@@ -47,7 +47,7 @@ signal-desktop &
 #   ~/scripts/mpd/local-cover &
 #   # nitrogen --restore &
 # } &
-sudo chmod 777 -R /sys/class/backlight/intel_backlight &
+# sudo chmod 777 -R /sys/class/backlight/intel_backlight &
 
 # wallpaper
 xwallpaper --zoom ~/.config/wallpaper.png &
