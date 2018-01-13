@@ -44,10 +44,6 @@
 		"prefer-arrow-callback": [ 1, { "allowNamedFunctions": true }],
 		"no-restricted-syntax": [ 2,
 			"WithStatement",
-			"ClassBody",
-			"ClassDeclaration",
-			"ClassExpression",
-			"Super"
 		],
 		"prefer-template": 2,
 		"no-useless-concat": 2,

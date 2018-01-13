@@ -4,7 +4,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export ZSH=/Users/jneidel/.oh-my-zsh
-ZSH_THEME="agnoster"
+ZSH_THEME="cobalt2"
 
 HIST_STAMP="dd.mm.yyyy"
 
@@ -12,15 +12,15 @@ plugins=( zsh-syntax-highlighting )
 
 source $ZSH/oh-my-zsh.sh
 
+export PATH=/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/jneidel/.vimpkg/bin
 
 ### Optional Apps
 
-# source /sw/bin/init.sh # Setup fink path
+#source /sw/bin/init.sh # Setup fink path
 
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 
 ### Aliases
 
@@ -47,6 +47,14 @@ alias build="npm run build"
 alias test="npm run test"
 alias testing="npm run testing"
 
+# tmux
+alias tn="tmux new -s"
+alias tls="tmux ls"
+alias ta="tmux a"
+alias tam="tmux a -t main"
+alias tac="tmux a -t code"
+alias tadb="tmux a -t mongodb"
+
 # ls
 alias l="ls -lah"
 alias lsd="ls -l -d */"  	#      dirs as list
@@ -56,13 +64,6 @@ alias lss="ls -l - d *" 	# files of sub dirs
 alias n="node"
 alias n8="nvm use 8.1.4"
 alias n9="nvm use 9.2.0"
-
-# hyper
-hypi() {
-  cd ~/.hyper_plugins/;  
-  npm install $1;
-  cd;
-}
 
 # itunes
 alias play="itunes play --exit"
@@ -81,15 +82,20 @@ alias wifipass="osx-wifi-cli pass"
 alias wifi="osx-wifi-cli"
 alias wifiscan="osx-wifi-cli scan"
 
+# .*rc alias
+alias zshrc="vim ~/.zshrc"
+alias vimrc="vim ~/.vimrc"
+
 # Misc shortcuts
 alias o="open ."
 alias vsc="code ."
-alias zshrc="vim ~/.zshrc"
 alias python3="~/anaconda/bin/python3.6"
 alias fix="eslint --fix"
 alias fixa="eslint --fix *.js"
 alias m="z misc"
+alias vnotes="vim ~/Programming/misc/contents/vim.md"
 alias uber="ssh jneidel@shaula.uberspace.de"
+alias src="source ~/.zshrc"
 alias showhidden="defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder"
 alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -boolean false ; killall Finder"
 alias music-dl="instantmusic -s"
@@ -123,5 +129,6 @@ dotfiles() {
   cp ~/.zshrc ~/Programming/dotfiles/zshrc;
   cp ~/.vimrc ~/Programming/dotfiles/vimrc; 
   cp ~/.eslintrc ~/Programming/dotfiles/eslintrc;  
-  cp ~/.hyper.js ~/Programming/dotfiles/hyper.js;
+  cp ~/.tmux.conf ~/Programming/dotfiles/tmux.conf;
 }
+
