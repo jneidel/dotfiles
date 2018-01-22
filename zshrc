@@ -1,18 +1,21 @@
 ### Zsh Options
 
+USER_DIR="/Users/jneidel"
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export ZSH=/Users/jneidel/.oh-my-zsh
+export ZSH=$USER_DIR/.oh-my-zsh
 ZSH_THEME="cobalt2"
 
 HIST_STAMP="dd.mm.yyyy"
+CASE_SENSITIVE="true"
 
 plugins=( zsh-syntax-highlighting )
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/jneidel/.vimpkg/bin
+export PATH=/opt/local/bin:/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$USER_DIR/.vimpkg/bin
 
 ### Optional Apps
 
@@ -21,6 +24,8 @@ export PATH=/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/U
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# set pastetoggle=<F5>
 
 ### Aliases
 
@@ -85,6 +90,7 @@ alias wifiscan="osx-wifi-cli scan"
 # .*rc alias
 alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
+alias tmuxrc="vim ~/.tmux.conf"
 
 # Misc shortcuts
 alias o="open ."
@@ -92,7 +98,8 @@ alias vsc="code ."
 alias python3="~/anaconda/bin/python3.6"
 alias fix="eslint --fix"
 alias fixa="eslint --fix *.js"
-alias m="z misc"
+alias n="vim ~/notes/notes"
+alias m="cd ~/Programming/misc/contents/"
 alias vnotes="vim ~/Programming/misc/contents/vim.md"
 alias uber="ssh jneidel@shaula.uberspace.de"
 alias src="source ~/.zshrc"
@@ -116,13 +123,20 @@ gh() {
 alias h="history"
 alias homepage="gh-home"
 alias manga="~/anaconda/bin/python3.6 ~/Programming/mangareader-dl/mangareader-dl.py $1"
-alias yt-mp3="youtube-dl --config-location /Users/jneidel/.config/youtube-dl/youtube-dl.conf $2 $3 $1"
+alias ytmp3="youtube-dl --config-location /Users/jneidel/.config/youtube-dl/youtube-dl.conf $2 $3 $1"
 alias ytunder="python3 /Users/jneidel/.utilities/underscore.py"
+alias ytdown="youtube-dl --yes-playlist --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias stats="iostat -w 1"
 alias vimdocs="cd /usr/share/vim/vim80/doc/ "
 alias readme="grip -b 7777"
 alias gettrackpadspeed="defaults read -g com.apple.mouse.scaling"
 alias settrackpadspeed="defaults write -g com.apple.mouse.scaling"
+alias ngrok="~/.bin/ngrok"
+mkdircd() {
+  mkdir "$1";
+  cd "$1";
+}
+alias sass="node-sass"
 
 # dotfiles
 dotfiles() {
@@ -130,5 +144,6 @@ dotfiles() {
   cp ~/.vimrc ~/Programming/dotfiles/vimrc; 
   cp ~/.eslintrc ~/Programming/dotfiles/eslintrc;  
   cp ~/.tmux.conf ~/Programming/dotfiles/tmux.conf;
+  cp $ZSH/oh-my-zsh.sh ~/Programming/dotfiles/oh-my-zsh.sh;
 }
 

@@ -4,6 +4,7 @@
 
 [View config](zshrc)
 
+To use my `.zshrc` fill in your home directory in the variable at line 3.
 
 ### Zsh theme
 

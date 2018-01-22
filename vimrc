@@ -2,17 +2,30 @@
 syntax on
 set t_Co=256
 colorscheme old-hope
-set nu		" Line numbers
+
+" Lines
+set number
+set ruler
 
 "###
-let mapleader = "#"
-set noswapfile
+set nocompatible
 set backspace=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
 "set autoindent
 "set smartindent
+
+set autoread " Watch for file changes
+
+" Backup/Swap files
+set backup
+set backupdir=~/.vim/backup
+set swapfile
+set directory=~/.vim/tmp
+
+" Save history/registers after :q session
+set viminfo=%,'50,\"100,:100,n~/.viminfo
 
 "### Window Spliting
 " Remapping ctrl + w + <movement> to ctrl + <movement> for easier window movement
@@ -24,9 +37,12 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow " on vsp
 set splitright " on sp
 
-"### NERDTree
+"### Aliases
+let mapleader = "#"
 nmap <leader>tt  :NERDTreeToggle<cr>
+nmap <leader>tc  :NERDTreeClose<cr>
 
+"### NERDTree options
 let NERDTreeSortHiddenFirst=0
 let NERDTreeCaseSensitiveSort=0
 let NERDTreeShowHidden=0
@@ -40,6 +56,7 @@ let NERDTreeWinSize=25
 let NERDTreeIgnore=[ "\.git", "\.DS_Store" ]
 
 "### MiniBufExpl
+
 map <Leader>mt :MBEToggle<cr>
 
 "### Vundle
@@ -69,6 +86,7 @@ filetype plugin indent on
 " Put your non-Plugin stuff after this line
 
 "### Pathogen  
+
 execute pathogen#infect()
 call pathogen#helptags()
 
