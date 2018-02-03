@@ -41,6 +41,8 @@ alias master="git pull origin master; git push origin master"
 alias pull="git pull origin master; git pull origin"
 alias log="git log --oneline --graph"
 alias re="git reset"
+alias diff="git diff"
+alias com="git checkout master"
 
 # npm
 alias ni="npm install"
@@ -51,6 +53,7 @@ alias start="npm run start"
 alias build="npm run build"
 alias test="npm run test"
 alias testing="npm run testing"
+alias npmlist="npm list -g --depth=0"
 
 # tmux
 alias tn="tmux new -s"
@@ -137,6 +140,8 @@ mkdircd() {
   cd "$1";
 }
 alias sass="node-sass"
+alias dlog='{ echo "--"; date +%d.%m.%Y; echo "--"; } | tr "\n" " " >> ~/notes/log; vim ~/notes/log;'
+alias elog="vim ~/notes/log"
 
 # dotfiles
 dotfiles() {
@@ -146,4 +151,8 @@ dotfiles() {
   cp ~/.tmux.conf ~/Programming/dotfiles/tmux.conf;
   cp $ZSH/oh-my-zsh.sh ~/Programming/dotfiles/oh-my-zsh.sh;
 }
+
+#####################################
+bindkey "^[," copy-prev-word
+bindkey "^[-" copy-prev-word
 
