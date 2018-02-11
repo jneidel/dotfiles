@@ -37,6 +37,10 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow " on vsp
 set splitright " on sp
 
+autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us "Spellchecking for Markdown files
+
+"##### Plugins
+
 "### Aliases
 let mapleader = "#"
 nmap <leader>tt  :NERDTreeToggle<cr>

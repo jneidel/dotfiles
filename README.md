@@ -2,24 +2,26 @@
 
 ## Zsh
 
-[View config](zshrc)
+I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
-To use my `.zshrc` fill in your home directory in the variable at line 3.
+To use my zsh config fill in your home directory in the variable at line 3.
+
+[View zsh config](zshrc) - `~/.zshrc`
+
+[View oh-my-zsh config](oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
+
+[View aliases](aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 ### Zsh theme
 
-[View zsh-theme](cobalt2.zsh-theme)
+[View zsh-theme](cobalt2.zsh-theme) - `~/.oh-my-zsh/themes/cobalt2.zsh-theme`
 
-
-To install a zsh-theme [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) is required.
-After installing oh-my-zsh put the the zsh-theme into `~/.oh-my-zsh/themes/`.
-
-For it to be rendered correctly one will need a [powerline patched font](https://github.com/robbyrussell/oh-my-zsh).
+For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/robbyrussell/oh-my-zsh).
 The font will need to be installed on the device and activated in the iTerm options: `Profiles > Text > Font > Change Font`.
 
-To change the `$` default prompt open `~/.oh-my-zsh/themes/cobalt2.zsh-theme` and edit line 52, changing the value between the closing parens and double quote:
+To change the `$` default prompt in the shell, open `~/.oh-my-zsh/themes/cobalt2.zsh-theme` and edit line 52, changing the value between the closing parens and double quote:
 
-```bash
+```zsh
 prompt_segment black default "%(!.%{%F{yellow}%}.)<insert-prompt-here>"
 ```
 
@@ -37,20 +39,22 @@ The iTerm colorscheme will need to imported in the iTerm options: `Profiles > Co
 
 Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
 
+- [z (jump around)](https://github.com/rupa/z) (already downloaded with oh-my-zsh)
+
 ## Eslint
 
-[View config](eslintrc)
+[View eslint config](eslintrc) - `~/.eslintrc`
 
-Requires `eslint-config-airbnb` and `eslint` to be installed globally:
+Requires `eslint` and `eslint-config-airbnb` to be installed globally:
 
 ```zsh
-npm i eslint-config-airbnb -g
 npm i eslint -g
+npm i eslint-config-airbnb -g
 ```
 
 ## Vim
 
-[View config](vimrc)
+[View vim config](vimrc) - `~/.vimrc`
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
 
@@ -58,4 +62,3 @@ npm i eslint -g
 
 - [NERDTree](https://github.com/scrooloose/nerdtree)
 - [MiniBufExpl](https://github.com/fholgado/minibufexpl.vim)
-
