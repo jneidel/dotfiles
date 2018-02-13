@@ -47,6 +47,7 @@ alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias tmuxrc="vim ~/.tmux.conf"
 alias eslintrc="vim ~/.eslintrc"
+alias al="vim $ZSH/custom/aliases.zsh"
 
 # eslint
 alias fix="eslint --fix"
@@ -75,3 +76,4 @@ mdc() { # MkDirCd
   cd "$1";
 }
 alias sass="node-sass"
+

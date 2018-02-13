@@ -62,3 +62,8 @@ npm i eslint-config-airbnb -g
 
 - [NERDTree](https://github.com/scrooloose/nerdtree)
 - [MiniBufExpl](https://github.com/fholgado/minibufexpl.vim)
+
+## Visual Studio Code
+
+[View vscode config](vscode.json) - `~/Library/Application\ Support/Code/User/settings.json`
+
