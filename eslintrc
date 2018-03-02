@@ -116,5 +116,7 @@
 		"no-mixed-spaces-and-tabs": 0,
     "camelcase": 2,
     "max-len": 0,
+    "no-prototype-builtins": 0,
+    "import/no-extraneous-dependencies": 0
 	},
 }

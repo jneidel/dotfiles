@@ -14,7 +14,6 @@
   "editor.parameterHints": false,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "editor.formatOnSave": true,
   "[javascript]": {
     "editor.formatOnSave": false
   },

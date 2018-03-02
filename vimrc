@@ -23,6 +23,8 @@ set backup
 set backupdir=~/.vim/backup
 set swapfile
 set directory=~/.vim/tmp
+set undofile
+set undodir=~/.vim/tmp
 
 " Save history/registers after :q session
 set viminfo=%,'50,\"100,:100,n~/.viminfo

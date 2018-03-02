@@ -16,6 +16,7 @@ plugins=( z zsh-syntax-highlighting )
 source $ZSH/oh-my-zsh.sh
 
 export PATH=/opt/local/bin:/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$USER_DIR/.vimpkg/bin
+export CDPATH=.:~:~/Programming
 
 ### Apps
 # Commented out to speed up zsh boot time

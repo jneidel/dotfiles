@@ -2,6 +2,8 @@
 
 alias src="source ~/.zshrc"
 
+alias v="vim"
+
 # git
 alias s="git status"
 alias add="git add .; git status"
@@ -18,6 +20,11 @@ alias diff="git diff"
 alias co="git checkout"
 alias com="git checkout master"
 alias gb="git branch"
+alias gr="git rebase"
+alias grc="git rebase --continue"
+alias gra="git rebase --abort"
+alias allcom="git add .; git commit -m"
+alias allam="git add .; git commit --amend"
 
 # npm
 alias ni="npm install"
@@ -53,6 +60,9 @@ alias al="vim $ZSH/custom/aliases.zsh"
 alias fix="eslint --fix"
 alias fixa="eslint --fix *.js"
 
+# sass
+alias sassdir="sass -w . -o ."
+
 # open apps
 alias o="open ."   # finder
 alias vsc="code ." # vscode
@@ -69,7 +79,6 @@ alias settrackpadspeed="defaults write -g com.apple.mouse.scaling"
 alias h="history"
 alias homepage="gh-home" # open github repo of current project
 alias vimdocs="cd /usr/share/vim/vim80/doc/"
-alias readme="grip -b 7777" # open readme with github styles
 alias ngrok="~/.bin/ngrok" # open tunnel to local port
 mdc() { # MkDirCd
   mkdir "$1";
