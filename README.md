@@ -65,5 +65,6 @@ npm i eslint-config-airbnb -g
 
 ## Visual Studio Code
 
-[View vscode config](vscode.json) - `~/Library/Application\ Support/Code/User/settings.json`
+[View vscode settings](vscode-settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
+[View vscode keybindings](vscode-keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
 
