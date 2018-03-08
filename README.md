@@ -68,3 +68,11 @@ npm i eslint-config-airbnb -g
 [View vscode settings](vscode-settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
 [View vscode keybindings](vscode-keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
 
+## NPM cli modules
+
+- [@aweary/alder](https://github.com/aweary/alder) - Print current directory as ascii tree
+- [dict-cc-cli](https://github.com/derhuerst/dict-cc-cli) - Dict.cc lookup from the command line
+- [generator-jneidel](https://github.com/jneidel/generator-jneidel) - Collection of boilerplates, for installation with yeoman
+- [np](https://github.com/sindresorhus/np) - Better version of 'npm publish'
+- [yo](https://github.com/yeoman/yo) - Run yeoman generators to create boilerplates
+
