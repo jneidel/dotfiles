@@ -74,5 +74,6 @@ npm i eslint-config-airbnb -g
 - [dict-cc-cli](https://github.com/derhuerst/dict-cc-cli) - Dict.cc lookup from the command line
 - [generator-jneidel](https://github.com/jneidel/generator-jneidel) - Collection of boilerplates, for installation with yeoman
 - [np](https://github.com/sindresorhus/np) - Better version of 'npm publish'
+- [tslide](https://github.com/tslide/tslide) - Terminal slide deck using markdown
 - [yo](https://github.com/yeoman/yo) - Run yeoman generators to create boilerplates
 
