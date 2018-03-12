@@ -40,7 +40,6 @@ alias nr="npm run"
 alias start="npm run start"
 alias build="npm run build"
 alias test="npm run test"
-alias watch="npm run watch"
 
 # tmux
 alias tn="tmux new -s"
@@ -80,6 +79,9 @@ alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -boolean fal
 # get/set trackpad speed on mac
 alias gettrackpadspeed="defaults read -g com.apple.mouse.scaling"
 alias settrackpadspeed="defaults write -g com.apple.mouse.scaling"
+
+# file system
+alias cpdir="cp -r"
 
 # misc
 alias h="history"

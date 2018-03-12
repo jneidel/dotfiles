@@ -13,7 +13,7 @@ set backspace=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
-"set autoindent
+set autoindent
 "set smartindent
 
 set autoread " Watch for file changes

@@ -117,6 +117,10 @@
     "camelcase": 2,
     "max-len": 0,
     "no-prototype-builtins": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "no-return-await": 2,
+    "dot-notation": 2,
+    "no-useless-return": 2,
+    "require-await": 2
 	},
 }
