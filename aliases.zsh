@@ -28,6 +28,9 @@ alias addcom="git add .; git commit -m"
 alias addam="git add .; git commit --amend --no-edit"
 alias pushup="git push --set-upstream origin"
 alias amendd="git commit --amend --no-edit"
+amdate() {
+  git commit --amend --date="$1"
+}
 
 # npm
 alias ni="npm install"

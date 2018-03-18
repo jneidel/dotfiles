@@ -121,6 +121,7 @@
     "no-return-await": 2,
     "dot-notation": 2,
     "no-useless-return": 2,
-    "require-await": 2
+    "require-await": 2,
+    "no-return-assign": 0
 	},
 }

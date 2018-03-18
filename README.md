@@ -1,5 +1,11 @@
 # dotfiles
 
+- [Zsh](#zsh)
+- [Eslint](#eslint)
+- [Vim](#vim)
+- [Visual Studio Code](#visual-studio-code)
+- [NPM CLIs](#npm-clis)
+
 ## Zsh
 
 I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
@@ -66,9 +72,10 @@ npm i eslint-config-airbnb -g
 ## Visual Studio Code
 
 [View vscode settings](vscode-settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
+
 [View vscode keybindings](vscode-keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
 
-## NPM cli modules
+## NPM CLIs
 
 - [@aweary/alder](https://github.com/aweary/alder) - Print current directory as ascii tree
 - [dict-cc-cli](https://github.com/derhuerst/dict-cc-cli) - Dict.cc lookup from the command line
