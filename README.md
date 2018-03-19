@@ -5,6 +5,7 @@
 - [Vim](#vim)
 - [Visual Studio Code](#visual-studio-code)
 - [NPM CLIs](#npm-clis)
+- [Chrome Extensions](#chrome-extensions)
 
 ## Zsh
 
@@ -83,4 +84,37 @@ npm i eslint-config-airbnb -g
 - [np](https://github.com/sindresorhus/np) - Better version of 'npm publish'
 - [tslide](https://github.com/tslide/tslide) - Terminal slide deck using markdown
 - [yo](https://github.com/yeoman/yo) - Run yeoman generators to create boilerplates
+
+## Chrome Extensions
+
+Chrome extensions, sorted by category.
+
+### Adblocker
+
+- [Adblock Plus](https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb)
+- [uBlock Origin](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm)
+
+### Coding
+
+- [Chrome Markdown Preview](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) - Elegant GFM preview on `.md` files
+- [JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) - Easy to read JSON formatting
+- [OpenGenus](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) - Offline algorithm search engine
+- [Octotree](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) - GitHub file tree
+- [Npmhub](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) - List npm dependencies in readme
+- [Refined GitHub](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) - GitHub functional/visual upgrade
+
+### Privacy
+
+- [DuckDuckGo Privacy Essentials](https://chrome.google.com/webstore/detail/duckduckgo-privacy-essent/bkdgflcldnnnapblkhphbgpggdiikppg) - DDG search
+- [HTTPS Everywhere](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) - Force HTTPS
+- [Privacy Badger](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) - Stop trackers
+- [Private Internet Access](https://chrome.google.com/webstore/detail/private-internet-access/jplnlifepflhkbkgonidnobkakhmpnmh) - VPN
+
+### Misc
+
+- [chromelPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) - KeePass integration for password insert
+- [ColorZilla](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) - Color picker
+- [Hover Zoom+](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) - Large overlay on image and link to image hover
+- [StayFocusd](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) - Site blocker
+- [Toby](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) - Better bookmark manager
 
