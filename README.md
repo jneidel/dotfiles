@@ -7,6 +7,7 @@
   - [Visual Studio Code](#visual-studio-code)
 - Apps
   - [NPM CLIs](#npm-clis)
+  - [Homebrew CLIs](#homebrew-clis)
   - [Chrome Extensions](#chrome-extensions)
 
 ## Zsh
@@ -90,6 +91,16 @@ npm i eslint-config-airbnb -g
 | [npm-name-cli](https://www.npmjs.com/package/npm-name-cli) | Check module name availability |
 | [tslide](https://github.com/tslide/tslide) | Terminal slide deck using markdown |
 | [yo](https://github.com/yeoman/yo) | Run yeoman generators to create boilerplates |
+
+## Homebrew CLIs
+
+
+| Name | Description |
+|--|--|
+| [grip](http://brewformulas.org/grip) | Render readme with github styles for local testing |
+| [mongodb](http://brewformulas.org/Mongodb) | Run mongodb locally |
+| [tmux](http://brewformulas.org/tmux) | Terminal multiplexer |
+
 
 ## Chrome Extensions
 
