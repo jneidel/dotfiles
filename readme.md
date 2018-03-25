@@ -5,6 +5,7 @@
   - [Vim](#vim)
   - [Eslint](#eslint)
   - [Visual Studio Code](#visual-studio-code)
+  - [Git](#git)
 - Apps
   - [NPM CLIs](#npm-clis)
   - [Homebrew CLIs](#homebrew-clis)
@@ -78,6 +79,14 @@ npm i eslint-config-airbnb -g
 [View vscode settings](vscode-settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
 
 [View vscode keybindings](vscode-keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
+
+## Git
+
+Not in form of a config, but as an collection of commands:
+
+```zsh
+git config core.ignorecase false
+```
 
 ## NPM CLIs
 
