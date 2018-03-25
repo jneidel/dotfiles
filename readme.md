@@ -67,12 +67,19 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 [View eslint config](eslintrc) - `~/.eslintrc`
 
-Requires `eslint` and `eslint-config-airbnb` to be installed globally:
+Once globally installed, run anywhere:
 
 ```zsh
-npm i eslint -g
-npm i eslint-config-airbnb -g
+eslint --fix
 ```
+
+Requires eslint, as well as a few plugins to be installed globally:
+
+```zsh
+npm i -g eslint eslint-plugin-ava eslint-plugin-json eslint-plugin-node eslint-plugin-unicorn eslint-plugin-xo
+```
+
+For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
 
 ## Visual Studio Code
 

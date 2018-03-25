@@ -47,7 +47,7 @@ alias test="npm run test"
 # tmux
 alias tn="tmux new -s"
 alias tls="tmux ls"
-alias ta="tmux a" # attach
+alias ta="tmux a -t" # attach
 alias tam="tmux a -t main"
 alias tac="tmux a -t code"
 alias tadb="tmux a -t mongo"
@@ -65,8 +65,8 @@ alias eslintrc="vim ~/.eslintrc"
 alias al="vim $ZSH/custom/aliases.zsh"
 
 # eslint
-alias fix="eslint --fix"
-alias fixa="eslint --fix *.js"
+alias fix="eslint --fix --ext .js, .json"
+alias fixa="eslint --fix *.js --ext .js, .json"
 
 # sass
 alias sassdir="sass -w . -o ."
