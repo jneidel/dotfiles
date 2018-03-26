@@ -3,6 +3,7 @@
 - Configs
   - [Zsh](#zsh)
   - [Vim](#vim)
+  - [Tmux](#tmux)
   - [Eslint](#eslint)
   - [Visual Studio Code](#visual-studio-code)
   - [Git](#git)
@@ -62,6 +63,21 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 - [NERDTree](https://github.com/scrooloose/nerdtree)
 - [MiniBufExpl](https://github.com/fholgado/minibufexpl.vim)
+
+## Tmux
+
+Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
+
+[View tmux config](tmux.conf) - `~/.tmux.conf`
+
+### Scripts
+
+**OSX only:**
+
+[View scripts](.tmux) - `~/.tmux/`
+
+- [battery](.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
+- [itunes](.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
 
 ## Eslint
 
