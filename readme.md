@@ -121,7 +121,9 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ## Git
 
-Not in form of a config, but as an collection of commands:
+[View global gitignore](gitignore) - `~/.gitignore`
+
+Config commands:
 
 ```zsh
 git config core.ignorecase false

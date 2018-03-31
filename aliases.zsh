@@ -43,6 +43,7 @@ alias nr="npm run"
 alias start="npm run start"
 alias build="npm run build"
 alias test="npm run test"
+alias testing="npm run testing"
 
 # tmux
 alias tn="tmux new -s"
@@ -96,4 +97,9 @@ mdc() { # MkDirCd
   cd "$1";
 }
 alias sass="node-sass"
+calc() {
+  echo "$1" | bc
+}
+alias calendar="cal -NA 3"
+alias cal3="cal -NC3"
 

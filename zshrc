@@ -20,6 +20,7 @@ export CDPATH=.:~:~/Programming
 
 bindkey -v
 export KEYTIMEOUT=1
+export EDITOR=vim
 
 ### Apps
 # Commented out to speed up zsh boot time
