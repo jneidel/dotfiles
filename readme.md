@@ -1,16 +1,32 @@
 # dotfiles
 
-- Configs
-  - [Zsh](#zsh)
-  - [Vim](#vim)
-  - [Tmux](#tmux)
-  - [Eslint](#eslint)
-  - [Visual Studio Code](#visual-studio-code)
-  - [Git](#git)
-- Apps
-  - [NPM CLIs](#npm-clis)
-  - [Homebrew CLIs](#homebrew-clis)
-  - [Chrome Extensions](#chrome-extensions)
+<details>
+<summary><strong>Table of Contents</strong></summary>
+
+<!-- toc -->
+
+- [Zsh](#zsh)
+  * [Zsh theme](#zsh-theme)
+  * [Colorscheme](#colorscheme)
+  * [Plugins](#plugins)
+- [Vim](#vim)
+  * [Plugins](#plugins-1)
+- [Tmux](#tmux)
+  * [Scripts](#scripts)
+- [Eslint](#eslint)
+- [Visual Studio Code](#visual-studio-code)
+  * [Plugins](#plugins-2)
+- [Git](#git)
+- [NPM CLIs](#npm-clis)
+- [Homebrew CLIs](#homebrew-clis)
+- [Chrome Extensions](#chrome-extensions)
+  * [Coding](#coding)
+  * [Privacy & Adblocker](#privacy--adblocker)
+  * [Misc](#misc)
+
+<!-- tocstop -->
+
+</details>
 
 ## Zsh
 
@@ -139,18 +155,17 @@ git config core.ignorecase false
 | [generator-jneidel](https://github.com/jneidel/generator-jneidel) | Collection of boilerplates, for installation with yeoman |
 | [np](https://github.com/sindresorhus/np) | Better version of 'npm publish' |
 | [npm-name-cli](https://www.npmjs.com/package/npm-name-cli) | Check module name availability |
+| [markdown-toc](https://www.npmjs.com/package/markdown-toc) | Create/update readme toc |
 | [tslide](https://github.com/tslide/tslide) | Terminal slide deck using markdown |
 | [yo](https://github.com/yeoman/yo) | Run yeoman generators to create boilerplates |
 
 ## Homebrew CLIs
-
 
 | Name | Description |
 |--|--|
 | [grip](http://brewformulas.org/grip) | Render readme with github styles for local testing |
 | [mongodb](http://brewformulas.org/Mongodb) | Run mongodb locally |
 | [tmux](http://brewformulas.org/tmux) | Terminal multiplexer |
-
 
 ## Chrome Extensions
 

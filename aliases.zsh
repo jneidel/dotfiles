@@ -29,7 +29,21 @@ alias addam="git add .; git commit --amend --no-edit"
 alias pushup="git push --set-upstream origin"
 alias amendd="git commit --amend --no-edit"
 amdate() {
-  git commit --amend --date="$1"
+  git commit --amend --no-edit --date="$1"
+}
+amd() {
+  git commit --amend --no-edit --date="$1 $2 $3 $4:35:25 2018 +0200"
+}
+amyest() {
+  # Date formatting: https://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
+  DATE=`date -v -1d +"%a %h %e"`; # eg: Sun Apr 6
+
+  git commit --amend --no-edit --date="$DATE $1:35:25 2018 +0200"
+}
+amtod() {
+  DATE=`date +"%a %h %e"`;
+
+  git commit --amend --no-edit --date="$DATE $1:35:25 2018 +0200"
 }
 
 # npm
@@ -44,6 +58,7 @@ alias start="npm run start"
 alias build="npm run build"
 alias test="npm run test"
 alias testing="npm run testing"
+alias unit="npm run unit"
 
 # tmux
 alias tn="tmux new -s"
@@ -67,7 +82,7 @@ alias al="vim $ZSH/custom/aliases.zsh"
 
 # eslint
 alias fix="eslint --fix --ext .js, .json"
-alias fixa="eslint --fix *.js --ext .js, .json"
+alias fixa="eslint . --fix --ext .js, .json"
 
 # sass
 alias sassdir="sass -w . -o ."
@@ -102,4 +117,9 @@ calc() {
 }
 alias calendar="cal -NA 3"
 alias cal3="cal -NC3"
+
+# npm apps
+alias toc="markdown-toc -i readme.md"
+alias tree="alder --depth 3"
+alias lint="fixa; toc;"
 

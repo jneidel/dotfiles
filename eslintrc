@@ -22,7 +22,7 @@
   ],
   "rules": {
     "no-undef": 2,
-    "no-console": 1,
+    "no-console": 0,
     "semi": [ 2, "always"],
     "quotes": [ 1, "double", { "allowTemplateLiterals": true } ],
     "indent": [ 2, 2, {
@@ -108,7 +108,7 @@
     "one-var": 0,
     "no-shadow": 0,
     "wrap-iife": [ 2, "inside", { "functionPrototypeMethods": true } ],
-    "no-mixed-operators": 2,
+    "no-mixed-operators": 0,
     "no-extra-parens": 2,
     "no-plusplus": 0,
     "default-case": 0,
@@ -116,7 +116,7 @@
     "guard-for-in": 1,
     "no-bitwise": 0,
     "no-labels": 0,
-    "no-case-declarations": 1,
+    "no-case-declarations": 0,
     "no-underscore-dangle": 0,
     "no-unused-vars": 0,
     "consistent-return": 0,
@@ -183,6 +183,9 @@
     "max-statements-per-line": 0,
     "capitalized-comments": 0,
     "curly": 0,
-    "handle-callback-err": 0
-	},
+    "handle-callback-err": 0,
+    "no-irregular-whitespace": 0,
+    "no-implicit-coercion": 0,
+    "max-params": [ 2, 6 ]
+  },
 }

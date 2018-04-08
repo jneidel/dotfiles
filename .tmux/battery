@@ -28,5 +28,5 @@ done
 
 BATTERY_STATUS=`battery_status $1`
 
-echo $(echo ${BATTERY_STATUS} + 2 | bc)%
+echo ${BATTERY_STATUS}%
 
