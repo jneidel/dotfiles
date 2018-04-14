@@ -106,20 +106,21 @@ alias cpdir="cp -r"
 alias h="history"
 alias homepage="gh-home" # open github repo of current project
 alias vimdocs="cd /usr/share/vim/vim80/doc/"
-alias ngrok="~/.bin/ngrok" # open tunnel to local port
 mdc() { # MkDirCd
   mkdir "$1";
   cd "$1";
 }
-alias sass="node-sass"
 calc() {
   echo "$1" | bc
 }
+alias sass="node-sass"
 alias calendar="cal -NA 3"
 alias cal3="cal -NC3"
 
-# npm apps
+# npm apps/clis
 alias toc="markdown-toc -i readme.md"
 alias tree="alder --depth 3"
 alias lint="fixa; toc;"
+alias manga="mangareader-dl"
+alias asciinema="py -m asciinema" # requires pip module: pip3 install asciinema
 

@@ -159,6 +159,13 @@ git config core.ignorecase false
 | [tslide](https://github.com/tslide/tslide) | Terminal slide deck using markdown |
 | [yo](https://github.com/yeoman/yo) | Run yeoman generators to create boilerplates |
 
+## CLIs
+
+| Name | Description |
+|--|--|
+| [youtube-dl](https://github.com/rg3/youtube-dl) | Configurable youtube downloader |
+| [asciinema](https://github.com/asciinema/asciinema) | Terminal recorder |
+
 ## Homebrew CLIs
 
 | Name | Description |
