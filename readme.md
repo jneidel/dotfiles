@@ -7,28 +7,26 @@
 
 <!-- toc -->
 
-- [Zsh (shell)](#zsh-shell)
-- [Vim (editor)](#vim-editor)
-- [Tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
-- [Eslint (js linter)](#eslint-js-linter)
-- [Visual Studio Code (editor)](#visual-studio-code-editor)
-- [Git (version control)](#git-version-control)
-- [CLIs](#clis)
-  * [npm](#npm)
-  * [General](#general)
-  * [Homebrew](#homebrew)
-- [Chrome Extensions](#chrome-extensions)
-  * [Coding](#coding)
-  * [Privacy & Adblocker](#privacy--adblocker)
-  * [Misc](#misc)
-- [Android Apps](#android-apps)
+- [Configurations](#configurations)
+  * [Zsh (shell)](#zsh-shell)
+  * [Vim (editor)](#vim-editor)
+  * [Tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
+  * [Eslint (js linter)](#eslint-js-linter)
+  * [Visual Studio Code (editor)](#visual-studio-code-editor)
+  * [Git (version control)](#git-version-control)
+- [Apps](#apps)
+  * [CLIs](#clis)
+  * [Chrome Extensions](#chrome-extensions)
+  * [Android](#android)
 - [Related](#related)
 
 <!-- tocstop -->
 
 </details>
 
-## Zsh (shell)
+## Configurations
+
+### Zsh (shell)
 
 I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
@@ -69,7 +67,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 - [z (jump around)](https://github.com/rupa/z) (already downloaded with oh-my-zsh)
 
-## Vim (editor)
+### Vim (editor)
 
 [View vim config](vimrc) - `~/.vimrc`
 
@@ -80,7 +78,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 - [NERDTree](https://github.com/scrooloose/nerdtree)
 - [MiniBufExpl](https://github.com/fholgado/minibufexpl.vim)
 
-## Tmux (terminal mutiplexer)
+### Tmux (terminal mutiplexer)
 
 Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
@@ -95,7 +93,7 @@ OSX only
 - [battery](.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
 - [itunes](.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
 
-## Eslint (js linter)
+### Eslint (js linter)
 
 [View eslint config](eslintrc) - `~/.eslintrc`
 
@@ -113,7 +111,7 @@ npm i -g eslint eslint-plugin-ava eslint-plugin-json eslint-plugin-node eslint-p
 
 For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
 
-## Visual Studio Code (editor)
+### Visual Studio Code (editor)
 
 [View vscode settings](vscode-settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
 
@@ -135,7 +133,7 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 - [Vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) - Vim mode for VSCode
 - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) - Nice language specific icons in the explorer
 
-## Git (version control)
+### Git (version control)
 
 [View global gitignore](gitignore) - `~/.gitignore`
 
@@ -147,9 +145,11 @@ git config core.ignorecase false
 
 ---
 
-## CLIs
+## Apps
 
-### npm
+### CLIs
+
+**npm:**
 
 | name | description | links |
 |--|--|--|
@@ -163,14 +163,14 @@ git config core.ignorecase false
 | tslide | Terminal slide deck using markdown | [npm](https://www.npmjs.com/package/tslide) [github](https://github.com/tslide/tslide) |
 | yo | Run yeoman generators to create boilerplates | [npm](https://www.npmjs.com/package/yo) [github](https://github.com/yeoman/yo) |
 
-### General
+**General:**
 
 | name | description | links |
 |--|--|--|
 | youtube-dl | Configurable youtube downloader | [github](https://github.com/rg3/youtube-dl) |
 | asciinema | Terminal recorder | [github](https://github.com/asciinema/asciinema) [pip3](https://pypi.python.org/pypi/asciinema) |
 
-### Homebrew
+**Homebrew:**
 
 | name | description | links |
 |--|--|--|
@@ -178,11 +178,11 @@ git config core.ignorecase false
 | mongodb | Run mongodb locally | [brew](http://brewformulas.org/Mongodb) |
 | tmux | Terminal multiplexer | [brew](http://brewformulas.org/tmux) [github](https://github.com/tmux/tmux) |
 
-## Chrome Extensions
+### Chrome Extensions
 
 Chrome extensions, sorted by category.
 
-### Coding
+**Coding:**
 
 | name | description | links |
 |--|--|--|
@@ -193,7 +193,7 @@ Chrome extensions, sorted by category.
 | npmhub | List npm dependencies in readme | [chrome-webstore](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [github](https://github.com/npmhub/npmhub) |
 | Refined GitHub | GitHub functional/visual upgrade | [chrome-webstore](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [github](https://github.com/sindresorhus/refined-github) |
 
-### Privacy & Adblocker
+**Privacy & Adblocker:**
 
 | name | description | links |
 |--|--|--|
@@ -203,7 +203,7 @@ Chrome extensions, sorted by category.
 | Privacy Badger | Stop trackers | [chrome-webstore](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
 | uBlock Origin | Adblocker | [chrome-webstore](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
 
-### Misc
+**Misc:**
 
 | name | description | links |
 |--|--|--|
@@ -213,7 +213,7 @@ Chrome extensions, sorted by category.
 | StayFocusd | Site blocker, limit black list to given time | [chrome-webstore](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
 | Toby | Better bookmark manager | [chrome-webstore](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
 
-## Android Apps
+### Android
 
 F-Droid is a software repository hosting free and mostly open source apps. If available always try to use F-Droid over the google-playstore. Read more on [F-Droid](https://f-droid.org/).
 
