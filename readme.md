@@ -1,5 +1,7 @@
 # dotfiles
 
+> Collection of config files and used apps
+
 <details>
 <summary><strong>Table of Contents</strong></summary>
 
@@ -14,11 +16,12 @@
 - [CLIs](#clis)
   * [npm](#npm)
   * [General](#general)
-  * [Homebrew CLIs](#homebrew-clis)
+  * [Homebrew](#homebrew)
 - [Chrome Extensions](#chrome-extensions)
   * [Coding](#coding)
   * [Privacy & Adblocker](#privacy--adblocker)
   * [Misc](#misc)
+- [Android Apps](#android-apps)
 - [Related](#related)
 
 <!-- tocstop -->
@@ -167,7 +170,7 @@ git config core.ignorecase false
 | youtube-dl | Configurable youtube downloader | [github](https://github.com/rg3/youtube-dl) |
 | asciinema | Terminal recorder | [github](https://github.com/asciinema/asciinema) [pip3](https://pypi.python.org/pypi/asciinema) |
 
-### Homebrew CLIs
+### Homebrew
 
 | name | description | links |
 |--|--|--|
@@ -183,32 +186,54 @@ Chrome extensions, sorted by category.
 
 | name | description | links |
 |--|--|--|
-| Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome webstore](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [github](https://github.com/zce/chrome-markdown) |
-| JSON Formatter | Easy to read JSON formatting | [chrome webstore](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [github](https://github.com/callumlocke/json-formatter) |
-| OpenGenus quark | Offline algorithm search engine | [chrome webstore](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) [github](https://github.com/OpenGenus/quark) |
-| Octotree | GitHub file tree | [chrome webstore](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [github](https://github.com/buunguyen/octotree/) |
-| npmhub | List npm dependencies in readme | [chrome webstore](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [github](https://github.com/npmhub/npmhub) |
-| Refined GitHub | GitHub functional/visual upgrade | [chrome webstore](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [github](https://github.com/sindresorhus/refined-github) |
+| Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome-webstore](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [github](https://github.com/zce/chrome-markdown) |
+| JSON Formatter | Easy to read JSON formatting | [chrome-webstore](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [github](https://github.com/callumlocke/json-formatter) |
+| OpenGenus quark | Offline algorithm search engine | [chrome-webstore](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) [github](https://github.com/OpenGenus/quark) |
+| Octotree | GitHub file tree | [chrome-webstore](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [github](https://github.com/buunguyen/octotree/) |
+| npmhub | List npm dependencies in readme | [chrome-webstore](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [github](https://github.com/npmhub/npmhub) |
+| Refined GitHub | GitHub functional/visual upgrade | [chrome-webstore](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [github](https://github.com/sindresorhus/refined-github) |
 
 ### Privacy & Adblocker
 
 | name | description | links |
 |--|--|--|
-| Adblock Plus | Adblocker | [chrome webstore](https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb) |
-| DuckDuckGo Privacy Essentials | DDG search, stop trackers | [chrome webstore](https://chrome.google.com/webstore/detail/duckduckgo-privacy-essent/bkdgflcldnnnapblkhphbgpggdiikppg) |
-| HTTPS Everywhere | Force HTTPS connection | [chrome webstore](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
-| Privacy Badger | Stop trackers | [chrome webstore](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
-| uBlock Origin | Adblocker | [chrome webstore](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
+| Adblock Plus | Adblocker | [chrome-webstore](https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb) |
+| DuckDuckGo Privacy Essentials | DDG search, stop trackers | [chrome-webstore](https://chrome.google.com/webstore/detail/duckduckgo-privacy-essent/bkdgflcldnnnapblkhphbgpggdiikppg) |
+| HTTPS Everywhere | Force HTTPS connection | [chrome-webstore](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
+| Privacy Badger | Stop trackers | [chrome-webstore](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
+| uBlock Origin | Adblocker | [chrome-webstore](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
 
 ### Misc
 
 | name | description | links |
 |--|--|--|
-| chromelPass | KeePass integration for password insert | [chrome webstore](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) [github](https://github.com/pfn/passifox/) |
-| ColorZilla | Color picker | [chrome webstore](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) |
-| Hover Zoom+ | Large overlay on image and link to image hover | [chrome webstore](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
-| StayFocusd | Site blocker, limit black list to given time | [chrome webstore](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
-| Toby | Better bookmark manager | [chrome webstore](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
+| chromelPass | KeePass integration for password insert | [chrome-webstore](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) [github](https://github.com/pfn/passifox/) |
+| ColorZilla | Color picker | [chrome-webstore](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) |
+| Hover Zoom+ | Large overlay on image and link to image hover | [chrome-webstore](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
+| StayFocusd | Site blocker, limit black list to given time | [chrome-webstore](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
+| Toby | Better bookmark manager | [chrome-webstore](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
+
+## Android Apps
+
+F-Droid is a software repository hosting free and mostly open source apps. If available always try to use F-Droid over the google-playstore. Read more on [F-Droid](https://f-droid.org/).
+
+| name | description | links |
+|--|--|--|
+| Anki | Flashcards | [f-droid](https://f-droid.org/en/packages/com.ichi2.anki/) [google-play](https://play.google.com/store/apps/details?id=com.ichi2.anki) [github](https://github.com/ankidroid/Anki-Android) |
+| Audipo | Audioplayer optimized for podcasts (speed, skipping) | [google-play](https://play.google.com/store/apps/details?id=jp.ne.sakura.ccice.audipo) |
+| Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [google-play](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
+| CamScanner | Document scanner | [google-play](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
+| dict.cc | Offline dictionary | [google-play](https://play.google.com/store/apps/details?id=cc.dict.dictcc) |
+| ES File Explorer | File explorer | [google-play](https://play.google.com/store/apps/details?id=com.estrongs.android.pop.pro) |
+| FBReader | Ebook reader | [f-droid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [google-play](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [github](https://github.com/geometer/FBReaderJ) |
+| HiPER Calc | Superior calculator | [google-play](https://play.google.com/store/apps/details?id=cz.hipercalc.pro) |
+| Markor | Markdown editor | [f-droid](https://f-droid.org/en/packages/net.gsantner.markor/) [google-play](https://play.google.com/store/apps/details?id=net.gsantner.markor) [github](https://github.com/gsantner/markor) |
+| My Expenses | Expense/income tracker, with exports | [f-droid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [google-play](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [github](https://github.com/mtotschnig/MyExpenses) |
+| MX Player | Video player | [google-play](https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.pro) |
+| Signal | End to end encrypted chat | [google-play](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) [github](https://github.com/signalapp/Signal-Android) |
+| Time Meter | Smooth time tracker, with exports  | [google-play](https://play.google.com/store/apps/details?id=com.rk.timemeter) |
+| Todoist | Todo list for all platforms | [google-play](https://play.google.com/store/apps/details?id=com.todoist) |
+| Relaxio | White-noise generator | [google-play](https://play.google.com/store/apps/details?id=net.relaxio.relaxio) |
 
 ## Related
 
