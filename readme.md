@@ -189,9 +189,28 @@ Chrome extensions, sorted by category.
 | Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome-webstore](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [github](https://github.com/zce/chrome-markdown) |
 | JSON Formatter | Easy to read JSON formatting | [chrome-webstore](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [github](https://github.com/callumlocke/json-formatter) |
 | OpenGenus quark | Offline algorithm search engine | [chrome-webstore](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) [github](https://github.com/OpenGenus/quark) |
-| Octotree | GitHub file tree | [chrome-webstore](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [github](https://github.com/buunguyen/octotree/) |
 | npmhub | List npm dependencies in readme | [chrome-webstore](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [github](https://github.com/npmhub/npmhub) |
 | Refined GitHub | GitHub functional/visual upgrade | [chrome-webstore](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [github](https://github.com/sindresorhus/refined-github) |
+
+<details>
+<summary><strong>More GitHub related plugins</strong></summary>
+
+A comprehensive list of GitHub chrome extensions can be found [here](https://github.com/stefanbuck/awesome-browser-extensions-for-github).
+
+| name | description | links |
+|--|--|--|
+| Octotree | GitHub file tree | [chrome-webstore](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [github](https://github.com/buunguyen/octotree/) |
+| Vscode-icons | Icons indicating file type | [chrome-webstore](https://chrome.google.com/webstore/detail/github-vscode-icons/hoccpcefjcgnabbmojbfoflggkecmpgd) [github](https://github.com/dderevjanik/github-vscode-icons) |
+| Lovely Forks | Shows notable forks | [chrome-webstore](https://chrome.google.com/webstore/detail/lovely-forks/ialbpcipalajnakfondkflpkagbkdoib) [github](https://github.com/musically-ut/lovely-forks) |
+| npm-stats | Display npm download stats in repo | [chrome-webstore](https://chrome.google.com/webstore/detail/github-npm-stats/oomfflokggoffaiagenekchfnpighcef) [github](https://github.com/katranci/github-npm-stats) |
+| show-email | Display email on profile, even if not provided | [chrome-webstore](https://chrome.google.com/webstore/detail/github-show-email/pndebicblkfcinlcedagfhjfkkkecibn) [github](https://github.com/prabhakar267/github-email-extractor) |
+| omnibar | Shortcut navigation for github | [chrome-webstore](https://chrome.google.com/webstore/detail/github-omnibar/njccjmmakcbdpnlbodllfgiloenfpocb/related?utm_source=chrome-ntp-icon) [github](https://github.com/jcouyang/gh-omnibar) |
+| issue-link-status | Colorize issue links depending on status | [chrome-webstore](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic) [github](https://github.com/bfred-it/github-issue-link-status/) |
+| build-tabs | Build tab for github | [chrome-webstore](https://chrome.google.com/webstore/detail/builds-tab-for-github/jnmdkbflmkjehkkdbjdfpmhgdafpcdkh) [github](https://github.com/duxet/builds-tab) |
+
+<!-- |  |  | [chrome-webstore]() [github]() | -->
+
+</details><br/>
 
 **Privacy & Adblocker:**
 
