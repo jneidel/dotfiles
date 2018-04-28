@@ -41,6 +41,10 @@ set splitright " on sp
 
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us "Spellchecking for Markdown files
 
+" Reload buffer on changes to file after 5s
+set autoread
+au CursorHold * checktime
+
 "##### Plugins
 
 "### Aliases

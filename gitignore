@@ -1,4 +1,6 @@
 todo.md
 *.un~
 .vscode
+package-lock.json
+node-modules/
 

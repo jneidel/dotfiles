@@ -35,7 +35,6 @@ amd() {
   git commit --amend --no-edit --date="$1 $2 $3 $4:35:25 2018 +0200"
 }
 amyest() {
-  # Date formatting: https://www.cyberciti.biz/faq/linux-unix-formatting-dates-for-display/
   DATE=`date -v -1d +"%a %h %e"`; # eg: Sun Apr 6
 
   git commit --amend --no-edit --date="$DATE $1:35:25 2018 +0200"
@@ -69,9 +68,10 @@ alias tac="tmux a -t code"
 alias tadb="tmux a -t mongo"
 
 # ls
-alias l="ls -lah"      # all files
-alias la="ls -l"       # no . files
-alias ld="ls -l -d */" # dirs as list
+alias l="ls -1aFG"     # all files
+alias la="ls -1FG"     # no . files
+alias ld="ls -1FGd */" # only dirs
+alias li="ls -lahoFG"  # more info
 
 # *.rc files
 alias zshrc="vim ~/.zshrc"
@@ -116,6 +116,7 @@ calc() {
 alias sass="node-sass"
 alias calendar="cal -NA 3"
 alias cal3="cal -NC3"
+alias home="cd;clear;"
 
 # npm apps/clis
 alias toc="markdown-toc -i readme.md"
