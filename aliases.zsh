@@ -68,10 +68,27 @@ alias tac="tmux a -t code"
 alias tadb="tmux a -t mongo"
 
 # ls
-alias l="ls -1aFG"     # all files
-alias la="ls -1FG"     # no . files
-alias ld="ls -1FGd */" # only dirs
-alias li="ls -lahoFG"  # more info
+function filterls() {
+  awk '{ if ( \
+      $1 != ".DS_Store" && \
+      $1 != "./" && \
+      $1 != "../" && \
+      $1 != ".git/" \
+  ) print };'
+}
+function colorizels() {
+  # like -G would
+  # 1;34 = blue
+  # 0;35 = purple
+  # color list http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+  awk '{ if ( /\// ) print "\033[1;34m"$1"\033[0m"; \
+         else if ( /@/ ) print "\033[0;35m"$1"\033[0m"; \
+         else print };'
+}
+alias l="ls -1aF | filterls | colorizels" # all files
+alias la="ls -1FG"    # no . files
+alias ld="ls -1Gd */" # only dirs
+alias li="ls -lahoFG" # more info
 
 # *.rc files
 alias zshrc="vim ~/.zshrc"
