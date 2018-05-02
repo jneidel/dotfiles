@@ -80,10 +80,15 @@ function colorizels() {
   # like -G would
   # 1;34 = blue
   # 0;35 = purple
+  # 0;31 = red
   # color list http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
-  awk '{ if ( /\// ) print "\033[1;34m"$1"\033[0m"; \
-         else if ( /@/ ) print "\033[0;35m"$1"\033[0m"; \
-         else print };'
+  awk '{ printf " ";
+         if ( /\// ) printf "\033[1;34m"; \
+         else if ( /@/ ) printf "\033[0;35m"; \
+         else if ( /\*/ ) printf "\033[0;31m";
+         printf;
+         print "\033[0m";
+       };'
 }
 alias l="ls -1aF | filterls | colorizels" # all files
 alias la="ls -1FG"    # no . files
