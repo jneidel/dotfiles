@@ -32,15 +32,15 @@ I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
 To use my zsh config fill in your home directory in the variable at line 3.
 
-View zsh config: [mac](mac/.zshrc), [linux](linux/.zshrc) - `~/.zshrc`
+View zsh config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.zshrc), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/.zshrc) - `~/.zshrc`
 
-[View oh-my-zsh config](oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
+[View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
-View aliases: [mac](mac/aliases.zsh), [linux](linux/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
+View aliases: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/aliases.zsh), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 **Zsh theme:**
 
-[View zsh-theme](cobalt2.zsh-theme) - `~/.oh-my-zsh/themes/cobalt2.zsh-theme`
+[View zsh-theme](https://raw.githubusercontent.com/jneidel/dotfiles/master/cobalt2.zsh-theme) - `~/.oh-my-zsh/themes/cobalt2.zsh-theme`
 
 For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/robbyrussell/oh-my-zsh).
 The font will need to be installed on the device and activated in the iTerm options: `Profiles > Text > Font > Change Font`.
@@ -55,7 +55,7 @@ prompt_segment black default "%(!.%{%F{yellow}%}.)<insert-prompt-here>"
 
 OSX only
 
-[View iTerm colorscheme](mac/brogrammer.itermcolors)
+[View iTerm colorscheme](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/brogrammer.itermcolors)
 
 The iTerm colorscheme will need to imported in the iTerm options: `Profiles > Colors > Color Presets > Import` and selected in the same dropdown after the import.
 
@@ -69,7 +69,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 ### Vim (editor)
 
-View vim config: [mac](mac/.vimrc), [linux](linux/.vimrc) - `~/.vimrc`
+View vim config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.vimrc), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/.vimrc) - `~/.vimrc`
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
 
@@ -82,20 +82,20 @@ View vim config: [mac](mac/.vimrc), [linux](linux/.vimrc) - `~/.vimrc`
 
 Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-View tmux config: [mac](mac/.tmux.conf), [linux](linux/.tmux.conf) - `~/.tmux.conf`
+View tmux config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux.conf), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/.tmux.conf) - `~/.tmux.conf`
 
 **Scripts:**
 
 OSX only
 
-[View scripts](.tmux) - `~/.tmux/`
+[View scripts](mac/.tmux) - `~/.tmux/`
 
-- [battery](.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
-- [itunes](.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
+- [battery](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
+- [itunes](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
 
 ### Eslint (js linter)
 
-[View eslint config](.eslintrc) - `~/.eslintrc`
+[View eslint config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc) - `~/.eslintrc`
 
 Once globally installed, run anywhere:
 
@@ -116,9 +116,9 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Visual Studio Code (editor)
 
-[View vscode settings](mac/settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
+[View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
 
-[View vscode keybindings](mac/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
+[View vscode keybindings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
 
 **Plugins:**
 
