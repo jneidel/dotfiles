@@ -154,6 +154,7 @@ git config core.ignorecase false
 | name | description | links |
 |--|--|--|
 | alder | Print current directory as ascii tree | [npm](https://www.npmjs.com/package/@aweary/alder) [github](https://github.com/aweary/alder) |
+| chrome-cli | Open given file in chrome | [npm](https://www.npmjs.com/package/chrome-cli) [github](https://github.com/diogocampos/chrome-cli) |
 | dict-cc | Dict.cc lookup from the command line | [npm](https://www.npmjs.com/package/dict-cc-cli) [github](https://github.com/derhuerst/dict-cc-cli) |
 | fkill | Interactive process killer | [npm](https://www.npmjs.com/package/fkill-cli) [github](https://github.com/sindresorhus/fkill-cli) |
 | generator-jneidel | Collection of boilerplates, for installation with yeoman | [npm](https://www.npmjs.com/package/generator-jneidel) [github](https://github.com/jneidel/generator-jneidel) |
@@ -207,6 +208,8 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | omnibar | Shortcut navigation for github | [chrome-webstore](https://chrome.google.com/webstore/detail/github-omnibar/njccjmmakcbdpnlbodllfgiloenfpocb/related?utm_source=chrome-ntp-icon) [github](https://github.com/jcouyang/gh-omnibar) |
 | issue-link-status | Colorize issue links depending on status | [chrome-webstore](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic) [github](https://github.com/bfred-it/github-issue-link-status/) |
 | build-tabs | Build tab for github | [chrome-webstore](https://chrome.google.com/webstore/detail/builds-tab-for-github/jnmdkbflmkjehkkdbjdfpmhgdafpcdkh) [github](https://github.com/duxet/builds-tab) |
+| github-autocomplete | Github search autocomplete | [chrome-webstore](https://chrome.google.com/webstore/detail/awesome-autocomplete-for/djkfdjpoelphhdclfjhnffmnlnoknfnd) [github](https://github.com/algolia/github-awesome-autocomplete) |
+| github-plus | Display repo size, download links | [chrome-webstore](https://chrome.google.com/webstore/detail/github-plus/anlikcnbgdeidpacdbdljnabclhahhmd) [github](https://github.com/softvar/github-plus) |
 
 <!-- |  |  | [chrome-webstore]() [github]() | -->
 
