@@ -32,11 +32,11 @@ I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
 To use my zsh config fill in your home directory in the variable at line 3.
 
-[View zsh config](zshrc) - `~/.zshrc`
+View zsh config: [mac](mac/.zshrc), [linux](linux/.zshrc) - `~/.zshrc`
 
 [View oh-my-zsh config](oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
-[View aliases](aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
+View aliases: [mac](mac/aliases.zsh), [linux](linux/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 **Zsh theme:**
 
@@ -55,7 +55,7 @@ prompt_segment black default "%(!.%{%F{yellow}%}.)<insert-prompt-here>"
 
 OSX only
 
-[View iTerm colorscheme](Brogrammer.itermcolors)
+[View iTerm colorscheme](mac/brogrammer.itermcolors)
 
 The iTerm colorscheme will need to imported in the iTerm options: `Profiles > Colors > Color Presets > Import` and selected in the same dropdown after the import.
 
@@ -65,11 +65,11 @@ The iTerm colorscheme will need to imported in the iTerm options: `Profiles > Co
 
 Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
 
-- [z (jump around)](https://github.com/rupa/z) (already downloaded with oh-my-zsh)
+- [z (jump around)](https://github.com/rupa/z) (included with oh-my-zsh)
 
 ### Vim (editor)
 
-[View vim config](vimrc) - `~/.vimrc`
+View vim config: [mac](mac/.vimrc), [linux](linux/.vimrc) - `~/.vimrc`
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
 
@@ -82,7 +82,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-[View tmux config](tmux.conf) - `~/.tmux.conf`
+View tmux config: [mac](mac/.tmux.conf), [linux](linux/.tmux.conf) - `~/.tmux.conf`
 
 **Scripts:**
 
@@ -95,12 +95,15 @@ OSX only
 
 ### Eslint (js linter)
 
-[View eslint config](eslintrc) - `~/.eslintrc`
+[View eslint config](.eslintrc) - `~/.eslintrc`
 
 Once globally installed, run anywhere:
 
 ```zsh
-eslint --fix
+$ eslint --fix
+# or via aliases
+$fix <file/dir>
+$fixa
 ```
 
 Requires eslint, as well as a few plugins to be installed globally:
@@ -113,9 +116,9 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Visual Studio Code (editor)
 
-[View vscode settings](vscode-settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
+[View vscode settings](mac/settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
 
-[View vscode keybindings](vscode-keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
+[View vscode keybindings](mac/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
 
 **Plugins:**
 
@@ -135,7 +138,7 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Git (version control)
 
-[View global gitignore](gitignore) - `~/.gitignore`
+View global gitignore: [mac](mac/.gitignore), [linux](linux/.gitignore) - `~/.gitignore`
 
 Config commands:
 
@@ -178,6 +181,12 @@ git config core.ignorecase false
 | grip | Render readme with github styles for local testing | [brew](http://brewformulas.org/grip) [github](https://github.com/joeyespo/grip) |
 | mongodb | Run mongodb locally | [brew](http://brewformulas.org/Mongodb) |
 | tmux | Terminal multiplexer | [brew](http://brewformulas.org/tmux) [github](https://github.com/tmux/tmux) |
+
+**Pacman (Manjaro Linux):**
+
+| name | description | links |
+|--|--|--|
+|  |  |  |
 
 ### Chrome Extensions
 
