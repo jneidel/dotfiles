@@ -1,1 +1,6 @@
 todo.md
+
+linux/.vim/swap/*
+linux/.vim/backup/*
+linux/.vim/tmp/*
+
