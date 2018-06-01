@@ -18,8 +18,8 @@ mkdir ~/.vim/colors;
 mkdir ~/.vim/tmp;
 mkdir ~/.vim/swap;
 mkdir ~/.vim/backup;
+mkdir ~/.vim/spell;
 wget $LINUX".vim/autoload/oldhope.vim" -O ~/.vim/autoload/oldhope.vim;
 wget $LINUX".vim/colors/old-hope.vim" -O ~/.vim/colors/old-hope.vim;
 wget $LINUX".vim/spell/en.utf-8.add" -O ~/.vim/spell/en.utf-8.add;
 wget $LINUX".vim/spell/en.utf-8.add.spl" -O ~/.vim/spell/en.utf-8.add.spl;
-
