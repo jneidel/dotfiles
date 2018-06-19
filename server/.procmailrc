@@ -1,0 +1,23 @@
+PMDIR=$HOME/.LOG
+LOGFILE=$PMDIR/maillog
+MAILDIR=$HOME/Mail
+VERBOSE=off
+
+:0
+* ^TOnewsletter@jneidel.com
+news/
+
+:0
+* ^TOinvoices@jneidel.com
+invoices/
+
+:0
+INBOX/
+
+# :0
+# * ^From:.*user@domain
+# INBOX
+
+# :0
+# * ^TOuser@domain
+# FOLDER2

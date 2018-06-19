@@ -4,3 +4,7 @@ manjaro/.vim/swap/*
 manjaro/.vim/backup/*
 manjaro/.vim/tmp/*
 
+server/.vim/swap/*
+server/.vim/backup/*
+server/.vim/tmp/*
+

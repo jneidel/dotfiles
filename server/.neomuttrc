@@ -1,0 +1,97 @@
+## Latest change: Sat May 10 16:30:00 CEST 2008
+## http://www.guckes.net/Setup/muttrc.workshop.en.txt
+## Purpose: Setup file for a workshop on mutt
+## Author:  Sven Guckes workshop-mutt (at) guckes (dot) net
+## Size:    2222bytes
+
+macro index ,0 ":source ~/.neomuttrc"
+
+## The "From:" header line is made up by the values
+## of two options - "realname" and "from":
+##       From: $realname <$from>
+## Please adjust the following two lines and remove the
+## comment character (#) at the start of those lines:
+# set from=jneidel@jneidel.com
+  set from=jneidel@jneidel.com
+  set realname="Jonathan Neidel"
+  set use_from # tell the MTA to use this result
+
+## Quick editing with the full header
+  set autoedit      # call editor without asking for To: and Subject:
+  set edit_headers  # edit mail *with* header
+  set include       # cite the contents with "> "
+
+## show the name as had been chosen
+## for an alias on the sender's address
+  set reverse_alias
+
+## answer by the address as the message had been received with
+## you need to tell mutt about your addresses for it to recognize.
+## do this with the "alternates" command!
+  set reverse_name
+# alternates muttrc@guckes.net
+# alternates guckes@vim.org
+# alternates guckes@slrn.org
+
+## save mails sent by "From: user@domain"
+## to the folder "$folder/$user"
+# set save_name
+
+set mbox_type = maildir # Save in maildir format, not mbox
+
+## Save all sent mails to $MAIL/sent
+  set record = +sent
+
+## attribute cited text with only name+address
+## (no words depending on some language):
+  set attribution="* %n <%a>:"
+## add year-month-day and hours:minutes, too:
+# set attribution="* %n <%a> [%(%y%m%d %H:%M)]:"
+
+## repair broken subject lines to a single "Re:":
+# set reply_regexp="^((aw|antw.?|antwort|re|r e|r?f|sv):[ \t]*)*"
+
+## do NOT move read mails from the mailbox, dammit!
+## (the default is silly and upsets many people)
+unset move
+
+## pager:
+## choose the header lines to see:
+  ignore *
+  unignore from: date: subject: to: cc: reply-to: X-Spam-Score: X-Envelope-To:
+
+## choose the order of header lines to see:
+  unhdr_order *
+  hdr_order Sender: From From: Reply-To: Subject: Date: \
+  Organization: Message-Id: User-Agent: X-Editor: X-Mail
+
+## choose a good editor for edtiting:
+  set editor=vim
+
+## choose a signature to be appended to every outbound mail:
+# set signature=~/.sig.mutt
+
+## put the status line to the top line:
+  set status_on_top
+
+## gpg
+  source ~/.mutt/gpg.rc
+  
+  set pgp_autosign=yes
+  set pgp_sign_as=0x7DFD16FA
+  set pgp_replyencrypt=yes
+  set pgp_timeout=3600 # cache password for 1h
+
+## alternates
+  alternates @jneidel.in-berlin.de
+  alternates @jneidel.com
+  alternates jneidel@outlook.(com|de)
+  alternates joni(2012|2014|2015)@live.de
+  alternates jneidel@(f87.de|protonmail.com|pm.me)
+  alternates jn@buchhaltungsbutler.de
+
+
+  source ~/.mutt/aliases
+# source ~/.mutt/outlook-imap
+  source ~/.mutt/color
+

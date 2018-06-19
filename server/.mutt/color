@@ -1,0 +1,38 @@
+## ========================================================================
+## File:           $HOME/.mutt/color
+## Purpose:        Setup file for the Mail program "Mutt"
+## Author:         Sven Guckes setup-mutt.color(at)guckes.net
+## Latest change:  Mon Mar 26 00:27:17 CEST 2007
+## Size:           ca 1.3KB
+## Availability:   http://www.guckes.net/setup/mutt.color
+## Comments are very very welcome - please send an email!  :-)
+## ========================================================================
+
+## ========================================================================
+## this file only serves to split up the
+## color setup into several other files.
+## "modularity" and all that.  ;-)
+## ========================================================================
+
+# colorize the message body:
+  source /home/user/guckes/public_html/Setup/mutt.color.body
+
+# colorize the message header:
+  source /home/user/guckes/public_html/Setup/mutt.color.header
+
+# colorize the message header lines with info
+# on user agents (read: editor and mailer):
+# source ~/.mutt/color.header.agents
+
+# colorize the folder index:
+  source /home/user/guckes/public_html/Setup/mutt.color.index
+
+# colorize mails from special people:
+# source ~/.mutt/color.people
+
+# 2007-03-26
+# colorize mails from people i know:
+# source ~/.mutt/color.index.whitelist
+
+# THPXRF
+#EOF vim: ft=muttrc
