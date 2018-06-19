@@ -123,19 +123,17 @@ alias settrackpadspeed="defaults write -g com.apple.mouse.scaling"
 
 # file system
 alias cpdir="cp -r"
-
-# misc
-alias h="history"
-alias homepage="gh-home" # open github repo of current project
-alias vimdocs="cd /usr/share/vim/vim80/doc/"
 mdc() { # MkDirCd
   mkdir "$1";
   cd "$1";
 }
+
+# misc
+alias h="history"
+alias vimdocs="cd /usr/share/vim/vim80/doc/"
 calc() {
   echo "$1" | bc
 }
-alias sass="node-sass"
 alias calendar="cal -NA 3"
 alias cal3="cal -NC3"
 alias home="cd;clear;"
@@ -146,4 +144,30 @@ alias tree="alder --depth 3"
 alias lint="fixa; toc;"
 alias manga="mangareader-dl"
 alias asciinema="py -m asciinema" # requires pip module: pip3 install asciinema
+alias homepage="gh-home" # open github repo of current project
+alias readmeoff="grip -b 7777"
+alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget"
+alias wifipass="npx wifi-password-cli"
+
+# jump around
+alias m="cd ~/notes/misc/"
+alias n="cd ~/notes/notes/"
+alias c="cd ~/code/"
+alias npmdir="cd /usr/local/lib/node_modules"
+
+# ssh
+alias uber="ssh u"
+alias kudu="ssh k"
+## scp file s: to beam up file
+
+# python
+alias py="~/anaconda/bin/python3.6" # python compiler
+alias pip3="py -m pip" # https://stackoverflow.com/questions/34573159/how-do-install-pip3-on-my-mac#34574269
+
+# ytdl
+alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f mp4 -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
+alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
+alias ytmusic="youtube-dl --yes-playlist --retries 4 -x --audio-format 'mp3' -o '~/Documents/youtube/%(title)s.%(ext)s' $2 $3 $1"
+alias ytunder="py /Users/jneidel/.utilities/underscore.py"
+## Add set cover to 'cover.png': eyeD3 --add-image="cover.png":FRONT_COVER "song.mp3"
 

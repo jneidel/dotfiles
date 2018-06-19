@@ -18,4 +18,5 @@
     "editor.formatOnSave": false
   },
   "eslint.autoFixOnSave": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
 }
