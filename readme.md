@@ -32,11 +32,11 @@ I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
 To use my zsh config fill in your home directory in the variable at line 3.
 
-View zsh config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.zshrc), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/.zshrc) - `~/.zshrc`
+View zsh config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) - `~/.zshrc`
 
 [View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
-View aliases: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/aliases.zsh), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
+View aliases: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/aliases.zsh), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 **Zsh theme:**
 
@@ -69,7 +69,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 ### Vim (editor)
 
-View vim config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.vimrc), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/.vimrc) - `~/.vimrc`
+View vim config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
 
@@ -82,7 +82,7 @@ View vim config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master
 
 Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-View tmux config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux.conf), [linux](https://raw.githubusercontent.com/jneidel/dotfiles/master/linux/.tmux.conf) - `~/.tmux.conf`
+View tmux config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux.conf), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.tmux.conf) - `~/.tmux.conf`
 
 **Scripts:**
 
@@ -138,7 +138,7 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Git (version control)
 
-View global gitignore: [mac](mac/.gitignore), [linux](linux/.gitignore) - `~/.gitignore`
+View global gitignore: [mac](mac/.gitignore), [manjaro](manjaro/.gitignore) - `~/.gitignore`
 
 Config commands:
 

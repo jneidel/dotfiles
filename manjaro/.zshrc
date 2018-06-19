@@ -15,10 +15,11 @@ plugins=( z zsh-syntax-highlighting )
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/local/bin/node-v10.1.0-linux-x64/lib/node_modules:/usr/bin
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/local/bin/node-v10.1.0-linux-x64/bin/:/usr/bin
 export CDPATH=.:~:~/code
 
 bindkey -v # vi mode
 export KEYTIMEOUT=1
 export EDITOR=vim
+export BROWSER=/usr/bin/chromium
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
