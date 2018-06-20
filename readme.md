@@ -116,9 +116,9 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Visual Studio Code (editor)
 
-[View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/vscode/settings.json) - `~/Library/Application\ Support/Code/User/settings.json`
+[View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/vscode/settings.json) - `~/Library/Application\ Support/Code/User/settings.json` (mac), `~/.config/Code/User/settings.json` (gnu/linux)
 
-[View vscode keybindings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/vscode/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`
+[View vscode keybindings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/vscode/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`, (mac), `~/.config/Code/User/keybindings.json` (gnu/linux)
 
 **Plugins:**
 
