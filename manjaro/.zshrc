@@ -23,3 +23,8 @@ export KEYTIMEOUT=1
 export EDITOR=vim
 export BROWSER=/usr/bin/chromium
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# X related
+export XAUTHORITY=/home/jneidel/.Xauthority
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
