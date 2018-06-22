@@ -1,25 +1,33 @@
-# test oh-my-zsh install
-
 BASE=https://raw.githubusercontent.com/jneidel/dotfiles/master/;
-LINUX=$BASE"linux/";
+LINUX=$BASE"manjaro/";
 
-wget $BASE"oh-my-zsh" -O ~/.oh-my-zsh/oh-my-zsh.zsh;
-wget $BASE"cobalt2.zsh-theme" -O ~/.oh-my-zsh/themes/cobalt2.zsh-theme;
-wget $LINUX"aliases.zsh" -O ~/.oh-my-zsh/custom/aliases.zsh;
-wget $LINUX".tmux.conf" -O ~/.tmux.conf;
-wget $LINUX".vimrc" -O ~/.vimrc;
-wget $LINUX".zshrc" -O ~/.zshrc;
-mkdir ~/.i3;
-wget $LINUX".i3/config" -O ~/.i3/config;
+sh -c "$( curl -fsSL $LINUX'scripts/zsh.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/configs.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/node.sh' )";
 
-mkdir ~/.vim;
-mkdir ~/.vim/autoload;
-mkdir ~/.vim/colors;
-mkdir ~/.vim/tmp;
-mkdir ~/.vim/swap;
-mkdir ~/.vim/backup;
-mkdir ~/.vim/spell;
-wget $LINUX".vim/autoload/oldhope.vim" -O ~/.vim/autoload/oldhope.vim;
-wget $LINUX".vim/colors/old-hope.vim" -O ~/.vim/colors/old-hope.vim;
-wget $LINUX".vim/spell/en.utf-8.add" -O ~/.vim/spell/en.utf-8.add;
-wget $LINUX".vim/spell/en.utf-8.add.spl" -O ~/.vim/spell/en.utf-8.add.spl;
+npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo;
+
+sudo pacman -Syu;
+sudo pacman -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting;
+
+yaourt -S visual-studio-code-bin;
+
+sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/ytdl.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/webtorrent.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/ssh-keys.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/dict-cc.sh' )";
+
+sh -c "$( curl -fsSL $LINUX'scripts/zeal.sh' )";
+sh -c "$( curl -fsSL $LINUX'scripts/vsc.sh' )";
+
+echo "zsh path:";
+which zsh;
+chsh;
+
+alsamixer;
+
+# Manual:
+# - get main.kdbx
+

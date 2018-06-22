@@ -133,6 +133,7 @@ calc() {
 alias calendar="cal -mn 6"
 alias cal3="cal -3m"
 alias home="cd;clear;"
+alias cmx="chmod +x"
 
 # npm apps/clis
 alias toc="markdown-toc -i readme.md"
