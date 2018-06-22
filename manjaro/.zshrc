@@ -15,7 +15,7 @@ plugins=( z zsh-syntax-highlighting )
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/local/bin/node-v10.1.0-linux-x64/bin/:/usr/bin
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
 export CDPATH=.:~:~/code
 
 bindkey -v # vi mode

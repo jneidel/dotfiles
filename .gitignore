@@ -3,6 +3,7 @@ todo.md
 manjaro/.vim/swap/*
 manjaro/.vim/backup/*
 manjaro/.vim/tmp/*
+manjaro/.vim/.netrwhist
 
 server/.vim/swap/*
 server/.vim/backup/*
