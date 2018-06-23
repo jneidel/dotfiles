@@ -32,11 +32,11 @@ I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
 To use my zsh config fill in your home directory in the variable at line 3.
 
-View zsh config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) - `~/.zshrc`
+View zsh config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) - `~/.zshrc`
 
 [View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
-View aliases: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/aliases.zsh), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
+View aliases: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/aliases.zsh), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 **Zsh theme:**
 
@@ -55,7 +55,7 @@ prompt_segment black default "%(!.%{%F{yellow}%}.)<insert-prompt-here>"
 
 OSX only
 
-[View iTerm colorscheme](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/brogrammer.itermcolors)
+[View iTerm colorscheme](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/brogrammer.itermcolors)
 
 The iTerm colorscheme will need to imported in the iTerm options: `Profiles > Colors > Color Presets > Import` and selected in the same dropdown after the import.
 
@@ -69,7 +69,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 ### Vim (editor)
 
-View vim config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
+View vim config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
 
@@ -82,16 +82,16 @@ View vim config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master
 
 Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-View tmux config: [mac](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux.conf), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.tmux.conf) - `~/.tmux.conf`
+View tmux config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux.conf), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.tmux.conf) - `~/.tmux.conf`
 
 **Scripts:**
 
 OSX only
 
-[View scripts](mac/.tmux) - `~/.tmux/`
+[View scripts](osx/.tmux) - `~/.tmux/`
 
-- [battery](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
-- [itunes](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
+- [battery](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
+- [itunes](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
 
 ### Eslint (js linter)
 
@@ -116,9 +116,9 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Visual Studio Code (editor)
 
-[View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/vscode/settings.json) - `~/Library/Application\ Support/Code/User/settings.json` (mac), `~/.config/Code/User/settings.json` (gnu/linux)
+[View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/vscode/settings.json) - `~/Library/Application\ Support/Code/User/settings.json` (osx), `~/.config/Code/User/settings.json` (gnu/linux)
 
-[View vscode keybindings](https://raw.githubusercontent.com/jneidel/dotfiles/master/mac/vscode/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`, (mac), `~/.config/Code/User/keybindings.json` (gnu/linux)
+[View vscode keybindings](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/vscode/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`, (osx), `~/.config/Code/User/keybindings.json` (gnu/linux)
 
 **Plugins:**
 
@@ -138,7 +138,7 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Git (version control)
 
-View global gitignore: [mac](mac/.gitignore), [manjaro](manjaro/.gitignore) - `~/.gitignore`
+View global gitignore: [osx](osx/.gitignore), [manjaro](manjaro/.gitignore) - `~/.gitignore`
 
 Config commands:
 
