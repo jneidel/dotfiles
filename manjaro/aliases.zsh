@@ -3,6 +3,7 @@
 alias src="source ~/.zshrc"
 
 alias v="vim"
+alias vp="vim -p"
 
 # git
 alias s="git status"
@@ -46,10 +47,10 @@ amtod() {
 }
 
 # npm
-alias ni="npm install"
-alias nid="npm install --save-dev"
+alias ni="pnpm install"
+alias nid="pnpm install --save-dev"
 alias nig="npm install -g"
-alias nu="npm uninstall"
+alias nu="pnpm uninstall"
 alias nug="npm uninstall -g"
 alias npmls="npm list -g --depth=0"
 alias nr="npm run"
@@ -100,6 +101,8 @@ alias vimrc="vim ~/.vimrc"
 alias tmuxrc="vim ~/.tmux.conf"
 alias eslintrc="vim ~/.eslintrc"
 alias al="vim $ZSH/custom/aliases.zsh"
+alias pkg="vim package.json"
+alias npmrc="vim ~/.npmrc"
 
 # eslint
 alias fix="eslint --fix --ext .js, .json"
@@ -120,7 +123,6 @@ alias settrackpadspeed="defaults write -g com.apple.mouse.scaling"
 alias cpdir="cp -r"
 
 # misc
-alias h="history"
 alias homepage="gh-home" # open github repo of current project
 alias vimdocs="cd /usr/share/vim/vim80/doc/"
 mdc() { # MkDirCd
@@ -132,7 +134,7 @@ calc() {
 }
 alias calendar="cal -mn 6"
 alias cal3="cal -3m"
-alias home="cd;clear;"
+alias h="cd;clear;"
 alias cmx="chmod +x"
 
 # npm apps/clis
@@ -142,6 +144,7 @@ alias lint="fixa; toc;"
 alias manga="mangareader-dl"
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f mp4 -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
+alias dict="dict-cc"
 
 # apps
 alias o="xdg-open ."
@@ -150,10 +153,12 @@ alias yacl="YACReaderLibrary"
 alias vsc="code ." # vscode
 
 # jump to folders
-alias m="cd ~/notes/misc"
+alias m="cd ~/code.prev/misc"
+alias c="cd ~/code"
 
 # mounting
-alias mo="sudo mount -o nonempty /dev/sdb1 /media/usb; cd /media/usb;"
+alias mob1="sudo mount -o nonempty /dev/sdb1 /media/usb; cd /media/usb;"
+alias mob2="sudo mount -o nonempty /dev/sdb2 /media/usb; cd /media/usb;"
 alias umo="sudo umount /media/usb;"
 
 # cmus
