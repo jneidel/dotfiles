@@ -1,33 +1,39 @@
 BASE=https://raw.githubusercontent.com/jneidel/dotfiles/master/;
 LINUX=$BASE"manjaro/";
 
-sh -c "$( curl -fsSL $LINUX'scripts/zsh.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/configs.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/node.sh' )";
+function prompt() {
+  read -p 'Install '$1'? (Y/n): ' ans
 
-npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo;
+  if [ -z $ans ] || [ $ans = y ] || [ $ans = Y ]
+  then
+    $2
+  fi
+}
 
-sudo pacman -Syu;
-sudo pacman -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting;
+prompt 'zsh' 'sh -c "$( curl -fsSL $LINUX'scripts/zsh.sh' )"'
+prompt 'configurations' 'sh -c "$( curl -fsSL $LINUX'scripts/configs.sh' )"'
+prompt 'node' 'sh -c "$( curl -fsSL $LINUX'scripts/node.sh' )"'
 
-yaourt -S visual-studio-code-bin;
+prompt 'npm-apps' 'npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo'
 
-sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/ytdl.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/webtorrent.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/ssh-keys.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/dict-cc.sh' )";
+prompt 'system-update' 'sudo pacman -Syu'
+prompt 'pacman-apps' 'sudo pacman -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting'
 
-sh -c "$( curl -fsSL $LINUX'scripts/zeal.sh' )";
-sh -c "$( curl -fsSL $LINUX'scripts/vsc.sh' )";
+prompt 'yaourt-apps' 'yaourt -S visual-studio-code-bin'
 
-echo "zsh path:";
-which zsh;
-chsh;
+prompt 'pia' 'sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )"'
+prompt 'gpg1' 'sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )"'
+prompt 'ytdl' 'sh -c "$( curl -fsSL $LINUX'scripts/ytdl.sh' )"'
+prompt 'webtorrent' 'sh -c "$( curl -fsSL $LINUX'scripts/webtorrent.sh' )"'
+prompt 'ssh-keys' 'sh -c "$( curl -fsSL $LINUX'scripts/ssh-keys.sh' )"'
+prompt 'dict-cc-dump' 'sh -c "$( curl -fsSL $LINUX'scripts/dict-cc.sh' )"'
+prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $LINUX'scripts/zeal.sh' )"'
+prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $LINUX'scripts/vsc.sh' )"'
+prompt 'yacreader' 'sh -c "$( curl -fsSL $LINUX'scripts/yacreader.sh' )"'
 
-alsamixer;
+prompt 'alsamixer' 'alsamixer'
 
 # Manual:
+# - chsh
 # - get main.kdbx
 
