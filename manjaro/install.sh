@@ -30,6 +30,7 @@ prompt 'dict-cc-dump' 'sh -c "$( curl -fsSL $LINUX'scripts/dict-cc.sh' )"'
 prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $LINUX'scripts/zeal.sh' )"'
 prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $LINUX'scripts/vsc.sh' )"'
 prompt 'yacreader' 'sh -c "$( curl -fsSL $LINUX'scripts/yacreader.sh' )"'
+prompt 'mongodb' 'sh -c "$( curl -fsSL $LINUX'scripts/mongodb.sh' )"'
 
 prompt 'alsamixer' 'alsamixer'
 
