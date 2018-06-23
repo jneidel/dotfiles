@@ -39,8 +39,26 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow " on vsp
 set splitright " on sp
 
-autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us "Spellchecking for Markdown files
 
 " Reload buffer on changes to file after 5s
 set autoread
 au CursorHold * checktime
+
+"### Coloring
+" Current tab in tabline
+  hi TabLineSel ctermfg=Red
+" Current status line
+  hi StatusLine ctermfg=Red
+" Vertical Split line
+  hi VertSplit ctermfg=Red
+" Number of splits, next to tab
+  hi Title ctermfg=Yellow
+
+" Spellchecking for Markdown files 
+  autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
+" Wrongly spelled words
+  hi SpellBad ctermbg=167
+  hi SpellRare ctermbg=none
+  hi SpellLocal ctermbg=none
+  hi SpellCap ctermbg=none
+
