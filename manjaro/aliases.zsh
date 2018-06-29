@@ -47,14 +47,15 @@ amtod() {
 }
 
 # npm
-alias ni="pnpm install"
-alias nid="pnpm install --save-dev"
+alias ni="npm install"
+alias nid="npm install --save-dev"
 alias nig="npm install -g"
-alias nu="pnpm uninstall"
+alias nu="npm uninstall"
 alias nug="npm uninstall -g"
 alias npmls="npm list -g --depth=0"
 alias nr="npm run"
 alias start="npm run start"
+# alias test="npm run test"
 alias build="npm run build"
 alias testing="npm run testing"
 alias unit="npm run unit"
@@ -145,6 +146,9 @@ alias manga="mangareader-dl"
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f mp4 -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias dict="dict-cc"
+alias torrent="transmission-cli"
+alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget"
+alias chrome="chromium"
 
 # apps
 alias o="xdg-open ."
@@ -153,8 +157,9 @@ alias yacl="YACReaderLibrary"
 alias vsc="code ." # vscode
 
 # jump to folders
-alias m="cd ~/code.prev/misc"
+alias m="cd ~/code/misc"
 alias c="cd ~/code"
+alias torrents="cd ~/.config/transmission/torrents"
 
 # mounting
 alias mob1="sudo mount -o nonempty /dev/sdb1 /media/usb; cd /media/usb;"
@@ -165,4 +170,8 @@ alias umo="sudo umount /media/usb;"
 alias cpl="cmus-remote -u" # start/stop
 alias cn="cmus-remote -n" # next
 alias cr="cmus-remote -r" # prev
+
+# ssh
+alias kudu="ssh k"
+alias uber="ssh u"
 
