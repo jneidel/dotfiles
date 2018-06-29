@@ -3,5 +3,6 @@ todo.md
 */.vim/swap/*
 */.vim/backup/*
 */.vim/tmp/*
+*/.vim/bundle/*
 */.vim/.netrwhist
 
