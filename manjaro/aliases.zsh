@@ -149,6 +149,7 @@ alias dict="dict-cc"
 alias torrent="transmission-cli"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget"
 alias chrome="chromium"
+alias wifipass="npx wifi-password-cli"
 
 # apps
 alias o="xdg-open ."
@@ -164,6 +165,8 @@ alias torrents="cd ~/.config/transmission/torrents"
 # mounting
 alias mob1="sudo mount -o nonempty /dev/sdb1 /media/usb; cd /media/usb;"
 alias mob2="sudo mount -o nonempty /dev/sdb2 /media/usb; cd /media/usb;"
+alias moc1="sudo mount -o nonempty /dev/sdc1 /media/usb; cd /media/usb;"
+alias moc2="sudo mount -o nonempty /dev/sdc2 /media/usb; cd /media/usb;"
 alias umo="sudo umount /media/usb;"
 
 # cmus
