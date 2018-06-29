@@ -14,4 +14,5 @@ cp ~/.config/Zeal/Zeal.conf $D/Zeal.conf;
 cp ~/.zshrc $D/.zshrc;
 rm -rf $D/nitrogen;
 cp -r ~/.config/nitrogen $D/nitrogen;
+cp ~/.i3status.conf $D/.i3status.conf;
 
