@@ -95,6 +95,7 @@ alias l="ls -1aF" # | filterls | colorizels" # all files
 alias la="ls -1FG"    # no . files
 alias ld="ls -1Gd */" # only dirs
 alias li="ls -lahoFG" # more info
+alias lw="l | cat"    # l[s] w[ithout color]
 
 # *.rc files
 alias zshrc="vim ~/.zshrc"
@@ -109,19 +110,9 @@ alias npmrc="vim ~/.npmrc"
 alias fix="eslint --fix --ext .js, .json"
 alias fixa="eslint . --fix --ext .js, .json"
 
-# sass
-alias sassdir="sass -w . -o ."
-
-# finder show/hide hidden files
-alias showhidden="defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder"
-alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -boolean false ; killall Finder"
-
-# get/set trackpad speed on mac
-alias gettrackpadspeed="defaults read -g com.apple.mouse.scaling"
-alias settrackpadspeed="defaults write -g com.apple.mouse.scaling"
-
 # file system
 alias cpdir="cp -r"
+alias dirsize="du -sh"
 
 # misc
 alias homepage="gh-home" # open github repo of current project
@@ -156,6 +147,7 @@ alias o="xdg-open ."
 alias yac="YACReader"
 alias yacl="YACReaderLibrary"
 alias vsc="code ." # vscode
+alias pdf="epdfview"
 
 # jump to folders
 alias m="cd ~/code/misc"
@@ -163,11 +155,24 @@ alias c="cd ~/code"
 alias torrents="cd ~/.config/transmission/torrents"
 
 # mounting
-alias mob1="sudo mount -o nonempty /dev/sdb1 /media/usb; cd /media/usb;"
-alias mob2="sudo mount -o nonempty /dev/sdb2 /media/usb; cd /media/usb;"
-alias moc1="sudo mount -o nonempty /dev/sdc1 /media/usb; cd /media/usb;"
-alias moc2="sudo mount -o nonempty /dev/sdc2 /media/usb; cd /media/usb;"
-alias umo="sudo umount /media/usb;"
+function mo() {
+  if [ -z $1 ]; then
+    echo "Please supply the volume to be mounted ('b1' for /dev/sdb1)."
+  elif [ -z $2 ]; then
+    sudo mount -o nonempty "/dev/sd"$1 /media/usb;
+    cd /media/usb;
+  else
+    sudo mount -o nonempty "/dev/sd"$1 "/media/"$2;
+    cd "/media/"$2;
+  fi
+}
+function umo() {
+  if [ -z $1 ]; then
+    sudo umount /media/usb;
+  else
+    sudo umount "/media/"$1;
+  fi
+}
 
 # cmus
 alias cpl="cmus-remote -u" # start/stop
