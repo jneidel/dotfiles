@@ -1,19 +1,3 @@
-echo "##### vim #####"
-
-echo "install vim configs";
-wget $LINUX".vimrc" -O ~/.vimrc;
-mkdir -p ~/.vim/autoload;
-wget $LINUX".vim/autoload/oldhope.vim" -O ~/.vim/autoload/oldhope.vim;
-mkdir -p ~/.vim/colors;
-wget $LINUX".vim/colors/old-hope.vim" -O ~/.vim/colors/old-hope.vim;
-mkdir -p ~/.vim/spell;
-wget $LINUX".vim/spell/en.utf-8.add" -O ~/.vim/spell/en.utf-8.add;
-wget $LINUX".vim/spell/en.utf-8.add.spl" -O ~/.vim/spell/en.utf-8.add.spl;
-mkdir -p ~/.vim/tmp;
-mkdir -p ~/.vim/swap;
-mkdir -p ~/.vim/backup;
-mkdir -p ~/.vim/bundle;
-
 echo "##### vim plugins #####"
 VB=~/.vim/bundle;
 
@@ -75,19 +59,19 @@ git clone https://github.com/scrooloose/nerdcommenter.git $VB/nerdocommenter;
 echo "install simple-pairs"
 git clone https://github.com/vim-scripts/simple-pairs.git $VB/simple-pairs;
 
-echo "install YouCompleteMe"
-git clone https://github.com/Valloric/YouCompleteMe.git $VB/YouCompleteMe;
-rmdir $VB/YouCompleteMe/third_party/ycmd;
-git clone https://github.com/Valloric/ycmd.git $VB/YouCompleteMe/third_party/ycmd;
-rmdir $VB/YouCompleteMe/third_party/ycmd/third_party/cregex;
-git clone https://github.com/micbou/regex.git $VB/YouCompleteMe/third_party/ycmd/third_party/cregex;
-cd $VB/YouCompleteMe;
-mkdir ycm-build;
-mkdir regex-build;
-cd ycm-build;
-cmake -G "Unix Makefiles" . ../third_party/ycmd/cpp;
-cd ../regex-build;
-cmake -G "Unix Makefiles" . ../third_party/ycmd/third_party/cregex;
-cmake --build . --target _regex --config Release;
-npm install --production --prefix=third_party/ycmd/third_party/tern_runtime;
+#echo "install YouCompleteMe"
+#git clone https://github.com/Valloric/YouCompleteMe.git $VB/YouCompleteMe;
+#rmdir $VB/YouCompleteMe/third_party/ycmd;
+#git clone https://github.com/Valloric/ycmd.git $VB/YouCompleteMe/third_party/ycmd;
+#rmdir $VB/YouCompleteMe/third_party/ycmd/third_party/cregex;
+#git clone https://github.com/micbou/regex.git $VB/YouCompleteMe/third_party/ycmd/third_party/cregex;
+#cd $VB/YouCompleteMe;
+#mkdir ycm-build;
+#mkdir regex-build;
+#cd ycm-build;
+#cmake -G "Unix Makefiles" . ../third_party/ycmd/cpp;
+#cd ../regex-build;
+#cmake -G "Unix Makefiles" . ../third_party/ycmd/third_party/cregex;
+#cmake --build . --target _regex --config Release;
+#npm install --production --prefix=third_party/ycmd/third_party/tern_runtime;
 
