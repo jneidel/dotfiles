@@ -19,7 +19,7 @@ prompt 'npm-apps' 'npm install -g ava concurrently dict-cc-cli eslint fkill-cli 
 prompt 'system-update' 'sudo pacman -Syu'
 prompt 'pacman-apps' 'sudo pacman -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip'
 
-prompt 'yaourt-apps' 'yaourt -S visual-studio-code-bin'
+prompt 'yaourt-apps' 'yaourt -S visual-studio-code-bin chromium-widevine'
 
 prompt 'pia' 'sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )"'
 prompt 'gpg1' 'sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )"'

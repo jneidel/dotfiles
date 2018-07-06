@@ -15,12 +15,14 @@
 [profiles]
   [[default]]
     background_color = "#1c1d21"
+    cursor_blink = False
     cursor_color = "#b9b9b9"
     foreground_color = "#d6dbe5"
     palette = "#1f1f1f:#f81118:#00ff50:#efd913:#2a84d2:#4e5ab7:#1081d6:#d6dbe5:#d6dbe5:#de352e:#68cd72:#f3bd09:#1081d6:#5350b9:#0f7ddb:#ffffff"
     scrollbar_position = hidden
   [[jneidel]]
     background_color = "#1c1d21"
+    cursor_blink = False
     cursor_color = "#b9b9b9"
     foreground_color = "#d6dbe5"
     palette = "#1f1f1f:#f81118:#00ff50:#efd913:#2a84d2:#4e5ab7:#1081d6:#d6dbe5:#d6dbe5:#de352e:#68cd72:#f3bd09:#1081d6:#5350b9:#0f7ddb:#ffffff"

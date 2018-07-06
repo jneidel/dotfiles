@@ -130,17 +130,18 @@ alias h="cd;clear;"
 alias cmx="chmod +x"
 
 # npm apps/clis
-alias toc="markdown-toc -i readme.md"
+alias toc="markdown-toc -i *.md"
 alias tree="alder --depth 3"
 alias lint="fixa; toc;"
 alias manga="mangareader-dl"
-alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f mp4 -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
+alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias dict="dict-cc"
 alias torrent="transmission-cli"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget"
 alias chrome="chromium"
 alias wifipass="npx wifi-password-cli"
+alias readmeoff="grip -b 7777"
 
 # apps
 alias o="xdg-open ."
@@ -148,9 +149,11 @@ alias yac="YACReader"
 alias yacl="YACReaderLibrary"
 alias vsc="code ." # vscode
 alias pdf="epdfview"
+alias gdrive="sh ~/.drive/update.sh"
 
 # jump to folders
 alias m="cd ~/code/misc"
+alias n="cd ~/code/notes"
 alias c="cd ~/code"
 alias torrents="cd ~/.config/transmission/torrents"
 
@@ -182,4 +185,17 @@ alias cr="cmus-remote -r" # prev
 # ssh
 alias kudu="ssh k"
 alias uber="ssh u"
+
+# pacman
+alias pac="sudo pacman -S"
+alias pacs="pacman -Ss"
+alias pacr="sudo pacman -R"
+alias pacu="sudo pacman -Syu"
+alias aur="yaourt -S"
+alias aurs="yaourt -Ss"
+alias aurr="yaourt -R"
+
+# gpg
+alias enc="gpg1 -e -r 7dfd16fa"
+alias dec="gpg1 -d"
 
