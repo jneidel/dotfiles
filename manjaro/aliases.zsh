@@ -145,6 +145,7 @@ alias wifipass="npx wifi-password-cli"
 alias readmeoff="grip -b 7777"
 alias gdrive="sh ~/.drive/update.sh"
 alias gpg1="~/.bin/gpg1/bin/gpg"
+alias flux="xflux -l 52 -g 13"
 
 # gui apps
 alias o="xdg-open ."
@@ -190,7 +191,7 @@ alias kudu="mosh k"
 alias uber="mosh u"
 
 # pacman
-alias pac="sudo packer -S"
+alias pac="packer -S"
 alias pacs="packer -Ss"
 alias pacu="sudo packer -Syu"
 alias pacr="sudo pacman -Rsn"

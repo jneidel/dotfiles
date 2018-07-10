@@ -7,3 +7,6 @@ tar xzf pia.tar.gz;
 rm pia.tar.gz;
 ./pia.v$PIAV-installer-linux.sh;
 
+mv ~/pia.sh ~/.bin/private-internet-access;
+ln -s ~/.bin/private-internet-access ~/.bin/pia;
+
