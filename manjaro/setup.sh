@@ -1,6 +1,7 @@
 D=~/code/dotfiles/manjaro;
 
-cp ~/.oh-my-zsh/custom/aliases.zsh $D/aliases.zsh;
+cp ~/.oh-my-zsh/oh-my-zsh.sh $D/../oh-my-zsh.sh;
+cp ~/.zsh/aliases.zsh $D/aliases.zsh;
 cp ~/.gitconfig $D/.gitconfig;
 cp ~/.gitignore $D/.gitignore;
 cp ~/.i3/config $D/.i3/config;

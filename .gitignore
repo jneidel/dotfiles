@@ -1,4 +1,5 @@
 todo.md
+node_modules/
 
 */.vim/swap/*
 */.vim/backup/*

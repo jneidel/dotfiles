@@ -16,10 +16,12 @@ prompt 'node' 'sh -c "$( curl -fsSL $LINUX'scripts/node.sh' )"'
 
 prompt 'npm-apps' 'npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo'
 
-prompt 'system-update' 'sudo pacman -Syu'
-prompt 'pacman-apps' 'sudo pacman -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip'
+prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu'
 
-prompt 'yaourt-apps' 'yaourt -S visual-studio-code-bin chromium-widevine'
+prompt 'install packer' 'yaourt -S packer'
+
+prompt 'system-update' 'sudo packer -Syu'
+prompt 'pacman/aur-apps' 'sudo packer -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip visual-studio-code-bin chromium-widevine'
 
 prompt 'pia' 'sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )"'
 prompt 'gpg1' 'sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )"'

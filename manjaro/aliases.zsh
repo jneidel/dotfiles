@@ -102,7 +102,7 @@ alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias tmuxrc="vim ~/.tmux.conf"
 alias eslintrc="vim ~/.eslintrc"
-alias al="vim $ZSH/custom/aliases.zsh"
+alias al="vim ~/.zsh/aliases.zsh"
 alias pkg="vim package.json"
 alias npmrc="vim ~/.npmrc"
 
@@ -115,7 +115,6 @@ alias cpdir="cp -r"
 alias dirsize="du -sh"
 
 # misc
-alias homepage="gh-home" # open github repo of current project
 alias vimdocs="cd /usr/share/vim/vim80/doc/"
 mdc() { # MkDirCd
   mkdir "$1";
@@ -128,6 +127,7 @@ alias calendar="cal -mn 6"
 alias cal3="cal -3m"
 alias h="cd;clear;"
 alias cmx="chmod +x"
+alias hdmi="xrandr --output HDMI1 --auto"
 
 # npm apps/clis
 alias toc="markdown-toc -i *.md"
@@ -135,6 +135,7 @@ alias tree="alder --depth 3"
 alias lint="fixa; toc;"
 alias manga="mangareader-dl"
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
+alias ytdllow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias dict="dict-cc"
 alias torrent="transmission-cli"
@@ -142,14 +143,16 @@ alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget"
 alias chrome="chromium"
 alias wifipass="npx wifi-password-cli"
 alias readmeoff="grip -b 7777"
+alias gdrive="sh ~/.drive/update.sh"
+alias gpg1="~/.bin/gpg1/bin/gpg"
 
-# apps
+# gui apps
 alias o="xdg-open ."
 alias yac="YACReader"
 alias yacl="YACReaderLibrary"
-alias vsc="code ." # vscode
+alias vsc="code ."
 alias pdf="epdfview"
-alias gdrive="sh ~/.drive/update.sh"
+alias epub="FBReader"
 
 # jump to folders
 alias m="cd ~/code/misc"
@@ -183,17 +186,15 @@ alias cn="cmus-remote -n" # next
 alias cr="cmus-remote -r" # prev
 
 # ssh
-alias kudu="ssh k"
-alias uber="ssh u"
+alias kudu="mosh k"
+alias uber="mosh u"
 
 # pacman
-alias pac="sudo pacman -S"
-alias pacs="pacman -Ss"
-alias pacr="sudo pacman -R"
-alias pacu="sudo pacman -Syu"
-alias aur="yaourt -S"
-alias aurs="yaourt -Ss"
-alias aurr="yaourt -R"
+alias pac="sudo packer -S"
+alias pacs="packer -Ss"
+alias pacu="sudo packer -Syu"
+alias pacr="sudo pacman -Rsn"
+alias aurr="sudo yaourt -Rsn"
 
 # gpg
 alias enc="gpg1 -e -r 7dfd16fa"
