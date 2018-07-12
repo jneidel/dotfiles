@@ -1,6 +1,7 @@
 D=~/code/dotfiles/manjaro;
 
 cp ~/.oh-my-zsh/oh-my-zsh.sh $D/../oh-my-zsh.sh;
+rm -rf $D/.zsh;
 cp -r ~/.zsh $D/.zsh;
 cp ~/.gitconfig $D/.gitconfig;
 cp ~/.gitignore $D/.gitignore;
@@ -18,4 +19,5 @@ cp -r ~/.config/nitrogen $D/nitrogen;
 cp ~/.i3status.conf $D/.i3status.conf;
 cp ~/.config/transmission/settings.json $D/transmission/;
 cp ~/.drive/update.sh $D/.scripts/update-google-drive.sh;
+cp ~/.config/htop/htoprc $D/htoprc;
 
