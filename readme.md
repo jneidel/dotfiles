@@ -245,6 +245,10 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | Toby | Better bookmark manager | [chrome-webstore](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
 | Vimium | Navigate chrome with vim shortcuts | [chrome-webstore](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) [github](https://github.com/philc/vimium) |
 
+**Chrome theme:**
+
+[Arc Dark](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
+
 ### Android
 
 F-Droid is a software repository hosting free and mostly open source apps. If available always try to use F-Droid over the google-playstore. Read more on [F-Droid](https://f-droid.org/).
