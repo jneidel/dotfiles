@@ -51,8 +51,9 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 
 # Start Applications
 bindsym $mod+F2 exec chromium
-bindsym $mod+F3 exec terminator -e 'ranger ~'
-bindsym $mod+F4 exec terminator -e 'cmus'
+bindsym $mod+F3 exec terminator -e 'kudu'
+bindsym $mod+F4 exec terminator -e 'ranger ~'
+bindsym $mod+F5 exec terminator -e 'cmus'
 
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -125,7 +126,7 @@ bindsym $mod+Ctrl+Left workspace prev
 set $ws1 1:zsh
 set $ws2 2:chrome
 set $ws3 3:kudu
-set $ws4 4
+set $ws4 4:ranger
 set $ws5 5
 set $ws6 6
 set $ws7 7
@@ -162,6 +163,7 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # Open applications on specific workspaces
+# Find out class names using xprop
 assign [class="Chromium"] $ws2
 
 # Open specific applications in floating mode
@@ -193,7 +195,7 @@ for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 
 # switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
+# for_window [urgent=latest] focus
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -226,15 +228,15 @@ mode "$mode_system" {
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        bindsym k resize shrink height 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym h resize grow width 5 px or 5 ppt
-        bindsym l resize shrink width 5 px or 5 ppt
+  # These bindings trigger as soon as you enter the resize mode
+  bindsym k resize shrink height 5 px or 5 ppt
+  bindsym j resize grow height 5 px or 5 ppt
+  bindsym h resize grow width 5 px or 5 ppt
+  bindsym l resize shrink width 5 px or 5 ppt
 
-        # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+  # exit resize mode: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 # Lock screen
@@ -243,13 +245,15 @@ bindsym $mod+9 exec --no-startup-id blurlock
 # Autostart applications
 exec terminator -e "tmux new -s main"
 exec chromium
+# exec --no-startup-id i3-msg 'workspace 3:kudu; exec terminator -e "kudu"'
+# exec --no-startup-id i3-msg 'workspace 4:ranger; exec terminator -e "ranger ~"'
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id xflux -l 52 -g 13
-exec --no-startup-id private-internet-access
+exec --no-startup-id ~/.bin/private-internet-access
 # exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb

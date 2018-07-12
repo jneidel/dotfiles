@@ -6,9 +6,10 @@ mdc() { # MkDirCd
   mkdir "$1";
   cd "$1";
 }
-calc() {
-  echo "$1" | bc
+calc() { # for a quick, one off calc
+  echo "$1" | bc -l
 }
+alias calculator='python -ic "from __future__ import division; from math import *; from random import *"' # for multiple calculations, interactive
 alias calendar="cal -mn 6"
 alias cal3="cal -3m"
 alias cmx="chmod +x"

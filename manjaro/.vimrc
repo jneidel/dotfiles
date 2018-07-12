@@ -8,6 +8,7 @@ colorscheme old-hope
 "## Lines
 set number
 set ruler
+set cursorline
 
 "## General
 set nocompatible
