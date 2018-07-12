@@ -249,7 +249,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id xflux -l 52 -g 13
-exec --no-startup-id pia
+exec --no-startup-id private-internet-access
 # exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
@@ -314,9 +314,9 @@ bar {
 #                      border  backgr. text
         focused_workspace  #1c1d21 #d6dbe5 #1c1d21
         active_workspace   #1c1d21 #1c1d21 #FDF6E3
-        inactive_workspace #1c1d21 #1c1d21 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
+        inactive_workspace #1c1d21 #1c1d21 #d6dbe5
+        binding_mode       #1c1d21 #2C2C2C #F9FAF9
+        urgent_workspace   #1c1d21 #d6dbe5 #1c1d21
     }
 }
 
