@@ -243,6 +243,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | Hover Zoom+ | Large overlay on image and link to image hover | [chrome-webstore](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
 | StayFocusd | Site blocker, limit black list to given time | [chrome-webstore](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
 | Toby | Better bookmark manager | [chrome-webstore](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
+| Vimium | Navigate chrome with vim shortcuts | [chrome-webstore](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) [github](https://github.com/philc/vimium) |
 
 ### Android
 
