@@ -21,7 +21,7 @@ prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu
 prompt 'install packer' 'yaourt -S packer'
 
 prompt 'system-update' 'sudo packer -Syu'
-prompt 'pacman/aur-apps' 'packer -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip visual-studio-code-bin chromium-widevine xflux todoist arandr'
+prompt 'pacman/aur-apps' 'packer -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip visual-studio-code-bin chromium-widevine xflux todoist arandr arc-gtk-theme rofi'
 
 prompt 'pia' 'sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )"'
 prompt 'gpg1' 'sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )"'
