@@ -21,7 +21,7 @@ prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu
 prompt 'install packer' 'yaourt -S packer'
 
 prompt 'system-update' 'sudo packer -Syu'
-prompt 'pacman/aur-apps' 'packer -S cmus fd chromium keepassxc gimp lynx terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip visual-studio-code-bin chromium-widevine xflux todoist arandr arc-gtk-theme rofi'
+prompt 'pacman/aur-apps' 'packer -S cmus fd chromium keepassxc gimp terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip chromium-widevine xflux arandr arc-gtk-theme rofi mosh'
 
 prompt 'pia' 'sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )"'
 prompt 'gpg1' 'sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )"'
@@ -33,6 +33,9 @@ prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $LINUX'scripts/zeal.sh' )"'
 prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $LINUX'scripts/vsc.sh' )"'
 prompt 'yacreader' 'sh -c "$( curl -fsSL $LINUX'scripts/yacreader.sh' )"'
 prompt 'mongodb' 'sh -c "$( curl -fsSL $LINUX'scripts/mongodb.sh' )"'
+prompt 'fonts' 'sh -c "$( curl -fsSL $LINUX'scripts/fonts.sh' )"'
+prompt 'keepass' 'sh -c "$( curl -fsSL $LINUX'scripts/keepass.sh' )"'
+prompt 'pip' 'sh -c "$( curl -fsSL $LINUX'scripts/pip.sh' )"'
 
 prompt 'alsamixer' 'alsamixer'
 
