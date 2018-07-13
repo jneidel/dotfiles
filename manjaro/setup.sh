@@ -20,4 +20,5 @@ cp ~/.i3status.conf $D/.i3status.conf;
 cp ~/.config/transmission/settings.json $D/transmission/;
 cp ~/.drive/update.sh $D/.scripts/update-google-drive.sh;
 cp ~/.config/htop/htoprc $D/htoprc;
+cp ~/.scripts/* $D/.scripts;
 

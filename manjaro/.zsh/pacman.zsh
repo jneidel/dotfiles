@@ -6,7 +6,10 @@
 
 alias pac="packer -S" # install
 alias pacs="packer -Ss" # search
-alias pacu="sudo packer -Syu" # update
+alias pacu="~/.scripts/system-update.sh" # update
 alias pacr="sudo pacman -Rsn" # remove pacman
 alias aurr="sudo yaourt -Rsn" # remove yaourt
+
+alias paco="sudo pacman -Qdt"
+alias pacor"sudo pacman -Rsn $(pacman -Qtdq)"
 
