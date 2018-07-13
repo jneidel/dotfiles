@@ -9,7 +9,7 @@
     "bind-address-ipv4": "0.0.0.0",
     "bind-address-ipv6": "::",
     "blocklist-enabled": false,
-    "blocklist-url": "http://list.iblocklist.com/?list=ydxerpxkpcfqjaybcssw&fileformat=p2p&archiveformat=gz",
+    "blocklist-url": "http://list.iblocklist.com/?list=ydxerpxkpcfqjaybcssw&fileformat=p2p&archiveforma",
     "cache-size-mb": 4,
     "dht-enabled": true,
     "download-dir": "/home/jneidel/Downloads",
@@ -42,10 +42,10 @@
     "rename-partial-files": true,
     "rpc-authentication-required": false,
     "rpc-bind-address": "0.0.0.0",
-    "rpc-enabled": false,
+    "rpc-enabled": true,
     "rpc-host-whitelist": "",
     "rpc-host-whitelist-enabled": true,
-    "rpc-password": "{e599f3e90f0b155b186b473f0ca7d8d914a313a19GRGyAcZ",
+    "rpc-password": "{5b9c48c349664ed8318fb73f3c212c62137362306rRus4A.",
     "rpc-port": 9091,
     "rpc-url": "/transmission/",
     "rpc-username": "",
@@ -64,5 +64,7 @@
     "trash-original-torrent-files": false,
     "umask": 18,
     "upload-slots-per-torrent": 14,
-    "utp-enabled": true
+    "utp-enabled": true,
+    "watch-dir": "/home/jneidel/Downloads",
+    "watch-dir-enabled": true
 }
