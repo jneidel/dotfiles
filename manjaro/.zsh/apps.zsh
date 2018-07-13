@@ -4,6 +4,7 @@
 
 ### programming
 alias rreadme="grip -b 7777" # render readme.md with github styles
+alias py="python"
 
 ### download
 alias manga="mangareader-dl" # manga downloader

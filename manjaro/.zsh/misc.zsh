@@ -19,6 +19,7 @@ alias cpdir="cp -r"
 alias dirsize="du -sh"
 alias pkg="vim package.json"
 
+alias W="watch -t -d -n 1"
 alias -g H="| head"
 alias -g T="| tail"
 alias -g G="| grep"

@@ -167,6 +167,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 # Open applications on specific workspaces
 # Find out class names using xprop
 assign [class="Chromium"] $ws2
+assign [class="Tor Browser"] $ws7
 assign [class="YACReaderLibrary"] $ws8
 
 # Open specific applications in floating mode
@@ -257,6 +258,7 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id xflux -l 52 -g 13
 exec --no-startup-id ~/.bin/private-internet-access
+exec --no-startup-id transmission-daemon -c ~/Downloads
 # exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
@@ -265,6 +267,9 @@ exec --no-startup-id start_conky_maia
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
+
+exec_always ~/.scripts/i3-hud-menu/i3-appmenu-service.py
+bindsym $mod+u exec ~/.scripts/i3-hud-menu/i3-hud-menu.py
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:

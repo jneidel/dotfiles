@@ -4,6 +4,7 @@ source $ZSH/ls.zsh;
 source $ZSH/tmux.zsh;
 source $ZSH/misc.zsh;
 source $ZSH/rcfiles.zsh;
+source $ZSH/transmission.zsh;
 
 # programming
 source $ZSH/git.zsh;
