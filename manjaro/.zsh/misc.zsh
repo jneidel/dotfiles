@@ -18,6 +18,7 @@ alias h="cd;clear;"
 alias cpdir="cp -r"
 alias dirsize="du -sh"
 alias pkg="vim package.json"
+alias colortest="~/.vim/colors/colortest"
 
 alias W="watch -t -d -n 1"
 alias -g H="| head"

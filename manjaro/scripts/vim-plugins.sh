@@ -75,3 +75,6 @@ git clone https://github.com/vim-scripts/simple-pairs.git $VB/simple-pairs;
 #cmake --build . --target _regex --config Release;
 #npm install --production --prefix=third_party/ycmd/third_party/tern_runtime;
 
+echo "install numbers"
+git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers;
+

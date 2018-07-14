@@ -6,5 +6,6 @@ personal.zsh
 */.vim/backup/*
 */.vim/tmp/*
 */.vim/bundle/*
+*/.vim/view/*
 */.vim/.netrwhist
 
