@@ -23,5 +23,8 @@ cp ~/.drive/update.sh $D/.scripts/update-google-drive.sh;
 cp ~/.config/htop/htoprc $D/htoprc;
 cp -r ~/.scripts/* $D/.scripts;
 cp ~/.profile $D/.profile;
+rm -rf $D/.tmux;
 cp -r ~/.tmux $D/.tmux;
+cp ~/.cmus/rc $D/.cmus/rc;
+cp ~/.cmus/cmus.theme $D/.cmus/cmus.theme;
 

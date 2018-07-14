@@ -1,0 +1,59 @@
+# cmus theme
+
+## colors
+# grey  234
+# white 252
+# red   160
+# green 160
+
+# Default colors
+set color_win_fg=252
+set color_win_bg=234
+set color_win_dir=252
+
+# Top window title
+set color_win_title_fg=252
+set color_win_title_bg=234
+
+# Separators
+set color_separator=252
+
+# Bottom title line
+set color_titleline_fg=252
+set color_titleline_bg=234
+
+# Bottom status line
+set color_statusline_fg=252
+set color_statusline_bg=234
+
+# Bottom command line
+set color_cmdline_fg=252
+set color_cmdline_bg=234
+set color_error=red
+set color_info=yellow
+
+# Currently playing track
+#----------------------------------------------------------------
+
+# Unselected
+set color_win_cur=118
+
+# Active selection
+set color_win_cur_sel_fg=160
+set color_win_cur_sel_bg=252
+
+# Inactive selection
+set color_win_inactive_cur_sel_fg=118
+set color_win_inactive_cur_sel_bg=234
+
+# Non-playing tracks
+#----------------------------------------------------------------
+
+# Active selection
+set color_win_sel_fg=160
+set color_win_sel_bg=252
+
+# Inactive selection
+set color_win_inactive_sel_fg=234
+set color_win_inactive_sel_bg=252
+

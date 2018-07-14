@@ -1,9 +1,9 @@
 [global_config]
-  title_inactive_bg_color = "#1c1d21"
+  title_inactive_bg_color = "#1c1c1c"
   title_inactive_fg_color = "#d3d7cf"
-  title_receive_bg_color = "#1c1d21"
+  title_receive_bg_color = "#1c1c1c"
   title_receive_fg_color = "#0076c9"
-  title_transmit_bg_color = "#1c1d21"
+  title_transmit_bg_color = "#1c1c1c"
   title_transmit_fg_color = "#555753"
 [keybindings]
 [layouts]
@@ -24,9 +24,9 @@
     palette = "#1f1f1f:#f81118:#00ff50:#efd913:#2a84d2:#4e5ab7:#1081d6:#d6dbe5:#d6dbe5:#de352e:#68cd72:#f3bd09:#1081d6:#5350b9:#0f7ddb:#ffffff"
     scrollbar_position = hidden
   [[jneidel]]
-    background_color = "#1c1d21"
+    background_color = "#1c1c1c"
     cursor_blink = False
     cursor_color = "#b9b9b9"
     foreground_color = "#d6dbe5"
-    palette = "#1f1f1f:#f81118:#00ff50:#efd913:#2a84d2:#4e5ab7:#1081d6:#d6dbe5:#d6dbe5:#de352e:#68cd72:#f3bd09:#1081d6:#5350b9:#0f7ddb:#ffffff"
+    palette = "#1c1c1c:#d70000:#00ff50:#efd913:#2a84d2:#4e5ab7:#1081d6:#d0d0d0:#d0d0d0:#d70000:#68cd72:#f3bd09:#1081d6:#5350b9:#0f7ddb:#d0d0d0"
     scrollbar_position = hidden

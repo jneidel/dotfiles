@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# convert .itermcolors to terminator colorscheme
+# source: https://github.com/hdra/itermcolors2terminator
+
 import plistlib
 import sys
 from os import listdir
