@@ -13,7 +13,7 @@ alias nug="npm uninstall -g"
 alias nr="npm run"
 alias start="npm run start"
 alias build="npm run build"
-alias ntest="npm run test"
+alias nt="npm run test"
 alias testing="npm run testing"
 alias unit="npm run unit"
 

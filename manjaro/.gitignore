@@ -3,4 +3,5 @@ todo.md
 .vscode/
 package-lock.json
 node-modules/
+Session.vim
 

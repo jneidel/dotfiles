@@ -50,7 +50,8 @@ alias gra="git rebase --abort"
 ## misc
 alias gb="git branch"
 alias re="git reset"
-alias glog="git log --oneline --graph --decorate"
-alias gdiff="git diff"
+alias gl="git log --oneline --graph --decorate"
+alias gd="git diff"
 alias reflog="git reflog"
+alias gc="git clone"
 

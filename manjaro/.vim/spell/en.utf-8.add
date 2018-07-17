@@ -51,3 +51,4 @@ gpg
 fetchmail
 htaccess
 letsencrypt
+jsonwebtoken

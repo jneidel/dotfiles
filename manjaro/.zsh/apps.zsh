@@ -8,6 +8,8 @@ alias py="python"
 
 ### download
 alias manga="mangareader-dl" # manga downloader
+alias mangaup="manga update -s >> ~/manga/updates &"
+alias mangala="manga list -l"
 alias torrent="transmission-cli"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
@@ -23,6 +25,12 @@ alias flux="xflux -l 52 -g 13" # bluelight filter
 alias wifipass="npx wifi-password-cli" # print wifi pass
 alias gdrive="sh ~/.drive/update.sh" # sync google drive, after encrypting the files
 alias tod="todoist add --date today" # quick add todoist task
+alias f="cd /; fd"
+
+if [ -e ~/.scripts/hhighlighter.sh ]; then
+  source ~/.scripts/hhighlighter.sh;
+fi
+alias -g highlight="| hhighlighter -i"
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"
@@ -31,15 +39,22 @@ alias dec="gpg1 -d"
 
 #### cmus
 alias cpl="cmus-remote -u" # start/stop
+alias x="cmus-remote -u"  # start/stop
 alias cn="cmus-remote -n" # next
 alias cr="cmus-remote -r" # prev
 
 ## gui
 alias chrome="chromium"
 alias o="xdg-open ." # gui file browser
-alias yac="YACReader" # manga reader
-alias yacl="YACReaderLibrary" # manga reader library
-alias pdf="epdfview"
-alias epub="FBReader"
+alias yac="YACReaderLibrary" # manga reader library
 alias tor="cd ~/.bin/tor-browser"
+
+## suffixes
+# open files of type x with application y
+# usage: $ doc.pdf -> opens in epdfview
+alias -s pdf=epdfview
+alias -s epub=FBReader
+alias -s mobi=FBReader
+alias -s cbz=YACReader
+alias -s cbr=YACReader
 

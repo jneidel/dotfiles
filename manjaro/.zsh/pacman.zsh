@@ -4,7 +4,7 @@
 # searche, install, update for both
 # remove needs to happen separately
 
-alias pac="packer -S" # install
+alias pac="packer --noconfirm --noedit -S" # install
 alias pacs="packer -Ss" # search
 alias pacu="~/.scripts/system-update.sh" # update
 alias pacr="sudo pacman -Rsn" # remove pacman

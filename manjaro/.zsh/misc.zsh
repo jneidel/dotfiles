@@ -25,7 +25,33 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g G="| grep"
 alias -g L="| less"
+alias -g HP="--help | less"
 alias -g LL="2>&1 | less"
 alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
+
+function extract() {
+  if [ -f $1 ]; then
+    case $1 in
+      (*.tar.gz) tar xzf $1 ;;
+      (*.tgz) tar xzf $1 ;;
+      (*.tar.bz2) tar xjf $1 ;;
+      (*.tbz2) tar xjf $1 ;;
+      (*.tar) tar xf $1 ;;
+      (*.cbt) tar xf $1 ;;
+      (*.bz2) bunzip2 $1 ;;
+      (*.rar) rar x $1 ;;
+      (*.cbr) rar x -ad $1 ;;
+      (*.gz) gunzip $1 ;;
+      (*.zip) unzip $1 ;;
+      (*.cbz) unzip $1 ;;
+      (*.Z) uncompress $1 ;;
+      (*.7z) 7z x $1 ;;
+      (*.deb) ar x $1 ;;
+      (*) echo "don't know how to extrack '$1'..." ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 

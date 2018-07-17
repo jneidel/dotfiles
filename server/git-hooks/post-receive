@@ -1,0 +1,5 @@
+#! /bin/bash
+
+unset GIT_DIR;
+git -C <path> pull origin master
+

@@ -75,3 +75,41 @@ source ~/.vim/config/plugins.vim
 " continue with , as sep
 " set dict=~/.vim/dict.vim
 
+" Write file with sudo, eventhough vim wasnt opened with sudo
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
+"## Sessions
+" Dont write vimrc option to sessionfile - vimrc changes would be overwritten
+" by old ones
+set ssop-=options
+
+function! MakeSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+  if (filewritable(b:sessiondir) != 2)
+    exe 'silent !mkdir -p ' b:sessiondir
+    redraw!
+  endif
+  let b:filename = b:sessiondir . '/session.vim'
+  exe "mksession! " . b:filename
+endfunction
+                    
+function! LoadSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+  let b:sessionfile = b:sessiondir . "/session.vim"
+  if (filereadable(b:sessionfile))
+    exe 'source ' b:sessionfile
+    else
+    echo "No session loaded."
+  endif
+endfunction
+" source make/load session:
+" https://stackoverflow.com/questions/1642611/how-to-save-and-restore-multiple-different-sessions-in-vim#1642641
+                                          
+" Load session automatically if no filename is provided
+if(argc() == 0)
+  au VimEnter * nested :call LoadSession()
+endif
+" Create session automatically on leave
+au VimLeave * :call MakeSession()
+
+

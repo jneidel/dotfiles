@@ -67,3 +67,12 @@ let g:syntastic_javascript_checkers = ["eslint"]
 " <leader> c <space> to toggle comment
 " <leader> cc        to comment
 
+"## numbers
+nnoremap <F3> :NumbersToggle<CR>
+
+"## fold (built-in)
+" Save folds at leave
+" au BufWinLeave * mkview
+" Load folds on enter
+" au BufWinEnter * silent loadview
+
