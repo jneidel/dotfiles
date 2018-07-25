@@ -60,7 +60,7 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 bindsym $mod+F2 exec chromium
 bindsym $mod+F3 exec terminator -e 'mosh k'
 bindsym $mod+F4 exec terminator -e 'ranger ~'
-bindsym $mod+F9 exec terminator -e 'cmus'
+bindsym $mod+F8 exec terminator -e 'cmus'
 
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -137,8 +137,8 @@ set $ws4 4
 set $ws5 5
 set $ws6 6
 set $ws7 7
-set $ws8 8
-set $ws9 9:cmus
+set $ws8 8:cmus
+set $ws9 9:keepass
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -171,13 +171,15 @@ bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
 bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws8; workspace $ws9
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 
 # Open applications on specific workspaces
-# Find out class names using xprop
+## Find out class names using xprop
 assign [class="Chromium"] $ws2
-assign [class="Tor Browser"] $ws7
-assign [class="YACReaderLibrary"] $ws8
+assign [class="Tor Browser"] $ws2
+# assign [class="YACReaderLibrary"] $ws7
+assign [class="keepassxc"] $ws8
+assign [class="keepass2"] $ws8
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -265,7 +267,7 @@ exec --no-startup-id nitrogen --restore #; sleep 1; compton -b -f
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-exec --no-startup-id xflux -l 52 -g 13
+exec --no-startup-id xflux -l 28 -g 77 # -l 52 -g 13 for Germany
 exec --no-startup-id ~/.bin/private-internet-access
 exec --no-startup-id transmission-daemon -c ~/Downloads
 exec --no-startup-id xset r rate 185 100 # set keyboard delay at startup

@@ -5,6 +5,7 @@
 ### programming
 alias rreadme="grip -b 7777" # render readme.md with github styles
 alias py="python"
+alias color="gcolor2"
 
 ### download
 alias manga="mangareader-dl" # manga downloader
@@ -24,13 +25,8 @@ alias tree="alder --depth 3" # print filetree
 alias flux="xflux -l 52 -g 13" # bluelight filter
 alias wifipass="npx wifi-password-cli" # print wifi pass
 alias gdrive="sh ~/.drive/update.sh" # sync google drive, after encrypting the files
-alias tod="todoist add --date today" # quick add todoist task
 alias f="cd /; fd"
-
-if [ -e ~/.scripts/hhighlighter.sh ]; then
-  source ~/.scripts/hhighlighter.sh;
-fi
-alias -g highlight="| hhighlighter -i"
+alias speed="npx speedo-cli"
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"

@@ -18,17 +18,27 @@ alias h="cd;clear;"
 alias cpdir="cp -r"
 alias dirsize="du -sh"
 alias pkg="vim package.json"
+alias pkgl="cat package.json L"
 alias colortest="~/.vim/colors/colortest"
 
-alias W="watch -t -d -n 1"
+## readers
+alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
-alias -g G="| grep"
-alias -g L="| less"
 alias -g HP="--help | less"
-alias -g LL="2>&1 | less"
-alias -g NE="2> /dev/null"
-alias -g NUL="> /dev/null 2>&1"
+alias -g LL="2>&1 | less" # shallow errors
+
+## filter
+alias -g G="| grep"
+if [ -e ~/.scripts/hhighlighter.sh ]; then
+  source ~/.scripts/hhighlighter.sh;
+fi
+alias -g HL="| hhighlighter -i"
+
+alias W="watch -t -d -n 1" # update 1s
+
+alias -g NE="2> /dev/null" # swallow errors
+alias -g NUL="> /dev/null 2>&1" # errors only
 
 function extract() {
   if [ -f $1 ]; then

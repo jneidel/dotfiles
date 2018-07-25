@@ -10,6 +10,10 @@ alias pacu="~/.scripts/system-update.sh" # update
 alias pacr="sudo pacman -Rsn" # remove pacman
 alias aurr="sudo yaourt -Rsn" # remove yaourt
 
-alias paco="sudo pacman -Qdt"
-alias pacor"sudo pacman -Rsn $(pacman -Qtdq)"
+alias paco="sudo pacman -Qdt" # list orphans
+alias pacor"sudo pacman -Rsn $(pacman -Qtdq)" # rm orphans
+
+function pacss() { # highlight search query
+  pacs $1 $2 $3 HL $1 $2 $3 L
+}
 

@@ -3,10 +3,17 @@
 # blocklist: https://www.iblocklist.com/list?list=ydxerpxkpcfqjaybcssw
 
 alias tsm="transmission-remote -l" # list torrents
+
 alias tsmadd="transmission-remote -a" # add torrent
+alias tsma="tsmadd"
+
 alias tsmsite="chromium http://localhost:9091" # open transmission site
+
 tsmpause() { transmission-remote -t"$1" --stop; }  # stop id or all
+alias tsmp="tsmpause"
 tsmstart() { transmission-remote -t"$1" --start; } # start id or all
+alias tsms="tsmstart"
+
 tsmrm() { transmission-remote -t"$1" --remove; } # delete torrent
 tsmpurge() { transmission-remote -t"$1" --remove-and-delete; } # delete torrent + data
 tsminfo() { transmission-remote -t"$1" --info; } # display torrent info

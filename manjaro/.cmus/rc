@@ -1,1 +1,4 @@
 set output_plugin=alsa
+#bind common A add ~/music
+#bind common ^A clear
+

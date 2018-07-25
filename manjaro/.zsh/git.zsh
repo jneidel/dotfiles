@@ -47,11 +47,19 @@ alias gr="git rebase"
 alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 
-## misc
+## branch
 alias gb="git branch"
+alias gbc="git checkout -b"
+
+## reset
 alias re="git reset"
+alias reh="git reset --hard"
+
+## log
 alias gl="git log --oneline --graph --decorate"
-alias gd="git diff"
 alias reflog="git reflog"
+
+## misc
+alias gd="git diff"
 alias gc="git clone"
 

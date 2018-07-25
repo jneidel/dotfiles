@@ -4,7 +4,7 @@
 # grey  234
 # white 252
 # red   160
-# green 160
+# green 118
 
 # Default colors
 set color_win_fg=252
@@ -36,24 +36,24 @@ set color_info=yellow
 #----------------------------------------------------------------
 
 # Unselected
-set color_win_cur=118
+set color_win_cur=220
 
 # Active selection
-set color_win_cur_sel_fg=160
+set color_win_cur_sel_fg=234
 set color_win_cur_sel_bg=252
 
 # Inactive selection
-set color_win_inactive_cur_sel_fg=118
-set color_win_inactive_cur_sel_bg=234
+set color_win_inactive_cur_sel_fg=220
+set color_win_inactive_cur_sel_bg=235
 
 # Non-playing tracks
 #----------------------------------------------------------------
 
 # Active selection
-set color_win_sel_fg=160
+set color_win_sel_fg=234
 set color_win_sel_bg=252
 
 # Inactive selection
-set color_win_inactive_sel_fg=234
-set color_win_inactive_sel_bg=252
+set color_win_inactive_sel_fg=252
+set color_win_inactive_sel_bg=235
 
