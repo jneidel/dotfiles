@@ -7,5 +7,6 @@
 [alias]
   s = status
   b = branch
+  l = log --oneline --graph --decorate
   ref = reflog
 

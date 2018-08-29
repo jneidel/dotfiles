@@ -1,0 +1,2 @@
+cd ~/.bin/tor-browser
+./start-tor-browser.desktop

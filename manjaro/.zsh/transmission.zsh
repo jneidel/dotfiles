@@ -23,6 +23,7 @@ tsmclear() { # remove finished torrents
   awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r;
 }
 alias tsmwatch="W transmission-remote -l"
+alias tsmw="tsmwatch"
 alias tsmdaemon="transmission-daemon -c ~/Downloads"
 
 alias tpb="~/.scripts/tpb.sh" # download from tpb using transmission

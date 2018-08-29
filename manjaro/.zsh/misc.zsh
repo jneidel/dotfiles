@@ -20,6 +20,8 @@ alias dirsize="du -sh"
 alias pkg="vim package.json"
 alias pkgl="cat package.json L"
 alias colortest="~/.vim/colors/colortest"
+alias colortest2="colortest -w -r -s | grep / --color=never L"
+alias imgweek="chrome https://getcomics.info/tag/image-week/"
 
 ## readers
 alias -g L="| less"
@@ -32,8 +34,8 @@ alias -g LL="2>&1 | less" # shallow errors
 alias -g G="| grep"
 if [ -e ~/.scripts/hhighlighter.sh ]; then
   source ~/.scripts/hhighlighter.sh;
+  alias -g HL="| hhighlighter -i"
 fi
-alias -g HL="| hhighlighter -i"
 
 alias W="watch -t -d -n 1" # update 1s
 

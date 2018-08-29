@@ -34,16 +34,16 @@ alias enc="gpg1 -e -r 7dfd16fa"
 alias dec="gpg1 -d"
 
 #### cmus
-alias cpl="cmus-remote -u" # start/stop
-alias x="cmus-remote -u"  # start/stop
-alias cn="cmus-remote -n" # next
-alias cr="cmus-remote -r" # prev
+alias cm="cmus-remote -u" # start/stop
+alias cmn="cmus-remote -n" # next
+alias cmp="cmus-remote -r" # prev
 
 ## gui
 alias chrome="chromium"
 alias o="xdg-open ." # gui file browser
 alias yac="YACReaderLibrary" # manga reader library
-alias tor="cd ~/.bin/tor-browser"
+alias tor="~/.scripts/tor"
+alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## suffixes
 # open files of type x with application y
@@ -53,4 +53,8 @@ alias -s epub=FBReader
 alias -s mobi=FBReader
 alias -s cbz=YACReader
 alias -s cbr=YACReader
+alias -s jpg=sxiv # or gwenview
+alias -s png=sxiv
+alias -s mp4=vlc
+alias -s mkv=vlc
 
