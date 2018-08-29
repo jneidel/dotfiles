@@ -40,7 +40,7 @@ set color_win_cur=220
 
 # Active selection
 set color_win_cur_sel_fg=234
-set color_win_cur_sel_bg=252
+set color_win_cur_sel_bg=220
 
 # Inactive selection
 set color_win_inactive_cur_sel_fg=220

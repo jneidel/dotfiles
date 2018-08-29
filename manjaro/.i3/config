@@ -72,6 +72,10 @@ bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart du
 bindsym $mod+Shift+p exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
+bindsym F11 exec "cmus-remote -u; exec notify-send 'cmus play/pause'"
+bindsym F10 exec "cmus-remote -r; exec notify-send 'cmus previous'"
+bindsym F12 exec "cmus-remote -n; exec notify-send 'cmus next'"
+
 # change focus
 focus_follows_mouse no
 bindsym $mod+h focus left
@@ -178,8 +182,8 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 assign [class="Chromium"] $ws2
 assign [class="Tor Browser"] $ws2
 # assign [class="YACReaderLibrary"] $ws7
-assign [class="keepassxc"] $ws8
-assign [class="keepass2"] $ws8
+assign [class="keepassxc"] $ws9
+assign [class="keepass2"] $ws9
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
