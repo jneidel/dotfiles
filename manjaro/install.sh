@@ -1,5 +1,6 @@
-BASE=https://raw.githubusercontent.com/jneidel/dotfiles/master/;
-LINUX=$BASE"manjaro/";
+BASE=https://raw.githubusercontent.com/jneidel/dotfiles/master;
+LINUX=$BASE"/manjaro";
+SCRIPTS=$LINUX"/install-scripts"
 
 function prompt() {
   read -p 'Install '$1'? (Y/n): ' ans
@@ -10,9 +11,9 @@ function prompt() {
   fi
 }
 
-prompt 'zsh' 'sh -c "$( curl -fsSL $LINUX'scripts/zsh.sh' )"'
-prompt 'configurations' 'sh -c "$( curl -fsSL $LINUX'scripts/configs.sh' )"'
-prompt 'node' 'sh -c "$( curl -fsSL $LINUX'scripts/node.sh' )"'
+prompt 'zsh' 'sh -c "$( curl -fsSL $SCRIPTS'/zsh.sh' )"'
+prompt 'configurations' 'sh -c "$( curl -fsSL $SCRIPTS'/configs.sh' )"'
+prompt 'node' 'sh -c "$( curl -fsSL $SCRIPTS'/node.sh' )"'
 
 prompt 'npm-apps' 'npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo'
 
@@ -23,19 +24,19 @@ prompt 'install packer' 'yaourt -S packer'
 prompt 'system-update' 'sudo packer -Syu'
 prompt 'pacman/aur-apps' 'packer -S cmus fd chromium keepassxc gimp terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip chromium-widevine xflux arandr arc-gtk-theme rofi mosh python-pip gcc'
 
-prompt 'pia' 'sh -c "$( curl -fsSL $LINUX'scripts/pia.sh' )"'
-prompt 'gpg1' 'sh -c "$( curl -fsSL $LINUX'scripts/gpg1.sh' )"'
-prompt 'ytdl' 'sh -c "$( curl -fsSL $LINUX'scripts/ytdl.sh' )"'
-prompt 'webtorrent' 'sh -c "$( curl -fsSL $LINUX'scripts/webtorrent.sh' )"'
-prompt 'ssh-keys' 'sh -c "$( curl -fsSL $LINUX'scripts/ssh-keys.sh' )"'
-prompt 'dict-cc-dump' 'sh -c "$( curl -fsSL $LINUX'scripts/dict-cc.sh' )"'
-prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $LINUX'scripts/zeal.sh' )"'
-prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $LINUX'scripts/vsc.sh' )"'
-prompt 'yacreader' 'sh -c "$( curl -fsSL $LINUX'scripts/yacreader.sh' )"'
-prompt 'mongodb' 'sh -c "$( curl -fsSL $LINUX'scripts/mongodb.sh' )"'
-prompt 'fonts' 'sh -c "$( curl -fsSL $LINUX'scripts/fonts.sh' )"'
-prompt 'keepass' 'sh -c "$( curl -fsSL $LINUX'scripts/keepass.sh' )"'
-prompt 'pip' 'sh -c "$( curl -fsSL $LINUX'scripts/pip.sh' )"'
+prompt 'pia' 'sh -c "$( curl -fsSL $SCRIPTS'/pia.sh' )"'
+prompt 'gpg1' 'sh -c "$( curl -fsSL $SCRIPTS'/gpg1.sh' )"'
+prompt 'ytdl' 'sh -c "$( curl -fsSL $SCRIPTS'/ytdl.sh' )"'
+prompt 'webtorrent' 'sh -c "$( curl -fsSL $SCRIPTS'/webtorrent.sh' )"'
+prompt 'ssh-keys' 'sh -c "$( curl -fsSL $SCRIPTS'/ssh-keys.sh' )"'
+prompt 'dict-cc-dump' 'sh -c "$( curl -fsSL $SCRIPTS'/dict-cc.sh' )"'
+prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $SCRIPTS'/zeal.sh' )"'
+prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $SCRIPTS'/vsc.sh' )"'
+prompt 'yacreader' 'sh -c "$( curl -fsSL $SCRIPTS'/yacreader.sh' )"'
+prompt 'mongodb' 'sh -c "$( curl -fsSL $SCRIPTS'/mongodb.sh' )"'
+prompt 'fonts' 'sh -c "$( curl -fsSL $SCRIPTS'/fonts.sh' )"'
+prompt 'keepass' 'sh -c "$( curl -fsSL $SCRIPTS'/keepass.sh' )"'
+prompt 'pip' 'sh -c "$( curl -fsSL $SCRIPTS'/pip.sh' )"'
 
 prompt 'alsamixer' 'alsamixer'
 
