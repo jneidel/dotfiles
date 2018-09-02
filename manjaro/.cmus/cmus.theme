@@ -1,10 +1,11 @@
 # cmus theme
 
 ## colors
-# grey  234
-# white 252
-# red   160
-# green 118
+# grey    234
+# white   252
+# yelllow 220
+# red     160
+# green   118
 
 # Default colors
 set color_win_fg=252
@@ -16,10 +17,10 @@ set color_win_title_fg=252
 set color_win_title_bg=234
 
 # Separators
-set color_separator=252
+set color_separator=220
 
 # Bottom title line
-set color_titleline_fg=252
+set color_titleline_fg=220
 set color_titleline_bg=234
 
 # Bottom status line
@@ -29,8 +30,8 @@ set color_statusline_bg=234
 # Bottom command line
 set color_cmdline_fg=252
 set color_cmdline_bg=234
-set color_error=red
-set color_info=yellow
+set color_error=160
+set color_info=118
 
 # Currently playing track
 #----------------------------------------------------------------

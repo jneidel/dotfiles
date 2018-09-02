@@ -1,4 +1,8 @@
-set output_plugin=alsa
+set output_plugin=pulse
+#set output_plugin=alsa
+
+colorscheme cmus
+
 #bind common A add ~/music
 #bind common ^A clear
 

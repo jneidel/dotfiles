@@ -42,7 +42,7 @@ alias cmp="cmus-remote -r" # prev
 alias chrome="chromium"
 alias o="xdg-open ." # gui file browser
 alias yac="YACReaderLibrary" # manga reader library
-alias tor="~/.scripts/tor"
+alias tor="~/scripts/tor"
 alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## suffixes

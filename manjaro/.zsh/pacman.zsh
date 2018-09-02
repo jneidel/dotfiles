@@ -6,7 +6,7 @@
 
 alias pac="packer --noconfirm --noedit -S" # install
 alias pacs="packer -Ss" # search
-alias pacu="~/.scripts/system-update.sh" # update
+alias pacu="~/scripts/system-update.sh" # update
 alias pacr="sudo pacman -Rsn" # remove pacman
 alias aurr="sudo yaourt -Rsn" # remove yaourt
 

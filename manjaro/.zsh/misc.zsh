@@ -67,3 +67,5 @@ function extract() {
   fi
 }
 
+alias pulsere="~/scripts/pulsere.sh"
+
