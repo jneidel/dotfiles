@@ -28,4 +28,6 @@ rm -rf $D/.tmux;
 cp -r ~/.tmux $D/.tmux;
 cp ~/.cmus/rc $D/.cmus/rc;
 cp ~/.cmus/cmus.theme $D/.cmus/cmus.theme;
+cp ~/.config/beets/config.yaml $C/beets/;
+cp ~/.config/pulse/default.pa $C/pulse/;
 

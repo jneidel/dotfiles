@@ -22,7 +22,7 @@ function colorls() {
     printf "\033[0m";
     if ( /\/$/ ) printf "\033[1;34m"; \
     else if ( /@$/ ) printf "\033[0;35m"; \
-    else if ( /(mp4)|(mkv)\*$/ ) printf "\033[0m"; \
+    else if ( /(mp4)|(mkv)|(m4v)|(pdf)|(png)|(jpeg)|(jpg)|(mp3)\*$/ ) printf "\033[0m"; \
     else if ( /\*$/ ) printf "\033[0;31m";
     print;
   };'

@@ -11,7 +11,6 @@ alias color="gcolor2"
 alias manga="mangareader-dl" # manga downloader
 alias mangaup="manga update -s >> ~/manga/updates &"
 alias mangala="manga list -l"
-alias torrent="transmission-cli"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
@@ -42,7 +41,6 @@ alias cmp="cmus-remote -r" # prev
 alias chrome="chromium"
 alias o="xdg-open ." # gui file browser
 alias yac="YACReaderLibrary" # manga reader library
-alias tor="~/scripts/tor"
 alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## suffixes

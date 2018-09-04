@@ -1,0 +1,18 @@
+directory: ~/music
+library: ~/.data/musiclibrary.db
+import:
+    copy: yes
+    write: yes
+    log: ~/.data/beetslog.txt
+    resume: yes
+    incremental: yes
+    incremental_skip_later: yes
+art_filename: cover
+paths:
+      default: $albumartist/$album/$track. $artist - $title
+      singleton: Singles/$artist - $title
+      comp: $album/$track. $artist - $title
+      albumtype:soundtrack: Soundtracks/$album/$track. $artist - $title
+asciify_paths: yes
+id3v23: yes
+
