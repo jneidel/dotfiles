@@ -35,7 +35,7 @@ bindsym $mod+Shift+q kill
 
 # start program launcher
 # bindsym $mod+d exec --no-startup-id dmenu_recency
-  bindsym $mod+d exec ~/code/dotfiles/manjaro/.scripts/rofi.sh
+  bindsym $mod+d exec ~/code/dotfiles/manjaro/scripts/rofi.sh
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -45,10 +45,9 @@ bindsym $mod+z exec --no-startup-id morc_menu
 ################################################################################################
 
 exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-#exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
-#bindsym $mod+Ctrl+m exec pavucontrol
+#bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+exec --no-startup-id pulseaudio
+bindsym $mod+Ctrl+m exec terminator -e 'pulsemixer'
 
 ################################################################################################
 
@@ -71,6 +70,10 @@ bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart du
 # bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Shift+p exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+
+bindsym F1 exec ~/scripts/cmus/mute.sh
+bindsym F2 exec ~/scripts/cmus/set-vol.sh -5
+bindsym F3 exec ~/scripts/cmus/set-vol.sh +5
 
 bindsym F11 exec ~/scripts/cmus/play-pause.sh
 bindsym F10 exec ~/scripts/cmus/previous.sh
@@ -207,7 +210,6 @@ for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Simple-scan"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Skype"] floating enable border normal
 for_window [class="Thus"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
@@ -351,9 +353,9 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border backgr text    indic.   child_border
-  client.focused          $grey  $grey  #555753 $grey
-  client.focused_inactive $grey  $grey  $white  $grey
-  client.unfocused        $grey  $grey  $white  $grey
+  client.focused          $grey  $grey  $white  $grey
+  client.focused_inactive $grey  $grey  #555753 $grey
+  client.unfocused        $grey  $grey  #555753 $grey
   client.urgent           $grey  $grey  #eb3d54 $grey
   client.placeholder      $grey  $grey  $white  $grey
 

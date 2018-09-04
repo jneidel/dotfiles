@@ -14,7 +14,7 @@ USER_DIR="/home/jneidel" # ~
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:~/.bin/node-latest/bin:~/.bin/ruby-latest/bin
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:~/.bin/node-latest/bin:~/.bin/ruby-latest/bin:~/scripts
 export CDPATH=.:~:~/code
 
 bindkey -v # shell vim mode (default emacs)

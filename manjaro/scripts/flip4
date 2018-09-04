@@ -1,0 +1,6 @@
+#! /bin/bash
+
+#fkill pulseaudio;
+pulseaudio --start;
+echo -e "power on\nconnect B8:D5:0B:EA:D9:A6\nquit" | bluetoothctl
+
