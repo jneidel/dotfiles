@@ -41,12 +41,11 @@ bindsym $mod+Shift+q kill
 bindsym $mod+z exec --no-startup-id morc_menu
 
 ################################################################################################
-## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
+## sound-section
 
 exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-exec --no-startup-id pulseaudio
+exec --no-startup-id "sleep 15; pulseaudio --start;"
 bindsym $mod+Ctrl+m exec terminator -e 'pulsemixer'
 
 ################################################################################################
@@ -60,13 +59,14 @@ bindsym $mod+F2 exec chromium
 bindsym $mod+F3 exec terminator -e 'mosh k'
 bindsym $mod+F4 exec terminator -e 'ranger ~'
 bindsym $mod+F8 exec terminator -e 'cmus'
+bindsym $mod+F9 exec terminator -e 'keepassxc'
 
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b -f
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 # bindsym Print exec --no-startup-id i3-scrot
-# bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 # bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Shift+p exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
@@ -75,9 +75,9 @@ bindsym F1 exec ~/scripts/cmus/mute.sh
 bindsym F2 exec ~/scripts/cmus/set-vol.sh -5
 bindsym F3 exec ~/scripts/cmus/set-vol.sh +5
 
-bindsym F11 exec ~/scripts/cmus/play-pause.sh
-bindsym F10 exec ~/scripts/cmus/previous.sh
-bindsym F12 exec ~/scripts/cmus/next.sh
+bindsym XF86LaunchA exec ~/scripts/cmus/play-pause.sh
+bindsym XF86Search exec ~/scripts/cmus/previous.sh
+bindsym XF86Explorer exec ~/scripts/cmus/next.sh
 
 # change focus
 focus_follows_mouse no
@@ -273,9 +273,9 @@ exec --no-startup-id nitrogen --restore #; sleep 1; compton -b -f
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-exec --no-startup-id xflux -l 28 -g 77 # -l 52 -g 13 for Germany
+exec --no-startup-id xflux -k 5000 -l 28 -g 77 # -l 52 -g 13 for Germany
 exec --no-startup-id ~/.bin/private-internet-access
-exec --no-startup-id transmission-daemon -c ~/Downloads
+exec --no-startup-id transmission-daemon -c ~/Downloads --encryption-preferred --paused
 exec --no-startup-id xset r rate 185 100 # set keyboard delay at startup
 # exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
@@ -287,7 +287,7 @@ exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 
 exec_always ~/.scripts/i3-hud-menu/i3-appmenu-service.py
-bindsym $mod+u exec ~/.scripts/i3-hud-menu/i3-hud-menu.py
+bindsym $mod+u exec ~/scripts/i3-hud-menu/i3-hud-menu.py
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:

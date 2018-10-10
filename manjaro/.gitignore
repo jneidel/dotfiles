@@ -4,5 +4,6 @@ todo.md
 package-lock.json
 node-modules/
 Session.vim
-tmp
+tmp/
+.yo-rc.json
 

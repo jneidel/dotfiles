@@ -3,6 +3,13 @@ set output_plugin=pulse
 
 colorscheme cmus
 
+# Refreshing shortcuts
 #bind common A add ~/music
 #bind common ^A clear
 
+# Swap c and space
+#unbind common space
+#unbind common c
+#bind common space player-pause
+#bind common c win-toggle
+#bind common C toggle continue

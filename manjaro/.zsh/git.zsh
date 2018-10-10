@@ -32,6 +32,7 @@ amtod() { # set commit date to today
 }
 
 ## push/pull
+alias gp="git push"
 alias push="git push origin"
 alias pushf="git push -f origin"
 alias pushup="git push --set-upstream origin"

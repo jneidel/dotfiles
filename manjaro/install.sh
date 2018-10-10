@@ -24,7 +24,7 @@ prompt 'install packer' 'yaourt -S packer'
 prompt 'system-update' 'sudo packer -Syu'
 prompt 'pacman/aur-apps' 'packer -S cmus fd chromium keepassxc gimp terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip chromium-widevine xflux arandr arc-gtk-theme rofi mosh python-pip gcc beets manjaro-pulse pulseaudio pulsemixer pulseaudio-bluetooth sxiv gwenview'
 
-#prompt 'pip apps' 'sudo pip install '
+prompt 'pip apps' 'sudo pip install grip'
 
 prompt 'pac remove' 'sudo pacman -Rsn hexchat'
 

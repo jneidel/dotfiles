@@ -76,3 +76,8 @@ nnoremap <F3> :NumbersToggle<CR>
 " Load folds on enter
 " au BufWinEnter * silent loadview
 
+"## html5
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_microdata_attributes_complete = 0
+let g:html5_aria_attributes_complete = 0
+

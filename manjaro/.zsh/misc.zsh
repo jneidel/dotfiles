@@ -7,7 +7,7 @@ mdc() { # MkDirCd
   cd "$1";
 }
 calc() { # for a quick, one off calc
-  echo "$1" | bc -l
+  echo "$1" | bc # -l <- spammy
 }
 alias calculator='python -ic "from __future__ import division; from math import *; from random import *"' # for multiple calculations, interactive
 alias calendar="cal -mn 6"
@@ -21,7 +21,6 @@ alias pkg="vim package.json"
 alias pkgl="cat package.json L"
 alias colortest="~/.vim/colors/colortest"
 alias colortest2="colortest -w -r -s | grep / --color=never L"
-alias imgweek="chrome https://getcomics.info/tag/image-week/"
 
 ## readers
 alias -g L="| less"
@@ -32,8 +31,9 @@ alias -g LL="2>&1 | less" # shallow errors
 
 ## filter
 alias -g G="| grep"
-if [ -e ~/.scripts/hhighlighter.sh ]; then
-  source ~/.scripts/hhighlighter.sh;
+alias -g GP="| grep -P"
+if [ -e ~/scripts/hhighlighter.sh ]; then
+  source ~/scripts/hhighlighter.sh;
   alias -g HL="| hhighlighter -i"
 fi
 
@@ -41,6 +41,12 @@ alias W="watch -t -d -n 1" # update 1s
 
 alias -g NE="2> /dev/null" # swallow errors
 alias -g NUL="> /dev/null 2>&1" # errors only
+
+function trim(){
+  VAR=$1
+  VAR="$(echo -e "${VAR}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+  echo -n $VAR
+}
 
 function extract() {
   if [ -f $1 ]; then
@@ -67,5 +73,24 @@ function extract() {
   fi
 }
 
-alias pulsere="~/scripts/pulsere.sh"
+function extractmo() {
+  DIR=.;
+
+  for F in $DIR/*\(320\ MP3\)*; do
+    extract $F;
+    rm cover.jpg;
+    rm $F;
+    TITLE=$(echo $F | cut -d "/" -f 2)
+    TITLE=$(echo $TITLE | cut -d "(" -f 1)
+    TITLE=$(trim $TITLE)
+    mv *$TITLE".mp3" ~/ct/music/
+  done
+
+}
+
+alias urlencode='node -e "console.log( encodeURIComponent( process.argv[1] ) )"'
+alias urldecode='node -e "console.log( decodeURIComponent( process.argv[1] ) )"'
+
+alias imgweek="chrome https://getcomics.info/tag/image-week/"
+alias explained="chrome https://www.imdb.com/title/tt8005374/episodes"
 

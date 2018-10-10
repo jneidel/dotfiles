@@ -131,7 +131,7 @@ call oldhope#LinkHi("lCursor"       , "Cursor")
 call oldhope#SetHi ("DiffAdd"       , s:vVeryDarkGrey , s:vGreen        , s:vNone      )
 call oldhope#SetHi ("DiffChange"    , s:vVeryDarkGrey , s:vYellow       , s:vNone      )
 call oldhope#SetHi ("DiffDelete"    , s:vVeryDarkGrey , s:vRed          , s:vNone      )
-call oldhope#SetHi ("DiffText"      , s:vNone         , s:vGrey         , s:vNone      )
+call oldhope#SetHi ("DiffText"      , s:vNone         , s:vRed         , s:vNone      )
 " * Errors
 call oldhope#SetHi ("Error"         , s:vVeryDarkGrey , s:vRed          , s:vBold      )
 call oldhope#SetHi ("ErrorMsg"      , s:vVeryDarkGrey , s:vRed          , s:vNone      )
