@@ -30,4 +30,5 @@ cp ~/.cmus/rc $D/.cmus/rc;
 cp ~/.cmus/cmus.theme $D/.cmus/cmus.theme;
 cp ~/.config/beets/config.yaml $C/beets/;
 cp ~/.config/pulse/default.pa $C/pulse/;
+cp ~/.drive/update.sh $D/.drive/update.sh;
 
