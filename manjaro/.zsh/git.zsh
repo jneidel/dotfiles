@@ -9,6 +9,7 @@ alias add="git add .; git status"
 
 ## commit
 alias commit="git commit -m"
+alias gc="commit"
 alias addcom="git add .; git commit -m"
 
 ## commit --amend
@@ -62,5 +63,4 @@ alias reflog="git reflog"
 
 ## misc
 alias gd="git diff"
-alias gc="git clone"
 

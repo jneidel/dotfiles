@@ -12,6 +12,7 @@ alias manga="mangareader-dl --debug" # manga downloader
 alias mangaup="mangareader-dl update --silent 1>> ~/manga/updates 2>&1 &"
 alias mangala="manga update check"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
+alias comic="getcomics-dl"
 
 #### youtube-dl
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
