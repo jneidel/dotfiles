@@ -3,8 +3,8 @@
 
 echo ":: updating system..."
 
-if (( $+commands[packer] )) ; then
-  sudo packer -Syu;
+if (( $+commands[packer-aur] )) ; then
+  packer-aur -Syu;
 else
   sudo pacman -Syu;
 fi
