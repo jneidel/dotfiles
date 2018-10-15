@@ -55,7 +55,7 @@ bindsym $mod+Ctrl+m exec terminator -e 'pulsemixer'
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
-bindsym $mod+F2 exec chromium
+bindsym $mod+F2 exec firefox-nightly
 bindsym $mod+F3 exec terminator -e 'mosh k'
 bindsym $mod+F4 exec terminator -e 'ranger ~'
 bindsym $mod+F8 exec terminator -e 'cmus'
@@ -138,7 +138,7 @@ bindsym $mod+Ctrl+Left workspace prev
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
 set $ws1 1:zsh
-set $ws2 2:chrome
+set $ws2 2:browser
 set $ws3 3
 set $ws4 4
 set $ws5 5
@@ -183,6 +183,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 # Open applications on specific workspaces
 ## Find out class names using xprop
 assign [class="Chromium"] $ws2
+assign [class="Nightly"] $ws2
 assign [class="Tor Browser"] $ws2
 # assign [class="YACReaderLibrary"] $ws7
 assign [class="keepassxc"] $ws9
@@ -265,7 +266,7 @@ bindsym $mod+ssharp exec --no-startup-id blurlock
 
 # Autostart applications
 exec terminator -e "tmux new -s main"
-exec chromium
+exec firefox-nightly
 # exec --no-startup-id i3-msg 'workspace 3:kudu; exec terminator -e "kudu"'
 # exec --no-startup-id i3-msg 'workspace 4:ranger; exec terminator -e "ranger ~"'
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1

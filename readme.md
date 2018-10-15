@@ -16,7 +16,7 @@
   * [Git (version control)](#git-version-control)
 - [Apps](#apps)
   * [CLIs](#clis)
-  * [Chrome Extensions](#chrome-extensions)
+  * [Browser Extensions](#browser-extensions)
   * [Android](#android)
 - [Related](#related)
 
@@ -188,19 +188,28 @@ git config core.ignorecase false
 |--|--|--|
 |  |  |  |
 
-### Chrome Extensions
+### Browser Extensions
 
-Chrome extensions, sorted by category.
+Browser extensions, sorted by category.
+
+**Essentials:**
+
+| name | description | links |
+|--|--|--|
+| HTTPS Everywhere | Force HTTPS connection | [firefox](https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/) [chrome](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
+| Privacy Badger | Stop trackers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/) [chrome](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
+| uBlock Origin | Private adblocker | [firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) [chrome](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
+| Vimium | Navigate browser with vim shortcuts | [firefox](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/) [chrome](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) [github](https://github.com/philc/vimium) |
 
 **Coding:**
 
 | name | description | links |
 |--|--|--|
-| Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome-webstore](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [github](https://github.com/zce/chrome-markdown) |
-| JSON Formatter | Easy to read JSON formatting | [chrome-webstore](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [github](https://github.com/callumlocke/json-formatter) |
-| OpenGenus quark | Offline algorithm search engine | [chrome-webstore](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) [github](https://github.com/OpenGenus/quark) |
-| npmhub | List npm dependencies in readme | [chrome-webstore](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [github](https://github.com/npmhub/npmhub) |
-| Refined GitHub | GitHub functional/visual upgrade | [chrome-webstore](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [github](https://github.com/sindresorhus/refined-github) |
+| Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [github](https://github.com/zce/chrome-markdown) |
+| JSON Formatter | Easy to read JSON formatting | [chrome](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [github](https://github.com/callumlocke/json-formatter) |
+| OpenGenus quark | Offline algorithm search engine | [chrome](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) [github](https://github.com/OpenGenus/quark) |
+| npmhub | List npm dependencies in readme | [chrome](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [github](https://github.com/npmhub/npmhub) |
+| Refined GitHub | GitHub functional/visual upgrade | [chrome](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [github](https://github.com/sindresorhus/refined-github) |
 
 <details>
 <summary><strong>More GitHub related plugins</strong></summary>
@@ -209,45 +218,36 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 
 | name | description | links |
 |--|--|--|
-| Octotree | GitHub file tree | [chrome-webstore](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [github](https://github.com/buunguyen/octotree/) |
-| Vscode-icons | Icons indicating file type | [chrome-webstore](https://chrome.google.com/webstore/detail/github-vscode-icons/hoccpcefjcgnabbmojbfoflggkecmpgd) [github](https://github.com/dderevjanik/github-vscode-icons) |
-| Lovely Forks | Shows notable forks | [chrome-webstore](https://chrome.google.com/webstore/detail/lovely-forks/ialbpcipalajnakfondkflpkagbkdoib) [github](https://github.com/musically-ut/lovely-forks) |
-| npm-stats | Display npm download stats in repo | [chrome-webstore](https://chrome.google.com/webstore/detail/github-npm-stats/oomfflokggoffaiagenekchfnpighcef) [github](https://github.com/katranci/github-npm-stats) |
-| show-email | Display email on profile, even if not provided | [chrome-webstore](https://chrome.google.com/webstore/detail/github-show-email/pndebicblkfcinlcedagfhjfkkkecibn) [github](https://github.com/prabhakar267/github-email-extractor) |
-| omnibar | Shortcut navigation for github | [chrome-webstore](https://chrome.google.com/webstore/detail/github-omnibar/njccjmmakcbdpnlbodllfgiloenfpocb/related?utm_source=chrome-ntp-icon) [github](https://github.com/jcouyang/gh-omnibar) |
-| issue-link-status | Colorize issue links depending on status | [chrome-webstore](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic) [github](https://github.com/bfred-it/github-issue-link-status/) |
-| build-tabs | Build tab for github | [chrome-webstore](https://chrome.google.com/webstore/detail/builds-tab-for-github/jnmdkbflmkjehkkdbjdfpmhgdafpcdkh) [github](https://github.com/duxet/builds-tab) |
-| github-autocomplete | Github search autocomplete | [chrome-webstore](https://chrome.google.com/webstore/detail/awesome-autocomplete-for/djkfdjpoelphhdclfjhnffmnlnoknfnd) [github](https://github.com/algolia/github-awesome-autocomplete) |
-| github-plus | Display repo size, download links | [chrome-webstore](https://chrome.google.com/webstore/detail/github-plus/anlikcnbgdeidpacdbdljnabclhahhmd) [github](https://github.com/softvar/github-plus) |
+| Octotree | GitHub file tree | [chrome](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [github](https://github.com/buunguyen/octotree/) |
+| Vscode-icons | Icons indicating file type | [chrome](https://chrome.google.com/webstore/detail/github-vscode-icons/hoccpcefjcgnabbmojbfoflggkecmpgd) [github](https://github.com/dderevjanik/github-vscode-icons) |
+| Lovely Forks | Shows notable forks | [chrome](https://chrome.google.com/webstore/detail/lovely-forks/ialbpcipalajnakfondkflpkagbkdoib) [github](https://github.com/musically-ut/lovely-forks) |
+| npm-stats | Display npm download stats in repo | [chrome](https://chrome.google.com/webstore/detail/github-npm-stats/oomfflokggoffaiagenekchfnpighcef) [github](https://github.com/katranci/github-npm-stats) |
+| show-email | Display email on profile, even if not provided | [chrome](https://chrome.google.com/webstore/detail/github-show-email/pndebicblkfcinlcedagfhjfkkkecibn) [github](https://github.com/prabhakar267/github-email-extractor) |
+| omnibar | Shortcut navigation for github | [chrome](https://chrome.google.com/webstore/detail/github-omnibar/njccjmmakcbdpnlbodllfgiloenfpocb/related?utm_source=chrome-ntp-icon) [github](https://github.com/jcouyang/gh-omnibar) |
+| issue-link-status | Colorize issue links depending on status | [chrome](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic) [github](https://github.com/bfred-it/github-issue-link-status/) |
+| build-tabs | Build tab for github | [chrome](https://chrome.google.com/webstore/detail/builds-tab-for-github/jnmdkbflmkjehkkdbjdfpmhgdafpcdkh) [github](https://github.com/duxet/builds-tab) |
+| github-autocomplete | Github search autocomplete | [chrome](https://chrome.google.com/webstore/detail/awesome-autocomplete-for/djkfdjpoelphhdclfjhnffmnlnoknfnd) [github](https://github.com/algolia/github-awesome-autocomplete) |
+| github-plus | Display repo size, download links | [chrome](https://chrome.google.com/webstore/detail/github-plus/anlikcnbgdeidpacdbdljnabclhahhmd) [github](https://github.com/softvar/github-plus) |
 
-<!-- |  |  | [chrome-webstore]() [github]() | -->
+<!-- |  |  | [chrome]() [github]() | -->
 
 </details><br/>
-
-**Privacy & Adblocker:**
-
-| name | description | links |
-|--|--|--|
-| Adblock Plus | Adblocker | [chrome-webstore](https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb) |
-| DuckDuckGo Privacy Essentials | DDG search, stop trackers | [chrome-webstore](https://chrome.google.com/webstore/detail/duckduckgo-privacy-essent/bkdgflcldnnnapblkhphbgpggdiikppg) |
-| HTTPS Everywhere | Force HTTPS connection | [chrome-webstore](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
-| Privacy Badger | Stop trackers | [chrome-webstore](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
-| uBlock Origin | Adblocker | [chrome-webstore](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
 
 **Misc:**
 
 | name | description | links |
 |--|--|--|
-| chromelPass | KeePass integration for password insert | [chrome-webstore](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) [github](https://github.com/pfn/passifox/) |
-| ColorZilla | Color picker | [chrome-webstore](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) |
-| Hover Zoom+ | Large overlay on image and link to image hover | [chrome-webstore](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
-| StayFocusd | Site blocker, limit black list to given time | [chrome-webstore](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
-| Toby | Better bookmark manager | [chrome-webstore](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
-| Vimium | Navigate chrome with vim shortcuts | [chrome-webstore](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) [github](https://github.com/philc/vimium) |
+| chromelPass | KeePass integration for password insert | [chrome](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) [github](https://github.com/pfn/passifox/) |
+| ColorZilla | Color picker | [chrome](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) |
+| Hover Zoom+ | Large overlay on image and link to image hover | [chrome](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
+| StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
+| Toby | Better bookmark manager | [chrome](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
 
-**Chrome theme:**
+**Theme:**
 
-[Arc Dark](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
+I use **Arc Dark** as I based my terminal colorscheme on it. 
+[firefox](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme-we/)
+[chrome](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
 
 ### Android
 
