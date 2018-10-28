@@ -4,7 +4,7 @@
 echo ":: updating system..."
 
 if (( $+commands[packer-aur] )) ; then
-  packer-aur -Syu;
+  packer-aur --noconfirm --noedit -Syu;
 else
   sudo pacman -Syu;
 fi
@@ -31,11 +31,10 @@ function orphanage {
 
 # infinite loop to find and remove orphan packages
 # script exits when none found
-while [ 1 ]
-do
-  orphanage
-done
+#while [ 1 ]
+#do
+#  orphanage
+#done
 
-# choose echo error message or zenity error message
-echo ":: ** update script did not exit normally!"
 exit
+

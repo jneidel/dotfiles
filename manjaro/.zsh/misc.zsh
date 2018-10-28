@@ -83,14 +83,15 @@ function extractmo() {
     TITLE=$(echo $F | cut -d "/" -f 2)
     TITLE=$(echo $TITLE | cut -d "(" -f 1)
     TITLE=$(trim $TITLE)
-    mv *$TITLE".mp3" ~/ct/music/
+    mid3v2 --TPE2 "Monstercat" -A "Mixed" $TITLE".mp3"
+    mv *$TITLE".mp3" ~/music/Singles/Monstercat\ -\ Mixed/
   done
-
 }
 
 alias urlencode='node -e "console.log( encodeURIComponent( process.argv[1] ) )"'
 alias urldecode='node -e "console.log( decodeURIComponent( process.argv[1] ) )"'
 
-alias imgweek="chrome https://getcomics.info/tag/image-week/"
-alias explained="chrome https://www.imdb.com/title/tt8005374/episodes"
+alias imgweek="$BROWSER https://getcomics.info/tag/image-week/"
+alias explained="$BROWSER https://www.imdb.com/title/tt8005374/episodes"
+alias letsplay="$BROWSER https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
 

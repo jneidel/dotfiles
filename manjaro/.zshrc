@@ -21,7 +21,7 @@ bindkey -v # shell vim mode (default emacs)
 export KEYTIMEOUT=1
 
 export EDITOR=vim
-export BROWSER=/usr/bin/chromium
+export BROWSER=/usr/bin/firefox-nightly
 
 source ~/.zsh/init.zsh;
 

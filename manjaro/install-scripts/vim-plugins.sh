@@ -78,3 +78,6 @@ git clone https://github.com/vim-scripts/simple-pairs.git $VB/simple-pairs;
 echo "install numbers"
 git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers;
 
+echo "install tabular"
+git clone git://github.com/godlygeek/tabular.git $VB/tabular;
+

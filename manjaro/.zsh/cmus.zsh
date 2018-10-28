@@ -11,17 +11,38 @@ function cmm() {
   printf "AAA: "
   cmus-remote -C "set aaa_mode" | cut -d "'" -f 2 | cut -d "=" -f 2
 }
-function cmco() { # get cover
-  file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
-  getco $file"mp3" ~/tmp/cmus-cover.jpg NUL
-  fkill -f sxiv NE
-  sxiv ~/tmp/cmus-cover.jpg
-}
 
 # set mp3 tags
 alias idar="id3tag -a" # ar mp3 # artist
 alias idal="id3tag -A" # al mp3 # album
 alias idso="id3tag -s" # so mp3 # song
+alias idtr="id3tag -t" # tr mp3 # tracknr
 alias idco="lame --ti" # jpg mp3 # cover
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
+
+# get cover
+function cmco() {
+  file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
+  getco $file"mp3" ~/tmp/cmus-cover.jpg NUL
+  fkill -f sxiv NE
+  sxiv -f ~/tmp/cmus-cover.jpg
+}
+function cmcoloop() {
+  file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
+
+  if [ $1 != "" ]; then
+    prev=$1
+
+    if [ $prev != $file ]; then
+      cmco &
+    fi
+  fi
+
+  sleep 5
+  cmcoloop $file &
+}
+function cmcol() {
+  cmco &
+  cmcoloop NE &
+}
 

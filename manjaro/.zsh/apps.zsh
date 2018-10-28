@@ -3,7 +3,7 @@
 ## cli
 
 ### programming
-alias rreadme="grip -b 7777" # render readme.md with github styles
+alias readme="chrome http://localhost:7777/ &; grip -b 7777" # render readme.md with github styles
 alias py="python"
 alias color="gcolor2"
 
