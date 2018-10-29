@@ -48,44 +48,29 @@ function trim(){
   echo -n $VAR
 }
 
-function extract() {
-  if [ -f $1 ]; then
-    case $1 in
-      (*.tar.gz) tar xzf $1 ;;
-      (*.tgz) tar xzf $1 ;;
-      (*.tar.bz2) tar xjf $1 ;;
-      (*.tbz2) tar xjf $1 ;;
-      (*.tar) tar xf $1 ;;
-      (*.cbt) tar xf $1 ;;
-      (*.bz2) bunzip2 $1 ;;
-      (*.rar) rar x $1 ;;
-      (*.cbr) rar x -ad $1 ;;
-      (*.gz) gunzip $1 ;;
-      (*.zip) unzip $1 ;;
-      (*.cbz) unzip $1 ;;
-      (*.Z) uncompress $1 ;;
-      (*.7z) 7z x $1 ;;
-      (*.deb) ar x $1 ;;
-      (*) echo "don't know how to extrack '$1'..." ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-
 function extractmo() {
-  DIR=.;
+  DIR=.
 
   for F in $DIR/*\(320\ MP3\)*; do
-    extract $F;
-    rm cover.jpg;
-    rm $F;
+    extract $F
+    rm cover.jpg
+    rm $F
     TITLE=$(echo $F | cut -d "/" -f 2)
     TITLE=$(echo $TITLE | cut -d "(" -f 1)
     TITLE=$(trim $TITLE)
     mid3v2 --TPE2 "Monstercat" -A "Mixed" $TITLE".mp3"
     mv *$TITLE".mp3" ~/music/Singles/Monstercat\ -\ Mixed/
   done
+}
+function extractmoep() {
+  DIR=.
+
+  for F in $DIR/*\(320\ MP3\)*; do
+    extract $F
+    rm $F
+  done
+
+  mv *EP* ~/ct/music/
 }
 
 alias urlencode='node -e "console.log( encodeURIComponent( process.argv[1] ) )"'

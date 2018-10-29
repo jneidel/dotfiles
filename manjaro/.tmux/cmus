@@ -9,7 +9,7 @@ if cmus-remote -Q > /dev/null 2>&1; then
 
   if [ "$status" == "playing" ]; then
     if [ "$title" == "" ]; then
-      echo $artist;
+      echo $file | cut -d "/" -f 6
     else
       echo $title - $artist;
     fi
