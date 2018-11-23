@@ -18,6 +18,7 @@ alias idal="id3tag -A" # al mp3 # album
 alias idso="id3tag -s" # so mp3 # song
 alias idtr="id3tag -t" # tr mp3 # tracknr
 alias idco="lame --ti" # jpg mp3 # cover
+alias idala="mid3v2 --TPE2" # ala mp3 # album artist
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 
 # get cover
