@@ -27,7 +27,7 @@ tsmclear() { # remove finished torrents
   transmission-remote -l | grep 100% | grep Done | \
   awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r;
 }
-alias tsmsite="chromium http://localhost:9091" # open transmission site
+alias tsmsite="$BROWSER http://localhost:9091" # open transmission site
 alias tsmdaemon="transmission-daemon -c ~/Downloads"
 
 alias tsmwatch="W transmission-remote -l"

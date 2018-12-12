@@ -82,8 +82,11 @@ alias randomnum="shuf -n 1 -i" # As range: 1-100
 alias imgweek="$BROWSER https://getcomics.info/tag/image-week/"
 alias explained="$BROWSER https://www.imdb.com/title/tt8005374/episodes"
 alias letsplay="$BROWSER https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
+alias are3="$BROWSER https://1337x.to/search/adam+ruins+everything+s03/1/"
+
 alias pewds="ytdl $1 $2 https://www.youtube.com/user/PewDiePie/videos"
 alias pyro="ytdl $1 $2 https://www.youtube.com/user/Pyrocynical/videos"
+alias -g PE="--playlist-end"
 
 function extract() {
   if [ -f $1 ]; then

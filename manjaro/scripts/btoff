@@ -1,0 +1,5 @@
+
+#! /bin/bash
+
+echo -e "power off\nquit" | bluetoothctl
+

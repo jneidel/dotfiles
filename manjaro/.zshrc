@@ -22,6 +22,7 @@ export KEYTIMEOUT=1
 
 export EDITOR=vim
 export BROWSER=/usr/bin/firefox-nightly
+export B=$BROWSER
 
 source ~/.zsh/init.zsh;
 
