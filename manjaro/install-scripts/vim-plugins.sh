@@ -22,10 +22,11 @@ sudo make install;
 cd ..;
 rm -rf ctags;
 
-echo "install syntax plugins (js, js-libs, pug)"
-git clone https://github.com/jelera/vim-javascript-syntax.git $VB/javascript-syntax;
-git clone https://github.com/othree/javascript-libraries-syntax.vim.git $VB/javascript-libs-syntax;
-git clone https://github.com/digitaltoad/vim-pug.git $VB/pug-syntax;
+echo "install syntax plugins (js, js-libs, pug, html)"
+git clone https://github.com/jelera/vim-javascript-syntax.git $VB/syntax-javascript;
+git clone https://github.com/othree/javascript-libraries-syntax.vim.git $VB/syntax-javascript-libs;
+git clone https://github.com/digitaltoad/vim-pug.git $VB/syntax-pug;
+git clone https://github.com/othree/html5.vim.git $VB/syntax-html5;
 
 echo "install tern"
 git clone https://github.com/ternjs/tern_for_vim.git $VB/tern;
@@ -46,18 +47,21 @@ cd $VB/command-t/ruby/command-t/ext/command-t;
 ruby extconf.rb
 make;
 
-echo "install syntastic, eslint (dependency)"
-git clone --depth=1 https://github.com/vim-syntastic/syntastic.git $VB/syntastic;
-npm i -g eslint;
-
 echo "install fugitive"
 git clone https://github.com/tpope/vim-fugitive.git $VB/fugitive;
 
 echo "install nerdcommenter"
 git clone https://github.com/scrooloose/nerdcommenter.git $VB/nerdocommenter;
 
-echo "install simple-pairs"
-git clone https://github.com/vim-scripts/simple-pairs.git $VB/simple-pairs;
+echo "install numbers"
+git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers;
+
+echo "install tabular"
+git clone git://github.com/godlygeek/tabular.git $VB/tabular;
+
+# echo "install syntastic, eslint (dependency)"
+# git clone --depth=1 https://github.com/vim-syntastic/syntastic.git $VB/syntastic;
+# npm i -g eslint;
 
 #echo "install YouCompleteMe"
 #git clone https://github.com/Valloric/YouCompleteMe.git $VB/YouCompleteMe;
@@ -74,10 +78,4 @@ git clone https://github.com/vim-scripts/simple-pairs.git $VB/simple-pairs;
 #cmake -G "Unix Makefiles" . ../third_party/ycmd/third_party/cregex;
 #cmake --build . --target _regex --config Release;
 #npm install --production --prefix=third_party/ycmd/third_party/tern_runtime;
-
-echo "install numbers"
-git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers;
-
-echo "install tabular"
-git clone git://github.com/godlygeek/tabular.git $VB/tabular;
 
