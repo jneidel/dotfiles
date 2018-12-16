@@ -1,0 +1,12 @@
+[user]
+	name = Jonathan Neidel
+	email = github@jneidel.com
+	signingkey = 7dfd16fa
+[core]
+	excludesfile = ~/.gitignore
+[alias]
+  s = status
+  b = branch
+  l = log --oneline --graph --decorate
+  ref = reflog
+
