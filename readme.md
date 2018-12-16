@@ -42,7 +42,7 @@ View aliases: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/os
 
 [View zsh-theme](https://raw.githubusercontent.com/jneidel/dotfiles/master/cobalt2.zsh-theme) - `~/.oh-my-zsh/themes/cobalt2.zsh-theme`
 
-For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/robbyrussell/oh-my-zsh).
+For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/powerline/fonts).
 The font will need to be installed on the device and activated in the iTerm options: `Profiles > Text > Font > Change Font`.
 
 To change the `$` default prompt in the shell, open `~/.oh-my-zsh/themes/cobalt2.zsh-theme` and edit line 52, changing the value between the closing parens and double quote:
