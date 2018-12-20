@@ -237,8 +237,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 
 | name | description | links |
 |--|--|--|
-| keepass-http | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) [github](https://github.com/pfn/passifox/) |
-| ColorZilla | Color picker | [chrome](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) |
+| KeePassXC-Browser | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk) [github](https://github.com/keepassxreboot/keepassxc-browser) |
 | Hover Zoom+ | Large overlay on image and link to image hover | [chrome](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
 | StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
 | Toby | Better bookmark manager | [chrome](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
@@ -252,25 +251,26 @@ I use **Arc Dark** as I based my terminal colorscheme on it.
 
 ### Android
 
-F-Droid is a software repository hosting free and mostly open source apps. If available always try to use F-Droid over the google-playstore. Read more on [F-Droid](https://f-droid.org/).
+F-Droid is a software repository hosting free and (mostly) open source apps. If available always try to use F-Droid over the google play store. Read more on [F-Droid](https://f-droid.org/).
 
 | name | description | links |
 |--|--|--|
-| Anki | Flashcards | [f-droid](https://f-droid.org/en/packages/com.ichi2.anki/) [google-play](https://play.google.com/store/apps/details?id=com.ichi2.anki) [github](https://github.com/ankidroid/Anki-Android) |
-| Audipo | Audioplayer optimized for podcasts (speed, skipping) | [google-play](https://play.google.com/store/apps/details?id=jp.ne.sakura.ccice.audipo) |
-| Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [google-play](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
-| CamScanner | Document scanner | [google-play](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
-| dict.cc | Offline dictionary | [google-play](https://play.google.com/store/apps/details?id=cc.dict.dictcc) |
-| ES File Explorer | File explorer | [google-play](https://play.google.com/store/apps/details?id=com.estrongs.android.pop.pro) |
-| FBReader | Ebook reader | [f-droid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [google-play](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [github](https://github.com/geometer/FBReaderJ) |
-| HiPER Calc | Superior calculator | [google-play](https://play.google.com/store/apps/details?id=cz.hipercalc.pro) |
-| Markor | Markdown editor | [f-droid](https://f-droid.org/en/packages/net.gsantner.markor/) [google-play](https://play.google.com/store/apps/details?id=net.gsantner.markor) [github](https://github.com/gsantner/markor) |
-| My Expenses | Expense/income tracker, with exports | [f-droid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [google-play](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [github](https://github.com/mtotschnig/MyExpenses) |
-| MX Player | Video player | [google-play](https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.pro) |
-| Signal | End to end encrypted chat | [google-play](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) [github](https://github.com/signalapp/Signal-Android) |
-| Time Meter | Smooth time tracker, with exports  | [google-play](https://play.google.com/store/apps/details?id=com.rk.timemeter) |
-| Todoist | Todo list for all platforms | [google-play](https://play.google.com/store/apps/details?id=com.todoist) |
-| Relaxio | White-noise generator | [google-play](https://play.google.com/store/apps/details?id=net.relaxio.relaxio) |
+| Signal | End to end encrypted chat | [g-play](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) [github](https://github.com/signalapp/Signal-Android) |
+| Vinyl Music Player | Music player | [f-droid](https://f-droid.org/packages/com.poupa.vinylmusicplayer/) [g-play](https://play.google.com/store/apps/details?id=com.poupa.vinylmusicplayer) [github](https://github.com/AdrienPoupa/VinylMusicPlayer) |
+| Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [g-play](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
+| dict.cc | Offline dictionary | [g-play](https://play.google.com/store/apps/details?id=cc.dict.dictcc) |
+| FBReader | Ebook reader | [f-droid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [g-play](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [github](https://github.com/geometer/FBReaderJ) |
+| ES File Explorer | File explorer | [g-play](https://play.google.com/store/apps/details?id=com.estrongs.android.pop.pro) |
+| Anki | Flashcards | [f-droid](https://f-droid.org/en/packages/com.ichi2.anki/) [g-play](https://play.google.com/store/apps/details?id=com.ichi2.anki) [github](https://github.com/ankidroid/Anki-Android) |
+| Markor | Markdown editor | [f-droid](https://f-droid.org/en/packages/net.gsantner.markor/) [g-play](https://play.google.com/store/apps/details?id=net.gsantner.markor) [github](https://github.com/gsantner/markor) |
+| Audipo | Audioplayer optimized for podcasts (speed, skipping) | [g-play](https://play.google.com/store/apps/details?id=jp.ne.sakura.ccice.audipo) |
+| CamScanner | Document scanner | [g-play](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
+| HiPER Calc | Superior calculator | [g-play](https://play.google.com/store/apps/details?id=cz.hipercalc.pro) |
+| MX Player | Video player | [g-play](https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.pro) |
+| Time Meter | Smooth time tracker, with exports  | [g-play](https://play.google.com/store/apps/details?id=com.rk.timemeter) |
+| Todoist | Todo list for all platforms | [g-play](https://play.google.com/store/apps/details?id=com.todoist) |
+| Relaxio | White-noise generator | [g-play](https://play.google.com/store/apps/details?id=net.relaxio.relaxio) |
+| My Expenses | Expense/income tracker, with exports | [f-droid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [g-play](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [github](https://github.com/mtotschnig/MyExpenses) |
 
 ## Related
 

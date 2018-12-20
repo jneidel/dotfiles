@@ -30,7 +30,7 @@ tsmclear() { # remove finished torrents
 alias tsmsite="$BROWSER http://localhost:9091" # open transmission site
 alias tsmdaemon="transmission-daemon -c ~/Downloads"
 
-alias tsmwatch="W transmission-remote -l"
+alias tsmwatch="watch -t -n .7 transmission-remote -l"
 alias tsmw="tsmwatch"
 
 alias tsmdone='tsm G "Done" G -v "None" G -v "ETA" HL "done"'
