@@ -26,7 +26,7 @@ wget https://github.com/powerline/fonts/blob/master/RobotoMono/Roboto%20Mono%20M
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # vim
-mkdir -p ~/.vim/backup ~/.vim/swap
+mkdir -p ~/.vim/backup ~/.vim/swap ~/.vim/tmp
 ## colors
 mkdir -p ~/.vim/autoload ~/.vim/colors
 wget https://raw.githubusercontent.com/j-tom/vim-old-hope/master/autoload/oldhope.vim -O ~/.vim/autoload/oldhope.vim
