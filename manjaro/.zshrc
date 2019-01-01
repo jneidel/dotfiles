@@ -8,9 +8,11 @@ source $OMZ/oh-my-zsh.sh
 source $OMZ/themes/cobalt2.zsh-theme;
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-## General
-USER_DIR="/home/jneidel" # ~
+## User specific
+export USER_DIR="/home/jneidel" # ~
+export KEYID=B29E6A7A7DFD16FA # GPG keyid
 
+## General
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 

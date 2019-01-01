@@ -3,22 +3,21 @@
 ## cli
 
 ### programming
-alias readme="chrome http://localhost:7777/ &; grip -b 7777" # render readme.md with github styles
+alias readme="$BROWSER http://localhost:7777/ &; grip -b 7777" # render readme.md with github styles
 alias py="python"
 alias color="gcolor2"
 
 ### download
-alias manga="mangareader-dl --debug" # manga downloader
-alias mangaup="mangareader-dl update --silent 1>> ~/manga/updates 2>&1 &"
+alias manga="mangareader-dl --debug"
+alias mangaup="manga update --silent 1>> ~/manga/updates 2>&1 &"
 alias mangala="manga update check"
-alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 alias comic="getcomics-dl"
-
+alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 #### youtube-dl
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
-alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
-alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1"
+alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
+alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height
 
 ### misc
 alias dict="dict-cc"
