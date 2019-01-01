@@ -1,0 +1,22 @@
+#! /bin/bash
+
+DIR=$1
+DIRTAR=$DIR".tgz"
+KEY=$KEYID # Global gpg keyid set in ~/.zshrc
+
+if [ -d $DIR ]; then
+  echo "Start archiving"
+  tar czf $DIRTAR $DIR
+  echo "Start encryption"
+  gpg -r $KEY -e $DIRTAR
+  echo "Cleanup"
+  rm $DIRTAR 
+elif [ $DIR = "--help" ]; then
+  echo "$ targpg <directory>"
+  echo "Will compress directory and then encrypt it."
+  echo "Reverse with untargpg"
+else
+  echo "Not a directory."
+  echo "Pass --help for usage info."
+fi
+

@@ -1,0 +1,24 @@
+#! /bin/bash
+
+DIRTARGPG=$1
+DIR=$(echo $DIRTARGPG | cut -d "." -f 1)
+TAR=$(echo $DIRTARGPG | cut -d "." -f 2)
+GPG=$(echo $DIRTARGPG | cut -d "." -f 3)
+DIRTAR=$DIR"."$TAR
+
+if [ $TAR = "tgz" ] && [ $GPG = "gpg" ]; then
+  echo "Start decryption"
+  cat $DIRTARGPG | gpg -d > $DIRTAR
+  echo "Start unarchiving"
+  tar xzf $DIRTAR $DIR
+  echo "Cleanup"
+  rm $DIRTAR
+elif [ $DIR = "--help" ]; then
+  echo "$ untargpg x.tgz.gpg"
+  echo "Will decrypt tar archive and then untar it."
+  echo "Reverse with targpg"
+else
+  echo "Not a encrypted tar archive."
+  echo "Pass --help for usage info."
+fi
+
