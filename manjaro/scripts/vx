@@ -1,0 +1,13 @@
+#! /bin/bash
+
+if [ $1 = "--help" ] || [ $1 = "-h" ]; then
+  echo "$ vx <new-script-name>"
+  echo "Open new executable file in vim."
+  echo "Example: $ vx connect.sh"
+else
+  FILE=$1
+  echo "" > $FILE
+  chmod +x $FILE
+  vim $FILE
+fi
+

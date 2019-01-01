@@ -1,12 +1,4 @@
 #! /bin/bash
 
-#fkill pulseaudio;
-pulseaudio --start;
-echo -e "power on\nquit" | bluetoothctl
-
-while [ 1 -eq 1 ]
-do
-  echo -e "connect B8:D5:0B:EA:D9:A6\nquit" | bluetoothctl
-  sleep 1
-done
+connectbt "B8:D5:0B:EA:D9:A6"
 
