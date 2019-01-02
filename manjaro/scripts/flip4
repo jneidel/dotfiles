@@ -1,4 +1,4 @@
 #! /bin/bash
 
-connectbt "B8:D5:0B:EA:D9:A6"
+btconnect "B8:D5:0B:EA:D9:A6"
 
