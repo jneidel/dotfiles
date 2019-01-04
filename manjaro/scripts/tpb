@@ -11,7 +11,8 @@
 # you can add -- at the end to indicate end of options
 # (if your program supports it, most do)
 program='/usr/bin/transmission-remote -a'
-TPB="http://thepiratebay.unblockthe.net"
+TPB="https://pirateproxy.life"
+#TPB="http://thepiratebay.unblockthe.net"
 
 # show N first matches by default
 limit=30

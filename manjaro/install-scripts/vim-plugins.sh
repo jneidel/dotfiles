@@ -22,11 +22,12 @@ sudo make install;
 cd ..;
 rm -rf ctags;
 
-echo "install syntax plugins (js, js-libs, pug, html)"
+echo "install syntax plugins (js, js-libs, pug, html, ts)"
 git clone https://github.com/jelera/vim-javascript-syntax.git $VB/syntax-javascript;
 git clone https://github.com/othree/javascript-libraries-syntax.vim.git $VB/syntax-javascript-libs;
 git clone https://github.com/digitaltoad/vim-pug.git $VB/syntax-pug;
 git clone https://github.com/othree/html5.vim.git $VB/syntax-html5;
+git clone https://github.com/leafgarland/typescript-vim.git $VB/syntax-typescript
 
 echo "install tern"
 git clone https://github.com/ternjs/tern_for_vim.git $VB/tern;

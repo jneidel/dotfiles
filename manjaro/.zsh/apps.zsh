@@ -27,6 +27,7 @@ alias wifipass="npx wifi-password-cli" # print wifi pass
 alias gdrive="sh ~/.drive/update.sh" # sync google drive, after encrypting the files
 alias f="cd /; fd"
 alias speed="npx speedo-cli"
+alias npmup="npm-check-updates"
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"
