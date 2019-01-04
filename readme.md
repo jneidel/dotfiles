@@ -71,12 +71,9 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 View vim config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
 
+[View plugins](vim.md)
+
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
-
-**Plugins:**
-
-- [NERDTree](https://github.com/scrooloose/nerdtree)
-- [MiniBufExpl](https://github.com/fholgado/minibufexpl.vim)
 
 ### Tmux (terminal mutiplexer)
 
