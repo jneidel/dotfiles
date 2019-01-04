@@ -99,8 +99,8 @@ Once globally installed, run anywhere:
 ```zsh
 $ eslint --fix
 # or via aliases
-$fix <file/dir>
-$fixa
+$ fix <file/dir>
+$ fixa
 ```
 
 Requires eslint, as well as a few plugins to be installed globally:
