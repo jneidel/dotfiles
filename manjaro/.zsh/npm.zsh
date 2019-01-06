@@ -3,11 +3,11 @@
 ## install
 alias ni="npm install"
 alias nid="npm install --save-dev"
-alias nig="npm install -g"
+alias nig="sudo npm install -g"
 
 ## uninstall
 alias nu="npm uninstall"
-alias nug="npm uninstall -g"
+alias nug="sudo npm uninstall -g"
 
 ## run
 alias nr="npm run"

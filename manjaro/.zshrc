@@ -16,7 +16,7 @@ export KEYID=B29E6A7A7DFD16FA # GPG keyid
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export PATH=~/.bin:~/.bin/node-latest/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.bin/ruby-latest/bin:~/scripts
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.bin/ruby-latest/bin:~/scripts:~/.bin
 export CDPATH=.:~:~/code
 
 bindkey -v # shell vim mode (default emacs)

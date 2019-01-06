@@ -28,6 +28,7 @@ alias gdrive="sh ~/.drive/update.sh" # sync google drive, after encrypting the f
 alias f="cd /; fd"
 alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
+alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"
