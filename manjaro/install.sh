@@ -22,7 +22,7 @@ prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu
 prompt 'install packer' 'yaourt -S packer-aur'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
-prompt 'pacman/aur-apps' 'packer-aur -S cmus fd keepassxc terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip xflux arandr arc-gtk-theme rofi mosh python-pip gcc beets manjaro-pulse pulseaudio pulsemixer pulseaudio-bluetooth swh-plugins sxiv gwenview apvlv figlet'
+prompt 'pacman/aur-apps' 'packer-aur -S cmus fd keepassxc terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip xflux arandr arc-gtk-theme rofi mosh python-pip gcc beets manjaro-pulse pulseaudio pulsemixer pulseaudio-bluetooth swh-plugins sxiv gwenview apvlv figlet pjson'
 
 # Specific case apps
 prompt 'firefox' 'packer-aur -S firefox-nightly'

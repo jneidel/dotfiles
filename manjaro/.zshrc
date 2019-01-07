@@ -17,7 +17,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.bin/ruby-latest/bin:~/scripts:~/.bin
-export CDPATH=.:~:~/code
+export CDPATH=.:~:~/code:~/Downloads:~/ct
 
 bindkey -v # shell vim mode (default emacs)
 export KEYTIMEOUT=1
