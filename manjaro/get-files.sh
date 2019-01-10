@@ -17,6 +17,7 @@ cp ~/.config/Zeal/Zeal.conf $C/Zeal/Zeal.conf;
 cp ~/.zshrc $D/.zshrc;
 rm -rf $C/nitrogen;
 cp -r ~/.config/nitrogen $C/nitrogen;
+cp ~/.config/pulse/default.pa $C/pulse/;
 cp ~/.i3status.conf $D/.i3status.conf;
 cp ~/.config/transmission/settings.json $C/transmission/;
 cp ~/.config/transmission-daemon/settings.json $C/transmission-daemon/;
@@ -29,6 +30,13 @@ cp -r ~/.tmux $D/.tmux;
 cp ~/.cmus/rc $D/.cmus/rc;
 cp ~/.cmus/cmus.theme $D/.cmus/cmus.theme;
 cp ~/.config/beets/config.yaml $C/beets/;
-cp ~/.config/pulse/default.pa $C/pulse/;
 cp ~/.drive/update.sh $D/.drive/update.sh;
+mkdir -p $D/.calcurse;
+cp ~/.calcurse/keys $D/.calcurse/;
+cp ~/.calcurse/conf $D/.calcurse/;
+mkdir -p $D/etc
+cp /etc/hosts $D/etc/hosts
+mkdir -p $C/vis;
+cp -r ~/.config/vis/colors $C/vis/;
+cp ~/.config/vis/config $C/vis/;
 

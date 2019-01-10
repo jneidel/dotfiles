@@ -44,7 +44,7 @@ alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 ## suffixes
 # open files of type x with application y
 # usage: $ doc.pdf -> opens in epdfview
-alias -s pdf=apvlv #epdfview
+alias -s pdf=apvlv #epdfview, mupdf
 alias -s epub=FBReader
 alias -s mobi=FBReader
 alias -s cbz=YACReader

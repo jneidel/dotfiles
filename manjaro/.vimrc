@@ -69,6 +69,7 @@ au CursorHold * checktime
   hi SpellCap ctermbg=none
 
 source ~/.vim/config/plugins.vim
+source ~/.vim/config/ide.vim
 
 " iab jn jneidel
 
@@ -112,4 +113,6 @@ endif
 " Create session automatically on leave
 au VimLeave * :call MakeSession()
 
-
+" Calcurse notes buffer md syntax
+autocmd BufRead,BufNewFile /tmp/calcurse* set filetype=markdown
+autocmd BufRead,BufNewFile ~/.calcurse/notes* set filetype=markdown

@@ -6,7 +6,7 @@ if [ $1 = "--help" ] || [ $1 = "-h" ]; then
   echo "Example: $ vx connect.sh"
 else
   FILE=$1
-  echo "" > $FILE
+  echo "#! /bin/bash" > $FILE
   chmod +x $FILE
   vim $FILE
 fi

@@ -60,6 +60,9 @@ git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers;
 echo "install tabular"
 git clone git://github.com/godlygeek/tabular.git $VB/tabular;
 
+echo "install vim-tmux-navigator"
+git clone https://github.com/christoomey/vim-tmux-navigator.git $VB/tmux-vim-navigator;
+
 # echo "install syntastic, eslint (dependency)"
 # git clone --depth=1 https://github.com/vim-syntastic/syntastic.git $VB/syntastic;
 # npm i -g eslint;
