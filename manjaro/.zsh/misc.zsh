@@ -62,7 +62,7 @@ function extractmo() {
     TITLE=$(trim $TITLE)
     id3tag -s $TITLE *$TITLE*.mp3
     mid3v2 --TPE2 "Monstercat" -A "Mixed" *$TITLE*.mp3
-    mv *$TITLE*.mp3 ~/music/Singles/Monstercat\ -\ Mixed/
+    mv *$TITLE*.mp3 ~/music/Singles/Monstercat-Current
   done
 }
 function extractmoep() {

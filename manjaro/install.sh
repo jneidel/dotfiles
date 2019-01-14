@@ -15,14 +15,14 @@ prompt 'zsh' 'sh -c "$( curl -fsSL $SCRIPTS'/zsh.sh' )"'
 prompt 'configurations' 'sh -c "$( curl -fsSL $SCRIPTS'/configs.sh' )"'
 prompt 'node' 'sh -c "$( curl -fsSL $SCRIPTS'/node.sh' )"'
 
-prompt 'npm-apps' 'npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo'
+prompt 'npm-apps' 'npm install -g ava concurrently dict-cc-cli eslint fkill-cli markdown-toc nodemon np npm-name-cli tslide yo typescript mangareader-dl browser-sync npm-check-updates webpack webpack-cli eslint-config-xo eslint-plugin-ava eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json generator-jneidel markdown-toc npm-name-cli'
 
 prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu'
 
 prompt 'install packer' 'yaourt -S packer-aur'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
-prompt 'pacman/aur-apps' 'packer-aur -S cmus fd keepassxc terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip xflux arandr arc-gtk-theme rofi mosh python-pip gcc beets manjaro-pulse pulseaudio pulsemixer pulseaudio-bluetooth swh-plugins sxiv gwenview apvlv figlet pjson'
+prompt 'pacman/aur-apps' 'packer-aur -S cmus fd keepassxc terminator vlc zeal gdb htop tmux unzip xorg-xmodmap zsh-syntax-highlighting bluez-utils zip xflux arandr arc-gtk-theme rofi mosh python-pip gcc beets manjaro-pulse pulseaudio pulsemixer pulseaudio-bluetooth swh-plugins sxiv gwenview apvlv figlet pjson entr'
 
 # Specific case apps
 prompt 'firefox' 'packer-aur -S firefox-nightly'

@@ -22,12 +22,13 @@ sudo make install;
 cd ..;
 rm -rf ctags;
 
-echo "install syntax plugins (js, js-libs, pug, html, ts)"
+echo "install syntax plugins (js, js-libs, pug, html, ts, i3)"
 git clone https://github.com/jelera/vim-javascript-syntax.git $VB/syntax-javascript;
 git clone https://github.com/othree/javascript-libraries-syntax.vim.git $VB/syntax-javascript-libs;
 git clone https://github.com/digitaltoad/vim-pug.git $VB/syntax-pug;
 git clone https://github.com/othree/html5.vim.git $VB/syntax-html5;
 git clone https://github.com/leafgarland/typescript-vim.git $VB/syntax-typescript
+git clone https://github.com/PotatoesMaster/i3-vim-syntax.git $VB/syntax-i3
 
 echo "install tern"
 git clone https://github.com/ternjs/tern_for_vim.git $VB/tern;
@@ -62,6 +63,9 @@ git clone git://github.com/godlygeek/tabular.git $VB/tabular;
 
 echo "install vim-tmux-navigator"
 git clone https://github.com/christoomey/vim-tmux-navigator.git $VB/tmux-vim-navigator;
+
+echo "install goyo"
+git clone https://github.com/junegunn/goyo.vim $VB/goyo;
 
 # echo "install syntastic, eslint (dependency)"
 # git clone --depth=1 https://github.com/vim-syntastic/syntastic.git $VB/syntastic;

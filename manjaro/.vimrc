@@ -6,7 +6,7 @@ set t_Co=256
 colorscheme old-hope
 
 "## Lines
-set number
+set number relativenumber
 set ruler
 set cursorline
 
@@ -33,8 +33,25 @@ set viminfo=%,'50,\"100,:100,n~/.viminfo
 
 "## Search
 set ic  " Ignore case
-set hls " Highlight matches 
+set hls " Highlight matches
 set is  " Highlight during writing
+
+" Enable autocomplete
+set wildmode=longest,list,full
+
+" Automatically deletes all trailing whitespace on save.
+autocmd BufWritePre * %s/\s\+$//e
+
+" Disable automatic commenting on newline
+" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" ^ not working
+
+" Spell-check set to <leader>o, 'o' for 'orthography'
+"map <leader>o :setlocal spell! spelllang=en_us<CR>
+" ^ not working
+
+" Run xrdb whenever Xdefaults or Xresources are updated.
+autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
 "## Windows
 " Remapping ctrl + w + <movement> to ctrl + <movement> for easier window movement
@@ -60,7 +77,7 @@ au CursorHold * checktime
 " Number of splits, next to tab
   hi Title ctermfg=Yellow
 
-" Spellchecking for Markdown files 
+" Spellchecking for Markdown files
   autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
 " Wrongly spelled words
   hi SpellBad ctermbg=167
@@ -69,7 +86,7 @@ au CursorHold * checktime
   hi SpellCap ctermbg=none
 
 source ~/.vim/config/plugins.vim
-source ~/.vim/config/ide.vim
+source ~/.vim/config/macros.vim
 
 " iab jn jneidel
 
@@ -93,7 +110,7 @@ function! MakeSession()
   let b:filename = b:sessiondir . '/session.vim'
   exe "mksession! " . b:filename
 endfunction
-                    
+
 function! LoadSession()
   let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
   let b:sessionfile = b:sessiondir . "/session.vim"
@@ -105,7 +122,7 @@ function! LoadSession()
 endfunction
 " source make/load session:
 " https://stackoverflow.com/questions/1642611/how-to-save-and-restore-multiple-different-sessions-in-vim#1642641
-                                          
+
 " Load session automatically if no filename is provided
 if(argc() == 0)
   au VimEnter * nested :call LoadSession()

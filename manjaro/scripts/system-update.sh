@@ -9,9 +9,10 @@ else
   sudo pacman -Syu;
 fi
 
-echo " "
+echo ":: updating global npm packages..."
+sudo npm -g upgrade
+
 echo ":: update complete..."
-echo " "
 sleep 2s
 
 # function to check for and remove orphan packages

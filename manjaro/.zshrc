@@ -3,10 +3,11 @@
 ## Oh-my-zsh
 OMZ=~/.oh-my-zsh;
 HIST_STAMP="dd.mm.yyyy"
-plugins=( z encode64 urltools )
 source $OMZ/oh-my-zsh.sh
 source $OMZ/themes/cobalt2.zsh-theme;
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+_Z_DATA=$HOME/.z/.z
+plugins=( z encode64 urltools )
 
 ## User specific
 export USER_DIR="/home/jneidel" # ~

@@ -81,3 +81,6 @@ let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
 
+"## Goyo
+nmap <leader>gy :Goyo<cr>
+

@@ -29,6 +29,7 @@ alias f="cd /; fd"
 alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
+alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"

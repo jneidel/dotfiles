@@ -58,6 +58,7 @@ bindsym $mod+Ctrl+m exec terminator -e 'pulsemixer'
 bindsym $mod+F2 exec firefox-nightly
 bindsym $mod+F3 exec terminator -e 'mosh k'
 bindsym $mod+F4 exec terminator -e 'ranger ~'
+bindsym $mod+F5 exec terminator -e 'calcurse'
 bindsym $mod+F8 exec terminator -e 'cmus'
 bindsym $mod+F9 exec terminator -e 'keepassxc'
 
