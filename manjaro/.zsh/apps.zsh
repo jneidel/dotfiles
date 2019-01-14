@@ -18,18 +18,18 @@ alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
+alias -g PE="--playlist-end"
 
 ### misc
 alias dict="dict-cc"
 alias tree="alder --depth 3" # print filetree
 alias flux="xflux -l 52 -g 13" # bluelight filter
 alias wifipass="npx wifi-password-cli" # print wifi pass
-alias gdrive="sh ~/.drive/update.sh" # sync google drive, after encrypting the files
-alias f="cd /; fd"
 alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
+alias wv="vlc --audio-desync=-250"
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"
