@@ -1,6 +1,7 @@
 todo.md
 node_modules/
 personal.zsh
+*.prog.md
 
 */.vim/swap/*
 */.vim/backup/*
