@@ -1,8 +1,8 @@
 # eslint
 
 ## fix
-alias fix="eslint --fix --ext .js" #, .json"
-alias fixa="eslint . --fix --ext .js" #, .json"
+alias fix="eslint --fix"
+alias fixa="eslint . --fix"
 
 ## create markdown toc
 alias toc="markdown-toc -i *.md"

@@ -3,7 +3,7 @@
 ## cli
 
 ### programming
-alias readme="$BROWSER http://localhost:7777/ &; grip -b 7777" # render readme.md with github styles
+alias readme="grip -b 7777" # render readme.md with github styles
 alias py="python"
 alias color="gcolor2"
 
@@ -29,7 +29,7 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
-alias wv="vlc --audio-desync=-250"
+alias vv="vlc --audio-desync=-250"
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"

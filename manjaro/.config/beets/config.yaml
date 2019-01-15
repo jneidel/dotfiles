@@ -14,5 +14,5 @@ paths:
       albumtype:soundtrack: Soundtracks/$album/$track. $artist - $title
 asciify_paths: yes
 art_filename: cover
-plugins: fetchart embedart
+plugins: fetchart embedart lyrics
 

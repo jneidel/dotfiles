@@ -32,6 +32,7 @@ function trim(){
   VAR="$(echo -e "${VAR}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
   echo -n $VAR
 }
+alias macros="vim ~/.vim/config/macros.vim"
 
 # Globals
 ## Readers

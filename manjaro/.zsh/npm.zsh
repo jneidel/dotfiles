@@ -4,6 +4,22 @@
 alias ni="npm install"
 alias nid="npm install --save-dev"
 alias nig="sudo npm install -g"
+function nit {
+  npm install --save-dev "@types/$1";
+}
+function nitt {
+  PKG=$1
+
+  if [ -z $PKG ]; then {
+    echo "Install npm packages as well as its types locally."
+    echo "$ nit <package-name>"
+    echo "Please include a package to install."
+    exit
+  } fi
+
+  npm install $PKG;
+  npm install --save-dev "@types/$PKG";
+}
 
 ## uninstall
 alias nu="npm uninstall"
