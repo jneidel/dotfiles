@@ -44,4 +44,5 @@
 ## Entertainment
 
 - How Wrestling tells unique stories: [Why Professional Wrestling is Fascinating](https://www.youtube.com/watch?v=BQCPj-bGYro)
+- Building a hut from scratch in the wild (Subtitles for commentary): [Primitive Technology: Tiled Roof Hut](https://www.youtube.com/watch?v=P73REgj-3UE)
 

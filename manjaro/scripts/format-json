@@ -1,0 +1,12 @@
+#! /usr/bin/env node
+
+const fs = require( "fs" );
+const path = require( "path" )
+
+const file = process.argv[2]
+const d = require( path.resolve( process.cwd(), file ) );
+
+console.log("Formatting:", file)
+
+fs.writeFileSync( file, JSON.stringify( d, null, 2 ) );
+

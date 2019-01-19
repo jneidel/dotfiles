@@ -85,8 +85,7 @@ au CursorHold * checktime
   hi SpellLocal ctermbg=none
   hi SpellCap ctermbg=none
 
-source ~/.vim/config/plugins.vim
-source ~/.vim/config/macros.vim
+source ~/.vim/config/init.vim
 
 " iab jn jneidel
 

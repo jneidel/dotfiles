@@ -50,13 +50,16 @@ if [ -e ~/scripts/hhighlighter.sh ]; then
   alias -g HL="| hhighlighter -i"
 fi
 
+## Format
+alias -g PP="| pjson"
+
 ## Redirect
 alias -g NE="2> /dev/null" # swallow errors
 alias -g NUL="> /dev/null 2>&1" # errors only
 
 # Links
-alias imgweek="$BROWSER https://getcomics.info/tag/image-week/"
-alias letsplay="$BROWSER https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
+alias imgweek="$B https://getcomics.info/tag/image-week/"
+alias letsplay="$B https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
 
 # Extract/tag/move monstercat songs
 function extractmo() {

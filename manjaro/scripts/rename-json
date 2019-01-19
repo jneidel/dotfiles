@@ -1,0 +1,107 @@
+#! /usr/bin/env node
+
+const fs = require( "fs" );
+const path = require( "path" );
+
+const field = process.argv[2];
+const newName = process.argv[3];
+const fileName = process.argv[4];
+
+if ( field === "--help" || field === "help" ) {
+  console.log( `$ rename-json <field-name> <new-name> <file>
+Rename a field in a json file.
+Works both in a single object '{}' or an array of objects '[{},{}]'.
+Renames recursively using '.' to specify child property.
+
+Parameters:
+$1: field to rename
+$2: new name
+$3: file name
+
+Example:
+  Normal:
+    $ rename-json id name tasks.json
+  Before: {
+    "id": 123,
+  }
+  After: {
+    "name": 123,
+  }
+  Recursive:
+    $ rename-json comments.id name tasks.json
+  Before: {
+    "comments": [
+      {
+        "id": 123,
+        "content": "here"
+      }
+    ]
+  }
+  After: {
+    "comments": [
+      {
+        "name: 123,
+        "content": "here"
+      }
+    ]
+  }` );
+  process.exit();
+} else if ( field === undefined ) {
+  console.log( "Missing parameter: field to rename\nSpecify --help for help" );
+  process.exit();
+} else if ( newName === undefined ) {
+  console.log( "Missing parameter: new name\nSpecify --help for help" );
+  process.exit();
+} else if ( fileName === undefined ) {
+  console.log( "Missing parameter: file\nSpecify --help for help" );
+  process.exit();
+} else if ( typeof field !== "string" || typeof newName !== "string" ) {
+  console.log( "Wrong parameter: field/new name have to be a strings\nSpecify --help for help" );
+  process.exit();
+}
+
+const isNested = field => field.split( "." ).length >= 2;
+
+function filterObject( data, field ) {
+  if ( isNested( field ) ) {
+    const fields = field.split( "." );
+    const currentField = fields.shift();
+    field = fields.join( "." );
+
+    if ( data[currentField] !== undefined ) {
+      data[currentField] = handleArrayObject( data[currentField], field );
+      return data;
+    } else
+      return data;
+  } else {
+    data[newName] = data[field];
+    delete data[field];
+    return data;
+  }
+}
+function filterArray( data, field ) {
+  return data.map( x => filterObject( x, field ) );
+}
+
+function handleArrayObject( data, objField = field ) {
+  if ( Array.isArray( data ) )
+    data = filterArray( data, objField );
+  else
+    data = filterObject( data, objField );
+  return data;
+}
+
+try {
+  const dataPath = path.resolve( process.cwd(), fileName );
+  //let data = require( dataPath );
+  let data = JSON.parse(fs.readFileSync( dataPath))
+
+  data = handleArrayObject( data );
+
+  fs.writeFileSync( dataPath, JSON.stringify( data, null, 2 ) );
+} catch ( err ) {
+  console.log( "Wrong parameter: file does not exist or is not valid json\nSpecify --help for help\n" );
+  throw err;
+  process.exit();
+}
+

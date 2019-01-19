@@ -19,9 +19,11 @@ autocmd FileType html,pug inoremap ,c <code></code><Space><++><Esc>2T>i
 autocmd FileType markdown inoremap ,a [](<++>)<Space><++><Esc>F]i
 
 " JavaScript
-autocmd filetype javascript,typescript inoremap ,f function<Space>( <++> )<Space>{<Enter><++><Enter>}<Esc>2kf<2hi
+autocmd filetype javascript,typescript inoremap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
 autocmd filetype javascript,typescript inoremap ,o {<Enter>}<Esc>O
 autocmd filetype javascript,typescript inoremap ,i import<Space><Space>from<Space>"<++>";<++><Esc>Ffhi
+autocmd filetype javascript,typescript inoremap ,l console.log(<Space><Space>)<++><Esc>F(la
+autocmd filetype javascript,typescript inoremap ,t test(<Space>""<Space>,<Space>t<Space>=><Space>{<Enter><++><Enter>}<Space>);<Esc>02kf"a
 
 " Typescript
 autocmd filetype typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi

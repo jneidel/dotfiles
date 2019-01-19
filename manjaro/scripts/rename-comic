@@ -1,0 +1,36 @@
+#! /bin/bash
+
+COMIC=$1
+DIRECTORY=$2
+
+if [[ $COMIC = "--help" ]] || [[ $COMIC = "help" ]]; then {
+  echo "rename-comic: Rename and format comics (downloaded from getcomics.info)"
+  echo ""
+  echo "Input format:  Oblivion Song 011 (2019) (Digital) (Zone-Empire).cbr"
+  echo "Output format: oblivion-song-011.cbr"
+  echo ""
+  echo "Parameters:"
+  echo "\$1: comic path"
+  echo "\$2: output path (optional, default: same as input)"
+  echo ""
+  echo "Example:"
+  echo "$ rename-comic Downloads/Oblivion\ Song\ 011\ \(2019\)\ \(Digital\)\ \(Zone-Empire\).cbr ~/comics/oblivion-song"
+  echo "  Moving comic to ./Downloads/oblivion-song-011.cbr"
+  exit
+} fi
+
+if [[ -z $COMIC ]]; then {
+  echo "Missing parameter: comic path"
+  echo "Pass --help for help"
+  exit
+} fi
+if [[ -z $DIRECTORY ]]; then {
+  #echo "Using default output path: same as input"
+  DIRECTORY=.
+} fi
+
+NAME=$(format-comic-name.js "$COMIC")
+
+echo 'Moving comic to: '$DIRECTORY/$NAME
+mv "$COMIC" "$DIRECTORY/$NAME"
+

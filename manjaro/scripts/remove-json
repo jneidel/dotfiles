@@ -1,0 +1,101 @@
+#! /usr/bin/env node
+
+const fs = require( "fs" );
+const path = require( "path" );
+
+const field = process.argv[2];
+const fileName = process.argv[3];
+
+if ( field === "--help" || field === "help" ) {
+  console.log( `$ remove-json <field> <file>
+Remove a field in a json file.
+Works both in a single object '{}' or an array of objects '[{},{}]'.
+Removes recursively using '.' to specify child property.
+
+Parameters:
+  $1: field to remove
+  $2: file
+
+Example:
+  Normal:
+    $ remove-json id tasks.json
+  Before: {
+    "name": "task",
+    "id": 123,
+  }
+  After: {
+    "name": "task",
+  }
+  Recursive:
+    $ remove-json comments.id tasks.json
+  Before: {
+    "comments": [
+      {
+        "id": 123,
+        "content": "here"
+      }
+    ]
+  }
+  After: {
+    "comments": [
+      {
+        "content": "here"
+      }
+    ]
+  }` );
+  process.exit();
+} else if ( field === undefined ) {
+  console.log( "Missing parameter: field to remove\nSpecify --help for help" );
+  process.exit();
+} else if ( fileName === undefined ) {
+  console.log( "Missing parameter: file\nSpecify --help for help" );
+  process.exit();
+} else if ( typeof field !== "string" ) {
+  console.log( "Wrong parameter: field to remove has to be a string\nSpecify --help for help" );
+  process.exit();
+}
+
+const isNested = field => field.split( "." ).length >= 2;
+
+function filterObject( data, field ) {
+  if ( isNested( field ) ) {
+    const fields = field.split( "." );
+    const currentField = fields.shift();
+    field = fields.join( "." );
+
+    if ( data[currentField] !== undefined ) {
+      data[currentField] = handleArrayObject( data[currentField], field );
+      return data;
+    } else
+      return data;
+  } else {
+    delete data[field];
+    return data;
+  }
+}
+function filterArray( data, field ) {
+  return data.map( x => filterObject( x, field ) );
+}
+
+function handleArrayObject( data, objField = field ) {
+  if ( Array.isArray( data ) )
+    data = filterArray( data, objField );
+  else
+    data = filterObject( data, objField );
+  return data;
+}
+
+try {
+  const dataPath = path.resolve( process.cwd(), fileName );
+  //let data = require( dataPath );
+  let data = JSON.parse(fs.readFileSync( dataPath))
+
+  data = handleArrayObject( data );
+
+  fs.writeFileSync( dataPath, JSON.stringify( data, null, 2 ) );
+} catch ( err ) {
+  console.log( "Wrong parameter: file does not exist or is not valid json\nSpecify --help for help\n" );
+  throw err;
+  process.exit();
+}
+

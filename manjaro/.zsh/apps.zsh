@@ -20,6 +20,10 @@ alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
 alias -g PE="--playlist-end"
 
+### youtube-local
+alias yt="vim ~/scripts/yt/videos"
+alias ytup="~/scripts/yt/download-loop.sh"
+
 ### misc
 alias dict="dict-cc"
 alias tree="alder --depth 3" # print filetree
@@ -29,7 +33,9 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
-alias vv="vlc --audio-desync=-250"
+alias vv="vlc --audio-desync=-250 -q -f"
+alias rc="rename-comic"
+alias -g R="| entr -cp" # R[UN]
 
 #### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"
