@@ -22,17 +22,17 @@ export KEYTIMEOUT=1
 export USER_DIR="/home/jneidel" # ~
 export KEYID=B29E6A7A7DFD16FA # GPG keyid
 
+### Applications
+export EDITOR=vim
+export BROWSER=/usr/bin/firefox-nightly
+export B=$BROWSER
+
 ### Import aliases
 source ~/.zsh/init.zsh;
 
 ### Paths
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.bin/ruby-latest/bin:~/scripts:~/.bin
 export CDPATH=.:~:~/code:~/Downloads:~/ct
-
-### Applications
-export EDITOR=vim
-export BROWSER=/usr/bin/firefox-nightly
-export B=$BROWSER
 
 ## X related vars
 export XAUTHORITY=~/.Xauthority

@@ -35,7 +35,7 @@ bindsym $mod+Shift+q kill
 
 # start program launcher
 # bindsym $mod+d exec --no-startup-id dmenu_recency
-  bindsym $mod+d exec ~/code/dotfiles/manjaro/scripts/rofi.sh
+  bindsym $mod+d exec ~/scripts/i3/rofi/rofi.sh
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -72,13 +72,15 @@ bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+p exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
-bindsym F1 exec ~/scripts/cmus/mute.sh
-bindsym F2 exec ~/scripts/cmus/set-vol.sh -5
-bindsym F3 exec ~/scripts/cmus/set-vol.sh +5
+bindsym F1 exec ~/scripts/i3/volume/mute.sh
+bindsym F2 exec ~/scripts/i3/volume/set-vol.sh -5
+bindsym F3 exec ~/scripts/i3/volume/set-vol.sh +5
 
-bindsym XF86LaunchA exec ~/scripts/cmus/play-pause.sh
-bindsym XF86Search exec ~/scripts/cmus/previous.sh
-bindsym XF86Explorer exec ~/scripts/cmus/next.sh
+bindsym XF86LaunchA exec ~/scripts/i3/cmus/play-pause.sh
+bindsym XF86Search exec ~/scripts/i3/cmus/previous.sh
+bindsym XF86Explorer exec ~/scripts/i3/cmus/next.sh
+
+bindsym $mod+v exec ~/scripts/i3/save-clipboard.sh
 
 # change focus
 focus_follows_mouse no
@@ -99,8 +101,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+c split h
-bindsym $mod+v split v
+#bindsym $mod+c split h
+#bindsym $mod+v split v
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
@@ -288,8 +290,8 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 
-exec_always ~/.scripts/i3-hud-menu/i3-appmenu-service.py
-bindsym $mod+u exec ~/scripts/i3-hud-menu/i3-hud-menu.py
+#exec_always ~/scripts/i3/hud-menu/i3-appmenu-service.py
+#bindsym $mod+u exec ~/scripts/i3/hud-menu/i3-hud-menu.py
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
