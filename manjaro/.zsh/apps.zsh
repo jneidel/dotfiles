@@ -12,6 +12,7 @@ alias manga="mangareader-dl --debug"
 alias mangaup="manga update --silent 1>> ~/manga/updates 2>&1 &"
 alias mangala="manga update check"
 alias comic="getcomics-dl"
+alias comicup="~/code/getcomics-dl/bin/new.js"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 #### youtube-dl
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
@@ -21,6 +22,7 @@ alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # 
 alias -g PE="--playlist-end"
 
 ### youtube-local
+### https://github.com/jneidel/youtube-local
 alias yt="vim ~/scripts/yt/videos"
 alias ytup="~/scripts/yt/download-loop.sh"
 
@@ -33,7 +35,7 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
-alias vv="vlc --audio-desync=-250 -q -f"
+alias vv="vlc --audio-desync=-250 -q --fullscreen --repeat"
 alias rc="rename-comic"
 alias -g R="| entr -cp" # R[UN]
 
