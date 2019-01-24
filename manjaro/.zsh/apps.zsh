@@ -25,7 +25,8 @@ alias -g PE="--playlist-end"
 ### https://github.com/jneidel/youtube-local
 alias yt="vim ~/scripts/yt/videos"
 alias ytup="~/scripts/yt/download-loop.sh"
-alias ytch="vim ~/scripts/yt/CHANNELS; ~/scripts/yt/generate-channel-list.js"
+alias ytch="vim ~/scripts/yt/CHANNELS"
+alias yta="~/scripts/yt/lib/add-video.sh"
 
 ### misc
 alias dict="dict-cc"

@@ -26,6 +26,7 @@ export KEYID=B29E6A7A7DFD16FA # GPG keyid
 export EDITOR=vim
 export BROWSER=/usr/bin/firefox-nightly
 export B=$BROWSER
+export TMP=$HOME/tmp
 
 ### Import aliases
 source ~/.zsh/init.zsh;

@@ -8,5 +8,5 @@ fi
 CLIP=$(clipit -c 2>/dev/null)
 
 echo $CLIP >> ~/tmp/clip
-notify-send "Clipboard saved"
+notify-send "Clipboard saved" -t 800
 
