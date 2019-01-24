@@ -12,3 +12,5 @@ In the system preferences these are normally restricted to 15 (225 ms) and 2 (30
 
 Restart to take effect.
 
+[**Update bash**](https://itnext.io/upgrading-bash-on-macos-7138bd1066ba)
+

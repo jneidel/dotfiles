@@ -36,6 +36,7 @@
 
 - What is your (job) market value as a programmer?: [Your market value](https://www.youtube.com/watch?v=zlps8geRwDM)
 - Why you need to learn a language in-depth (saying refers to expressing an idea in code) _[snippet]_: [Why don't some big websites use React?](https://www.youtube.com/watch?v=5oTVvBlWvNs&feature=youtu.be&t=300)
+- Why your first job should be with a bigger company: [Should I work for a big company or a small one?](https://www.youtube.com/watch?v=kSirn_2mf6U)
 
 ### JavaScript
 
