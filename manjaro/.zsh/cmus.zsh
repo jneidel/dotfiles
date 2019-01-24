@@ -27,7 +27,7 @@ function cmco() {
   fkill -f sxiv NE
   sxiv -f ~/tmp/cmus-cover.jpg
 }
-function cmcoloop() {
+function cmcoloop() { # requires sxiv, fkill (npm: fkill-cli)
   file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
 
   if [ $1 != "" ]; then
@@ -41,7 +41,7 @@ function cmcoloop() {
   sleep 5
   cmcoloop $file &
 }
-function cmcol() {
+function cmcol() { # get cover & update cover once song changes
   cmco &
   cmcoloop NE &
 }
