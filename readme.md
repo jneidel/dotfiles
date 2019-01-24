@@ -18,6 +18,7 @@
   * [CLIs](#clis)
   * [Browser Extensions](#browser-extensions)
   * [Android](#android)
+  * [Music setup](#music-setup)
 - [Related](#related)
 
 <!-- tocstop -->
@@ -243,7 +244,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 
 **Theme:**
 
-I use **Arc Dark** as I based my terminal colorscheme on it. 
+I use **Arc Dark** as I based my terminal colorscheme on it.
 [firefox](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme-we/)
 [chrome](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
 
@@ -269,6 +270,10 @@ F-Droid is a software repository hosting free and (mostly) open source apps. If 
 | Todoist | Todo list for all platforms | [g-play](https://play.google.com/store/apps/details?id=com.todoist) |
 | Relaxio | White-noise generator | [g-play](https://play.google.com/store/apps/details?id=net.relaxio.relaxio) |
 | My Expenses | Expense/income tracker, with exports | [f-droid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [g-play](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [github](https://github.com/mtotschnig/MyExpenses) |
+
+### Music setup
+
+You can find a detailed account of my music related setup [here](manjaro/music.md)
 
 ## Related
 
