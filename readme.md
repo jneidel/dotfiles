@@ -1,6 +1,6 @@
 # dotfiles
 
-> Collection of config files and used apps
+> Collection of config files, install scripts, list of used apps
 
 <details>
 <summary><strong>Table of Contents</strong></summary>
