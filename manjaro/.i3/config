@@ -192,6 +192,8 @@ assign [class="Tor Browser"] $ws2
 # assign [class="YACReaderLibrary"] $ws7
 assign [class="keepassxc"] $ws9
 assign [class="keepass2"] $ws9
+assign [class="kid3"] $ws5
+assign [class="pcmanfm"] $ws5
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1

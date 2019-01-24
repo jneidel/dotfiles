@@ -1,15 +1,19 @@
-set output_plugin=pulse
-#set output_plugin=alsa
+# cmus rc
+## comment out the 'bind' commands after
+## initial setup, otherwise cmus will pester you
 
+set output_plugin=pulse
+
+# In the same directory, named cmus.theme
 colorscheme cmus
 
-# Refreshing shortcuts
-#bind common A add ~/music
-#bind common ^A clear
+# Update library shortcuts
+bind common A add ~/music
+bind common ^A clear
 
 # Swap c and space
-#unbind common space
-#unbind common c
-#bind common space player-pause
-#bind common c win-toggle
-#bind common C toggle continue
+unbind common space
+unbind common c
+bind common space player-pause
+bind common c win-toggle
+bind common C toggle continue

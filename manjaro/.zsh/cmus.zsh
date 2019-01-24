@@ -45,4 +45,5 @@ function cmcol() {
   cmco &
   cmcoloop NE &
 }
+alias cmly="get-cmus-lyrics"
 

@@ -1,0 +1,33 @@
+#! /bin/bash
+# Source: https://askubuntu.com/questions/226773/how-to-read-mp3-tags-in-shell
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ get-lyrics <mp3>"
+  echo "Get content of 'lyrics-eng' tag of the specified mp3"
+  echo ""
+  echo "Parameters:"
+  echo "$1: path to mp3"
+  echo ""
+  echo "Example:"
+  echo "$ get-lyrics The\ Art\ of\ Peer\ Pressure.mp3"
+  exit
+fi
+
+MP3=$1
+ARGS=""
+
+function runCmd() {
+  TAG=$1
+  ffprobe -loglevel error -show_entries format_tags=$TAG -of default=noprint_wrappers=1:nokey=1 "$MP3"
+}
+
+LYRICS_ENG=$(runCmd lyrics-eng)
+if [[ -n $LYRICS_ENG ]]; then
+  runCmd lyrics-eng
+else
+  LYRICS_XXX=$(runCmd lyrics-XXX)
+  if [[ -n $LYRICS_XXX ]]; then
+    runCmd lyrics-XXX
+  fi
+fi
+

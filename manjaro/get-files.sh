@@ -1,3 +1,5 @@
+#! /bin/bash
+
 D=~/code/dotfiles/manjaro;
 C=$D/.config;
 
@@ -26,8 +28,8 @@ cp -r ~/scripts/* $D/scripts;
 cp ~/.profile $D/.profile;
 rm -rf $D/.tmux;
 cp -r ~/.tmux $D/.tmux;
-cp ~/.cmus/rc $D/.cmus/rc;
-cp ~/.cmus/cmus.theme $D/.cmus/cmus.theme;
+#cp ~/.cmus/rc $D/.cmus/rc;
+#cp ~/.cmus/cmus.theme $D/.cmus/cmus.theme;
 cp ~/.config/beets/config.yaml $C/beets/;
 mkdir -p $D/.calcurse;
 cp ~/.calcurse/keys $D/.calcurse/;

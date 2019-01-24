@@ -1,0 +1,26 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ get-cmus-lyrics"
+  echo "Get the lyrics for the current song running in cmus"
+  echo "Uses 'get-lyrics' under the hood"
+  echo ""
+  echo "Example:"
+  echo "$ get-cmus-lyrics"
+  exit
+fi
+
+if cmus-remote -Q > /dev/null 2>&1; then
+  FILE=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
+  FILE=$FILE"mp3"
+  LYRICS=$(get-lyrics "$FILE")
+
+  if [[ -n $LYRICS ]]; then
+    get-lyrics "$FILE" | less
+  else
+    echo "Song has no lyrics in the 'lyrics-eng' tag"
+  fi
+else
+  echo "cmus is not running"
+fi
+

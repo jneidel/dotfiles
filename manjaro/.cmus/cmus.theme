@@ -1,11 +1,12 @@
 # cmus theme
+## based my (jneidel's) color palette
 
-## colors
-# grey    234
-# white   252
-# yelllow 220
-# red     160
-# green   118
+# colors
+## grey    234
+## white   252
+## yelllow 220
+## red     160
+## green   118
 
 # Default colors
 set color_win_fg=252
@@ -34,7 +35,7 @@ set color_error=160
 set color_info=118
 
 # Currently playing track
-#----------------------------------------------------------------
+#-------------------------------------
 
 # Unselected
 set color_win_cur=220
@@ -48,7 +49,7 @@ set color_win_inactive_cur_sel_fg=220
 set color_win_inactive_cur_sel_bg=235
 
 # Non-playing tracks
-#----------------------------------------------------------------
+#-------------------------------------
 
 # Active selection
 set color_win_sel_fg=234

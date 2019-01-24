@@ -1,18 +1,19 @@
 directory: ~/music
 library: ~/.config/beets/musiclibrary.db
 import:
-    copy: yes
-    write: yes
-    log: ~/.config/beets/beetslog.txt
-    resume: yes
-    incremental: yes
-    incremental_skip_later: yes
+  copy: yes
+  write: yes
+  log: ~/.config/beets/beetslog.txt
+  resume: yes
+  incremental: yes
+  incremental_skip_later: yes
 paths:
-      default: $albumartist/$album/$track. $artist - $title
-      singleton: Singles/$artist - $title
-      comp: Various Artists/$album/$track. $artist - $title
-      albumtype:soundtrack: Soundtracks/$album/$track. $artist - $title
+  default: $albumartist/$album/$track. $artist - $title
+  singleton: Singles/$artist - $title
+  comp: Various Artists/$album/$track. $artist - $title
+  albumtype:soundtrack: Soundtracks/$album/$track. $artist - $title
 asciify_paths: yes
 art_filename: cover
 plugins: fetchart embedart lyrics
-
+lyrics:
+  force: yes

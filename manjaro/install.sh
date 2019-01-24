@@ -20,9 +20,9 @@ prompt 'packer' 'yaourt -S packer-aur'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
 prompt 'pacman gui apps' 'packer-aur -S keepassxc terminator vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine'
-prompt 'pacman tui apps' 'packer-aur -S cmus htop mosh beets pulsemixer'
+prompt 'pacman tui apps' 'packer-aur -S cmus htop mosh pulsemixer'
 prompt 'pacman clis' 'packer-aur -S figlet fd pjson entr python-grip'
-prompt 'pacman utilities' 'packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth python-requests jq'
+prompt 'pacman utilities' 'packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq'
 
 # NPM
 prompt 'node' 'pacman -S nodejs'
@@ -33,6 +33,8 @@ prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-
 
 # Specific case apps
 prompt 'gimp' 'packer-aur -S gimp'
+
+prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests' # python modules for the lyrics/cover-art plugin
 
 prompt 'pacman remove' 'sudo pacman -Rsn hexchat'
 
