@@ -13,14 +13,14 @@ FILE=$1
 echo "#! /bin/bash
 
 if [[ \$1 = \"--help\" ]] || [[ \$1 = \"help\" ]]; then
-  echo \"$ $FILE \"
+  echo \"$ $FILE\"
   echo \"\"
   echo \"\"
   echo \"Parameters:\"
   echo \"\$1: \"
   echo \"\"
   echo \"Example:\"
-  echo \"$ $FILE \"
+  echo \"$ $FILE\"
   exit
 fi
 " >> $FILE

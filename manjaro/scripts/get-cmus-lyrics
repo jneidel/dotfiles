@@ -18,7 +18,7 @@ if cmus-remote -Q > /dev/null 2>&1; then
   if [[ -n $LYRICS ]]; then
     get-lyrics "$FILE" | less
   else
-    echo "Song has no lyrics in the 'lyrics-eng' tag"
+    echo "Song has no lyrics"
   fi
 else
   echo "cmus is not running"

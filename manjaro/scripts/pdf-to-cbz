@@ -1,0 +1,42 @@
+#! /bin/bash
+## Command source: https://unix.stackexchange.com/a/477002
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ pdf-to-cbz.sh <pdf>"
+  echo "Covert a pdf file to cbz"
+  echo "by extracting the pdfs imgs and creating a zip file from them"
+  echo "The output file will be created in cwd."
+  echo ""
+  echo "(If imagemagick throws a pdf security error see: https://stackoverflow.com/a/54056571)"
+  echo ""
+  echo "Parameters:"
+  echo "$1: pdf file to be converted"
+  echo ""
+  echo "Example:"
+  echo "$ pdf-to-cbz.sh 'my comic.pdf'"
+  exit
+fi
+
+PDF=$1
+NAME=$(echo $PDF | cut -d "." -f 1)
+CBZ="$NAME.cbz"
+
+PWD=$(pwd)
+TMP=~/tmp
+
+echo "Copy pdf to tmp dir"
+cp "$PWD/$PDF" "$TMP/$PDF"
+mkdir -p "$TMP/$NAME"
+
+echo "Start pdf to img conversion"
+convert "$TMP/$PDF" "$TMP/$NAME/$NAME.png"
+
+echo "Start bundling images as cbz"
+zip -r "$TMP/$CBZ" "$TMP/$NAME"
+
+mv "$TMP/$CBZ" $PWD
+
+echo "Cleanup"
+rm -r "$TMP/$NAME" # zipped dir
+rm "$TMP/$PDF"
+
