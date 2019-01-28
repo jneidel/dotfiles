@@ -67,14 +67,17 @@ function extractmo() {
 
   for F in $DIR/*\(320\ MP3\)*; do
     extract $F
-    rm cover.jpg
-    rm $F
     TITLE=$(echo $F | cut -d "/" -f 2)
     TITLE=$(echo $TITLE | cut -d "(" -f 1)
     TITLE=$(trim $TITLE)
+    cd *$TITLE*
+    rm cover.jpg
+    rm $F
     id3tag -s $TITLE *$TITLE*.mp3
     mid3v2 --TPE2 "Monstercat" -A "Mixed" *$TITLE*.mp3
     mv *$TITLE*.mp3 ~/music/Singles/Monstercat-Current
+    cd ~/Downloads
+    rmr *$TITLE*
   done
 }
 function extractmoep() {

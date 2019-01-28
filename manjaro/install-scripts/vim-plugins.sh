@@ -67,6 +67,9 @@ git clone https://github.com/christoomey/vim-tmux-navigator.git $VB/tmux-vim-nav
 echo "install goyo"
 git clone https://github.com/junegunn/goyo.vim $VB/goyo;
 
+echo "install tmux-focus-events"
+git clone https://github.com/tmux-plugins/vim-tmux-focus-events.git $VB/tmux-focus-events;
+
 # echo "install syntastic, eslint (dependency)"
 # git clone --depth=1 https://github.com/vim-syntastic/syntastic.git $VB/syntastic;
 # npm i -g eslint;

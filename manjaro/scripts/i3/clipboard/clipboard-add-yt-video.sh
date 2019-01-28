@@ -8,5 +8,5 @@ fi
 
 CLIP=$(clipit -c 2>/dev/null)
 notify-send "Added clipboard to videos" -t 800
-~/scripts/yt/lib/add-video.sh "$CLIP"
+~/scripts/yt/bin/add-video.sh "$CLIP"
 

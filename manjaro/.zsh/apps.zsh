@@ -37,7 +37,7 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
-alias vv="vlc --audio-desync=-250 -q --fullscreen --repeat"
+alias vv="vlc --audio-desync=-250 -q --fullscreen --loop"
 alias rc="rename-comic"
 alias -g R="| entr -cp" # R[UN]
 

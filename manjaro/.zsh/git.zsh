@@ -21,11 +21,6 @@ amd() { # set commit date to passed date
   # eg: Sun Apr 6 12
   git commit --amend --no-edit --date="$1 $2 $3 $4:35:25 2019 +0200"
 }
-amyest() { # set commit date to yesterday
-  # pass hour
-  DATE=`date -v -1d +"%a %h %e"`; # eg: Sun Apr 6
-  git commit --amend --no-edit --date="$DATE $1:35:25 2019 +0200"
-}
 amtod() { # set commit date to today
   # pass hour
   DATE=`date +"%a %h %e"`;
