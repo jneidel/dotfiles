@@ -154,37 +154,43 @@ git config core.ignorecase false
 
 | name | description | links |
 |--|--|--|
-| alder | Print current directory as ascii tree | [npm](https://www.npmjs.com/package/@aweary/alder) [github](https://github.com/aweary/alder) |
-| chrome-cli | Open given file in chrome | [npm](https://www.npmjs.com/package/chrome-cli) [github](https://github.com/diogocampos/chrome-cli) |
-| dict-cc | Dict.cc lookup from the command line | [npm](https://www.npmjs.com/package/dict-cc-cli) [github](https://github.com/derhuerst/dict-cc-cli) |
 | fkill | Interactive process killer | [npm](https://www.npmjs.com/package/fkill-cli) [github](https://github.com/sindresorhus/fkill-cli) |
-| generator-jneidel | Collection of boilerplates, for installation with yeoman | [npm](https://www.npmjs.com/package/generator-jneidel) [github](https://github.com/jneidel/generator-jneidel) |
+| dict-cc | Dict.cc lookup from the command line | [npm](https://www.npmjs.com/package/dict-cc-cli) [github](https://github.com/derhuerst/dict-cc-cli) |
+| tslide | Terminal slide deck using markdown | [npm](https://www.npmjs.com/package/tslide) [github](https://github.com/tslide/tslide) |
+| alder | Print current directory as ascii tree | [npm](https://www.npmjs.com/package/@aweary/alder) [github](https://github.com/aweary/alder) |
+
+**npm development:**
+
+| name | description | links |
+|--|--|--|
+| markdown-toc | Generate markdown toc | [npm](https://www.npmjs.com/package/markdown-toc) [github](https://github.com/jonschlinkert/markdown-toc) |
 | np | Better version of 'npm publish' | [npm](https://www.npmjs.com/package/np) [github](https://github.com/sindresorhus/np) |
 | npm-name | Check module name availability | [npm](https://www.npmjs.com/package/npm-name-cli) [github](https://github.com/sindresorhus/npm-name-cli) |
-| markdown-toc | Create/update readme toc | [npm](https://www.npmjs.com/package/markdown-toc) [github](https://github.com/jonschlinkert/markdown-toc) |
-| tslide | Terminal slide deck using markdown | [npm](https://www.npmjs.com/package/tslide) [github](https://github.com/tslide/tslide) |
 | yo | Run yeoman generators to create boilerplates | [npm](https://www.npmjs.com/package/yo) [github](https://github.com/yeoman/yo) |
+| generator-jneidel | Collection of boilerplates, for installation with yeoman | [npm](https://www.npmjs.com/package/generator-jneidel) [github](https://github.com/jneidel/generator-jneidel) |
 
 **General:**
 
 | name | description | links |
 |--|--|--|
-| youtube-dl | Configurable youtube downloader | [github](https://github.com/rg3/youtube-dl) |
-| asciinema | Terminal recorder | [github](https://github.com/asciinema/asciinema) [pip3](https://pypi.python.org/pypi/asciinema) |
+| tmux | Terminal multiplexer | [pacman](https://aur.archlinux.org/packages/tmux-git/) [homebrew](http://brewformulas.org/tmux) [github](https://github.com/tmux/tmux) |
+| youtube-dl | Configurable youtube downloader | [pacman](https://aur.archlinux.org/packages/youtube-dl-git/) [github](https://github.com/rg3/youtube-dl) |
 
-**Homebrew:**
+**General development:**
 
 | name | description | links |
 |--|--|--|
-| grip | Render readme with github styles for local testing | [brew](http://brewformulas.org/grip) [github](https://github.com/joeyespo/grip) |
-| mongodb | Run mongodb locally | [brew](http://brewformulas.org/Mongodb) |
-| tmux | Terminal multiplexer | [brew](http://brewformulas.org/tmux) [github](https://github.com/tmux/tmux) |
+| grip | Render readme with github styles for local testing | [pacman](https://aur.archlinux.org/packages/python-grip/) [homebrew](http://brewformulas.org/grip) [github](https://github.com/joeyespo/grip) |
+| jq | JSON processor | [pacman](https://aur.archlinux.org/packages/jq-git/) [github](https://github.com/stedolan/jq) |
 
-**Pacman (Manjaro Linux):**
+<!--**Pacman (Manjaro Linux):**
+
+| asciinema | Terminal recorder | [github](https://github.com/asciinema/asciinema) [pip3](https://pypi.python.org/pypi/asciinema) |
 
 | name | description | links |
 |--|--|--|
 |  |  |  |
+-->
 
 ### Browser Extensions
 
@@ -194,13 +200,25 @@ Browser extensions, sorted by category.
 
 | name | description | links |
 |--|--|--|
-| HTTPS Everywhere | Force HTTPS connection | [firefox](https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/) [chrome](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
-| Privacy Badger | Stop trackers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/) [chrome](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
-| uBlock Origin | Private adblocker | [firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) [chrome](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
+| uBlock Origin | Best free (as in freedom) adblocker | [firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) [chrome](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
 | Vimium | Navigate browser with vim shortcuts | [firefox](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/) [chrome](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) [github](https://github.com/philc/vimium) |
-| Disable WebRTC | Stops IP leakage while using a VPN | [firefox](https://addons.mozilla.org/en-US/firefox/addon/happy-bonobo-disable-webrtc/) |
+| HTTPS Everywhere | Force encrypted connections (HTTPS) | [firefox](https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/) [chrome](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
+
+**Privacy:**
+
+Firefox (nightly) is my main browser. I have it setup to delete cookies and history on exit. You can find these options under "Privacy & Security".
+
+| name | description | links |
+|--|--|--|
+| Privacy Badger | Stop suspicious trackers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/) [chrome](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
+| Decentraleyes | Stop tracking through CDNs | [firefox](https://addons.mozilla.org/en-US/firefox/addon/decentraleyes) |
+| Disable WebRTC | Stop IP leakage while using a VPN | [firefox](https://addons.mozilla.org/en-US/firefox/addon/happy-bonobo-disable-webrtc/) |
+
+For an more infos on why these plugins are important view [privacytools.io](https://www.privacytools.io/#addons)
 
 **Coding:**
+
+Chromium is my browser for web-development.
 
 | name | description | links |
 |--|--|--|
@@ -240,7 +258,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | Hover Zoom+ | Large overlay on image and link to image hover | [chrome](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [github](https://github.com/extesy/hoverzoom/) |
 | StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
 | Toby | Better bookmark manager | [chrome](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
-| SoundCloudOG | Filter reposts out off your soundcloud stream | [chrome](https://chrome.google.com/webstore/detail/soundcloudog/enegaliobdmmnlcgdfljpebckdfbgcai) |
+| SoundCloudOG | Filter reposts out of your soundcloud stream | [chrome](https://chrome.google.com/webstore/detail/soundcloudog/enegaliobdmmnlcgdfljpebckdfbgcai) |
 
 **Theme:**
 
@@ -254,22 +272,21 @@ F-Droid is a software repository hosting free and (mostly) open source apps. If 
 
 | name | description | links |
 |--|--|--|
-| Signal | End to end encrypted chat | [g-play](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) [github](https://github.com/signalapp/Signal-Android) |
-| Vinyl Music Player | Music player | [f-droid](https://f-droid.org/packages/com.poupa.vinylmusicplayer/) [g-play](https://play.google.com/store/apps/details?id=com.poupa.vinylmusicplayer) [github](https://github.com/AdrienPoupa/VinylMusicPlayer) |
+| Signal | Privacy friendly messaging, end to end encrypted chat | [g-play](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) [github](https://github.com/signalapp/Signal-Android) |
+| Vinyl Music Player | Full featured music player | [f-droid](https://f-droid.org/packages/com.poupa.vinylmusicplayer/) [g-play](https://play.google.com/store/apps/details?id=com.poupa.vinylmusicplayer) [github](https://github.com/AdrienPoupa/VinylMusicPlayer) |
 | Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [g-play](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
 | dict.cc | Offline dictionary | [g-play](https://play.google.com/store/apps/details?id=cc.dict.dictcc) |
 | FBReader | Ebook reader | [f-droid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [g-play](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [github](https://github.com/geometer/FBReaderJ) |
 | ES File Explorer | File explorer | [g-play](https://play.google.com/store/apps/details?id=com.estrongs.android.pop.pro) |
 | Anki | Flashcards | [f-droid](https://f-droid.org/en/packages/com.ichi2.anki/) [g-play](https://play.google.com/store/apps/details?id=com.ichi2.anki) [github](https://github.com/ankidroid/Anki-Android) |
-| Markor | Markdown editor | [f-droid](https://f-droid.org/en/packages/net.gsantner.markor/) [g-play](https://play.google.com/store/apps/details?id=net.gsantner.markor) [github](https://github.com/gsantner/markor) |
+| Markor | Markdown editor, notes app | [f-droid](https://f-droid.org/en/packages/net.gsantner.markor/) [g-play](https://play.google.com/store/apps/details?id=net.gsantner.markor) [github](https://github.com/gsantner/markor) |
 | Audipo | Audioplayer optimized for podcasts (speed, skipping) | [g-play](https://play.google.com/store/apps/details?id=jp.ne.sakura.ccice.audipo) |
 | CamScanner | Document scanner | [g-play](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
 | HiPER Calc | Superior calculator | [g-play](https://play.google.com/store/apps/details?id=cz.hipercalc.pro) |
-| MX Player | Video player | [g-play](https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.pro) |
-| Time Meter | Smooth time tracker, with exports  | [g-play](https://play.google.com/store/apps/details?id=com.rk.timemeter) |
-| Todoist | Todo list for all platforms | [g-play](https://play.google.com/store/apps/details?id=com.todoist) |
-| Relaxio | White-noise generator | [g-play](https://play.google.com/store/apps/details?id=net.relaxio.relaxio) |
+| MX Player | Video player (better than vlc) | [g-play](https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.pro) |
 | My Expenses | Expense/income tracker, with exports | [f-droid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [g-play](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [github](https://github.com/mtotschnig/MyExpenses) |
+| Time Meter | Smooth time tracker, with exports  | [g-play](https://play.google.com/store/apps/details?id=com.rk.timemeter) |
+| Relaxio | White-noise player | [g-play](https://play.google.com/store/apps/details?id=net.relaxio.relaxio) |
 
 ### Music setup
 
@@ -278,3 +295,4 @@ You can find a detailed account of my music related setup [here](manjaro/music.m
 ## Related
 
 [generator-jneidel](https://github.com/jneidel/generator-jneidel) - My personal collection of boilerplates, for installation with yeoman
+
