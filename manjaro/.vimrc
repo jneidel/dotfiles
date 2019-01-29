@@ -129,10 +129,15 @@ autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 au FocusLost,WinLeave * :silent! w " Doesnt trigger on i3 windows
 " read file after regaining focus, entering the buffer
 "au FocusGained,BufEnter * :silent! !
+au BufEnter * :silent! !
 " source: https://stackoverflow.com/a/20418591
 " maybe checkout: https://stackoverflow.com/a/8610556
 set autoread " takes 5s
 au CursorHold * checktime
+
+" Run markdown-toc on save
+autocmd BufWritePost ~/code/dotfiles/videos.md !markdown-toc -i ~/code/dotfiles/videos.md
+autocmd BufWritePost ~/code/dotfiles/readme.md !markdown-toc -i ~/code/dotfiles/readme.md
 
 "## Source external configs/plugins
 source ~/.vim/config/init.vim

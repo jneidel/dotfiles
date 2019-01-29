@@ -13,7 +13,9 @@
 - [Software Industry](#software-industry)
   * [General](#general)
   * [JavaScript](#javascript)
+  * [Internet](#internet)
 - [Entertainment](#entertainment)
+- [Life](#life)
 
 <!-- tocstop -->
 
@@ -41,6 +43,10 @@
 ### JavaScript
 
 - Expectation if youre a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
+
+### Internet
+
+- Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
 
 ## Entertainment
 
