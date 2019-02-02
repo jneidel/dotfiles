@@ -14,7 +14,7 @@ rm -rf Font-Awesome-$FAV;
 
 echo "install emojione"
 
-packer ttf-emojione
+sudo packer-aur -S ttf-emojione
 
 echo  "install yosemite-san-francisco"
 

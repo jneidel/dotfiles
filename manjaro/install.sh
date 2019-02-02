@@ -33,7 +33,7 @@ prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-
 
 # Specific case apps
 prompt 'gimp' 'packer-aur -S gimp'
-
+prompt 'yacreader' 'packer-aur -S yacreader-nopdf'
 prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests' # python modules for the lyrics/cover-art plugin
 
 prompt 'pacman remove' 'sudo pacman -Rsn hexchat'
