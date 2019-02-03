@@ -3,22 +3,13 @@
 ## install
 alias ni="npm install"
 alias nid="npm install --save-dev"
-alias nig="sudo npm install -g"
+alias nig="sudo npm install -g" # remove sudo if locally installed
 function nit {
   npm install --save-dev "@types/$1";
 }
-function nitt {
-  PKG=$1
-
-  if [ -z $PKG ]; then {
-    echo "Install npm packages as well as its types locally."
-    echo "$ nit <package-name>"
-    echo "Please include a package to install."
-    exit
-  } fi
-
-  npm install $PKG;
-  npm install --save-dev "@types/$PKG";
+function nitt { # pkg + types
+  npm install "$1";
+  npm install --save-dev "@types/$1";
 }
 
 ## uninstall
@@ -27,13 +18,24 @@ alias nug="sudo npm uninstall -g"
 
 ## run
 alias nr="npm run"
-alias start="npm run start"
-alias build="npm run build"
 alias nt="npm run test"
-alias testing="npm run testing"
-alias unit="npm run unit"
+alias ns="npm run start"
+alias start="npm run start"
+alias nrl="npm run lint"
+
+### build
+alias nb="npm run build"
+alias nbt="npm run build-ts"
+alias nbw="npm run build-webpack"
+alias build="npm run build"
+
+### watch
+alias nwt="npm run watch-test"
+alias nwts="npm run watch-ts"
+alias nww="npm run watch-webpack"
+alias nwu="npm run watch-unit"
+alias ntw="npm run watch-test"
 
 ## misc
-alias npmls="npm list -g --depth=0" # list installed npm clis
-alias npmdir="cd ~/.bin/node-latest/bin"
+alias npmls="npm list -g --depth=0" # list npm -g pkgs
 

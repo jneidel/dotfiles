@@ -105,10 +105,6 @@ set viminfo=%,'50,\"100,:100,n~/.viminfo
 " Write file with sudo, eventhough vim wasnt opened with sudo
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" Calcurse notes buffer md syntax
-autocmd BufRead,BufNewFile /tmp/calcurse* set filetype=markdown
-autocmd BufRead,BufNewFile ~/.calcurse/notes* set filetype=markdown
-
 " Run xrdb whenever Xdefaults or Xresources are updated.
 autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 

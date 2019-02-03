@@ -24,7 +24,7 @@ autocmd filetype javascript,typescript inoremap ,f function (<++>) {<Enter><++><
 autocmd filetype javascript,typescript inoremap ,o {<Enter>}<Esc>O
 autocmd filetype javascript,typescript inoremap ,i import<Space><Space>from<Space>"<++>";<++><Esc>Ffhi
 autocmd filetype javascript,typescript inoremap ,l console.log(<Space><Space>)<Esc>hi
-autocmd filetype javascript,typescript inoremap ,t test(<Space>""<Space>,<Space>t<Space>=><Space>{<Enter><++><Enter>}<Space>);<Esc>02kf"a
+autocmd filetype javascript,typescript inoremap ,t test(<Space>"",<Space>()<Space>=><Space>{<Enter><++><Enter>}<Space>);<Esc>02kf"a
 
 " Typescript
 autocmd filetype typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi
