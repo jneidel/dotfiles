@@ -41,4 +41,5 @@ cp -r ~/.config/vis/colors $C/vis/;
 cp ~/.config/vis/config $C/vis/;
 #cp ~/.npmrc $D/ has my auth key
 rm -rf $D/scripts/yt
+cp ~/.eslintrc $D/../.eslintrc
 
