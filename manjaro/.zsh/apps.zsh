@@ -30,7 +30,7 @@ alias yta="~/scripts/yt/lib/add-video.sh"
 
 ### misc
 alias dict="dict-cc $1 | less"
-alias tree="alder --depth 3" # print filetree
+alias tree="alder --depth 3" # print filetree, nig @aweary/alder
 alias flux="xflux -l 52 -g 13" # bluelight filter
 alias wifipass="npx wifi-password-cli" # print wifi pass
 alias speed="npx speedo-cli"

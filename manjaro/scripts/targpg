@@ -10,7 +10,7 @@ if [ -d $DIR ]; then
   echo "Start encryption"
   gpg -r $KEY -e $DIRTAR
   echo "Cleanup"
-  rm $DIRTAR 
+  rm $DIRTAR
 elif [ $DIR = "--help" ]; then
   echo "$ targpg <directory>"
   echo "Will compress directory and then encrypt it."

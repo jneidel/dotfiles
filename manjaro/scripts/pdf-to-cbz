@@ -10,7 +10,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "(If imagemagick throws a pdf security error see: https://stackoverflow.com/a/54056571)"
   echo ""
   echo "Parameters:"
-  echo "$1: pdf file to be converted"
+  echo "\$1: pdf file to be converted"
   echo ""
   echo "Example:"
   echo "$ pdf-to-cbz.sh 'my comic.pdf'"

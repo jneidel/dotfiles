@@ -1,0 +1,23 @@
+#! /bin/bash
+
+DIR=~/.mozilla/firefox/*.default*/bookmarkbackups
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ get-last-bookmark"
+  echo "Get the path of the latest bookmark backup."
+  echo ""
+  echo "How to restore:"
+  echo "This is not the export file, it's firefoxes automatic backup."
+  echo "It need to be placed into the following path:"
+  echo "$DIR"
+  echo "After adding it, you should see it in Library\>Import \& Backup\>Restore"
+  echo ""
+  exit
+fi
+
+LS=$(ls $DIR)
+PARTS=(${LS// /})
+LAST_PART=${PARTS[${#PARTS[@]} - 1]}
+
+echo $DIR"/$LAST_PART"
+

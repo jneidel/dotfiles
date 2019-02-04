@@ -17,7 +17,7 @@ if [[ \$1 = \"--help\" ]] || [[ \$1 = \"help\" ]]; then
   echo \"\"
   echo \"\"
   echo \"Parameters:\"
-  echo \"\$1: \"
+  echo \"\\\$1: \"
   echo \"\"
   echo \"Example:\"
   echo \"$ $FILE\"

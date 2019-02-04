@@ -6,7 +6,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "Get content of 'lyrics-XXX' or 'lyrics-eng' tag of the specified mp3"
   echo ""
   echo "Parameters:"
-  echo "$1: path to mp3"
+  echo "\$1: path to mp3"
   echo ""
   echo "Example:"
   echo "$ get-lyrics The\ Art\ of\ Peer\ Pressure.mp3"

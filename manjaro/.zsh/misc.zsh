@@ -14,13 +14,24 @@ alias cal3="cal -3m"
 ## shortcuts
 alias h="cd;clear;"
 alias v="vim"
-alias rmr="rm -r"
-alias cpr="cp -r"
-alias cpdir="cp -r"
-alias cmx="chmod +x"
-alias dirsize="du -sh"
-alias W="watch -t -d -n 1" # update 1s
 alias src="source ~/.zshrc"
+alias W="watch -t -d -n 1" # update 1s
+
+### recursive
+alias rmr="rm -r"
+alias cpr="cp -r -v"
+alias cpdir="cp -r -v"
+
+### change permissions
+alias cmx="chmod +x" # add executable
+alias cmd="chmod 755" # default dir
+alias cmf="chmod 644" # default file
+
+### dir/disk info
+alias dirsize="du -sh"
+alias disksize="df -h"
+alias diskspace="df -h"
+
 mdc() { # MkDirCd
   mkdir "$1";
   cd "$1";
@@ -61,8 +72,8 @@ fi
 alias -g PP="| pjson" # pretty print json
 
 ## Redirect stdout/stderr
-alias -g NE="2> /dev/null"      # only stdout
-alias -g NUL="> /dev/null 2>&1" # only stderr
+alias -g N1="2> /dev/null"     # only stdout
+alias -g N2="> /dev/null 2>&1" # only stderr
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week/"

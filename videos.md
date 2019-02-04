@@ -53,7 +53,10 @@
 
 - How Wrestling tells unique stories: [Why Professional Wrestling is Fascinating](https://www.youtube.com/watch?v=BQCPj-bGYro)
 - Building a hut from scratch in the wild (Subtitles for commentary): [Primitive Technology: Tiled Roof Hut](https://www.youtube.com/watch?v=P73REgj-3UE)
+- Why you should watch redline (the best anime movie you've never heard of): [Why Redline is an Amazing Movie, and Why That Matters Today](https://www.youtube.com/watch?v=uUeaYaI-VAI)
 
 ## Life
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
+- Why social media isn't that great for you: [Social Media: Anything for Upcummies! ⬆🍆💦💦](https://www.youtube.com/watch?v=YjbyDU0WzYI)
+
