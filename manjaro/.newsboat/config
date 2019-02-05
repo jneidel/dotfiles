@@ -68,5 +68,8 @@ color article           color252 color234
 
 # macros
 # default macro key: ,
-macro y set browser "tsp vlc --fullscreen --audio-desync=-250 %u"; open-in-browser ; set browser "$BROWSER %u"
+## Play youtube video in vlc
+macro y set browser "vlc --fullscreen --audio-desync=-250 --play-and-exit --no-loop --no-repeat %u"; open-in-browser ; set browser "$BROWSER %u"
+## Download video using youtube-dl
+macro d set browser "~/scripts/newsboat/yt-dl %u"; open-in-browser ; set browser "$BROWSER %u"
 

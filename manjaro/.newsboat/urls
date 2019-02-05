@@ -1,0 +1,18 @@
+# exmaple newsboat feeds
+## for more infos checkout:
+## https://www.youtube.com/playlist?list=PLqv94xWU9zZ30jHFe8pqC5qES6ya6v2sE
+
+# queries
+## query:<feed-name>:<filter-expression> [<tag>..]
+"query:Youtube:tags # \"youtube\"" "youtube" # All articles with the 'youtube' tag
+"query:All New Podcasts:unread = \"yes\" and tags # \"podcast\"" # All unread articles with the 'podcast' tag
+
+# feeds
+## podcasts
+http://feed.syntax.fm/rss "~Syntax" "podcast" # '~Syntax' to rename the feed, 'podcast' to add the podcast tag
+
+## youtube
+https://www.youtube.com/feeds/videos.xml?user=PewDiePie "youtube" # pewdiepie using the user id
+https://www.youtube.com/feeds/videos.xml?channel_id=UC-lHJZR3Gqxm24_Vd_AJ5Yw "youtube" # pewdiepie using the channel_id
+https://www.youtube.com/feeds/videos.xml?playlist_id=PLlRceUcRZcK0E1Id3NHchFaxikvCvAVQe "youtube" # the jimquisition using the playlist_id
+

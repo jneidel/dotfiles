@@ -41,11 +41,11 @@ alias rc="rename-comic"
 alias -g R="| entr -cp" # R[UN]
 
 ### newsboat
-alias n="newsboat --quiet"
-alias p="podboat --autodownload"
+alias n="newsboat --quiet && clear"
+alias pod="podboat --autodownload"
 
 ### players
-alias vv="vlc --audio-desync=-250 -q --fullscreen --loop"
+alias vv="vlc --audio-desync=-250 -q --fullscreen --loop --no-repeat"
 alias play="mplayer -ao pulse -really-quiet"
 
 ### gpg
