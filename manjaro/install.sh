@@ -35,6 +35,8 @@ prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-
 prompt 'gimp' 'packer-aur -S gimp'
 prompt 'yacreader' 'packer-aur -S yacreader-nopdf'
 prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests' # python modules for the lyrics/cover-art plugin
+prompt 'mplayer' 'sudo packer-aur -S mplayer' # cli player
+prompt 'newsboat' 'sudo packer-aur -S newsboat'
 
 prompt 'pacman remove' 'sudo pacman -Rsn hexchat'
 

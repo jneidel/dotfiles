@@ -1,0 +1,72 @@
+# newsboat config
+# https://github.com/gotbletu/dotfiles/blob/master/newsbeuter/.newsbeuter/config
+
+# config
+## basic config
+download-path "~/podcasts/%n"
+max-downloads 6
+player "vlc"
+
+## reload feeds
+auto-reload yes
+reload-time 30
+
+## formatting
+download-filename-format "%t.%e"
+feedlist-format " %n  %t"
+articlelist-format " %f %D %?T?|%-17T| ?%t"
+datetime-format "%b %d"
+
+## ignore pattern
+ignore-article "Podcasts" "title =~ \"MJS\""
+
+## misc
+user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
+
+# keybindings
+## vim hotkeys
+bind-key j down
+bind-key k up
+bind-key m toggle-show-read-feeds
+bind-key ^D pagedown
+bind-key ^U pageup
+bind-key / open-search tagselection
+
+unbind-key l
+bind-key l open
+bind-key h quit
+unbind-key q
+bind-key q hard-quit
+bind-key ESC hard-quit
+
+bind-key i sort
+bind-key I rev-sort
+
+bind-key g home all
+bind-key G end all
+
+## rebind podboat to mutt hotkeys
+unbind-key P
+bind-key $ pb-purge
+unbind-key d
+bind-key ENTER pb-download
+unbind-key D
+bind-key d pb-delete
+unbind-key a
+bind-key SPACE pb-toggle-download-all
+unbind-key c
+bind-key i pb-cancel
+
+# colorscheme
+color background        color252 color234
+color listnormal        color240 color234
+color listfocus         color234 color220 bold
+color listnormal_unread color252 color234
+color listfocus_unread  color234 color220 bold
+color info              color240 color234
+color article           color252 color234
+
+# macros
+# default macro key: ,
+macro y set browser "tsp vlc --fullscreen --audio-desync=-250 %u"; open-in-browser ; set browser "$BROWSER %u"
+

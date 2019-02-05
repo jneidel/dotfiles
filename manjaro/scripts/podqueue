@@ -1,0 +1,22 @@
+#! /bin/bash
+# src: https://github.com/gotbletu/shownotes/blob/master/podqueue.md
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]] || [[ $# -lt 1 ]];  then
+  echo "$ podqueue <url>"
+  echo "Add links to podboat, Use podboat as a TUI download manager"
+  echo "Adds the link to your podboat queue, with '~/Downloads' as output directory"
+  echo ""
+  echo "Parameters:"
+  echo "\$1: url to be added to '~/.newsboat/queue'"
+  echo ""
+  echo "Example:"
+  echo "$ podqueue http://abcxyz.com/filename.mp3"
+  exit
+fi
+
+URL="$1"
+SAVE_PATH=~/Downloads
+GET_FILENAME="$(echo "$1" | rev | cut -d\/ -f1 | rev | sed -e 's@\%20@\_@g' )"
+
+echo "$URL" "$SAVE_PATH/$GET_FILENAME" >> ~/.newsboat/queue
+

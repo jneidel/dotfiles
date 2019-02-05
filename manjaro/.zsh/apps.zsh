@@ -1,7 +1,6 @@
 # apps
 
-## cli
-
+## clis
 ### programming
 alias readme="grip -b 7777" # render readme.md with github styles
 alias py="python"
@@ -14,6 +13,7 @@ alias mangala="manga update check"
 alias comic="getcomics-dl"
 alias comicup="~/code/getcomics-dl/bin/new.js"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
+
 #### youtube-dl
 alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
@@ -37,11 +37,18 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
-alias vv="vlc --audio-desync=-250 -q --fullscreen --loop"
 alias rc="rename-comic"
 alias -g R="| entr -cp" # R[UN]
 
-#### gpg
+### newsboat
+alias n="newsboat --quiet"
+alias p="podboat --autodownload"
+
+### players
+alias vv="vlc --audio-desync=-250 -q --fullscreen --loop"
+alias play="mplayer -ao pulse -really-quiet"
+
+### gpg
 alias gpg1="~/.bin/gpg1/bin/gpg"
 alias enc="gpg1 -e -r 7dfd16fa"
 alias dec="gpg1 -d"
