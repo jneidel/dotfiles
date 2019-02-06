@@ -9,12 +9,12 @@ player "vlc"
 
 ## reload feeds
 auto-reload yes
-reload-time 30
+reload-time 10
 
 ## formatting
 download-filename-format "%t.%e"
 feedlist-format " %n  %t"
-articlelist-format " %f %D %?T?|%-17T| ?%t"
+articlelist-format " %f %D %?T?|%-20T| ?%t"
 datetime-format "%b %d"
 
 ## ignore pattern
@@ -44,6 +44,8 @@ bind-key I rev-sort
 
 bind-key g home all
 bind-key G end all
+
+unbind-key C
 
 ## rebind podboat to mutt hotkeys
 unbind-key P

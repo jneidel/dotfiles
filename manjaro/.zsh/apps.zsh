@@ -29,7 +29,9 @@ alias ytch="vim ~/scripts/yt/CHANNELS"
 alias yta="~/scripts/yt/lib/add-video.sh"
 
 ### misc
-alias dict="dict-cc $1 | less"
+function dict {
+  dict-cc $1 | less
+}
 alias tree="alder --depth 3" # print filetree, nig @aweary/alder
 alias flux="xflux -l 52 -g 13" # bluelight filter
 alias wifipass="npx wifi-password-cli" # print wifi pass
@@ -42,7 +44,8 @@ alias -g R="| entr -cp" # R[UN]
 
 ### newsboat
 alias n="newsboat --quiet && clear"
-alias pod="podboat --autodownload"
+alias dl="podboat --autodownload"
+alias pod="dl"
 
 ### players
 alias vv="vlc --audio-desync=-250 -q --fullscreen --loop --no-repeat"
@@ -56,12 +59,11 @@ alias dec="gpg1 -d"
 ## gui
 alias chrome="chromium"
 alias o="xdg-open ." # gui file browser
-alias yac="YACReaderLibrary" # manga reader library
 alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## suffixes
-# open files of type x with application y
-# usage: $ doc.pdf -> opens in epdfview
+## open files with extension .x with application y
+## usage: $ ./doc.cbz -> opens in YACReader
 alias -s pdf=apvlv #epdfview, mupdf
 alias -s epub=FBReader
 alias -s mobi=FBReader
@@ -71,5 +73,10 @@ alias -s jpg=sxiv # or gwenview
 alias -s png=sxiv
 alias -s mp4=vlc
 alias -s mkv=vlc
+alias -s mp3=mplayer
+alias -s sh=bash
+alias -s js=node
+alias -s json=fx
+alias -s html=firefox-nightly
+alias -s ts=tsc
 
-alias pd="~/.steam/steam/steamapps/common/PAYDAY\ 2/payday2_release"

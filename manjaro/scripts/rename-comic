@@ -4,7 +4,8 @@ COMIC=$1
 DIRECTORY=$2
 
 if [[ $COMIC = "--help" ]] || [[ $COMIC = "help" ]]; then {
-  echo "rename-comic: Rename and format comics (downloaded from getcomics.info)"
+  echo "rename-comic: <comic>"
+  echo "Rename and format comics (downloaded from getcomics.info)"
   echo ""
   echo "Input format:  Oblivion Song 011 (2019) (Digital) (Zone-Empire).cbr"
   echo "Output format: oblivion-song-011.cbr"
@@ -24,13 +25,14 @@ if [[ -z $COMIC ]]; then {
   echo "Pass --help for help"
   exit
 } fi
-if [[ -z $DIRECTORY ]]; then {
-  #echo "Using default output path: same as input"
-  DIRECTORY=.
-} fi
 
 NAME=$(format-comic-name.js "$COMIC")
 
-echo 'Moving comic to: '$DIRECTORY/$NAME
-mv "$COMIC" "$DIRECTORY/$NAME"
+if [[ -z $DIRECTORY ]]; then
+  echo "Moving comic to: "$NAME
+  mv "$COMIC" "$NAME"
+else
+  echo "Moving comic to: $DIRECTORY/$NAME"
+  mv "$COMIC" "$DIRECTORY/$NAME"
+fi
 

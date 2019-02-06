@@ -29,3 +29,6 @@ autocmd filetype javascript,typescript inoremap ,t test(<Space>"",<Space>()<Spac
 " Typescript
 autocmd filetype typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi
 
+" Bash
+autocmd filetype bash,shell,zsh inoremap ,f function<Space><Space>{<Enter><++><Enter>}<Esc>02kf a
+

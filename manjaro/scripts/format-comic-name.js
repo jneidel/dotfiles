@@ -9,27 +9,27 @@
  * See rncomic for usage information
  */
 
-let nameRaw = process.argv[2];
+const nameRaw = process.argv[2];
 
 function createName( name, issue ) {
   name = name.toLowerCase();
-  name = name.split( " " ).join( "-" )
+  name = name.split( " " ).join( "-" );
 
-  return `${name}-${issue}`
+  return `${name}-${issue}`;
 }
 
-let [ name, ...rest ] = nameRaw.split( "." )
-const nameExt = rest[rest.length-1]
+let [ name, ...rest ] = nameRaw.split( ".cb" );
+const nameExt = `cb${rest[rest.length - 1]}`;
 
-const completePath = name.split( "/" )
-name = completePath.pop()
+const completePath = name.split( "/" );
+name = completePath.pop();
 
-const [ , seriesName, issue ] = name.match( /^(.*?)\s(\d\d\d)/ )
+const [ , seriesName, issue ] = name.match( /^(.*?)\s(\d\d\d)/ );
 
-const formattedName = `${createName( seriesName, issue )}.${nameExt}`
-completePath.push(formattedName);
+const formattedName = `${createName( seriesName, issue )}.${nameExt}`;
+completePath.push( formattedName );
 
-const result = completePath.join("/")
+const result = completePath.join( "/" );
 
-console.log(result)
+console.log( result );
 

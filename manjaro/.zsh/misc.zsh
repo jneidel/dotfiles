@@ -76,7 +76,8 @@ alias -g N1="2> /dev/null"     # only stdout
 alias -g N2="> /dev/null 2>&1" # only stderr
 
 ## Open links
-alias imgweek="$B https://getcomics.info/tag/image-week/"
+#alias imgweek="$B https://getcomics.info/tag/image-week/"
+alias imgweek="$B https://imagecomics.com/comics/new-releases"
 alias letsplay="$B https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
 
 ## Extract/tag/move monstercat songs
