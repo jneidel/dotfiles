@@ -4,15 +4,24 @@
     "browser": true,
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "ecmaFeatures": {
+      "impliedStrict": true
+    }
+  },
   "plugins": [
     "unicorn",
     "node",
     "ava",
-    "json"
+    "json",
+    "@typescript-eslint"
   ],
   "extends": [
     "eslint:recommended",
-    "xo"
+    "xo",
+    "xo-typescript"
   ],
   "rules": {
     "no-undef": 2,
@@ -207,6 +216,54 @@
     "ava/test-title": [ 2, "always" ],
     "ava/use-t-well": 2,
     "ava/use-t": 2,
-    "ava/use-test": 2
+    "ava/use-test": 2,
+    "@typescript-eslint/adjacent-overload-signatures": 2,
+    "@typescript-eslint/array-type": [ 2, "array" ],
+    "@typescript-eslint/ban-types": [ "off", { "types": {
+      "Array": { "message": "Use [] instead", "fixWith": "[]" },
+      "array": { "message": "Use [] instead", "fixWith": "[]" },
+      "Object": { "message": "Use {} instead", "fixWith": "{}" },
+      "object": { "message": "Use {} instead", "fixWith": "{}" },
+      "String": { "message": "Use string instead", "fixWith": "string" },
+      "Number": { "message": "Use number instead", "fixWith": "number" }
+    } } ],
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/class-name-casing": 2,
+    "@typescript-eslint/explicit-function-return-type": 2,
+    "@typescript-eslint/explicit-member-accessibility": 1,
+    "@typescript-eslint/generic-type-naming": 1,
+    "@typescript-eslint/indent": 0,
+    "@typescript-eslint/interface-name-prefix": 2,
+    "@typescript-eslint/member-delimiter-style": 2,
+    "@typescript-eslint/member-naming": [ 2, { "private": "^_" } ],
+    "@typescript-eslint/member-ordering": 2,
+    "@typescript-eslint/no-angle-bracket-type-assertion": 2,
+    "@typescript-eslint/no-array-constructor": 2,
+    "@typescript-eslint/no-empty-interface": 2,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-extraneous-class": 2,
+    "@typescript-eslint/no-inferrable-types": 2,
+    "@typescript-eslint/no-misused-new": 2,
+    "@typescript-eslint/no-namespace": 2,
+    "@typescript-eslint/no-non-null-assertion": 2,
+    "@typescript-eslint/no-object-literal-type-assertion": 2,
+    "@typescript-eslint/no-parameter-properties": 2,
+    "@typescript-eslint/no-this-alias": 2,
+    "@typescript-eslint/no-triple-slash-reference": 2,
+    "@typescript-eslint/no-type-alias": [ 2, {
+      "allowAliases": "always",
+      "allowCallbacks": "always",
+      "allowLiterals": "always",
+      "allowMappedTypes": "always"
+    } ],
+    "@typescript-eslint/no-unnecessary-type-assertion": 2,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/no-useless-constructor": 2,
+    "@typescript-eslint/no-var-requires": 1,
+    "@typescript-eslint/prefer-interface": 1,
+    "@typescript-eslint/prefer-namespace-keyword": 2,
+    "@typescript-eslint/restrict-plus-operands": 2,
+    "@typescript-eslint/type-annotation-spacing": 2
   }
 }
