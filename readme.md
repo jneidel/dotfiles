@@ -94,6 +94,7 @@ OSX only
 ### Eslint (js linter)
 
 [View eslint config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc) - `~/.eslintrc`
+[View eslint typescript config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc-ts) - `~/.eslintrc`
 
 Once globally installed, run anywhere:
 
@@ -107,7 +108,11 @@ $ fixa
 Requires eslint, as well as a few plugins to be installed globally:
 
 ```zsh
-npm i -g eslint eslint-plugin-ava eslint-plugin-json eslint-plugin-node eslint-plugin-unicorn eslint-plugin-xo eslint-config-xo
+# for .eslintrc
+npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo
+
+# for .eslintrc-ts
+npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
 ```
 
 For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
