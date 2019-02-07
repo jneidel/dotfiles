@@ -1,22 +1,48 @@
 #! /bin/bash
+# todo: implement --force flag to remove exiting data
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ targpg <directory>"
+  echo "Will compress directory (tar) and then encrypt it (gpg)."
+  echo "Reverse with untargpg"
+  echo ""
+  echo "Parameters:"
+  echo "\$1: directory to be compressed/encryped"
+  echo "[\$2]: keyid for encryption (uses gobal \$KEYID if not passed)"
+  echo ""
+  echo "Example:"
+  echo "$ targpg my-files 7DFD16FA"
+  exit
+fi
+
+if [[ ! -d $1 ]]; then
+  echo "\$1 is not a directory."
+  echo "Pass --help for usage info."
+  exit
+fi
 
 DIR=$1
 DIRTAR=$DIR".tgz"
-KEY=$KEYID # Global gpg keyid set in ~/.zshrc
 
-if [ -d $DIR ]; then
-  echo "Start archiving"
-  tar czf $DIRTAR $DIR
-  echo "Start encryption"
-  gpg -r $KEY -e $DIRTAR
-  echo "Cleanup"
-  rm $DIRTAR
-elif [ $DIR = "--help" ]; then
-  echo "$ targpg <directory>"
-  echo "Will compress directory and then encrypt it."
-  echo "Reverse with untargpg"
+PASSED_KEY=$2
+if [[ -z $PASSED_KEY ]]; then
+  if [[ -z $KEYID ]]; then
+    echo "No gobal \$KEYID has been found."
+    echo "Alternatively it can be passed directly as \$2."
+    exit
+  fi
+
+  KEY=$KEYID # Global gpg keyid set in ~/.zshrc
+  echo "Using default keyid: $KEY"
 else
-  echo "Not a directory."
-  echo "Pass --help for usage info."
+  KEY=$PASSED_KEY # $2
+  echo "Using passed keyid: $KEY"
 fi
+
+echo "Start archiving"
+tar czf $DIRTAR $DIR
+echo "Start encryption"
+gpg -r $KEY -e $DIRTAR
+echo "Cleanup"
+rm $DIRTAR
 

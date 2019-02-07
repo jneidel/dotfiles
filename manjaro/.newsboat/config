@@ -18,7 +18,9 @@ articlelist-format " %f %D %?T?|%-20T| ?%t"
 datetime-format "%b %d"
 
 ## ignore pattern
-ignore-article "Podcasts" "title =~ \"MJS\""
+ignore-mode "display"
+ignore-article "https://feeds.feedwrench.com/JavaScriptJabber.rss" "title =~ \"^MJS\""
+#ignore-article "http://feed.syntax.fm/rss" "title =~ \"^Potluck\""
 
 ## misc
 user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"

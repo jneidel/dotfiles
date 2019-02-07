@@ -6,6 +6,7 @@ source $ZSH/misc.zsh;
 source $ZSH/rcfiles.zsh;
 source $ZSH/transmission.zsh;
 source $ZSH/cmus.zsh;
+source $ZSH/mega.zsh;
 
 # programming
 source $ZSH/git.zsh;

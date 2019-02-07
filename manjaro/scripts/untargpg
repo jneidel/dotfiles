@@ -1,4 +1,23 @@
 #! /bin/bash
+# todo: implement --force flag to remove exiting data
+# todo: pass along encryption password
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ untargpg file.tgz.gpg"
+  echo "Will decrypt the tar archive (gpg) before untaring it (tar)."
+  echo "Reverse with targpg"
+  echo ""
+  echo "The input file has be in the required format:"
+  echo "  filename.tgz.gpg"
+  echo ""
+  echo "Parameters:"
+  echo "\$1: path to file, has to conform to format"
+  echo "[\$2]: passphrase to decrypt the archive (prompts user if not passed)"
+  echo ""
+  echo "Example:"
+  echo "$ untargpg my-files.tgz.gpg mypasphrase"
+  exit
+fi
 
 DIRTARGPG=$1
 DIR=$(echo $DIRTARGPG | cut -d "." -f 1)
@@ -6,19 +25,29 @@ TAR=$(echo $DIRTARGPG | cut -d "." -f 2)
 GPG=$(echo $DIRTARGPG | cut -d "." -f 3)
 DIRTAR=$DIR"."$TAR
 
-if [ $TAR = "tgz" ] && [ $GPG = "gpg" ]; then
+if [ $TAR != "tgz" ] || [ $GPG != "gpg" ]; then
+  echo "\$1: Wrong argument passed"
+  echo "The file has to be an encrypted tar archive."
+  echo "For usage info pass --help."
+  exit
+fi
+
+PASSPHRASE=$2
+if [[ -n $PASSPHRASE ]]; then
+  # decrypt using passphrase
+  echo "Start decryption"
+  cat $DIRTARGPG | gpg --batch --pinentry loopback --passphrase $PASSPHRASE -d > $DIRTAR
+  echo "Start unarchiving"
+  tar xzf $DIRTAR $DIR
+  echo "Cleanup"
+  rm $DIRTAR
+else
   echo "Start decryption"
   cat $DIRTARGPG | gpg -d > $DIRTAR
   echo "Start unarchiving"
   tar xzf $DIRTAR $DIR
   echo "Cleanup"
   rm $DIRTAR
-elif [ $DIR = "--help" ]; then
-  echo "$ untargpg x.tgz.gpg"
-  echo "Will decrypt tar archive and then untar it."
-  echo "Reverse with targpg"
-else
-  echo "Not a encrypted tar archive."
-  echo "Pass --help for usage info."
 fi
+
 
