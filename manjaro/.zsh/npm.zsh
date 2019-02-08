@@ -30,6 +30,7 @@ alias nbw="npm run build-webpack"
 alias build="npm run build"
 
 ### watch
+alias nw="npm run watch"
 alias nwt="npm run watch-test"
 alias nwts="npm run watch-ts"
 alias nww="npm run watch-webpack"

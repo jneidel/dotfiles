@@ -52,9 +52,8 @@ alias vv="vlc --audio-desync=-250 -q --fullscreen --loop --no-repeat"
 alias play="mplayer -ao pulse -really-quiet"
 
 ### gpg
-alias gpg1="~/.bin/gpg1/bin/gpg"
-alias enc="gpg1 -e -r 7dfd16fa"
-alias dec="gpg1 -d"
+alias enc="gpg -e -r 7dfd16fa"
+alias dec="gpg -d"
 
 ## gui
 alias chrome="chromium"

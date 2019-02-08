@@ -1,12 +1,11 @@
 # /ect/hosts: static lookup table for host names
+# <id-adress> <subdomain.domain.domain-extension>
 
-#<id-adress> <hostname.domain.org> <hostname>
-127.0.0.1	   localhost
-#::1	localhost ip6-localhost ip6-loopback
-#ff02::1 ip6-allnodes
-#ff02::2 ip6-allrouters
+127.0.0.1	localhost
 
-# Source: https://raw.githubusercontent.com/LukeSmithxyz/etc/master/ips
+# Domain blocklist
+## Source: https://raw.githubusercontent.com/LukeSmithxyz/etc/master/ips
+
 # Ads, tracking and general junk
 0.0.0.0 api.opencandy.com
 0.0.0.0 api.recommendedsw.com
@@ -49682,5 +49681,3 @@
 0.0.0.0 gv.com
 0.0.0.0 blog.google
 0.0.0.0 localguidesconnect.com
-
-

@@ -40,9 +40,9 @@ else
 fi
 
 echo "Start archiving"
-tar czf $DIRTAR $DIR
+tar czf "$DIRTAR" "$DIR"
 echo "Start encryption"
-gpg -r $KEY -e $DIRTAR
+gpg -r $KEY -e "$DIRTAR"
 echo "Cleanup"
-rm $DIRTAR
+rm "$DIRTAR"
 

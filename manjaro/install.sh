@@ -29,7 +29,8 @@ prompt 'node' 'pacman -S nodejs'
 prompt 'npm non programming clis' 'sudo npm install -g dict-cc-cli tslide mangareader-dl fkill-cli'
 prompt 'npm programming clis' 'sudo npm install -g ava eslint np yo typescript webpack webpack-cli generator-jneidel fx'
 prompt 'npm programming utilities' 'sudo npm install -g concurrently markdown-toc nodemon npm-name-cli browser-sync npm-check-updates'
-prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-ava eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin'
+prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin'
+prompt 'npm eslint-ts specific configs' 'sudo npm install -g eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin'
 
 # Specific case apps
 prompt 'gimp' 'packer-aur -S gimp'
@@ -37,6 +38,9 @@ prompt 'yacreader' 'packer-aur -S yacreader-nopdf'
 prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests' # python modules for the lyrics/cover-art plugin
 prompt 'mplayer' 'sudo packer-aur -S mplayer' # cli player
 prompt 'newsboat' 'sudo packer-aur -S newsboat'
+
+prompt 'rclone (skip for beta, as it will be asked next)' 'sudo packer-aur -S rclone'
+prompt 'rclone-beta' 'curl https://rclone.org/install.sh | sudo bash -s beta'
 
 prompt 'pacman remove' 'sudo pacman -Rsn hexchat'
 

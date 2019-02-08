@@ -36,18 +36,18 @@ PASSPHRASE=$2
 if [[ -n $PASSPHRASE ]]; then
   # decrypt using passphrase
   echo "Start decryption"
-  cat $DIRTARGPG | gpg --batch --pinentry loopback --passphrase $PASSPHRASE -d > $DIRTAR
+  cat "$DIRTARGPG" | gpg --batch --pinentry loopback --passphrase $PASSPHRASE -d > "$DIRTAR"
   echo "Start unarchiving"
-  tar xzf $DIRTAR $DIR
+  tar xzf "$DIRTAR" "$DIR"
   echo "Cleanup"
-  rm $DIRTAR
+  rm "$DIRTAR"
 else
   echo "Start decryption"
-  cat $DIRTARGPG | gpg -d > $DIRTAR
+  cat "$DIRTARGPG" | gpg -d > "$DIRTAR"
   echo "Start unarchiving"
-  tar xzf $DIRTAR $DIR
+  tar xzf "$DIRTAR" "$DIR"
   echo "Cleanup"
-  rm $DIRTAR
+  rm "$DIRTAR"
 fi
 
 
