@@ -31,13 +31,13 @@
 
 I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
-To use my zsh config fill in your home directory in the variable at line 3.
+View zsh config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) (you definitly want to change the `User specific` section of this config) - `~/.zshrc`
 
-View zsh config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) - `~/.zshrc`
+[View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) (I removed everything uneccessary to me, as it slowed me down on every new shell instance) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
-[View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) - `~/.oh-my-zsh/oh-my-zsh.sh`
-
-View aliases: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/aliases.zsh), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
+View aliases:
+- [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
+- [manjaro](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/init.zsh) (this file links to all other alias files, which can be found in the same dir) - `~/.zsh/init.zsh`
 
 **Zsh theme:**
 
