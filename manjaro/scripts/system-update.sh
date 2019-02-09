@@ -3,7 +3,7 @@
 
 echo ":: updating system..."
 
-if (( $+commands[packer-aur] )) ; then
+if [[ $+commands[packer-aur] ]]; then
   packer-aur --noconfirm --noedit -Syu;
 else
   sudo pacman -Syu;

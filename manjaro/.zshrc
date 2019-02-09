@@ -5,11 +5,17 @@ OMZ=~/.oh-my-zsh;
 HIST_STAMP="dd.mm.yyyy"
 
 _Z_DATA=$HOME/.z/.z
-plugins=( z encode64 urltools )
+plugins=( z encode64 urltools colored-man-pages colorize cp )
+# z: jump around, $ z dot, to cd into dir thats most often used an includes 'dot' in the name, i.e. "dotfiles"
+# encode64: $ d64; $ e64
+# test colored-man-pages
+# test colorize: ccat
+# test cp: cpv
 
 source $OMZ/oh-my-zsh.sh
 source $OMZ/themes/cobalt2.zsh-theme;
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# installed with pacman: zsh-syntax-highlighting[-git]
 
 ## General
 export LC_ALL=en_US.UTF-8

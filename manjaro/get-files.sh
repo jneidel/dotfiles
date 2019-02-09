@@ -45,4 +45,6 @@ cp ~/.eslintrc $D/../.eslintrc
 cp ~/.eslintrc-ts $D/../.eslintrc-ts
 mkdir -p $D/.newsboat
 cp ~/.newsboat/config $D/.newsboat/
+mkdir -p $C/networkmanager-dmenu
+cp ~/.config/networkmanager-dmenu/config.ini $C/networkmanager-dmenu/
 
