@@ -39741,7 +39741,7 @@
 0.0.0.0 login.dotomi.net
 0.0.0.0 external.stealthedeal.com
 0.0.0.0 goodblock.gladly.io
-0.0.0.0 help.evernote.com
+#0.0.0.0 help.evernote.com
 0.0.0.0 mackeeperapp.zeobit.com
 0.0.0.0 montrealgazette.stats.com
 0.0.0.0 fgoogle.com

@@ -11,21 +11,21 @@ function prompt() {
   fi
 }
 
-prompt 'zsh' 'sh -c "$( curl -fsSL $SCRIPTS'/zsh.sh' )"'
-prompt 'configurations' 'sh -c "$( curl -fsSL $SCRIPTS'/configs.sh' )"'
+prompt 'zsh' 'sh -c "$( curl -fsSL $SCRIPTS\"/zsh.sh\" )"'
+prompt 'configurations' 'sh -c "$( curl -fsSL $SCRIPTS\"/configs.sh\" )"'
 
 # Pacman
 prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu'
-prompt 'packer' 'yaourt -S packer-aur'
+prompt 'packer' 'yaourt -S packer-aur-git'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
-prompt 'pacman gui apps' 'packer-aur -S keepassxc terminator vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine'
-prompt 'pacman tui apps' 'packer-aur -S cmus htop mosh pulsemixer'
-prompt 'pacman clis' 'packer-aur -S figlet fd pjson entr python-grip'
-prompt 'pacman utilities' 'packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq networkmanager-dmenu-git'
+prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc terminator vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine'
+prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer'
+prompt 'pacman clis' 'sudo packer-aur -S figlet fd pjson entr python-grip'
+prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq networkmanager-dmenu-git'
 
 # NPM
-prompt 'node' 'pacman -S nodejs'
+prompt 'node' 'sudo packer-aur -S nodejs'
 prompt 'npm non programming clis' 'sudo npm install -g dict-cc-cli tslide mangareader-dl fkill-cli'
 prompt 'npm programming clis' 'sudo npm install -g ava eslint np yo typescript webpack webpack-cli generator-jneidel fx'
 prompt 'npm programming utilities' 'sudo npm install -g concurrently markdown-toc nodemon npm-name-cli browser-sync npm-check-updates'

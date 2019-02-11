@@ -1,13 +1,13 @@
 # mega
-# aliases for megacmd
 
+## aliases for megacmd
 alias mega="mega-cmd" # mega shell
 alias megas="mega-https on" # megas[tart]
 
-# put
+### put
 alias megaup="mega-put -q" # megaup[load]
 
-# transfers
+### transfers
 alias megaw="W mega-transfers --path-display-size=53 --limit=14" # megaw[atch]
 
 alias megar="mega-transfers -r -a" # megar[esume]
