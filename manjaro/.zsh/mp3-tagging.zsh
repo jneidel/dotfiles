@@ -23,8 +23,8 @@ alias cmly="get-cmus-lyrics" # in ~/scripts
 ## get cover
 function cmco() {
   file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
-  getco $file"mp3" ~/tmp/cmus-cover.jpg NUL
-  fkill -f sxiv NE # kill prev instance
+  getco $file"mp3" ~/tmp/cmus-cover.jpg N2
+  fkill -f sxiv N1 # kill prev instance
   sxiv -f ~/tmp/cmus-cover.jpg # img viewer
 }
 function cmcoloop() { # requires sxiv, fkill (npm: fkill-cli)
@@ -43,6 +43,6 @@ function cmcoloop() { # requires sxiv, fkill (npm: fkill-cli)
 }
 function cmcol() { # get cover & update cover once song changes
   cmco &
-  cmcoloop NE &
+  cmcoloop N1 &
 }
 

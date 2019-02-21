@@ -16,6 +16,7 @@ alias h="cd;clear;"
 alias v="vim"
 alias src="source ~/.zshrc"
 alias W="watch -t -d -n 1" # update 1s
+alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude=package-lock.json" # short: grep -nHsr
 
 ### recursive
 alias rmr="rm -r"
@@ -29,6 +30,7 @@ alias cmf="chmod 644" # default file
 
 ### dir/disk info
 alias dirsize="du -sh"
+alias ds="du -sh" # d[ir]s[ize]
 alias disksize="df -h"
 alias diskspace="df -h"
 
@@ -72,8 +74,8 @@ fi
 alias -g PP="| pjson" # pretty print json
 
 ## Redirect stdout/stderr
-alias -g N1="2> /dev/null"     # only stdout
-alias -g N2="> /dev/null 2>&1" # only stderr
+alias -g N1="2> /dev/null"     # only stdout, prev NE
+alias -g N2="> /dev/null 2>&1" # only stderr, prev NUL
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week/"
