@@ -2,7 +2,8 @@
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ get-clip"
-  echo "Get clipboard content"
+  echo "Get clipboard content using clipit"
+  exit
 fi
 
 clipit -c 2>/dev/null
