@@ -16,6 +16,7 @@
   * [Internet](#internet)
 - [Entertainment](#entertainment)
 - [Life](#life)
+  * [Political](#political)
 
 <!-- tocstop -->
 
@@ -59,5 +60,9 @@
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
 - Why social media isn't that great for you: [Social Media: Anything for Upcummies! ⬆🍆💦💦](https://www.youtube.com/watch?v=YjbyDU0WzYI)
+
+### Political
+
 - The dangers of spreading unresearched information as if it were the truth: [Understanding Superficial Political Opinions](https://www.youtube.com/watch?v=2vVEV2gLxGY)
+- Why you should care about climate change: [The Apocalypse - ContraPoints](https://www.youtube.com/watch?v=S6GodWn4XMM)
 

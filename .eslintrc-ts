@@ -151,7 +151,7 @@
     "valid-jsdoc": 1,
     "valid-typeof": 2,
     "array-bracket-newline": [ 2, "consistent" ],
-    "prefer-destructuring": [ 1, { "object": true, "array": true } ],
+    "prefer-destructuring": [ 0, { "object": true, "array": true } ],
     "unicorn/catch-error-name": [ 2, { "name": "err" } ],
     "unicorn/explicit-length-check": [ 1, { "non-zero": "not-equal" } ],
     "unicorn/filename-case": [ 0, { "case": "kebabCase" } ],
