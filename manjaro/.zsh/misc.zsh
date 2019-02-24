@@ -19,7 +19,7 @@ alias W="watch -t -d -n 1" # update 1s
 alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude=package-lock.json" # short: grep -nHsr
 
 ### recursive
-alias rmr="rm -r"
+alias rmr="rm -rf"
 alias cpr="cp -r -v"
 alias cpdir="cp -r -v"
 
