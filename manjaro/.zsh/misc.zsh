@@ -82,39 +82,6 @@ alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
 alias letsplay="$B https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
 
-## Extract/tag/move monstercat songs
-function extractmo() { # singles
-  DIR=.
-  for F in $DIR/*\(320\ MP3\)*; do
-    extract $F
-    TITLE=$(echo $F | cut -d "/" -f 2)
-    TITLE=$(echo $TITLE | cut -d "(" -f 1)
-    TITLE=$(trim $TITLE)
-    cd *$TITLE*
-    rm cover.jpg
-    rm $F
-    id3tag -s $TITLE *$TITLE*.mp3
-    mid3v2 --TPE2 "Monstercat" -A "Mixed" *$TITLE*.mp3
-    mv *$TITLE*.mp3 ~/music/Singles/Monstercat-Current
-    cd ~/Downloads
-    rmr *$TITLE*
-  done
-}
-function extractmoep() { # eps
-  DIR=.
-  for F in $DIR/*\(320\ MP3\)*; do
-    extract $F
-    rm $F
-  done
-
-  mv *EP* ~/ct/music/
-}
-
 ## Unused
-function trim(){
-  VAR=$1
-  VAR="$(echo -e "${VAR}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-  echo -n $VAR
-}
 alias hdmi="xrandr --output HDMI1 --auto" # dublicate screen on connected hdmi
 

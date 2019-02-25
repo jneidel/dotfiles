@@ -35,7 +35,7 @@ prompt 'npm eslint-ts specific configs' 'sudo npm install -g eslint-config-xo-ty
 # Specific case apps
 prompt 'gimp' 'packer-aur -S gimp'
 prompt 'yacreader' 'packer-aur -S yacreader-nopdf'
-prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests' # python modules for the lyrics/cover-art plugin
+prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests mutagen-tools' # python modules for the lyrics/cover-art plugin
 prompt 'mplayer' 'sudo packer-aur -S mplayer' # cli player
 prompt 'newsboat' 'sudo packer-aur -S newsboat'
 

@@ -270,28 +270,33 @@ mode "resize" {
 # Lock screen (ssharp = ß) - find out keyid with xev
 bindsym $mod+ssharp exec --no-startup-id blurlock
 
-# Autostart applications
+# Application Autostart
 exec terminator -e "tmux new -s main"
 exec firefox-nightly
-# exec --no-startup-id i3-msg 'workspace 3:kudu; exec terminator -e "kudu"'
-# exec --no-startup-id i3-msg 'workspace 4:ranger; exec terminator -e "ranger ~"'
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+## desktop monitor
+exec --no-startup-id ~/.config/conky/start
+## bluelight filter
+exec --no-startup-id xflux -k 5000 -l 52 -g 13
+## lockscreen
+exec --no-startup-id xautolock -time 15 -locker blurlock
+## wallpaper
 exec --no-startup-id nitrogen --restore #; sleep 1; compton -b -f
+## network manager
 exec --no-startup-id nm-applet
+## power manager
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id xflux -k 5000 -l 28 -g 77 # -l 52 -g 13 for Germany
-exec --no-startup-id ~/.bin/private-internet-access
+## torrent daemon
 exec --no-startup-id transmission-daemon -c ~/Downloads --encryption-preferred --paused
+## keyboard setup
 exec --no-startup-id xset r rate 185 100 # set keyboard delay at startup
+## system defaults
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec_always --no-startup-id ff-theme-util
+exec_always --no-startup-id fix_xcursor
+#exec --no-startup-id pamac-tray
 # exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
-# exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
-exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
 
 #exec_always ~/scripts/i3/hud-menu/i3-appmenu-service.py
 #bindsym $mod+u exec ~/scripts/i3/hud-menu/i3-hud-menu.py

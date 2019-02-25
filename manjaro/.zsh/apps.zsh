@@ -48,7 +48,7 @@ alias dl="podboat --autodownload"
 alias pod="dl"
 
 ### players
-alias vv="vlc --audio-desync=-450 -q --fullscreen --loop --no-repeat --no-random"
+alias vv="vlc --audio-desync=-250 -q --fullscreen --loop --no-repeat --no-random"
 alias play="mplayer -ao pulse -really-quiet"
 
 ### gpg
