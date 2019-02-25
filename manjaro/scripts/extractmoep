@@ -1,0 +1,28 @@
+#! /bin/bash
+BIN=extractmoep
+OUT=~/ct/music
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ $BIN"
+  echo "Extract and move monstercat eps"
+  echo "Eps will be moved to: $OUT"
+  echo ""
+  echo "Format:"
+  echo "'<ep-name> EP (320 MP3).zip' -> '<ep-name> EP (320 MP3)'"
+  exit
+fi
+
+echo "Running $BIN in $(pwd)"
+
+for F in *"EP"*".zip"; do
+  echo "---"
+  echo "Starting: $F"
+  extract $F > /dev/null 2>&1
+
+  echo "cleanup"
+  rm "$F"
+done
+
+echo "move files"
+mv *"EP"* ~/ct/music/
+
