@@ -1,0 +1,16 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ bluetooth"
+  echo ""
+  exit
+fi
+
+BT=$(btstatus)
+
+if [[ ! $BT = "" ]]; then
+  echo "$BT"
+else
+  echo "-"
+fi
+

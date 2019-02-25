@@ -267,17 +267,17 @@ mode "resize" {
   bindsym Escape mode "default"
 }
 
-# Lock screen (ssharp = ß) - find out keyid with xev
+# Manually lock screen (ssharp = ß) - find out keyid with xev
 bindsym $mod+ssharp exec --no-startup-id blurlock
 
 # Application Autostart
 exec terminator -e "tmux new -s main"
 exec firefox-nightly
 ## desktop monitor
-exec --no-startup-id ~/.config/conky/start
+exec --no-startup-id ~/scripts/conky/start
 ## bluelight filter
 exec --no-startup-id xflux -k 5000 -l 52 -g 13
-## lockscreen
+## auto lock screen
 exec --no-startup-id xautolock -time 15 -locker blurlock
 ## wallpaper
 exec --no-startup-id nitrogen --restore #; sleep 1; compton -b -f
