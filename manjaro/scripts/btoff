@@ -1,5 +1,10 @@
-
 #! /bin/bash
 
-echo -e "power off\nquit" | bluetoothctl
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ btoff"
+  echo "Turn off bluetooth via bluetoothctl"
+  exit
+fi
+
+echo -e "power off\nquit" | bluetoothctl > /dev/null 2>&1
 

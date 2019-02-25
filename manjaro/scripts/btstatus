@@ -1,0 +1,18 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ btstatus"
+  echo "Display name of currently connected bluetooth device"
+  echo "If no device is connected the output will be empty"
+  echo "Uses bluetoothctl"
+  exit
+fi
+
+CUR=$(echo -e "quit" | bluetoothctl | grep quit | grep "\[" | cut -d "[" -f 3 | cut -d "]" -f 1)
+
+if [[ "$CUR" = "bluetooth" ]]; then
+  echo ""
+else
+  echo $CUR
+fi
+
