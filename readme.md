@@ -9,10 +9,11 @@
 
 - [Configurations](#configurations)
   * [Zsh (shell)](#zsh-shell)
-  * [Vim (editor)](#vim-editor)
+  * [Terminal](#terminal)
   * [Tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
+  * [Vim (TUI editor)](#vim-tui-editor)
+  * [Visual Studio Code (GUI editor)](#visual-studio-code-gui-editor)
   * [Eslint (js linter)](#eslint-js-linter)
-  * [Visual Studio Code (editor)](#visual-studio-code-editor)
   * [Git (version control)](#git-version-control)
 - [Apps](#apps)
   * [CLIs](#clis)
@@ -31,34 +32,27 @@
 
 I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
-View zsh config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) (you definitly want to change the `User specific` section of this config) - `~/.zshrc`
+View zsh config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) (change the `User specific` section of this config) - `~/.zshrc`
 
 [View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) (I removed everything uneccessary to me, as it slowed me down on every new shell instance) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
 View aliases:
-- [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 - [manjaro](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/init.zsh) (this file links to all other alias files, which can be found in the same dir) - `~/.zsh/init.zsh`
+- [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 **Zsh theme:**
 
 [View zsh-theme](https://raw.githubusercontent.com/jneidel/dotfiles/master/cobalt2.zsh-theme) - `~/.oh-my-zsh/themes/cobalt2.zsh-theme`
 
-For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/powerline/fonts).
-The font will need to be installed on the device and activated in the iTerm options: `Profiles > Text > Font > Change Font`.
+For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/powerline/fonts) (I use [Roboto Mono](https://github.com/powerline/fonts/blob/master/RobotoMono/Roboto%20Mono%20for%20Powerline.ttf)).
+
+The font will need to be installed on the device. On linux just place the ttf file in `~/.fonts`.
 
 To change the `$` default prompt in the shell, open `~/.oh-my-zsh/themes/cobalt2.zsh-theme` and edit line 52, changing the value between the closing parens and double quote:
 
 ```zsh
 prompt_segment black default "%(!.%{%F{yellow}%}.)<insert-prompt-here>"
 ```
-
-**Colorscheme:**
-
-OSX only
-
-[View iTerm colorscheme](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/brogrammer.itermcolors)
-
-The iTerm colorscheme will need to imported in the iTerm options: `Profiles > Colors > Color Presets > Import` and selected in the same dropdown after the import.
 
 **Plugins:**
 
@@ -68,13 +62,15 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 - [z (jump around)](https://github.com/rupa/z) (included with oh-my-zsh)
 
-### Vim (editor)
+### Terminal
 
-View vim config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
+**Linux**
 
-[View plugins](vim.md)
+[View](manjaro/readme.md#terminator-terminal) Terminator notes
 
-[View colorscheme](https://github.com/j-tom/vim-old-hope)
+**OSX:**
+
+[View](osx/readme.md#iterm2-terminal) iTerm2 notes
 
 ### Tmux (terminal mutiplexer)
 
@@ -84,40 +80,22 @@ View tmux config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/maste
 
 **Scripts:**
 
-OSX only
+View scripts: [manjaro](manjaro/.tmux), [osx](osx/.tmux) - `~/.tmux/`
 
-[View scripts](osx/.tmux) - `~/.tmux/`
+- [cmus](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/cmus-current-track) - get current cmus track
+- [mullvad](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/mullvad-running) - check if mullvad is running
+- [battery](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/battery) (osx) - get osx battery,  adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
+- [itunes](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/itunes) (osx - get current itunes track,  adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
 
-- [battery](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/battery) - adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
-- [itunes](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/itunes) - adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
+### Vim (TUI editor)
 
-### Eslint (js linter)
+View vim config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
 
-[View eslint config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc) - `~/.eslintrc`
-[View eslint typescript config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc-ts) - `~/.eslintrc`
+[View plugins](vim.md)
 
-Once globally installed, run anywhere:
+[View colorscheme](https://github.com/j-tom/vim-old-hope)
 
-```zsh
-$ eslint --fix
-# or via aliases
-$ fix <file/dir>
-$ fixa
-```
-
-Requires eslint, as well as a few plugins to be installed globally:
-
-```zsh
-# for .eslintrc
-npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo
-
-# for .eslintrc-ts
-npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
-```
-
-For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
-
-### Visual Studio Code (editor)
+### Visual Studio Code (GUI editor)
 
 [View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/vscode/settings.json) - `~/Library/Application\ Support/Code/User/settings.json` (osx), `~/.config/Code/User/settings.json` (gnu/linux)
 
@@ -138,6 +116,35 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 - [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) - Update dependencies individually from within package.json
 - [Vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) - Vim mode for VSCode
 - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) - Nice language specific icons in the explorer
+
+### Eslint (js linter)
+
+[View eslint config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc) - `~/.eslintrc`
+[View eslint typescript config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc-ts) - `~/.eslintrc-ts`
+
+Once globally installed, run anywhere:
+
+```zsh
+# for js
+eslint --fix .
+
+# for ts
+eslint -c ~/.eslintrc-ts --fix .
+```
+
+See [eslint aliases](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/eslint.zsh) for shortcuts.
+
+Requires eslint, as well as a few plugins to be installed globally:
+
+```zsh
+# for js
+npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo
+
+# for js & ts
+npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
+```
+
+For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
 
 ### Git (version control)
 
