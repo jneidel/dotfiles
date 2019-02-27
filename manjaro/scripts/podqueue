@@ -7,10 +7,10 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]] || [[ $# -lt 1 ]];  then
   echo "Adds the link to your podboat queue, with '~/Downloads' as output directory"
   echo ""
   echo "Parameters:"
-  echo "\$1: url to be added to '~/.newsboat/queue'"
+  echo "  \$1: url to be added to '~/.newsboat/queue'"
   echo ""
   echo "Example:"
-  echo "$ podqueue http://abcxyz.com/filename.mp3"
+  echo "$ podqueue http://abc.xyz/file.mp3"
   exit
 fi
 

@@ -60,7 +60,9 @@ bindsym $mod+F3 exec terminator -e 'mosh k'
 bindsym $mod+F4 exec terminator -e 'ranger ~'
 bindsym $mod+F5 exec terminator -e 'calcurse'
 bindsym $mod+F8 exec terminator -e 'cmus'
-bindsym $mod+F9 exec terminator -e 'keepassxc'
+bindsym $mod+F9 exec keepassxc
+# exec sh -c "keepassxc &" & - to start in bg and then kill shell
+# https://unix.stackexchange.com/a/302671
 
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -186,14 +188,19 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 
 # Open applications on specific workspaces
 ## Find out class names using xprop
+## 'class' matches the 'WM_CLASS': xprop | grep WM_CLASS
+## 'title' matches the 'WM_NAME': xprop | grep WM_NAME
+## docs: https://i3wm.org/docs/userguide.html#command_criteria
 assign [class="Chromium"] $ws2
 assign [class="Nightly"] $ws2
 assign [class="Tor Browser"] $ws2
-# assign [class="YACReaderLibrary"] $ws7
 assign [class="keepassxc"] $ws9
-assign [class="keepass2"] $ws9
 assign [class="kid3"] $ws5
 assign [class="pcmanfm"] $ws5
+# for titles try this format
+for_window [title="cmus"] move to workspace $ws8
+for_window [title="mosh"] move to workspace $ws3
+#for_window [title="calcurse"] move to workspace $ws3 - not working as name is /usr/bin/zsh
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1

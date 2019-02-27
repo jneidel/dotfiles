@@ -41,6 +41,7 @@ alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
 alias rc="rename-comic"
 alias -g R="| entr -cp" # R[UN]
+alias q="podqueue"
 
 ### newsboat
 alias n="newsboat --quiet && clear"
@@ -48,7 +49,8 @@ alias dl="podboat --autodownload"
 alias pod="dl"
 
 ### players
-alias vv="vlc --audio-desync=-250 -q --fullscreen --loop --no-repeat --no-random"
+alias vv="vv 250"
+alias vvv="~/scripts/vv 450"
 alias play="mplayer -ao pulse -really-quiet"
 
 ### gpg

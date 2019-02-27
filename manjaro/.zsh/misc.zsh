@@ -16,7 +16,7 @@ alias h="cd;clear;"
 alias v="vim"
 alias src="source ~/.zshrc"
 alias W="watch -t -d -n 1" # update 1s
-alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude=package-lock.json" # short: grep -nHsr
+alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude=package-lock.json" # short: grep -nHsr
 
 ### recursive
 alias rmr="rm -rf"

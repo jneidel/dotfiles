@@ -1,0 +1,28 @@
+#! /bin/bash
+
+# flags
+VERBOSE="-q"
+VIDEO="--fullscreen"
+PLAYLIST="--loop --no-repeat --no-random"
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ vv"
+  echo "Open vlc with better defaults"
+  echo ""
+  echo "Flags:"
+  echo "  verbosity: $VERBOSE"
+  echo "  video:     $VIDEO"
+  echo "  playlist:  $PLAYLIST"
+  echo ""
+  echo "Parameters:"
+  echo "  [\$1]: audio delay in ms, for bluetooth speakers (--audo-desync)"
+  exit
+fi
+
+if [[ -n $1 ]]; then
+  vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$1" "${@:2}"
+  # ${@:2} src: https://stackoverflow.com/a/9057392
+else
+  vlc $VERBOSE $VIDEO $PLAYLIST
+fi
+
