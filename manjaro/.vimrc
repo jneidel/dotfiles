@@ -105,9 +105,6 @@ set viminfo=%,'50,\"100,:100,n~/.viminfo
 " Write file with sudo, eventhough vim wasnt opened with sudo
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" Run xrdb whenever Xdefaults or Xresources are updated.
-autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
-
 " Disable automatic commenting on newline
 " autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " ^ not working
@@ -130,10 +127,6 @@ au BufEnter * :silent! !
 " maybe checkout: https://stackoverflow.com/a/8610556
 set autoread " takes 5s
 au CursorHold * checktime
-
-" Run markdown-toc on save
-autocmd BufWritePost ~/code/dotfiles/videos.md !markdown-toc -i ~/code/dotfiles/videos.md
-autocmd BufWritePost ~/code/dotfiles/readme.md !markdown-toc -i ~/code/dotfiles/readme.md
 
 " Increment/Decrement next number
 " src: https://vim.fandom.com/wiki/Increasing_or_decreasing_numbers

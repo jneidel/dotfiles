@@ -1,0 +1,25 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ idmix"
+  echo "Tag all songs with the passed artist and the album 'Mixed'"
+  echo "Uses 'id3tag' and mutagens 'mid3v2'"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: Artist"
+  echo "  \$2+: Songs"
+  echo ""
+  echo "Example:"
+  echo "  $ idmix \"Black Muffin\" *.mp3"
+  exit
+fi
+
+ARTIST="$1"
+for SONG in "${@:2}"
+do {
+  id3tag -a "$ARTIST" "$SONG"
+  mid3v2 --TPE2 "$ARTIST" "$SONG"
+  id3tag -A "Mixed" "$SONG"
+}
+done
+

@@ -8,13 +8,7 @@ alias ids="id3tag -s" # so mp3 # song
 alias idn="id3tag -t" # tr mp3 # tracknr
 alias idco="lame --ti" # jpg mp3 # cover
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
-function idmix() {
-  AR=$1
-  SO=$2
-  idar $AR $SO
-  idaa $AR $SO
-  idal "Mixed" $SO
-}
+# see ~/scripts/idmix
 
 # get tags (prefix derived from cm[us])
 ## get lyrics
