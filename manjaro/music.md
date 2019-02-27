@@ -62,14 +62,14 @@ Sometimes I use kid3 to quickly clean up the tags (set cover on multiple files, 
 
 ## [youtube-dl](https://github.com/rg3/youtube-dl) (Downloader)
 
-youtube-dl always for easy mass download of youtube playlist or soundcloud sets.
+I use youtube-dl for easy mass download of youtube playlists or soundcloud sets.
 
 ```shell
 # Extract audio and save it in ~/Downloads
 youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' -o '~/Downloads/%(title)s.%(ext)s'
 ```
 
-View [alias](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/apps.zsh#L17) in context
+View [aliases](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/apps.zsh#L17) in context
 
 ## Scripts to interact with cmus
 
@@ -89,7 +89,7 @@ cmus-remote -r # prev
 
 Using `cmus-remote -Q` you can get information on the current song. My tmux bar runs a script to check if a song is running and then prints available information.
 
-View: [.tmux.conf](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux.conf#L37), [script that fetches info](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/cmus)
+View: [.tmux.conf](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux.conf#L37), [script that fetches info](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/cmus-current-track)
 
 **Display cover of current song:**
 
