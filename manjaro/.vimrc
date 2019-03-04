@@ -57,8 +57,6 @@ set splitright " on sp
 " Number of splits, next to tab
   hi Title ctermfg=Yellow
 
-" Spellchecking for Markdown files
-  autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
 " Hightlight wrongly spelled words
   hi SpellBad ctermbg=167
   hi SpellRare ctermbg=none
@@ -139,6 +137,16 @@ endfunction
 nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
 nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 
+" Edit the file selected with fzf
+" F because f run automatically
+function! F()
+  exe '!fzf' >
+endfunction
+function! FF()
+  exe '!~/scripts/F' >
+endfunction
+
 "## Source external configs/plugins
 source ~/.vim/config/init.vim
+
 

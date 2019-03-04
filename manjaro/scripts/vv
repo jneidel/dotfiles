@@ -2,8 +2,11 @@
 
 # flags
 VERBOSE="-q"
-VIDEO="--fullscreen"
+VIDEO="--fullscreen --play-and-exit"
 PLAYLIST="--loop --no-repeat --no-random"
+DNC="--compressor-rms-peak 0 --compressor-attack 50 --compressor-release 300 --compressor-threshold -20 --compressor-ratio 20 --compressor-knee 1 --compressor-makeup-gain 12" # src: https://www.geekality.net/2013/11/01/settings-for-vlc-dynamic-range-compression/
+
+# --no-sout-mono-downmix - if using stero speakers
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ vv"
@@ -13,6 +16,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "  verbosity: $VERBOSE"
   echo "  video:     $VIDEO"
   echo "  playlist:  $PLAYLIST"
+  echo "  dynamic range compression: $DNC"
   echo ""
   echo "Parameters:"
   echo "  [\$1]: audio delay in ms, for bluetooth speakers (--audo-desync)"
@@ -20,7 +24,8 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 if [[ -n $1 ]]; then
-  vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$1" "${@:2}"
+  DELAY=$1
+  vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$DELAY" "--sub-delay=-$($(($DELAY/100.0)))" "${@:2}"
   # ${@:2} src: https://stackoverflow.com/a/9057392
 else
   vlc $VERBOSE $VIDEO $PLAYLIST

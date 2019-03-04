@@ -21,13 +21,6 @@ alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
 alias -g PE="--playlist-end"
 
-### youtube-local
-### https://github.com/jneidel/youtube-local
-alias yt="vim ~/scripts/yt/videos"
-alias ytup="~/scripts/yt/download-loop.sh"
-alias ytch="vim ~/scripts/yt/CHANNELS"
-alias yta="~/scripts/yt/lib/add-video.sh"
-
 ### misc
 function dict {
   dict-cc $1 | less
@@ -44,13 +37,13 @@ alias -g R="| entr -cp" # R[UN]
 alias q="podqueue"
 
 ### newsboat
-alias n="newsboat --quiet && clear"
-alias dl="podboat --autodownload"
-alias pod="dl"
+alias yt="newsboat -u ~/.newsboat/urls-youtube -c ~/.newsboat/cache-youtube.db --quiet && clear"
+alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
+alias nbd="podboat --autodownload"
 
 ### players
-alias vv="vv 250"
-alias vvv="~/scripts/vv 450"
+alias vv="~/scripts/vv 250"
+alias vvv="~/scripts/vv 500"
 alias play="mplayer -ao pulse -really-quiet"
 
 ### gpg

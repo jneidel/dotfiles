@@ -1,6 +1,6 @@
 #! /bin/bash
 BIN=extractmo
-OUT=~/music/Singles/Monstercat-Current
+OUT=~/music/Monstercat/singles-current
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ $BIN"

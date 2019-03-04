@@ -13,8 +13,10 @@
 - [Software Industry](#software-industry)
   * [General](#general)
   * [JavaScript](#javascript)
+- [Technology](#technology)
   * [Internet](#internet)
 - [Entertainment](#entertainment)
+  * [Games](#games)
 - [Life](#life)
   * [Political](#political)
 
@@ -45,6 +47,8 @@
 
 - Expectation if youre a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
 
+## Technology
+
 ### Internet
 
 - Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
@@ -55,6 +59,11 @@
 - How Wrestling tells unique stories: [Why Professional Wrestling is Fascinating](https://www.youtube.com/watch?v=BQCPj-bGYro)
 - Building a hut from scratch in the wild (Subtitles for commentary): [Primitive Technology: Tiled Roof Hut](https://www.youtube.com/watch?v=P73REgj-3UE)
 - Why you should watch redline (the best anime movie you've never heard of): [Why Redline is an Amazing Movie, and Why That Matters Today](https://www.youtube.com/watch?v=uUeaYaI-VAI)
+
+### Games
+
+- On the state of the games industry and why you need to stop financially supporting companies like EA and Bethesda: [Bethesda VS Critics: How To Save The Games Industry](https://www.youtube.com/watch?v=C6NiXAdMzEk)
+- A look into speedrunning: [Speedrunning Is Awesome, And Here's Why](https://www.youtube.com/watch?v=I5auJOBC828)
 
 ## Life
 

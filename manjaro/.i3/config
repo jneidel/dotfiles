@@ -198,8 +198,9 @@ assign [class="keepassxc"] $ws9
 assign [class="kid3"] $ws5
 assign [class="pcmanfm"] $ws5
 # for titles try this format
-for_window [title="cmus"] move to workspace $ws8
-for_window [title="mosh"] move to workspace $ws3
+## doesnt work if I open it on the same ws that its being moved to
+#for_window [title="cmus"] move to workspace $ws8
+#for_window [title="mosh"] move to workspace $ws3
 #for_window [title="calcurse"] move to workspace $ws3 - not working as name is /usr/bin/zsh
 
 # Open specific applications in floating mode
