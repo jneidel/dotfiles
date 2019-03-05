@@ -10,6 +10,7 @@
 - [Linux](#linux)
   * [Vim](#vim)
   * [Misc](#misc)
+  * [Arch](#arch)
 - [Software Industry](#software-industry)
   * [General](#general)
   * [JavaScript](#javascript)
@@ -34,6 +35,10 @@
 
 - Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
 - Thinkpad comparisons: [Which ThinkPad Should You Get? (And Libreboot notes)](https://www.youtube.com/watch?v=La3sb5y7e-k)
+
+### Arch
+
+- How to use pacman (archs package manager): [Using Pacman on Arch Linux: Everything you need to know](https://www.youtube.com/watch?v=-dEuXTMzRKs)
 
 ## Software Industry
 

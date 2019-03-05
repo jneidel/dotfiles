@@ -1,12 +1,29 @@
 #!/usr/bin/zsh
 # run system update
 
+# Sync:
+#   -Sy upate dbs
+#   -Syy force update dbs
+#   -Su upgrade pkgs
+#   -Sc clear old pkg cache
+# Remove:
+#   -Rs remove with dependencies
+#   -Rn remove with system files
+# Info:
+#   -Q list all installed programms
+#   -Qe list non-dependency programms (directly installed)
+#   -Qn list pacman programms
+#   -Qm list AUR programms
+#   -Qdt list unused dependecies
+# Args:
+#   -q omit version number
+
 echo ":: updating system..."
 
 if [[ $+commands[packer-aur] ]]; then
-  packer-aur --noconfirm --noedit -Syu;
+  packer-aur --noconfirm --noedit -Syyu;
 else
-  sudo pacman -Syu;
+  sudo pacman -Syyu;
 fi
 
 echo ":: updating global npm packages..."
