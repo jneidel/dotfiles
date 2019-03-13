@@ -2,20 +2,20 @@
 
 > Collections of helpful videos on various topics.
 
+**A:** specifies articles.
+
 <details>
 <summary><strong>Table of Contents</strong></summary>
 
 <!-- toc -->
 
-- [Linux](#linux)
-  * [Vim](#vim)
-  * [Misc](#misc)
-  * [Arch](#arch)
-- [Software Industry](#software-industry)
-  * [General](#general)
-  * [JavaScript](#javascript)
 - [Technology](#technology)
   * [Internet](#internet)
+  * [Linux](#linux)
+    + [Arch](#arch)
+    + [Vim](#vim)
+  * [Software Industry](#software-industry)
+    + [JavaScript](#javascript)
 - [Entertainment](#entertainment)
   * [Games](#games)
 - [Life](#life)
@@ -25,39 +25,37 @@
 
 </details>
 
-## Linux
-
-### Vim
-
-- How to easily build language specific macros: [Start Turning vim into a /comfy/ IDE!](https://www.youtube.com/watch?v=Q4I_Ft-VLAg)
-
-### Misc
-
-- Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
-- Thinkpad comparisons: [Which ThinkPad Should You Get? (And Libreboot notes)](https://www.youtube.com/watch?v=La3sb5y7e-k)
-
-### Arch
-
-- How to use pacman (archs package manager): [Using Pacman on Arch Linux: Everything you need to know](https://www.youtube.com/watch?v=-dEuXTMzRKs)
-
-## Software Industry
-
-### General
-
-- What is your (job) market value as a programmer?: [Your market value](https://www.youtube.com/watch?v=zlps8geRwDM)
-- Why you need to learn a language in-depth (saying refers to expressing an idea in code) _[snippet]_: [Why don't some big websites use React?](https://www.youtube.com/watch?v=5oTVvBlWvNs&feature=youtu.be&t=300)
-- Why your first job should be with a bigger company: [Should I work for a big company or a small one?](https://www.youtube.com/watch?v=kSirn_2mf6U)
-
-### JavaScript
-
-- Expectation if youre a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
-
 ## Technology
+
+- A: Why we need more stupid programms and why facebook and apple are making us worse users: [Turing Complete User](http://contemporary-home-computing.org/turing-complete-user)
 
 ### Internet
 
 - Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
 - Getting web hosting: [4 Hosting Types Compared: Free and Paid Hosting and VPS](https://www.youtube.com/watch?v=iMmR5UVOz8Q) (If in DE check out [uberspace](https://uberspace.de/), shared hosting with many of the upsides of a VPS)
+
+### Linux
+
+- Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
+- Thinkpad comparisons: [Which ThinkPad Should You Get? (And Libreboot notes)](https://www.youtube.com/watch?v=La3sb5y7e-k)
+
+#### Arch
+
+- How to use pacman (archs package manager): [Using Pacman on Arch Linux: Everything you need to know](https://www.youtube.com/watch?v=-dEuXTMzRKs)
+
+#### Vim
+
+- How to easily build language specific macros: [Start Turning vim into a /comfy/ IDE!](https://www.youtube.com/watch?v=Q4I_Ft-VLAg)
+
+### Software Industry
+
+- What is your (job) market value as a programmer?: [Your market value](https://www.youtube.com/watch?v=zlps8geRwDM)
+- Why you need to learn a language in-depth (saying refers to expressing an idea in code) _[snippet]_: [Why don't some big websites use React?](https://www.youtube.com/watch?v=5oTVvBlWvNs&feature=youtu.be&t=300)
+- Why your first job should be with a bigger company: [Should I work for a big company or a small one?](https://www.youtube.com/watch?v=kSirn_2mf6U)
+
+#### JavaScript
+
+- Expectation if youre a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
 
 ## Entertainment
 
