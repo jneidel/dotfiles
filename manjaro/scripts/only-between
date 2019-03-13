@@ -1,0 +1,48 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ only-between <time-frame> <bin-or-cmd>"
+  echo "Execute binaray or command if the current time is within the give time frame"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: allowed time frame, e.g. '17-21'"
+  echo "  \$2: binary or command to be executed"
+  echo ""
+  echo "Examples:"
+  echo "$ only-between 17-21 ~/scripts/personal/fallout"
+  echo "$ only-between 6-8 'vv <yt-link>'"
+  exit
+fi
+
+TIMEFRAME="$1"
+CMD="$2"
+
+if [[ -z $TIMEFRAME ]]; then
+  echo "Please pass a time frame"
+  exit
+elif [[ -z $CMD ]]; then
+  echo "Please pass a binary or command to execute"
+  exit
+fi
+
+TIMEFRAME_START=$(echo $TIMEFRAME | cut -d "-" -f 1)
+TIMEFRAME_END=$(echo $TIMEFRAME | cut -d "-" -f 2)
+
+if [[ -z $TIMEFRAME_START ]] || [[ -z $TIMEFRAME_END ]]; then
+  echo "The time frame has to be formatted like this:"
+  echo "  <start>-<end>"
+  exit
+elif [[ $TIMEFRAME_START -gt $TIMEFRAME_END ]]; then
+  echo "Start time has to be before end time"
+  echo "start: $TIMEFRAME_START; end: $TIMEFRAME_END"
+  exit
+fi
+
+HOUR_NOW=$(date +%H)
+if [[ $HOUR_NOW -ge $TIMEFRAME_START ]] && [[ $HOUR_NOW -le $TIMEFRAME_END ]]; then
+  sh -c "$CMD"
+else
+  echo "Current time is not within the specified range of '$TIMEFRAME'"
+  exit
+fi
+

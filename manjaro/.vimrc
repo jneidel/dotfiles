@@ -137,16 +137,6 @@ endfunction
 nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
 nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 
-" Edit the file selected with fzf
-" F because f run automatically
-function! F()
-  exe '!fzf' >
-endfunction
-function! FF()
-  exe '!~/scripts/F' >
-endfunction
-
 "## Source external configs/plugins
 source ~/.vim/config/init.vim
-
 

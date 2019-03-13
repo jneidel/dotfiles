@@ -1,0 +1,14 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ mullvad-toogle"
+  echo "Toggle mullvads block-when-disconnected option"
+  exit
+fi
+
+if [[ $(mullvad block-when-disconnected get) = "Network traffic will be allowed when the VPN is disconnected" ]]; then
+  mullvad block-when-disconnected set on
+else
+  mullvad block-when-disconnected set off
+fi
+

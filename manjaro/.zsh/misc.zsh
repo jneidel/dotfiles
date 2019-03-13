@@ -62,7 +62,7 @@ alias -g T="| tail"         # print last 10 lines
 alias -g HP="--help | less" # show help in reader
 alias -g LL="2>&1 | less"   # shallow errors and open in reader
 
-## Filter text
+#### Filter text
 alias -g G="| grep"
 alias -g GP="| grep -P"
 if [ -e ~/scripts/hhighlighter.sh ]; then
@@ -70,12 +70,15 @@ if [ -e ~/scripts/hhighlighter.sh ]; then
   alias -g HL="| hhighlighter -i" # highlight the given words
 fi
 
-## Format text
+#### Format text
 alias -g PP="| pjson" # pretty print json
 
-## Redirect stdout/stderr
+#### Redirect stdout/stderr
 alias -g N1="2> /dev/null"     # only stdout, prev NE
 alias -g N2="> /dev/null 2>&1" # only stderr, prev NUL
+
+#### Misc
+alias -g PB="| nc termbin.com 9999" # terminal pastebin
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week/"
