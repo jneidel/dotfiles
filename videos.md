@@ -1,8 +1,11 @@
-# Videos
+# videos and more
 
-> Collections of helpful videos on various topics.
+> Collection of helpful or interesting videos on various topics, in no particular order
 
-**A:** specifies articles.
+- no-prefix specifies videos.
+- **A:** specifies articles.
+- **M:** specifies movies.
+- **S:** specifies series.
 
 <details>
 <summary><strong>Table of Contents</strong></summary>
@@ -20,6 +23,7 @@
   * [Games](#games)
 - [Life](#life)
   * [Political](#political)
+  * [Understanding other people](#understanding-other-people)
 
 <!-- tocstop -->
 
@@ -55,7 +59,7 @@
 
 #### JavaScript
 
-- Expectation if youre a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
+- Expectation if you're a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
 
 ## Entertainment
 
@@ -76,5 +80,13 @@
 ### Political
 
 - The dangers of spreading unresearched information as if it were the truth: [Understanding Superficial Political Opinions](https://www.youtube.com/watch?v=2vVEV2gLxGY)
-- Why you should care about climate change: [The Apocalypse - ContraPoints](https://www.youtube.com/watch?v=S6GodWn4XMM)
+- Why you should care about climate change: [The Apocalypse](https://www.youtube.com/watch?v=S6GodWn4XMM)
+- How capitalism is the root of many problems: What's Wrong with Capitalism [Part 1](https://www.youtube.com/watch?v=gJW4-cOZt8A) [Part 2](https://www.youtube.com/watch?v=AR7ryg1w_IQ)
+- An overview of how americas systemic racism is alive and well today: [America: Still Racist](https://www.youtube.com/watch?v=GWwiUIVpmNY)
+
+### Understanding other people
+
+- Transgender: [ContraPoints](https://www.youtube.com/user/ContraPoints/videos) - Especially ["Are Traps Gay?"](https://www.youtube.com/watch?v=PbBzhqJK3bg)
+- S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/)
+- M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) [[nf](https://www.netflix.com/watch/60024976)]
 
