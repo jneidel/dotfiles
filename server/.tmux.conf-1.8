@@ -1,0 +1,69 @@
+set-option -g prefix C-a # ^a as prefix
+
+# Vim mode
+setw -g mode-keys vi
+set-window-option -g mode-keys vi
+set -g status-keys vi
+
+# Kill window/pane
+bind q confirm-before -p "Kill window #W? (y/n)" kill-window # ^a k
+bind x confirm-before -p "Kill pane #P? (y/n)" kill-pane     # ^a x
+
+# Movement
+bind C-a last-window # ^a ^a
+bind k select-pane -U # ^a k
+bind l select-pane -R # ^a l
+bind j select-pane -D # ^a j
+bind h select-pane -L # ^a h
+
+bind s command-prompt -p "Swap window with:" "swap-window -t ':%%'"
+bind m command-prompt -p "Move window to:" "move-window -t ':%%'"
+
+# Create pane in current path
+bind C-p split-window # a^ p^
+bind C-l split-window -h # a^ l^
+## copy pane-split and add -f flag to split on whole width/height
+## bind-key | split-window -fh -c "#{pane_current_path}"
+
+# Resizing
+bind H resize-pane -L 5 # ^a H
+bind J resize-pane -D 5 # ^a J
+bind K resize-pane -U 5 # ^a K
+bind L resize-pane -R 5 # ^a L
+
+# Status line
+# colors: green=#00ff5f, blue=#2a84d2, grey=#1c1c1c
+set -g status-left '#[bg=#00ff5f] ❯ '
+set -g status-right '#[bg=#2a84d2] #(date +"%H:%M") #[bg=#00ff5f] #(date +"%a %d.%m.%y") '
+set -g status-right-length 80
+set -g status-interval 10
+
+## Active windows
+set -g window-status-format "#[fg=#1c1c1c] #I #W "
+set -g window-status-current-format "#[fg=#1c1c1c,bg=#2a84d2] #I #W "
+
+# Misc
+bind v copy-mode  # ^a v
+bind V paste-buffer  # ^a V
+set -s escape-time 50 # Reduce latency switching modes in vim
+set -g base-index 1   # Start numbering windows at 1
+set -g default-terminal screen-256color
+bind C-m command-prompt -p "Open man page for:" "new-window 'exec man %%'"
+
+# Testing
+bind R source-file ~/.tmux.conf \; display-message "Config reloaded..." # a^ R
+
+# Window Renaming
+set-window-option -g allow-rename on # Allow programms changing window names
+set -g set-titles on
+setw -g automatic-rename on
+# bind-key + , # a^ , to change window name
+
+# Maximize current pane
+bind f run ~/.tmux/maximize-pane
+
+# Smart pane switching with awareness of vim splits
+# Source: https://robots.thoughtbot.com/seamlessly-navigate-vim-and-tmux-splits
+bind -n C-j run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys C-j) || tmux select-pane -D"
+bind -n C-k run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys C-k) || tmux select-pane -U"
+
