@@ -22,7 +22,7 @@ prompt 'system-update' 'sudo packer-aur -Syu'
 prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc terminator vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine'
 prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer'
 prompt 'pacman clis' 'sudo packer-aur -S figlet fd pjson entr python-grip'
-prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq networkmanager-dmenu-git'
+prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq networkmanager-dmenu-git sent farbfeld surf'
 
 # NPM
 prompt 'node' 'sudo packer-aur -S nodejs'
