@@ -277,6 +277,7 @@ mode "resize" {
 
 # Manually lock screen (ssharp = ß) - find out keyid with xev
 bindsym $mod+ssharp exec --no-startup-id blurlock
+## As an alternative: https://tools.suckless.org/slock/
 
 # Application Autostart
 exec terminator -e "tmux new -s main"

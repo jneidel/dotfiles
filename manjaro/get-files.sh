@@ -35,7 +35,7 @@ mkdir -p $D/.calcurse;
 cp ~/.calcurse/keys $D/.calcurse/;
 cp ~/.calcurse/conf $D/.calcurse/;
 mkdir -p $D/etc
-cp /etc/hosts $D/etc/hosts
+#cp /etc/hosts $D/etc/hosts only update manually
 mkdir -p $C/vis;
 cp -r ~/.config/vis/colors $C/vis/;
 cp ~/.config/vis/config $C/vis/;
@@ -49,4 +49,5 @@ mkdir -p $C/networkmanager-dmenu
 cp ~/.config/networkmanager-dmenu/config.ini $C/networkmanager-dmenu/
 mkdir -p $C/conky
 cp ~/.config/conky/* $C/conky
+cp ~/.profile $D/.profile
 

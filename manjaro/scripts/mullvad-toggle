@@ -7,8 +7,18 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 if [[ $(mullvad block-when-disconnected get) = "Network traffic will be allowed when the VPN is disconnected" ]]; then
-  mullvad block-when-disconnected set on
+  mullvad block-when-disconnected set on > /dev/null
+  echo "block-when-disconnected set on"
 else
-  mullvad block-when-disconnected set off
+  mullvad block-when-disconnected set off > /dev/null
+  echo "block-when-disconnected set off"
+fi
+
+if [[ $(timeout 0.01 mullvad status) = "Tunnel status: Connected" ]]; then
+  mullvad disconnect
+  echo "disconnected"
+else
+  mullvad connect
+  echo "connected"
 fi
 

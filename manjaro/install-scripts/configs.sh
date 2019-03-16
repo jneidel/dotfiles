@@ -40,12 +40,6 @@ echo "install zeal conf";
 mkdir -p ~/.config/Zeal;
 wget $LINUX"Zeal.conf" -O ~/.config/Zeal/Zeal.conf;
 
-# wget $LINUX".mangareader-dl.json" -O ~/.mangareader-dl.json;
-
-echo "install ssh conf";
-mkdir -p ~/.ssh;
-wget $LINUX".ssh/config" -O ~/.ssh/config;
-
 echo "install git conf";
 wget $LINUX".gitconfig" -O ~/.gitconfig;
 wget $LINUX".gitignore" -O ~/.gitignore;

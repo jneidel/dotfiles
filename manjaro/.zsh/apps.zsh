@@ -8,7 +8,7 @@ alias color="gcolor2"
 
 ### download
 alias manga="mangareader-dl --debug"
-alias mangaup="manga update --silent 1>> ~/manga/updates 2>&1 &"
+alias mangaup="tsp \"manga update --silent | sed -e 's/^[[:space:]]*//' 1>> ~/manga/updates\""
 alias mangala="manga update check"
 alias comic="getcomics-dl"
 alias comicup="~/code/getcomics-dl/bin/new.js"
