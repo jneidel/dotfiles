@@ -19,10 +19,10 @@ prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu
 prompt 'packer' 'yaourt -S packer-aur-git'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
-prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc terminator vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine'
-prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer'
-prompt 'pacman clis' 'sudo packer-aur -S figlet fd pjson entr python-grip'
-prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq networkmanager-dmenu-git sent farbfeld surf'
+prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc terminator vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine surf'
+prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer sent'
+prompt 'pacman clis' 'sudo packer-aur -S figlet fd pjson entr python-grip task-spooler'
+prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth jq networkmanager-dmenu-git farbfeld'
 
 # NPM
 prompt 'node' 'sudo packer-aur -S nodejs'

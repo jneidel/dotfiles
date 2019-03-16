@@ -8,7 +8,7 @@ alias color="gcolor2"
 
 ### download
 alias manga="mangareader-dl --debug"
-alias mangaup="tsp \"manga update --silent | sed -e 's/^[[:space:]]*//' 1>> ~/manga/updates\""
+alias mangaup="tsp manga-update"
 alias mangala="manga update check"
 alias comic="getcomics-dl"
 alias comicup="~/code/getcomics-dl/bin/new.js"
@@ -55,6 +55,9 @@ alias dec="gpg -d"
 alias chrome="chromium"
 alias o="xdg-open ." # gui file browser
 alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
+
+## tui
+alias job="taskell ~/notes/job-applications.md 2> /dev/null"
 
 ## suffixes
 ## open files with extension .x with application y

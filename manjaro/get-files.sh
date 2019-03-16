@@ -50,4 +50,6 @@ cp ~/.config/networkmanager-dmenu/config.ini $C/networkmanager-dmenu/
 mkdir -p $C/conky
 cp ~/.config/conky/* $C/conky
 cp ~/.profile $D/.profile
+mkdir -p $D/.taskell
+cp ~/.taskell/* $D/.taskell
 
