@@ -1,30 +1,22 @@
-### Zsh Options
+# Zsh config
 
-USER_DIR="/home/user/jneidel"
-MAIL=$USER_DIR/Mail/INBOX
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-export ZSH=$USER_DIR/.oh-my-zsh
-ZSH_THEME="cobalt2"
-
+## oh-my-zsh
+OMZ=~/.oh-my-zsh;
 HIST_STAMP="dd.mm.yyyy"
-CASE_SENSITIVE="true"
 
+_Z_DATA=$HOME/.z/.z
 plugins=( z zsh-syntax-highlighting )
 
-source $ZSH/oh-my-zsh.sh
-source $ZSH/custom/aliases-personal.zsh
+source $OMZ/oh-my-zsh.sh
+source $OMZ/themes/cobalt2.zsh-theme;
 
-export PATH=/usr/local/bin:/usr/bin:/bin:~guckes/bin
-export CDPATH=.:~
+bindkey -v # shell vim mode (default emacs)
 
-bindkey -v # vi mode
-export KEYTIMEOUT=1
-export EDITOR=vim
+## Export variables
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export EDITOR=/usr/bin/vim
 
-source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-f; # fetch new mail when opening a new zsh
+## Import aliases
+source ~/.zsh/init.zsh;
 
