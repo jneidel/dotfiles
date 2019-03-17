@@ -15761,7 +15761,6 @@
 0.0.0.0 s.clickability.com
 0.0.0.0 s.statistici.ro
 0.0.0.0 s.stats.wordpress.com
-0.0.0.0 s.youtube.com
 0.0.0.0 s1-tracking.adalyser.com
 0.0.0.0 s1.shinystat.it
 0.0.0.0 s1.thecounter.com
@@ -15777,7 +15776,6 @@
 0.0.0.0 s18.sitemeter.com
 0.0.0.0 s19.sitemeter.com
 0.0.0.0 s2.statcounter.com
-0.0.0.0 s2.youtube.com
 0.0.0.0 s20.sitemeter.com
 0.0.0.0 s21.sitemeter.com
 0.0.0.0 s22.sitemeter.com
@@ -46031,9 +46029,13 @@
 0.0.0.0 38.media.tumblr.com
 
 # Google
+0.0.0.0 www.google.com
+0.0.0.0 www.gstatic.com
+0.0.0.0 fonts.gstatic.com
+0.0.0.0 apis.google.com
+
 0.0.0.0 plus.google.com
 0.0.0.0 google.com
-0.0.0.0 www.google.com
 0.0.0.0 google.ac
 0.0.0.0 google.ad
 0.0.0.0 google.ae
@@ -47737,7 +47739,6 @@
 0.0.0.0 a-oz-opensocial.googleusercontent.com
 0.0.0.0 apacdeveloper.blogspot.com
 0.0.0.0 apiblog.youtube.com
-0.0.0.0 apis.google.com
 0.0.0.0 appengine.google.com
 0.0.0.0 apps.admob.com
 0.0.0.0 apps.google.com
@@ -48087,7 +48088,6 @@
 0.0.0.0 filetransferenabled.mail.google.com
 0.0.0.0 finance.google.com
 0.0.0.0 fonts.googleapis.com
-0.0.0.0 fonts.gstatic.com
 0.0.0.0 fusion.google.com
 0.0.0.0 g0.gstatic.com
 0.0.0.0 g1.gstatic.com
@@ -48177,7 +48177,6 @@
 0.0.0.0 hangouts.google.com
 0.0.0.0 haoutil.googlecode.com
 0.0.0.0 health.google.com
-0.0.0.0 help.youtube.com
 0.0.0.0 history.google.com
 0.0.0.0 hsco54a20sh11q9jkmb51ad2n3hmkmrg-a-oz-opensocial.googleusercontent.com
 0.0.0.0 huhamhire-hosts.googlecode.com
@@ -48226,7 +48225,6 @@
 0.0.0.0 ipv6.l.google.com
 0.0.0.0 ipv6test.google.com
 0.0.0.0 isolated.mail.google.com
-0.0.0.0 i.ytimg.com
 0.0.0.0 jmt0.google.com
 0.0.0.0 k6v18tjr24doa89b55o3na41kn4v73eb-a-oz-opensocial.googleusercontent.com
 0.0.0.0 keep.google.com
@@ -48332,7 +48330,6 @@
 0.0.0.0 mw1.google.com
 0.0.0.0 mw2.google.com
 0.0.0.0 myaccount.google.com
-0.0.0.0 m.youtube.com
 0.0.0.0 newsfeed-dot-latest-dot-rovio-ad-engine.appspot.com
 0.0.0.0 news.google.com
 0.0.0.0 news.l.google.com
@@ -50756,7 +50753,6 @@
 0.0.0.0 www.googlesyndication.com
 0.0.0.0 www.googletagservices.com
 0.0.0.0 www.googleusercontent.com
-0.0.0.0 www.gstatic.com
 0.0.0.0 www.gwtproject.org
 0.0.0.0 www-hangouts-opensocial.googleusercontent.com
 0.0.0.0 www.ig.gmodules.com
@@ -50774,7 +50770,6 @@
 0.0.0.0 www-trixcopysheet-opensocial.googleusercontent.com
 0.0.0.0 www-wave-opensocial.googleusercontent.com
 0.0.0.0 www.webmproject.org
-0.0.0.0 www.youtube.com
 0.0.0.0 www.youtube-nocookie.com
 0.0.0.0 youtu.be
 0.0.0.0 youtube-global.blogspot.com

@@ -15,7 +15,8 @@ echo "Setting $HOSTS"
 rm $HOSTS > /dev/null
 cp $OG_HOSTS $HOSTS
 curl -sSL https://hosts.ubuntu101.co.za/hosts | sed -e '1,55d' \
-  | sed "/0.0.0.0 soundcloud.com/d" >> $HOSTS
+  | sed "/0.0.0.0 soundcloud.com/d" \
+  | sed "/0.0.0.0 xkcd.com/d" >> $HOSTS
 
 echo "Setting $HOSTS_DENY"
 rm $HOSTS_DENY > /dev/null
