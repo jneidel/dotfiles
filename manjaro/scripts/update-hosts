@@ -1,0 +1,24 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ sudo hostsup"
+  echo "Update /etc/hosts & /etc/hosts.deny files from"
+  echo "  https://github.com/mitchellkrogza/Ultimate.Hosts.Blacklist"
+  exit
+fi
+
+HOSTS=/etc/hosts
+HOSTS_DENY=/etc/hosts.deny
+OG_HOSTS=/home/jneidel/code/dotfiles/manjaro/etc/hosts
+
+echo "Setting $HOSTS"
+sudo rm $HOSTS > /dev/null
+sudo cp $OG_HOSTS $HOSTS
+sudo curl -sSL https://hosts.ubuntu101.co.za/hosts | sed -e '1,55d' \
+  | sed "/0.0.0.0 soundcloud.com/d" \
+  | sed "/0.0.0.0 xkcd.com/d" >> $HOSTS
+
+echo "Setting $HOSTS_DENY"
+sudo rm $HOSTS_DENY > /dev/null
+sudo wget -q https://hosts.ubuntu101.co.za/superhosts.deny -O $HOSTS_DENY
+

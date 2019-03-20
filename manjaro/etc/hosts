@@ -50775,13 +50775,6 @@
 0.0.0.0 youtube-global.blogspot.com
 0.0.0.0 youtube.googleapis.com
 0.0.0.0 youtube-ui.l.google.com
-0.0.0.0 yt0.ggpht.com
-0.0.0.0 yt1.ggpht.com
-0.0.0.0 yt2.ggpht.com
-0.0.0.0 yt3.ggpht.com
-0.0.0.0 yt4.ggpht.com
-0.0.0.0 yt5.ggpht.com
-0.0.0.0 yt6.ggpht.com
 0.0.0.0 yt-debates.appspot.com
 0.0.0.0 ytimg.googleusercontent.com
 0.0.0.0 ytimg.l.google.com
@@ -54257,7 +54250,6 @@
 0.0.0.0 api.flurry.com
 0.0.0.0 api.flyertown.ca
 0.0.0.0 api.freeskreen.com
-0.0.0.0 api.github.com
 0.0.0.0 api.hexagram.com
 0.0.0.0 api.instantdollarz.com
 0.0.0.0 api.interstateanalytics.com

@@ -34,3 +34,8 @@ autocmd filetype typescript inoremap ,c class<Space><Space>{<Enter>constructor( 
 autocmd filetype bash,shell,zsh inoremap ,f function<Space><Space>{<Enter><++><Enter>}<Esc>02kf a
 autocmd filetype bash,shell,zsh inoremap ,o {<Enter>}<Esc>O
 
+" JSON
+autocmd filetype json inoremap ,o {<Enter>}<Esc>O
+
+" CSS, SCSS
+autocmd filetype css,scss,sass inoremap ,o {<Enter>}<Esc>O

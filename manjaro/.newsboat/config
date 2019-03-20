@@ -26,6 +26,7 @@ ignore-article "https://feeds.feedwrench.com/JavaScriptJabber.rss" "title =~ \"^
 user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
 
 # keybindings
+## available operations: https://newsboat.org/releases/2.14.1/docs/newsboat.html#available-operations
 ## vim hotkeys
 bind-key j down
 bind-key k up
@@ -48,6 +49,8 @@ bind-key g home all
 bind-key G end all
 
 unbind-key C
+
+bind-key b toggle-article-read
 
 ## rebind podboat to mutt hotkeys
 unbind-key P
