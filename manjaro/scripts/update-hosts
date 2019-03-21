@@ -16,6 +16,12 @@ sudo rm $HOSTS > /dev/null
 sudo cp $OG_HOSTS $HOSTS
 sudo curl -sSL https://hosts.ubuntu101.co.za/hosts | sed -e '1,55d' \
   | sed "/0.0.0.0 soundcloud.com/d" \
+  | sed "/0.0.0.0 imagecomics.com/d" \
+  | sed "/0.0.0.0 humblebundle.com/d" \
+  | sed "/0.0.0.0 www.humblebundle.com/d" \
+  | sed "/0.0.0.0 store.steampowered.com/d" \
+  | sed "/0.0.0.0 steampowered.com/d" \
+  | sed "/0.0.0.0 forums.steampowered.com/d" \
   | sed "/0.0.0.0 xkcd.com/d" >> $HOSTS
 
 echo "Setting $HOSTS_DENY"
