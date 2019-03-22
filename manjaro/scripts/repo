@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ repo"
+  echo "Open github repository of current npm package in $BROWSER"
+  exit
+fi
+
+$BROWSER $(cat package.json | jq ".repository" | sed -e 's/"//g' | awk '{ printf "https://github.com/"$1 }')
+

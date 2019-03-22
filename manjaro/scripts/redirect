@@ -1,0 +1,30 @@
+#! /bin/bash
+
+SERVER=u
+FILE=~/html/.htaccess
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ redirect"
+  echo "Add a redirect to the given .htaccess file."
+  echo "Server config: $SERVER:$FILE"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: redirect name (/ is automatically prepended)"
+  echo "  \$2: redirect link"
+  echo ""
+  echo "Example:"
+  echo "$ redirect news https://news.ycombinator.com"
+  exit
+fi
+
+if [[ $1 = "" ]] || [[ $2 = "" ]]; then
+  echo "Please pass both a redirect name and a redirect link"
+  echo "Pass --help for help"
+  exit
+fi
+
+REDIRECT="redirect /$1 $2"
+
+echo "Appending '$REDIRECT' to $FILE on $SERVER"
+ssh $SERVER "echo $REDIRECT >> $FILE"
+

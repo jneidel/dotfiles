@@ -22,7 +22,10 @@ sudo curl -sSL https://hosts.ubuntu101.co.za/hosts | sed -e '1,55d' \
   | sed "/0.0.0.0 store.steampowered.com/d" \
   | sed "/0.0.0.0 steampowered.com/d" \
   | sed "/0.0.0.0 forums.steampowered.com/d" \
-  | sed "/0.0.0.0 xkcd.com/d" >> $HOSTS
+  | sed "/0.0.0.0 meetup.com/d" \
+  | sed "/0.0.0.0 musicbrainz.org/d" \
+  | sed "/0.0.0.0 xkcd.com/d" \
+  | sed "/0.0.0.0 www.catb.org/d" >> $HOSTS
 
 echo "Setting $HOSTS_DENY"
 sudo rm $HOSTS_DENY > /dev/null
