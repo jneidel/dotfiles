@@ -6,7 +6,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 ## Paths
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.bin/ruby-latest/bin:~/scripts:~/.bin:~/scripts/personal
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/scripts:~/scripts/personal
 export CDPATH=.:~:~/code:~/Downloads:~/ct
 
 ## Applications

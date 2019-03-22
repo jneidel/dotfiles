@@ -3,7 +3,7 @@
 ## install
 alias ni="npm install"
 alias nid="npm install --save-dev"
-alias nig="sudo npm install -g" # remove sudo if locally installed
+alias nig="sudo npm install -g -s" # remove sudo if locally installed
 function nit {
   npm install --save-dev "@types/$1";
 }
