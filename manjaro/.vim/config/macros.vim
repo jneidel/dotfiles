@@ -1,12 +1,15 @@
 " Collection of language specific macros
+" Source: https://www.youtube.com/watch?v=Q4I_Ft-VLAg
 "
 " :help key-notation for key-notations (eg: <Space>)
-" Idea from: https://www.youtube.com/watch?v=Q4I_Ft-VLAg
-" nnoremap - normal mode
+"
+" inoremap - activate in insert mode
+" nnoremap - activate in normal mode
 
 filetype plugin on
 
 " Jump to next <++>
+" A custom goto command
 inoremap ,, <Esc>/<++><Enter>"_c4l
 
 " HTML
@@ -16,7 +19,7 @@ autocmd FileType html,pug inoremap ,i <i></i><Space><++><Esc>2T>i
 autocmd FileType html,pug inoremap ,c <code></code><Space><++><Esc>2T>i
 
 " Markdown
-autocmd FileType markdown inoremap ,a [](<++>)<Space><++><Esc>F]i
+autocmd FileType markdown inoremap ,a [](<++>)<Esc>F]i
 autocmd FileType markdown inoremap ,c ```<Enter>```<Enter><++><Esc>kO
 autocmd FileType markdown inoremap ,l - [] <++><Esc>F[a
 

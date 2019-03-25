@@ -27,10 +27,9 @@ else
 fi
 
 echo ":: updating global npm packages..."
-sudo npm -g upgrade
+sudo npm -g -s upgrade
 
 echo ":: update complete..."
-sleep 2s
 
 # function to check for and remove orphan packages
 function orphanage {
