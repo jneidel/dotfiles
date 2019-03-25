@@ -9,6 +9,7 @@ personal.zsh
 */.vim/bundle/*
 */.vim/view/*
 */.vim/.netrwhist
+*/.vim/spell/*.add.spl
 
 */scripts/personal
 
