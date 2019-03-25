@@ -39,3 +39,4 @@ autocmd filetype json inoremap ,o {<Enter>}<Esc>O
 
 " CSS, SCSS
 autocmd filetype css,scss,sass inoremap ,o {<Enter>}<Esc>O
+

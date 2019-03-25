@@ -1,28 +1,84 @@
-"# Vim
+" Vim config
+" If you are using vim for the first time you might want to start
+" with simpler setup, because this one will break if not setup correctly
+" For basic setup see: https://gist.github.com/simonista/8703722
 
-"## Colors
+" not vi compatible
+set nocompatible
+
+" encoding
+set encoding=utf-8
+
+" syntax highlighting
 syntax on
+
+" activate 256 colors
 set t_Co=256
+
+" set colorscheme
+" file in ~/.vim/colors/old-hope.vim
 colorscheme old-hope
 
-"## Lines
+" linenumbers, in normal mode numbers will be relative to the current line
 set number relativenumber
-set ruler
+
+" display cursor position info in bottom right corner
+"set ruler
+
+" blink cursor on error instead of beeping
+set visualbell
+
+" color current horizontal line
+" set as 'CursorLine' in colorscheme
 set cursorline
 
-"## General
-set nocompatible
-set backspace=2
-set tabstop=2
-set shiftwidth=2
+" wrap content to next line when display width is reached
+set wrap
+
+" replace tab characters with spaces
 set expandtab
+" number of spaces a <Tab> consists of
+set tabstop=2
+" number of spaces to insert when indenting with >,<
+set shiftwidth=2
+" number of spaces to remove when pressing <Backspace>
+set softtabstop=2
+" allows <Backspace> to remove linebreaks
+set backspace=2
+" explaination of above settings: http://vimcasts.org/episodes/tabs-and-spaces/
+
+" round <Tab>s to multiples of tabstop/shiftwidth
+set shiftround
+
+" activate autoindent
 set autoindent "set smartindent
 
-" Enable autocomplete
+" check first lines of file for vim commands to execute
+" turned off for security
+set modelines=0
+
+" allow hidden buffers without forcing them (!)
+" a hidden buffer is one with unsaved changed not currently open
+set hidden
+
+" defines <leader> key
+let mapleader = "#"
+
+" enable autocomplete
 set wildmode=longest,list,full
 
-" Automatically deletes all trailing whitespace on save.
-autocmd BufWritePre * %s/\s\+$//e
+" highlight search matches
+set hlsearch
+" highlight search matches while typing
+set incsearch
+
+" ignore search case
+set ignorecase
+" enforce case if search contains uppercase
+set smartcase
+
+" remove search highlighting, deselect/hide matches
+map <leader><space> :nohls<Enter>
 
 "## Backup/Swap files
 set backup
@@ -32,10 +88,9 @@ set directory=~/.vim/tmp
 set undofile
 set undodir=~/.vim/tmp
 
-"## Search
-set ic  " Ignore case
-set hls " Highlight matches
-set is  " Highlight during writing
+" set whitespace characters
+" to toggle :set list / :set nolist
+set listchars=tab:▸\ ,eol:¬
 
 "## Windows
 " Remapping ctrl + w + <movement> to ctrl + <movement> for easier window movement
@@ -98,7 +153,15 @@ au VimLeave * :call MakeSession()
 " Save history/registers after :q session
 set viminfo=%,'50,\"100,:100,n~/.viminfo
 
-"## Misc
+" Enable folding
+" Set foldmethod=snytax if current language has fold support
+set foldmethod=marker
+set foldmarker={{{,}}}
+
+" copy to and from X clipboard
+" src: https://vim.fandom.com/wiki/GNU/Linux_clipboard_copy/paste_with_xclip
+vmap <leader>c :!xclip -f -sel clip<CR>
+map <leader>v mz:-1r !xclip -o -sel clip<CR>`z
 
 " Write file with sudo, eventhough vim wasnt opened with sudo
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!

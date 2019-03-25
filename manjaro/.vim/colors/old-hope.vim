@@ -167,7 +167,7 @@ call oldhope#SetHi ("TabLineFill"   , s:vVeryDarkGrey , s:vBg           , s:vNon
 call oldhope#SetHi ("TabLineSel"    , s:vLightGrey    , s:vBg           , s:vNone      )
 call oldhope#SetHi ("TabLine"       , s:vGrey         , s:vBg           , s:vNone      )
 call oldhope#SetHi ("CursorLineNr"  , s:vBlack        , s:vRed          , s:vBold      )
-call oldhope#SetHi ("CursorLine"    , s:vNone         , s:vDarkGrey , s:vNone      )
+call oldhope#SetHi ("CursorLine"    , s:vNone         , s:vDarkGrey     , s:vNone      )
 call oldhope#SetHi ("CursorColumn"  , s:vNone         , s:vVeryDarkGrey , s:vNone      )
 call oldhope#SetHi ("ColorColumn"   , s:vNone         , s:vVeryDarkGrey , s:vNone      )
 call oldhope#SetHi ("LineNr"        , s:vGrey         , s:vBg           , s:vNone      )

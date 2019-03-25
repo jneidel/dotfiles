@@ -8,7 +8,6 @@ filetype plugin indent on
 "# Plugin configs
 "## NERDTree
 "### Aliases
-let mapleader = "#"
 nmap <leader>tt  :NERDTreeToggle<cr>
 nmap <leader>tc  :NERDTreeClose<cr>
 "### Options
