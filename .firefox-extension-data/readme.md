@@ -2,6 +2,9 @@
 
 My data exports from firefox privacy extensions.
 
+Using these settings will break some sites.
+Try playing around with the settings to fix the websites.
+
 ## Chameleon
 
 Chameleon will spoof the useragent, changing once a minute to make fingerprinting harder.
