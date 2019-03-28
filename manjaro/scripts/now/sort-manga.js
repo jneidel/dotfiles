@@ -73,13 +73,14 @@ process.stdin.on( "readable", () => {
     names = names.map( name => {
       const provider = data[name].provider;
       const chapter = data[name].chapter;
+      const paused = data[name].paused || false;
 
       const readableName = createReadableName( name );
 
       const info = createInfoUrl( readableName );
       const get = createGetCommand( name, provider );
 
-      return { readableName, chapter, info, get }
+      return { readableName, chapter, info, get, paused }
     } )
 
     process.stdout.write( JSON.stringify( names, null, 2 ) );

@@ -33,7 +33,7 @@ alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
 alias rc="rename-comic"
-alias -g R="| entr -cp" # R[UN]
+alias -g R="| entr -c" # R[UN]
 alias q="podqueue"
 
 ### newsboat

@@ -67,6 +67,7 @@
 - How Wrestling tells unique stories: [Why Professional Wrestling is Fascinating](https://www.youtube.com/watch?v=BQCPj-bGYro)
 - Building a hut from scratch in the wild (Subtitles for commentary): [Primitive Technology: Tiled Roof Hut](https://www.youtube.com/watch?v=P73REgj-3UE)
 - Why you should watch redline (the best anime movie you've never heard of): [Why Redline is an Amazing Movie, and Why That Matters Today](https://www.youtube.com/watch?v=uUeaYaI-VAI)
+- How anime and otaku culture came to be: Anime and Otaku | Down the Rabbit Hole [Part 1](https://www.youtube.com/watch?v=zZsFQPdU2dw) [Part 2](https://www.youtube.com/watch?v=brF1zVXG5_0)
 
 ### Games
 

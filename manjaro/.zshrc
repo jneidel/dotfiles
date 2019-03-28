@@ -20,6 +20,8 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 bindkey -v # shell vim mode (default emacs)
 export KEYTIMEOUT=1
 
+#[[ -f $HOME/.LS_COLORS ]] && eval "`dircolors -b $HOME/.LS_COLORS`"
+
 # Import aliases
 source ~/.zsh/init.zsh;
 

@@ -10,8 +10,9 @@ export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/scripts:~/scri
 export CDPATH=.:~:~/code:~/Downloads:~/ct
 
 ## Applications
-export EDITOR=/usr/bin/vim
-export BROWSER=/usr/bin/firefox-nightly
+export EDITOR=vim
+export PAGER=less
+export BROWSER=firefox-nightly
 export B=$BROWSER
 
 ### Application options

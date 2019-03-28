@@ -20,7 +20,8 @@ autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us,de
 " Enable javascript syntax folding
 augroup javascript_folding
   au!
-  au FileType javascript setlocal foldmethod=syntax
+  "au FileType javascript setlocal foldmethod=syntax
+  nnoremap <Leader>f :setlocal foldmethod=syntax<Enter>
 augroup END
 
 " Automatically remove trailing whitespace

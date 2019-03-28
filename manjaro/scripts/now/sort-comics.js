@@ -42,6 +42,7 @@ process.stdin.on( "readable", () => {
         issue: x[1],
         info: createInfoUrl( x[0] ),
         get: createGetUrl( x[0] ),
+        paused: x[2] || false,
       }) )
 
     process.stdout.write( JSON.stringify( data, null, 2 ) );
