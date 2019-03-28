@@ -28,7 +28,7 @@ for_window [class="^.*"] border none # setting border none for all windows
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminator
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -46,7 +46,7 @@ bindsym $mod+z exec --no-startup-id morc_menu
 exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 exec --no-startup-id "sleep 15; pulseaudio --start;"
-bindsym $mod+Ctrl+m exec terminator -e 'pulsemixer'
+bindsym $mod+Ctrl+m exec kitty pulsemixer
 
 ################################################################################################
 
@@ -56,11 +56,13 @@ bindsym $mod+Ctrl+m exec terminator -e 'pulsemixer'
 
 # Start Applications
 bindsym $mod+F2 exec firefox-nightly
-bindsym $mod+F3 exec terminator -e 'mosh k'
-bindsym $mod+F4 exec terminator -e 'ranger ~'
-bindsym $mod+F5 exec terminator -e 'calcurse'
-bindsym $mod+F8 exec terminator -e 'cmus'
+bindsym $mod+F5 exec kitty --class calcurse calcurse
+bindsym $mod+F6 exec kitty ranger ~
+bindsym $mod+F8 exec kitty --class cmus cmus
 bindsym $mod+F9 exec keepassxc
+## connect to my servers
+bindsym $mod+F3 exec kitty --class mosh mosh k
+bindsym $mod+F4 exec kitty --class mosh uber
 # exec sh -c "keepassxc &" & - to start in bg and then kill shell
 # https://unix.stackexchange.com/a/302671
 
@@ -68,7 +70,6 @@ bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b -f
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-# bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 # bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Shift+p exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
@@ -197,11 +198,9 @@ assign [class="Tor Browser"] $ws2
 assign [class="keepassxc"] $ws9
 assign [class="kid3"] $ws5
 assign [class="pcmanfm"] $ws5
-# for titles try this format
-## doesnt work if I open it on the same ws that its being moved to
-#for_window [title="cmus"] move to workspace $ws8
-#for_window [title="mosh"] move to workspace $ws3
-#for_window [title="calcurse"] move to workspace $ws3 - not working as name is /usr/bin/zsh
+assign [class="cmus"] $ws8
+assign [class="mosh"] $ws3
+assign [class="calcurse"] $ws3
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -280,7 +279,7 @@ bindsym $mod+ssharp exec --no-startup-id blurlock
 ## As an alternative: https://tools.suckless.org/slock/
 
 # Application Autostart
-exec terminator -e "tmux new -s main"
+exec kitty tmux new -s main
 exec firefox-nightly
 ## desktop monitor
 exec --no-startup-id ~/scripts/conky/start

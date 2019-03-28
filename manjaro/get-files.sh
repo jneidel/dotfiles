@@ -52,4 +52,6 @@ cp ~/.config/conky/* $C/conky
 cp ~/.profile $D/.profile
 mkdir -p $D/.taskell
 cp ~/.taskell/* $D/.taskell
+mkdir -p $C/kitty
+cp ~/.config/kitty/* $C/kitty
 
