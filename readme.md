@@ -66,7 +66,7 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 **Linux**
 
-[View](manjaro/readme.md#terminator-terminal) Terminator notes
+[View](manjaro/readme.md#kitty-terminal) Kitty notes
 
 **OSX:**
 

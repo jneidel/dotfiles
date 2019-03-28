@@ -4,8 +4,8 @@
 
 [Kitty Website](https://sw.kovidgoyal.net/kitty)
 
-[View my kitty config](.config/kitty/kitty.conf) `~/.config/kitty/kitty.conf`
-[View my kitty colorscheme](.config/kitty/jneidel-colors.conf) `~/.config/kitty/jneidel-colors.conf`
+- [View my kitty config](.config/kitty/kitty.conf) `~/.config/kitty/kitty.conf`
+- [View my kitty colorscheme](.config/kitty/jneidel-colors.conf) `~/.config/kitty/jneidel-colors.conf`
 
 In the past I've used [Terminator](https://code.google.com/p/jessies/wiki/Terminator) in the past, but the project is unmaintained which caused a few problems (passing WM class does not work, images not rendered correctly). Additionally it has fewer relevant options and config management is a mess.
 
