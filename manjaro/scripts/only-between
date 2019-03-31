@@ -25,7 +25,7 @@ elif [[ -z $CMD ]]; then
   exit
 fi
 
-TIMEFRAME_START=$(echo $TIMEFRAME | cut -d "-" -f 1)
+TIMEFRAME_START=$(echo $TIMEFRAME | cut -d "-" -f 1 | sed -e 's/^0*//')
 TIMEFRAME_END=$(echo $TIMEFRAME | cut -d "-" -f 2)
 
 if [[ -z $TIMEFRAME_START ]] || [[ -z $TIMEFRAME_END ]]; then
@@ -38,7 +38,7 @@ elif [[ $TIMEFRAME_START -gt $TIMEFRAME_END ]]; then
   exit
 fi
 
-HOUR_NOW=$(date +%H)
+HOUR_NOW=$(date +%H | sed -e 's/^0*//')
 if [[ $HOUR_NOW -ge $TIMEFRAME_START ]] && [[ $HOUR_NOW -le $TIMEFRAME_END ]]; then
   sh -c "$CMD"
 else
