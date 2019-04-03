@@ -27,7 +27,7 @@ git clone https://github.com/pangloss/vim-javascript.git $VB/syntax-javascript
 git clone https://github.com/leafgarland/typescript-vim.git $VB/syntax-typescript
 git clone https://github.com/othree/javascript-libraries-syntax.vim.git $VB/syntax-javascript-libs
 git clone https://github.com/digitaltoad/vim-pug.git $VB/syntax-pug
-git clone https://github.com/othree/html5.vim.git $VB/syntax-html5
+git clone https://github.com/othree/html5.vim.git $VB/syntax-html
 git clone https://github.com/PotatoesMaster/i3-vim-syntax.git $VB/syntax-i3
 
 echo "install tern"

@@ -55,6 +55,7 @@ bindsym $mod+Ctrl+m exec kitty pulsemixer
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
+bindsym $mod+F1 exec chromium
 bindsym $mod+F2 exec firefox-nightly
 bindsym $mod+F5 exec kitty --class calcurse calcurse
 bindsym $mod+F6 exec kitty ranger ~
