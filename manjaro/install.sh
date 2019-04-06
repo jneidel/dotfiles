@@ -28,8 +28,8 @@ prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highli
 prompt 'node' 'sudo packer-aur -S nodejs'
 prompt 'npm non programming clis' 'sudo npm install -g dict-cc-cli tslide mangareader-dl fkill-cli'
 prompt 'npm programming clis' 'sudo npm install -g ava eslint np yo typescript webpack webpack-cli generator-jneidel fx'
-prompt 'npm programming utilities' 'sudo npm install -g concurrently markdown-toc nodemon npm-name-cli browser-sync npm-check-updates'
-prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin'
+prompt 'npm programming utilities' 'sudo npm install -g concurrently markdown-toc nodemon npm-name-cli browser-sync npm-check-updates prettier eslint_d'
+prompt 'npm eslint configs' 'sudo npm install -g eslint-config-xo eslint-plugin-node eslint-plugin-unicorn'
 prompt 'npm eslint-ts specific configs' 'sudo npm install -g eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin'
 
 # Specific case apps

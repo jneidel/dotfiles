@@ -56,4 +56,5 @@ mkdir -p $C/kitty
 cp ~/.config/kitty/* $C/kitty
 mkdir -p $C/bleachbit
 cp ~/.config/bleachbit/bleachbit.ini $C/
+cp -r ~/.eslint $D/.eslint
 
