@@ -7,13 +7,14 @@ export LANG=en_US.UTF-8
 
 ## Paths
 export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/scripts:~/scripts/personal
-export CDPATH=.:~:~/code:~/Downloads:~/ct
+export CDPATH=.:~:~/code:~/Downloads:~/ct:~/tmp
 
 ## Applications
 export EDITOR=vim
 export PAGER=less
 export BROWSER=firefox-nightly
 export B=$BROWSER
+export ALT_BROWSER=chromium
 
 ### Application options
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"

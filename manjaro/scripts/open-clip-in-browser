@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ open-clip-in-browser"
+  echo "Open url in clipbord with the selected browser"
+  exit
+fi
+
+xclip -o | open-in-browser
+

@@ -86,6 +86,7 @@ bindsym XF86Explorer exec ~/scripts/i3/cmus/next.sh
 
 bindsym $mod+v exec ~/scripts/i3/clipboard/save-clipboard.sh
 bindsym $mod+y exec ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
+bindsym $mod+o exec ~/scripts/open-clip-in-browser
 
 # change focus
 focus_follows_mouse no

@@ -25,3 +25,4 @@ export KEYTIMEOUT=1
 # Import aliases
 source ~/.zsh/init.zsh;
 
+export ALT_BROWSER=chromium
