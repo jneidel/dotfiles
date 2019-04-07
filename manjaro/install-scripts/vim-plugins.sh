@@ -26,6 +26,8 @@ echo "install syntax plugins (js, js-libs, pug, html, ts, i3)"
 git clone https://github.com/pangloss/vim-javascript.git $VB/syntax-javascript
 git clone https://github.com/leafgarland/typescript-vim.git $VB/syntax-typescript
 git clone https://github.com/othree/javascript-libraries-syntax.vim.git $VB/syntax-javascript-libs
+git clone https://github.com/mxw/vim-jsx.git $VB/syntax-jsx
+git clone https://github.com/styled-components/vim-styled-components.git $VB/syntax-styled-components
 git clone https://github.com/digitaltoad/vim-pug.git $VB/syntax-pug
 git clone https://github.com/othree/html5.vim.git $VB/syntax-html
 git clone https://github.com/PotatoesMaster/i3-vim-syntax.git $VB/syntax-i3
@@ -69,6 +71,12 @@ git clone https://github.com/junegunn/goyo.vim $VB/goyo;
 
 echo "install tmux-focus-events"
 git clone https://github.com/tmux-plugins/vim-tmux-focus-events.git $VB/tmux-focus-events;
+
+echo "install prettier"
+git clone https://github.com/prettier/vim-prettier $VB/prettier
+
+echo "install DeleteTrailingWhitespace"
+git clone https://github.com/vim-scripts/DeleteTrailingWhitespace.git $VB/DeleteTrailingWhitespace
 
 # echo "install syntastic, eslint (dependency)"
 # git clone --depth=1 https://github.com/vim-syntastic/syntastic.git $VB/syntastic;

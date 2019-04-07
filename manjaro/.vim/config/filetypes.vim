@@ -12,10 +12,13 @@ autocmd BufRead,BufNewFile /tmp/calcurse* setfiletype markdown
 autocmd BufRead,BufNewFile ~/.calcurse/notes* setfiletype markdown
 
 " JSON syntax for eslint configs
-autocmd BufRead ~/.eslintrc* setfiletype json
+autocmd BufRead *.eslintrc* ~/.eslint/* setfiletype json
 
 " Spellchecking for Markdown files
-autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us,de
+au Filetype markdown setlocal spell spelllang=en_us,de
+" Wrap text at 80 characters
+au Filetype markdown setlocal textwidth=80
+au FileType markdown setlocal formatoptions+=t
 
 " Enable javascript syntax folding
 augroup javascript_folding
@@ -38,5 +41,4 @@ function! <SID>StripTrailingWhitespaces()
   call cursor(l, c)
 endfunction
 autocmd BufWritePre *.js,*.ts,*.sh,*.pug,*.html,*.css,*.scss :call <SID>StripTrailingWhitespaces()
-
 

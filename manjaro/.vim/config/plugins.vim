@@ -27,7 +27,7 @@ let NERDTreeIgnore=[ "\.git", "\.DS_Store" ]
 nmap <F8> :TagbarToggle<CR>
 
 "## javascript-libraries-syntax
-let g:used_javascript_libs = 'underscore,react,flux,angularjs,ramda,vue,d3'
+let g:used_javascript_libs = 'react,underscore,ramda,vue,d3'
 
 "## tern
 " Make use of these in the future:
@@ -82,4 +82,59 @@ let g:html5_aria_attributes_complete = 0
 
 "## Goyo
 nmap <leader>gy :Goyo<cr>
+
+"## prettier
+" Run prettier
+nmap <Leader>p <Plug>(Prettier)
+
+" Run prettier on write
+let g:prettier#autoformat = 0
+au Filetype javascript,typescript,css,json,html,yaml au BufWritePre * PrettierAsync
+au BufWritePre *.jsx,*.mjs,*.tsx,*.scss,*.graphql,*.vue PrettierAsync
+
+"au Filetype json au BufWritePre * :%!eslint_d --stdin --fix-to-stdout -c ~/.eslint/json
+au BufWritePre *.ts :%!eslint_d --stdin --fix-to-stdout
+au BufWritePre *.js :%!eslint_d --stdin --fix-to-stdout
+
+" Autofix entire buffer with eslint_d:
+nnoremap <leader>i mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
+
+" Max line length that prettier will wrap on
+let g:prettier#config#print_width = 80
+
+" Number of spaces per indentation level
+let g:prettier#config#tab_width = 2
+
+" Use tabs over spaces
+let g:prettier#config#use_tabs = 'false'
+
+" Print semicolons
+let g:prettier#config#semi = 'true'
+
+" Single quotes over double quotes
+let g:prettier#config#single_quote = 'false'
+
+" Print spaces between brackets
+let g:prettier#config#bracket_spacing = 'true'
+
+" Put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'false'
+
+" Include parentheses around a sole arrow function parameter (avoid|always)
+let g:prettier#config#arrow_parens = 'avoid'
+
+" Print trailing commas wherever possible when multi-line (none|es5|all)
+let g:prettier#config#trailing_comma = 'all'
+
+" Specify which parser to use (flow|babylon|typescript)
+let g:prettier#config#parser = 'babylon'
+
+" Wrap prose if it exceeds the print width (always|never|preserve)
+let g:prettier#config#prose_wrap = 'always'
+
+" Specify the global whitespace sensitivity for HTML files (css|strict|ignore)
+let g:prettier#config#html_whitespace_sensitivity = 'css'
+
+" How config file should be evaluated in combination with CLI options (cli-override|file-override|prefer-file)
+let g:prettier#config#config_precedence = 'cli-override'
 

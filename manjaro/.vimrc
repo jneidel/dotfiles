@@ -200,6 +200,17 @@ endfunction
 nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
 nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 
+"Delete trailing whitespace on save
+au BufWritePre * DeleteTrailingWhitespace
+
+" Save cursor position before writing and restore after writing
+function! SaveCursorPosition()
+  let a:cursor_pos = getpos(".")
+  call setpos('.', a:cursor_pos)
+  winsaveview()
+  winrestview()
+endfunction
+
 "## Source external configs/plugins
 source ~/.vim/config/init.vim
 
