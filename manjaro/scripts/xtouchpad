@@ -1,0 +1,41 @@
+#! /bin/bash
+# source: https://unix.stackexchange.com/a/52470
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ xtouchpad"
+  echo "Enable, disable or toggle touchpad"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1:"
+  echo "      -e to enable"
+  echo "      -d to disable"
+  echo "      -t to toggle"
+  echo ""
+  echo "Example:"
+  echo "$ xtouchpad"
+  exit
+fi
+
+device="11" # xinput --list to find out devide num
+if [[ $1 == -e ]] ; then
+    # Enable
+    #xinput --set-prop "$device" "Device Enabled" 1
+    xinput --enable "$device"
+elif [[ $1 == -d ]] ; then
+    # Disable
+    #xinput --set-prop "$device" "Device Enabled" 0
+    xinput --disable "$device"
+elif [[ $1 == -t ]] ; then
+    # Toggle
+    if [[ $(xinput list-props "$device" |
+       grep "Device Enabled") == *:*1 ]] ; then
+           #xinput --set-prop "$device" "Device Enabled" 0
+           xinput --disable "$device"
+    else
+        #xinput --set-prop "$device" "Device Enabled" 1
+        xinput --enable "$device"
+    fi
+else
+    echo "usage: $0 [-edt]"
+fi
+
