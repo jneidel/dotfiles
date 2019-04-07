@@ -89,8 +89,8 @@ nmap <Leader>p <Plug>(Prettier)
 
 " Run prettier on write
 let g:prettier#autoformat = 0
-au Filetype javascript,typescript,css,json,html,yaml au BufWritePre * PrettierAsync
-au BufWritePre *.jsx,*.mjs,*.tsx,*.scss,*.graphql,*.vue PrettierAsync
+"au Filetype javascript,typescript,css,json,html,yaml au BufWritePre * PrettierAsync
+au BufWritePre *.js,*.ts,*.css,*.json,*.html,*.jsx,*.mjs,*.tsx,*.scss,*.graphql,*.vue PrettierAsync
 
 "au Filetype json au BufWritePre * :%!eslint_d --stdin --fix-to-stdout -c ~/.eslint/json
 au BufWritePre *.ts :%!eslint_d --stdin --fix-to-stdout
