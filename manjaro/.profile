@@ -7,7 +7,7 @@ export LANG=en_US.UTF-8
 
 ## Paths
 export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/scripts:~/scripts/personal
-export CDPATH=.:~:~/code:~/Downloads:~/ct:~/tmp
+export CDPATH=.:~:~/code:~/Downloads:~/ct
 
 ## Applications
 export EDITOR=vim

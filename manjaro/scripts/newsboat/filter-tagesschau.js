@@ -25,6 +25,12 @@ const blocklist = [
   "Gorch-Fock",
   "Tagesspiegel",
   "Airbus",
+  "FC Augsburg",
+  "München",
+  "Algerien",
+  "Hannover 96",
+  "laut Umfrage",
+  "Champions League",
 ];
 
 function exclude(data) {

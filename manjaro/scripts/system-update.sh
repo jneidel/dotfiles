@@ -21,9 +21,9 @@
 echo ":: updating system..."
 
 if [[ $+commands[packer-aur] ]]; then
-  packer-aur --noconfirm --noedit -Syyu;
+  packer-aur --noconfirm --noedit -Syyuu;
 else
-  sudo pacman -Syyu;
+  sudo pacman -Syyuu;
 fi
 
 echo ":: updating global npm packages..."
