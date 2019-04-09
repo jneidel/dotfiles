@@ -90,14 +90,14 @@ nmap <Leader>p <Plug>(Prettier)
 " Run prettier on write
 let g:prettier#autoformat = 0
 "au Filetype javascript,typescript,css,json,html,yaml au BufWritePre * PrettierAsync
-au BufWritePre *.js,*.ts,*.css,*.json,*.html,*.jsx,*.mjs,*.tsx,*.scss,*.graphql,*.vue PrettierAsync
+"au BufWritePre *.js,*.ts,*.css,*.json,*.html,*.jsx,*.mjs,*.tsx,*.scss,*.graphql,*.vue PrettierAsync
 
-"au Filetype json au BufWritePre * :%!eslint_d --stdin --fix-to-stdout -c ~/.eslint/json
-au BufWritePre *.ts :%!eslint_d --stdin --fix-to-stdout
-au BufWritePre *.js :%!eslint_d --stdin --fix-to-stdout
+au BufWritePre *.js nnoremap <Leader>l mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc<CR>`F
+au BufWritePre *.ts nnoremap <Leader>l mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
+"au BufWritePre *.js :%!eslint_d --stdin --fix-to-stdout
 
 " Autofix entire buffer with eslint_d:
-nnoremap <leader>i mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
+"nnoremap <leader>i mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
 
 " Max line length that prettier will wrap on
 let g:prettier#config#print_width = 80

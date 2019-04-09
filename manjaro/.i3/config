@@ -84,7 +84,7 @@ bindsym XF86LaunchA exec ~/scripts/i3/cmus/play-pause.sh
 bindsym XF86Search exec ~/scripts/i3/cmus/previous.sh
 bindsym XF86Explorer exec ~/scripts/i3/cmus/next.sh
 
-bindsym XF86Tools exec xtouchpad -t; exec notify-send 'toggled keyboard'
+bindsym XF86Tools exec xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
 # XF86 keys: http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
 
 bindsym $mod+v exec ~/scripts/i3/clipboard/save-clipboard.sh

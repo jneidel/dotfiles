@@ -156,7 +156,7 @@
     "no-await-in-loop": 0,
     "arrow-parens": 0,
     "max-statements-per-line": [1, { "max": 2 }],
-    "capitalized-comments": 1,
+    "capitalized-comments": 0,
     "curly": [2, "multi-or-nest", "consistent"],
     "handle-callback-err": 0,
     "no-irregular-whitespace": 0,

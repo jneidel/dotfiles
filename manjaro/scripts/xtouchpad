@@ -16,7 +16,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-device="11" # xinput --list to find out devide num
+device="12" # xinput --list to find out devide num
 if [[ $1 == -e ]] ; then
     # Enable
     #xinput --set-prop "$device" "Device Enabled" 1

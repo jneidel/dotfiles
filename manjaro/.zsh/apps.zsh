@@ -41,6 +41,7 @@ alias q="podqueue"
 alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet -l 6 -d tmp/nb-log && clear"
 alias nbd="podboat --autodownload"
+alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 && clear"
 
 ### players
 alias vv="~/scripts/vv 250"
