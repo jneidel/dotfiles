@@ -240,7 +240,7 @@
         "max": 2
       }
     ],
-    "capitalized-comments": 1,
+    "capitalized-comments": 0,
     "curly": [
       2,
       "multi-or-nest",
@@ -268,6 +268,17 @@
     ],
     "func-name-matching": 1,
     "no-unused-labels": 1,
+    "jsx-quotes": [
+      2,
+      "prefer-double"
+    ],
+    "computed-property-spacing": 0,
+    "linebreak-style": [
+      2,
+      "unix"
+    ],
+    "lines-around-comment": 0,
+    "lines-between-class-members": 0,
     "unicorn/catch-error-name": [
       2,
       {

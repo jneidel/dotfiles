@@ -2,18 +2,19 @@
 
 const { promisify } = require( "util" );
 const fs = require( "fs" );
+const path = require( "path" );
 const writeFile = promisify( fs.writeFile );
 
 const base = require( "./base" );
 
 const paths = [
   {
-    in : "./js",
-    out: "../.eslintrc",
+    in : "/home/jneidel/.eslint/js",
+    out: "/home/jneidel/.eslintrc",
   },
   {
-    in : "./ts",
-    out: "../.eslintrc-ts",
+    in : "/home/jneidel/.eslint/ts",
+    out: "/home/jneidel/.eslintrc-ts",
   },
 ];
 
