@@ -26,9 +26,9 @@ autocmd FileType markdown inoremap ,l - [] <++><Esc>F[a
 " JavaScript
 autocmd filetype javascript,typescript inoremap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
 autocmd filetype javascript,typescript inoremap ,o {<Enter>}<Esc>O
-autocmd filetype javascript,typescript inoremap ,i import<Space><Space>from<Space>"<++>";<++><Esc>Ffhi
-autocmd filetype javascript,typescript inoremap ,l console.log(<Space><Space>)<Esc>hi
-autocmd filetype javascript,typescript inoremap ,t test(<Space>"",<Space>()<Space>=><Space>{<Enter><++><Enter>}<Space>);<Esc>02kf"a
+autocmd filetype javascript,typescript inoremap ,i import  from "<++>";<++><Esc>Ffhi
+autocmd filetype javascript,typescript inoremap ,l console.log(  )<Esc>hi
+autocmd filetype javascript,typescript inoremap ,t test( "", () => {<Enter>const <Enter>const answer <Enter><Enter>const result <Enter>expect( result ).toBe( answer );<Enter>} );<Esc>02k2ela= <++><Esc>02k2ela= <++><Esc>0kela<++><Esc>0kf"a
 
 " Typescript
 autocmd filetype typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi
