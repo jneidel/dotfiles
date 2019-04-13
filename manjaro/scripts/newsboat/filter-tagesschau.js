@@ -31,6 +31,14 @@ const blocklist = [
   "Hannover 96",
   "laut Umfrage",
   "Champions League",
+  "Barcelona",
+  "Bundeswehr",
+  "Österreich:",
+  "Mönchengladbach",
+  "Trainer",
+  "Europa League",
+  "Handball",
+  "Verspätung",
 ];
 
 function exclude(data) {

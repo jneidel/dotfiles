@@ -2,7 +2,7 @@
 
 const filter = require("./filter-rss");
 
-const blacklist = ["Briefing"];
+const blacklist = ["Briefing", "Pope"];
 
 function exclude(data) {
   function filter(x) {
