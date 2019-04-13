@@ -40,6 +40,7 @@
 
 ### Linux
 
+- Why people use free- over propriety software: [Why Use Free Software?](https://www.youtube.com/watch?v=btHano6wHgA)
 - Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
 - Thinkpad comparisons: [Which ThinkPad Should You Get? (And Libreboot notes)](https://www.youtube.com/watch?v=La3sb5y7e-k)
 

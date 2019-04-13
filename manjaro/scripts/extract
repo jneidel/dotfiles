@@ -26,6 +26,7 @@ if [ -f "$archive" ] ; then
 	case "$archive" in
 		*.tar.bz2|*.tbz2) tar xvjf "$archive" ;;
 		*.tar.gz|*.tgz) tar xvzf "$archive" ;;
+    *.txz) tar Jxvf "$archive" ;;
 		*.lzma) unlzma "$archive" ;;
 		*.bz2) bunzip2 "$archive" ;;
 		*.rar|*.cbr) unrar x -ad "$archive" ;;
