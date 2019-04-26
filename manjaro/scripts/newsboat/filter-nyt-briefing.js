@@ -4,7 +4,7 @@ const filter = require("./filter-rss");
 
 const whitelist = ["Briefing"];
 
-function include(data) {
+function include(data, whitelist) {
   function filter(x) {
     if (x.name === "item") {
       const { text } = x.elements[0].elements[0];

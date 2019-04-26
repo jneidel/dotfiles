@@ -1,0 +1,19 @@
+#! /bin/bash
+
+CLIP_CMD=get-clip
+VLC_CMD="vv 250"
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ open-in-vlc"
+  echo "Open clipboard content in vlc"
+  echo ""
+  echo "Parameters:"
+  echo "  clipboard: link to open in vlc"
+  exit
+fi
+
+CLIP_CONTENT=$($CLIP_CMD)
+echo $CLIP_CONTENT
+
+$VLC_CMD "$CLIP_CONTENT"
+

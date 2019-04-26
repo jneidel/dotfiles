@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# Todo:
+# - pass multiple comic files to rename
+# - handle pwd not being the dir the comic resides in (comic in sub dir)
+
 COMIC=$1
 DIRECTORY=$2
 

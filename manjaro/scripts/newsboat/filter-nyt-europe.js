@@ -4,7 +4,7 @@ const filter = require("./filter-rss");
 
 const blacklist = ["Briefing", "Pope"];
 
-function exclude(data) {
+function exclude(data, blacklist) {
   function filter(x) {
     if (x.name === "item") {
       const { text } = x.elements[0].elements[0];

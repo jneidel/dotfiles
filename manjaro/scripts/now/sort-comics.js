@@ -2,8 +2,9 @@
 
 function getPublisher( comic ) {
   const aftershock = [ "Dark Red", "Stronghold" ];
+  const boom = [ "The Empty Man" ];
 
-  return ~aftershock.indexOf( comic ) ? "aftershock" : "image"; // Image is fallback
+  return aftershock.includes( comic ) ? "aftershock" : boom.includes( comic ) ? "boom" : "image"; // Image is fallback
 }
 
 function createInfoUrl( comic ) {
@@ -15,9 +16,14 @@ function createInfoUrl( comic ) {
   function formAftershockUrl( comic ) {
     return `https://duckduckgo.com/?q=site%3Aaftershockcomics.com+inurl%3A${comic}`
   }
+  function formBoomUrl( comic ) {
+return `https://duckduckgo.com/?q=site%3Awww.boom-studios.com%2Fseries+${comic}`
+  }
 
   let url = publisher === "aftershock" ?
     formAftershockUrl( comic ) :
+    publisher === "boom" ?
+    formBoomUrl( comic ) :
     formImageUrl( comic );
 
   url = new URL( url )

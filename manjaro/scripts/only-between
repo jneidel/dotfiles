@@ -25,12 +25,15 @@ elif [[ -z $CMD ]]; then
   exit
 fi
 
-TIMEFRAME_START=$(echo $TIMEFRAME | cut -d "-" -f 1 | sed -e 's/^0*//')
+TIMEFRAME_START=$(echo $TIMEFRAME | cut -d "-" -f 1 | sed -e 's/^0?//')
 TIMEFRAME_END=$(echo $TIMEFRAME | cut -d "-" -f 2)
 
 if [[ -z $TIMEFRAME_START ]] || [[ -z $TIMEFRAME_END ]]; then
   echo "The time frame has to be formatted like this:"
   echo "  <start>-<end>"
+  echo ""
+  echo "Passed start: '$TIMEFRAME_START'"
+  echo "Passed end  : '$TIMEFRAME_END'"
   exit
 elif [[ $TIMEFRAME_START -gt $TIMEFRAME_END ]]; then
   echo "Start time has to be before end time"

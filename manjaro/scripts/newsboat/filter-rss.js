@@ -10,16 +10,20 @@
 const convert = require( "xml-js" );
 
 function filter( blocklist, cb ) {
+  const chunks = [];
   process.stdin.on( "readable", () => {
     const chunk = process.stdin.read();
-    if ( chunk !== null ) {
-      let data = JSON.parse( convert.xml2json( chunk.toString() ) );
+    if ( chunk !== null )
+      chunks.push( chunk.toString() );
+  } );
 
-      data = cb( data );
+  process.stdin.on( "end", () => {
+    let data = JSON.parse( convert.xml2json( chunks.join( "" ) ) );
 
-      const out = convert.json2xml( JSON.stringify( data ) );
-      process.stdout.write( out );
-    }
+    data = cb( data, blocklist );
+
+    const out = convert.json2xml( JSON.stringify( data ) );
+    process.stdout.write( out );
   } );
 }
 

@@ -9,16 +9,20 @@ fi
 if [[ $(mullvad block-when-disconnected get) = "Network traffic will be allowed when the VPN is disconnected" ]]; then
   mullvad block-when-disconnected set on > /dev/null
   echo "block-when-disconnected set on"
+  mullvad connect
+  echo "mullvad connect"
 else
   mullvad block-when-disconnected set off > /dev/null
   echo "block-when-disconnected set off"
+  mullvad disconnect
+  echo "mullvad disconnect"
 fi
 
-if [[ $(timeout 0.01 mullvad status) = "Tunnel status: Connected" ]]; then
-  mullvad disconnect
-  echo "disconnected"
-else
-  mullvad connect
-  echo "connected"
-fi
+#if [[ $(timeout 0.01 mullvad status) = "Tunnel status: Connected" ]]; then
+  #mullvad disconnect
+  #echo "disconnected"
+#else
+  #mullvad connect
+  #echo "connected"
+#fi
 
