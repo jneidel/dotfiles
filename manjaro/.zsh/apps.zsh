@@ -39,9 +39,9 @@ alias q="podqueue"
 ### newsboat
 #alias yt="" set in ~/scripts/personal/yt
 alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
-alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet -l 6 -d tmp/nb-log && clear"
+alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"
 alias nbd="podboat --autodownload"
-alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 && clear"
+alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 -d ~/tmp/nb-log && clear"
 
 ### players
 alias vv="~/scripts/vv 250"
@@ -59,6 +59,7 @@ alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## tui
 alias job="taskell ~/notes/job-applications.md 2> /dev/null"
+alias uni="taskell ~/notes/uni-applications.md 2> /dev/null"
 
 ## suffixes
 ## open files with extension .x with application y

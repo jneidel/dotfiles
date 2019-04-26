@@ -82,6 +82,7 @@ let g:html5_aria_attributes_complete = 0
 
 "## Goyo
 nmap <leader>gy :Goyo<cr>
+nmap <leader>gj :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>
 
 "## prettier
 " Run prettier

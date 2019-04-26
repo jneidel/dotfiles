@@ -9,7 +9,7 @@ player "vlc"
 
 ## reload feeds
 auto-reload yes
-reload-time 10
+reload-time 20
 
 ## formatting
 download-filename-format "%t.%e"

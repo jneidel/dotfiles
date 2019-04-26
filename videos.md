@@ -15,8 +15,10 @@
 - [Technology](#technology)
   * [Internet](#internet)
   * [Linux](#linux)
+    + [Tools](#tools)
     + [Arch](#arch)
     + [Vim](#vim)
+    + [Hardware](#hardware)
   * [Software Industry](#software-industry)
     + [JavaScript](#javascript)
 - [Entertainment](#entertainment)
@@ -41,8 +43,11 @@
 ### Linux
 
 - Why people use free- over propriety software: [Why Use Free Software?](https://www.youtube.com/watch?v=btHano6wHgA)
+- Why the terminal is better than a grapical user interface: [Is the Terminal just for Insufferable Hipsters?](https://www.youtube.com/watch?v=G4g-du1MIas)
+
+#### Tools
+
 - Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
-- Thinkpad comparisons: [Which ThinkPad Should You Get? (And Libreboot notes)](https://www.youtube.com/watch?v=La3sb5y7e-k)
 
 #### Arch
 
@@ -52,11 +57,16 @@
 
 - How to easily build language specific macros: [Start Turning vim into a /comfy/ IDE!](https://www.youtube.com/watch?v=Q4I_Ft-VLAg)
 
+#### Hardware
+
+- Thinkpad comparisons: [Which ThinkPad Should You Get? (And Libreboot notes)](https://www.youtube.com/watch?v=La3sb5y7e-k)
+
 ### Software Industry
 
 - What is your (job) market value as a programmer?: [Your market value](https://www.youtube.com/watch?v=zlps8geRwDM)
 - Why you need to learn a language in-depth (saying refers to expressing an idea in code) _[snippet]_: [Why don't some big websites use React?](https://www.youtube.com/watch?v=5oTVvBlWvNs&feature=youtu.be&t=300)
 - Why your first job should be with a bigger company: [Should I work for a big company or a small one?](https://www.youtube.com/watch?v=kSirn_2mf6U)
+- Finding a good company as a junior developer: [Finding the right employer](https://www.youtube.com/watch?v=Kka7sis8rxI)
 
 #### JavaScript
 
