@@ -3,6 +3,7 @@
 const filter = require("./filter-rss");
 
 const blocklist = [
+  "Fußball",
   "DFB",
   "THW",
   "DHB",
@@ -43,6 +44,8 @@ const blocklist = [
   "Verspätung",
   "deutschen Pass",
   "Bilder:",
+  "Dschungelcamp",
+  "Schauspieler",
 ];
 
 function exclude(data, blocklist) {

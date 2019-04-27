@@ -22,15 +22,12 @@ colorscheme old-hope
 " linenumbers, in normal mode numbers will be relative to the current line
 set number relativenumber
 
-" display cursor position info in bottom right corner
-"set ruler
-
 " blink cursor on error instead of beeping
 set visualbell
 
 " color current horizontal line
-" set as 'CursorLine' in colorscheme
 set cursorline
+" set as 'CursorLine' in colorscheme
 
 " wrap content to next line when display width is reached
 set wrap
@@ -50,8 +47,10 @@ set backspace=2
 " round <Tab>s to multiples of tabstop/shiftwidth
 set shiftround
 
-" activate autoindent
-set autoindent "set smartindent
+" activate automatic indention based on syntax files
+set autoindent
+" and based on static rules
+set smartindent
 
 " check first lines of file for vim commands to execute
 " turned off for security
@@ -93,14 +92,15 @@ set undodir=~/.vim/tmp
 set listchars=tab:▸\ ,eol:¬
 
 "## Windows
-" Remapping ctrl + w + <movement> to ctrl + <movement> for easier window movement
+" Remapping ctrl + w + <movement> to ctrl + <movement> for easier window changing
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-set splitbelow " on vsp
-set splitright " on sp
+" the default splits are inverted, which is counter intuitive 
+set splitbelow " on sp
+set splitright " on vsp
 
 "## Custom coloring
 " Current tab in tabline
@@ -112,7 +112,7 @@ set splitright " on sp
 " Number of splits, next to tab
   hi Title ctermfg=Yellow
 
-" Hightlight wrongly spelled words
+" only hightlight wrongly spelled words
   hi SpellBad ctermbg=167
   hi SpellRare ctermbg=none
   hi SpellLocal ctermbg=none
@@ -155,8 +155,8 @@ set viminfo=%,'50,\"100,:100,n~/.viminfo
 
 " Enable folding
 " Set foldmethod=snytax if current language has fold support
-set foldmethod=marker
 set foldmarker={{{,}}}
+set foldmethod=marker
 
 " copy to and from X clipboard
 " src: https://vim.fandom.com/wiki/GNU/Linux_clipboard_copy/paste_with_xclip
@@ -210,6 +210,7 @@ function! SaveCursorPosition()
   winsaveview()
   winrestview()
 endfunction
+" ^ not working, was supposed to mitigate eslint resetting the cursor location
 
 "## Source external configs/plugins
 source ~/.vim/config/init.vim

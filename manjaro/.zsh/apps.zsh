@@ -60,10 +60,11 @@ alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 ## tui
 alias job="taskell ~/notes/job-applications.md 2> /dev/null"
 alias uni="taskell ~/notes/uni-applications.md 2> /dev/null"
+alias flat="taskell ~/notes/flat-applications.md 2> /dev/null"
 
 ## suffixes
-## open files with extension .x with application y
-## usage: $ ./doc.cbz -> opens in YACReader
+# open files with extension .xy with application z
+# usage: $ ./doc.cbz -> opens in YACReader
 alias -s pdf=apvlv #epdfview, mupdf
 alias -s epub=FBReader
 alias -s mobi=FBReader
@@ -71,9 +72,10 @@ alias -s cbz=YACReader
 alias -s cbr=YACReader
 alias -s jpg=sxiv # or gwenview
 alias -s png=sxiv
-alias -s mp4=vlc
-alias -s mkv=vlc
-alias -s mp3=mplayer
+alias -s mp4=vv # as defined above
+alias -s mkv=vv
+alias -s avi=vv
+alias -s mp3=play # as defined above
 alias -s sh=bash
 alias -s js=node
 alias -s json=fx
