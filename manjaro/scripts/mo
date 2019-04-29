@@ -1,0 +1,38 @@
+#! /bin/bash
+
+DEFAULT_MOUNT_ROOT=/media
+DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/usb
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ mo"
+  echo "mount drives"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: volume to be mounted ('b' for /dev/sdb)"
+  echo "  [\$2]: mount location in $DEFAULT_MOUNT_ROOT, default: $DEFAULT_LOCATION"
+  echo ""
+  echo "Example:"
+  echo "$ mo b1 hd"
+  exit
+fi
+
+VOLUME_ID="$1"
+if [[ -z $VOLUME_ID ]]; then
+  echo "Please supply the volume to be mounted ('b1' for /dev/sdb1)."                                                                   
+  exit
+fi
+VOLUME="/dev/sd$VOLUME_ID"
+
+LOCATION="$DEFAULT_MOUNT_ROOT/$2"
+if [[ ! -z $2 && -d $LOCATION ]]; then
+  sudo mount -o nonempty $VOLUME "$LOCATION"
+  echo "mounted $VOLUME to $LOCATION"
+
+  cd "$LOCATION"
+else
+  sudo mount -o nonempty $VOLUME $DEFAULT_LOCATION
+  echo "mounted $VOLUME to $DEFAULT_LOCATION"
+
+  cd "$DEFAULT_LOCATION"
+fi
+

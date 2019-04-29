@@ -1,0 +1,34 @@
+#! /bin/bash
+
+LOCATION=/media/iso
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ moiso"
+  echo "mount iso file to $LOCATION"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: iso file"
+  echo ""
+  echo "Example:"
+  echo "$ moiso arch-linux.iso"
+  exit
+fi
+
+if [[ ! -e "$1" ]]; then
+  echo "file does not exist"
+  exit
+fi
+
+BASENAME=$(basename "$1")
+FILE_EXTENSION=$(echo "${BASENAME##*.}")
+if [[ $FILE_EXTENSION != "iso" ]]; then
+  echo "filename does not end in .iso"
+  echo $BASENAME $FILE_EXTENSION
+  exit
+fi
+
+sudo mount -o loop "$1" $LOCATION 2> /dev/null
+echo "mounted iso as readonly at $LOCATION"
+
+cd $LOCATION
+

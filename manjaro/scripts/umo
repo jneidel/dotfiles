@@ -1,0 +1,26 @@
+#! /bin/bash
+
+DEFAULT_MOUNT_ROOT=/media
+DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/usb
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ umo"
+  echo "unmount devices"
+  echo ""
+  echo "Parameters:"
+  echo "  [\$1]: mount location in $DEFAULT_MOUNT_ROOT, default: $DEFAULT_LOCATION"
+  echo ""
+  echo "Example:"
+  echo "$ umo hd"
+  exit
+fi
+
+LOCATION="$DEFAULT_MOUNT_ROOT/$1"
+if [[ ! -z $1 && -d $LOCATION ]]; then
+  sudo umount "$LOCATION"
+  echo "unmounted $LOCATION"
+else
+  sudo umount $DEFAULT_LOCATION
+  echo "unmounted $DEFAULT_LOCATION"
+fi
+
