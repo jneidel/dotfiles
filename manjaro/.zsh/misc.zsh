@@ -79,6 +79,7 @@ alias -g N2="> /dev/null 2>&1" # only stderr, prev NUL
 
 #### Misc
 alias -g PB="| nc termbin.com 9999" # terminal pastebin
+alias -g C="| wc -l" # get count
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week/"

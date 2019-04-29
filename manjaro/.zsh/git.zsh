@@ -6,11 +6,13 @@ alias s="git status"
 ## add
 alias ga="git add"
 alias add="git add .; git status"
+alias gap="git add -p"
 
 ## commit
 alias commit="git commit -m"
 alias gc="commit"
 alias addcom="git add .; git commit -m"
+alias ac="addcom"
 
 ## commit --amend
 alias amend="git commit --amend"
@@ -34,19 +36,21 @@ alias pushf="git push -f origin"
 alias pushup="git push --set-upstream origin"
 alias pull="git pull origin"
 alias master="git pull origin master; git push origin master"
+alias gpu="git push uber master"
 
 ## checkout
 alias co="git checkout"
 alias com="git checkout master"
+alias cob="git checkout -b"
 
 ## rebase
 alias gr="git rebase"
+alias gri="git rebase -i"
 alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 
 ## branch
 alias gb="git branch"
-alias gbc="git checkout -b"
 
 ## reset
 alias re="git reset"
@@ -56,6 +60,6 @@ alias reh="git reset --hard"
 alias gl="git log --oneline --graph --decorate"
 alias reflog="git reflog"
 
-## misc
+## diff
 alias gd="git diff"
 
