@@ -1,0 +1,33 @@
+#! /bin/bash
+
+DEFAULT_DEVICE=1
+DEFAULT_MOUNT_ROOT=/media
+DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/phone
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ moan"
+  echo "mount android devices"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "$ moan"
+  exit
+fi
+
+STATUS=$(simple-mtpfs -l 2> /dev/null | grep "." -m 1)
+if [[ -z $STATUS ]]; then
+  echo "no connected devices found"
+fi
+
+# parse -l location
+# parse -d device
+# https://stackoverflow.com/a/29754866
+# https://github.com/gavinbeatty/getopt-enhanced
+
+simple-mtpfs --device $DEFAULT_DEVICE $DEFAULT_LOCATION
+echo "mounted device $DEFAULT_DEVICE at $DEFAULT_LOCATION
+
+cd $DEFAULT_LOCATION
+

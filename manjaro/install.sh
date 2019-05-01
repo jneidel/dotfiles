@@ -20,8 +20,8 @@ prompt 'packer' 'yaourt -S packer-aur-git'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
 prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc kitty vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine surf bleachbit kid3 fbreader gcolor2'
-prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer sent taskell-bin calcurse ranger'
-prompt 'pacman clis' 'sudo packer-aur -S figlet figlet-fonts fd pjson entr python-grip task-spooler ffsend-bin megacmd-bin mullvad-vpn neofetch tmate'
+prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer sent taskell-bin calcurse ranger transmission-remote-cli-git'
+prompt 'pacman clis' 'sudo packer-aur -S figlet figlet-fonts fd pjson entr python-grip task-spooler ffsend-bin megacmd-bin mullvad-vpn neofetch tmate transmission-cli exa bat'
 prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth networkmanager-dmenu-git farbfeld par ttf-emojione volumeicon'
 promt 'pacman programming' 'sudo packer-aur -S docker docker-compose jq mongodb ngrok'
 

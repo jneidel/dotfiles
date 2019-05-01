@@ -28,9 +28,11 @@ function colorls() {
   };'
 }
 
-alias l="ls -1aF | filterls | colorls" # all files
-alias lo="ls -1aF"    # all files, without filter
-alias la="ls -1FG"    # no . files
-alias ld="ls -1Gd */" # only dirs
-alias li="ls -lahoFG" # show permissions
+alias ls="exa"
+alias l="exa -1a" # "ls -1aF | filterls | colorls" # all files
+alias la="exa -1" # "ls -1FG"    # no . files
+alias ld="exa -1d" # "ls -1Gd */" # only dirs
+alias li="exa -lah --git" #"ls -lahoFG" # show permissions
+
+export EXA_COLORS="di=1;34" # make dirs bold again
 

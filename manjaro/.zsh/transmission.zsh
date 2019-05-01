@@ -27,11 +27,8 @@ alias tsmw="tsmwatch"
 
 alias tsmdone='tsm G "Done" G -v "None" G -v "ETA" HL "done"' # list finished torrents
 alias tsmd="tsmdone"
-tsmclear() { # remove finished torrents
-  transmission-remote -l | grep 100% | grep Done | \
-  awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r;
-}
-alias tsmc="tsmclear"
+
+alias tsmc="transmission-clear"
 
 alias tsmsite="$BROWSER http://localhost:9091" # open transmission site
 

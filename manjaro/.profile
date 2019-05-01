@@ -6,7 +6,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 ## Paths
-export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/scripts:~/scripts/personal
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -f ~/scripts/scripts-path-filter-pattern | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/ct
 
 ## Applications
@@ -18,9 +19,6 @@ export ALT_BROWSER=chromium
 
 ### Application options
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
-
-## Directories
-export TMP=$HOME/tmp
 
 ## User specific
 export KEYID=B29E6A7A7DFD16FA # GPG keyid

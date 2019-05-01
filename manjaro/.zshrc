@@ -5,11 +5,9 @@ OMZ=~/.oh-my-zsh;
 HIST_STAMP="dd.mm.yyyy"
 
 _Z_DATA=$HOME/.z/.z
-plugins=( z encode64 urltools colored-man-pages colorize cp )
+plugins=( z encode64 urltools cp )
 # z: jump around, $ z dot, to cd into dir thats most often used an includes 'dot' in the name, i.e. "dotfiles"
 # encode64: $ d64; $ e64
-# test colored-man-pages
-# test colorize: ccat
 # test cp: cpv
 
 source $OMZ/oh-my-zsh.sh
