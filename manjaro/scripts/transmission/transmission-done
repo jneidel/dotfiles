@@ -1,0 +1,15 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ torrent-done"
+  echo "Send a notification when a torrent is done"
+  echo ""
+  echo "Set as 'script-torrent-done-filename'"
+  echo " in '~/.config/transmission-daemon/settings.json'"
+  exit
+fi
+
+notify-send "transmission-daemon" "$TR_TORRENT_NAME has finished downloading."
+
+transmission-clear # remove torrent
+

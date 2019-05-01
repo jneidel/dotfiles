@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ transmission-clear"
+  echo "Remove finished torrent from transmission"
+  exit
+fi
+
+transmission-remote -l | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} 100% | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} Done | awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r
