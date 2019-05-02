@@ -21,12 +21,13 @@ prompt 'packer' 'yaourt -S packer-aur-git'
 prompt 'system-update' 'sudo packer-aur -Syu'
 prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc kitty vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine surf bleachbit kid3 fbreader gcolor2'
 prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer sent taskell-bin calcurse ranger transmission-remote-cli-git'
-prompt 'pacman clis' 'sudo packer-aur -S figlet figlet-fonts fd pjson entr python-grip task-spooler ffsend-bin megacmd-bin mullvad-vpn neofetch tmate transmission-cli exa bat'
-prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr manjaro-pulse pulseaudio pulseaudio-bluetooth networkmanager-dmenu-git farbfeld par ttf-emojione volumeicon'
-promt 'pacman programming' 'sudo packer-aur -S docker docker-compose jq mongodb ngrok'
+prompt 'pacman clis' 'sudo packer-aur -S figlet figlet-fonts fd pjson entr python-grip task-spooler ffsend-bin megacmd-bin mullvad-vpn neofetch tmate transmission-cli exa bat conky'
+prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr networkmanager-dmenu-git farbfeld par ttf-emojione volumeicon'
+prompt 'pacman programming' 'sudo packer-aur -S docker docker-compose jq mongodb ngrok'
+prompt 'sound' 'alsa-utils pulseaudio-alsa manjaro-pulse pulseaudio pulseaudio-bluetooth'
 
 # NPM
-prompt 'node' 'sudo packer-aur -S nodejs'
+prompt 'node' 'sudo packer-aur -S nodejs npm'
 prompt 'npm non programming clis' 'sudo npm install -g dict-cc-cli tslide mangareader-dl fkill-cli'
 prompt 'npm programming clis' 'sudo npm install -g ava eslint np yo typescript webpack webpack-cli generator-jneidel fx'
 prompt 'npm programming utilities' 'sudo npm install -g concurrently markdown-toc nodemon npm-name-cli browser-sync npm-check-updates prettier eslint_d'
@@ -40,7 +41,7 @@ prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests m
 prompt 'mplayer' 'sudo packer-aur -S mplayer' # cli player
 prompt 'newsboat' 'sudo packer-aur -S newsboat'
 prompt 'wine' 'sudo packer-aur -S wine wine-mono'
-prompt 'xorg' 'sudo packer-aur -S xautolock xorg-server xorg-xev xorg-host xorg-init -xorg-kill'
+prompt 'xorg' 'sudo packer-aur -S xautolock xorg-server xorg-xev xorg-xrandr xclip oblogout-blurlock'
 
 prompt 'rclone (skip for beta, as it will be asked next)' 'sudo packer-aur -S rclone'
 prompt 'rclone-beta' 'curl https://rclone.org/install.sh | sudo bash -s beta'

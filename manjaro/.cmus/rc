@@ -1,6 +1,4 @@
 # cmus rc
-## comment out the 'bind' commands after
-## initial setup, otherwise cmus will pester you
 
 set output_plugin=pulse
 
@@ -8,12 +6,25 @@ set output_plugin=pulse
 colorscheme cmus
 
 # Update library shortcuts
+unbind common A
+unbind common ^A
 bind common A add ~/music
 bind common ^A clear
 
 # Swap c and space
 unbind common space
 unbind common c
+unbind common C
 bind common space player-pause
 bind common c win-toggle
 bind common C toggle continue
+
+# Options
+## i, to jump to current track does not focus album
+set auto_expand_albums_selcur=false
+## Display artists as: Lastname, Firstname
+set display_artist_sort_name=true
+## repeat all
+set repeat=true
+## normalize loadness
+set replaygain=album-preferred
