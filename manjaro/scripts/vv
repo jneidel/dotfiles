@@ -25,7 +25,8 @@ fi
 
 if [[ -n $1 ]]; then
   DELAY=$1
-  vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$DELAY" "--sub-delay=-$($(($DELAY/100.0)))" "${@:2}"
+  #vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$DELAY" "--sub-delay=-$($(($DELAY/100.0)))" "${@:2}"
+  mpv --profile=movie "${@:2}"
   # ${@:2} src: https://stackoverflow.com/a/9057392
 else
   vlc $VERBOSE $VIDEO $PLAYLIST

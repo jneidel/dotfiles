@@ -8,12 +8,12 @@ fi
 
 if [[ $(mullvad block-when-disconnected get) = "Network traffic will be allowed when the VPN is disconnected" ]]; then
   mullvad block-when-disconnected set on > /dev/null
-  echo "block-when-disconnected set on"
+  printf "block-when-disconnected set \033[1;32mon\n"
   mullvad connect
   echo "mullvad connect"
 else
   mullvad block-when-disconnected set off > /dev/null
-  echo "block-when-disconnected set off"
+  printf "block-when-disconnected set \033[1;31moff\n"
   mullvad disconnect
   echo "mullvad disconnect"
 fi

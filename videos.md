@@ -53,6 +53,7 @@
 #### Arch
 
 - How to use pacman (archs package manager): [Using Pacman on Arch Linux: Everything you need to know](https://www.youtube.com/watch?v=-dEuXTMzRKs)
+- Basic arch install: [Full Arch Linux Install (SAVAGE Edition!)](https://www.youtube.com/watch?v=4PBqpX0_UOc) [After a Minimal Linux Install: Graphical Envionment and Users](https://www.youtube.com/watch?v=nSHOb8YU9Gw)
 
 #### Vim
 
@@ -80,6 +81,7 @@
 - Building a hut from scratch in the wild (Subtitles for commentary): [Primitive Technology: Tiled Roof Hut](https://www.youtube.com/watch?v=P73REgj-3UE)
 - Why you should watch redline (the best anime movie you've never heard of): [Why Redline is an Amazing Movie, and Why That Matters Today](https://www.youtube.com/watch?v=uUeaYaI-VAI)
 - How anime and otaku culture came to be: Anime and Otaku | Down the Rabbit Hole [Part 1](https://www.youtube.com/watch?v=zZsFQPdU2dw) [Part 2](https://www.youtube.com/watch?v=brF1zVXG5_0)
+- How a new generation of "battle" manga tell unique stories: ["Non Battle" Battle Anime](https://www.youtube.com/watch?v=kkg9BhISfdA)
 
 ### Games
 
