@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ ipa"
+  echo "Get current ip address"
+  exit
+fi
+
+ifconfig | grep 192 | awk '{ print $2 }'
+

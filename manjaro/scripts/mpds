@@ -1,0 +1,16 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ mpds"
+  echo "Set current ip address as address before starting mpd"
+  exit
+fi
+
+CONFIG=~/.config/mpd/mpd.conf
+IP=$(ifconfig | grep 192 | awk '{ print $2 }')
+
+cat $CONFIG > ~/tmp/mpd.conf-backup
+cat $CONFIG | sed "s/192.168.178.[1-9]*/$IP/" > $CONFIG
+
+mpd
+

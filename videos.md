@@ -49,6 +49,7 @@
 #### Tools
 
 - Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
+- Connect your phone via cable: [How to Mount Android Phones in Linux](https://www.youtube.com/watch?v=lcmJg4OfKzs)
 
 #### Arch
 

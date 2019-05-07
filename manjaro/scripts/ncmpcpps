@@ -1,0 +1,12 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ ncmpcpps"
+  echo "Connect ncmpcpp to the current ip address"
+  exit
+fi
+
+IP=$(ifconfig | grep 192 | awk '{ print $2 }')
+
+ncmpcpp -h $IP -p 5555
+
