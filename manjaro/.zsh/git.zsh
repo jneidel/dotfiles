@@ -1,7 +1,7 @@
 # git
 
 ## status
-alias s="git status"
+alias s="git status -sb"
 
 ## add
 alias ga="git add"
