@@ -1,0 +1,26 @@
+# List of pacman and aur apps
+
+# How to use:
+#   To get the app names:
+#     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 1
+#   To get the app descriptions: 
+#     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 2-
+
+# gui
+keepassxc Password database
+kitty Terminal emulator
+vlc Video player
+zeal Programming language/tool offline documentation
+tmux Terminal muliplexer (multiple shells inside the same terminal window)
+gwenview Extensive image viewer
+sxiv Minimal image viewer
+apvlv Minimal pdf viewer
+
+# browsers
+firefox-nightly Experimental firefox
+# ungoogled-chromium
+# chromium-widevine Chromium module required for netflix
+surf Minimal browser
+
+bleachbit System cleaner
+kid3 Visual (mp3) tag editor
