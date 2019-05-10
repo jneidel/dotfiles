@@ -1,12 +1,13 @@
 # git
 
 ## status
-alias s="git status -sb"
+alias s="git status -sb" # -s short output, -b branch info
 
 ## add
 alias ga="git add"
-alias add="git add .; git status"
-alias gap="git add -p"
+alias add="ga -A; s" # -A all, even removed
+alias gai="git add -i" # interactive
+alias gap="git add -p" # patch
 
 ## commit
 alias commit="git commit -m"
@@ -53,7 +54,7 @@ alias gra="git rebase --abort"
 alias gb="git branch"
 
 ## reset
-alias re="git reset"
+alias re="git reset -q; s"
 alias reh="git reset --hard"
 
 ## log

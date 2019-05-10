@@ -19,10 +19,10 @@ prompt 'optimize pacman' 'sudo pacman-mirrors --fasttrack 5 && sudo pacman -Syyu
 prompt 'packer' 'yaourt -S packer-aur-git'
 
 prompt 'system-update' 'sudo packer-aur -Syu'
-prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc kitty vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine surf bleachbit kid3 fbreader gcolor2'
+prompt 'pacman gui apps' 'sudo packer-aur -S keepassxc kitty vlc zeal tmux gwenview apvlv sxiv firefox-nightly chromium chromium-widevine surf bleachbit kid3 fbreader gcolor2 conky rofi'
 prompt 'pacman tui apps' 'sudo packer-aur -S cmus htop mosh pulsemixer sent taskell-bin calcurse ranger transmission-remote-cli-git'
-prompt 'pacman clis' 'sudo packer-aur -S figlet figlet-fonts fd pjson entr python-grip task-spooler ffsend-bin megacmd-bin mullvad-vpn neofetch tmate transmission-cli exa bat conky'
-prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc rofi xflux arandr networkmanager-dmenu-git farbfeld par ttf-emojione volumeicon'
+prompt 'pacman clis' 'sudo packer-aur -S figlet figlet-fonts fd pjson entr python-grip task-spooler ffsend-bin megacmd-bin mullvad-vpn neofetch tmate transmission-cli exa bat'
+prompt 'pacman utilities' 'sudo packer-aur -S gdb xorg-xmodmap zsh-syntax-highlighting zip unzip bluez-utils arc-gtk-theme python-pip gcc xflux arandr networkmanager-dmenu-git farbfeld par ttf-emojione volumeicon'
 prompt 'pacman programming' 'sudo packer-aur -S docker docker-compose jq mongodb ngrok'
 prompt 'sound' 'alsa-utils pulseaudio-alsa manjaro-pulse pulseaudio pulseaudio-bluetooth'
 
@@ -36,7 +36,7 @@ prompt 'npm eslint-ts specific configs' 'sudo npm install -g eslint-config-xo-ty
 
 # Specific case apps
 prompt 'gimp' 'packer-aur -S gimp'
-prompt 'yacreader' 'packer-aur -S yacreader-nopdf'
+#prompt 'yacreader' 'packer-aur -S yacreader-nopdf'
 prompt 'beets' 'sudo packer-aur -S beets python-beautifulsoup4 python-requests mutagen-tools' # python modules for the lyrics/cover-art plugin
 prompt 'mplayer' 'sudo packer-aur -S mplayer' # cli player
 prompt 'newsboat' 'sudo packer-aur -S newsboat'
@@ -48,15 +48,12 @@ prompt 'rclone-beta' 'curl https://rclone.org/install.sh | sudo bash -s beta'
 
 prompt 'pacman remove' 'sudo pacman -Rsn hexchat'
 
-prompt 'pia' 'sh -c "$( curl -fsSL $SCRIPTS'/pia.sh' )"'
-#prompt 'gpg1' 'sh -c "$( curl -fsSL $SCRIPTS'/gpg1.sh' )"'
 prompt 'ytdl' 'sh -c "$( curl -fsSL $SCRIPTS'/ytdl.sh' )"'
 prompt 'webtorrent' 'sh -c "$( curl -fsSL $SCRIPTS'/webtorrent.sh' )"'
 prompt 'ssh-keys' 'sh -c "$( curl -fsSL $SCRIPTS'/ssh-keys.sh' )"'
 prompt 'dict-cc-dump' 'sh -c "$( curl -fsSL $SCRIPTS'/dict-cc.sh' )"'
 prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $SCRIPTS'/zeal.sh' )"'
 #prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $SCRIPTS'/vsc.sh' )"'
-prompt 'yacreader' 'sh -c "$( curl -fsSL $SCRIPTS'/yacreader.sh' )"'
 prompt 'mongodb' 'sh -c "$( curl -fsSL $SCRIPTS'/mongodb.sh' )"'
 prompt 'fonts' 'sh -c "$( curl -fsSL $SCRIPTS'/fonts.sh' )"'
 prompt 'keepass' 'sh -c "$( curl -fsSL $SCRIPTS'/keepass.sh' )"'

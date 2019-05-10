@@ -4,11 +4,10 @@
 # searche, install, update for both
 # remove needs to happen separately
 
-alias pac="packer-aur --noconfirm --noedit -S" # install
-alias pacs="packer-aur -Ss" # search
+alias pac="yay --noconfirm -S" # install
+alias pacs="yay -Ss" # search
 alias pacu="~/scripts/system-update.sh" # update
-alias pacr="sudo pacman -Rsn" # remove pacman
-alias aurr="sudo yaourt -Rsn" # remove yaourt
+alias pacr="yay -Rsn" # remove pacman
 
 alias paco="sudo pacman -Qdt" # list orphans
 alias pacor"sudo pacman -Rsn $(pacman -Qtdq)" # rm orphans
