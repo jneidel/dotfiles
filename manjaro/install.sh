@@ -48,18 +48,12 @@ prompt 'rclone-beta' 'curl https://rclone.org/install.sh | sudo bash -s beta'
 
 prompt 'pacman remove' 'sudo pacman -Rsn hexchat'
 
-prompt 'ytdl' 'sh -c "$( curl -fsSL $SCRIPTS'/ytdl.sh' )"'
-prompt 'webtorrent' 'sh -c "$( curl -fsSL $SCRIPTS'/webtorrent.sh' )"'
 prompt 'ssh-keys' 'sh -c "$( curl -fsSL $SCRIPTS'/ssh-keys.sh' )"'
 prompt 'dict-cc-dump' 'sh -c "$( curl -fsSL $SCRIPTS'/dict-cc.sh' )"'
 prompt 'zeal-docsets' 'sh -c "$( curl -fsSL $SCRIPTS'/zeal.sh' )"'
 #prompt 'vsc-extensions' 'sh -c "$( curl -fsSL $SCRIPTS'/vsc.sh' )"'
 prompt 'mongodb' 'sh -c "$( curl -fsSL $SCRIPTS'/mongodb.sh' )"'
 prompt 'fonts' 'sh -c "$( curl -fsSL $SCRIPTS'/fonts.sh' )"'
-prompt 'keepass' 'sh -c "$( curl -fsSL $SCRIPTS'/keepass.sh' )"'
-#prompt 'pip' 'sh -c "$( curl -fsSL $SCRIPTS'/pip.sh' )"'
-
-#prompt 'alsamixer' 'alsamixer'
 
 # Manual:
 # - chsh

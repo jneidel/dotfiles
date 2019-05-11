@@ -3,24 +3,201 @@
 # How to use:
 #   To get the app names:
 #     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 1
-#   To get the app descriptions: 
+#   To get the app descriptions:
 #     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 2-
 
 # gui
 keepassxc Password database
 kitty Terminal emulator
-vlc Video player
 zeal Programming language/tool offline documentation
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
+gimp Photo editing
+
+## player
+vlc Video player
+mplayer Headless audio player
+mpv Minimal video player
+
+## viewer/reader
 gwenview Extensive image viewer
 sxiv Minimal image viewer
 apvlv Minimal pdf viewer
+fbreader epub reader
+# yacreader-nopdf Comicbook reader
+newsboat RSS feed reader
 
-# browsers
+## browsers
 firefox-nightly Experimental firefox
-# ungoogled-chromium
+firefox-developer-edition Developer edition of firefox
+ungoogled-chromium Free version of chromium
 # chromium-widevine Chromium module required for netflix
 surf Minimal browser
 
+## utils
+rofi Prompt (dmenu alternative)
+conky Desktop widgets
+polybar Status bar
+
+## misc
 bleachbit System cleaner
+gcolor2 Color picker
+
+# tui
+cmus Music player
+htop Process manager
+mosh Better ssh
+sent Simple presentations
+taskell-bin Kanban board
+calcurse Calendar and todos
+transmission-remote-cli-git Transmission client
+rclone Sync local and remote directories
+youtube-dl Youtube downloader
+
+## file managers
+ranger File manager
+# vimfm
+
+# cli
+## apps
+transmission-cli Torrent client
+nodejs-webtorrent-cli Streaming torrent client
+
+## text
+figlet Print text as big ascii letters
+figlet-fonts More figlet fonts
+neofetch Print system info
+
+## util
+fd Better find
+scrot Screenshot utility
+pjson Pretty print json
+entr Run command if something changes
+task-spooler Queue commands for linear execution
+tmate Share tmux sessions
+exa Better ls
+bat Better cat
+
+## dev
+python-grip Reader markdown file with github styles
+
+## service clients
+ffsend-bin Firefox send client
+megacmd-bin MEGA.nz client
+mullvad-vpn Mullvad client
+
+# system
+## xorg tools
+xorg-server X server
+xorg-server-command
+xorg-xinit X init system
+xorg-xset Set keyboard repeat for X
+xorg-xprop Print properties of X windows
+xorg-xev Print X events
+xorg-xmodmap Modify keyboard mappings
+xorg-setxkbmap Modify keyboard mappings
+# xorg-xkbcomp
+xorg-xrandr Control display outputs
+arandr Control display outputs (GUI)
+xclip X clipboard interface
+xautolock X display lock system
+oblogout-blurlock Display lock
+# xorg-xauth
+# xorg-xrdb
+xflux Flux bluelight filter for X
+
+## xorg drivers
+xf86-input-libinput Generic X drivers
+xf86-video-intel Drivers for intel chips
+# xf86-input-synaptics
+# xf86-video-fbdev
+# xf86-video-vesa
+
+zsh-syntax-highlighting Highlight whever the typed command exists
+networkmanager-dmenu-git Control NetworkManager through rofi
+# farbfeld
+# par
+#python-pip Python package manager
+
+## building/c
+gcc C/C++ compiler
+# gdb
+
+## themes
+arc-gtk-theme Arc theme
+vibrancy-full-dark-blue Vibrancy icon theme
+## fonts
+ttf-emojione Emoji font
+
+## util
+bluez-utils bluetoothctl utility
+
+## compression
+zip Zip files
+unzip Unzip files
+rar Rar and unrar files
+
+# development
+## docker
+docker Docker daemon
+docker-compose Docker simplification
+
+## files
+jq JSON processor
+
+mongodb MongoDB database
+ngrok Open localhost to the outside
+
+## pulseaudio
+pulseaudio Pulseaudio server
+libpulse Pulseaudio client
+pulseaudio-alsa Alsa integration
+Pulseaudio-bluetooth Bluetooth integration
+pulsemixer Pulseaudio mixer
+
+# npm
+nodejs Javascript runtime
+npm Node.js package manager
+
+npm:dict-cc-cli Offline dict.cc
+#npm:tslide
+npm:mangareader-dl Manga downloader
+npm:fkill-cli Process killer
+
+npm:np npm release helper
+#npm:yo Sc.. tool
+#npm:generator-jneidel Personal yo generator
+npm:typescript Typescript compiler
+npm:webpack Javscript build tool
+npm:webpack-cli Webpack interface
+npm:fx JSON explorer
+
+npm:concurrently Run scripts in parallel
+npm:markdown-toc Create a md toc
+npm:nodemon Restart node command on changes
+npm:npm-name-cli Check if name is available for npm
+npm:browser-sync Reload browser on changes
+#npm:npm-check-updates
+#npm:updates?
+
+## eslint
+npm:eslint Javascript linter
+npm:prettier Code formatter
+npm:eslint_d Eslint script
+npm:eslint-config-xo xo eslint plugin
+npm:eslint-plugin-node node eslint plugin
+npm:eslint-plugin-unicorn unicorn eslint plugin
+eslint-config-xo-typescript Typescript eslint plugin
+@typescript-eslint/parser Typescript eslint parser
+@typescript-eslint/eslint-plugin Typescript eslint rules
+
+## music
+beets Automatic music tagger
+python-beautifulsoup4 beets plugin dependency
+python-requests beets plugin dependency
 kid3 Visual (mp3) tag editor
+mutagen-tools Cli tagging tools
+
+## wine
+wine Run windows applications
+wine-mono wine dependency
+
