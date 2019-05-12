@@ -1,7 +1,7 @@
 [user]
 	name = Jonathan Neidel
 	email = git@jneidel.com
-	signingkey = 7dfd16fa
+	signingkey = B29E6A7A7DFD16FA
 [core]
 	excludesfile = ~/.gitignore
 [alias]
@@ -10,3 +10,5 @@
   l = log --oneline --graph --decorate
   ref = reflog
 
+[commit]
+	gpgsign = true

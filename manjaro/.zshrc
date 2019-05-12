@@ -24,3 +24,4 @@ export KEYTIMEOUT=1
 source ~/.zsh/init.zsh;
 
 export ALT_BROWSER=chromium
+export GPG_TTY=$(tty)

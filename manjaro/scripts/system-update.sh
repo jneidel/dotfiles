@@ -21,7 +21,7 @@
 echo ":: updating system..."
 
 if [[ $+commands[yay] ]]; then
-  yay --noconfirm --noedit -Syyuu;
+  yay --noconfirm -Syyuu;
 else
   sudo pacman -Syyuu;
 fi
