@@ -1,6 +1,6 @@
 [user]
 	name = Jonathan Neidel
-	email = git@jneidel.com
+	email = jneidel@jneidel.com
 	signingkey = B29E6A7A7DFD16FA
 [core]
 	excludesfile = ~/.gitignore
