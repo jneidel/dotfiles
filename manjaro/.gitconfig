@@ -9,6 +9,7 @@
   b = branch
   l = log --oneline --graph --decorate
   ref = reflog
-
 [commit]
 	gpgsign = true
+  # How to setup commit signing:
+  # https://help.github.com/en/articles/managing-commit-signature-verification
