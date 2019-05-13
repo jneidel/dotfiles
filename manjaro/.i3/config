@@ -8,7 +8,7 @@ set $white #d0d0d0
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
-# set default desktop layout (default is tiling) <stacking|tabbed>
+# Set default desktop layout <stacking|tabbed|tiling>
 workspace_layout stacking
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
@@ -17,138 +17,108 @@ new_float normal
 
 # Hide borders
 hide_edge_borders none
-for_window [class="^.*"] border none # setting border none for all windows
+for_window [class="^.*"] border none
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# font xft:URWGothic-Book 20
-  font xft:yosemite-san-francisco 11
+# Font for window titles
+font xft:yosemite-san-francisco 11
 
-# Use Mouse+$mod to drag floating windows
-floating_modifier $mod
-
-# start a terminal
+# Start a terminal
 bindsym $mod+Return exec kitty
 
-# kill focused window
+# Kill focused window
 bindsym $mod+Shift+q kill
 
-# start program launcher
-# bindsym $mod+d exec --no-startup-id dmenu_recency
-  bindsym $mod+d exec ~/scripts/i3/rofi/rofi.sh
+# Start program launcher
+bindsym $mod+d exec ~/scripts/i3/rofi/rofi.sh
 
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
-
-################################################################################################
-## sound-section
-
-exec --no-startup-id volumeicon
-#bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-exec --no-startup-id "sleep 15; pulseaudio --start;"
+# Start audio mixer
 bindsym $mod+Ctrl+m exec kitty pulsemixer
 
-################################################################################################
-
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
-
-# Start Applications
+# Start applications
 bindsym $mod+F1 exec chromium
 bindsym $mod+F2 exec firefox-nightly
 bindsym $mod+F5 exec kitty --class calcurse calcurse
 bindsym $mod+F6 exec kitty ranger ~
 bindsym $mod+F8 exec kitty --class cmus cmus
 bindsym $mod+F9 exec keepassxc
-## connect to my servers
+# Connect to my servers
 bindsym $mod+F3 exec kitty --class mosh mosh k
 bindsym $mod+F4 exec kitty --class mosh uber
 # exec sh -c "keepassxc &" & - to start in bg and then kill shell
 # https://unix.stackexchange.com/a/302671
 
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b -f
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+# Take screenshot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 # bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+p exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
+# Volume control
 bindsym F1 exec ~/scripts/i3/volume/mute.sh
 bindsym F2 exec ~/scripts/i3/volume/set-vol.sh -5
 bindsym F3 exec ~/scripts/i3/volume/set-vol.sh +5
 
-bindsym XF86LaunchA exec ~/scripts/i3/cmus/play-pause.sh
-bindsym XF86Search exec ~/scripts/i3/cmus/previous.sh
-bindsym XF86Explorer exec ~/scripts/i3/cmus/next.sh
+# mpd control
+bindsym XF86LaunchA exec ~/scripts/mpd/mpcc toggle
+bindsym XF86Search exec ~/scripts/mpd/mpcc prev
+bindsym XF86Explorer exec ~/scripts/mpd/mpcc next
 
+# misc controls
 bindsym XF86Tools exec xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
 # XF86 keys: http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
-
 bindsym $mod+y exec ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
 bindsym $mod+v exec ~/scripts/open-clip-in-vlc
 bindsym $mod+o exec ~/scripts/open-clip-in-browser
 
-# change focus
+# Change window focus
 focus_follows_mouse no
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# move focused window
+# Move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# workspace back and forth (with/without active container)
+# Workspace back and forth
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
-# split orientation
-#bindsym $mod+c split h
-#bindsym $mod+v split v
+# Split orientation
 bindsym $mod+q split toggle
 
-# toggle fullscreen mode for the focused container
+# Toggle fullscreen mode for focused
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
+# Change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# toggle tiling / floating
+# Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
+# Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# toggle sticky
-bindsym $mod+Shift+s sticky toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# move the currently focused window to the scratchpad
+# Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
 
-#navigate workspaces next / previous
-bindsym $mod+Ctrl+Right workspace next
-bindsym $mod+Ctrl+Left workspace prev
+# Navigate workspaces
+bindsym $mod+Ctrl+j workspace next
+bindsym $mod+Ctrl+k workspace prev
+
+# toggle sticky
+# bindsym $mod+Shift+s sticky toggle
+# focus the parent container
+# bindsym $mod+a focus parent
 
 # Workspace names
-# to display names or symbols instead of plain workspace numbers you can use
-# something like: set $ws1 1:mail
-#                 set $ws2 2:
 set $ws1 1:$
 set $ws2 2:
 set $ws3 3
@@ -159,7 +129,7 @@ set $ws7 7
 set $ws8 8:♪
 set $ws9 9:K
 
-# switch to workspace
+# Switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -212,17 +182,10 @@ assign [class="YACReaderLibrary"] $ws3
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="mpv"] floating enable
 
-# switch to workspace with urgent window automatically
-# for_window [urgent=latest] focus
-
-# reload the configuration file
+# Reload the configuration file
 bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
-# exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
@@ -247,10 +210,10 @@ mode "$mode_system" {
 bindsym $mod+r mode "resize"
 mode "resize" {
   # These bindings trigger as soon as you enter the resize mode
-  bindsym k resize shrink height 5 px or 5 ppt
-  bindsym j resize grow height 5 px or 5 ppt
-  bindsym h resize grow width 5 px or 5 ppt
-  bindsym l resize shrink width 5 px or 5 ppt
+  bindsym k resize shrink height 2 px or 2 ppt
+  bindsym j resize grow height 2 px or 2 ppt
+  bindsym h resize grow width 2 px or 2 ppt
+  bindsym l resize shrink width 2 px or 2 ppt
 
   # exit resize mode: Enter or Escape
   bindsym Return mode "default"
@@ -264,33 +227,27 @@ bindsym $mod+ssharp exec --no-startup-id blurlock
 # Application Autostart
 exec kitty tmux new -s main
 exec firefox-nightly
-## desktop monitor
+## Desktop monitor
 exec --no-startup-id ~/scripts/conky/start
-## bluelight filter
+## Bluelight filter
 exec --no-startup-id xflux -k 5000 -l 52 -g 13
-## auto lock screen
+## Automatically lock screen
 exec --no-startup-id xautolock -time 15 -locker blurlock
-## wallpaper
+## Wallpaper
 exec --no-startup-id nitrogen --restore #; sleep 1; compton -b -f
-## network manager
+## Network manager
 exec --no-startup-id nm-applet
-## power manager
+## Power manager
 exec --no-startup-id xfce4-power-manager
-## torrent daemon
+## Torrent daemon
 exec --no-startup-id transmission-daemon -c ~/Downloads --encryption-preferred --paused
-## keyboard setup
-exec --no-startup-id xset r rate 185 100 # set keyboard delay at startup
-## system defaults
+## Adjust key repeat
+exec --no-startup-id xset r rate 185 100
+## i3 system defaults
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
-#exec --no-startup-id pamac-tray
-# exec --no-startup-id clipit
-# exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-
-#exec_always ~/scripts/i3/hud-menu/i3-appmenu-service.py
-#bindsym $mod+u exec ~/scripts/i3/hud-menu/i3-hud-menu.py
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -420,4 +377,3 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
