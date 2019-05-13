@@ -1,26 +1,32 @@
 #! /bin/bash
 
-if [ $1 = "--help" ] || [ $1 = "-h" ]; then
-  echo "$ vx <new-script-name>"
-  echo "Open new executable file in vim."
-  echo "Example: $ vx connect.sh"
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ vx <script-name>"
+  echo "Create a new executable file and open it in vim."
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: name of the new script"
+  echo ""
+  echo "Example:"
+  echo "$ vx connect.sh"
   exit
-elif [ -z $1 ]; then
+elif [[ -z $1 ]]; then
   echo "Missing parameter: script-name"
+  exit
 fi
 
 FILE=$1
 echo "#! /bin/bash
 
 if [[ \$1 = \"--help\" ]] || [[ \$1 = \"help\" ]]; then
-  echo \"$ $FILE\"
+  echo \"$ $FILE <>\"
   echo \"\"
   echo \"\"
   echo \"Parameters:\"
   echo \"  \\\$1: \"
   echo \"\"
   echo \"Example:\"
-  echo \"$ $FILE\"
+  echo \"  $ $FILE\"
   exit
 fi
 " >> $FILE

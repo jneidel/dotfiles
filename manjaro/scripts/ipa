@@ -1,5 +1,10 @@
 #! /bin/bash
 
+# Todo:
+# Fallback like
+# 192.168.172.0
+# if network unavailable
+
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ ipa"
   echo "Get current ip address"
