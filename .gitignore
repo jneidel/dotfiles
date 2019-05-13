@@ -12,4 +12,5 @@ personal.zsh
 */.vim/spell/*.add.spl
 
 */scripts/personal
+*/scripts/mpd/current-mpd-ip
 

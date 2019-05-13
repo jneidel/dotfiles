@@ -1,0 +1,35 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]] || [[ -z $1 ]]; then
+  echo "$ mpc-get <format>"
+  echo "Get different values from 'mpc current'"
+  echo "by using the --format options"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: format option(s)"
+  echo "    All options can be found on 'man mpc'"
+  echo "    as options for the --format flag."
+  echo ""
+  echo "    You can pass simple options without the % around them:"
+  echo "      artist, title, album, etc."
+  echo "    Or you can pass more complex combinations,"
+  echo "    as defined on the man page:"
+  echo "      \"%artist% - %title%\""
+  echo ""
+  echo "Examples:"
+  echo "  $ mpc-get artist"
+  echo "   -> A Tribe Called Quest"
+  echo "  $ mpc-get \"[[%artist% - ]%title%]|[%file%]\""
+  echo "   -> A Tribe Called Quest - Midnight"
+  exit
+fi
+
+if [[ $(echo "$1" | fgrep %) ]]; then
+  mpcc current -f "$1"
+else
+  mpcc current -f "%$1%"
+fi
+
+# Old implementations using status:
+# mpcc status -f "$1" | fgrep volume -v | fgrep "[" -v
+

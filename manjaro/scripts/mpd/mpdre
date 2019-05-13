@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ mpdre"
+  echo "Restart the current mpd session"
+  exit
+fi
+
+mpd --kill 2> /dev/null
+mpd
+

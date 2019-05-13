@@ -1,0 +1,36 @@
+#! /bin/bash
+
+# get the ip address from last update instead of the
+# ipa command to make sure it matches the mpd config
+# and read is 6x faster than ipa
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+IP=$(cat "$DIR/current-mpd-ip")
+
+PORT=5555
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ mpcc <command>"
+  echo "mpc command wrapper with the correct mpd config"
+  echo ""
+  echo "Connection params:"
+  echo "  -h $IP" 
+  echo "  -p $PORT" 
+  echo ""
+  echo "Common commands:"
+  echo "  current - current song info"
+  echo "  toggle  - toggle pause/play"
+  echo "  next    - next song"
+  echo "  prev    - previous song"
+  echo "  random  - toggle random"
+  echo "  repeat  - toggle repeat"
+  echo "  volume  - set volume"
+  echo ""
+  echo "See 'man mpc' for all commands"
+  echo ""
+  echo "Example:"
+  echo "  $ mpcc status"
+  exit
+fi
+
+mpc -h "$IP" -p "$PORT" "$@"
+
