@@ -2,6 +2,12 @@
 
 CD=~/.config/conky # ConfigDir
 
-conky -c $CD/conky.conf &&
-conky -c $CD/cmus.conf
+fkill conky
+conky -c $CD/conky.conf # &&
+
+# conky -c $CD/cmus.conf
+# Todo:
+# - adapt for mpd
+# - fix image
+# - get image from pi
 
