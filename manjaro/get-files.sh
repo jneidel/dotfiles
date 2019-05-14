@@ -59,3 +59,5 @@ cp ~/.config/bleachbit/bleachbit.ini $C/
 mkdir -p $D/.eslint
 cp ~/.eslint/* $D/.eslint/
 cp ~/.LS_COLORS $D
+mkdir -p $C/mpd
+cp ~/.config/mpd/mpd.conf $C/mpd/mpd.conf
