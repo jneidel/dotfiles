@@ -52,7 +52,7 @@ bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 # bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 
 # Volume control
-bindsym F1 exec ~/scripts/i3/volume/mute.sh
+# bindsym F1 exec ~/scripts/i3/volume/mute.sh
 bindsym F2 exec ~/scripts/i3/volume/set-vol.sh -5
 bindsym F3 exec ~/scripts/i3/volume/set-vol.sh +5
 
