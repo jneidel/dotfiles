@@ -89,3 +89,5 @@ alias letsplay="$B https://www.webtoons.com/en/romance/letsplay/list\?title_no\=
 ## Unused
 alias hdmi="xrandr --output HDMI1 --auto" # dublicate screen on connected hdmi
 
+## New
+alias discover="nmap -sP \"$(ip addr | grep brd | grep wlp | awk '{ print $4 }')/24\" | grep -v \"Host is up\""

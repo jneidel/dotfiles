@@ -30,7 +30,7 @@ if [[ -z $COMIC ]]; then {
   exit
 } fi
 
-NAME=$(format-comic-name.js "$COMIC")
+NAME=$(basename $(format-comic-name.js "$COMIC"))
 
 if [[ -z $DIRECTORY ]]; then
   echo "Moving comic to: "$NAME
