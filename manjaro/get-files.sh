@@ -62,3 +62,5 @@ cp ~/.LS_COLORS $D
 mkdir -p $C/mpd
 cp ~/.config/mpd/mpd.conf $C/mpd/mpd.conf
 cp ~/.Xresources $D
+mkdir -p $C/ncmpcpp
+cp ~/.config/ncmpcpp/config ~/.config/ncmpcpp/bindings $C/ncmpcpp

@@ -47,6 +47,7 @@ alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -
 alias vv="~/scripts/vv 250"
 alias vvv="~/scripts/vv 500"
 alias play="mplayer -ao pulse -really-quiet"
+alias n="ncmpcpps"
 
 ### gpg
 alias enc="gpg -e -r 7dfd16fa"
