@@ -5,6 +5,11 @@
 #     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 1
 #   To get the app descriptions:
 #     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 2-
+#
+# What commands to run:
+# no prefix - yay -S
+# npm - npm install -g
+# systemd - systemctl enable
 
 # gui
 keepassxc Password database
@@ -84,6 +89,7 @@ python-grip Reader markdown file with github styles
 ffsend-bin Firefox send client
 megacmd-bin MEGA.nz client
 mullvad-vpn Mullvad client
+systemd:mullvad-daemon Enable the mullvad daemon
 
 # system
 ## xorg tools
@@ -130,6 +136,13 @@ ttf-emojione Emoji font
 
 ## util
 bluez-utils bluetoothctl utility
+
+## power management
+# See: https://wiki.archlinux.org/index.php/TLP
+tlp Power management
+systemd:tlp Enable power management
+systemd:tlp-sleep Enable sleep power management
+ethtool Disable wake on lan
 
 ## compression
 zip Zip files
@@ -186,9 +199,9 @@ npm:eslint_d Eslint script
 npm:eslint-config-xo xo eslint plugin
 npm:eslint-plugin-node node eslint plugin
 npm:eslint-plugin-unicorn unicorn eslint plugin
-eslint-config-xo-typescript Typescript eslint plugin
-@typescript-eslint/parser Typescript eslint parser
-@typescript-eslint/eslint-plugin Typescript eslint rules
+npm:eslint-config-xo-typescript Typescript eslint plugin
+npm:@typescript-eslint/parser Typescript eslint parser
+npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 
 ## music
 beets Automatic music tagger
