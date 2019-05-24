@@ -1,0 +1,231 @@
+# polybar config
+
+# Based on: https://www.reddit.com/r/unixporn/comments/ahztal/modern_yellow_herbstluftwm/
+# Github: https://github.com/mojomastur/Dotfiles/tree/master/Modern_Yellow
+
+# Colors used:
+# 1c1c1c - grey
+# CF004B - magenta
+# 005fd7 - blue
+# ffff00 - yellow
+
+## Bars
+[bar/main]
+bottom = true
+tray-position = none # disable system tray
+
+# Background colors
+background = #1c1c1c
+foreground = #ffffff
+
+# Padding
+border-bottom-size = 4
+border-top-size = 4
+border-color = #1c1c1c
+
+# Size
+height = 20
+font-0 = FuraCode Nerd Font Mono:style=medium:size=13;3
+# to avoid line below/above the bar fiddle with the height (above)
+# and the size (3 in 13;3) (below)
+
+## Order
+modules-left = left2 left1 workspaces left1
+modules-right = right1 cpu diskspace battery right1 volume date right1 inet-off inet-on-vpn-off inet-on-vpn-on right1 right2
+
+## Dashes
+[module/right1]
+type = custom/text
+content = ""
+content-foreground = #CF004B
+content-background = #1c1c1c
+label-font = 1
+
+[module/left1]
+type = custom/text
+content = ""
+content-foreground = #CF004B
+content-background = #1c1c1c
+
+[module/right2]
+type = custom/text
+content = ""
+content-foreground = #CF004B
+content-background = #1c1c1c
+
+[module/left2]
+type = custom/text
+content = ""
+content-foreground = #CF004B
+content-background = #1c1c1c
+
+## Workspaces
+[module/workspaces]
+type = internal/i3
+
+pin-workspaces = true # multi monitor
+enable-click = false
+enable-scroll = false
+
+strip-wsnumbers = true
+index-sort = true
+
+label-focused = " %name% "
+label-focused-background = #ffff00
+label-focused-foreground = #1c1c1c
+
+label-unfocused = " %name% "
+label-unfocused-background = #005fd7
+label-unfocused-foreground = #1c1c1c
+
+label-visable = " %name% "
+label-visible-background = #005fd7
+label-visable-foreground = #1c1c1c
+
+label-urgent = " %name% "
+label-urgent-background = #cf004b
+label-urgent-foreground = #1c1c1c
+
+## Diskspace
+[module/diskspace]
+type = custom/script
+exec = ~/scripts/diskspace
+interval = 30
+
+format = "  <label> "
+label = %output%
+format-background = #005fd7
+format-foreground = #1c1c1c
+
+## CPU usage and load average
+[module/cpu]
+type = custom/script
+exec = echo "$(~/scripts/status/cpu-usage)  $(~/scripts/status/load-average)"
+interval = 3
+
+label =" %output% "
+format-background = #005fd7
+format-foreground = #1c1c1c
+
+## Wifi/Ethernet
+[module/wlan]
+# TODO: replace with custom script,
+# which prints wifi if avail
+# or ether if avail
+type = internal/network
+interface = wlp3s0
+interval = 3
+
+format-connected = " on "
+format-connected-background = #005fd7
+format-connected-foreground = #1c1c1c
+
+format-disconnected = " off "
+format-disconnected-background = #005fd7
+format-disconnected-foreground = #1c1c1c
+
+## Date and time
+[module/date]
+type = internal/date
+interval = 15
+
+date = " %a %e. %b"
+time = "%H:%M"
+label = "%date% %time% "
+format = <label>
+format-background = #CF004B
+format-foreground = #1c1c1c
+
+## Volume bar
+[module/volume]
+type = internal/pulseaudio
+interval = 1
+
+format-volume = " <label-volume><bar-volume>"
+# keep empty to overwrite default
+label-volume =
+label-volume-background = #ffff00
+label-volume-foreground = #1c1c1c
+
+format-muted= "<label-muted>"
+label-muted = " 婢 mute "
+label-muted-background = #CF004B
+label-muted-foreground = #1c1c1c
+
+bar-volume-width = 9
+bar-volume-indicator = 
+bar-volume-indicator-foreground = #ffff00
+
+bar-volume-fill = 
+bar-volume-fill-foreground = #ffff00
+
+bar-volume-empty = 
+bar-volume-empty-foreground = #CF004B
+
+## Battery charge
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+
+full-at = 100
+format-full = " <ramp-capacity> 100% "
+format-full-background = #005fd7
+format-full-foreground = #1c1c1c
+
+format-charging = "  <ramp-capacity> <label-charging> "
+format-charging-background = #005fd7
+format-charging-foreground = #1c1c1c
+
+format-discharging = " <ramp-capacity> <label-discharging> "
+format-discharging-background = #005fd7
+format-discharging-foreground = #1c1c1c
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+## Internet disconnected
+[module/inet-off]
+type = custom/script
+exec-if = ~/scripts/status/wifi-disconnected
+exec = echo off
+interval = 2
+
+format = " <label> "
+label = "直 no wifi"
+
+format-background = #005fd7
+format-foreground = #1c1c1c
+
+## Internet connected, vpn disconnected
+[module/inet-on-vpn-off]
+type = custom/script
+exec-if = ~/scripts/status/wifi-connected-mullvad-disconnected
+exec = echo off
+interval = 2
+
+format = " <label> "
+label = "直 no vpn"
+
+format-background = #ffff00
+format-foreground = #1c1c1c
+
+## Internet connected, vpn connected
+[module/inet-on-vpn-on]
+type = custom/script
+exec-if = ~/scripts/status/wifi-connected-mullvad-connected
+exec = echo on
+interval = 2
+
+format = " <label> "
+label = "直 on"
+
+format-background = #CF004B
+format-foreground = #1c1c1c
+
+[settings]
+wm-name = i3
+screenchange-reload = false
