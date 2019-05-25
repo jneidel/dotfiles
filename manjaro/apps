@@ -110,6 +110,7 @@ oblogout-blurlock Display lock
 # xorg-xauth
 # xorg-xrdb
 xflux Flux bluelight filter for X
+sxhkd Set hotkey mappings
 
 ## xorg drivers
 xf86-input-libinput Generic X drivers
