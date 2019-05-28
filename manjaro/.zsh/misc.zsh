@@ -34,7 +34,7 @@ alias ds="du -sh" # d[ir]s[ize]
 alias disksize="df -h"
 alias diskspace="df -h"
 
-mdc() { # MkDirCd
+mdc() { # m[k]d[ir]c[d]
   mkdir "$1";
   cd "$1";
 }

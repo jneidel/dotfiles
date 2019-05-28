@@ -55,6 +55,8 @@
 
 - How to use pacman (archs package manager): [Using Pacman on Arch Linux: Everything you need to know](https://www.youtube.com/watch?v=-dEuXTMzRKs)
 - Basic arch install: [Full Arch Linux Install (SAVAGE Edition!)](https://www.youtube.com/watch?v=4PBqpX0_UOc) [After a Minimal Linux Install: Graphical Envionment and Users](https://www.youtube.com/watch?v=nSHOb8YU9Gw)
+- Portable keyboard bindings: [Binding Keys *Universally* in Linux](https://www.youtube.com/watch?v=2ClckQzJTlk)
+- dwm intro: [Suckless's dwm: So easy even a caveman could do it!](https://www.youtube.com/watch?v=unqsQJaECv0)
 
 #### Vim
 

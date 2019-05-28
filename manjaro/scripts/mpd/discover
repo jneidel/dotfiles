@@ -1,0 +1,21 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ discover <>"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "  $ discover"
+  exit
+fi
+
+
+IP=$(ipa | tr -t "\n" " " | cut -d " " -f1)
+
+nmap -sP "$IP/24" | grep -v "Host is up"
+

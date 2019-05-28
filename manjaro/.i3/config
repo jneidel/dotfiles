@@ -83,8 +83,8 @@ bindsym $mod+Shift+l move right
 
 # Workspace back and forth
 workspace_auto_back_and_forth yes
-bindsym $mod+b workspace back_and_forth
-bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+bindsym $mod+a workspace back_and_forth
+bindsym $mod+Shift+a move container to workspace back_and_forth; workspace back_and_forth
 
 # Split orientation
 bindsym $mod+q split toggle
@@ -101,17 +101,6 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 # Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# Move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
-
-# Navigate workspaces
-bindsym $mod+Ctrl+j workspace next
-bindsym $mod+Ctrl+k workspace prev
 
 # toggle sticky
 # bindsym $mod+Shift+s sticky toggle
@@ -177,6 +166,7 @@ assign [class="cmus"] $ws8
 assign [class="mosh"] $ws3
 assign [class="calcurse"] $ws3
 assign [class="YACReaderLibrary"] $ws3
+assign [class="Steam"] $ws3
 
 # Open specific applications in floating mode
 for_window [class="Nitrogen"] floating enable sticky enable border normal
