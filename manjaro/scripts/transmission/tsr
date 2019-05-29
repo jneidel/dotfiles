@@ -1,0 +1,19 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ tsr <transmission-remote command>"
+  echo "transmission-remote wrapper"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "  $ tsr"
+  exit
+fi
+
+# redirect stderr to stdout and redirect stdout to /dev/null
+[ "$(transmission-remote -l 2>&1 >/dev/null | grep "Couldn't connect to server" )" ] && ~/scripts/transmission/transmission-startup && sleep 7
+
+transmission-remote "${@:1}"
+

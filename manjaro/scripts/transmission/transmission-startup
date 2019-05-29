@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ transmission-startup"
+  echo "Start the transmission-daemon with my prefered flags"
+  exit
+fi
+
+echo "Starting the transmission daemon"
+transmission-daemon -c ~/Downloads --encryption-preferred --paused
+
