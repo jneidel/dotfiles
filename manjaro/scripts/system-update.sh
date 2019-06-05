@@ -20,8 +20,8 @@
 
 echo ":: updating system..."
 
-if [[ $+commands[yay] ]]; then
-  yay --noconfirm -Syyuu;
+if [[ $+commands[packer-aur] ]]; then
+  packer-aur --noconfirm --noedit -Syyuu;
 else
   sudo pacman -Syyuu;
 fi

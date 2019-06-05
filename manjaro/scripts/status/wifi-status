@@ -1,0 +1,4 @@
+#! /bin/sh
+
+[ -z "$(ip neigh)" ] && echo 0 || echo 1
+

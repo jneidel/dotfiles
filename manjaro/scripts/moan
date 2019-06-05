@@ -1,7 +1,7 @@
 #! /bin/bash
 
 DEFAULT_DEVICE=1
-DEFAULT_MOUNT_ROOT=/media
+DEFAULT_MOUNT_ROOT=/mnt
 DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/phone
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
@@ -27,7 +27,7 @@ fi
 # https://github.com/gavinbeatty/getopt-enhanced
 
 simple-mtpfs --device $DEFAULT_DEVICE $DEFAULT_LOCATION
-echo "mounted device $DEFAULT_DEVICE at $DEFAULT_LOCATION
+echo "mounted device $DEFAULT_DEVICE at $DEFAULT_LOCATION"
 
 cd $DEFAULT_LOCATION
 

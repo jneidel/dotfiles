@@ -6,7 +6,5 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-IP=$(ifconfig | grep 192 | awk '{ print $2 }')
-
-ncmpcpp -h $IP -p 5555
+ncmpcpp -h "192.168.178.111" -p 5555
 

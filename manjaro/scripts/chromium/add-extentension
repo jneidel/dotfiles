@@ -1,0 +1,33 @@
+#! /bin/bash
+# Docs: https://ungoogled-software.github.io/ungoogled-chromium-wiki/faq#can-i-install-extensions-or-themes-from-the-chrome-webstore
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ add-extentension"
+  echo "Add a extension to ungoogled chromium"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: extension id from the chrome webstore"
+  echo ""
+  echo "Example:"
+  echo "$ add-extentension gcbommkclmclpchllfjekcdonpmejbdp"
+  exit
+fi
+
+ID=$1
+if [[ -z $ID || ${#ID} -ne 32 ]]; then
+  echo "Pleas pass a correct extension id"
+  exit
+fi
+VERSION=$(chromium --version | awk '{ print $2 }' | cut -d . -f -2)
+
+SHARE_DIR=/usr/share/chromium
+#INSTALL_DIR=$SHARE_DIR/$ID
+INSTALL_FILE=$SHARE_DIR/$ID.crx
+#sudo mkdir -p $INSTALL_DIR
+
+sudo curl -L "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=$VERSION&x=id%3D$ID%26installsource%3Dondemand%26uc" --output $INSTALL_FILE
+
+sudo sh -c "echo $ID >> /etc/chromium-extension"
+
+#sudo sh -c "printf '{\n  \"external_crx\": \"$INSTALL_FILE\",\n  \"external_version\": \"1.0.0\"\n}' > $SHARE_DIR/extensions/$ID.json"
+

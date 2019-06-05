@@ -23,5 +23,35 @@ export KEYTIMEOUT=1
 # Import aliases
 source ~/.zsh/init.zsh;
 
+## Language
+export LANG=en_US.UTF-8
+# tmux needs to know the encoding: https://github.com/wernight/powerline-web-fonts/issues/8#issuecomment-353081869
+export LC_CTYPE=en_US.UTF-8
+
+## Paths
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -f ~/scripts/scripts-path-filter-pattern | tr '\n' ':')$PATH"
+export CDPATH=.:~:~/code:~/Downloads:~/ct
+
+## Applications
+export EDITOR=vim
+export PAGER=less
+export BROWSER=firefox-nightly
+export B=$BROWSER
 export ALT_BROWSER=chromium
-export GPG_TTY=$(tty)
+
+export MPD_PORT=5555
+
+export GTK_THEME=Arc
+
+### Application options
+export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
+
+## User specific
+export KEYID=B29E6A7A7DFD16FA # GPG keyid
+
+# start xorg on first login into the tty
+# runs commands in ~/.xinitrc
+if [[ "$(tty)" = "/dev/tty1" ]]; then
+  pgrep i3 || startx
+fi

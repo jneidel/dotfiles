@@ -1,0 +1,38 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ battery"
+  echo "Print current battery charge"
+  exit
+fi
+
+PERCENT=$(python -c "print($(cat /sys/class/power_supply/BAT0/charge_now)/$(cat /sys/class/power_supply/BAT0/charge_full)*100)" | cut -d "." -f1)
+PERCENT_ICON=$(
+  if [ "$PERCENT" -gt 90 ] && [ "$PERCENT" -le 100 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 80 ] && [ "$PERCENT" -le 90 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 70 ] && [ "$PERCENT" -le 80 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 60 ] && [ "$PERCENT" -le 70 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 50 ] && [ "$PERCENT" -le 60 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 40 ] && [ "$PERCENT" -le 50 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 30 ] && [ "$PERCENT" -le 40 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 20 ] && [ "$PERCENT" -le 30 ]; then
+      echo " "
+  elif [ "$PERCENT" -gt 10 ] && [ "$PERCENT" -le 20 ]; then
+      echo " "
+  elif [ "$PERCENT" -ge 0 ] && [ "$PERCENT" -le 10 ]; then
+      echo " "
+  fi
+)
+
+IS_CHARGING=$(cat /sys/class/power_supply/ADP1/online)
+CHARGING_ICON=$([ "$IS_CHARGING" -eq 1 ] && echo "")
+
+echo "$CHARGING_ICON$PERCENT_ICON$PERCENT%"
+

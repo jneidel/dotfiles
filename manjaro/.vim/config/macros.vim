@@ -34,8 +34,8 @@ autocmd filetype javascript,typescript inoremap ,t test( "", () => {<Enter>const
 autocmd filetype typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi
 
 " Bash
-autocmd filetype bash,shell,zsh inoremap ,f function<Space><Space>{<Enter><++><Enter>}<Esc>02kf a
-autocmd filetype bash,shell,zsh inoremap ,o {<Enter>}<Esc>O
+autocmd filetype bash,shell,zsh,sh inoremap ,f function<Space><Space>{<Enter><++><Enter>}<Esc>02kf a
+autocmd filetype bash,shell,zsh,sh inoremap ,o {<Enter>}<Esc>O
 
 " JSON
 autocmd filetype json inoremap ,o {<Enter>}<Esc>O

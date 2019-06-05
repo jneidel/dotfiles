@@ -27,8 +27,12 @@ LOCATION="$DEFAULT_MOUNT_ROOT/$2"
 if [[ ! -z $2 && -d $LOCATION ]]; then
   sudo mount -o nonempty $VOLUME "$LOCATION"
   echo "mounted $VOLUME to $LOCATION"
+
+  cd "$LOCATION"
 else
   sudo mount -o nonempty $VOLUME $DEFAULT_LOCATION
   echo "mounted $VOLUME to $DEFAULT_LOCATION"
+
+  cd "$DEFAULT_LOCATION"
 fi
 

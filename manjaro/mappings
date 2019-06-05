@@ -1,0 +1,11 @@
+[polybar]
+.config/polybar/config
+
+[vim]
+.vimrc
+create .vim/swap
+.vim/backup
+.vim/tmp
+create .vim/bundle
+.vim/view
+.vim/spell

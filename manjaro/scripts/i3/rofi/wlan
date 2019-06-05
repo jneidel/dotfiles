@@ -1,0 +1,6 @@
+#! /bin/bash
+# Wrapper for networkmanager_dmenu
+# From the package: networkmanager-dmenu-git
+
+networkmanager_dmenu
+

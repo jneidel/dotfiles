@@ -1,0 +1,18 @@
+#!\bin\sh
+# i3 panel config
+
+panel_fifo="/tmp/i3_lemonbar_${USER}"
+geometry="1440x22"
+font="FuraCode Nerd Font Mono-14"
+
+# color definitions
+col_main="#005fd7" # blue
+col_sec="#cf004b" # magenta
+col_active="#ffff00" # yellow
+col_back="#1c1c1c" # black
+
+# seperators
+sep_right=""
+sep_left=""
+sep_right_rev=""
+sep_left_rev=""

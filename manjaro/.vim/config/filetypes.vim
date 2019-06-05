@@ -14,6 +14,9 @@ autocmd BufRead,BufNewFile ~/.calcurse/notes* setfiletype markdown
 " JSON syntax for eslint configs
 autocmd BufRead *.eslintrc* ~/.eslint/* setfiletype json
 
+" Conky config
+au BufRead ~/scripts/status/status-config setfiletype conkyrc
+
 " Spellchecking for Markdown files
 au Filetype markdown setlocal spell spelllang=en_us,de
 " Wrap text at 80 characters

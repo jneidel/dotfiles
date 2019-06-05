@@ -11,3 +11,5 @@ au BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 " Regenerate eslint configs on save
 au BufWritePost ~/.eslint/*.json !~/.eslint/generate-eslint-configs.js
 
+au BufWritePost ~/code/dwm/* !make -C ~/code/dwm
+

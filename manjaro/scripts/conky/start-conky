@@ -1,0 +1,7 @@
+#! /bin/bash
+
+CD=~/.config/conky # ConfigDir
+
+conky -c $CD/conky.conf &&
+conky -c $CD/cmus.conf
+
