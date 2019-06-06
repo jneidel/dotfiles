@@ -8,7 +8,7 @@ alias color="gcolor2"
 
 ### download
 alias manga="mangareader-dl --debug"
-alias mangaup="tsp manga-update"
+alias mangaup="manga-update &"
 alias mangala="manga update check"
 alias comic="getcomics-dl"
 alias comicup="~/code/getcomics-dl/bin/new.js"
@@ -27,7 +27,7 @@ function dict {
 }
 alias tree="alder --depth 3" # print filetree, nig @aweary/alder
 alias flux="xflux -l 52 -g 13" # bluelight filter
-alias wifipass="npx wifi-password-cli" # print wifi pass
+alias wifipass="wifi-pass" # print wifi password
 alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
@@ -40,6 +40,7 @@ alias q="podqueue"
 #alias yt="" set in ~/scripts/personal/yt
 alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"
+alias yt="newsboat -u ~/.newsboat/urls-youtube -c ~/.newsboat/cache-youtube.db --quiet && clear"
 alias nbd="podboat --autodownload"
 alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 -d ~/tmp/nb-log && clear"
 
@@ -47,6 +48,8 @@ alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -
 alias vv="~/scripts/vv 250"
 alias vvv="~/scripts/vv 500"
 alias play="mplayer -ao pulse -really-quiet"
+alias n="ncmpcpps"
+alias mpvo="mpv --profile=overlay"
 
 ### gpg
 alias enc="gpg -e -r 7dfd16fa"

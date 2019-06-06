@@ -16,6 +16,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # installed with pacman: zsh-syntax-highlighting[-git]
 
 bindkey -v # shell vim mode (default emacs)
+bindkey "^R" history-incremental-pattern-search-backward # history search
 export KEYTIMEOUT=1
 
 #[[ -f $HOME/.LS_COLORS ]] && eval "`dircolors -b $HOME/.LS_COLORS`"

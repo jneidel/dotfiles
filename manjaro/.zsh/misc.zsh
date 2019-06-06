@@ -54,6 +54,18 @@ alias urldecode='node -e "console.log( decodeURIComponent( process.argv[1] ) )"'
 alias randomnum="shuf -n 1 -i" # As range: 1-100
 
 ## Globals (can be accessed everywhere in a command)
+expand-global-alias() {
+  # src: https://www.youtube.com/watch?v=WTTIGjZAMGg
+  # src: https://github.com/gotbletu/shownotes/blob/master/zsh_global_alias_expansion.md
+  if [[ $LBUFFER =~ '[A-Z0-9]+$' ]]; then
+    zle _expand_alias
+    zle expand-word
+  fi
+  zle self-insert
+}
+zle -N expand-global-alias
+bindkey " " expand-global-alias
+
 ### Readers
 alias -g L="| less"         # open in reader
 alias -g H="| head"         # print first 10 lines

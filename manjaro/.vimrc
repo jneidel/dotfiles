@@ -79,6 +79,9 @@ set smartcase
 " remove search highlighting, deselect/hide matches
 map <leader><space> :nohls<Enter>
 
+" number of lines visable while scrolling (in the scroll direction)
+set scrolloff=6
+
 "## Backup/Swap files
 set backup
 set backupdir=~/.vim/backup
