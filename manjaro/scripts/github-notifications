@@ -7,7 +7,9 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo ""
   echo "Parameters:"
   echo "  \$1: Username and access token."
-  echo "  Create a new token in 'github>settings>developer settings' with only notification rights."
+  echo "    Create a new token in"
+  echo "      'github>settings>developer settings'"
+  echo "    with only notification rights."
   echo "    Format: 'username:token'"
   echo ""
   echo "Dependencies:"
@@ -17,6 +19,11 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ github-notifications jneidel:mytoken"
   exit
 fi
+
+[ -z "$1" ] && {
+  echo "Requires 'username:token' as a parameter"
+  exit
+}
 
 curl -sS -u "$1" https://api.github.com/notifications | jq length
 
