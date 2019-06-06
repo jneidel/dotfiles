@@ -1,0 +1,10 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ sync-music"
+  echo "Sync ~/music with /dev/sdb mounted on /media/usb"
+  exit
+fi
+
+sudo rsync -avr --delete ~/music/ /media/usb
+

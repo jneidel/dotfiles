@@ -1,10 +1,13 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ repo"
   echo "Open github repository of current npm package in $BROWSER"
   exit
 fi
 
-$BROWSER $(cat package.json | jq ".repository" | sed -e 's/"//g' | awk '{ printf "https://github.com/"$1 }')
+[ -e "package.json" ] \
+  && $BROWSER $(jq ".repository" < package.json | sed -e 's/"//g' | awk '{ printf "https://github.com/"$1 }') \
+  || echo package.json does not exist in this directory
+
 

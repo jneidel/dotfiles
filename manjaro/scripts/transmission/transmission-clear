@@ -6,4 +6,8 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-transmission-remote -l | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} 100% | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} Done | awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r
+transmission-remote -l | grep 100% | grep Done | awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r
+
+echo "Killing transmission-daemon"
+fkill transmission-da
+

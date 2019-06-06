@@ -2,6 +2,8 @@
 
 DEFAULT_MOUNT_ROOT=/media
 DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/usb
+DEFAULT_CMD="sudo mount"
+#DEFAULT_CMD="sudo mount -o nonempty"
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ mo"
@@ -25,12 +27,12 @@ VOLUME="/dev/sd$VOLUME_ID"
 
 LOCATION="$DEFAULT_MOUNT_ROOT/$2"
 if [[ ! -z $2 && -d $LOCATION ]]; then
-  sudo mount -o nonempty $VOLUME "$LOCATION"
+  $DEFAULT_CMD $VOLUME "$LOCATION"
   echo "mounted $VOLUME to $LOCATION"
 
   cd "$LOCATION"
 else
-  sudo mount -o nonempty $VOLUME $DEFAULT_LOCATION
+  $DEFAULT_CMD $VOLUME $DEFAULT_LOCATION
   echo "mounted $VOLUME to $DEFAULT_LOCATION"
 
   cd "$DEFAULT_LOCATION"

@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+  echo "$ setup-keys"
+  echo "Setup keyboard repeat and capslock remap for usb keyboard"
+  exit
+fi
+
+xset r rate 185 100
+xmodmap .Xmodmap
