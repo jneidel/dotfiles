@@ -6,6 +6,8 @@
 [zsh]
 .zshrc
 .zsh
+.oh-my-zsh/themes/cobalt2.zsh-theme
+.oh-my-zsh/oh-my-zsh.sh
 
 [vim]
 .vimrc
