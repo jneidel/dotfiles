@@ -14,8 +14,6 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-[ ! -z $DRY ] && echo DRYRUN
-
 CATEGORY=""
 function install-files {
   IFS=$'\n'
@@ -47,9 +45,12 @@ function install-files {
 
     # commands
     CMD=$(echo "$IN" | cut -d " " -f1)
+    REST=$(echo "$IN" | cut -d" " -f2-)
     case $CMD in
       create)
-        create-dir "$(echo "$IN" | cut -d" " -f2-)";;
+        create-dir "$DIR/$HOME";;
+      clean)
+        copy-dir "$DIR/$REST" "$HOME/$REST";; # don't clean local
       *)
         echo "skipped:      $IN"
     esac

@@ -45,9 +45,12 @@ function get-files {
 
     # commands
     CMD=$(echo "$IN" | cut -d " " -f1)
+    REST=$(echo "$IN" | cut -d" " -f2-)
     case $CMD in
       create)
-        create-dir "$(echo "$IN" | cut -d" " -f2-)";;
+        create-dir "$DIR/$REST";;
+      clean)
+        clean-copy-dir "$HOME/$REST" "$DIR/$REST";;
       *)
         echo "skipped:      $IN"
     esac

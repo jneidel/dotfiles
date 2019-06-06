@@ -7,6 +7,8 @@ IN_USE="$DIR/used-apps"
 IN_USE_TMP=/tmp/used-apps
 sed -r "s/^(.*)$/^\1$/" $IN_USE > $IN_USE_TMP
 
+[ ! -z $DRY ] && echo DRYRUN
+
 function copy-dir {
   [ -z $DRY ] && mkdir -p $2
   [ -z $DRY ] && cp -r $1/* $2
@@ -21,5 +23,10 @@ function copy-file {
 function create-dir {
   [ -z $DRY ] && mkdir -p "$DIR/$1"
   echo "create dir:  $1"
+}
+
+function clean-copy-dir {
+  [ -z $DRY ] && rm -r $2
+  copy-dir "$1" "$2"
 }
 

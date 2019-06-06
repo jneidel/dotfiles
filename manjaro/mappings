@@ -1,11 +1,131 @@
-[polybar]
-.config/polybar/config
+# config mappings
+# todo: handle git clone
+# todo: handle /etc
+
+## necessities
+[zsh]
+.zshrc
+.zsh
 
 [vim]
 .vimrc
-create .vim/swap
-.vim/backup
-.vim/tmp
-create .vim/bundle
-.vim/view
+.vim/config
+.vim/autoload
+.vim/colors
 .vim/spell
+create .vim/swap
+create .vim/backup
+create .vim/tmp
+create .vim/bundle
+create .vim/view
+
+[tmux]
+.tmux.conf
+
+[scripts]
+clean scripts
+
+## system
+### terminal
+[kitty]
+.config/kitty
+
+[terminator]
+.config/terminator/config
+
+### window manager
+[i3]
+.i3
+
+### status bar
+[i3status]
+.i3status.conf
+
+[polybar]
+.config/polybar/config
+
+### Xorg
+[xinit]
+.xinit
+
+[xmodmap]
+.Xmodmap
+
+[xresources]
+.Xresources
+
+### sound
+[pulseaudio]
+.config/pulse/default.pa
+
+[alsa]
+.asoundrc
+
+### monitor
+[conky]
+.config/conky/conky.conf
+.config/conky/cmus.conf
+
+[htop]
+.config/htop/htoprc
+
+[nitrogen]
+.config/nitrogen/bg-saved.cfg
+.config/nitrogen/nitrogen.cfg
+
+### network
+[networkmanager-dmenu]
+.config/networkmanager-dmenu
+
+### cleanup
+[bleachbit]
+.config/bleachbit.ini
+
+## apps
+### development
+[git]
+.gitconfig
+.gitignore
+
+#### node
+[eslint]
+.eslint
+.eslintrc
+.eslintrc-ts
+
+[npm]
+.npmrc
+
+[zeal]
+.config/Zeal/Zeal.conf
+
+### music
+[mpd]
+.config/mpd/mpd.conf
+
+[ncmpcpp]
+.config/ncmpcpp/bindings
+.config/ncmpcpp/config
+
+[cmus]
+.cmus/cmus.theme
+.cmus/rc
+
+[beets]
+.config/beets/config.yaml
+
+### orga
+[calcurse]
+.calcurse/conf
+.calcurse/keys
+
+[taskell]
+.taskell
+
+### rss
+[newsboat]
+.newsboat/config
+
+### torrents
+[transmission]
+.config/transmission-daemon/settings.json
