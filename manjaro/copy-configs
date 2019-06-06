@@ -1,0 +1,25 @@
+#! /bin/sh
+# shared environment and functions
+# for import-configs/install-configs
+
+MAPPINGS="$DIR/mappings"
+IN_USE="$DIR/used-apps"
+IN_USE_TMP=/tmp/used-apps
+sed -r "s/^(.*)$/^\1$/" $IN_USE > $IN_USE_TMP
+
+function copy-dir {
+  [ -z $DRY ] && mkdir -p $2
+  [ -z $DRY ] && cp -r $1/* $2
+  echo "copy dir:    $(echo $1 | cut -d "/" -f 4-)"
+}
+
+function copy-file {
+  [ -z $DRY ] && cp $1 $2
+  echo "copy file:   $(echo $1 | cut -d "/" -f 4-)"
+}
+
+function create-dir {
+  [ -z $DRY ] && mkdir -p "$DIR/$1"
+  echo "create dir:  $1"
+}
+

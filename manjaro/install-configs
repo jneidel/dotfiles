@@ -1,0 +1,62 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# blank to run normally, anything to dryrun
+DRY=true
+
+source $DIR/copy-configs
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ install-configs"
+  echo "Copy the dotfiles into the local locations"
+  echo "Uses the mapping/commands from ./mappings"
+  exit
+fi
+
+[ ! -z $DRY ] && echo DRYRUN
+
+CATEGORY=""
+function install-files {
+  IFS=$'\n'
+  for IN in $(cat /dev/stdin); do
+    # categories
+    [ ${IN:0:1} = "[" ] && {
+      IN=${IN:1:-1} # strip []
+      CATEGORY=$IN 
+      continue
+    }
+
+    # category not in use
+    [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
+
+    LOCAL="$HOME/$IN"
+    REPO="$DIR/$IN"
+
+    # directories
+    [ -d "$LOCAL" ] && {
+      copy-dir $REPO $LOCAL
+      continue
+    }
+
+    # files
+    [ -f "$LOCAL" ] && {
+      copy-file $REPO $LOCAL
+      continue
+    }
+
+    # commands
+    CMD=$(echo "$IN" | cut -d " " -f1)
+    case $CMD in
+      create)
+        create-dir "$(echo "$IN" | cut -d" " -f2-)";;
+      *)
+        echo "skipped:      $IN"
+    esac
+  done
+}
+
+cat $MAPPINGS |
+  grep -v "^#" |
+  grep -v "^\s*$" |
+  install-files
