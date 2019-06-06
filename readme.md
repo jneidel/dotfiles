@@ -12,7 +12,6 @@
   * [Terminal](#terminal)
   * [Tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
   * [Vim (TUI editor)](#vim-tui-editor)
-  * [Visual Studio Code (GUI editor)](#visual-studio-code-gui-editor)
   * [Eslint (js linter)](#eslint-js-linter)
   * [Git (version control)](#git-version-control)
 - [Apps](#apps)
@@ -20,6 +19,7 @@
   * [Browser Extensions](#browser-extensions)
   * [Android](#android)
   * [Music setup](#music-setup)
+- [OSX](#osx)
 - [Related](#related)
 
 <!-- tocstop -->
@@ -32,13 +32,12 @@
 
 I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
-View zsh config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.zshrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) (change the `User specific` section of this config) - `~/.zshrc`
+View zsh config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) (change the `User specific` section of this config) - `~/.zshrc`
 
 [View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) (I removed everything uneccessary to me, as it slowed me down on every new shell instance) - `~/.oh-my-zsh/oh-my-zsh.sh`
 
 View aliases:
 - [manjaro](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/init.zsh) (this file links to all other alias files, which can be found in the same dir) - `~/.zsh/init.zsh`
-- [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/aliases.zsh) - `~/.oh-my-zsh/custom/aliases.zsh`
 
 **Zsh theme:**
 
@@ -64,58 +63,28 @@ Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users
 
 ### Terminal
 
-**Linux**
-
 [View](manjaro/readme.md#kitty-terminal) Kitty notes
-
-**OSX:**
-
-[View](osx/readme.md#iterm2-terminal) iTerm2 notes
 
 ### Tmux (terminal mutiplexer)
 
 Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-View tmux config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux.conf), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.tmux.conf) - `~/.tmux.conf`
+View tmux config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.tmux.conf) - `~/.tmux.conf`
 
 **Scripts:**
 
-View scripts: [manjaro](manjaro/.tmux), [osx](osx/.tmux) - `~/.tmux/`
+View scripts: [manjaro](manjaro/.tmux) - `~/.tmux/`
 
 - [cmus](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/cmus-current-track) - get current cmus track
 - [mullvad](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/mullvad-running) - check if mullvad is running
-- [battery](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/battery) (osx) - get osx battery,  adapted from [richoH](https://github.com/richoH/dotfiles/blob/master/bin/battery)
-- [itunes](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.tmux/itunes) (osx - get current itunes track,  adapted from [erikw](https://github.com/erikw/tmux-powerline/blob/master/segments/np_itunes.script)
 
 ### Vim (TUI editor)
 
-View vim config: [osx](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/.vimrc), [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
+View vim config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
 
 [View plugins](vim.md)
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
-
-### Visual Studio Code (GUI editor)
-
-[View vscode settings](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/vscode/settings.json) - `~/Library/Application\ Support/Code/User/settings.json` (osx), `~/.config/Code/User/settings.json` (gnu/linux)
-
-[View vscode keybindings](https://raw.githubusercontent.com/jneidel/dotfiles/master/osx/vscode/keybindings.json) - `~/Library/Application\ Support/Code/User/keybindings.json`, (osx), `~/.config/Code/User/keybindings.json` (gnu/linux)
-
-**Plugins:**
-
-- [An Old Hope Theme](https://marketplace.visualstudio.com/items?itemName=dustinsanders.an-old-hope-theme-vscode)
-- [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag) - Create HTML closing bracket
-- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) - Rename corresponding tag automatically
-- [AutoFileName](https://marketplace.visualstudio.com/items?itemName=JerryHong.autofilename)
-- [Babel ES6/ES7](https://marketplace.visualstudio.com/items?itemName=dzannotti.vscode-babel-coloring) - Autocomplete for latest JS features
-- [Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight)
-- [EditorConfig for VSCode](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) - Use .editorconfig file if available
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Run ESLint on save
-- [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
-- [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
-- [Version Lens](https://marketplace.visualstudio.com/items?itemName=pflannery.vscode-versionlens) - Update dependencies individually from within package.json
-- [Vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) - Vim mode for VSCode
-- [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) - Nice language specific icons in the explorer
 
 ### Eslint (js linter)
 
@@ -148,7 +117,7 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### Git (version control)
 
-View global gitignore: [osx](osx/.gitignore), [manjaro](manjaro/.gitignore) - `~/.gitignore`
+View global gitignore: [manjaro](manjaro/.gitignore) - `~/.gitignore`
 
 Config commands:
 
@@ -307,6 +276,10 @@ F-Droid is a software repository hosting free and (mostly) open source apps. If 
 ### Music setup
 
 You can find a detailed account of my music related setup [here](manjaro/music.md)
+
+## OSX
+
+My osx install is no longer maintained, but you can still [explore the files here](https://github.com/jneidel/dotfiles/tree/bd758ada365a9fc2e7d4dc0b456684cfe88dc2bd/osx).
 
 ## Related
 
