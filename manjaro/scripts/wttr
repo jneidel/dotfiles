@@ -1,0 +1,21 @@
+#! /bin/sh
+
+FLAGS="FQ0"
+
+[ "$1" = "-f" ] && FLAGS="${FLAGS:0:-1}" # remove 0 from FLAGS
+
+WEATHER=$(curl -s "wttr.in/berlin?${FLAGS}")
+
+# remove wind speed, by dynamically replacing the length of the matched str with spaces (minus color codes)
+# src: https://stackoverflow.com/a/7338118
+WEATHER=$(perl -e '$ARGV[0] =~ s!((←|↖|→|↗|↑).*?km/h)!" " x (length($1) -36)!eg; print $ARGV[0]' "$WEATHER")
+# remove x km
+perl -e '$ARGV[0] =~ s!\d+\skm!" " x (length($1) +5)!eg; print $ARGV[0]' "$WEATHER" |
+  sed "s/0.0\smm\s|\s0%/           /g" | # remove 0% rain chance
+  sed "s/0.0\smm/      /" | # remove 0.0 mm from current panel
+  sed "s/Morning/   8   /g" | sed "s/Noon/  12/g" | sed "s/Evening/   18  /g" | sed "s/Night/  22 /g" | # replace timeofday with numbers
+  sed "s/$(date "+%a %d %b")/  Today   /" | # replace current date with 'today'
+  sed "s/$(date -d "+1 days" "+%a %d %b")/Tomorrow  /" | # replace next day with 'tomorrow'
+  sed "s/$(date -d "+2 days" "+%a %d %b")/ $(date -d "+2 days" "+%a") (+2) /" # replace today+2
+echo "" # remove % from the last line
+
