@@ -45,8 +45,6 @@ alias nbd="podboat --autodownload"
 alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 -d ~/tmp/nb-log && clear"
 
 ### players
-alias vv="~/scripts/vv 250"
-alias vvv="~/scripts/vv 500"
 alias play="mplayer -ao pulse -really-quiet"
 alias n="ncmpcpps"
 alias mpvo="mpv --profile=overlay"

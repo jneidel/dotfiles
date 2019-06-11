@@ -5,7 +5,6 @@ VERBOSE="-q"
 VIDEO="--fullscreen --play-and-exit"
 PLAYLIST="--no-loop --no-repeat --no-random"
 DNC="--compressor-rms-peak 0 --compressor-attack 50 --compressor-release 300 --compressor-threshold -20 --compressor-ratio 20 --compressor-knee 1 --compressor-makeup-gain 12" # src: https://www.geekality.net/2013/11/01/settings-for-vlc-dynamic-range-compression/
-
 # --no-sout-mono-downmix - if using stero speakers
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
@@ -24,10 +23,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 if [[ -n $1 ]]; then
-  DELAY=$1
-  vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$DELAY" "--sub-delay=-$($(($DELAY/100.0)))" "${@:2}"
-  # ${@:2} src: https://stackoverflow.com/a/9057392
-else
-  vlc $VERBOSE $VIDEO $PLAYLIST
+  #vlc $VERBOSE $VIDEO $PLAYLIST "--audio-desync=-$DELAY" "--sub-delay=-$($(($DELAY/100.0)))" "${@:2}"
+  TS_SOCKET=/tmp/tsp-mpv-queue tsp mpv --profile=overlay "${@:2}"
 fi
 
