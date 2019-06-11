@@ -6,7 +6,19 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-PERCENT=$(python -c "print($(cat /sys/class/power_supply/BAT0/charge_now)/$(cat /sys/class/power_supply/BAT0/charge_full)*100)" | cut -d "." -f1)
+POWER=/sys/class/power_supply
+
+[ -f $POWER/BAT0/charge_now ] && { # macbook
+  CHARGE=$POWER/BAT0/charge_now
+  CAPACITY=$POWER/BAT0/charge_full
+  AC=$POWER/ADP1/online
+} || { # thinkpad
+  CHARGE=$POWER/BAT1/energy_now
+  CAPACITY=$POWER/BAT1/energy_full
+  AC=$POWER/AC/online
+}
+
+PERCENT=$(python -c "print($(cat $CHARGE)/$(cat $CAPACITY)*100)" | cut -d "." -f1)
 PERCENT_ICON=$(
   if [ "$PERCENT" -gt 90 ] && [ "$PERCENT" -le 100 ]; then
       echo " "
@@ -31,7 +43,7 @@ PERCENT_ICON=$(
   fi
 )
 
-IS_CHARGING=$(cat /sys/class/power_supply/ADP1/online)
+IS_CHARGING=$(cat $AC)
 CHARGING_ICON=$([ "$IS_CHARGING" -eq 1 ] && echo "")
 
 echo "$CHARGING_ICON$PERCENT_ICON$PERCENT%"
