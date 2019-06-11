@@ -56,6 +56,10 @@ clean scripts
 [xresources]
 .Xresources
 
+[sxhkd]
+create .config/sxhkd
+.config/sxhkd/sxhkdrc
+
 ### sound
 [pulseaudio]
 .config/pulse/default.pa

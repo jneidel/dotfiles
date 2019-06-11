@@ -21,7 +21,7 @@ function copy-file {
 }
 
 function create-dir {
-  [ -z $DRY ] && mkdir -p "$DIR/$1"
+  [ -z $DRY ] && mkdir -p "$1"
   echo "create dir:  $1"
 }
 

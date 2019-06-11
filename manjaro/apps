@@ -11,6 +11,10 @@
 # npm - npm install -g
 # systemd - systemctl enable
 
+# Todo: convert to categories, like configs, share used-apps
+[sxhkd]
+sxhkd Hotkey assignment
+
 # gui
 keepassxc Password database
 kitty Terminal emulator

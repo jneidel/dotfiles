@@ -21,7 +21,7 @@ function install-files {
     # categories
     [ ${IN:0:1} = "[" ] && {
       IN=${IN:1:-1} # strip []
-      CATEGORY=$IN 
+      CATEGORY=$IN
       continue
     }
 
@@ -32,13 +32,13 @@ function install-files {
     REPO="$DIR/$IN"
 
     # directories
-    [ -d "$LOCAL" ] && {
+    [ -d "$REPO" ] && {
       copy-dir $REPO $LOCAL
       continue
     }
 
     # files
-    [ -f "$LOCAL" ] && {
+    [ -f "$REPO" ] && {
       copy-file $REPO $LOCAL
       continue
     }
@@ -48,7 +48,7 @@ function install-files {
     REST=$(echo "$IN" | cut -d" " -f2-)
     case $CMD in
       create)
-        create-dir "$DIR/$HOME";;
+        create-dir "$HOME/$REST";;
       clean)
         copy-dir "$DIR/$REST" "$HOME/$REST";; # don't clean local
       *)
