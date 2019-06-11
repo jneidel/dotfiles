@@ -1,0 +1,9 @@
+super + d
+  ~/scripts/i3/rofi/rofi.sh
+
+XF86AudioMute
+  ~/scripts/i3/volume/mute.sh
+XF86AudioLowerVolume
+  ~/scripts/i3/volume/set-vol.sh -5
+XF86AudioRaiseVolume
+  ~/scripts/i3/volume/set-vol.sh +5
