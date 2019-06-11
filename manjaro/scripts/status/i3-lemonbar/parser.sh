@@ -2,7 +2,7 @@
 
 # load config
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-. "$DIR/i3_lemonbar_config"
+. "$DIR/config"
 
 # parse fifo
 while read -r line ; do
