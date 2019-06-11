@@ -225,7 +225,7 @@ bindsym $mod+ssharp exec --no-startup-id blurlock
 # exec_always --no-startup-id sbxkb
 
 # Application Autostart
-exec kitty tmux new -s main
+#exec kitty ~/scripts/tmux-startup
 exec firefox-nightly
 ## Desktop monitor
 exec --no-startup-id ~/scripts/conky/start
@@ -245,6 +245,8 @@ exec --no-startup-id transmission-daemon -c ~/Downloads --encryption-preferred -
 exec_always --no-startup-id sxhkd
 ## Adjust key repeat
 exec --no-startup-id xset r rate 185 100
+## status bar
+exec --no-startup-id ~/scripts/status/i3-lemonbar/run-lemonbar.sh
 ## i3 system defaults
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id ff-theme-util
@@ -283,32 +285,32 @@ set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	i3bar_command i3bar
-	status_command i3status
-	position bottom
+#bar {
+#	i3bar_command i3bar
+#	status_command i3status
+#	position bottom
 
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
+### please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+##	tray_output primary
+##	tray_output eDP1
 
-	bindsym button4 nop
-	bindsym button5 nop
-#   font xft:URWGothic-Book 11
-	strip_workspace_numbers yes
+#	bindsym button4 nop
+#	bindsym button5 nop
+##   font xft:URWGothic-Book 11
+#	strip_workspace_numbers yes
 
-    colors {
-        background $grey
-        statusline $white
-        separator  #454947
-#                          border  backgr. text
-        focused_workspace  $grey   $white  $grey
-        active_workspace   $grey   $grey   #FDF6E3
-        inactive_workspace $grey   $grey   $white
-        binding_mode       $grey   #2C2C2C #F9FAF9
-        urgent_workspace   $grey   $white  $grey
-    }
-}
+#    colors {
+#        background $grey
+#        statusline $white
+#        separator  #454947
+##                          border  backgr. text
+#        focused_workspace  $grey   $white  $grey
+#        active_workspace   $grey   $grey   #FDF6E3
+#        inactive_workspace $grey   $grey   $white
+#        binding_mode       $grey   #2C2C2C #F9FAF9
+#        urgent_workspace   $grey   $white  $grey
+#    }
+#}
 
 # hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
