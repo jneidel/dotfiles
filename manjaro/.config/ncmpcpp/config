@@ -154,7 +154,7 @@ message_delay_time = 1
 #
 song_list_format = {$4%a - }{%t}|{$8%f$9}$R{$3(%l)$9}
 #
-song_status_format = $b{{$8%t}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
+song_status_format = $b{{{$8%t}|{$8%f}} $3by $4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
 #
 song_library_format = {%n - }{%t}|{%f}
 #
@@ -287,8 +287,13 @@ browser_display_mode = columns
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-progressbar_look = ->
-#
+#progressbar_look = "─⊙─"
+#progressbar_look = "◈◆◇"
+#progressbar_look = "▪▪▪"
+#progressbar_look = "‒‒‒"
+progressbar_look = "───"
+
+
 ## Available values: database, playlist.
 ##
 #default_place_to_search_in = database
@@ -311,15 +316,11 @@ media_library_albums_split_by_date = no
 #
 #default_tag_editor_pattern = %n - %t
 #
-#header_visibility = yes
-#
-#statusbar_visibility = yes
-#
-#titles_visibility = yes
-#
+header_visibility = yes
+statusbar_visibility = yes
+titles_visibility = no
+
 #header_text_scrolling = yes
-#
-#cyclic_scrolling = no
 #
 #lines_scrolled = 2
 #
@@ -385,15 +386,10 @@ startup_screen = media_library
 #jump_to_now_playing_song_at_start = yes
 #
 #ask_before_clearing_playlists = yes
-#
-#clock_display_seconds = no
-#
-display_volume_level = no
-#
-#display_bitrate = no
-#
-#display_remaining_time = no
-#
+
+display_volume_level = yes
+display_remaining_time = yes
+
 ## Available values: none, basic, extended, perl.
 ##
 #regular_expressions = perl
@@ -442,74 +438,35 @@ ignore_leading_the = yes
 ##
 #
 #search_engine_default_search_mode = 1
-#
+
 external_editor = vim
-#
-## Note: set to yes if external editor is a console application.
-##
 use_console_editor = yes
-#
+
 ##### colors definitions #####
+## Define color as using presets or 256 codes
 ##
 ## It is possible to set a background color by setting a color value
 ## "<foreground>_<background>", e.g. red_black will set foregound color to red
 ## and background color to black.
 ##
-## In addition, for terminals that support 256 colors it is possible to set one
-## of them by using a number in range [1, 256] instead of color name,
-## e.g. numerical value corresponding to red_black is 2_1. To find out if the
-## terminal supports 256 colors, run ncmpcpp and check out the bottom of the
-## help screen for list of available colors and their numerical values.
-##
-## What is more, there are two special values for the background color:
-## "transparent" and "current". The first one explicitly sets the background to
-## be transparent, while the second one allows you to preserve current
-## background color and change only the foreground one. It's used implicitly
-## when background color is not specified.
-##
-## Moreover, it is possible to attach format information to selected color
-## variables by appending to their end a colon followed by one or more format
-## flags, e.g. black:b or red:ur. The following variables support this syntax:
-## visualizer_color, color1, color2, empty_tag_color, volume_color,
-## state_line_color, state_flags_color, progressbar_color,
-## progressbar_elapsed_color, player_state_color, statusbar_time_color,
-## alternative_ui_separator_color.
-##
-## Note: due to technical limitations of older ncurses version, if 256 colors
-## are used there is a possibility that you'll be able to use only colors with
-## transparent background.
-#
-#colors_enabled = yes
-#
-empty_tag_color = magenta
-#
-#header_window_color = magenta
-#
-#volume_color = default
-#
-#state_line_color = default
-#
-#state_flags_color = default:b
-#
-main_window_color = white
-#
-#color1 = white
-#
-#color2 = green
-#
-progressbar_color = black:b
-#
+## There are two special values for the background color: "transparent" and "current".
+
+volume_color = 26
+header_window_color = 26
+state_line_color = 26
+state_flags_color = 252
+
+main_window_color = 252
+window_border_color = 26
+active_window_border = 26
+alternative_ui_separator_color = 26
+
+progressbar_color = black
 progressbar_elapsed_color = blue:b
-#
 statusbar_color = red
-#
-statusbar_time_color = cyan:b
-#
-#player_state_color = default:b
-#
-#alternative_ui_separator_color = black:b
-#
-#window_border_color = green
-#
-#active_window_border = red
-#
+player_state_color = red
+statusbar_time_color = 26
+
+empty_tag_color = magenta
+#color1 = white
+#color2 = green
