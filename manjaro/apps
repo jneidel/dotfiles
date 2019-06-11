@@ -15,6 +15,10 @@
 [sxhkd]
 sxhkd Hotkey assignment
 
+[lemonbar]
+lemonbar-xft-git
+perl-anyevent-i3
+
 # gui
 keepassxc Password database
 kitty Terminal emulator
