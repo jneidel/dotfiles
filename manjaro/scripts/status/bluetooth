@@ -9,6 +9,6 @@ fi
 if [[ $(btstatus) = "" ]]; then
   exit 1
 else
-btstatus | cut -d "-" -f 2- | awk '{ print "  "$1" " }'
+btstatus | cut -d "-" -f 2- | awk '{ print "  "$1" " }'
 fi
 
