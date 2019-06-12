@@ -19,13 +19,13 @@
   },
   { "info": "If true, enables automatic use of wielded pickaxes and jackhammers whenever trying to move into mineable terrain.", "default": "Default: False", "name": "AUTO_MINING", "value": "false"
   },
-  { "info": "Action to perform when 'Auto foraging' is enabled.  Bushes: Only forage bushes.  - Trees: Only forage trees.  - Both: Forage bushes and trees.", "default": "Default: off - Values: off, bushes, trees, both", "name": "AUTO_FORAGING", "value": "off"
+  { "info": "Action to perform when 'Auto foraging' is enabled.  Bushes: Only forage bushes.  - Trees: Only forage trees.  - Both: Forage bushes and trees.", "default": "Default: off - Values: off, bushes, trees, both", "name": "AUTO_FORAGING", "value": "both"
   },
   { "info": "If false, will cause player to drop new items that cause them to exceed the weight limit.", "default": "Default: False", "name": "DANGEROUS_PICKUPS", "value": "false"
   },
-  { "info": "If true, will hold the game and display a warning if a hostile monster/npc is approaching.", "default": "Default: True", "name": "SAFEMODE", "value": "true"
+  { "info": "If true, will hold the game and display a warning if a hostile monster/npc is approaching.", "default": "Default: True", "name": "SAFEMODE", "value": "false"
   },
-  { "info": "If safe mode is enabled, distance to hostiles at which safe mode should show a warning.  0 = Max player view distance.", "default": "Default: 0 - Min: 0, Max: 60", "name": "SAFEMODEPROXIMITY", "value": "0"
+  { "info": "If safe mode is enabled, distance to hostiles at which safe mode should show a warning.  0 = Max player view distance.", "default": "Default: 0 - Min: 0, Max: 60", "name": "SAFEMODEPROXIMITY", "value": "40"
   },
   { "info": "When true, safe mode will alert you of hostiles while you are driving a vehicle.", "default": "Default: False", "name": "SAFEMODEVEH", "value": "false"
   },
@@ -37,27 +37,19 @@
   },
   { "info": "If enabled, monsters will take periodic gameplay turns.  This value is the delay between each turn, in seconds.  Works best with Safe Mode disabled.  0 = disabled.", "default": "Default: 0.00 - Min: 0.00, Max: 10.00", "name": "TURN_DURATION", "value": "0.00"
   },
-  { "info": "If true, game will periodically save the map.  Autosaves occur based on in-game turns or real-time minutes, whichever is larger.", "default": "Default: False", "name": "AUTOSAVE", "value": "false"
+  { "info": "If true, game will periodically save the map.  Autosaves occur based on in-game turns or real-time minutes, whichever is larger.", "default": "Default: False", "name": "AUTOSAVE", "value": "true"
   },
-  { "info": "Number of game turns between autosaves", "default": "Default: 50 - Min: 10, Max: 1000", "name": "AUTOSAVE_TURNS", "value": "50"
+  { "info": "Number of game turns between autosaves", "default": "Default: 50 - Min: 10, Max: 1000", "name": "AUTOSAVE_TURNS", "value": "500"
   },
-  { "info": "Number of real time minutes between autosaves", "default": "Default: 5 - Min: 0, Max: 127", "name": "AUTOSAVE_MINUTES", "value": "5"
+  { "info": "Number of real time minutes between autosaves", "default": "Default: 5 - Min: 0, Max: 127", "name": "AUTOSAVE_MINUTES", "value": "10"
   },
   { "info": "If true, the game will calculate range in a realistic way: light sources will be circles, diagonal movement will cover more ground and take longer.  If disabled, everything is square: moving to the northwest corner of a building takes as long as moving to the north wall.", "default": "Default: False", "name": "CIRCLEDIST", "value": "false"
   },
-  { "info": "Set to drop empty containers after use.  No: Don't drop any. - Watertight: All except watertight containers. - All: Drop all containers.", "default": "Default: no - Values: no, watertight, all", "name": "DROP_EMPTY", "value": "no"
+  { "info": "Set to drop empty containers after use.  No: Don't drop any. - Watertight: All except watertight containers. - All: Drop all containers.", "default": "Default: no - Values: no, watertight, all", "name": "DROP_EMPTY", "value": "watertight"
   },
   { "info": "If true, automatically sets notes on places that have stairs that go up or down", "default": "Default: True", "name": "AUTO_NOTES", "value": "true"
   },
-  { "info": "Always: Always start deathcam.  Ask: Query upon death.  Never: Never show deathcam.", "default": "Default: ask - Values: always, ask, never", "name": "DEATHCAM", "value": "ask"
-  },
-  { "info": "If true, music and sound are enabled.", "default": "Default: True", "name": "SOUND_ENABLED", "value": "true"
-  },
-  { "info": "Choose the soundpack you want to use.", "default": "Default: basic - Values: basic", "name": "SOUNDPACKS", "value": "basic"
-  },
-  { "info": "Adjust the volume of the music being played in the background.", "default": "Default: 100 - Min: 0, Max: 200", "name": "MUSIC_VOLUME", "value": "100"
-  },
-  { "info": "Adjust the volume of sound effects being played by the game.", "default": "Default: 100 - Min: 0, Max: 200", "name": "SOUND_EFFECT_VOLUME", "value": "100"
+  { "info": "Always: Always start deathcam.  Ask: Query upon death.  Never: Never show deathcam.", "default": "Default: ask - Values: always, ask, never", "name": "DEATHCAM", "value": "never"
   },
   { "info": "Switch Language.", "default": "Default:  - Values: en, de, es_AR, es_ES, fr, hu, ja, ko, pl, ru, zh_CN, zh_TW", "name": "USE_LANG", "value": ""
   },
@@ -71,7 +63,7 @@
   },
   { "info": "12h: AM/PM, e.g. 7:31 AM - Military: 24h Military, e.g. 0731 - 24h: Normal 24h, e.g. 7:31", "default": "Default: 12h - Values: 12h, military, 24h", "name": "24_HOUR", "value": "24h"
   },
-  { "info": "If true, Y/N prompts are case-sensitive and y and n are not accepted.", "default": "Default: True", "name": "FORCE_CAPITAL_YN", "value": "true"
+  { "info": "If true, Y/N prompts are case-sensitive and y and n are not accepted.", "default": "Default: True", "name": "FORCE_CAPITAL_YN", "value": "false"
   },
   { "info": "If true, automatically follow the crosshair when firing/throwing.", "default": "Default: False", "name": "SNAP_TO_TARGET", "value": "false"
   },
@@ -85,8 +77,6 @@
   },
   { "info": "If true, actions ( like \"Read\", \"Smoke\", \"Wrap tighter\" ) will be displayed next to the corresponding items.", "default": "Default: True", "name": "INV_USE_ACTION_NAMES", "value": "true"
   },
-  { "info": "If true, allows diagonal movement with cursor keys using CTRL and SHIFT modifiers.  Diagonal movement action keys are taken from keybindings, so you need these to be configured.", "default": "Default: True", "name": "DIAG_MOVE_WITH_MODIFIERS", "value": "true"
-  },
   { "info": "If true, vehicle parts will change color if they are armor plated", "default": "Default: True", "name": "VEHICLE_ARMOR_COLOR", "value": "true"
   },
   { "info": "If true, view will automatically shift towards the driving direction", "default": "Default: True", "name": "DRIVING_VIEW_OFFSET", "value": "true"
@@ -99,11 +89,11 @@
   },
   { "info": "Where new log messages should show.", "default": "Default: new_bottom - Values: new_top, new_bottom", "name": "LOG_FLOW", "value": "new_bottom"
   },
-  { "info": "Number of turns after which a message will be removed from the sidebar log.  '0' disables this option.", "default": "Default: 0 - Min: 0, Max: 1000", "name": "MESSAGE_TTL", "value": "0"
+  { "info": "Number of turns after which a message will be removed from the sidebar log.  '0' disables this option.", "default": "Default: 0 - Min: 0, Max: 1000", "name": "MESSAGE_TTL", "value": "30"
   },
   { "info": "If true, pressing a key with no set function will not display a notice in the chat log.", "default": "Default: False", "name": "NO_UNKNOWN_COMMAND_MSG", "value": "false"
   },
-  { "info": "How should confidence and steadiness be communicated to the player.", "default": "Default: bars - Values: numbers, bars", "name": "ACCURACY_DISPLAY", "value": "bars"
+  { "info": "How should confidence and steadiness be communicated to the player.", "default": "Default: bars - Values: numbers, bars", "name": "ACCURACY_DISPLAY", "value": "numbers"
   },
   { "info": "Morale display style in sidebar.", "default": "Default: vertical - Values: vertical, horizontal", "name": "MORALE_STYLE", "value": "vertical"
   },
@@ -117,57 +107,19 @@
   },
   { "info": "If true, show item health bars instead of reinforced, scratched etc. text.", "default": "Default: True", "name": "ITEM_HEALTH_BAR", "value": "true"
   },
-  { "info": "If true, show item symbols in inventory and pick up menu.", "default": "Default: False", "name": "ITEM_SYMBOLS", "value": "false"
-  },
-  { "info": "Enable input from joystick.", "default": "Default: True", "name": "ENABLE_JOYSTICK", "value": "false"
-  },
-  { "info": "Show: Cursor is always shown.  Hide: Cursor is hidden.  HideKB: Cursor is hidden on keyboard input and unhidden on mouse movement.", "default": "Default: show - Values: show, hide, hidekb", "name": "HIDE_CURSOR", "value": "hide"
+  { "info": "If true, show item symbols in inventory and pick up menu.", "default": "Default: False", "name": "ITEM_SYMBOLS", "value": "true"
   },
   { "info": "If true, will display enabled animations.", "default": "Default: True", "name": "ANIMATIONS", "value": "true"
   },
-  { "info": "If true, will display weather animations.", "default": "Default: True", "name": "ANIMATION_RAIN", "value": "true"
+  { "info": "If true, will display weather animations.", "default": "Default: True", "name": "ANIMATION_RAIN", "value": "false"
   },
-  { "info": "If true, will display scrolling combat text animations.", "default": "Default: True", "name": "ANIMATION_SCT", "value": "true"
+  { "info": "If true, will display scrolling combat text animations.", "default": "Default: True", "name": "ANIMATION_SCT", "value": "false"
   },
   { "info": "If true, will display scrolling combat text with Unicode font.", "default": "Default: True", "name": "ANIMATION_SCT_USE_FONT", "value": "true"
   },
   { "info": "The amount of time to pause between animation frames in ms.", "default": "Default: 10 - Min: 0, Max: 100", "name": "ANIMATION_DELAY", "value": "10"
   },
   { "info": "If true, forces the game to redraw at least once per turn.", "default": "Default: True", "name": "FORCE_REDRAW", "value": "true"
-  },
-  { "info": "Set the size of the terminal along the X axis.  Requires restart.", "default": "Default: 80 - Min: 80, Max: 960", "name": "TERMINAL_X", "value": "170"
-  },
-  { "info": "Set the size of the terminal along the Y axis.  Requires restart.", "default": "Default: 24 - Min: 24, Max: 270", "name": "TERMINAL_Y", "value": "43"
-  },
-  { "info": "If true, replaces some TTF rendered text with tiles.", "default": "Default: True", "name": "USE_TILES", "value": "true"
-  },
-  { "info": "Choose the tileset you want to use.", "default": "Default: MSX++DEAD_PEOPLE - Values: blockhead, ChestHole16, ChestHole32, ChestHole_iso, ChestHole, deon, HitButton_iso, hoder, MSX++DEAD_PEOPLE, MShock24Modded, MShock32Modded, MshockXottoplus, retroascii, retrodays, Boardgame-Style@, tsu", "name": "TILES", "value": "retrodays"
-  },
-  { "info": "If true, shows the pixel-detail minimap in game after the save is loaded.  Use the 'Toggle Pixel Minimap' action key to change its visibility during gameplay.", "default": "Default: True", "name": "PIXEL_MINIMAP", "value": "true"
-  },
-  { "info": "Specified the mode in which the minimap drawn.", "default": "Default: dots - Values: solid, squares, dots", "name": "PIXEL_MINIMAP_MODE", "value": "dots"
-  },
-  { "info": "Overall brightness of pixel-detail minimap.", "default": "Default: 100 - Min: 10, Max: 300", "name": "PIXEL_MINIMAP_BRIGHTNESS", "value": "100"
-  },
-  { "info": "Height of pixel-detail minimap, measured in terminal rows.  Set to 0 for default spacing.", "default": "Default: 0 - Min: 0, Max: 100", "name": "PIXEL_MINIMAP_HEIGHT", "value": "0"
-  },
-  { "info": "Preserves the square shape of tiles shown on the pixel minimap.", "default": "Default: True", "name": "PIXEL_MINIMAP_RATIO", "value": "true"
-  },
-  { "info": "Controls how fast the enemy beacons blink on the pixel minimap.  Value is multiplied by 200 ms.  Set to 0 to disable.", "default": "Default: 10 - Min: 0, Max: 50", "name": "PIXEL_MINIMAP_BLINK", "value": "10"
-  },
-  { "info": "Sets which video display will be used to show the game. Requires restart.", "default": "Default: 0: 0", "name": "DISPLAY", "value": "0"
-  },
-  { "info": "Starts Cataclysm in one of the fullscreen modes.  Requires restart.", "default": "Default: no - Values: no, fullscreen, windowedbl", "name": "FULLSCREEN", "value": "no"
-  },
-  { "info": "Set which renderer to use.  Requires restart.", "default": "Default: software - Values: software, opengl, opengles2, opengles", "name": "RENDERER", "value": "software"
-  },
-  { "info": "Use hardware acceleration for the framebuffer when using software rendering.  Requires restart.", "default": "Default: False", "name": "FRAMEBUFFER_ACCEL", "value": "false"
-  },
-  { "info": "If true, tries to use color modulated textures to speed-up ASCII drawing.  Requires restart.", "default": "Default: False", "name": "USE_COLOR_MODULATED_TEXTURES", "value": "false"
-  },
-  { "info": "Sets the scaling mode, 'none' ( default ) displays at the game's native resolution, 'nearest'  uses low-quality but fast scaling, and 'linear' provides high-quality scaling.", "default": "Default: none - Values: none, nearest, linear", "name": "SCALING_MODE", "value": "none"
-  },
-  { "info": "Factor by which to scale the display. Requires restart.", "default": "Default: 1 - Values: 1, 2, 4", "name": "SCALING_FACTOR", "value": "1"
   },
   { "info": "Determines the scope, which is known in the beginning of the game.", "default": "Default: 15 - Min: 3, Max: 20", "name": "DISTANCE_INITIAL_VISIBILITY", "value": "15"
   },

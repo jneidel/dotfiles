@@ -127,7 +127,7 @@
   },
   { "id": "action_menu", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "RETURN" ] } ]
   },
-  { "id": "advinv", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "/" ] } ]
+  { "id": "advinv", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "/" ] }, { "input_method": "keyboard", "key": [ "u" ] } ]
   },
   { "id": "apply", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "a" ] } ]
   },
@@ -143,7 +143,7 @@
   },
   { "id": "center", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ ":" ] } ]
   },
-  { "id": "chat", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "C" ] } ]
+  { "id": "chat", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "q" ] } ]
   },
   { "id": "close", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "c" ] } ]
   },
@@ -153,7 +153,7 @@
   },
   { "id": "control_vehicle", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "^" ] } ]
   },
-  { "id": "craft", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "&" ] } ]
+  { "id": "craft", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "C" ] } ]
   },
   { "id": "debug", "category": "DEFAULTMODE", "bindings": [  ]
   },
@@ -241,11 +241,11 @@
   },
   { "id": "quicksave", "category": "DEFAULTMODE", "bindings": [  ]
   },
-  { "id": "quit", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "Q" ] } ]
+  { "id": "quit", "category": "DEFAULTMODE", "bindings": [  ]
   },
   { "id": "read", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "R" ] } ]
   },
-  { "id": "recraft", "category": "DEFAULTMODE", "bindings": [  ]
+  { "id": "recraft", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "&" ] } ]
   },
   { "id": "reload", "category": "DEFAULTMODE", "bindings": [ { "input_method": "keyboard", "key": [ "r" ] } ]
   },
@@ -405,7 +405,7 @@
   },
   { "id": "look", "category": "LIST_MONSTERS", "bindings": [ { "input_method": "keyboard", "key": [ "x" ] } ]
   },
-  { "id": "LIST_ITEMS", "category": "LOOK", "bindings": [ { "input_method": "keyboard", "key": [ "V" ] } ]
+  { "id": "LIST_ITEMS", "category": "LOOK", "bindings": [ { "input_method": "keyboard", "key": [ "V" ] }, { "input_method": "keyboard", "key": [ "v" ] } ]
   },
   { "id": "throw_blind", "category": "LOOK", "bindings": [ { "input_method": "keyboard", "key": [ "t" ] } ]
   },
@@ -697,25 +697,137 @@
   },
   { "id": "SHOW_ZONE_ON_MAP", "category": "ZONES_MANAGER", "bindings": [ { "input_method": "keyboard", "key": [ "m" ] }, { "input_method": "keyboard", "key": [ "M" ] } ]
   },
+  { "id": "ACIDBOMB_ACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "ADRENALINE_INJECTOR", "category": "default", "bindings": [  ]
+  },
   { "id": "AIM", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "." ] }, { "input_method": "keyboard", "key": [ "5" ] } ]
   },
   { "id": "AIMED_SHOT", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "a" ] } ]
   },
+  { "id": "ALCOHOL", "category": "default", "bindings": [  ]
+  },
+  { "id": "ALCOHOL_STRONG", "category": "default", "bindings": [  ]
+  },
+  { "id": "ALCOHOL_WEAK", "category": "default", "bindings": [  ]
+  },
+  { "id": "ANTIBIOTIC", "category": "default", "bindings": [  ]
+  },
+  { "id": "ANTICONVULSANT", "category": "default", "bindings": [  ]
+  },
+  { "id": "ANTIFUNGAL", "category": "default", "bindings": [  ]
+  },
+  { "id": "ANTIPARASITIC", "category": "default", "bindings": [  ]
+  },
   { "id": "ANY_INPUT", "category": "default", "bindings": [  ]
+  },
+  { "id": "ARROW_FLAMABLE", "category": "default", "bindings": [  ]
+  },
+  { "id": "ARTIFACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "ATOMIC_CAFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "BATTLETORCH_LIT", "category": "default", "bindings": [  ]
+  },
+  { "id": "BELL", "category": "default", "bindings": [  ]
+  },
+  { "id": "BIRDFOOD", "category": "default", "bindings": [  ]
+  },
+  { "id": "BLECH", "category": "default", "bindings": [  ]
+  },
+  { "id": "BLOOD_DRAW", "category": "default", "bindings": [  ]
+  },
+  { "id": "BOLTCUTTERS", "category": "default", "bindings": [  ]
+  },
+  { "id": "BREAK_STICK", "category": "default", "bindings": [  ]
+  },
+  { "id": "C4", "category": "default", "bindings": [  ]
+  },
+  { "id": "CABLE_ATTACH", "category": "default", "bindings": [  ]
+  },
+  { "id": "CAFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "CAMERA", "category": "default", "bindings": [  ]
+  },
+  { "id": "CAN_GOO", "category": "default", "bindings": [  ]
+  },
+  { "id": "CAPTURE_MONSTER_ACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "CAPTURE_MONSTER_VEH", "category": "default", "bindings": [  ]
   },
   { "id": "CAREFUL_SHOT", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "c" ] } ]
   },
+  { "id": "CARVER_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "CARVER_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "CATFOOD", "category": "default", "bindings": [  ]
+  },
+  { "id": "CATTLEFODDER", "category": "default", "bindings": [  ]
+  },
   { "id": "CENTER", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "0" ] } ]
+  },
+  { "id": "CHAINSAW_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "CHAINSAW_ON", "category": "default", "bindings": [  ]
   },
   { "id": "CHANGE_GENDER", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "@" ] } ]
   },
+  { "id": "CHEW", "category": "default", "bindings": [  ]
+  },
+  { "id": "CHOP_LOGS", "category": "default", "bindings": [  ]
+  },
+  { "id": "CHOP_TREE", "category": "default", "bindings": [  ]
+  },
+  { "id": "CIRCSAW_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "CLEAR_RUBBLE", "category": "default", "bindings": [  ]
+  },
+  { "id": "COIN_FLIP", "category": "default", "bindings": [  ]
+  },
+  { "id": "COKE", "category": "default", "bindings": [  ]
+  },
+  { "id": "COMBATSAW_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "COMBATSAW_ON", "category": "default", "bindings": [  ]
+  },
   { "id": "CONFIRM", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "RETURN" ] } ]
   },
+  { "id": "CONTACTS", "category": "default", "bindings": [  ]
+  },
   { "id": "COORDINATE", "category": "default", "bindings": [  ]
+  },
+  { "id": "CROWBAR", "category": "default", "bindings": [  ]
+  },
+  { "id": "CS_LAJATANG_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "CS_LAJATANG_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "DATURA", "category": "default", "bindings": [  ]
+  },
+  { "id": "DIG", "category": "default", "bindings": [  ]
+  },
+  { "id": "DIRECTIONAL_ANTENNA", "category": "default", "bindings": [  ]
+  },
+  { "id": "DIRECTIONAL_HOLOGRAM", "category": "default", "bindings": [  ]
+  },
+  { "id": "DISASSEMBLE", "category": "default", "bindings": [  ]
+  },
+  { "id": "DOGFOOD", "category": "default", "bindings": [  ]
+  },
+  { "id": "DOG_WHISTLE", "category": "default", "bindings": [  ]
+  },
+  { "id": "DOLLCHAT", "category": "default", "bindings": [  ]
   },
   { "id": "DOWN", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "j" ] }, { "input_method": "keyboard", "key": [ "DOWN" ] } ]
   },
   { "id": "DOWN_WIDE", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "J" ] } ]
+  },
+  { "id": "ECIG", "category": "default", "bindings": [  ]
+  },
+  { "id": "ECS_LAJATANG_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "ECS_LAJATANG_ON", "category": "default", "bindings": [  ]
   },
   { "id": "EDITMAP_MOVE", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "m" ] } ]
   },
@@ -723,13 +835,91 @@
   },
   { "id": "EDITMAP_TAB", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "TAB" ] } ]
   },
+  { "id": "EHANDCUFFS", "category": "default", "bindings": [  ]
+  },
+  { "id": "EINKTABLETPC", "category": "default", "bindings": [  ]
+  },
+  { "id": "ELEC_CHAINSAW_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "ELEC_CHAINSAW_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "END", "category": "default", "bindings": [  ]
+  },
   { "id": "EXTENDED_DESCRIPTION", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "e" ] } ]
+  },
+  { "id": "EXTINGUISHER", "category": "default", "bindings": [  ]
+  },
+  { "id": "EYEDROPS", "category": "default", "bindings": [  ]
+  },
+  { "id": "E_COMBATSAW_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "E_COMBATSAW_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "FILL_PIT", "category": "default", "bindings": [  ]
   },
   { "id": "FILTER", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "f" ] }, { "input_method": "keyboard", "key": [ "F" ] }, { "input_method": "keyboard", "key": [ "/" ] } ]
   },
   { "id": "FIRE", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "f" ] }, { "input_method": "keyboard", "key": [ "F" ] }, { "input_method": "keyboard", "key": [ "RETURN" ] }, { "input_method": "mouse", "key": [ "MOUSE_RIGHT" ] } ]
   },
+  { "id": "FIRECRACKER", "category": "default", "bindings": [  ]
+  },
+  { "id": "FIRECRACKER_ACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "FIRECRACKER_PACK", "category": "default", "bindings": [  ]
+  },
+  { "id": "FIRECRACKER_PACK_ACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "FISH_ROD", "category": "default", "bindings": [  ]
+  },
+  { "id": "FISH_TRAP", "category": "default", "bindings": [  ]
+  },
+  { "id": "FLUMED", "category": "default", "bindings": [  ]
+  },
+  { "id": "FLUSLEEP", "category": "default", "bindings": [  ]
+  },
+  { "id": "FLU_VACCINE", "category": "default", "bindings": [  ]
+  },
+  { "id": "FUNGICIDE", "category": "default", "bindings": [  ]
+  },
+  { "id": "GASMASK", "category": "default", "bindings": [  ]
+  },
+  { "id": "GEIGER", "category": "default", "bindings": [  ]
+  },
+  { "id": "GRANADE", "category": "default", "bindings": [  ]
+  },
+  { "id": "GRANADE_ACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "GRENADE_INC_ACT", "category": "default", "bindings": [  ]
+  },
+  { "id": "GUNMOD_ATTACH", "category": "default", "bindings": [  ]
+  },
+  { "id": "GUN_REPAIR", "category": "default", "bindings": [  ]
+  },
+  { "id": "HACKSAW", "category": "default", "bindings": [  ]
+  },
+  { "id": "HAIRKIT", "category": "default", "bindings": [  ]
+  },
+  { "id": "HAMMER", "category": "default", "bindings": [  ]
+  },
+  { "id": "HEATPACK", "category": "default", "bindings": [  ]
+  },
+  { "id": "HEAT_FOOD", "category": "default", "bindings": [  ]
+  },
   { "id": "HELP_KEYBINDINGS", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "?" ] } ]
+  },
+  { "id": "HOME", "category": "default", "bindings": [  ]
+  },
+  { "id": "HONEYCOMB", "category": "default", "bindings": [  ]
+  },
+  { "id": "HOTPLATE", "category": "default", "bindings": [  ]
+  },
+  { "id": "INHALER", "category": "default", "bindings": [  ]
+  },
+  { "id": "JACKHAMMER", "category": "default", "bindings": [  ]
+  },
+  { "id": "JET_INJECTOR", "category": "default", "bindings": [  ]
+  },
+  { "id": "LADDER", "category": "default", "bindings": [  ]
   },
   { "id": "LEFT", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "h" ] }, { "input_method": "keyboard", "key": [ "LEFT" ] }, { "input_method": "keyboard", "key": [ "4" ] }, { "input_method": "gamepad", "key": [ "JOY_LEFT" ] } ]
   },
@@ -743,15 +933,73 @@
   },
   { "id": "LEVEL_UP", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "<" ] } ]
   },
+  { "id": "LUMBER", "category": "default", "bindings": [  ]
+  },
+  { "id": "MAGIC_8_BALL", "category": "default", "bindings": [  ]
+  },
+  { "id": "MAKEMOUND", "category": "default", "bindings": [  ]
+  },
+  { "id": "MARLOSS", "category": "default", "bindings": [  ]
+  },
+  { "id": "MARLOSS_GEL", "category": "default", "bindings": [  ]
+  },
+  { "id": "MARLOSS_SEED", "category": "default", "bindings": [  ]
+  },
+  { "id": "MA_MANUAL", "category": "default", "bindings": [  ]
+  },
+  { "id": "MEDITATE", "category": "default", "bindings": [  ]
+  },
+  { "id": "METH", "category": "default", "bindings": [  ]
+  },
+  { "id": "MININUKE", "category": "default", "bindings": [  ]
+  },
+  { "id": "MISC_REPAIR", "category": "default", "bindings": [  ]
+  },
+  { "id": "MOLOTOV_LIT", "category": "default", "bindings": [  ]
+  },
+  { "id": "MOP", "category": "default", "bindings": [  ]
+  },
   { "id": "MOUSE_MOVE", "category": "default", "bindings": [ { "input_method": "mouse", "key": [ "MOUSE_MOVE" ] } ]
+  },
+  { "id": "MP3", "category": "default", "bindings": [  ]
+  },
+  { "id": "MP3_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "MULTICOOKER", "category": "default", "bindings": [  ]
+  },
+  { "id": "MYCUS", "category": "default", "bindings": [  ]
   },
   { "id": "NEXT_TAB", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "TAB" ] } ]
   },
   { "id": "NEXT_TARGET", "category": "default", "bindings": [ { "input_method": "mouse", "key": [ "SCROLL_DOWN" ] }, { "input_method": "keyboard", "key": [ "NPAGE" ] }, { "input_method": "keyboard", "key": [ ">" ] } ]
   },
+  { "id": "NOISE_EMITTER_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "NOISE_EMITTER_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "OXYGEN_BOTTLE", "category": "default", "bindings": [  ]
+  },
+  { "id": "OXYTORCH", "category": "default", "bindings": [  ]
+  },
+  { "id": "PACK_ITEM", "category": "default", "bindings": [  ]
+  },
   { "id": "PAGE_DOWN", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "NPAGE" ] } ]
   },
   { "id": "PAGE_UP", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "PPAGE" ] } ]
+  },
+  { "id": "PANACEA", "category": "default", "bindings": [  ]
+  },
+  { "id": "PHEROMONE", "category": "default", "bindings": [  ]
+  },
+  { "id": "PICKAXE", "category": "default", "bindings": [  ]
+  },
+  { "id": "PLANTBLECH", "category": "default", "bindings": [  ]
+  },
+  { "id": "POISON", "category": "default", "bindings": [  ]
+  },
+  { "id": "PORTABLE_GAME", "category": "default", "bindings": [  ]
+  },
+  { "id": "PORTAL", "category": "default", "bindings": [  ]
   },
   { "id": "PRECISE_SHOT", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "p" ] } ]
   },
@@ -759,7 +1007,33 @@
   },
   { "id": "PREV_TARGET", "category": "default", "bindings": [ { "input_method": "mouse", "key": [ "SCROLL_UP" ] }, { "input_method": "keyboard", "key": [ "PPAGE" ] }, { "input_method": "keyboard", "key": [ "<" ] } ]
   },
+  { "id": "PROZAC", "category": "default", "bindings": [  ]
+  },
+  { "id": "PURIFIER", "category": "default", "bindings": [  ]
+  },
+  { "id": "PURIFY_IV", "category": "default", "bindings": [  ]
+  },
+  { "id": "PURIFY_SMART", "category": "default", "bindings": [  ]
+  },
   { "id": "QUIT", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "ESC" ] }, { "input_method": "keyboard", "key": [ "q" ] }, { "input_method": "keyboard", "key": [ "Q" ] }, { "input_method": "keyboard", "key": [ "SPACE" ] }, { "input_method": "gamepad", "key": [ "JOY_3" ] } ]
+  },
+  { "id": "RADGLOVE", "category": "default", "bindings": [  ]
+  },
+  { "id": "RADIOCAR", "category": "default", "bindings": [  ]
+  },
+  { "id": "RADIOCARON", "category": "default", "bindings": [  ]
+  },
+  { "id": "RADIOCONTROL", "category": "default", "bindings": [  ]
+  },
+  { "id": "RADIO_MOD", "category": "default", "bindings": [  ]
+  },
+  { "id": "RADIO_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "RADIO_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "REMOTEVEH", "category": "default", "bindings": [  ]
+  },
+  { "id": "REMOVE_ALL_MODS", "category": "default", "bindings": [  ]
   },
   { "id": "RESET_FILTER", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "r" ] }, { "input_method": "keyboard", "key": [ "R" ] } ]
   },
@@ -771,11 +1045,47 @@
   },
   { "id": "RIGHT_WIDE", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "L" ] } ]
   },
+  { "id": "RM13ARMOR_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "RM13ARMOR_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "ROBOTCONTROL", "category": "default", "bindings": [  ]
+  },
+  { "id": "ROYAL_JELLY", "category": "default", "bindings": [  ]
+  },
   { "id": "SEARCH", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "/" ] } ]
   },
   { "id": "SEC_SELECT", "category": "default", "bindings": [ { "input_method": "mouse", "key": [ "MOUSE_RIGHT" ] } ]
   },
+  { "id": "SEED", "category": "default", "bindings": [  ]
+  },
   { "id": "SELECT", "category": "default", "bindings": [ { "input_method": "mouse", "key": [ "MOUSE_LEFT" ] } ]
+  },
+  { "id": "SEWAGE", "category": "default", "bindings": [  ]
+  },
+  { "id": "SEW_ADVANCED", "category": "default", "bindings": [  ]
+  },
+  { "id": "SHAVEKIT", "category": "default", "bindings": [  ]
+  },
+  { "id": "SHOCKTONFA_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "SHOCKTONFA_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "SIPHON", "category": "default", "bindings": [  ]
+  },
+  { "id": "SLEEP", "category": "default", "bindings": [  ]
+  },
+  { "id": "SMOKING", "category": "default", "bindings": [  ]
+  },
+  { "id": "SOLARPACK", "category": "default", "bindings": [  ]
+  },
+  { "id": "SOLARPACK_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "SPRAY_CAN", "category": "default", "bindings": [  ]
+  },
+  { "id": "STIMPACK", "category": "default", "bindings": [  ]
+  },
+  { "id": "STRONG_ANTIBIOTIC", "category": "default", "bindings": [  ]
   },
   { "id": "SWITCH_AIM", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "m" ] } ]
   },
@@ -783,14 +1093,114 @@
   },
   { "id": "SWITCH_MODE", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "s" ] } ]
   },
+  { "id": "TAZER", "category": "default", "bindings": [  ]
+  },
+  { "id": "TELEPORT", "category": "default", "bindings": [  ]
+  },
+  { "id": "THORAZINE", "category": "default", "bindings": [  ]
+  },
+  { "id": "THROWABLE_EXTINGUISHER_ACT", "category": "default", "bindings": [  ]
+  },
   { "id": "TOGGLE_FAST_SCROLL", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "f" ] } ]
   },
   { "id": "TOGGLE_SNAP_TO_TARGET", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "*" ] } ]
   },
+  { "id": "TOOLMOD_ATTACH", "category": "default", "bindings": [  ]
+  },
+  { "id": "TORCH_LIT", "category": "default", "bindings": [  ]
+  },
+  { "id": "TOWEL", "category": "default", "bindings": [  ]
+  },
   { "id": "TRAVEL_TO", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "T" ] } ]
+  },
+  { "id": "TRIMMER_OFF", "category": "default", "bindings": [  ]
+  },
+  { "id": "TRIMMER_ON", "category": "default", "bindings": [  ]
+  },
+  { "id": "UNFOLD_GENERIC", "category": "default", "bindings": [  ]
+  },
+  { "id": "UNPACK_ITEM", "category": "default", "bindings": [  ]
   },
   { "id": "UP", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "k" ] }, { "input_method": "keyboard", "key": [ "8" ] }, { "input_method": "keyboard", "key": [ "UP" ] }, { "input_method": "gamepad", "key": [ "JOY_UP" ] } ]
   },
   { "id": "UP_WIDE", "category": "default", "bindings": [ { "input_method": "keyboard", "key": [ "K" ] } ]
+  },
+  { "id": "VACCINE", "category": "default", "bindings": [  ]
+  },
+  { "id": "VIBE", "category": "default", "bindings": [  ]
+  },
+  { "id": "VORTEX", "category": "default", "bindings": [  ]
+  },
+  { "id": "WASHCLOTHES", "category": "default", "bindings": [  ]
+  },
+  { "id": "WATER_PURIFIER", "category": "default", "bindings": [  ]
+  },
+  { "id": "WEAK_ANTIBIOTIC", "category": "default", "bindings": [  ]
+  },
+  { "id": "WEATHER_TOOL", "category": "default", "bindings": [  ]
+  },
+  { "id": "WEED_BROWNIE", "category": "default", "bindings": [  ]
+  },
+  { "id": "XANAX", "category": "default", "bindings": [  ]
+  },
+  { "id": "ammobelt", "category": "default", "bindings": [  ]
+  },
+  { "id": "bandolier", "category": "default", "bindings": [  ]
+  },
+  { "id": "cauterize", "category": "default", "bindings": [  ]
+  },
+  { "id": "consume_drug", "category": "default", "bindings": [  ]
+  },
+  { "id": "countdown", "category": "default", "bindings": [  ]
+  },
+  { "id": "debug_scent", "category": "default", "bindings": [  ]
+  },
+  { "id": "delayed_transform", "category": "default", "bindings": [  ]
+  },
+  { "id": "deploy_furn", "category": "default", "bindings": [  ]
+  },
+  { "id": "deploy_tent", "category": "default", "bindings": [  ]
+  },
+  { "id": "detach_gunmods", "category": "default", "bindings": [  ]
+  },
+  { "id": "enzlave", "category": "default", "bindings": [  ]
+  },
+  { "id": "explosion", "category": "default", "bindings": [  ]
+  },
+  { "id": "fireweapon_off", "category": "default", "bindings": [  ]
+  },
+  { "id": "fireweapon_on", "category": "default", "bindings": [  ]
+  },
+  { "id": "heal", "category": "default", "bindings": [  ]
+  },
+  { "id": "inscribe", "category": "default", "bindings": [  ]
+  },
+  { "id": "install_bionic", "category": "default", "bindings": [  ]
+  },
+  { "id": "manualnoise", "category": "default", "bindings": [  ]
+  },
+  { "id": "musical_instrument", "category": "default", "bindings": [  ]
+  },
+  { "id": "mutagen", "category": "default", "bindings": [  ]
+  },
+  { "id": "mutagen_iv", "category": "default", "bindings": [  ]
+  },
+  { "id": "picklock", "category": "default", "bindings": [  ]
+  },
+  { "id": "place_monster", "category": "default", "bindings": [  ]
+  },
+  { "id": "place_trap", "category": "default", "bindings": [  ]
+  },
+  { "id": "reveal_map", "category": "default", "bindings": [  ]
+  },
+  { "id": "salvage", "category": "default", "bindings": [  ]
+  },
+  { "id": "saw_barrel", "category": "default", "bindings": [  ]
+  },
+  { "id": "transform", "category": "default", "bindings": [  ]
+  },
+  { "id": "unfold_vehicle", "category": "default", "bindings": [  ]
+  },
+  { "id": "ups_based_armor", "category": "default", "bindings": [  ]
   }
 ]
