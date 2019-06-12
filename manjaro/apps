@@ -25,6 +25,10 @@ python-beautifulsoup4 beets lyrics plugin dependency
 python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
 
+[cataclysm]
+cataclysm-dda Ascii post-apocalyptic roguelike
+cataclysm-dda-tiles Gui post-apocalyptic roguelike
+
 # gui
 keepassxc Password database
 kitty Terminal emulator
