@@ -16,8 +16,14 @@
 sxhkd Hotkey assignment
 
 [lemonbar]
-lemonbar-xft-git
-perl-anyevent-i3
+lemonbar-xft-git Customizable bar
+perl-anyevent-i3 i3 eventlistener library
+
+[beets]
+beets Automatic music tagger
+python-beautifulsoup4 beets lyrics plugin dependency
+python-requests beets fetchart/lyrics plugin dependency
+imagemagick beets embedArt plugin dependency
 
 # gui
 keepassxc Password database
@@ -213,9 +219,6 @@ npm:@typescript-eslint/parser Typescript eslint parser
 npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 
 ## music
-beets Automatic music tagger
-python-beautifulsoup4 beets plugin dependency
-python-requests beets plugin dependency
 kid3 Visual (mp3) tag editor
 mutagen-tools Cli tagging tools
 
