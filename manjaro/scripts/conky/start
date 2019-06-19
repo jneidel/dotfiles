@@ -5,9 +5,6 @@ CD=~/.config/conky # ConfigDir
 fkill conky
 conky -c $CD/conky.conf # &&
 
-# conky -c $CD/cmus.conf
-# Todo:
-# - adapt for mpd
-# - fix image
-# - get image from pi
+conky -c $CD/cmus.conf
+# fix current track: ${font Bitstream Vera Sans:size=10}$color2$alignr${execi 5 ~/.tmux/cmus-current-track}
 

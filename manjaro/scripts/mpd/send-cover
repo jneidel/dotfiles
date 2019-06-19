@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# On mpd player state change update a tmp file with the cover of the current song
+# and send a notification of change to a named pipe which should be listened to by
+# any client interested in receiving the cover. Get it on the client using scp.
+
+IP=$(ipa)
+PORT=5555
+
+PIPE_LOCATION=/home/jneidel/mpd-pipe
+MUSIC_LOCATION=/mnt/usb
+COVER_LOCATION=/tmp/mpd-cover.jpg
+
+function createCover {
+  while read i;
+  do
+    FILE="$MUSIC_LOCATION/$(mpc -h $IP -p $PORT -f %file% | cut -d$'\n' -f1)"
+
+    [ "$LAST_FILE" = "$FILE" ] && continue
+    LAST_FILE="$FILE"
+
+    ffmpeg -i "$FILE" -y $COVER_LOCATION > /dev/null 2>&1
+    [ $(echo $?) -eq 0 ] && { # find fallback if there is no cover
+      echo Reloading cover
+      echo "$COVER_LOCATION" > $PIPE_LOCATION
+    }
+  done
+}
+
+mpc -h $IP -p $PORT idleloop "player" | createCover

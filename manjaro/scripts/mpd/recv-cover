@@ -1,0 +1,12 @@
+#! /bin/sh
+
+# Receive the cover from send-cover
+
+while true
+  do ssh pih 'cat mpd-pipe' | {
+    scp pih:/tmp/mpd-cover.jpg ~/tmp/cover.jpg
+  }
+done
+
+# fix: not killable with ^c
+
