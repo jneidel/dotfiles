@@ -13,8 +13,8 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "mpc command wrapper with the correct mpd config"
   echo ""
   echo "Connection params:"
-  echo "  -h $IP" 
-  echo "  -p $PORT" 
+  echo "  -h $IP"
+  echo "  -p $PORT"
   echo ""
   echo "Common commands:"
   echo "  current - current song info"
@@ -32,5 +32,8 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-mpc -h "$IP" -p "$PORT" "$@"
+timeout 1 mpc -h "$IP" -p "$PORT" "$@"
+
+# try local if pi timedout
+[ $(echo $?) -gt 0 ] && mpc -p $PORT "$@"
 

@@ -101,7 +101,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" the default splits are inverted, which is counter intuitive 
+" the default splits are inverted, which is counter intuitive
 set splitbelow " on sp
 set splitright " on vsp
 
@@ -218,3 +218,5 @@ endfunction
 "## Source external configs/plugins
 source ~/.vim/config/init.vim
 
+"## Light theme
+"source ~/.vim/colors/light.vim
