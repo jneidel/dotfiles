@@ -1,0 +1,40 @@
+#! /bin/sh
+
+# On mpd player state change update a tmp file with the cover of the current song
+# and send a notification of change to a named pipe which should be listened to by
+# any client interested in receiving the cover. Get it on the client using scp.
+
+PORT=5555
+
+MUSIC_LOCATION=~/music
+COVER_LOCATION=~/tmp/cover.jpg
+TMP_LOCATION=/tmp/mpd-cover.jpg
+FALLBACK_LOCATION=~/scripts/mpd/fallback-cover.jpg
+
+function createCover {
+  while read i;
+  do
+    FILE="$MUSIC_LOCATION/$(mpc -p $PORT -f %file% | cut -d$'\n' -f1)"
+
+    [ "$LAST_FILE" = "$FILE" ] && continue
+    LAST_FILE="$FILE"
+
+    ffmpeg -i "$FILE" -y $TMP_LOCATION > /dev/null 2>&1
+
+    [ $(echo $?) -eq 0 ] && { # was cover extraction successful
+      echo Reloading cover
+      cp $TMP_LOCATION $COVER_LOCATION
+    } || {
+      echo Reloading cover with fallback
+      cp $FALLBACK_LOCATION $COVER_LOCATION
+    }
+  done
+}
+
+mpc -p $PORT idleloop "player" | createCover
+
+# notes:
+#  I scaled up the fallback image to 1200 (from 480),
+#  as conky did not update the image after the small
+#  fallback was set
+

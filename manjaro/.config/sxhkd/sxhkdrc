@@ -7,3 +7,8 @@ XF86AudioLowerVolume
   ~/scripts/i3/volume/set-vol.sh -5
 XF86AudioRaiseVolume
   ~/scripts/i3/volume/set-vol.sh +5
+
+super + m
+  kitty ncpamixer
+
+# kill $(pidof sxhkd); sxhkd on write

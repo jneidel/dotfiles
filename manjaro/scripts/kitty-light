@@ -1,0 +1,12 @@
+#! /bin/sh
+
+CONF=~/.config/kitty/light.conf
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ kitty-light"
+  echo "Start kitty using the $CONF config"
+  exit
+fi
+
+kitty -c $CONF
+

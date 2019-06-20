@@ -1,0 +1,9 @@
+#! /bin/sh
+
+# automate as service?
+# to have cover logging
+
+mpd &
+~/scripts/mpd/get-local-cover &
+~/scripts/mpd/recv-cover &
+

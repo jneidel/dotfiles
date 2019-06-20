@@ -179,12 +179,12 @@ jq JSON processor
 mongodb MongoDB database
 ngrok Open localhost to the outside
 
-## pulseaudio
+[pulseaudio]
 pulseaudio Pulseaudio server
-libpulse Pulseaudio client
 pulseaudio-alsa Alsa integration
 Pulseaudio-bluetooth Bluetooth integration
 pulsemixer Pulseaudio mixer
+ncpamixer-git Alternative pulseaudio mixer
 
 # npm
 nodejs Javascript runtime

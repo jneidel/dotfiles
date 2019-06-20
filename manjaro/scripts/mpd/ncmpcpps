@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# todo: handle mpd error: No route to host
+#  and use localhost instead
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 IP=$(cat "$DIR/current-mpd-ip")
 
@@ -8,10 +11,10 @@ PORT=5555
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ ncmpcpps"
   echo "Connect ncmpcpp to mpd running on this devices ip address"
-  echo "" 
+  echo ""
   echo "Connection params:"
-  echo "  -h $IP" 
-  echo "  -p $PORT" 
+  echo "  -h $IP"
+  echo "  -p $PORT"
   exit
 fi
 
