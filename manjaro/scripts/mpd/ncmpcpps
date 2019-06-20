@@ -18,5 +18,9 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-ncmpcpp -h "$IP" -p "$PORT" 2> /dev/null
+timeout 1 mpc -h "$IP" -p "$PORT" status > /dev/null 2> /dev/null
+
+[ $(echo $?) -eq 0 ] && \
+  ncmpcpp -h "$IP" -p "$PORT" 2> /dev/null || \
+  ncmpcpp -p "$PORT" 2> /dev/null # try local if pi timedout
 

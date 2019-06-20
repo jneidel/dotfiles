@@ -20,26 +20,28 @@ POWER=/sys/class/power_supply
 
 PERCENT=$(python -c "print($(cat $CHARGE)/$(cat $CAPACITY)*100)" | cut -d "." -f1)
 PERCENT_ICON=$(
-  if [ "$PERCENT" -gt 90 ] && [ "$PERCENT" -le 100 ]; then
+  if [ "$PERCENT" -gt 95 ] && [ "$PERCENT" -le 100 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 80 ] && [ "$PERCENT" -le 90 ]; then
+  elif [ "$PERCENT" -gt 90 ] && [ "$PERCENT" -le 95 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 70 ] && [ "$PERCENT" -le 80 ]; then
+  elif [ "$PERCENT" -gt 80 ] && [ "$PERCENT" -le 90 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 60 ] && [ "$PERCENT" -le 70 ]; then
+  elif [ "$PERCENT" -gt 65 ] && [ "$PERCENT" -le 80 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 50 ] && [ "$PERCENT" -le 60 ]; then
+  elif [ "$PERCENT" -gt 55 ] && [ "$PERCENT" -le 65 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 40 ] && [ "$PERCENT" -le 50 ]; then
+  elif [ "$PERCENT" -gt 42 ] && [ "$PERCENT" -le 55 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 30 ] && [ "$PERCENT" -le 40 ]; then
+  elif [ "$PERCENT" -gt 35 ] && [ "$PERCENT" -le 42 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 20 ] && [ "$PERCENT" -le 30 ]; then
+  elif [ "$PERCENT" -gt 30 ] && [ "$PERCENT" -le 35 ]; then
       echo " "
-  elif [ "$PERCENT" -gt 10 ] && [ "$PERCENT" -le 20 ]; then
+  elif [ "$PERCENT" -gt 15 ] && [ "$PERCENT" -le 30 ]; then
       echo " "
-  elif [ "$PERCENT" -ge 0 ] && [ "$PERCENT" -le 10 ]; then
+  elif [ "$PERCENT" -ge 5 ] && [ "$PERCENT" -le 15 ]; then
       echo " "
+  elif [ "$PERCENT" -ge 0 ] && [ "$PERCENT" -le 5 ]; then
+      echo " "
   fi
 )
 
