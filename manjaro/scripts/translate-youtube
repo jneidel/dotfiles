@@ -1,0 +1,21 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  echo "$ translate-youtube"
+  echo "Translate a normal youtube link into a embed nocookie link"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: youtube link"
+  echo ""
+  echo "Example:"
+  echo "$ translate-youtube \"https://www.youtube.com/watch?v=R5k0__kBEyM\""
+  exit
+fi
+
+IN="$1"
+# in: https://www.youtube.com/watch?v=R5k0__kBEyM
+# out: https://www.youtube-nocookie.com/embed/R5k0__kBEyM?autoplay=1&auto_play=true
+echo "$IN" | sed "s|.com/watch?v=|-nocookie.com/embed/|" | cut -d\& -f1 | awk '{ print $1"?autoplay=1&auto_play=true" }'
+
+# todo: echo link if not for youtube.com
+

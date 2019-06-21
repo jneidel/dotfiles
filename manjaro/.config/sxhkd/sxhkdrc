@@ -4,9 +4,9 @@ super + d
 XF86AudioMute
   ~/scripts/i3/volume/mute.sh
 XF86AudioLowerVolume
-  ~/scripts/i3/volume/set-vol.sh -5
+  ~/scripts/i3/volume/set-vol.sh -2
 XF86AudioRaiseVolume
-  ~/scripts/i3/volume/set-vol.sh +5
+  ~/scripts/i3/volume/set-vol.sh +2
 
 super + m
   kitty ncpamixer

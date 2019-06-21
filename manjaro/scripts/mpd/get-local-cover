@@ -5,36 +5,70 @@
 # any client interested in receiving the cover. Get it on the client using scp.
 
 PORT=5555
-
 MUSIC_LOCATION=~/music
 COVER_LOCATION=~/tmp/cover.jpg
 TMP_LOCATION=/tmp/mpd-cover.jpg
 FALLBACK_LOCATION=~/scripts/mpd/fallback-cover.jpg
 
+function startConky {
+  conky -c ~/.config/conky/mpd.conf 2> /dev/null
+}
+function getConkyPid {
+  ps | grep " conky" | cut -dp  -f1 | sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
+}
+function killConky {
+  kill $(getConkyPid) > /dev/null 2> /dev/null
+}
+function restartConky {
+  killConky
+  startConky
+  # due to a bug, where the image file that conky loads is <100kb,
+  # it will not notice changes and thus not reload the conky once
+  # the image changes, so I have to manually restart the conky
+}
+startConky
+
+while true # kill conky after 3min of not playing anything
+  do {
+    [ ! "$(mpcc status | grep "^\[" | cut -d] -f1 | cut -d\[ -f2)" = "playing" ] && {
+      killConky
+    }
+    sleep 3m
+  }
+done &
+
 function createCover {
   while read i;
   do
+    [ -z "$(getConkyPid)" ] && startConky # stark conky if killed for not playing for 3min
+
     FILE="$MUSIC_LOCATION/$(mpc -p $PORT -f %file% | cut -d$'\n' -f1)"
 
-    [ "$LAST_FILE" = "$FILE" ] && continue
+    [ "$LAST_FILE" = "$FILE" ]  && continue
     LAST_FILE="$FILE"
 
     ffmpeg -i "$FILE" -y $TMP_LOCATION > /dev/null 2>&1
+    # write to tmp location first, so I can do cover size check
+    FFMPEG_STATUS=$(echo $?)
 
-    [ $(echo $?) -eq 0 ] && { # was cover extraction successful
+    # check if current cover size is <100kb,
+    # which would cause conky not to reload it on changes
+    [ $(du -sh $COVER_LOCATION | cut -dK -f1) -lt 100 ] && RESTART_CONKY=1
+
+    [ $FFMPEG_STATUS -eq 0 ] && { # cover extraction successful
       echo Reloading cover
       cp $TMP_LOCATION $COVER_LOCATION
-    } || {
+    } || { # extraction failed, reload fallback
       echo Reloading cover with fallback
       cp $FALLBACK_LOCATION $COVER_LOCATION
+    }
+
+    [ "$RESTART_CONKY" -eq 1 ] && {
+      restartConky
+      RESTART_CONKY=0
     }
   done
 }
 
 mpc -p $PORT idleloop "player" | createCover
-
-# notes:
-#  I scaled up the fallback image to 1200 (from 480),
-#  as conky did not update the image after the small
-#  fallback was set
 

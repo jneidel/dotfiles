@@ -3,5 +3,6 @@
 CONF=~/.config/conky
 
 conky -c $CONF/conky.conf
-conky -c $CONF/mpd.conf
+# conky -c $CONF/mpd.conf
+# start from get-local-cover
 
