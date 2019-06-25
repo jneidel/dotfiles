@@ -93,8 +93,8 @@ let g:prettier#autoformat = 0
 "au Filetype javascript,typescript,css,json,html,yaml au BufWritePre * PrettierAsync
 "au BufWritePre *.js,*.ts,*.css,*.json,*.html,*.jsx,*.mjs,*.tsx,*.scss,*.graphql,*.vue PrettierAsync
 
-au BufWritePre *.js nnoremap <Leader>l mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc<CR>`F
-au BufWritePre *.ts nnoremap <Leader>l mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
+au BufRead,BufNewFile *.js nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc<CR>`F
+au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
 "au BufWritePre *.js :%!eslint_d --stdin --fix-to-stdout
 
 " Autofix entire buffer with eslint_d:

@@ -1,12 +1,15 @@
 [user]
-	name = Jonathan Neidel
-	email = git@jneidel.com
-	signingkey = 7dfd16fa
+  name = Jonathan Neidel
+  email = jneidel@jneidel.com
+  signingkey = B29E6A7A7DFD16FA
 [core]
-	excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
 [alias]
   s = status
   b = branch
   l = log --oneline --graph --decorate
   ref = reflog
-
+[commit]
+  gpgsign = true
+  # How to setup commit signing:
+  # https://help.github.com/en/articles/managing-commit-signature-verification
