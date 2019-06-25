@@ -94,13 +94,10 @@ alias -g N2="> /dev/null 2>&1" # only stderr, prev NUL
 alias -g PB="| nc termbin.com 9999" # terminal pastebin
 alias -g C="| wc -l | human-number" # get count
 alias -g CP="| xclip -f -sel clip" # copy to clipboard
-alias -g HN="| sed 's/\(.\)/\1\n/g' # | sed '/^\s*$/d' | sed '1!G;h;$!d' | sed ': loop; n; n; a .
-n; b loop' | sed '1!G;h;$!d' | tr -d '\r\n' | sed 's/^\.//'"
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
-alias letsplay="$B https://www.webtoons.com/en/romance/letsplay/list\?title_no\=1218"
 
 ## Unused
 alias hdmi="xrandr --output HDMI1 --auto" # dublicate screen on connected hdmi

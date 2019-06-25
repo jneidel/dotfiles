@@ -5,14 +5,17 @@
 # tsr is a tsr wrapper, which starts the daemon if it's not already running
 alias tsm="tsr -l" # list torrents
 
-alias tsmadd="tsr -a" # add torrent
-alias tsma="tsmadd"
-
-tsmpause() { tsr -t"$1" --stop; }  # stop id or all
+tsmpause() { tsr -t"$1" --stop }  # stop id or all
 alias tsmp="tsmpause"
 
-tsmstart() { tsr -t"$1" --start; } # start id or all
+tsmstart() { tsr -t"$1" --start } # start id or all
 alias tsms="tsmstart"
+
+tsmadd() { # add torrent
+  tsr -a "$1"
+  tsms all
+}
+alias tsma="tsmadd"
 
 tsminfo() { # display torrent info
   tsm -t $1 -i G -P "Name:|Total size:|Downloaded:|Peers:"
