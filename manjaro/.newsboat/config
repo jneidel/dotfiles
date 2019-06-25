@@ -5,11 +5,11 @@
 ## basic config
 download-path "~/podcasts/%n"
 max-downloads 6
-player "vlc"
+player "mpv"
 
 ## reload feeds
 auto-reload yes
-reload-time 20
+#reload-time 20
 
 ## formatting
 download-filename-format "%t.%e"
@@ -75,7 +75,7 @@ color article           color252 color234
 
 # macros
 # default macro key: ,
-## Play youtube video in vlc
+## Play youtube video in mpv
 macro y set browser "~/scripts/vv 250 %u"; open-in-browser ; set browser "$BROWSER %u"
 ## Download video using youtube-dl
 macro d set browser "~/scripts/newsboat/yt-dl %u"; open-in-browser ; set browser "$BROWSER %u"
