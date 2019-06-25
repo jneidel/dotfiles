@@ -25,10 +25,6 @@ python-beautifulsoup4 beets lyrics plugin dependency
 python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
 
-[cataclysm]
-cataclysm-dda Ascii post-apocalyptic roguelike
-cataclysm-dda-tiles Gui post-apocalyptic roguelike
-
 # gui
 keepassxc Password database
 kitty Terminal emulator
@@ -38,8 +34,7 @@ gimp Photo editing
 
 ## player
 vlc Video player
-mplayer Headless audio player
-mpv Minimal video player
+mpv Minimal (video) player
 
 ## viewer/reader
 gwenview Extensive image viewer

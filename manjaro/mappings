@@ -135,13 +135,3 @@ create .config/sxhkd
 ### torrents
 [transmission]
 .config/transmission-daemon/settings.json
-
-## games
-[cataclysm]
-create .config/cataclysm-dda
-.config/cataclysm-dda/auto_pickup.json
-.config/cataclysm-dda/base_colors.json
-.config/cataclysm-dda/custom_colors.json
-.config/cataclysm-dda/fonts.json
-.config/cataclysm-dda/keybindings.json
-.config/cataclysm-dda/options.json
