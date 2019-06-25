@@ -70,7 +70,8 @@ create .config/sxhkd
 ### monitor
 [conky]
 .config/conky/conky.conf
-.config/conky/cmus.conf
+.config/conky/mpd.conf
+scripts/conky
 
 [htop]
 .config/htop/htoprc
@@ -108,6 +109,8 @@ create .config/sxhkd
 ### music
 [mpd]
 .config/mpd/mpd.conf
+.config/conky/mpd.conf
+scripts/mpd
 
 [ncmpcpp]
 .config/ncmpcpp/bindings
