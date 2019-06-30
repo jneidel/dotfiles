@@ -51,3 +51,9 @@ export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
 ## User specific
 export KEYID=B29E6A7A7DFD16FA # GPG keyid
 
+# start xorg on first login into the tty
+# runs commands in ~/.xinitrc
+if [[ "$(tty)" = "/dev/tty1" ]]; then
+  pgrep i3 || startx
+fi
+
