@@ -206,14 +206,20 @@ npm:browser-sync Reload browser on changes
 #npm:npm-check-updates
 #npm:updates?
 
-## eslint
+[eslint]
 npm:eslint Javascript linter
+npm:eslint_d Eslint script for vim
+
 npm:prettier Code formatter
-npm:eslint_d Eslint script
-npm:eslint-config-xo xo eslint plugin
-npm:eslint-plugin-node node eslint plugin
-npm:eslint-plugin-unicorn unicorn eslint plugin
-npm:eslint-config-xo-typescript Typescript eslint plugin
+
+npm:typescript Typescript compiler
+
+npm:eslint-config-xo xo eslint config
+npm:eslint-config-xo-typescript Typescript eslint config
+
+npm:eslint-plugin-node Eslint node ruleset
+npm:eslint-plugin-unicorn Eslint unicorn ruleset
+
 npm:@typescript-eslint/parser Typescript eslint parser
 npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 

@@ -1,0 +1,20 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ tam"
+  echo "Start or attach to the tmux main session"
+  exit
+fi
+
+NAME=main
+tmux has-session -t $NAME &> /dev/null
+
+if [ $? != 0 ]; then
+  tmux new -s $NAME -n vim
+  tmux send-keys -t $NAME "clear && vim" "Enter"
+  tmux rename-window -t $NAME vim
+  tmux new-window
+fi
+
+tmux attach -t $NAME
+

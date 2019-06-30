@@ -8,8 +8,7 @@ au BufWritePost ~/code/dotfiles/manjaro/music.md !markdown-toc -i ~/code/dotfile
 " Run xrdb whenever Xdefaults or Xresources are updated.
 au BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
-" Regenerate eslint configs on save
+" Generate eslint configs on save and restart eslint daemon
 au BufWritePost ~/.eslint/*.json !~/.eslint/generate-eslint-configs.js
-
-au BufWritePost ~/code/dwm/* !make -C ~/code/dwm
+au BufWritePost ~/.eslint/*.json !eslint_d restart
 

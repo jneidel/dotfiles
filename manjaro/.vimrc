@@ -124,6 +124,8 @@ set splitright " on vsp
 "## Sessions
 " Dont write vimrc option to sessionfile - vimrc changes would be overwritten by old ones
 " source: https://stackoverflow.com/a/31978241
+
+" don't store vim options (config) in session
 set ssop-=options
 
 function! MakeSession()

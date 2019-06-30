@@ -1,0 +1,3 @@
+#! /bin/sh
+
+~/scripts/status/i3-lemonbar/run-lemonbar &

@@ -14,7 +14,7 @@ function startConky {
   conky -c ~/.config/conky/mpd.conf 2> /dev/null
 }
 function getConkyPid {
-  ps | grep " conky" | cut -dp  -f1 | sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
+  ps -t | grep " conky" | grep "mpd.conf" | cut -dp  -f1 | sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
 }
 function killConky {
   kill $(getConkyPid) > /dev/null 2> /dev/null

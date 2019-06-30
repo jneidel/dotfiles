@@ -1,0 +1,21 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ] || [ -z "$2" ]; then
+  echo "$ scps"
+  echo "Copy file from on server to the other,"
+  echo "saving it into a temp file in between"
+  echo "to get around scp restriction to not do this directly."
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: Server source location"
+  echo "  \$2: Server destination"
+  echo ""
+  echo "Example:"
+  echo "$ scps k:~/.zshrc u:~"
+  exit
+fi
+
+TMP=/tmp/scps.tmp
+scp $1 $TMP
+scp $TMP $2
+

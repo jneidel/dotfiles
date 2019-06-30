@@ -1,0 +1,27 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ tmux-code"
+  echo "Start the code session"
+  exit
+fi
+
+NAME=code
+DIR=~/code/mangareader-dl
+tmux has-session -t $NAME &> /dev/null
+
+if [ $? != 0 ]; then
+  tmux new-session -s $NAME -n vim -c $DIR -d
+  tmux send-keys -t $NAME "clear && vim" "Enter"
+  tmux rename-window -t $NAME vim
+  tmux new-window -n test -c $DIR
+  tmux send-keys -t $NAME "clear" "Enter" "nwt"
+  tmux split-window -v -p 45 -c $DIR
+  tmux send-keys -t $NAME "nwts" "Enter"
+  tmux new-window -n run -c $DIR/dist/bin
+  tmux send-keys -t $NAME "clear" "Enter" "./cli.js"
+fi
+
+tmux attach -t $NAME
+
+
