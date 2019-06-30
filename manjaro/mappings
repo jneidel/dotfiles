@@ -51,7 +51,7 @@ create .config/polybar
 
 ### Xorg
 [xinit]
-.xinit
+.xinitrc
 
 [xmodmap]
 .Xmodmap
