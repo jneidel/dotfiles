@@ -1,29 +1,32 @@
-" Set filetypes for specific files
-" info: http://vimcasts.org/episodes/whitespace-preferences-and-filetypes/
+"# vim filetypes
+" set missing filetypes for specific files
+" see: http://vimcasts.org/episodes/whitespace-preferences-and-filetypes/
 "
-" Structure
-" condition: autocmd Filetype <filetype>
-" condition: autocmd BufRead <filepath>
-" do       : setlocal (to set options for this buffer only)
+" Structure:
+" condition: au Filetype <filetype>
+" condition: au BufRead <filepath>
+" action   : setfiletype <filetype>
+" action   : setlocal (to set options for this buffer only) <options>
 "
 
-" Calcurse notes buffer md syntax
-autocmd BufRead,BufNewFile /tmp/calcurse* setfiletype markdown
-autocmd BufRead,BufNewFile ~/.calcurse/notes* setfiletype markdown
+" calcurse notes
+au BufRead,BufNewFile /tmp/calcurse* setfiletype markdown
+au BufRead,BufNewFile ~/.calcurse/notes* setfiletype markdown
 
-" JSON syntax for eslint configs
-autocmd BufRead *.eslintrc* ~/.eslint/* setfiletype json
+" eslint configs
+au BufRead *.eslintrc* ~/.eslint/* setfiletype json
 
-" Conky config
-au BufRead ~/scripts/status/status-config setfiletype conkyrc
+" conky configs
+au BufRead *conkyrc* setfiletype conkyrc
+au BufRead ~/.config/conky/* setfiletype conkyrc
 
-" Spellchecking for Markdown files
+" spellchecking for Markdown files
 au Filetype markdown setlocal spell spelllang=en_us,de
-" Wrap text at 80 characters
+" wrap text at 80 characters
 au Filetype markdown setlocal textwidth=80
 au FileType markdown setlocal formatoptions+=t
 
-" Enable javascript syntax folding
+" enable javascript syntax folding
 augroup javascript_folding
   au!
   "au FileType javascript setlocal foldmethod=syntax
@@ -43,5 +46,5 @@ function! <SID>StripTrailingWhitespaces()
   let @/=_s
   call cursor(l, c)
 endfunction
-autocmd BufWritePre *.js,*.ts,*.sh,*.pug,*.html,*.css,*.scss :call <SID>StripTrailingWhitespaces()
+au BufWritePre *.js,*.ts,*.sh,*.pug,*.html,*.css,*.scss :call <SID>StripTrailingWhitespaces()
 
