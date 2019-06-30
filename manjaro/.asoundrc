@@ -1,17 +1,17 @@
 # alsa config
-
 # use 'aplay -l' to check for available sound cards
 
 pcm.!default {
   type hw
-  card 1
-}
-ctl.!default {
-  type hw
-  card 1
+  card PCH
 }
 
-# Enables multiple applications to ouput sound at the same time
+ctl.!default {
+  type hw
+  card PCH
+}
+
+# enable multiple applications to ouput sound at the same time
 pcm.dsp {
   type plug
   slave.pcm "dmix"
