@@ -11,6 +11,7 @@
 
 [vim]
 .vimrc
+create .vim
 .vim/config
 .vim/autoload
 .vim/colors
@@ -33,6 +34,7 @@ clean scripts
 .config/kitty
 
 [terminator]
+create .config/terminator
 .config/terminator/config
 
 ### window manager
@@ -44,6 +46,7 @@ clean scripts
 .i3status.conf
 
 [polybar]
+create .config/polybar
 .config/polybar/config
 
 ### Xorg
@@ -62,6 +65,7 @@ create .config/sxhkd
 
 ### sound
 [pulseaudio]
+create .config/pulse
 .config/pulse/default.pa
 
 [alsa]
@@ -69,14 +73,17 @@ create .config/sxhkd
 
 ### monitor
 [conky]
+create .config/conky
 .config/conky/conky.conf
 .config/conky/mpd.conf
 scripts/conky
 
 [htop]
+create .config/htop
 .config/htop/htoprc
 
 [nitrogen]
+create .config/nitrogen
 .config/nitrogen/bg-saved.cfg
 .config/nitrogen/nitrogen.cfg
 
@@ -104,27 +111,35 @@ scripts/conky
 .npmrc
 
 [zeal]
+create .config/Zeal
 .config/Zeal/Zeal.conf
 
 ### music
 [mpd]
+create .config/mpd
 .config/mpd/mpd.conf
+create .config/conky
 .config/conky/mpd.conf
+create scripts
 scripts/mpd
 
 [ncmpcpp]
+create .config/ncmpcpp
 .config/ncmpcpp/bindings
 .config/ncmpcpp/config
 
 [cmus]
+create .cmus
 .cmus/cmus.theme
 .cmus/rc
 
 [beets]
+create .config/beets
 .config/beets/config.yaml
 
 ### orga
 [calcurse]
+create .calcurse
 .calcurse/conf
 .calcurse/keys
 
@@ -133,8 +148,10 @@ scripts/mpd
 
 ### rss
 [newsboat]
+create .newsboat
 .newsboat/config
 
 ### torrents
 [transmission]
+create .config/transmission-daemon
 .config/transmission-daemon/settings.json
