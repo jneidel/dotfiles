@@ -1,0 +1,67 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DATA="$DIR/data"
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ run-entertainment-timer"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  exit
+fi
+
+formatDate() {
+  date '+%d-%m-%Y'
+}
+
+addDate() {
+  FILE="$1"
+
+  echo "$(formatDate) $STEP" >> "$FILE"
+}
+
+updateTime() {
+  FILE="$DATA/$1"
+
+  if cat "$FILE" > /dev/null 2> /dev/null
+  then
+    CURRENT=$(grep "$(formatDate)" "$FILE" 2> /dev/null | cut -d\  -f2)
+    sed -i -E "/$(formatDate)/ { s|\s[0-9]+$| $((CURRENT + STEP))| }" "$FILE"
+  else
+    addDate "$FILE"
+  fi
+}
+
+STEP=5
+LIMIT=20
+TIMER=0
+
+while true; do
+  MATCH=$(ps -x | grep -f $DIR/app-filter-pattern)
+
+  [ $? -eq 0 ] && { # timer advances on match
+    TIMER=$((TIMER + STEP))
+
+    while read -r PROGRAM; do
+      if pgrep "$PROGRAM" > /dev/null
+      then
+        updateTime "$PROGRAM"
+      fi
+    done < "$DIR/app-filter-pattern"
+  }
+
+  echo $TIMER
+
+  [ $TIMER -gt $LIMIT ] &&
+  [ -n "$MATCH" ] && {
+    echo killing processes
+    kill "$(echo "$MATCH" | cut -d\  -f1)"
+  }
+
+  sleep $STEP
+done
+
+# pgrep?
+
