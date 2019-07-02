@@ -28,6 +28,10 @@ create .vim/view
 [scripts]
 clean scripts
 
+[mpv]
+create .config/mpv
+.config/mpv/mpv.conf
+
 ## system
 ### terminal
 [kitty]
