@@ -1,0 +1,24 @@
+#! /bin/sh
+
+HOSTS=/etc/hosts
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ netflix-toggle"
+  echo "Remove/add netflix.com to $HOSTS"
+  exit
+fi
+
+if [ -e  $HOSTS ]; then
+  cat $HOSTS | grep www.netflix.com > /dev/null
+
+  [ $? -gt 0 ] && {
+    sudo sh -c "echo '0.0.0.0 www.netflix.com' >> $HOSTS"
+    printf "\033[1;32mAdded\033[0m netflix to hosts file\n"
+  } || {
+    sudo sed -i -n "/www.netflix.com/!p" $HOSTS
+    printf "\033[1;31mRemoved\033[0m netflix from hosts file\n"
+  }
+else
+  echo "Hosts file is not active"
+fi
+

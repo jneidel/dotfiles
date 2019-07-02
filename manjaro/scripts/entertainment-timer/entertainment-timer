@@ -1,0 +1,40 @@
+#! /bin/sh
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ entertainment-timer"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "$ entertainment-timer"
+  exit
+fi
+
+STEP=5
+LIMIT=20
+TIMER=0
+
+while true; do
+  MATCH=$(ps -x | grep -f $DIR/app-filter-pattern)
+
+  [ $? -eq 0 ] && { # timer advances on match
+    TIMER=$(($TIMER + $STEP))
+  }
+
+  echo $TIMER
+
+  [ $TIMER -gt $LIMIT ] &&
+  [ -n "$MATCH" ] && {
+    echo killing processes
+    kill $(echo $MATCH | cut -d\  -f1)
+  }
+
+  sleep $STEP
+done
+
+# pgrep?
+

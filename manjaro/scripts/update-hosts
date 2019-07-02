@@ -9,12 +9,13 @@ fi
 
 HOSTS=/etc/hosts
 HOSTS_DENY=/etc/hosts.deny
-OG_HOSTS=/home/jneidel/tmp/manjaro/etc/hosts
+OG_HOSTS=/home/jneidel/code/dotfiles/manjaro/etc/hosts
 
 echo "Setting $HOSTS"
-sudo rm $HOSTS > /dev/null
+sudo rm $HOSTS 2> /dev/null
 sudo cp $OG_HOSTS $HOSTS
-sudo curl -sSL https://hosts.ubuntu101.co.za/hosts | sed -e '1,55d' \
+curl -sSL https://hosts.ubuntu101.co.za/hosts \
+  | sed -e '1,55d' \
   | sed "/0.0.0.0 soundcloud.com/d" \
   | sed "/0.0.0.0 imagecomics.com/d" \
   | sed "/0.0.0.0 humblebundle.com/d" \
@@ -27,7 +28,9 @@ sudo curl -sSL https://hosts.ubuntu101.co.za/hosts | sed -e '1,55d' \
   | sed "/0.0.0.0 xkcd.com/d" \
   | sed "/0.0.0.0 www.namecheap.com/d" \
   | sed "/0.0.0.0 1337x.to/d" \
-  | sed "/0.0.0.0 www.catb.org/d" >> $HOSTS
+  | sed "/0.0.0.0 larrysanger.org/d" \
+  | sed "/0.0.0.0 www.catb.org/d" > /tmp/hosts
+sudo mv /tmp/hosts $HOSTS
 
 echo "Setting $HOSTS_DENY"
 sudo rm $HOSTS_DENY > /dev/null

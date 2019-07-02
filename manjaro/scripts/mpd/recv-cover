@@ -54,4 +54,5 @@ done
 
 # todo: dynamic ssh adress
 # fix: not killable with ^c
-
+  #test $? -gt 128 && break
+  # https://unix.stackexchange.com/questions/42287/terminating-an-infinite-loop
