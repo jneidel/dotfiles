@@ -1,14 +1,22 @@
 #! /bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+PROCESS_WATCHLIST="$DIR/process-watchlist"
 DATA="$DIR/data"
+mkdir -p "$DATA"
+RES_FIFO="$DIR/command-response-fifo"
+FIFO="$DIR/command-fifo"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ run-entertainment-timer"
+  echo "$ entertainment-timer-daemon"
+  echo "Daemon that watches a set of processes"
+  echo "and kills them once the time limit has been reached."
   echo ""
+  echo "To interact with this daemon use:"
+  echo "  entertainment-timer"
   echo ""
-  echo "Parameters:"
-  echo "  \$1: "
+  echo "Process watchlist:"
+  cat $PROCESS_WATCHLIST | awk '{ print "  "$1 }'
   exit
 fi
 
@@ -37,20 +45,39 @@ updateTime() {
 STEP=5
 LIMIT=20
 TIMER=0
+ACTIVE=0
 
 while true; do
-  MATCH=$(ps -x | grep -f $DIR/app-filter-pattern)
+  CMD=$(cat $FIFO) && {
+    case $CMD in
+      kill)
+        PIDS=$(pgrep -f entertainment-timer-daemon)
+        echo "killing entertainment-timer-daemon: $PIDS" > $RES_FIFO
+        kill $PIDS
+        ;;
+      show)
+        echo "$TIMER/$LIMIT $([ "$ACTIVE" -eq 0 ] && echo off || echo on)" > $RES_FIFO
+        ;;
+      *)
+        echo 404 > $RES_FIFO
+    esac
+  }
+done &
+
+while true; do
+  MATCH=$(ps -x | grep -f $PROCESS_WATCHLIST)
 
   [ $? -eq 0 ] && { # timer advances on match
     TIMER=$((TIMER + STEP))
+    ACTIVE=1
 
     while read -r PROGRAM; do
       if pgrep "$PROGRAM" > /dev/null
       then
         updateTime "$PROGRAM"
       fi
-    done < "$DIR/app-filter-pattern"
-  }
+    done < "$PROCESS_WATCHLIST"
+  } || ACTIVE=0
 
   echo $TIMER
 

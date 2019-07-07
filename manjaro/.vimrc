@@ -219,6 +219,3 @@ endfunction
 
 "## Source external configs/plugins
 source ~/.vim/config/init.vim
-
-"## Light theme
-"source ~/.vim/colors/light.vim

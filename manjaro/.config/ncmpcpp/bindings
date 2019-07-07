@@ -64,9 +64,11 @@ def_key "P"
 
 ### search
 def_key "s"
-  reset_search_engine
-def_key "s"
   show_search_engine
+def_key "s"
+  start_searching
+def_key "r"
+  reset_search_engine
 
 def_key "v"
   show_visualizer
@@ -162,8 +164,6 @@ def_key "T"
 #def_key "y"
 #  save_tag_changes
 #
-#def_key "y"
-#  start_searching
 #
 #
 #

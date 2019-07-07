@@ -81,4 +81,5 @@ macro y set browser "~/scripts/vv 250 %u"; open-in-browser ; set browser "$BROWS
 macro d set browser "~/scripts/newsboat/yt-dl %u"; open-in-browser ; set browser "$BROWSER %u"
 ## Open in terminal browser
 macro w set browser "~/scripts/newsboat/web-reader %u"; open-in-browser ; set browser "$BROWSER %u"
-
+## Open in terminal browser
+macro m set browser "mpv --no-audio-display %u"; open-in-browser ; set browser "$BROWSER %u"

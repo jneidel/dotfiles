@@ -1,0 +1,48 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  echo "$ entertainment-timer"
+  echo "CLI for the entertainment-timer-daemon"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: command"
+  echo ""
+  echo "Commands:"
+  echo "  kill: kill the daemon and all subprocesses"
+  echo "  show: show current timer"
+  echo ""
+  echo ""
+  echo ""
+  echo "Example:"
+  echo "$ entertainment-timer kill"
+  exit
+fi
+
+CMD="$1"
+
+parseResponse() {
+  RES=$(cat $DIR/command-response-fifo) && {
+    case $RES in
+      404)
+        echo "Command not found."
+        echo "Try --help for available commands."
+        ;;
+      *)
+        echo $RES
+    esac
+  }
+}
+parseResponse &
+
+killCat() {
+  # kill cat waiting for response
+  kill $(ps | grep cat | cut -d\  -f1) 2> /dev/null
+  exit
+}
+
+trap "killCat" 2
+echo "$1" > $DIR/command-fifo
+killCat
+

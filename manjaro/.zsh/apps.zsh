@@ -63,6 +63,10 @@ alias job="taskell ~/notes/job-applications.md 2> /dev/null"
 alias uni="taskell ~/notes/uni-applications.md 2> /dev/null"
 alias flat="taskell ~/notes/flat-applications.md 2> /dev/null"
 
+## light versions
+alias vim-light="vim -c 'source ~/.vim/colors/light.vim'"
+alias vl="vim-light"
+
 ## suffixes
 # open files with extension .xy with application z
 # usage: $ ./doc.cbz -> opens in YACReader
