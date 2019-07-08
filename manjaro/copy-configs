@@ -30,3 +30,8 @@ function clean-copy-dir {
   copy-dir "$1" "$2"
 }
 
+function run-command {
+  CMD=$(echo "$1" | cut -d\  -f2)
+  echo "run cmd:      $CMD"
+  [ -e "$CMD" ] && sh $CMD || echo file does not exist
+}

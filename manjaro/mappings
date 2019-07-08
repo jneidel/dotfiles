@@ -158,4 +158,8 @@ create .newsboat
 ### torrents
 [transmission]
 create .config/transmission-daemon
+.config/transmission-daemon/get-rpc-password.sh
+.config/transmission-daemon/set-rpc-password.sh
+run /home/jneidel/.config/transmission-daemon/get-rpc-password.sh
 .config/transmission-daemon/settings.json
+run /home/jneidel/.config/transmission-daemon/set-rpc-password.sh

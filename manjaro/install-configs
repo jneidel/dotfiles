@@ -52,6 +52,8 @@ function install-files {
         create-dir "$HOME/$REST";;
       clean)
         copy-dir "$DIR/$REST" "$HOME/$REST";; # don't clean local
+      run)
+        run-command $IN;;
       *)
         echo "skipped:      $IN"
     esac
