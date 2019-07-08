@@ -2,7 +2,7 @@
 INSTALL_LOCATION=$HOME
 
 echo "# Installing gpg"
-V="2.2.13"; # see for new versions: https://gnupg.org/ftp/gcrypt/gnupg
+V="2.2.16"; # see for new versions: https://gnupg.org/ftp/gcrypt/gnupg
 
 TAR=./gpg-$V.tar.bz2
 DIR=gnupg-$V

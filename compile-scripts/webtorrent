@@ -1,0 +1,15 @@
+#! /bin/sh
+
+V="0.20.0" # https://github.com/webtorrent/webtorrent-desktop/releases/latest
+LOCATION=$HOME/.bin
+
+echo "# install webtorrent"
+
+wget https://github.com/webtorrent/webtorrent-desktop/releases/download/v$V/WebTorrent-v$V-linux.zip -O $LOCATION/webtorrent-latest.zip
+cd $LOCATION
+unzip webtorrent-latest.zip
+rm webtorrent-latest.zip
+
+echo "## creating symlink"
+ln -sf WebTorrent-linux-x64/WebTorrent webtorrent
+

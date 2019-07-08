@@ -1,0 +1,9 @@
+#! /bin/sh
+# see: https://github.com/ytdl-org/youtube-dl#installation
+
+LOCATION=$HOME/.bin
+
+echo "# installing youtube-dl"
+
+sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o $LOCATION/youtube-dl
+sudo chmod a+rx $LOCATION/youtube-dl

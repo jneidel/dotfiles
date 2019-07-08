@@ -1,0 +1,7 @@
+#! /bin/sh
+
+LOCATION=/bin
+
+echo "# installing ack"
+wget https://beyondgrep.com/ack-2.24-single-file -O $LOCATION/ack
+

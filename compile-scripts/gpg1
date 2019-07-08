@@ -1,0 +1,17 @@
+echo "# install gpg 1"
+
+V="1.4.23"
+PREFIX="$HOME"
+
+wget https://gnupg.org/ftp/gcrypt/gnupg/gnupg-$V.tar.bz2 -O ./gpg-1.4.tar.bz2
+tar xf gpg-1.4.tar.bz2
+rm gpg-1.4.tar.bz2
+cd gnupg-$V
+
+./configure --prefix="$PREFIX"
+make
+make install
+
+echo "## cleanup gpg 1 install"
+rm -rf gnupg-1.4.23
+

@@ -12,10 +12,6 @@ rm fa.tgz;
 mv ./Font-Awesome-$FAV/web-fonts-with-css/webfonts/fa-regular-400.ttf ./font-awesome-$FAV.ttf;
 rm -rf Font-Awesome-$FAV;
 
-echo "install emojione"
-
-sudo packer-aur -S ttf-emojione
-
 echo  "install yosemite-san-francisco"
 
 wget https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip -O ~/.fonts/yosemite-sf.zip;
