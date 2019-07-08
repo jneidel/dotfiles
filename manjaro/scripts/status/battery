@@ -20,7 +20,7 @@ POWER=/sys/class/power_supply
 
 PERCENT=$(python -c "print($(cat $CHARGE)/$(cat $CAPACITY)*100)" | cut -d "." -f1)
 PERCENT_ICON=$(
-  if [ "$PERCENT" -gt 95 ] && [ "$PERCENT" -le 100 ]; then
+  if [ "$PERCENT" -gt 95 ] && [ "$PERCENT" -le 105 ]; then
       echo " "
   elif [ "$PERCENT" -gt 90 ] && [ "$PERCENT" -le 95 ]; then
       echo " "

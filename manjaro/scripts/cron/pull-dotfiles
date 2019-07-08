@@ -1,0 +1,5 @@
+#! /bin/sh
+
+[ "$(git -C ~/code/dotfiles pull)" != "Already up to date." ] && echo pulled changes, install to local dotfiles now
+[ "$(git -C ~/.sensitive pull)" != "Already up to date." ] && echo pulled changes, install to local dotfiles now
+

@@ -1,16 +1,4 @@
-#! /bin/bash
-
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ mangala <>"
-  echo ""
-  echo ""
-  echo "Parameters:"
-  echo "  \$1: "
-  echo ""
-  echo "Example:"
-  echo "  $ mangala"
-  exit
-fi
+#! /bin/sh
 
 notify-send "Running cronjob mangaup"
 mangareader-dl update

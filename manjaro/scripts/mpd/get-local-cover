@@ -5,7 +5,7 @@
 # any client interested in receiving the cover. Get it on the client using scp.
 
 PORT=5555
-MUSIC_LOCATION=~/music
+MUSIC_LOCATION=$HOME/music # ffmpeg needs absolute path, not ~
 COVER_LOCATION=~/tmp/cover.jpg
 TMP_LOCATION=/tmp/mpd-cover.jpg
 FALLBACK_LOCATION=~/scripts/mpd/fallback-cover.jpg
@@ -70,5 +70,5 @@ function createCover {
   done
 }
 
-mpc -p $PORT idleloop "player" | createCover
+mpc -p $PORT idleloop "player" | createCover &
 
