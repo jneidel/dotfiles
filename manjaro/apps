@@ -1,17 +1,12 @@
-# List of pacman and aur apps
-
-# How to use:
-#   To get the app names:
-#     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 1
-#   To get the app descriptions:
-#     cat apps | grep -v "^#" | grep -v "^\s*$" | cut -d " " -f 2-
+# List of packages, grouped by categories
 #
 # What commands to run:
 # no prefix - yay -S
-# npm - npm install -g
-# systemd - systemctl enable
+# npm       - npm install -g
+# systemd   - systemctl enable
+#
+# Todo: cleanup, comment broader categories
 
-# Todo: convert to categories, like configs, share used-apps
 [sxhkd]
 sxhkd Hotkey assignment
 
@@ -40,7 +35,7 @@ conky Desktop widgets
 keepassxc Password database
 
 [kitty]
-kitty Terminal emulator
+kitty-git Terminal emulator
 
 [tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)

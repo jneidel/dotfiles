@@ -1,0 +1,77 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source $DIR/copy-configs
+APPS="$DIR/apps"
+TMP_INSTALL_FILE="/tmp/install-file"
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ app-install"
+  echo "Install the apps from $APPS"
+  exit
+fi
+
+PACMAN_INSTALL=""
+NPM_INSTALL=""
+POST_INSTALL=""
+
+CATEGORY=""
+function get-files {
+  IFS=$'\n'
+  for IN in $(cat /dev/stdin); do
+    # categories
+    [ ${IN:0:1} = "[" ] && {
+      IN=${IN:1:-1} # strip []
+      CATEGORY=$IN
+      continue
+    }
+
+    # category not in use
+    [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
+
+    PKG=$(echo $IN | cut -d\  -f1)
+    DESC=$(echo $IN | cut -d\  -f2-)
+    PREFIX=$(echo $PKG | cut -d: -f1)
+
+    if [ $PKG != $PREFIX ]; then # has prefix
+      PKG=$(echo $PKG | cut -d: -f2)
+      case $PREFIX in
+        npm)
+          NPM_INSTALL="$NPM_INSTALL $PKG";;
+        systemd)
+          POST_INSTALL="$POST_INSTALL sudo systemctl enable $PKG; echo systemd: Enabled $PKG;";;
+        *)
+          echo "skipped: $IN"
+      esac
+    else
+      PACMAN_INSTALL="$PACMAN_INSTALL $PKG"
+    fi
+  done
+
+  ### Not needed now as not consumed directly
+  ## turn install variables into arrays for consumption
+  ## otherwise it will the variable will be used as one arg.
+  ## see: https://stackoverflow.com/a/5257398
+  # IFS=':'
+  # PACMAN_INSTALL_ARR=($PACMAN_INSTALL)
+  # NPM_INSTALL_ARR=($NPM_INSTALL)
+  # unset IFS
+
+  echo "yay -S $PACMAN_INSTALL" > $TMP_INSTALL_FILE
+  echo "sudo npm i -g $NPM_INSTALL" >> $TMP_INSTALL_FILE
+  echo "$POST_INSTALL" >> $TMP_INSTALL_FILE
+}
+
+cat $APPS |
+  grep -v "^#" |
+  grep -v "^\s*$" |
+  get-files
+
+# yay throws if executed within get-files, probably because it
+# requires user input
+sh $TMP_INSTALL_FILE
+
+# non 0 error code
+exit 0
+
