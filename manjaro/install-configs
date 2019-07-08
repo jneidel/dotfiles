@@ -23,6 +23,7 @@ function install-files {
     [ ${IN:0:1} = "[" ] && {
       IN=${IN:1:-1} # strip []
       CATEGORY=$IN
+      [ $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && echo "## $CATEGORY"
       continue
     }
 
