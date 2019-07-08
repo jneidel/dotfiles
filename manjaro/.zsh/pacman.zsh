@@ -1,19 +1,28 @@
 # pacman
 
-# uses packer as a pacman/yaourt wrapper
+# uses yay as a pacman/yaourt wrapper
 # searche, install, update for both
 # remove needs to happen separately
 
-alias pac="packer-aur --noconfirm --noedit -S" # install
-alias pacs="packer-aur -Ss" # search
-#alias pacu="~/scripts/system-update.sh" # update
-alias pacr="sudo pacman -Rsn" # remove pacman
-alias aurr="sudo yaourt -Rsn" # remove yaourt
+## install
+alias pac="yay --noconfirm --noedit -S"
 
-alias paco="sudo pacman -Qdt" # list orphans
-alias pacor"sudo pacman -Rsn $(pacman -Qtdq)" # rm orphans
+## seach
+alias pacs="yay -Ss"
 
-function pacss() { # highlight search query
+function pachs() { # highlight query
   pacs $1 $2 $3 HL $1 $2 $3 L
 }
+function pacss() { # stict search
+  pacs $1 jq | grep --color=auto "/$1" -A 1
+}
+
+## update
+alias pacu="yay -Syuu"
+
+## remove
+alias pacr="yay -Rsn"
+
+alias paco="yay -Qdt" # list orphans
+alias pacor"yay -Rsn $(pacman -Qtdq)" # rm orphans
 
