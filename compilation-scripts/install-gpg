@@ -1,3 +1,4 @@
+#! /bin/sh
 INSTALL_LOCATION=$HOME
 
 echo "# Installing gpg"
@@ -46,7 +47,7 @@ rm -rf $DIR
 #   IN_EXCL_UNLINK undeclared
 # Fix:
 #  # Get the file which uses IN_EXCL_UNLINK
-#  grep --line-number --with-filename --no-messages --recursive IN_EXCL_UNLINK 
+#  grep --line-number --with-filename --no-messages --recursive IN_EXCL_UNLINK
 #  # and remove the call to IN_EXCL_UNLINK
 # See:
 #   https://lists.gt.net/gnupg/users/80319

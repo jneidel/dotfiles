@@ -1,0 +1,9 @@
+#! /bin/sh
+# see: https://github.com/Jguer/yay#installation
+
+echo "# Installing yay"
+
+git -C /tmp clone https://aur.archlinux.org/yay.git
+cd /tmp/yay
+makepkg -si
+
