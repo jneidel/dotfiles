@@ -25,186 +25,290 @@ python-beautifulsoup4 beets lyrics plugin dependency
 python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
 
-# gui
+[scripts]
+ack hhlighlighter dependency
+jq JSON processor
+rofi Prompt (dmenu alternative)
+networkmanager-dmenu-git Control NetworkManager through rofi
+conky Desktop widgets
+xclip X clipboard interface
+
+[conky]
+conky Desktop widgets
+
+[keepass]
 keepassxc Password database
+
+[kitty]
 kitty Terminal emulator
-zeal Programming language/tool offline documentation
+
+[tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
+tmate Share tmux sessions
+
+[gimp]
 gimp Photo editing
 
-## player
+[zeal]
+zeal Programming language/tool offline documentation
+
+[vlc]
 vlc Video player
-mpv Minimal (video) player
+
+[mpv]
+mpv Minimal player
+task-spooler Queue commands for linear execution
 
 ## viewer/reader
-gwenview Extensive image viewer
-sxiv Minimal image viewer
-apvlv Minimal pdf viewer
+[fbreader]
 fbreader epub reader
-# yacreader-nopdf Comicbook reader
+
+[apvlv]
+apvlv Minimal pdf viewer
+
+[sxiv]
+sxiv Minimal image viewer
+
+[gwenview]
+gwenview Extensive image viewer
+
+[newsboat]
 newsboat RSS feed reader
 
+[yacreader]
+yacreader-nopdf Comicbook reader
+
 ## browsers
+[firefox]
 firefox-nightly Experimental firefox
+
+[firefox-dev]
 firefox-developer-edition Developer edition of firefox
+
+[chromium]
 ungoogled-chromium Free version of chromium
-# chromium-widevine Chromium module required for netflix
+chromium-widevine Chromium module required for netflix
+
+[surf]
 surf Minimal browser
 
 ## utils
-rofi Prompt (dmenu alternative)
-conky Desktop widgets
+[polybar]
 polybar Status bar
 
 ## misc
+[bleachbit]
 bleachbit System cleaner
+
+[gcolor]
 gcolor2 Color picker
 
 # tui
+[cmus]
 cmus Music player
+
+[htop]
 htop Process manager
+
+[mosh]
 mosh Better ssh
-sent Simple presentations
+
+[taskell]
 taskell-bin Kanban board
+
+[calcurse]
 calcurse Calendar and todos
+
+[transmission]
+transmission-cli Torrent daemon
 transmission-remote-cli-git Transmission client
+
+[rclone]
 rclone Sync local and remote directories
+
+[rsync]
+rsync Sync local and remote directories
+
+[youtube-dl]
 youtube-dl Youtube downloader
 
 ## file managers
+[ranger]
 ranger File manager
 # vimfm
 
 # cli
 ## apps
-transmission-cli Torrent client
-nodejs-webtorrent-cli Streaming torrent client
+#nodejs-webtorrent-cli Streaming torrent client
 
 ## text
+[figlet]
 figlet Print text as big ascii letters
 figlet-fonts More figlet fonts
+
+[neofetch]
 neofetch Print system info
 
 ## util
-fd Better find
+#fd Better find
+[scrot]
 scrot Screenshot utility
-pjson Pretty print json
+
+#pjson Pretty print json
+
+[zsh]
+zsh-syntax-highlighting Highlight whever the typed command exists
 entr Run command if something changes
-task-spooler Queue commands for linear execution
-tmate Share tmux sessions
 exa Better ls
 bat Better cat
+npm:fx JSON explorer
 
-## dev
-python-grip Reader markdown file with github styles
+[vim]
+vim The text editor
+# par
 
 ## service clients
+[ffsend]
 ffsend-bin Firefox send client
+
+[mega]
 megacmd-bin MEGA.nz client
+
+[mullvad]
 mullvad-vpn Mullvad client
 systemd:mullvad-daemon Enable the mullvad daemon
 
 # system
 ## xorg tools
+[xinit]
 xorg-server X server
-xorg-server-command
 xorg-xinit X init system
+
+[x-set]
 xorg-xset Set keyboard repeat for X
-xorg-xprop Print properties of X windows
-xorg-xev Print X events
 xorg-xmodmap Modify keyboard mappings
 xorg-setxkbmap Modify keyboard mappings
-# xorg-xkbcomp
+xclip X clipboard interface
+
+[x-dev]
+xorg-xprop Print properties of X windows
+xorg-xev Print X events
+
+[x-display]
 xorg-xrandr Control display outputs
 arandr Control display outputs (GUI)
-xclip X clipboard interface
+
+[x-lock]
 xautolock X display lock system
 oblogout-blurlock Display lock
-# xorg-xauth
-# xorg-xrdb
+
+[xflux]
 xflux Flux bluelight filter for X
+
+[sxhkd]
 sxhkd Set hotkey mappings
 
 ## xorg drivers
+[x-drivers]
 xf86-input-libinput Generic X drivers
 xf86-video-intel Drivers for intel chips
 # xf86-input-synaptics
 # xf86-video-fbdev
 # xf86-video-vesa
 
-zsh-syntax-highlighting Highlight whever the typed command exists
-networkmanager-dmenu-git Control NetworkManager through rofi
-# farbfeld
-# par
 #python-pip Python package manager
 
 ## building/c
+[c-dev]
 gcc C/C++ compiler
-# gdb
+gdb
 
 ## themes
+[themes]
 arc-gtk-theme Arc theme
 vibrancy-full-dark-blue Vibrancy icon theme
 ## fonts
 ttf-joypixels Emoji font
 
 ## util
+[bluez]
 bluez-utils bluetoothctl utility
 
 ## power management
 # See: https://wiki.archlinux.org/index.php/TLP
+[tlp]
 tlp Power management
 systemd:tlp Enable power management
 systemd:tlp-sleep Enable sleep power management
 ethtool Disable wake on lan
 
 ## compression
+[extract]
 zip Zip files
 unzip Unzip files
 rar Rar and unrar files
 
 # development
 ## docker
+[docker]
 docker Docker daemon
 docker-compose Docker simplification
 
 ## files
-jq JSON processor
-
+[mongodb]
 mongodb MongoDB database
+
+[ngrok]
 ngrok Open localhost to the outside
 
 [pulseaudio]
+alsa-utils Alsa utilities
 pulseaudio Pulseaudio server
 pulseaudio-alsa Alsa integration
-Pulseaudio-bluetooth Bluetooth integration
+pulseaudio-bluetooth Bluetooth integration
 pulsemixer Pulseaudio mixer
 ncpamixer-git Alternative pulseaudio mixer
 
 # npm
+[node]
 nodejs Javascript runtime
 npm Node.js package manager
 
+[dictcc]
 npm:dict-cc-cli Offline dict.cc
+# run dict css setup script
+
 #npm:tslide
+
+[mangareader-dl]
 npm:mangareader-dl Manga downloader
+
+[fkill]
 npm:fkill-cli Process killer
 
+[js-dev]
+python-grip Reader markdown file with github styles
+
 npm:np npm release helper
-#npm:yo Sc.. tool
-#npm:generator-jneidel Personal yo generator
+
+npm:yo Scaffolding tool
+npm:generator-jneidel Personal yo generator
+
 npm:typescript Typescript compiler
+
 npm:webpack Javscript build tool
 npm:webpack-cli Webpack interface
-npm:fx JSON explorer
 
 npm:concurrently Run scripts in parallel
-npm:markdown-toc Create a md toc
 npm:nodemon Restart node command on changes
-npm:npm-name-cli Check if name is available for npm
 npm:browser-sync Reload browser on changes
-#npm:npm-check-updates
-#npm:updates?
+
+npm:markdown-toc Create a md toc
+npm:doctoc Create a md toc
+
+npm:updates npm update manager
+
+npm:jest Test runner
 
 [eslint]
 npm:eslint Javascript linter
@@ -224,10 +328,14 @@ npm:@typescript-eslint/parser Typescript eslint parser
 npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 
 ## music
+[kid3]
 kid3 Visual (mp3) tag editor
+
+[mutagen]
 mutagen-tools Cli tagging tools
 
 ## wine
+[wine]
 wine Run windows applications
 wine-mono wine dependency
 
