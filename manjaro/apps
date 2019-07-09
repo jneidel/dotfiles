@@ -11,6 +11,9 @@
 networkmanager NetworkManger
 systemd:NetworkManager
 
+[dash]
+dash
+
 [sxhkd]
 sxhkd Hotkey assignment
 
