@@ -1,6 +1,34 @@
+# simple x hotkey daemon config
+# systemwide keybindings
+
 super + d
   ~/scripts/i3/rofi/rofi.sh
 
+## start applications
+super + Return
+  kitty
+
+super + F1 
+  firefox-developer-edition
+super + F2
+  firefox-nightly
+
+super + F5
+  kitty --class calcurse calcurse
+
+super + F8
+  kitty --class cmus cmus
+
+super + F9
+  export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
+
+super + F3
+  kitty --class mosh mosh k
+super + F4
+  kitty --class mosh uber
+
+## pulseaudio
+### volume control
 XF86AudioMute
   ~/scripts/i3/volume/mute.sh
 XF86AudioLowerVolume
@@ -8,7 +36,50 @@ XF86AudioLowerVolume
 XF86AudioRaiseVolume
   ~/scripts/i3/volume/set-vol.sh +2
 
+### sound mixer
+super + ctrl + m
+  kitty pulsemixer
 super + m
   kitty ncpamixer
 
-# kill $(pidof sxhkd); sxhkd on write
+## mpd
+### playback control
+XF86LaunchA
+  ~/scripts/i3/cmus/play-pause.sh
+XF86Search
+  ~/scripts/i3/cmus/previous.sh
+XF86Explorer
+  ~/scripts/i3/cmus/next.sh
+
+## mac brightness
+XF86KbdBrightnessUp
+  ~/scripts/mac/keyboard-backlight p +1
+XF86KbdBrightnessDown
+  ~/scripts/mac/keyboard-backlight p -1
+
+#XF86KbdBrightnessUp
+#  "backlight percent +1; notify-send 'backlight $(backlight get)'"
+#XF86KbdBrightnessDown
+#  "backlight percent-1; notify-send 'backlight $(backlight get)'"
+
+XF86MonBrightnessUp
+  ~/scripts/mac/backlight p +02
+XF86MonBrightnessDown
+  ~/scripts/mac/backlight p -02
+
+## screenshot
+# super + Print --release exec --no-startup-id i3-scrot -w
+# super + Shift+Print --release exec --no-startup-id i3-scrot -s
+
+## misc
+super + y
+  ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
+super + v
+  ~/scripts/open-clip-in-vlc
+super + o
+  ~/scripts/open-clip-in-browser
+
+## to fix
+# super + Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+#bindsym XF86Tools exec xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
+# XF86 keys: http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols

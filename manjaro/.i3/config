@@ -5,110 +5,76 @@ set $black #1c1d21
 set $grey  #1c1c1c
 set $white #d0d0d0
 
-# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+# set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
-# Set default desktop layout <stacking|tabbed|tiling>
+# set default desktop layout (default is tiling) <stacking|tabbed>
 workspace_layout stacking
 
-# Configure border style <normal|1pixel|pixel xx|none|pixel>
+# configure border style <normal|1pixel|pixel xx|none|pixel>
 new_window pixel 1
 new_float normal
 
-# Hide borders
+# hide borders
 hide_edge_borders none
 for_window [class="^.*"] border none
 
-# Font for window titles
+# font for window titles
 font xft:yosemite-san-francisco 11
 
-# Start a terminal
-bindsym $mod+Return exec kitty
+# use Mouse+$mod to drag floating windows
+floating_modifier $mod
 
-# Kill focused window
+# kill focused window
 bindsym $mod+Shift+q kill
 
-# Start program launcher
-bindsym $mod+d exec ~/scripts/i3/rofi/rofi.sh
-
-# Start audio mixer
-bindsym $mod+Ctrl+m exec kitty pulsemixer
-
-# Mac screen brightness controls
-#bindsym XF86KbdBrightnessUp exec ~/scripts/mac/keyboard-backlight p +1
-#bindsym XF86KbdBrightnessDown exec ~/scripts/mac/keyboard-backlight p -1
-#bindsym XF86MonBrightnessUp exec ~/scripts/mac/backlight p +02
-#bindsym XF86MonBrightnessDown exec ~/scripts/mac/backlight p -02
-
-# Start applications
-bindsym $mod+F1 exec chromium
-bindsym $mod+F2 exec firefox-nightly
-bindsym $mod+F5 exec kitty --class calcurse calcurse
-bindsym $mod+F6 exec kitty ranger ~
-bindsym $mod+F8 exec kitty --class cmus cmus
-bindsym $mod+F9 exec keepassxc
-# Connect to my servers
-bindsym $mod+F3 exec kitty --class mosh mosh k
-bindsym $mod+F4 exec kitty --class mosh uber
-# exec sh -c "keepassxc &" & - to start in bg and then kill shell
-# https://unix.stackexchange.com/a/302671
-
-# Take screenshot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-# bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-
-# mpd control
-bindsym XF86LaunchA exec ~/scripts/mpd/mpcc toggle
-bindsym XF86Search exec ~/scripts/mpd/mpcc prev
-bindsym XF86Explorer exec ~/scripts/mpd/mpcc next
-
-# misc controls
-bindsym XF86Tools exec xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
-# XF86 keys: http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
-bindsym $mod+y exec ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
-bindsym $mod+v exec ~/scripts/open-clip-in-vlc
-bindsym $mod+o exec ~/scripts/open-clip-in-browser
-
-# Change window focus
+# change focus
 focus_follows_mouse no
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+# move focused window
+bindsym $mod+Ctrl+h move left
+bindsym $mod+Ctrl+j move down
+bindsym $mod+Ctrl+k move up
+bindsym $mod+Ctrl+l move right
 
-# Workspace back and forth
+# workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
-bindsym $mod+a workspace back_and_forth
-bindsym $mod+Shift+a move container to workspace back_and_forth; workspace back_and_forth
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
-# Split orientation
+# split orientation
+#bindsym $mod+c split h
+#bindsym $mod+v split v
 bindsym $mod+q split toggle
 
-# Toggle fullscreen mode for focused
+# toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# Change container layout (stacked, tabbed, toggle split)
+# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# Toggle tiling / floating
+# toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-# Change focus between tiling / floating windows
+
+# change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
 # toggle sticky
-# bindsym $mod+Shift+s sticky toggle
+bindsym $mod+Shift+s sticky toggle
+
 # focus the parent container
-# bindsym $mod+a focus parent
+bindsym $mod+a focus parent
 
 # Workspace names
+# to display names or symbols instead of plain workspace numbers you can use
+# something like: set $ws1 1:mail
+#                 set $ws2 2:🌍
 set $ws1 1:$
 set $ws2 2:
 set $ws3 3
@@ -119,7 +85,7 @@ set $ws7 7
 set $ws8 8:♪
 set $ws9 9:K
 
-# Switch to workspace
+# switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -158,100 +124,51 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 ## 'title' matches the 'WM_NAME': xprop | grep WM_NAME
 ## docs: https://i3wm.org/docs/userguide.html#command_criteria
 assign [class="Chromium"] $ws2
+assign [class="Firefox"] $ws2
 assign [class="Nightly"] $ws2
+assign [class="Firefox Developer Edition"] $ws2
 assign [class="Tor Browser"] $ws2
 assign [class="keepassxc"] $ws9
 assign [class="kid3"] $ws5
-assign [class="pcmanfm"] $ws5
 assign [class="cmus"] $ws8
 assign [class="mosh"] $ws3
 assign [class="calcurse"] $ws3
-assign [class="YACReaderLibrary"] $ws3
-assign [class="Steam"] $ws3
 
 # Open specific applications in floating mode
+for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="Oblogout"] fullscreen enable
 for_window [class="mpv"] floating enable
 
-# Reload the configuration file
+# reload the configuration file
 bindsym $mod+Shift+c reload
-# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
 # set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-set $mode_system (e)xit, switch_(u)ser, (r)eboot, (s)hutdown
+set $mode_system (r)eboot, (s)hutdown, s(u)spend
 mode "$mode_system" {
-    # bindsym l exec --no-startup-id i3exit lock, mode "default"
-    # bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    # bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    # bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-    bindsym s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym r exec --no-startup-id reboot
+    bindsym s exec --no-startup-id poweroff
+    bindsym u exec --no-startup-id systemctl suspend
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-# Resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
-mode "resize" {
-  # These bindings trigger as soon as you enter the resize mode
-  bindsym k resize shrink height 2 px or 2 ppt
-  bindsym j resize grow height 2 px or 2 ppt
-  bindsym h resize grow width 2 px or 2 ppt
-  bindsym l resize shrink width 2 px or 2 ppt
-
-  # exit resize mode: Enter or Escape
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
+# Resize window
+bindsym $mod+Shift+k resize shrink height 2 px or 2 ppt
+bindsym $mod+Shift+j resize grow height 2 px or 2 ppt
+bindsym $mod+Shift+h resize grow width 2 px or 2 ppt
+bindsym $mod+Shift+l resize shrink width 2 px or 2 ppt
 
 # Manually lock screen (ssharp = ß) - find out keyid with xev
 bindsym $mod+ssharp exec --no-startup-id blurlock
 ## As an alternative: https://tools.suckless.org/slock/
-
-# Application Autostart
-## status bar
-#exec_always --no-startup-id fkill polybar -f; polybar main
-## system defaults
-#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec_always --no-startup-id ff-theme-util
-#exec_always --no-startup-id fix_xcursor
-# exec_always --no-startup-id sbxkb
-
-# Application Autostart
-#exec kitty ~/scripts/tmux-startup
-exec firefox-nightly
-## Desktop monitor
-exec --no-startup-id ~/scripts/conky/start
-## Bluelight filter
-exec --no-startup-id xflux -k 5000 -l 52 -g 13
-## Automatically lock screen
-exec --no-startup-id xautolock -time 15 -locker blurlock
-## Wallpaper
-exec --no-startup-id nitrogen --restore #; sleep 1; compton -b -f
-## Network manager
-exec --no-startup-id nm-applet
-## Power manager
-exec --no-startup-id xfce4-power-manager
-## Torrent daemon
-exec --no-startup-id transmission-daemon -c ~/Downloads --encryption-preferred --paused
-## hotkeys
-exec_always --no-startup-id sxhkd
-## Adjust key repeat
-exec --no-startup-id xset r rate 185 100
-## status bar
-exec --no-startup-id ~/scripts/status/i3-lemonbar/run-lemonbar.sh
-## i3 system defaults
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
-# exec_always --no-startup-id sbxkb
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -284,41 +201,18 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-#bar {
-#	i3bar_command i3bar
-#	status_command i3status
-#	position bottom
-
-### please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-##	tray_output primary
-##	tray_output eDP1
-
-#	bindsym button4 nop
-#	bindsym button5 nop
-##   font xft:URWGothic-Book 11
-#	strip_workspace_numbers yes
-
-#    colors {
-#        background $grey
-#        statusline $white
-#        separator  #454947
-##                          border  backgr. text
-#        focused_workspace  $grey   $white  $grey
-#        active_workspace   $grey   $grey   #FDF6E3
-#        inactive_workspace $grey   $grey   $white
-#        binding_mode       $grey   #2C2C2C #F9FAF9
-#        urgent_workspace   $grey   $white  $grey
-#    }
-#}
-
 # Theme colors
-# class                   border backgr text    indic.   child_border
-  client.focused          $grey  $grey  $white  $grey
-  client.focused_inactive $grey  $grey  #555753 $grey
-  client.unfocused        $grey  $grey  #555753 $grey
-  client.urgent           $grey  $grey  #eb3d54 $grey
-  client.placeholder      $grey  $grey  $white  $grey
+# class                 border backgr text    indic.   child_border
+client.focused          $grey  $grey  $white  $grey
+client.focused_inactive $grey  $grey  #555753 $grey
+client.unfocused        $grey  $grey  #555753 $grey
+client.urgent           $grey  $grey  #eb3d54 $grey
+client.placeholder      $grey  $grey  $white  $grey
 
-  client.background       $grey
+client.background       $grey
 
+# Start a terminal
+# This is set by sxhkd as well,
+# but I want to keep it as a backup
+# in case something goes wrong with sxhkd 
+bindsym $mod+Return exec kitty

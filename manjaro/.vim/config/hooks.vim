@@ -13,3 +13,6 @@ au BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 au BufWritePost ~/.eslint/*.json !~/.eslint/generate-eslint-configs.js
 au BufWritePost ~/.eslint/*.json !eslint_d restart
 
+" restart sxhdk on config write
+au BufWritePost ~/.config/sxhkd/sxhkdrc !kill $(pidof sxhkd); sxhkd &
+
