@@ -31,10 +31,12 @@ kitty ~/scripts/tmux-startup &
 ## browser
 firefox-nightly &
 ## wallpaper
-exec nitrogen --restore &
+nitrogen --restore &
 #exec ~/tmp/imgur/update-wallpaper &
 ## status bar
-exec ~/scripts/status/i3-lemonbar/run-lemonbar &
+~/scripts/status/i3-lemonbar/run-lemonbar &
+## conky
+~/scripts/conky/start-conky &
 
 # start window manager
 exec i3

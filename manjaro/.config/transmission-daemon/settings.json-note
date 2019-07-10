@@ -1,0 +1,7 @@
+settings.json has a unique rpc-password for each device,
+so to stop gettings this file as modified,
+I ignored it using "git update-index --assume-unchanged".
+
+Reverse with "git update-index --no-assume-unchanged".
+
+See: https://stackoverflow.com/a/3320183
