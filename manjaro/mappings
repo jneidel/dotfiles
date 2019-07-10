@@ -163,3 +163,7 @@ create .config/transmission-daemon
 run /home/jneidel/.config/transmission-daemon/get-rpc-password.sh
 .config/transmission-daemon/settings.json
 run /home/jneidel/.config/transmission-daemon/set-rpc-password.sh
+
+[themes]
+create .config/Kvantum
+.config/Kvantum/kvantum.kvconfig

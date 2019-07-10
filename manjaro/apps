@@ -229,8 +229,9 @@ gdb
 
 ## themes
 [themes]
-arc-gtk-theme Arc theme
-vibrancy-full-dark-blue Vibrancy icon theme
+arc-gtk-theme GTK theme
+vibrancy-full-dark-blue GTK icon theme
+kvantum-qt5 QT theme
 ## fonts
 ttf-joypixels Emoji font
 

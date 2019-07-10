@@ -41,7 +41,9 @@ export ALT_BROWSER=chromium
 
 export MPD_PORT=5555
 
+### Themes
 export GTK_THEME=Arc
+export QT_STYLE_OVERRIDE=kvantum-dark
 
 ### Application options
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
