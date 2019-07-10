@@ -37,6 +37,8 @@ nitrogen --restore &
 ~/scripts/status/i3-lemonbar/run-lemonbar &
 ## conky
 ~/scripts/conky/start-conky &
+## mpd
+mpd &
 
 # start window manager
 exec i3

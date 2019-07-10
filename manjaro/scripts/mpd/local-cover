@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # On mpd player state change update a tmp file with the cover of the current song
 # and send a notification of change to a named pipe which should be listened to by
@@ -10,22 +10,23 @@ COVER_LOCATION=~/tmp/cover.jpg
 TMP_LOCATION=/tmp/mpd-cover.jpg
 FALLBACK_LOCATION=~/scripts/mpd/fallback-cover.jpg
 
-function startConky {
+startConky() {
   conky -c ~/.config/conky/mpd.conf 2> /dev/null
 }
-function getConkyPid {
+getConkyPid() {
   ps -t | grep " conky" | grep "mpd.conf" | cut -dp  -f1 | sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
 }
-function killConky {
+killConky() {
   kill $(getConkyPid) > /dev/null 2> /dev/null
 }
-function restartConky {
+restartConky() {
   killConky
   startConky
   # due to a bug, where the image file that conky loads is <100kb,
   # it will not notice changes and thus not reload the conky once
   # the image changes, so I have to manually restart the conky
 }
+RESTART_CONKY=0
 startConky
 
 while true # kill conky after 3min of not playing anything
@@ -37,7 +38,7 @@ while true # kill conky after 3min of not playing anything
   }
 done &
 
-function createCover {
+createCover() {
   while read i;
   do
     [ -z "$(getConkyPid)" ] && startConky # stark conky if killed for not playing for 3min
