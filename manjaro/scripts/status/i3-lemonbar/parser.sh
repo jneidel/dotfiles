@@ -34,6 +34,7 @@ while read -r line ; do
       else
         network="%{B${col_main}}${sep_left} 直 no wifi ${sep_right}"
       fi
+      network="$network%{B$col_sec}"
       ;;
     WSP*) # i3 workspaces
       wsp="" # reset previous content

@@ -44,12 +44,15 @@ super + m
 
 ## mpd
 ### playback control
-XF86LaunchA
-  ~/scripts/i3/cmus/play-pause.sh
-XF86Search
-  ~/scripts/i3/cmus/previous.sh
-XF86Explorer
-  ~/scripts/i3/cmus/next.sh
+#XF86LaunchA
+XF86AudioPlay
+  ~/scripts/mpd/mpcc toggle
+#XF86Search
+XF86AudioPrev
+  ~/scripts/mpd/mpcc prev
+#XF86Explorer
+XF86AudioNext
+  ~/scripts/mpd/mpcc next
 
 ## mac brightness
 XF86KbdBrightnessUp
@@ -72,6 +75,8 @@ XF86MonBrightnessDown
 # super + Shift+Print --release exec --no-startup-id i3-scrot -s
 
 ## misc
+super + n
+  wlan
 super + y
   ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
 super + v

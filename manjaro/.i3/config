@@ -1,4 +1,3 @@
-# i3 config
 
 # colors
 set $black #1c1d21
@@ -139,6 +138,7 @@ for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
 for_window [class="mpv"] floating enable
+for_window [class="Bdrive"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

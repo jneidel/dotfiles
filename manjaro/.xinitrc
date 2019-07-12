@@ -16,29 +16,24 @@ sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
 # start pulseaudio
 /bin/start-pulseaudio-x11
 
-## keyboard repeat
+# keyboard repeat
 xset r rate 185 100 &
-## hotkeys
-sxhkd &
-## bluelight filter
+# bluelight filter
 xflux -k 5000 -l 52 -g 13 &
-## auto lock screen
+# hotkeys
+sxhkd &
+# auto lock screen
 xautolock -time 15 -locker blurlock &
-## desktop monitor
-#~/scripts/conky/start-conky &
-## terminal
-kitty ~/scripts/tmux-startup &
-## browser
-firefox-nightly &
-## wallpaper
-nitrogen --restore &
+# wallpaper
+exec nitrogen --restore &
 #exec ~/tmp/imgur/update-wallpaper &
-## status bar
-~/scripts/status/i3-lemonbar/run-lemonbar &
-## conky
-~/scripts/conky/start-conky &
-## mpd
+exec ~/scripts/conky/start-conky &
+
+kitty ~/scripts/tmux-startup &
+firefox-nightly &
 mpd &
 
+# status bar
+~/scripts/status/i3-lemonbar/run-lemonbar &
 # start window manager
 exec i3

@@ -24,6 +24,7 @@ ignore-article "https://feeds.feedwrench.com/JavaScriptJabber.rss" "title =~ \"^
 
 ## misc
 user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
+max-items 120
 
 # keybindings
 ## available operations: https://newsboat.org/releases/2.14.1/docs/newsboat.html#available-operations
