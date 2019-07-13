@@ -17,7 +17,7 @@ geometry="${width}x22"
 
 # color definitions
 col_main="#005fd7" # blue
-col_sec="#cf004b" # magenta
+col_sec="#d70000" # magenta
 col_active="#ffff00" # yellow
 col_back="#1c1c1c" # black
 
