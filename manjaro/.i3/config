@@ -132,6 +132,8 @@ assign [class="kid3"] $ws5
 assign [class="cmus"] $ws8
 assign [class="mosh"] $ws3
 assign [class="calcurse"] $ws3
+assign [class="signal"] $ws3
+assign [class="YACReaderLibrary"] $ws3
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1

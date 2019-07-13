@@ -2,9 +2,12 @@
 
 ## utilities
 ### calculator
-calc() { # for a quick, one off calc
-  echo "$1" | bc # -l <- spammy
-} # or use: echo $((<calc>))
+# calc() { # for a quick, one off calc
+#   echo "$1" | bc # -l <- spammy
+# } # or use: echo $((<calc>))
+calc() {
+  node -e "console.log($@)"
+}
 alias calculator='python -ic "from __future__ import division; from math import *; from random import *"' # for multiple calculations, interactive
 
 ## calendar
