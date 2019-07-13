@@ -87,9 +87,7 @@ create .config/htop
 .config/htop/htoprc
 
 [nitrogen]
-create .config/nitrogen
-.config/nitrogen/bg-saved.cfg
-.config/nitrogen/nitrogen.cfg
+.config/nitrogen
 
 ### network
 [networkmanager-dmenu]
