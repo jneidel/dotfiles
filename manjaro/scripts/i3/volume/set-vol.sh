@@ -16,7 +16,8 @@ else
   fi
 fi
 
-pulsemixer --change-volume $1;
+pulsemixer --change-volume $1
+mpc-vol $1 # change mpd vol if playing
 
 #icon=audio-volume-medium
 #if [ $cur = "0" ]; then

@@ -2,7 +2,7 @@
 # systemwide keybindings
 
 super + d
-  ~/scripts/i3/rofi/rofi.sh
+  ~/scripts/rofi/rofi.sh
 
 ## start applications
 super + Return

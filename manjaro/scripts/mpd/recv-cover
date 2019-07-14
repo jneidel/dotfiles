@@ -35,14 +35,14 @@ while true # kill conky after 3min of not playing anything
 done &
 
 while true
-  do ssh pii 'cat mpd-pipe' | {
+  do ssh pidd 'cat mpd-pipe' | {
     [ -z "$(getConkyPid)" ] && startConky # stark conky if killed for not playing for 3min
 
-    scp pii:$REMOTE_COVER_LOCATION $TMP_LOCATION
+    scp pidd:$REMOTE_COVER_LOCATION $TMP_LOCATION
 
     # check if current cover size is <100kb,
     # which would cause conky not to reload it on changes
-    [ $(du -sh $COVER_LOCATION | cut -dK -f1) -lt 100 ] && RESTART_CONKY=1
+    [ "$(du -sh $COVER_LOCATION | cut -dK -f1 2> /dev/null)" -lt 100 ] && RESTART_CONKY=1
 
     cp $TMP_LOCATION $COVER_LOCATION
 

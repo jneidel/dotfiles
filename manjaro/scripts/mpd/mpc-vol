@@ -1,0 +1,19 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  echo "$ mpc-vol"
+  echo "Change volume to/by passed parameter, if mpd is playing."
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: volume difference (+2) or value (40)"
+  echo ""
+  echo "Example:"
+  echo "$ mpc-vol -2"
+  exit
+fi
+
+[ "$(mpcc status | grep "^\[" | cut -d] -f1 | cut -d\[ -f2)" = "playing" ] && {
+  mpcc vol "$1" > /dev/null
+  exit 0
+}
+
