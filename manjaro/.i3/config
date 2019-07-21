@@ -136,7 +136,6 @@ assign [class="signal"] $ws3
 assign [class="YACReaderLibrary"] $ws3
 
 # Open specific applications in floating mode
-for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
 for_window [class="mpv"] floating enable

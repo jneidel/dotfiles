@@ -31,6 +31,7 @@ clean scripts
 [mpv]
 create .config/mpv
 .config/mpv/mpv.conf
+create podcasts
 
 ## system
 ### terminal

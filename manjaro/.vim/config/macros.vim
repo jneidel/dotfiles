@@ -29,6 +29,7 @@ autocmd FileType md,markdown inoremap ,l - [] <++><Esc>F[a
 "### JavaScript
 autocmd filetype js,ts,javascript,typescript inoremap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
 autocmd filetype js,ts,javascript,typescript inoremap ,o {<Enter>}<Esc>O
+autocmd filetype js,ts,javascript,typescript inoremap ,a [  ]<Esc>hi
 autocmd filetype js,ts,javascript,typescript inoremap ,i import  from "<++>";<++><Esc>Ffhi
 autocmd filetype js,ts,javascript,typescript inoremap ,l console.log(  )<Esc>hi
 autocmd filetype js,ts,javascript,typescript inoremap ,t test( "", () => {<Enter>const <Enter>const answer <Enter><Enter>const result <Enter>expect( result ).toBe( answer );<Enter>} );<Esc>02k2ela= <++><Esc>02k2ela= <++><Esc>0kela<++><Esc>0kf"a

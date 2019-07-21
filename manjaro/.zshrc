@@ -37,7 +37,7 @@ export EDITOR=vim
 export PAGER=less
 export BROWSER=firefox-nightly
 export B=$BROWSER
-export ALT_BROWSER=chromium
+export ALT_BROWSER=firefox-developer-edition
 
 export MPD_PORT=5555
 

@@ -58,6 +58,14 @@ alias urldecode='node -e "console.log( decodeURIComponent( process.argv[1] ) )"'
 ## generate a random number
 alias randomnum="shuf -n 1 -i" # As range: 1-100
 
+## ps tree
+pst() {
+  ps xwjf | awk '{ $1="";$3="";$4="";$5="";$6="";$7="";$8="";$9=""; print $0 }' | grep -v 'firefox-' | bat
+}
+
+## vim mass rename
+alias mmv="qmv -f do" # massmove
+
 ## Globals (can be accessed everywhere in a command)
 expand-global-alias() {
   # src: https://www.youtube.com/watch?v=WTTIGjZAMGg
@@ -104,4 +112,15 @@ alias imgrel="$B https://imagecomics.com/comics/new-releases"
 
 ## Unused
 alias hdmi="xrandr --output HDMI1 --auto" # dublicate screen on connected hdmi
+
+
+## previous command hotkeys
+# print previous command but only the first nth arguments
+# see: https://github.com/gotbletu/shownotes/blob/master/bang_previous_commands_hotkeys.md
+bindkey -s '\e1' "!:0 \t" # alt+1
+bindkey -s '\e2' "!:0-1 \t" # alt+2
+bindkey -s '\e3' "!:0-2 \t"
+bindkey -s '\e4' "!:0-3 \t"
+bindkey -s '\e5' "!:0-4 \t"
+bindkey -s '\el' "!:0- \t" # alt+l - all but the last word
 

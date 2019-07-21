@@ -12,7 +12,7 @@ networkmanager NetworkManger
 systemd:NetworkManager
 
 [dash]
-dash
+dash Fast shell
 
 [sxhkd]
 sxhkd Hotkey assignment
@@ -34,6 +34,7 @@ rofi Prompt (dmenu alternative)
 networkmanager-dmenu-git Control NetworkManager through rofi
 conky Desktop widgets
 xclip X clipboard interface
+clipit Clipboard interface
 
 [conky]
 conky Desktop widgets
@@ -166,6 +167,7 @@ entr Run command if something changes
 exa Better ls
 bat Better cat
 npm:fx JSON explorer
+renameutils qmv mass rename util
 
 [vim]
 vim The text editor
@@ -197,6 +199,7 @@ xclip X clipboard interface
 [x-dev]
 xorg-xprop Print properties of X windows
 xorg-xev Print X events
+xorg-xinput Configure X input devices
 
 [x-display]
 xorg-xrandr Control display outputs

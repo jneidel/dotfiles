@@ -17,3 +17,5 @@ art_filename: cover
 plugins: fetchart embedart lyrics fromfilename scrub
 lyrics:
   force: yes
+match:
+  strong_rec_thresh: 0.1
