@@ -1,7 +1,0 @@
-#! /bin/sh
-
-while true; do
-  ~/scripts/status/run-status &
-  ~/code/dwm/dwm 2> ~/tmp/dwm.log; fkill run-status
-done
-

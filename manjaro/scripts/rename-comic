@@ -1,42 +1,35 @@
-#! /bin/bash
+#! /bin/sh
 
-# Todo:
-# - pass multiple comic files to rename
-# - handle pwd not being the dir the comic resides in (comic in sub dir)
+COMIC_DIR=~/comics
+SEPERATOR="-----------------------------------------------------------"
 
-COMIC=$1
-DIRECTORY=$2
-
-if [[ $COMIC = "--help" ]] || [[ $COMIC = "help" ]]; then {
-  echo "rename-comic: <comic>"
-  echo "Rename and format comics (downloaded from getcomics.info)"
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  echo "rename-comic: <comic> [<more-comics>]"
+  echo "Format comic names and move them into the comic dir"
   echo ""
+  echo "The accpected format is the one of running issues from getcomics.info:"
   echo "Input format:  Oblivion Song 011 (2019) (Digital) (Zone-Empire).cbr"
   echo "Output format: oblivion-song-011.cbr"
   echo ""
   echo "Parameters:"
-  echo "\$1: comic path"
-  echo "\$2: output path (optional, default: same as input)"
+  echo "  \$1+: comic path(s)"
   echo ""
   echo "Example:"
-  echo "$ rename-comic Downloads/Oblivion\ Song\ 011\ \(2019\)\ \(Digital\)\ \(Zone-Empire\).cbr ~/comics/oblivion-song"
-  echo "  Moving comic to ./Downloads/oblivion-song-011.cbr"
+  echo "  $ rename-comic Gideon\ Falls\ 015\ \(2019\)\ \(Digital\)\ \(Mephisto-Empire\).cbr Outpost\ Zero\ 011\ \(2019\)\ \(Digital\)\ \(Zone-Empire\).cbr "
   exit
-} fi
-
-if [[ -z $COMIC ]]; then {
-  echo "Missing parameter: comic path"
-  echo "Pass --help for help"
-  exit
-} fi
-
-NAME=$(format-comic-name.js "$COMIC")
-
-if [[ -z $DIRECTORY ]]; then
-  echo "Moving comic to: "$NAME
-  mv "$COMIC" "$NAME"
-else
-  echo "Moving comic to: $DIRECTORY/$NAME"
-  mv "$COMIC" "$DIRECTORY/$NAME"
 fi
+
+echo "moving comics to comic dir at:\n  '$COMIC_DIR'"
+echo $SEPERATOR
+
+for COMIC in "$@"; do
+  DIR_NAME=$(format-comic-name.js "$COMIC" nameonly)
+  COMIC_NAME=$(format-comic-name.js "$COMIC")
+  OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
+
+  echo "moving\n  '$COMIC'\nto\n  '$OUT_FILE'"
+  mv "$COMIC" "$OUT_FILE"
+
+  echo $SEPERATOR
+done
 

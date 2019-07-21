@@ -1,11 +1,11 @@
 #! /bin/bash
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ colored-man"
   echo "Color man page"
   echo ""
   echo "Parameters:"
-  echo "  \$1: man argument"
+  echo "  \$1: man page to read"
   exit
 fi
 

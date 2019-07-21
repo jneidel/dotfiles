@@ -1,4 +1,0 @@
-#! /bin/bash
-
-btconnect "B8:D5:0B:EA:D9:A6"
-

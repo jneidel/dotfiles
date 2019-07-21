@@ -9,5 +9,5 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-sudo rsync -avr --delete $LOCAL_MUSIC/ $MNT_POINT
+sudo rsync -avr $LOCAL_MUSIC/ $MNT_POINT # --delete 
 

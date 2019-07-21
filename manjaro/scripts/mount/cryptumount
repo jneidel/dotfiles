@@ -1,0 +1,24 @@
+#! /bin/sh
+
+MAPPER_NAME=cryptroot
+MOUNT_LOCATION=/mnt
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ cryptumount"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "$ cryptumount"
+  exit
+fi
+
+
+# umount
+sudo umount -R $MOUNT_LOCATION
+
+# close luks
+sudo cryptsetup close $MAPPER_NAME
+

@@ -1,0 +1,26 @@
+#! /bin/sh
+
+MAPPER_NAME=cryptroot
+MOUNT_LOCATION=/mnt
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ cryptmount"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "$ cryptmount"
+  exit
+fi
+
+# unlock luks
+sudo cryptsetup open /dev/sdb $MAPPER_NAME
+
+# mount root subvol
+sudo mount -o compress=lzo,subvol=@ /dev/mapper/$MAPPER_NAME $MOUNT_LOCATION
+
+# mount drive specific subvols
+sh /mnt/mount
+

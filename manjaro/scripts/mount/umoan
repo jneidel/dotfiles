@@ -1,0 +1,18 @@
+#! /bin/sh
+
+MOUNT_LOCATION="~/tmp/android"
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ umoan"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "$ umoan"
+  exit
+fi
+
+umount $MOUNT_LOCATION && "umounted android" || "unmounting failed"
+

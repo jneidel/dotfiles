@@ -1,8 +1,10 @@
 #! /bin/bash
 
 DEFAULT_DEVICE=1
-DEFAULT_MOUNT_ROOT=/media
-DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/phone
+DEFAULT_MOUNT_ROOT=~/tmp
+DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/android
+
+mkdir -p $DEFAULT_LOCATION
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ moan"
@@ -26,8 +28,7 @@ fi
 # https://stackoverflow.com/a/29754866
 # https://github.com/gavinbeatty/getopt-enhanced
 
-simple-mtpfs --device $DEFAULT_DEVICE $DEFAULT_LOCATION
-echo "mounted device $DEFAULT_DEVICE at $DEFAULT_LOCATION"
-
-cd $DEFAULT_LOCATION
+simple-mtpfs --device $DEFAULT_DEVICE $DEFAULT_LOCATION && \
+  echo "mounted device $DEFAULT_DEVICE at $DEFAULT_LOCATION" || \
+  echo "mounting failed"
 

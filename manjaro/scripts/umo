@@ -24,3 +24,9 @@ else
   echo "unmounted $DEFAULT_LOCATION"
 fi
 
+# if device busy:
+# find out what processes are using the mountpoint:
+#   lsof | grep /media/hd
+# or umount directly:
+# umount -l location
+# umount -f location
