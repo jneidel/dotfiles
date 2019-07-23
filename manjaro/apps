@@ -7,6 +7,9 @@
 #
 # Todo: cleanup, comment broader categories
 
+[dunst]
+dunst Notification daemon
+
 [nm]
 networkmanager NetworkManger
 systemd:NetworkManager

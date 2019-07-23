@@ -16,3 +16,6 @@ au BufWritePost ~/.eslint/*.json !eslint_d restart
 " restart sxhdk on config write
 au BufWritePost ~/.config/sxhkd/sxhkdrc !kill $(pidof sxhkd); sxhkd &
 
+" restart dunst on config write
+au BufWritePost ~/.config/dunst/dunstrc !kill $(pidof dunst); dunst &
+

@@ -141,9 +141,6 @@ for_window [class="Oblogout"] fullscreen enable
 for_window [class="mpv"] floating enable
 for_window [class="Bdrive"] floating enable
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
