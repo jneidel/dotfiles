@@ -1,32 +1,30 @@
 #! /bin/sh
 
-V=11.6.0 # latest: https://nodejs.org/en
-LOCATION=$HOME/.bin
+V=12.7.0 # latest: https://nodejs.org/en
+LOCATION=$HOME/bin
 
 echo "# installing node v$V"
 
 echo "## downloading"
-wget https://nodejs.org/dist/v$V/node-v$V-linux-x64.tar.xz -O /tmp/node-latest.tar.xz
+wget https://nodejs.org/dist/v$V/node-v$V-linux-x64.tar.xz -O $LOCATION/node-latest.tar.xz
 
 echo "## extracting"
-cd /tmp
+cd $LOCATION
 tar xf node-latest.tar.xz
 rm node-latest.tar.xz
 
 echo "## linking"
-cd $LOCATION
 mv node-v$V-linux-x64 $LOCATION/node-$V
 
-ln -sf node-$NODEV/bin/node node
+ln -sf node-$V/bin/node node
 echo "### created node symlink"
 
-ln -sf node-$NODEV/lib/node_modules/npm/bin/npm-cli.js npm
+ln -sf node-$V/lib/node_modules/npm/bin/npm-cli.js npm
 echo "### created npm symlink"
 
-ln -sf node-$NODEV/lib/node_modules/npm/bin/npx-cli.js npx
+ln -sf node-$V/lib/node_modules/npm/bin/npx-cli.js npx
 echo "### created npx symlink"
 
 rm node-lastest 2> /dev/null
-ln -sf node-$NODEV node-latest
+ln -sf node-$V node-latest
 echo "### created node-latest symlink"
-
