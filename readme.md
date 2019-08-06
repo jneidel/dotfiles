@@ -28,6 +28,8 @@
 
 ## Configurations
 
+**Warning:** links to config files are outdated.
+
 ### Zsh (shell)
 
 I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
