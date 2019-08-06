@@ -9,6 +9,7 @@
 
 [dunst]
 dunst Notification daemon
+arc-icon-theme Icon theme
 
 [nm]
 networkmanager NetworkManger
@@ -236,8 +237,8 @@ gdb
 ## themes
 [themes]
 arc-gtk-theme GTK theme
-vibrancy-full-dark-blue GTK icon theme
-kvantum-qt5 QT theme
+arc-icon-theme Icon theme for dunst
+kvantum-qt5 QT themes
 ## fonts
 ttf-joypixels Emoji font
 

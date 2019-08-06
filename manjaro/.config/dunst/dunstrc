@@ -151,7 +151,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Vibrancy-Colors-Dark/status/16:/usr/share/icons/Vibrancy-Colors-Dark/devices/16
+    icon_path = /usr/share/icons/Arc/devices/16:/usr/share/icons/Arc/status/16
 
     ### History ###
 

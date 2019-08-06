@@ -71,8 +71,9 @@ XF86MonBrightnessDown
   ~/scripts/mac/backlight p -02
 
 ## screenshot
-# super + Print --release exec --no-startup-id i3-scrot -w
-# super + Shift+Print --release exec --no-startup-id i3-scrot -s
+# command copied from "alias scrot" in ~/.zsh/apps.zsh
+super + p
+  /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv $f ~/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
 
 ## misc
 super + n

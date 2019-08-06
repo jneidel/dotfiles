@@ -23,7 +23,7 @@ alias -g PE="--playlist-end"
 
 ### redefining existing commands
 alias cat="bat"
-alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv \$f ~/pictures'"
+alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'notify-send \"took screenshot\" -t 1000 -i camera;mv \$f ~/pictures'"
 alias man="colored-man"
 
 ### misc
