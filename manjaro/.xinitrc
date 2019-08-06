@@ -23,7 +23,7 @@ xflux -k 5000 -l 52 -g 13 &
 # hotkeys
 sxhkd &
 # auto lock screen
-xautolock -time 15 -locker blurlock &
+xautolock -time 20 -locker blurlock &
 # wallpaper
 exec nitrogen --restore &
 #exec ~/tmp/imgur/update-wallpaper &
@@ -32,6 +32,9 @@ exec ~/scripts/conky/start-conky &
 kitty ~/scripts/tmux-startup &
 firefox-nightly &
 mpd &
+dunst &
+signal-desktop &
+rmdir Desktop &
 
 # status bar
 ~/scripts/status/i3-lemonbar/run-lemonbar &

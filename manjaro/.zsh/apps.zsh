@@ -21,6 +21,11 @@ alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
 alias -g PE="--playlist-end"
 
+### redefining existing commands
+alias cat="bat"
+alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv \$f ~/pictures'"
+alias man="colored-man"
+
 ### misc
 function dict {
   dict-cc $1 | less

@@ -1,4 +1,4 @@
-
+# i3
 # colors
 set $black #1c1d21
 set $grey  #1c1c1c
@@ -122,18 +122,20 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 ## 'class' matches the 'WM_CLASS': xprop | grep WM_CLASS
 ## 'title' matches the 'WM_NAME': xprop | grep WM_NAME
 ## docs: https://i3wm.org/docs/userguide.html#command_criteria
-assign [class="Chromium"] $ws2
 assign [class="Firefox"] $ws2
 assign [class="Nightly"] $ws2
 assign [class="Firefox Developer Edition"] $ws2
+assign [class="firefoxdeveloperedition"] $ws2
+assign [class="Chromium"] $ws2
 assign [class="Tor Browser"] $ws2
 assign [class="keepassxc"] $ws9
-assign [class="kid3"] $ws5
 assign [class="cmus"] $ws8
 assign [class="mosh"] $ws3
 assign [class="calcurse"] $ws3
 assign [class="signal"] $ws3
+assign [class="Signal"] $ws3
 assign [class="YACReaderLibrary"] $ws3
+#assign [class="kid3"] $ws5
 
 # Open specific applications in floating mode
 for_window [class="Nitrogen"] floating enable sticky enable border normal

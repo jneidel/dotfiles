@@ -23,7 +23,7 @@ super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
 
 super + F3
-  kitty --class mosh mosh k
+  kitty --class mosh --name kudu mosh k
 super + F4
   kitty --class mosh uber
 

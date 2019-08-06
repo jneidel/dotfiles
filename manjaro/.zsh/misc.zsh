@@ -26,7 +26,6 @@ alias back="bg; disown"
 ### recursive
 alias rmr="rm -rf"
 alias cpr="cp -r -v"
-alias cpdir="cp -r -v"
 
 ### change permissions
 alias cmx="chmod +x" # add executable
@@ -42,6 +41,7 @@ mdc() { # MkDirCd
   mkdir "$1";
   cd "$1";
 }
+alias mkdir="/usr/bin/mkdir -p"
 
 ### package.json
 alias pkg="vim package.json"

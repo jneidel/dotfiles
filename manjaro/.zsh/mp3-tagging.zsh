@@ -15,14 +15,14 @@ alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 alias cmly="get-cmus-lyrics" # in ~/scripts
 
 ## get cover
-function cmco() {
-  file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
-  getco $file"mp3" ~/tmp/cmus-cover.jpg N2
+function mpdco() {
+  file="/home/jneidel/music/"$(mpc status -f "%file%" | grep mp3)
+  getco $file ~/tmp/mpd-cover.jpg N2
   fkill -f sxiv N1 # kill prev instance
-  sxiv -f ~/tmp/cmus-cover.jpg # img viewer
+  sxiv -f ~/tmp/mpd-cover.jpg # img viewer
 }
-function cmcoloop() { # requires sxiv, fkill (npm: fkill-cli)
-  file=$(cmus-remote -Q | grep "file" | grep -o -P '\/.*\.' )
+function mpdcoloop() { # requires sxiv, fkill (npm: fkill-cli)
+  file="/home/jneidel/music/"$(mpc status -f "%file%" | grep mp3)
 
   if [ $1 != "" ]; then
     prev=$1
@@ -35,7 +35,7 @@ function cmcoloop() { # requires sxiv, fkill (npm: fkill-cli)
   sleep 5
   cmcoloop $file &
 }
-function cmcol() { # get cover & update cover once song changes
+function mpdcol() { # get cover & update cover once song changes
   cmco &
   cmcoloop N1 &
 }

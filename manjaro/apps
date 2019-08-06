@@ -322,7 +322,7 @@ npm:updates npm update manager
 npm:jest Test runner
 
 [eslint]
-npm:eslint Javascript linter
+npm:eslint@5 Javascript linter
 npm:eslint_d Eslint script for vim
 
 npm:prettier Code formatter
