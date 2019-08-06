@@ -82,7 +82,7 @@ View scripts: [manjaro](manjaro/.tmux) - `~/.tmux/`
 
 View vim config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
 
-[View plugins](vim.md)
+[View plugins](docs/vim.md)
 
 [View colorscheme](https://github.com/j-tom/vim-old-hope)
 
