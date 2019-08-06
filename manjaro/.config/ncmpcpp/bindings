@@ -72,6 +72,8 @@ def_key "r"
 
 def_key "v"
   show_visualizer
+def_key "v"
+  toggle_visualization_type
 
 def_key "f1"
   show_help
