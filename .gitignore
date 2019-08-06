@@ -3,16 +3,16 @@ node_modules/
 personal.zsh
 *.prog.md
 
-*/.vim/swap/*
-*/.vim/backup/*
-*/.vim/tmp/*
-*/.vim/bundle/*
-*/.vim/sessions/*
-*/.vim/view/*
-*/.vim/.netrwhist
-*/.vim/spell/*.add.spl
+.vim/swap/*
+.vim/backup/*
+.vim/tmp/*
+.vim/bundle/*
+.vim/sessions/*
+.vim/view/*
+.vim/.netrwhist
+.vim/spell/*.add.spl
 
-*/scripts/personal
-*/scripts/mpd/current-mpd-ip
-*/scripts/yt
-*/scripts/*/data
+scripts/personal
+scripts/mpd/current-mpd-ip
+scripts/yt
+scripts/*/data
