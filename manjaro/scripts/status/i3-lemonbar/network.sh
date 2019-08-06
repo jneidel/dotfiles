@@ -18,8 +18,10 @@ while read -r line; do
       VPN=0 ;;
     "wlp3s0): Activation: successful"|"NetworkManager state is now CONNECTED_GLOBAL"|"NetworkManager state is now CONNECTED_SITE")
       WIFI=1 ;;
-    "wlp3s0): state change: deactivating -> disconnected"|"NetworkManager state is now DISCONNECTED"|"NetworkManager state is now CONNECTED_LOCAL"|"NetworkManager state is now CONNECTING")
+    "wlp3s0): state change: deactivating -> disconnected"|"NetworkManager state is now DISCONNECTED")
       WIFI=0 ;;
+    "NetworkManager state is now CONNECTED_LOCAL"|"NetworkManager state is now CONNECTING")
+      WIFI=2 ;; # connected local
   esac
   echo "NET$WIFI $VPN"
 done

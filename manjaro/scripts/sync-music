@@ -1,7 +1,7 @@
 #! /bin/sh
 
 LOCAL_MUSIC=~/music
-MNT_POINT=/media/hd
+MNT_POINT=/media/usb
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ sync-music"

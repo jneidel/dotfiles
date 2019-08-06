@@ -2,7 +2,7 @@
 # Docs: https://ungoogled-software.github.io/ungoogled-chromium-wiki/faq#can-i-install-extensions-or-themes-from-the-chrome-webstore
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ add-extentension"
+  echo "$ add-extension"
   echo "Add a extension to ungoogled chromium"
   echo ""
   echo "Parameters:"

@@ -32,7 +32,11 @@ while read -r line ; do
           network="%{B${col_active}}${sep_left} 直 no vpn ${sep_right}"
         fi
       else
-        network="%{B${col_main}}${sep_left} 直 no wifi ${sep_right}"
+        if [ "${net_arr[0]}" -eq 2 ]; then
+          network="%{B${col_main}}${sep_left} 直 local wifi ${sep_right}"
+        else
+          network="%{B${col_main}}${sep_left} 直 no wifi ${sep_right}"
+        fi
       fi
       network="$network%{B$col_sec}"
       ;;

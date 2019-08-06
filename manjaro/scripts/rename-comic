@@ -24,6 +24,8 @@ echo $SEPERATOR
 
 for COMIC in "$@"; do
   DIR_NAME=$(format-comic-name.js "$COMIC" nameonly)
+  mkdir -p "$COMIC_DIR/$DIR_NAME"
+
   COMIC_NAME=$(format-comic-name.js "$COMIC")
   OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
 

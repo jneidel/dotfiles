@@ -1,6 +1,6 @@
-echo "##### install mongodb #####";
+echo "##### install mongodb #####"
 
-sudo pacman -S mongodb;
-sudo mkdir -p /data/db;
-sudo chmod 777 /data/db;
+sudo yay -S mongodb-bin
+sudo mkdir -p /data/db
+sudo chmod 777 /data/db
 
