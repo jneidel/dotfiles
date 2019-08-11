@@ -1,9 +1,16 @@
 #! /bin/sh
 # see: https://github.com/Jguer/yay#installation
 
+if [ "$(whoami)" = "root" ]; then
+  echo "Install will not work as root"
+  echo "Please change into a different user"
+  exit 1
+fi
+
 echo "# Installing yay"
 
-git -C /tmp clone https://aur.archlinux.org/yay.git
-cd /tmp/yay
+mkdir -p ~/tmp
+git -C ~/tmp clone https://aur.archlinux.org/yay.git
+cd ~/tmp/yay
 makepkg -si
 

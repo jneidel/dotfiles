@@ -12,6 +12,12 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
+yay -v 2> /dev/null || {
+  echo "yay (aur helper) does not exist."
+  echo "Please install it first using my compile script."
+  exit 1
+}
+
 PACMAN_INSTALL=""
 NPM_INSTALL=""
 POST_INSTALL=""
