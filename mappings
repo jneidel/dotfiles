@@ -170,3 +170,6 @@ create .config/Kvantum
 [dunst]
 create .config/dunst
 .config/dunst/dunstrc
+
+[fonts]
+.fonts
