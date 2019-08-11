@@ -40,6 +40,10 @@
 - Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
 - Getting web hosting: [4 Hosting Types Compared: Free and Paid Hosting and VPS](https://www.youtube.com/watch?v=iMmR5UVOz8Q) (If in DE check out [uberspace](https://uberspace.de/), shared hosting with many of the upsides of a VPS)
 
+#### Surveillance
+
+- A: An alternative to the current state of survailance: [A radical proposal to keep your personal data safe](https://www.theguardian.com/commentisfree/2018/apr/03/facebook-abusing-data-law-privacy-big-tech-surveillance)
+
 ### Linux
 
 - Why people use free- over propriety software: [Why Use Free Software?](https://www.youtube.com/watch?v=btHano6wHgA)

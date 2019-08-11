@@ -82,6 +82,9 @@ map <leader><space> :nohls<Enter>
 " number of lines visable while scrolling (in the scroll direction)
 set scrolloff=6
 
+" external formatting program
+set formatprg=par\ -w80
+
 "## Backup/Swap files
 set backup
 set backupdir=~/.vim/backup

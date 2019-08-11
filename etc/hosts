@@ -6984,6 +6984,7 @@
 0.0.0.0 pubads.g.doubleclick.net
 0.0.0.0 securepubads.g.doubleclick.net
 0.0.0.0 spclient.wg.spotify.com
+0.0.0.0 humblebundle.com
 
 # Source: https://github.com/txthinking/google-hosts/blob/master/hosts
 0.0.0.0 www.googletagservices.com
