@@ -29,7 +29,7 @@ exec nitrogen --restore &
 #exec ~/tmp/imgur/update-wallpaper &
 exec ~/scripts/conky/start-conky &
 
-kitty ~/scripts/tmux-startup &
+kitty ~/scripts/tmux/tmux-startup &
 firefox-nightly &
 mpd &
 dunst &

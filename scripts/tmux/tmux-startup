@@ -5,17 +5,15 @@ SESSION_NAME=main
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ tmux-startup"
   echo ""
-  echo "Start the tmux session '$SESSION_NAME' or attach to"
-  echo "it if it already exists"
+  echo "Create or attach to the tmux session '$SESSION_NAME'"
   exit
 fi
 
 TMUX_CMD="tmux -u"
-
 # -u to force utf-8 support,
 # without setting up the corresponding variables in the environment
 
-if [[ $(tmux ls | cut -d : -f 1 | grep $SESSION_NAME) = "$SESSION_NAME" ]]; then
+if [[ $(tmux ls 2> /dev/null | cut -d : -f 1 | grep $SESSION_NAME) = "$SESSION_NAME" ]]; then
   $TMUX_CMD a -t $SESSION_NAME
 else
   $TMUX_CMD new -s $SESSION_NAME
