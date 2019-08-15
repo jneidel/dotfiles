@@ -22,6 +22,7 @@ alias nt="npm run test"
 alias ns="npm run start"
 alias start="npm run start"
 alias nrl="npm run lint"
+alias nlk="npm run link"
 
 ### build
 alias nb="npm run build"
@@ -39,4 +40,5 @@ alias ntw="npm run watch-test"
 
 ## misc
 alias npmls="npm list -g --depth=0" # list npm -g pkgs
+alias npml="sudo npm link"
 

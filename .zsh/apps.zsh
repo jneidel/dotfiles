@@ -72,26 +72,3 @@ alias flat="taskell ~/notes/flat-applications.md 2> /dev/null"
 alias vim-light="vim -c 'source ~/.vim/colors/light.vim'"
 alias vl="vim-light"
 
-## suffixes
-# open files with extension .xy with application z
-# usage: $ ./doc.cbz -> opens in YACReader
-alias -s pdf=apvlv #epdfview, mupdf
-alias -s epub=FBReader
-alias -s mobi=FBReader
-alias -s cbz=YACReader
-alias -s cbr=YACReader
-alias -s jpg=sxiv # or gwenview
-alias -s png=sxiv
-alias -s mp4=mpvo
-alias -s mkv=mpvo
-alias -s avi=mpvo
-alias -s mp3=mpvm
-alias -s flac=mpvm
-alias -s ogg=mpvm
-alias -s wma=mpvm
-alias -s sh=bash
-alias -s js=node
-alias -s json=fx
-alias -s html=firefox-nightly
-alias -s ts=tsc
-
