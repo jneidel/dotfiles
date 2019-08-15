@@ -12,12 +12,12 @@ conky.config = {
 }
 
 conky.text = [[
-TEXT
 SYS\
 ${time %a %e. %b %H:%M} \
 ${cpu}% \
 ${loadavg 1} \
 ${fs_free /home} \
-${execi 5 ~/scripts/status/battery}
+${execi 5 ~/scripts/status/battery} \
+${downspeed wlp3s0}
 ]]
 

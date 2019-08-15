@@ -21,6 +21,9 @@ while read -r line ; do
       # battery
       battery="${sys_arr[7]} ${sys_arr[8]}" # icon, percentage
       battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
+      # network monitor
+      downspeed="${sys_arr[9]}"
+      downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"
       ;;
     NET*) # wifi/vpn
       network=""
@@ -62,5 +65,5 @@ while read -r line ; do
   end_left="%{F${col_back} B${col_sec}}${sep_right_rev}${sep_left_rev}${sep_right_rev}"
 
   # output
-  printf "%s\n" "%{l}${end_left}${wsp}%{r}${cpu}${battery}${diskspace}${datetime}${network}${end_right}"
+  printf "%s\n" "%{l}${end_left}${wsp}%{r}${cpu}${downspeed}${battery}${diskspace}${datetime}${network}${end_right}"
 done
