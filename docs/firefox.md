@@ -48,7 +48,7 @@ Now open the mime tpye handlers file for your firefox installation:
 
 ```sh
 # nightly:
-vim ~/.mozilla/firefox/*.default-nightly/handlers.json
+vim ~/.mozilla/firefox/*.default-nightly*/handlers.json
 # developer-edition:
 vim ~/.mozilla/firefox/*.dev-edition-default/handlers.json
 ```

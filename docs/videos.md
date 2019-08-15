@@ -39,6 +39,7 @@
 
 - Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
 - Getting web hosting: [4 Hosting Types Compared: Free and Paid Hosting and VPS](https://www.youtube.com/watch?v=iMmR5UVOz8Q) (If in DE check out [uberspace](https://uberspace.de/), shared hosting with many of the upsides of a VPS)
+- A: How IoT devices will become a massive threat with their increased adoption: [The Internet of Things Will Turn Large-Scale Hacks into Real World Disasters](https://www.vice.com/en_us/article/qkjzwp/the-internet-of-things-will-cause-the-first-ever-large-scale-internet-disaster)
 
 #### Surveillance
 
@@ -110,6 +111,6 @@
 ### Understanding other people
 
 - Transgender: [ContraPoints](https://www.youtube.com/user/ContraPoints/videos) - Especially ["Are Traps Gay?"](https://www.youtube.com/watch?v=PbBzhqJK3bg)
-- S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/)
+- S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/), [The Boondocks](https://www.imdb.com/title/tt0373732)
 - M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) [[nf](https://www.netflix.com/watch/60024976)]
 
