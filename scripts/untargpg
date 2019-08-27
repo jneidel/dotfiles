@@ -38,14 +38,14 @@ if [[ -n $PASSPHRASE ]]; then
   echo "Start decryption"
   cat "$DIRTARGPG" | gpg --batch --pinentry loopback --passphrase $PASSPHRASE -d > "$DIRTAR"
   echo "Start unarchiving"
-  tar xzf "$DIRTAR" "$DIR"
+  tar xzf "$DIRTAR"
   echo "Cleanup"
   rm "$DIRTAR"
 else
   echo "Start decryption"
   cat "$DIRTARGPG" | gpg -d > "$DIRTAR"
   echo "Start unarchiving"
-  tar xzf "$DIRTAR" "$DIR"
+  tar xzf "$DIRTAR"
   echo "Cleanup"
   rm "$DIRTAR"
 fi

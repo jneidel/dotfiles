@@ -1,0 +1,7 @@
+#! /bin/sh
+## extract wrapper to pass along the -c flag.
+## For usage with zsh file extension aliases:
+##  alias -s gpg=extracthere
+
+extract -c "$(echo "$@" | sed -e 's/^.\///')"
+

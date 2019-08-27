@@ -1,5 +1,6 @@
 #! /bin/sh
 
+DEV_SOURCE=/dev/sdb
 MAPPER_NAME=cryptroot
 MOUNT_LOCATION=/mnt
 
@@ -16,7 +17,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 # unlock luks
-sudo cryptsetup open /dev/sdb $MAPPER_NAME
+sudo cryptsetup open $DEV_SOURCE $MAPPER_NAME
 echo "unlocked luks"
 
 # mount root subvol
@@ -24,5 +25,8 @@ sudo mount -o compress=lzo,subvol=@ /dev/mapper/$MAPPER_NAME $MOUNT_LOCATION
 echo "mounted to $MOUNT_LOCATION"
 
 # mount drive specific subvols
-sh /mnt/mount
+[ -e "$MOUNT_LOCATION/mount" ] && {
+  echo "running custom mount script"
+  sh $MOUNT_LOCATION/mount
+}
 

@@ -7,4 +7,5 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 xset r rate 185 100
-xmodmap .Xmodmap
+setxkbmap -option caps:escape &
+#xmodmap ~/.Xmodmap

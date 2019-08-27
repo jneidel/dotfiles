@@ -2,7 +2,7 @@
 # systemwide keybindings
 
 super + d
-  ~/scripts/rofi/rofi.sh
+  ~/scripts/rofi/application-start
 
 ## start applications
 super + Return
@@ -84,6 +84,8 @@ super + v
   ~/scripts/open-clip-in-vlc
 super + o
   ~/scripts/open-clip-in-browser
+super + a
+  cnsm-add
 
 ## to fix
 # super + Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"

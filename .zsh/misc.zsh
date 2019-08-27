@@ -57,6 +57,7 @@ alias urldecode='node -e "console.log( decodeURIComponent( process.argv[1] ) )"'
 
 ## generate a random number
 alias randomnum="shuf -n 1 -i" # As range: 1-100
+alias dice="W $(whence randomnum) 1-6"
 
 ## ps tree
 pst() {

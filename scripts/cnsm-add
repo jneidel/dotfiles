@@ -1,0 +1,21 @@
+#! /bin/sh
+
+# Seemlessly add something to cnsm.
+# 1. Copy the name, url, etc. that you want to add.
+# 1.2 For articles/videos/files also highlight the name of the article/video to be added as a description.
+# 2. Use the shortcut (mod+a) and choose the type in the prompt.
+# 3. Done
+
+TYPE=$(echo 'article\nvideo\nseries\nmovie\nmanga\ncomic\nfile\nanime\nbook' | dmenu)
+if [ -z "$TYPE" ]; then
+  echo "No type chosen, abort."
+  exit 1
+fi
+
+DESC=""
+if [ "$TYPE" = "article" ] || [ "$TYPE" = "video" ] || [ "$TYPE" = "file" ]; then
+  DESC="$(xclip -o)"
+fi
+
+cnsm add -t "$TYPE" "$(xclip -o -sel clipboard)" -d "$DESC"
+

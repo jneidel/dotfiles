@@ -17,7 +17,7 @@ if [ -z "$extracthere" ]; then
 	mkdir -p "$directory" &&
 	cd "$directory" || exit
 else
-	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2)")"
+	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2-)")"
 fi
 
 [ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
@@ -38,6 +38,7 @@ if [ -f "$archive" ] ; then
 		*.xz) unxz "$archive" ;;
 		*.exe) cabextract "$archive" ;;
     *.deb) ar x "$archive" ;;
+    *.gpg) cat "$archive" | gpg -d > "$(echo "$archive" | sed -e 's/.gpg$//')" ;;
 		*) printf "extract: '%s' - unknown archive method\\n" "$archive" ;;
 	esac
 else

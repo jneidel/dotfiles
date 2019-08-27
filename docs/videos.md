@@ -96,6 +96,15 @@
 - On the state of the games industry and why you need to stop financially supporting companies like EA and Bethesda: [Bethesda VS Critics: How To Save The Games Industry](https://www.youtube.com/watch?v=C6NiXAdMzEk)
 - A look into speedrunning: [Speedrunning Is Awesome, And Here's Why](https://www.youtube.com/watch?v=I5auJOBC828)
 
+### Art
+#### Simpsonwave
+
+- [Sunday Schoool](https://www.youtube.com/watch?v=rTfa-9aCTYg)
+- [Crisis](https://www.youtube.com/watch?v=FCb3rblTEds)
+- [Bart on the Road](https://www.youtube.com/watch?v=W_rC-495Z_A)
+
+Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/watch?v=8er83V2OJ1o)
+
 ## Life
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)

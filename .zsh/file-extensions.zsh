@@ -40,3 +40,10 @@ alias -s html=firefox-nightly
 alias -s json=fx
 alias -s ts=tsc
 
+## extract
+alias -s tgz=extract
+alias -s zip=extract
+alias -s rar=extract
+alias -s xz=extract
+alias -s gz=extract
+alias -s gpg=extracthere
