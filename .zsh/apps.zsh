@@ -38,21 +38,25 @@ alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
 alias rc="rename-comic"
-alias -g R="| entr -c" # R[UN]
-alias q="podqueue"
 
 ### newsboat
-#alias yt="" set in ~/scripts/personal/yt
-alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"
 alias yt="newsboat -u ~/.newsboat/urls-youtube -c ~/.newsboat/cache-youtube.db --quiet && clear"
-alias nbd="podboat --autodownload"
+alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
+
 alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 -d ~/tmp/nb-log && clear"
+
+alias q="podqueue"
+alias nbd="podboat --autodownload"
 
 ### players
 alias n="ncmpcpps"
+
+#### mpv
 alias mpvo="mpv --profile=overlay"
-alias mpvm="mpv --no-audio-display"
+alias mpvm="mpv --no-audio-display --no-video" # mpv music
+alias mpvan="mpv --profile=anime"
+alias mpvmv="mpv --profile=movie"
 
 ### gpg
 alias enc="gpg -e -r 7dfd16fa"

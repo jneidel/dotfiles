@@ -31,7 +31,7 @@ function colorls() {
 alias ls="exa"
 alias l="exa -1a" # "ls -1aF | filterls | colorls" # all files
 alias la="exa -1" # "ls -1FG"    # no . files
-alias ld="exa -1d" # "ls -1Gd */" # only dirs
+alias ld="exa -1D" # "ls -1Gd */" # only dirs
 alias li="exa -lah --git" #"ls -lahoFG" # show permissions
 
 export EXA_COLORS="di=1;34" # make dirs bold again
