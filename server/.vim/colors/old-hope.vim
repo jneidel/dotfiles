@@ -36,60 +36,26 @@ let s:gYellow          = "#E5CD52"
 let s:gGreen           = "#78BD65"
 let s:gBlue            = "#4FB4D8"
 " * t_Co 256 (cterm)
-if s:tCol == 256
-  let s:tWhite         = 15
-  let s:tBlack         = 0
+let s:tWhite         = 15
+let s:tBlack         = 0
 
-  let s:tVeryLightGrey = 252
-  let s:tLightGrey     = 245
-  let s:tGrey          = 242
-  let s:tDarkGrey      = 238
-  let s:tVeryDarkGrey  = 234
-  let s:tRed           = 203 " 9, 197
-  let s:tOrange        = 202 " 166
-  let s:tYellow        = 221 " 222, 227
-  let s:tGreen         = 41  " 47
-  let s:tBlue          = 39  " 45
-" * t_Co 16
-elseif s:tCol == 16
-  let s:tWhite         = 15
-  let s:tBlack         = 0
-
-  let s:tVeryLightGrey = 7
-  let s:tLightGrey     = 7
-  let s:tGrey          = 12
-  let s:tDarkGrey      = 8
-  let s:tVeryDarkGrey  = 0
-  let s:tRed           = 1
-  let s:tOrange        = 9
-  let s:tYellow        = 11
-  let s:tGreen         = 2
-  let s:tBlue          = 14
-" * t_Co 8
-else
-  let s:tWhite         = 7
-  let s:tBlack         = 0
-
-  let s:tVeryLightGrey = 7
-  let s:tLightGrey     = 7
-  let s:tGrey          = 6
-  let s:tDarkGrey      = 0
-  let s:tVeryDarkGrey  = 0
-  let s:tRed           = 1
-  let s:tOrange        = 5
-  let s:tYellow        = 3
-  let s:tGreen         = 2
-  let s:tBlue          = 6
-endif
+let s:tVeryLightGrey = 252
+let s:tLightGrey     = 245
+let s:tGrey          = 242
+let s:tDarkGrey      = 235
+let s:tVeryDarkGrey  = 234
+let s:tRed           = 160 " 203
+let s:tOrange        = 202 " 166
+let s:tYellow        = 221 " 222, 227
+let s:tGreen         = 47  " 41
+let s:tBlue          = 39  " 45
 " }}}
 
 " Variables {{{
 let s:gFg = s:gVeryLightGrey
 let s:tFg = s:tVeryLightGrey
-let s:gBg = s:gBlack
-let s:tBg = s:tBlack
-" let s:gBg = s:gVeryDarkGrey
-" let s:tBg = s:tVeryDarkGrey
+let s:gBg = s:gVeryDarkGrey
+let s:tBg = s:tVeryDarkGrey
 
 let s:vBold          = {'GUI': "BOLD"          , 'TERM': "NONE"          }
 let s:vItalic        = {'GUI': "ITALIC"        , 'TERM': "NONE"          }
@@ -165,7 +131,7 @@ call oldhope#LinkHi("lCursor"       , "Cursor")
 call oldhope#SetHi ("DiffAdd"       , s:vVeryDarkGrey , s:vGreen        , s:vNone      )
 call oldhope#SetHi ("DiffChange"    , s:vVeryDarkGrey , s:vYellow       , s:vNone      )
 call oldhope#SetHi ("DiffDelete"    , s:vVeryDarkGrey , s:vRed          , s:vNone      )
-call oldhope#SetHi ("DiffText"      , s:vNone         , s:vGrey         , s:vNone      )
+call oldhope#SetHi ("DiffText"      , s:vNone         , s:vRed         , s:vNone      )
 " * Errors
 call oldhope#SetHi ("Error"         , s:vVeryDarkGrey , s:vRed          , s:vBold      )
 call oldhope#SetHi ("ErrorMsg"      , s:vVeryDarkGrey , s:vRed          , s:vNone      )
@@ -177,7 +143,7 @@ call oldhope#LinkHi("FoldColumn"    , "Folded")
 call oldhope#SetHi ("IncSearch"     , s:vVeryDarkGrey , s:vVeryLightGrey, s:vNone      )
 call oldhope#SetHi ("Search"        , s:vVeryDarkGrey , s:vOrange       , s:vNone      )
 " * Other
-call oldhope#SetHi ("MatchParen"    , s:vVeryDarkGrey , s:vYellow       , s:vBold      )
+call oldhope#SetHi ("MatchParen"    , s:vYellow       , s:vBg           , s:vBold      )
 call oldhope#SetHi ("ModeMsg"       , s:vOrange       , s:vBg           , s:vNone      )
 call oldhope#SetHi ("Question"      , s:vOrange       , s:vBg           , s:vNone      )
 " * Complete menu
@@ -201,7 +167,7 @@ call oldhope#SetHi ("TabLineFill"   , s:vVeryDarkGrey , s:vBg           , s:vNon
 call oldhope#SetHi ("TabLineSel"    , s:vLightGrey    , s:vBg           , s:vNone      )
 call oldhope#SetHi ("TabLine"       , s:vGrey         , s:vBg           , s:vNone      )
 call oldhope#SetHi ("CursorLineNr"  , s:vBlack        , s:vRed          , s:vBold      )
-call oldhope#SetHi ("CursorLine"    , s:vNone         , s:vVeryDarkGrey , s:vNone      )
+call oldhope#SetHi ("CursorLine"    , s:vNone         , s:vDarkGrey     , s:vNone      )
 call oldhope#SetHi ("CursorColumn"  , s:vNone         , s:vVeryDarkGrey , s:vNone      )
 call oldhope#SetHi ("ColorColumn"   , s:vNone         , s:vVeryDarkGrey , s:vNone      )
 call oldhope#SetHi ("LineNr"        , s:vGrey         , s:vBg           , s:vNone      )

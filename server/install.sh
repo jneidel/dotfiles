@@ -40,7 +40,7 @@ wget -q $M/.zsh/misc.zsh -O ~/.zsh/misc.zsh
 
 echo "# Install tmux config"
 echo "## Write ~/.tmux.conf"
-wget -q $S/.tmux.conf -O ~/.tmux.conf
+wget -q $S/.tmux.conf -O ~/.tmux.conf # tmux 2.x
 # wget -q $S/.tmux.conf-1.8 -O ~/.tmux.conf # Use if your tmux version is 1.x
 
 
