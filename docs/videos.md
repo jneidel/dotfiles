@@ -40,6 +40,7 @@
 - Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
 - Getting web hosting: [4 Hosting Types Compared: Free and Paid Hosting and VPS](https://www.youtube.com/watch?v=iMmR5UVOz8Q) (If in DE check out [uberspace](https://uberspace.de/), shared hosting with many of the upsides of a VPS)
 - A: How IoT devices will become a massive threat with their increased adoption: [The Internet of Things Will Turn Large-Scale Hacks into Real World Disasters](https://www.vice.com/en_us/article/qkjzwp/the-internet-of-things-will-cause-the-first-ever-large-scale-internet-disaster)
+- A: Choosing a vpn: [That One Privacy Guy's - Guide to Choosing the Best VPN (for you)](https://www.reddit.com/r/VPN/comments/4iho8e/that_one_privacy_guys_guide_to_choosing_the_best/?st=iu9u47u7&sh=459a76f2)
 
 #### Surveillance
 

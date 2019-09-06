@@ -18,9 +18,9 @@ alias -s jpg=sxiv # or gwenview
 alias -s png=sxiv
 
 ## video
-alias -s mp4=mpvo
-alias -s mkv=mpvo
-alias -s avi=mpvo
+alias -s mp4=mpvmv
+alias -s mkv=mpvmv
+alias -s avi=mpvmv
 alias -s webm=mpvo
 
 ## audio

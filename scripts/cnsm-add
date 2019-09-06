@@ -6,7 +6,7 @@
 # 2. Use the shortcut (mod+a) and choose the type in the prompt.
 # 3. Done
 
-TYPE=$(echo 'article\nvideo\nseries\nmovie\nmanga\ncomic\nfile\nanime\nbook' | dmenu)
+TYPE=$(printf "article\nvideo\nseries\nmovie\nmanga\ncomic\nfile\nanime\nbook" | dmenu)
 if [ -z "$TYPE" ]; then
   echo "No type chosen, abort."
   exit 1

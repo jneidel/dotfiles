@@ -29,7 +29,13 @@ cp "$PWD/$PDF" "$TMP/$PDF"
 mkdir -p "$TMP/$NAME"
 
 echo "Start pdf to img conversion"
-convert "$TMP/$PDF" "$TMP/$NAME/$NAME.png"
+magick "$TMP/$PDF" "$TMP/$NAME/$NAME.png"
+# by default blocked by security policy,
+# to unlock: https://stackoverflow.com/a/54056571
+
+# still not working?
+# try: yay -S ghostscript
+# see: https://www.imagemagick.org/discourse-server/viewtopic.php?t=32267
 
 echo "Start bundling images as cbz"
 zip -r "$TMP/$CBZ" "$TMP/$NAME"

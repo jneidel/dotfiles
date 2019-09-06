@@ -1,6 +1,6 @@
 " Vim config
 " If you are using vim for the first time you might want to start
-" with simpler setup, because this one will break if not setup correctly
+" with simpler setup, because this one will break if not setup correctly.
 " For basic setup see: https://gist.github.com/simonista/8703722
 
 " not vi compatible
@@ -16,8 +16,9 @@ syntax on
 set t_Co=256
 
 " set colorscheme
-" file in ~/.vim/colors/old-hope.vim
 colorscheme old-hope
+"   file in ~/.vim/colors/old-hope.vim
+"   see: https://github.com/j-tom/vim-old-hope.git
 
 " linenumbers, in normal mode numbers will be relative to the current line
 set number relativenumber
@@ -27,7 +28,7 @@ set visualbell
 
 " color current horizontal line
 set cursorline
-" set as 'CursorLine' in colorscheme
+"   set as 'CursorLine' in colorscheme to style
 
 " wrap content to next line when display width is reached
 set wrap
@@ -42,7 +43,7 @@ set shiftwidth=2
 set softtabstop=2
 " allows <Backspace> to remove linebreaks
 set backspace=2
-" explaination of above settings: http://vimcasts.org/episodes/tabs-and-spaces/
+"   explaination of above settings: http://vimcasts.org/episodes/tabs-and-spaces
 
 " round <Tab>s to multiples of tabstop/shiftwidth
 set shiftround
@@ -84,46 +85,50 @@ set scrolloff=6
 
 " external formatting program
 set formatprg=par\ -w80
+"   on arch: aur/par
 
-"## Backup/Swap files
+" set whitespace characters
+set listchars=tab:▸\ ,eol:¬
+"   activate   :set list
+"   deactivete :set nolist
+
+" backup files
 set backup
 set backupdir=~/.vim/backup
+" swap files
 set swapfile
 set directory=~/.vim/tmp
+" undo files
 set undofile
 set undodir=~/.vim/tmp
 
-" set whitespace characters
-" to toggle :set list / :set nolist
-set listchars=tab:▸\ ,eol:¬
+" invert splits; the defaults are inverted, which is counter intuitive
+set splitbelow " on sp
+set splitright " on vsp
 
-"## Windows
-" Remapping ctrl + w + <movement> to ctrl + <movement> for easier window changing
+" remap ^w + <movement> to ^<movement> for easier window changing
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" the default splits are inverted, which is counter intuitive
-set splitbelow " on sp
-set splitright " on vsp
-
-"## Custom coloring
-" Current tab in tabline
+" custom coloring
+" current tab in tabline
   hi TabLineSel ctermfg=Red
-" Current status line
+" current status line
   hi StatusLine ctermfg=Red
-" Vertical Split line
+" vertical Split line
   hi VertSplit ctermfg=Red
-" Number of splits, next to tab
+" number of splits, in tabline next to tab
   hi Title ctermfg=Yellow
 
-" only hightlight wrongly spelled words
+" only highlight wrongly spelled words
   hi SpellBad ctermbg=167
   hi SpellRare ctermbg=none
   hi SpellLocal ctermbg=none
   hi SpellCap ctermbg=none
 
+" TODO: cleanup descriptions below
 "## Sessions
 " Dont write vimrc option to sessionfile - vimrc changes would be overwritten by old ones
 " source: https://stackoverflow.com/a/31978241
@@ -220,5 +225,5 @@ function! SaveCursorPosition()
 endfunction
 " ^ not working, was supposed to mitigate eslint resetting the cursor location
 
-"## Source external configs/plugins
+" source external configs/plugins
 source ~/.vim/config/init.vim

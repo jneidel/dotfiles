@@ -54,7 +54,7 @@ createCover() {
 
     # check if current cover size is <100kb,
     # which would cause conky not to reload it on changes
-    [ $(du -sh $COVER_LOCATION | cut -dK -f1) -lt 100 ] && RESTART_CONKY=1
+    [ "$(du -sh $COVER_LOCATION | cut -dK -f1)" -lt 100 ] && RESTART_CONKY=1
 
     [ $FFMPEG_STATUS -eq 0 ] && { # cover extraction successful
       echo Reloading cover

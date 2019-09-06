@@ -1,28 +1,22 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mullvad-toogle"
   echo "Toggle mullvads block-when-disconnected option"
   exit
 fi
 
-if [[ $(mullvad block-when-disconnected get) = "Network traffic will be allowed when the VPN is disconnected" ]]; then
+if [ "$(mullvad block-when-disconnected get)" = "Network traffic will be allowed when the VPN is disconnected" ]; then
   mullvad block-when-disconnected set on > /dev/null
   printf "block-when-disconnected set \033[1;32mon\n"
   mullvad connect
   echo "mullvad connect"
 else
+  [ "$(transmission-status)" -gt 0 ] && transmission-kill
+
   mullvad block-when-disconnected set off > /dev/null
   printf "block-when-disconnected set \033[1;31moff\n"
   mullvad disconnect
   echo "mullvad disconnect"
 fi
-
-#if [[ $(timeout 0.01 mullvad status) = "Tunnel status: Connected" ]]; then
-  #mullvad disconnect
-  #echo "disconnected"
-#else
-  #mullvad connect
-  #echo "connected"
-#fi
 

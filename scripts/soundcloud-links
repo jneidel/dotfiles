@@ -1,0 +1,22 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ soundcloud-links"
+  echo "Get song links for a soundcloud playlist/album"
+  echo ""
+  echo "Why is this useful?"
+  echo "  real-debrid.com takes in a list of individual soundcloud premium songs"
+  echo "  and translates them into a download links."
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: album/playlist"
+  echo ""
+  echo "Example:"
+  echo "$ soundcloud-links https://soundcloud.com/polyphiaofficial/sets/new-levels-new-devils-1"
+  exit
+fi
+
+URL="$1"
+
+youtube-dl --flat-playlist --yes-playlist -J  "$URL" | grep -P -oh '"https://soundcloud.com/.*?/.*?"' | cut -d\" -f2
+

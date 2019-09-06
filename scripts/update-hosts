@@ -30,6 +30,9 @@ curl -sSL https://hosts.ubuntu101.co.za/hosts \
   | sed "/0.0.0.0 1337x.to/d" \
   | sed "/0.0.0.0 larrysanger.org/d" \
   | sed "/0.0.0.0 www.theguardian.com/d" \
+  | sed "/0.0.0.0 www.heise.de/d" \
+  | sed "/0.0.0.0 heise.de/d" \
+  | sed "/0.0.0.0 turbobit.net/d" \
   | sed "/0.0.0.0 www.catb.org/d" > /tmp/hosts
 sudo mv /tmp/hosts $HOSTS
 
