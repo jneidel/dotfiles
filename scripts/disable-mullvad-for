@@ -1,0 +1,38 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ disable-mullvad-for <command>"
+  echo "Wrapper that executes a command after making sure that the vpn"
+  echo "is deactivated."
+  echo ""
+  echo "This is because scp, git push (to ssh), beet import and a few other commands"
+  echo "have a really long delay with mullvad activated."
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: command to be executed"
+  echo ""
+  echo "Example:"
+  echo "$ disable-mullvad-for git push"
+  echo "$ disable-mullvad-for beet import *"
+  exit
+fi
+
+
+if [ ! "$(mullvad block-when-disconnected get)" = "Network traffic will be allowed when the VPN is disconnected" ]; then
+  mullvad block-when-disconnected set off > /dev/null
+  mullvad disconnect
+  echo "turned mullvad off"
+
+  [ "$(transmission-status)" -gt 0 ] && transmission-kill
+
+  echo "running '$@'"
+  "$@"
+
+  mullvad block-when-disconnected set on > /dev/null
+  mullvad connect
+  echo "turned mullvad back on again"
+else
+  echo "running '$@'"
+  $@
+fi
+

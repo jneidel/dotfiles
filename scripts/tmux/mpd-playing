@@ -1,0 +1,21 @@
+#! /bin/sh
+
+source ~/scripts/tmux/text-roll
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ mpd-playing"
+  echo ""
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: "
+  echo ""
+  echo "Example:"
+  echo "$ mpd-playing"
+  exit
+fi
+
+roll_text "$( \
+  [ "$(mpcc status | grep "^\[" | cut -d] -f1 | cut -d\[ -f2)" = "playing" ] &&
+    mpc-get '[[%artist% - ]%title%]|[%file%]' \
+)" "30" "3"
+

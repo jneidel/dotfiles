@@ -26,6 +26,9 @@ au Filetype markdown setlocal spell spelllang=en_us,de
 au Filetype markdown setlocal textwidth=80
 au FileType markdown setlocal formatoptions+=t
 
+" notes
+au BufRead ~/code/notes/journal/* setfiletype markdown
+
 " enable javascript syntax folding
 augroup javascript_folding
   au!

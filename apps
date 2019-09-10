@@ -70,8 +70,9 @@ task-spooler Queue commands for linear execution
 [fbreader]
 fbreader epub reader
 
-[apvlv]
-apvlv Minimal pdf viewer
+[zathura]
+zathura Reader
+zathura-pdf-mupdf Pdf plugin
 
 [sxiv]
 sxiv Minimal image viewer

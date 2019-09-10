@@ -1,0 +1,4 @@
+#! /bin/sh
+
+[ "$(mpcc status | grep "^\[" | cut -d] -f1 | cut -d\[ -f2)" = "playing" ] && exit 0 || exit 1
+

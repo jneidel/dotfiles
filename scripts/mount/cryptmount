@@ -1,32 +1,74 @@
 #! /bin/sh
 
-DEV_SOURCE=/dev/sdb
-MAPPER_NAME=cryptroot
-MOUNT_LOCATION=/mnt
+DEFAULT_DEV=/dev/sdb
+DEFAULT_LOCATION=/mnt
+DEFAULT_MAPPER=cryptroot
+DEFAULT_MAPPER2=cryptroot2
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ cryptmount"
-  echo ""
+  echo "Mount a luks encrypted external (hard)disk"
   echo ""
   echo "Parameters:"
-  echo "  \$1: "
+  echo "  [\$1]: device source, as in '/dev/sd<x>'; default $DEV_SOURCE"
+  echo "  [\$2]: mount location; default $DEFAULT_LOCATION"
   echo ""
-  echo "Example:"
+  echo "Examples:"
   echo "$ cryptmount"
+  echo "$ cryptmount d"
+  echo "$ cryptmount c1 /media/hd"
   exit
 fi
 
+DEV=$DEFAULT_DEV
+if [ -z "$1" ]; then
+  [ ! -e $DEV ] && {
+    echo "Default device '$DEV' does not exist."
+    echo "Insert it or pass a different one."
+    exit 1
+  }
+else
+  [ -e "/dev/sd$1" ] &&
+    DEV="/dev/sd$1" || 
+    {
+      echo "Passed device '$1' does not exist."
+      exit 1
+    }
+fi
+
+LOCATION=$DEFAULT_LOCATION
+if [ -z "$2" ]; then
+  [ ! -d $LOCATION ] && {
+    echo "Default location '$LOCATION' does not exist." 
+    echo "Either create it or pass your own."
+    exit 1
+  }
+else 
+  [ ! -d "$2" ] &&
+    LOCATION="$2" ||
+    {
+      echo "Passed location '$2' does not exist."
+      exit 1
+    }
+fi
+
+MAPPER=$DEFAULT_MAPPER
+[ -e $MAPPER ] && MAPPER=$DEFAULT_MAPPER2
+
 # unlock luks
-sudo cryptsetup open $DEV_SOURCE $MAPPER_NAME
-echo "unlocked luks"
+sudo cryptsetup open $DEV $MAPPER
+[ $? -gt 0 ] && {
+  echo "Wrong passphrase"
+  exit 1
+} || echo "Unlocked luks"
 
 # mount root subvol
-sudo mount -o compress=lzo,subvol=@ /dev/mapper/$MAPPER_NAME $MOUNT_LOCATION
-echo "mounted to $MOUNT_LOCATION"
+sudo mount -o compress=lzo,subvol=@ /dev/mapper/$MAPPER $LOCATION
+echo "Mounted to $LOCATION"
 
 # mount drive specific subvols
-[ -e "$MOUNT_LOCATION/mount" ] && {
-  echo "running custom mount script"
-  sh $MOUNT_LOCATION/mount
+[ -e "$LOCATION/mount" ] && {
+  echo "Running custom mount script"
+  sh $LOCATION/mount
 }
 

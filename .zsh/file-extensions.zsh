@@ -3,7 +3,7 @@
 ## usage: $ ./doc.cbz -> opens in YACReader
 
 ## pdf
-alias -s pdf=apvlv #epdfview, mupdf
+alias -s pdf=zathura #epdfview, mupdf, apvlv
 
 ## ebook
 alias -s epub=FBReader

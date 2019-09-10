@@ -1,24 +1,46 @@
 #! /bin/sh
 
-MAPPER_NAME=cryptroot
-MOUNT_LOCATION=/mnt
+DEFAULT_LOCATION=/mnt
+DEFAULT_MAPPER=cryptroot
+DEFAULT_MAPPER2=cryptroot2
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ cryptumount"
-  echo ""
+  echo "Unmount an luks encrypted disk"
   echo ""
   echo "Parameters:"
-  echo "  \$1: "
+  echo "  [\$1]: alternative mount location; default $DEFAULT_LOCATION"
   echo ""
   echo "Example:"
   echo "$ cryptumount"
+  echo "$ cryptumount /media/hd"
   exit
 fi
 
+LOCATION=$DEFAULT_LOCATION
+if [ -z "$1" ]; then
+  [ ! -d $LOCATION ] && {
+    echo "Default location '$LOCATION' does not exist." 
+    echo "Either create it or pass your own."
+    exit 1
+  }
+else 
+  [ ! -d "$1" ] &&
+    LOCATION="$1" ||
+    {
+      echo "Passed location '$1' does not exist."
+      exit 1
+    }
+fi
+
+MAPPER=$DEFAULT_MAPPER
+[ ! -e "/dev/mapper/$MAPPER" ] && MAPPER=$DEFAULT_MAPPER2
 
 # umount
-sudo umount -R $MOUNT_LOCATION
+sudo umount -R $LOCATION || exit 1
+echo "Unmounted"
 
 # close luks
-sudo cryptsetup close $MAPPER_NAME
+sudo cryptsetup close $MAPPER
+echo "Luks closed"
 

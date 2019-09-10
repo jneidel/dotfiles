@@ -31,10 +31,10 @@ amtod() { # set commit date to today
 }
 
 ## push/pull
-alias gp="git push"
-alias push="git push origin"
-alias pushf="git push --force-with-lease origin"
-alias pushup="git push --set-upstream origin"
+alias gp="disable-mullvad-for git push"
+alias push="disable-mullvad-for git push origin"
+alias pushf="disable-mullvad-for git push --force-with-lease origin"
+alias pushup="disable-mullvad-for git push --set-upstream origin"
 alias pull="git pull origin"
 alias master="git pull origin master; git push origin master"
 alias gpu="git push uber master"
