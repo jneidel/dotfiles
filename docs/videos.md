@@ -51,6 +51,7 @@
 - Why people use free- over propriety software: [Why Use Free Software?](https://www.youtube.com/watch?v=btHano6wHgA)
 - Why the terminal is better than a grapical user interface: [Is the Terminal just for Insufferable Hipsters?](https://www.youtube.com/watch?v=G4g-du1MIas)
 - The power of pipes by example: [Layin' down Pipes like a Unix Chad](https://www.youtube.com/watch?v=8E8sUNHdzG8)
+- A: What maintainers do and why they are integral to the linux ecosystem: [Maintainers Matter](http://kmkeen.com/maintainers-matter/)
 
 #### Tools
 

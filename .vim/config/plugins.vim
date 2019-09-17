@@ -25,8 +25,8 @@ let g:html5_microdata_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
 
 "## goyo
-nmap <leader>gy :Goyo<cr>
-nmap <leader>gj :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>
+let g:goyo_width = 84
+nmap <leader>gy :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>:set nornu<cr>
 
 "## prettier
 " Run prettier

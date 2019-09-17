@@ -39,6 +39,7 @@ alias -s html=firefox-nightly
 ## misc
 alias -s json=fx
 alias -s ts=tsc
+alias -s exe=wine
 
 ## extract
 alias -s tgz=extract

@@ -1,9 +1,12 @@
 #! /bin/sh
 
+# Todo: refactor code inside loops into a function
+
 COMIC_DIR=~/comics
 SEPERATOR="-----------------------------------------------------------"
+DEFAULTS="$(ls $HOME/Downloads/*.cbr $HOME/Downloads/*.cbz 2> /dev/null)" # errout would be 'no matches found'
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "rename-comic: <comic> [<more-comics>]"
   echo "Format comic names and move them into the comic dir"
   echo ""
@@ -12,26 +15,48 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   echo "Output format: oblivion-song-011.cbr"
   echo ""
   echo "Parameters:"
-  echo "  \$1+: comic path(s)"
+  echo "  [\$1+]: comic path(s), if not given use all matches for '~/Downloads/*.(cbr|cbz)"
   echo ""
   echo "Example:"
-  echo "  $ rename-comic Gideon\ Falls\ 015\ \(2019\)\ \(Digital\)\ \(Mephisto-Empire\).cbr Outpost\ Zero\ 011\ \(2019\)\ \(Digital\)\ \(Zone-Empire\).cbr "
+  echo "  $ rename-comic \"Gideon Falls 015 (2019) (Digital) (Mephisto-Empire).cbr\" \"Outpost Zero 011 (2019) (Digital) (Zone-Empire).cbr\""
   exit
 fi
 
-echo "moving comics to comic dir at:\n  '$COMIC_DIR'"
+echo "moving comics to comic directory at: $COMIC_DIR"
 echo $SEPERATOR
 
-for COMIC in "$@"; do
-  DIR_NAME=$(format-comic-name.js "$COMIC" nameonly)
-  mkdir -p "$COMIC_DIR/$DIR_NAME"
+if [ -z "$1" ]; then
+  [ -z "$DEFAULTS" ] && {
+    echo "no default matches found"
+    exit 1
+  }
 
-  COMIC_NAME=$(format-comic-name.js "$COMIC")
-  OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
+  echo "$DEFAULTS" | while read -r COMIC; do
+    DIR_NAME=$(format-comic-name.js "$COMIC" nameonly)
+    mkdir -p "$COMIC_DIR/$DIR_NAME"
 
-  echo "moving\n  '$COMIC'\nto\n  '$OUT_FILE'"
-  mv "$COMIC" "$OUT_FILE"
+    COMIC_NAME=$(format-comic-name.js "$COMIC")
+    OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
 
-  echo $SEPERATOR
-done
+    printf "moving\n  $COMIC\nto\n  $OUT_FILE\n"
+    mv "$COMIC" "$OUT_FILE"
+    
+    echo $SEPERATOR
+  done
+else
+  for COMIC in "$@"; do
+    DIR_NAME=$(format-comic-name.js "$COMIC" nameonly)
+    mkdir -p "$COMIC_DIR/$DIR_NAME"
+
+    COMIC_NAME=$(format-comic-name.js "$COMIC")
+    OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
+
+    printf "moving\n  $COMIC\nto\n  $OUT_FILE\n"
+    mv "$COMIC" "$OUT_FILE"
+
+    echo $SEPERATOR
+  done
+fi
+
+
 

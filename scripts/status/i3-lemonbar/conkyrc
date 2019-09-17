@@ -2,7 +2,7 @@ conky.config = {
   out_to_console = true,
   out_to_x = false,
   background = true,
-  update_interval = 2,
+  update_interval = 1,
   total_run_times = 0,
   use_spacer = none,
   short_units = true,
@@ -17,7 +17,7 @@ ${time %a %e. %b %H:%M} \
 ${cpu}% \
 ${loadavg 1} \
 ${fs_free /home} \
-${execi 5 ~/scripts/status/battery} \
+${execi 15 ~/scripts/status/battery} \
 ${downspeed wlp3s0}
 ]]
 

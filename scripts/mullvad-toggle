@@ -12,7 +12,7 @@ if [ "$(mullvad block-when-disconnected get)" = "Network traffic will be allowed
   mullvad connect
   echo "mullvad connect"
 else
-  [ "$(transmission-status)" -gt 0 ] && transmission-kill
+  transmission-status > /dev/null || transmission-kill
 
   mullvad block-when-disconnected set off > /dev/null
   printf "block-when-disconnected set \033[1;31moff\n"
