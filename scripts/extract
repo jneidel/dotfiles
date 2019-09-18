@@ -7,40 +7,40 @@
 # Source: https://github.com/LukeSmithxyz/voidrice/blob/master/.scripts/tools/extract
 
 while getopts "hc" o; do case "${o}" in
-	c) extracthere="True" ;;
-	*) printf "Options:\\n   -c: Extract archive into current directory rather than a new one.\\n" && exit ;;
+  c) extracthere="True" ;;
+  *) printf "Options:\\n   -c: Extract archive into current directory rather than a new one.\\n" && exit ;;
 esac done
 
 if [ -z "$extracthere" ]; then
-	archive="$(readlink -f "$*")" &&
-	directory="$(echo "$archive" | sed 's/\.[^\/.]*$//')" &&
-	mkdir -p "$directory" &&
-	cd "$directory" || exit
+  archive="$(readlink -f "$*")" &&
+  directory="$(echo "$archive" | sed 's/\.[^\/.]*$//')" &&
+  mkdir -p "$directory" &&
+  cd "$directory" || exit
 else
-	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2-)")"
+  archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2-)")"
 fi
 
 [ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
 
 if [ -f "$archive" ] ; then
-	case "$archive" in
-		*.tar.bz2|*.tbz2) tar xvjf "$archive" ;;
-		*.tar.gz|*.tgz) tar xvzf "$archive" ;;
+  case "$archive" in
+    *.tar.bz2|*.tbz2) tar xvjf "$archive" ;;
+    *.tar.gz|*.tgz) tar xvzf "$archive" ;;
     *.txz) tar Jxvf "$archive" ;;
-		*.lzma) unlzma "$archive" ;;
-		*.bz2) bunzip2 "$archive" ;;
-		*.rar|*.cbr) unrar x -ad "$archive" ;;
-		*.gz) gunzip "$archive" ;;
-		*.tar|*.cbt|*.tar.xz) tar xvf "$archive" ;;
-		*.zip|*.cbz) unzip "$archive" ;;
-		*.Z) uncompress "$archive" ;;
-		*.7z) 7z x "$archive" ;;
-		*.xz) unxz "$archive" ;;
-		*.exe) cabextract "$archive" ;;
+    *.lzma) unlzma "$archive" ;;
+    *.bz2) bunzip2 "$archive" ;;
+    *.rar|*.cbr) unrar x -ad "$archive" ;;
+    *.gz) gunzip "$archive" ;;
+    *.tar|*.cbt|*.tar.xz) tar xvf "$archive" ;;
+    *.zip|*.cbz) unzip "$archive" ;;
+    *.Z) uncompress "$archive" ;;
+    *.7z) 7z x "$archive" ;;
+    *.xz) unxz "$archive" ;;
+    *.exe) cabextract "$archive" ;;
     *.deb) ar x "$archive" ;;
     *.gpg) cat "$archive" | gpg -d > "$(echo "$archive" | sed -e 's/.gpg$//')" ;;
-		*) printf "extract: '%s' - unknown archive method\\n" "$archive" ;;
-	esac
+    *) printf "extract: '%s' - unknown archive method\\n" "$archive" ;;
+  esac
 else
-	printf "File \"%s\" not found.\\n" "$archive"
+  printf "File \"%s\" not found.\\n" "$archive"
 fi

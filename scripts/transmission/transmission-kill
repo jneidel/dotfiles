@@ -7,6 +7,6 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 kill $(ps aux | grep "watch.*tsr" | grep -v grep | awk '{ print $2 }') 2> /dev/null
-kill $(ps aux | grep transmission-daemon | grep -v grep | awk '{ print $2 }') 2> /dev/null
-echo "Killed transmission-daemon"
+kill $(ps aux | grep transmission-daemon | grep -v grep | awk '{ print $2 }') 2> /dev/null && echo "Killed transmission-daemon"
+exit 0
 
