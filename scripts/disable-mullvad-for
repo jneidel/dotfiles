@@ -23,8 +23,9 @@ if [ ! "$(mullvad block-when-disconnected get)" = "Network traffic will be allow
   mullvad disconnect
   echo "turned mullvad off"
 
-  [ "$(transmission-status)" -gt 0 ] && transmission-kill
+  transmission-status > /dev/null && transmission-kill
 
+  sleep 1
   echo "running '$@'"
   "$@"
 

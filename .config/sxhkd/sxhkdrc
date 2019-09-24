@@ -86,6 +86,8 @@ super + o
   ~/scripts/open-clip-in-browser
 super + a
   cnsm-add
+super + t
+  transmission-add
 
 ## to fix
 # super + Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"

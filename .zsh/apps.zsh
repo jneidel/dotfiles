@@ -12,7 +12,6 @@ alias mangaup="manga-update &"
 alias mangala="manga update check"
 alias mangan="mangala | grep ' - ' && mangaup"
 alias comic="getcomics-dl"
-alias comicup="~/code/getcomics-dl/bin/new.js"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
@@ -42,6 +41,7 @@ alias npmup="npm-check-updates"
 alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
 alias rc="rename-comic"
+alias shasum="sha256sum"
 
 ### newsboat
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"

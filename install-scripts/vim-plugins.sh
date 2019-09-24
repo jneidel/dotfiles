@@ -72,3 +72,5 @@ git clone https://github.com/christoomey/vim-tmux-navigator.git $VB/tmux-vim-nav
 echo "install tmux-focus-events" # fix focus events with tmux
 git clone https://github.com/tmux-plugins/vim-tmux-focus-events.git $VB/tmux-focus-events
 
+echo "install conquer of completion" # autocompletion
+git clone -b release https://github.com/neoclide/coc.nvim.git $VB/coc

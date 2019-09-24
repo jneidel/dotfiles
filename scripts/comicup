@@ -1,0 +1,13 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ comicup"
+  echo "Get new issues of subscribed comics from getcomics-dl and"
+  echo "fetch their download link from getcomics.info"
+  exit
+fi
+
+$HOME/code/getcomics-dl/bin/new.js | tee --output-error=warn >(grep -o "http.*$" | while read LINK; do
+  curl -s "$LINK" | grep -P "https://getcomics.info/run.php-urls/.*?\"" -o | head -n 1 | cut -d\" -f1  | sed "s/^h/    h/"
+done)
+

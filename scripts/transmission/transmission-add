@@ -1,0 +1,18 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ transmission-add"
+  echo "Script version of tsmadd alias for sxhd"
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: magnet link to add to tsm"
+  exit
+fi
+
+CLIP=$(clipit -c 2>/dev/null)
+
+tsr -a "$CLIP" && {
+  notify-send "Added magnet link to tsm" -t 800
+  tsr -t "$CLIP" --start
+} || notify-send "Adding the magnet failed"
+

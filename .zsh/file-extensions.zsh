@@ -16,6 +16,7 @@ alias -s cbr=YACReader
 ## image
 alias -s jpg=sxiv # or gwenview
 alias -s png=sxiv
+alias -s jpeg=sxiv
 
 ## video
 alias -s mp4=mpvmv

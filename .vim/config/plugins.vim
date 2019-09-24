@@ -26,7 +26,7 @@ let g:html5_aria_attributes_complete = 0
 
 "## goyo
 let g:goyo_width = 84
-nmap <leader>gy :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>:set nornu<cr>
+nmap <leader>gy :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>:set nornu<cr>:set scrolloff=0<cr>
 
 "## prettier
 " Run prettier
@@ -75,4 +75,39 @@ let g:prettier#config#config_precedence = 'cli-override'
 " using eslint_d (npm i -g eslint_d)
 au BufRead,BufNewFile *.js nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc<CR>`F
 au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
+
+" ## coc
+let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank"
+
+" only use coc for specific filetypes
+au Filetype * CocDisable
+au Filetype javascript,typescript,json,bash,shell,sh,js,ts,html,css,sass CocEnable
+
+" ### Solutions to possible problems
+" Some servers have issues with backup files, see #649
+" set nobackup
+" set nowritebackup
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+" set updatetime=300
+
+" ### gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" show type, function definition, etc.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" rename current word
+nmap <leader>rn <Plug>(coc-rename)
 
