@@ -295,7 +295,7 @@ Ordered by importance.
 | Dicer | Roll dices | [fdroid](https://f-droid.org/en/packages/org.secuso.privacyfriendlydicer) |
 | Anki | Flashcards | [f-droid](https://f-droid.org/en/packages/com.ichi2.anki/) [gplay](https://play.google.com/store/apps/details?id=com.ichi2.anki) [github](https://github.com/ankidroid/Anki-Android) |
 | KeePass DX | Mobile keepass database | [fdroid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre) |
-| K-9 Mail | Mail | [fdroid](https://f-droid.org/en/packages/com.fsck.k9) |
+| K-9 Mail | Mail | [fdroid](https://f-droid.org/en/packages/com.fsck.k9) [sync-setup](https://github.com/k9mail/k-9/issues/857#issuecomment-397109350) |
 | Micopi+ | Generate profile picture for contacts | [fdroid](https://f-droid.org/en/packages/com.easytarget.micopi) |
 | Time Meter | Smooth time tracker, with exports  | [gplay](https://play.google.com/store/apps/details?id=com.rk.timemeter) |
 | StreetComplete | Simplified OSM contribution | [fdroid](https://f-droid.org/en/packages/de.westnordost.streetcomplete) |
