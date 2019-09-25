@@ -1,0 +1,87 @@
+#! /bin/sh
+
+DOWNLOAD_LOCATION=~/Downloads
+CONVERT_TO_CBZ=1
+
+function genBritish() {
+  echo "https://magazinelib.com/all/british-gq-$1-$2/"
+}
+function genUSA() {
+  echo "https://magazinelib.com/all/gq-usa-$1-$2/"
+}
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ gq"
+  echo "Download the latest Britsh GQ or GQ USA"
+  echo "from magazinelib.com"
+  echo ""
+  echo "Checks if this months issues are available"
+  echo "before checking the last 3 months"
+  echo ""
+  echo "One the latest issue will be downloaded."
+  echo ""
+  echo "The pdf will be converted into a cbz (for easier reading)"
+  echo "after the download has finished"
+  echo "To turn off the cbz conversion set"
+  echo "the \$CONVERT_TO_CBZ, at the start of this file, to 0."
+  exit
+fi
+
+function testUrl() {
+  STATUS="$( curl -Ss -I "$1" | head -n 1 | cut -d\  -f2 )"
+  echo "$STATUS - $URL"
+  [ "$STATUS" -lt 400 ] && true || false
+
+}
+
+function download() {
+  DOWNLOAD_URL=$(curl -Ss "$1" | grep -P -o '"https://vk.com/doc.*?"' | cut -d\" -f2)
+
+  FILE="$DOWNLOAD_LOCATION/gq-$3-$2.pdf"
+  wget -q --show-progress -c "$DOWNLOAD_URL" -O "$FILE"
+  [ "$(du -s "$FILE" | cut -f1)" -gt 1000 ] && {
+    # convert to cbz
+    printf "\nSucessfully downloaded $FILE\n\n"
+
+    [ "$CONVERT_TO_CBZ" -gt 0 ] && {
+      printf "Starting pdf to cbz conversion\n\n"
+      pdf-to-cbz "$FILE" && rm "$FILE"
+    }
+
+    exit 0
+  } || {
+    echo "Downloaded file $FILE, was invaild (deleted from source)"
+    rm "$FILE"
+  }
+}
+
+function testAndDownloadUSA() {
+  URL="$(genUSA $1 $2)"
+  testUrl "$URL" && download "$URL" $1 $2
+}
+function testAndDownloadBritish() {
+  URL="$(genBritish $1 $2)"
+  testUrl "$URL" && download "$URL" $1 $2
+}
+
+MONTH=$(date +%B | tr A-Z a-z)
+YEAR=$(date +%Y)
+
+LAST_MONTH=$(date +%B --date "-1 month" | tr A-Z a-z)
+LAST_YEAR=$(date +%Y --date "-1 month")
+
+SECOND_2_LAST_MONTH=$(date +%B --date "-2 month" | tr A-Z a-z)
+SECOND_2_LAST_YEAR=$(date +%Y --date "-2 month")
+
+THIRD_2_LAST_MONTH=$(date +%B --date "-3 month" | tr A-Z a-z)
+THIRD_2_LAST_YEAR=$(date +%Y --date "-3 month")
+
+# if one of these is download the script exits
+testAndDownloadBritish $MONTH $YEAR
+testAndDownloadUSA $MONTH $YEAR
+testAndDownloadBritish $LAST_MONTH $LAST_YEAR
+testAndDownloadUSA $LAST_MONTH $LAST_YEAR
+testAndDownloadBritish $SECOND_2_LAST_MONTH $SECOND_2_LAST_YEAR
+testAndDownloadUSA $SECOND_2_LAST_MONTH $SECOND_2_LAST_YEAR
+testAndDownloadBritish $THIRD_2_LAST_MONTH $THIRD_2_LAST_YEAR
+testAndDownloadUSA $THIRD_2_LAST_MONTH $THIRD_2_LAST_YEAR
