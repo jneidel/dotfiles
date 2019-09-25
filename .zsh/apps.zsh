@@ -29,19 +29,22 @@ alias man="colored-man"
 alias beetim="disable-mullvad-for beet import"
 alias scp="disable-mullvad-for /usr/bin/scp"
 
+### shorter script names
+alias rc="rename-comic"
+alias shasum="sha256sum"
+alias mt="mullvad-toggle"
+alias ht="hosts-toggle"
+alias c3="charge3"
+
 ### misc
 function dict {
   dict-cc $1 | less
 }
 alias tree="alder --depth 3" # print filetree, nig @aweary/alder
 alias flux="xflux -l 52 -g 13" # bluelight filter
-alias wifipass="wifi-pass" # print wifi password
 alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
-alias pftp="stftp -u jneidel -p 2121" # $1=IP; pftp for phoneftp
-alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"'
-alias rc="rename-comic"
-alias shasum="sha256sum"
+alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
 
 ### newsboat
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"

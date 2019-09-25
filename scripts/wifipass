@@ -3,11 +3,14 @@
 DIR="/etc/NetworkManager/system-connections"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ wifi-pass"
+  echo "$ wifipass"
   echo "Print wifi password for currently connected wifi"
+  echo "and put it in the clipboard"
   exit
 fi
 
 NAME=$(nmcli device | grep "wifi " | grep -F connected | awk '{ print $4 }')
 
-sudo su -c "cat '$DIR/$NAME'*" | grep "^psk" | cut -d= -f2 | tee >(xclip -sel clip)
+sudo su -c "cat '$DIR/$NAME'*" | grep "^psk" | cut -d= -f2 | tail -n 1 | tee >(xclip -sel clip)
+
+notify-send "Saved wifi password to clip" -t 1200

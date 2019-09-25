@@ -6,14 +6,14 @@
 # 2. Use the shortcut (mod+a) and choose the type in the prompt.
 # 3. Done
 
-TYPE=$(printf "article\nvideo\nseries\nmovie\nmanga\ncomic\nfile\nanime\nbook" | dmenu)
+TYPE=$(printf "article\nvideo\nseries\nmovie\nmanga\ncomic\nfile\nanime\nbook\nart" | dmenu)
 if [ -z "$TYPE" ]; then
   echo "No type chosen, abort."
   exit 1
 fi
 
 DESC=""
-if [ "$TYPE" = "article" ] || [ "$TYPE" = "video" ] || [ "$TYPE" = "file" ]; then
+if [ "$TYPE" = "article" ] || [ "$TYPE" = "video" ] || [ "$TYPE" = "file" ] || [ "$TYPE" = "art" ]; then
   DESC="$(xclip -o)"
 fi
 

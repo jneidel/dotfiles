@@ -2,7 +2,7 @@
 ## Command source: https://unix.stackexchange.com/a/477002
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ pdf-to-cbz.sh <pdf>"
+  echo "$ pdf-to-cbz <pdf>"
   echo "Covert a pdf file to cbz"
   echo "by extracting the pdfs imgs and creating a zip file from them"
   echo "The output file will be created in cwd."
@@ -13,23 +13,28 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "\$1: pdf file to be converted"
   echo ""
   echo "Example:"
-  echo "$ pdf-to-cbz.sh 'my comic.pdf'"
+  echo "$ pdf-to-cbz 'my comic.pdf'"
   exit
 fi
 
-PDF=$1
-NAME=$(echo $PDF | cut -d "." -f 1)
-CBZ="$NAME.cbz"
+IN_FILE="$(realpath $1)"
+OUT_FILE="$(realpath $1 | sed 's/pdf/cbz/')"
 
-PWD=$(pwd)
+NAME_PDF=$(basename $IN_FILE)
+NAME_CBZ="$(echo $NAME_PDF | sed 's/pdf/cbz/')"
+NAME=${NAME_PDF%.pdf}
+
 TMP=~/tmp
+TMP_PDF="$TMP/$NAME_PDF"
+TMP_DIR="$TMP/$NAME"
+TMP_CBZ="$TMP/$NAME_CBZ"
 
 echo "Copy pdf to tmp dir"
-cp "$PWD/$PDF" "$TMP/$PDF"
-mkdir -p "$TMP/$NAME"
+cp "$IN_FILE" "$TMP_PDF"
+mkdir -p "$TMP_DIR"
 
 echo "Start pdf to img conversion"
-magick "$TMP/$PDF" "$TMP/$NAME/$NAME.png"
+magick "$TMP_PDF" "$TMP_DIR/$NAME.png"
 # by default blocked by security policy,
 # to unlock: https://stackoverflow.com/a/54056571
 
@@ -38,11 +43,11 @@ magick "$TMP/$PDF" "$TMP/$NAME/$NAME.png"
 # see: https://www.imagemagick.org/discourse-server/viewtopic.php?t=32267
 
 echo "Start bundling images as cbz"
-zip -r "$TMP/$CBZ" "$TMP/$NAME"
+zip -r "$TMP_CBZ" "$TMP_DIR"
 
-mv "$TMP/$CBZ" $PWD
+mv "$TMP_CBZ" "$OUT_FILE"
 
 echo "Cleanup"
-rm -r "$TMP/$NAME" # zipped dir
-rm "$TMP/$PDF"
+rm -r "$TMP_DIR"
+rm "$TMP_PDF"
 
