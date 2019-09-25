@@ -107,6 +107,11 @@
 
 Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/watch?v=8er83V2OJ1o)
 
+#### Anime Edits
+
+- [AKATSUKI GANG ft. $UICIDEBOY$](https://www.youtube.com/watch?v=6wmRQUc96yM)
+- [Not what it looks like #VHS](https://www.youtube.com/watch?v=mPUzhKjsnBM)
+
 ## Life
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
