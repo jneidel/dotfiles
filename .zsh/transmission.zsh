@@ -24,7 +24,7 @@ alias tsmi="tsminfo"
 # tsminfo() { tsr -t"$1" --info; } # has a lot more information
 
 tsmrm() { tsr -t"$1" --remove; } # delete torrent
-tsmpurge() { tsr -t"$1" --remove-and-delete; } # delete torrent + data
+tsmrmr() { tsr -t"$1" --remove-and-delete; } # (purge) delete torrent + data
 
 alias tsmwatch="watch -t -n .7 tsr -l" # watch mode, updating 'tsm'
 alias tsmw="tsmwatch"

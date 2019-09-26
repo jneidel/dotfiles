@@ -22,6 +22,7 @@ create .vim/backup
 create .vim/tmp
 create .vim/bundle
 create .vim/view
+.vim/coc-settings.json
 
 [tmux]
 .tmux.conf

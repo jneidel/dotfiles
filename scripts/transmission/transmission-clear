@@ -1,10 +1,13 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ transmission-clear"
   echo "Remove finished torrent from transmission"
   exit
 fi
 
-transmission-remote -l | grep 100% | grep Done | awk '{print $1}' | xargs -n 1 -I % transmission-remote -t % -r
+transmission-remote -l | grep 100% | grep Done | # match completed torrents
+  awk '{print $1}' | # get their id
+  xargs -n 1 -I % transmission-remote -t % -r | # pass id to transmission to remove
+  awk '{ print "tsm-clear: "$0 }' # prefix output with script name
 

@@ -94,6 +94,7 @@ set listchars=tab:▸\ ,eol:¬
 
 " backup files
 set backup
+set writebackup
 set backupdir=~/.vim/backup
 " swap files
 set swapfile
@@ -101,6 +102,8 @@ set directory=~/.vim/tmp
 " undo files
 set undofile
 set undodir=~/.vim/tmp
+" vimfinfo file
+set viminfo+=n~/.vim/tmp/viminfo
 
 " invert splits; the defaults are inverted, which is counter intuitive
 set splitbelow " on sp

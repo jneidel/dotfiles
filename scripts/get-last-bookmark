@@ -1,10 +1,11 @@
-#! /bin/bash
+#! /bin/sh
 
-DIR=~/.mozilla/firefox/*.default*/bookmarkbackups
+#DIR=~/.mozilla/firefox/*.default*/bookmarkbackups
+DIR=~/.mozilla/firefox/nightly/bookmarkbackups # using symlink
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ get-last-bookmark"
-  echo "Get the path of the latest bookmark backup."
+  echo "Get the path of the latest firefox bookmark backup."
   echo ""
   echo "How to restore:"
   echo "This is not the export file, it's firefoxes automatic backup."
