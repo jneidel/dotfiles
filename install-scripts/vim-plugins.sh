@@ -44,6 +44,12 @@ git clone https://github.com/wellle/targets.vim.git $VB/targets
 echo "install surround" # easily edit html tags
 git clone https://github.com/tpope/vim-surround.git $VB/surround
 
+echo "install improved f/t"
+git clone https://github.com/chrisbra/improvedft $VB/improvedft
+
+echo "install lightline"
+git clone https://github.com/itchyny/lightline.vim.git $VB/lightline
+
 echo "## javascript"
 echo "install syntax plugins (js, js-libs, pug, html, ts, i3)"
 git clone https://github.com/pangloss/vim-javascript.git $VB/syntax-javascript
@@ -65,12 +71,12 @@ wget https://raw.githubusercontent.com/vim-scripts/JavaScript-Indent/master/inde
 echo "install prettier" # run prettier on current buffer
 git clone https://github.com/prettier/vim-prettier $VB/prettier
 
+echo "install conquer of completion" # autocompletion
+git clone -b release https://github.com/neoclide/coc.nvim.git $VB/coc
+
 echo "## tmux"
 echo "install vim-tmux-navigator" # navigate between vim and tmux
 git clone https://github.com/christoomey/vim-tmux-navigator.git $VB/tmux-vim-navigator
 
 echo "install tmux-focus-events" # fix focus events with tmux
 git clone https://github.com/tmux-plugins/vim-tmux-focus-events.git $VB/tmux-focus-events
-
-echo "install conquer of completion" # autocompletion
-git clone -b release https://github.com/neoclide/coc.nvim.git $VB/coc

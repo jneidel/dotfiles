@@ -71,19 +71,19 @@ let g:prettier#config#html_whitespace_sensitivity = 'css'
 " How config file should be evaluated in combination with CLI options (cli-override|file-override|prefer-file)
 let g:prettier#config#config_precedence = 'cli-override'
 
-" ## eslint
+"## eslint
 " using eslint_d (npm i -g eslint_d)
 au BufRead,BufNewFile *.js nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc<CR>`F
 au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
 
-" ## coc
+"## coc
 let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank"
 
 " only use coc for specific filetypes
 au Filetype * silent CocDisable
 au Filetype javascript,typescript,json,bash,shell,sh,js,ts,html,css,sass CocEnable
 
-" ### Solutions to possible problems
+"### Solutions to possible problems
 " Some servers have issues with backup files, see #649
 " set nobackup
 " set nowritebackup
@@ -91,7 +91,7 @@ au Filetype javascript,typescript,json,bash,shell,sh,js,ts,html,css,sass CocEnab
 " You will have bad experience for diagnostic messages when it's default 4000.
 " set updatetime=300
 
-" ### gotos
+"### gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -110,4 +110,43 @@ endfunction
 
 " rename current word
 nmap <leader>rn <Plug>(coc-rename)
+
+"## lightline
+
+" hide -- INSERT -- in line below statusline
+set noshowmode
+
+" import colorscheme palette
+source ~/.vim/colors/OldHope-lightline.vim
+
+" remove file type if it's empty (instead of no-ft)
+function! LightlineFiletype()
+  return (&filetype !=# '' ? &filetype : '')
+endfunction
+
+" lightline config,
+" see :h lightline for defaults
+
+" component_function overwrites internal functions with your own
+" active/inactive describes the contents of the statusbar of active/inactive windows
+" tabline/tab do so for tabs
+let g:lightline = {
+\   "colorscheme": "OldHope",
+\   "component_function": {
+\     "filetype": "LightlineFiletype",
+\   },
+\   "active": {
+\     "right": [ [ "filetype" ] ],
+\     "left":  [ [ "mode", "paste" ], [ "readonly", "filename" ] ],
+\   },
+\   "inactive": {
+\     "right": [],
+\     "left":  [ [ "filename" ] ],
+\   },
+\   "tabline": { "right": [] },
+\   "tab": {
+\     "active": [ "filename" ], 
+\     "inactive": [ "filename" ], 
+\   },
+\ }
 
