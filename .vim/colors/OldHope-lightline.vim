@@ -1,9 +1,9 @@
 " old-hope colorscheme
 
-let s:yellow = [ '#E5CD52' , 221 ]
+let s:yellow = [ '#e5cd52' , 221 ]
 let s:blue = [ '#4fb4d8' , 39 ]
 let s:darkBlue = [ '#005fd7' , 26 ]
-let s:red = [ '#EB3D54' , 160 ]
+let s:red = [ '#eb3d54' , 160 ]
 let s:green = [ '#78bd65' , 41 ]
 let s:orange = [ '#ef7c2a' , 202 ]
 let s:white = [ '#ffffff' , 15 ]

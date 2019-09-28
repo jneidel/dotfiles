@@ -30,7 +30,7 @@ export LC_CTYPE=en_US.UTF-8
 ## Paths
 export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -f ~/scripts/scripts-path-filter-pattern | tr '\n' ':')$PATH"
-export CDPATH=.:~:~/code:~/Downloads:~/ct
+export CDPATH=.:~:~/code:~/Downloads:~/ct:~/scripts
 
 ## Applications
 export EDITOR=vim

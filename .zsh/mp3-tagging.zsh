@@ -15,12 +15,6 @@ alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 alias cmly="get-cmus-lyrics" # in ~/scripts
 
 ## get cover
-function mpdco() {
-  file="/home/jneidel/music/"$(mpc status -f "%file%" | grep mp3)
-  getco $file ~/tmp/mpd-cover.jpg N2
-  fkill -f sxiv N1 # kill prev instance
-  sxiv -f ~/tmp/mpd-cover.jpg # img viewer
-}
 function mpdcoloop() { # requires sxiv, fkill (npm: fkill-cli)
   file="/home/jneidel/music/"$(mpc status -f "%file%" | grep mp3)
 

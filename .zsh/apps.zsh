@@ -66,6 +66,10 @@ alias mpvm="mpv --no-audio-display --no-video" # mpv music
 alias mpvan="mpv --profile=anime"
 alias mpvmv="mpv --profile=movie"
 
+### mpd
+alias mpdco="mpd-cover"
+alias mpdly="mpd-lyrics"
+
 ### gpg
 alias enc="gpg -e -r 7dfd16fa"
 alias dec="gpg -d"

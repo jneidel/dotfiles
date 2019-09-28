@@ -37,6 +37,6 @@ signal-desktop &
 rmdir Desktop &
 
 # status bar
-~/scripts/status/i3-lemonbar/run-lemonbar &
+~/scripts/lemonbar/run-lemonbar &
 # start window manager
 exec i3
