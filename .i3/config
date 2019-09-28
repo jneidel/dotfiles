@@ -132,7 +132,7 @@ assign [class="calcurse"] $ws3
 assign [class="signal"] $ws3
 assign [class="Signal"] $ws3
 assign [class="YACReaderLibrary"] $ws3
-#assign [class="kid3"] $ws5
+assign [class="Zeal"] $ws3
 
 # Open specific applications in floating mode
 for_window [class="Nitrogen"] floating enable sticky enable border normal

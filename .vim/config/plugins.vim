@@ -124,20 +124,32 @@ function! LightlineFiletype()
   return (&filetype !=# '' ? &filetype : '')
 endfunction
 
-" lightline config,
-" see :h lightline for defaults
+" remove RO label on help files (and other plugin buffers)
+function! LightlineReadonly()
+  return &readonly && &filetype !=# '\v(help|vimfiler)' ? 'RO' : ''
+endfunction
 
-" component_function overwrites internal functions with your own
-" active/inactive describes the contents of the statusbar of active/inactive windows
-" tabline/tab do so for tabs
+" remove | between the modified + and the filename
+" and change the filename to be relative path instead of just the name
+function! LightlineFilename()
+  let filename = expand('%:f') !=# '' ? expand('%:f') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
+endfunction
+
+"### lightline json config
+" component_function: process the value before displaying it
+" active/inactive: the contents of the statusbar of active/inactive windows
 let g:lightline = {
 \   "colorscheme": "OldHope",
 \   "component_function": {
 \     "filetype": "LightlineFiletype",
+\     "readonly": "LightlineReadonly",
+\     "filename": "LightlineFilename",
 \   },
 \   "active": {
 \     "right": [ [ "filetype" ] ],
-\     "left":  [ [ "mode", "paste" ], [ "readonly", "filename" ] ],
+\     "left":  [ [ "staticGlyph", "mode", "paste" ], [ "readonly", "filename" ] ],
 \   },
 \   "inactive": {
 \     "right": [],
@@ -148,5 +160,6 @@ let g:lightline = {
 \     "active": [ "filename" ], 
 \     "inactive": [ "filename" ], 
 \   },
+\   "tabline_separator": { "left": "", "right": "" },
+\   "subseparator": { "left": "", "right": "" },
 \ }
-
