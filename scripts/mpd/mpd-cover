@@ -1,0 +1,29 @@
+#! /bin/sh
+
+IMAGE_VIEWER="sxiv -f"
+IMAGE_VIEWER_BIN="$(echo $IMAGE_VIEWER | cut -d\  -f1)"
+
+MUSIC_DIR="$HOME/music"
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ mpd-cover"
+  echo "Open cover of current mpd track in $IMAGE_VIEWER_BIN"
+  exit
+fi
+
+command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
+command -v $IMAGE_VIEWER_BIN >/dev/null || { echo "your selected image viewer ($IMAGE_VIEWER_BIN) is not installed"; exit 1; }
+command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }
+
+command -v mpc-get >/dev/null &&
+  MPC_CMD="mpc-get file" ||
+  MPC_CMD="mpc status -f %file% | head -n 1"
+
+TMP_FILE=$(mktemp --suffix .jpg)
+
+SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
+
+ffmpeg -y -i "$SONG_FILE" $TMP_FILE > /dev/null 2>&1
+
+kill $(pgrep $IMAGE_VIEWER_BIN) 2> /dev/null # kill previous instance
+$IMAGE_VIEWER $TMP_FILE

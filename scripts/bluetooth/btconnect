@@ -3,25 +3,31 @@
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ btconnect <mac-address>"
   echo "Connect to a bluetooth device via bluetoothctl."
-  echo "The device has to be paired/trusted via bluetoothctl beforehand."
+  echo ""
+  echo "The device has to be trusted and paired via"
+  echo "bluetoothctl manually beforehand:"
+  echo "  $ bluetoothctl"
+  echo "  power on"
+  echo "  scan on"
+  echo "  # get the mac address as it gets scanned"
+  echo "  trust <mac>"
+  echo "  pair <mac>"
   echo ""
   echo "Example:"
   echo "$ btconnect B8:D5:0B:EA:D9:A6"
-else
-  printf "power on\nquit" | bluetoothctl > /dev/null
-
-  echo "Started connecting"
-
-  while [ 1 -eq 1 ]
-  do
-    OUT=$(printf "connect "$1"\nquit" | bluetoothctl | grep "bluetooth" | grep "connect")
-
-    if [ "$OUT" = "" ]; then 
-      echo "Connected"
-      break
-    else
-      sleep 1
-    fi
-  done
+  exit
 fi
+
+printf "power on\nquit" | bluetoothctl > /dev/null
+
+echo "Started connecting"
+
+while [ 1 -eq 1 ]; do
+  if printf "connect %s\nquit" "$1" | bluetoothctl | grep "# quit" | grep "bluetooth" > /dev/null; then
+    sleep 1
+  else
+    echo "Connected"
+    break
+  fi
+done
 

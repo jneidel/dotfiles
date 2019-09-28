@@ -1,6 +1,6 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]] || [[ -z $1 ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   echo "$ mpc-get <format>"
   echo "Get different values from 'mpc current'"
   echo "by using the --format options"
@@ -24,12 +24,9 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]] || [[ -z $1 ]]; then
   exit
 fi
 
-if [[ $(echo "$1" | fgrep %) ]]; then
+if echo "$1" | grep -F % >/dev/null; then
   mpcc current -f "$1"
 else
   mpcc current -f "%$1%"
 fi
-
-# Old implementations using status:
-# mpcc status -f "$1" | fgrep volume -v | fgrep "[" -v
 

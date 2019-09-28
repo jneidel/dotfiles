@@ -17,7 +17,7 @@ ${time %a %e. %b %H:%M} \
 ${cpu}% \
 ${loadavg 1} \
 ${fs_free /home} \
-${execi 15 ~/scripts/status/battery} \
+${execi 15 ~/scripts/lemonbar/battery.sh} \
 ${downspeed wlp3s0}
 ]]
 

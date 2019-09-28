@@ -1,4 +1,6 @@
-#! /bin/bash
+#! /bin/sh
+
+MUSIC_DIR="$HOME/music"
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ get-cmus-lyrics"
@@ -10,15 +12,20 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-FILE="/home/jneidel/music/$(mpc-get %file%)"
-if [[ ! -e $FILE ]]; then
-  echo "File is not a mp3" # Only works for mp3s
-  exit
-fi
+command -v mpc-get >/dev/null &&
+  MPC_CMD="mpc-get file" ||
+  MPC_CMD="mpc status -f %file% | head -n 1"
 
-LYRICS=$(get-lyrics "$FILE")
-if [[ -n $LYRICS ]]; then
-  get-lyrics "$FILE" | less # Reusing $LYRICS messes with the formatting (newlines)
+SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
+
+[ "$(basename "$SONG_FILE" | rev | cut -d\. -f1)" != "3pm" ] && {
+  echo "File is not a mp3" # get-lyrics works for mp3's
+  exit
+}
+
+LYRICS=$(get-lyrics "$SONG_FILE")
+if [ -n "$LYRICS" ]; then
+  get-lyrics "$SONG_FILE" | less # Reusing $LYRICS messes with the formatting (newlines)
 else
   echo "Song has no lyrics"
 fi

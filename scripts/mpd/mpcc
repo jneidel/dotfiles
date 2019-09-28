@@ -32,8 +32,6 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-timeout 1 mpc -h "$IP" -p "$PORT" "$@" 2> /dev/null
-
-# try local if pi timedout
-[ $(echo $?) -gt 0 ] && mpc -p $PORT "$@"
+timeout 1 mpc -h "$IP" -p "$PORT" "$@" 2> /dev/null ||
+  mpc -p $PORT "$@"
 

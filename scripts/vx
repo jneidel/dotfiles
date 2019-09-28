@@ -1,30 +1,41 @@
 #! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
-  echo "$ vx <new-script-name>"
-  echo "Open new executable file in vim."
-  echo "Example: $ vx connect.sh"
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ -z "$1" ]; then
+  echo "$ vx <script-name>"
+  echo "Create a new executable file,"
+  echo "add a --help menu and open the file in vim."
+  echo ""
+  echo "Parameters:"
+  echo "  \$1: name of the script file to be created"
+  echo ""
+  echo "Example:"
+  echo "  $ vx connect.sh"
   exit
-elif [ -z "$1" ]; then
-  echo "Missing parameter: script-name"
 fi
 
-FILE=$1
+command -v vim >/dev/null || { echo \"vim is not installed\"; exit 1; }
+
+FILE="$1"
+
 echo "#! /bin/sh
 
-if [ \"\$1\" = \"--help\" ] || [ \"\$1\" = \"help\" ]; then
-  echo \"$ $FILE\"
-  echo \"\"
-  echo \"\"
-  echo \"Parameters:\"
-  echo \"  \\\$1: \"
-  echo \"\"
-  echo \"Example:\"
-  echo \"$ $FILE\"
+if [ \"\$1\" = \"--help\" ] || [ \"\$1\" = \"-h\" ] || [ \"\$1\" = \"help\" ]; then
+  printf \"$ $FILE <<++>>
+<++>
+
+Parameters:
+  \\\$1: <++>
+  [\\\$1]: <++>
+
+Example:
+  $ $FILE <++>
+\"
   exit
 fi
-" >> $FILE
 
-chmod +x $FILE
-vim $FILE
+command -v <++> >/dev/null || { echo \"<++> is not installed\"; exit 1; }
+" >> "$FILE"
+
+chmod +x "$FILE"
+vim "$FILE"
 
