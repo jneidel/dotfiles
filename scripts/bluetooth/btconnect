@@ -1,20 +1,22 @@
-#! /bin/bash
+#! /bin/sh
 
-if [ $1 = "--help" ] || [ $1 = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ btconnect <mac-address>"
   echo "Connect to a bluetooth device via bluetoothctl."
   echo "The device has to be paired/trusted via bluetoothctl beforehand."
-  echo "Example: $ btconnect B8:D5:0B:EA:D9:A6"
+  echo ""
+  echo "Example:"
+  echo "$ btconnect B8:D5:0B:EA:D9:A6"
 else
-  echo -e "power on\nquit" | bluetoothctl > /dev/null
+  printf "power on\nquit" | bluetoothctl > /dev/null
 
   echo "Started connecting"
 
   while [ 1 -eq 1 ]
   do
-    OUT=$(echo -e "connect "$1"\nquit" | bluetoothctl | grep "bluetooth" | grep "connect")
+    OUT=$(printf "connect "$1"\nquit" | bluetoothctl | grep "bluetooth" | grep "connect")
 
-    if [[ $OUT = "" ]]; then
+    if [ "$OUT" = "" ]; then 
       echo "Connected"
       break
     else

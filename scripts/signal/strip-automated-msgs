@@ -1,0 +1,17 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ signal-cli receive | strip-automated-msgs"
+  echo "Strip automated messages from the signal-cli output"
+  echo ""
+  echo "Example:"
+  echo "$ signal-cli -u <number> receive | strip-automated-msgs"
+  exit
+fi
+
+cat /dev/stdin |
+  pcregrep -M -v "Envelope from:.*\nTimestamp:.*\nMessage timestamp:.*\nBody:.*\nIs Expiration update: true\nExpires in:.*\n" | # expiration updates
+  pcregrep -M -v "Envelope from:.*\nTimestamp:.*\nGot receipt.\n" | # message receipts
+  pcregrep -M -v "Envelope from:.*\nTimestamp:.*\nReceived a receipt message\n - When:.*\n - Is read receipt\n - Timestamps:\n.*\n" # read receipts
+
+exit 0
