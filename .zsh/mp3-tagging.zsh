@@ -10,10 +10,6 @@ alias idco="lame --ti" # jpg mp3 # cover
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 # see ~/scripts/idmix
 
-# get tags (prefix derived from cm[us])
-## get lyrics
-alias cmly="get-cmus-lyrics" # in ~/scripts
-
 ## get cover
 function mpdcoloop() { # requires sxiv, fkill (npm: fkill-cli)
   file="/home/jneidel/music/"$(mpc status -f "%file%" | grep mp3)

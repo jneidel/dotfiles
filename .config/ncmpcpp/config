@@ -274,8 +274,6 @@ titles_visibility = no
 
 #header_text_scrolling = yes
 #
-#lines_scrolled = 2
-#
 #lyrics_fetchers = lyricwiki, azlyrics, genius, sing365, lyricsmania, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet
 #
 #follow_now_playing_lyrics = no
@@ -422,3 +420,10 @@ statusbar_time_color = 26
 empty_tag_color = magenta
 #color1 = white
 #color2 = green
+
+## disable gui
+mouse_support = no
+# mouse scroll
+lines_scrolled = 0
+mouse_list_scroll_whole_page = no
+

@@ -28,6 +28,9 @@ alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'notify-send \
 alias man="colored-man"
 alias beetim="disable-mullvad-for beet import"
 alias scp="disable-mullvad-for /usr/bin/scp"
+alias vim="nvim $@ 2>/dev/null"
+alias v="vim"
+alias vvim="/bin/vim"
 
 ### shorter script names
 alias rc="rename-comic"

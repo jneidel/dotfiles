@@ -23,7 +23,7 @@ if [ ! "$(mullvad block-when-disconnected get)" = "Network traffic will be allow
   mullvad disconnect
   printf "\033[1;31mturned mullvad off\n\033[0m"
 
-  transmission-status > /dev/null && transmission-kill
+  transmission.sh > /dev/null && transmission-kill
 
   sleep 3
   echo "running '$@'"
