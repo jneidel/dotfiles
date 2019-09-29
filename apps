@@ -176,6 +176,7 @@ renameutils qmv mass rename util
 
 [vim]
 vim The text editor
+nvim The newer text editor
 # par
 
 ## service clients

@@ -23,6 +23,8 @@ create .vim/tmp
 create .vim/bundle
 create .vim/view
 .vim/coc-settings.json
+create .config/nvim
+.config/nvim/init.vim
 
 [tmux]
 .tmux.conf

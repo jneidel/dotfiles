@@ -102,8 +102,6 @@ set directory=~/.vim/tmp
 " undo files
 set undofile
 set undodir=~/.vim/tmp
-" vimfinfo file
-set viminfo+=n~/.vim/tmp/viminfo
 
 " invert splits; the defaults are inverted, which is counter intuitive
 set splitbelow " on sp
@@ -167,7 +165,7 @@ endif
 au VimLeave * :call MakeSession()
 
 " Save history/registers after :q session
-set viminfo=%,'50,\"100,:100,n~/.viminfo
+set viminfo=%,'50,\"100,:100,n~/.vim/tmp/viminfo
 
 " Enable folding
 " Set foldmethod=snytax if current language has fold support
