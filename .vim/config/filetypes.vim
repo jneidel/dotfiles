@@ -30,6 +30,9 @@ au FileType markdown setlocal formatoptions+=t
 au BufRead ~/code/notes/journal/* setfiletype markdown
 au BufNewFile ~/code/notes/journal/* r!printf "\# thoughts on <++>\n\n"
 
+" contacts
+au BufRead ~/.contacts/* setfiletype conf
+
 " enable javascript syntax folding
 augroup javascript_folding
   au!

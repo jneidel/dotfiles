@@ -30,16 +30,15 @@ alias -s flac=mpvm
 alias -s ogg=mpvm
 alias -s wma=mpvm
 
-## script
+## code
 alias -s sh=bash
 alias -s js=node
-
-## html
-alias -s html=firefox-nightly
+alias -s java=java
+alias -s ts=tsc
 
 ## misc
 alias -s json=fx
-alias -s ts=tsc
+alias -s html=firefox-nightly
 alias -s exe=wine
 
 ## extract

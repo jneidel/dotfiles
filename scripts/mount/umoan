@@ -1,6 +1,6 @@
 #! /bin/sh
 
-MOUNT_LOCATION="~/tmp/android"
+MOUNT_LOCATION="$HOME/tmp/android"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ umoan"

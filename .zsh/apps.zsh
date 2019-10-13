@@ -31,6 +31,7 @@ alias scp="disable-mullvad-for /usr/bin/scp"
 alias vim="nvim $@ 2>/dev/null"
 alias v="vim"
 alias vvim="/bin/vim"
+alias ex="extract"
 
 ### shorter script names
 alias rc="rename-comic"

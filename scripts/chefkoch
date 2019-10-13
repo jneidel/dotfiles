@@ -1,0 +1,67 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ chefkoch <url>
+Scrape chefkoch.de recipes
+
+Parameters:
+  \$1: url to recipe, see example
+
+Example:
+  $ chefkoch https://www.chefkoch.de/rezepte/1096011215603693/Reis-aus-1001-Nacht.html
+"
+  exit
+fi
+
+# TODO: zutaten has multiple sections (https://www.chefkoch.de/rezepte/745721177147257/Lasagne.html)
+
+command -v pcregrep >/dev/null || { echo "pcregrep is not installed"; exit 1; }
+command -v curl >/dev/null || { echo "curl is not installed"; exit 1; }
+command -v paste >/dev/null || { echo "paste is not installed"; exit 1; }
+command -v tr >/dev/null || { echo "tr is not installed"; exit 1; }
+
+LINK="$1"
+HTML=$(mktemp)
+
+parseZutaten() {
+  grep -P 'Zutaten' $HTML -m 1 -A 200 |
+    pcregrep -M 'Zutaten(\n|.)*?</article>' |
+    pcregrep -M 'td-left(\n|.)*?td-right(\n|.)*?</span>' |
+    paste -d: -- - - - - | while read line; do # 4x "-", to create chunks in a four line interval, see https://unix.stackexchange.com/a/312497
+      tr : "\n" <<<"$line" |
+        tr -d "\n\r" |
+        grep -Po '<span>.*?</span>.*?</span>' |
+        sed "s/<a.*\">//; s/<span>//g; s/<\/span>//g; s/<\/td>\s*<td.*\">//; s/<\/a>//"
+    done | sed -E 's/\s+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
+}
+
+parseAnweisungen() {
+  grep -P 'class=\"ds-box\">' $HTML -A 20 |
+    sed '/Bilder/,/--/d' | # remove other grep matches, see https://stackoverflow.com/a/1221753
+    grep -v '<div class="ds-box">' |
+    tr -d "\n\r" |
+    grep -Po "^.*?</div>" |
+    sed "s|</div>||; s|<br />||g; s/^[[:space:]]*//; s|\. *|.\n|g"
+}
+
+if curl -Ss "$LINK" > $HTML; then
+  TITLE="$(grep -P 'h1.*?</h1>' -o $HTML | cut -d\> -f2 | cut -d\< -f1)"
+  IMG="$(grep -P 'https://.*?/bilder/.*?.jpg' -o $HTML -m 1)"
+  ZUTATEN="$(parseZutaten)"
+  ANWEISUNGEN="$(parseAnweisungen)"
+
+  printf "**$TITLE**
+
+![]($IMG) 
+
+$ZUTATEN
+
+$ANWEISUNGEN
+
+[Link]($LINK)
+
+"
+else
+  printf "Download of webpage failed.\nPlease check the url.\n"
+fi
+

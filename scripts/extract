@@ -38,6 +38,7 @@ if [ -f "$archive" ] ; then
     *.xz) unxz "$archive" ;;
     *.exe) cabextract "$archive" ;;
     *.deb) ar x "$archive" ;;
+    *.tgz.gpg) untargpg "$archive" ;;
     *.gpg) cat "$archive" | gpg -d > "$(echo "$archive" | sed -e 's/.gpg$//')" ;;
     *) printf "extract: '%s' - unknown archive method\\n" "$archive" ;;
   esac

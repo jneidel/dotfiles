@@ -27,8 +27,7 @@ if [[ $FILE_EXTENSION != "iso" ]]; then
   exit
 fi
 
+sudo mkdir -p $LOCATION
 sudo mount -o loop "$1" $LOCATION 2> /dev/null
 echo "mounted iso as readonly at $LOCATION"
-
-cd $LOCATION
 

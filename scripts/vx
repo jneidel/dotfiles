@@ -20,7 +20,7 @@ FILE="$1"
 echo "#! /bin/sh
 
 if [ \"\$1\" = \"--help\" ] || [ \"\$1\" = \"-h\" ] || [ \"\$1\" = \"help\" ]; then
-  printf \"$ $FILE <<++>>
+  printf \"$ $FILE <++>
 <++>
 
 Parameters:
