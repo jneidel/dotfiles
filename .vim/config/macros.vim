@@ -49,3 +49,6 @@ au filetype json inoremap ,o {<Enter>}<Esc>O
 "### CSS, SCSS
 au filetype css,scss,sass inoremap ,o {<Enter>}<Esc>O
 
+"### Java
+au filetype java inoremap ,o {<Enter>}<Esc>O
+

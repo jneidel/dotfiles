@@ -1,0 +1,49 @@
+#! /bin/sh
+
+MANGA_DIR=~/manga
+YAC_DB_FILE=$MANGA_DIR/.yacreaderlibrary/library.ydb
+UPDATES=$MANGA_DIR/updates
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ mangasync
+Remove mangas from updates list (created with mangareader-dl) if
+they are marked as read in in YACReader.
+"
+  exit
+fi
+
+command -v sqlite3 >/dev/null || { echo "sqlite3 is not installed"; exit 1; }
+[ ! -e "$UPDATES" ] && {
+  echo "updates file ('$UPDATES') does not exist"
+  exit 1
+}
+[ ! -e "$YAC_DB_FILE" ] && {
+  echo "yacreader library file ('$YAC_DB_FILE') does not exist"
+  exit 1
+}
+
+DUMP=$(mktemp)
+sqlite3 $YAC_DB_FILE .dump > $DUMP
+
+cat "$UPDATES" | while read LINE; do
+  NAME=$(echo $LINE | cut -d\  -f2)
+  CHAPTER=$(echo $LINE | cut -d\( -f2 | cut -d\) -f1)
+  if echo "$CHAPTER" | grep "-" >/dev/null; then
+    CHAPTER=$(echo "$CHAPTER" | cut -d- -f2)
+  fi
+
+  INFO_ID=$(grep "$NAME-0*$CHAPTER" $DUMP | awk -F , '{ print $3 }')
+  READ=$(grep -P "comic_info.*?$INFO_ID," $DUMP | awk -F , '{ print $29 }') # 0/1
+
+  # to find out more about the structure:
+  #   sqlite3 <yacreader-db-file>
+  #     .tables
+  #     .schema comic
+  #     .schema comic_info 
+
+  [ "$READ" -gt 0 ] && {
+    sed -i "/$NAME/d" $UPDATES
+    echo "Removed $LINE from updates"
+  } || true
+done
+

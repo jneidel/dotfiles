@@ -77,7 +77,7 @@ au BufRead,BufNewFile *.js nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-std
 au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
 
 "## coc
-let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank"
+let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank coc-java"
 
 " only use coc for specific filetypes
 au Filetype * silent CocDisable
