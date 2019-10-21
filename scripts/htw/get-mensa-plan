@@ -1,0 +1,58 @@
+#! /bin/sh
+
+TMP_DIR=~/tmp/speiseplan
+PDF=$TMP_DIR/speiseplan-$(date +%Y)-$(($(date +%U)+1)).pdf
+MAIN=$TMP_DIR/main-dishes.png
+SIDE=$TMP_DIR/side-dishes.png
+
+# dimensions
+MON=570x1420+430+450
+TUE=570x1420+1030+450
+WED=570x1420+1610+450
+THU=570x1420+2200+450
+FRI=570x1420+2800+450
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ get-mensa-plan
+Download this weeks Speiseplan for the HTW Wilhelminenhof
+"
+  exit
+fi
+
+command -v convert >/dev/null || { echo "convert (imagemagick) is not installed"; exit 1; }
+
+updateSpeiseplan() {
+  echo "Downloading speiseplan"
+  curl -Ss https://www.stw.berlin/assets/speiseplaene/319/aktuelle_woche_de.pdf > $PDF
+
+  echo "Converting speiseplan"
+  LAST_PAGE=$(identify -format "%p" "$PDF" | rev | cut -c1)
+  convert -density 300 -quality 100 "$PDF[$(($LAST_PAGE - 1))]" $MAIN # main dishes on the 4th page
+  convert -density 300 -quality 100 "$PDF[$LAST_PAGE]" $SIDE # sides on the 5th
+}
+
+cutDay() {
+  DIMENSIONS=$1
+  OUT=$TMP_DIR/dishes-$(date +%Y)-$(($(date +%U)+1))-$2.png
+
+  CUT_MAIN=$(mktemp --suffix=.png)
+  CUT_SIDE=$(mktemp --suffix=.png)
+
+  convert $MAIN -crop $DIMENSIONS +repage $CUT_MAIN
+  convert $SIDE -crop $DIMENSIONS +repage $CUT_SIDE
+  # see: https://www.imagemagick.org/Usage/crop/#crop_repage
+
+  montage -mode concatenate $CUT_MAIN $CUT_SIDE $OUT
+}
+
+mkdir -p $TMP_DIR
+[ ! -e "$PDF" ] && updateSpeiseplan
+[ ! -e "$MAIN" ] && updateSpeiseplan
+[ ! -e "$SIDE" ] && updateSpeiseplan
+
+cutDay $MON 1
+cutDay $TUE 2
+cutDay $WED 3
+cutDay $THU 4
+cutDay $FRI 5
+

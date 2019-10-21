@@ -1,0 +1,32 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+TMP_DIR=~/tmp/speiseplan
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ send-mensa-plan
+Send todays mensa Speiseplan via signal
+
+Add it to your servers crontab to execute automatically:
+  0 11 * * 1-5 <path-to>/send-mensa-plan
+"
+  exit
+fi
+
+command -v signal >/dev/null || { echo "signal-cli wrapper script (signal) is not installed"; exit 1; }
+[ ! -x "$DIR/get-mensa-plan" ] && { echo "get-mensa-plan not found (or executable) in this dir"; exit 1; }
+[ -z "$SIGNAL_SELF" ] && { echo "Variable SIGNAL_SELF is not set (the phone number to send stuff to)"; exit 1; }
+
+mkdir -p $TMP_DIR
+
+DOTW=$(date +%u)
+WEEK=$(($(date +%U)+1))
+YEAR=$(date +%Y)
+FILE=$TMP_DIR/dishes-$YEAR-$WEEK-$DOTW.png
+
+[ ! -e "$FILE" ] && {
+  ./get-mensa-plan
+}
+
+signal send $SIGNAL_SELF -m "" -a "$FILE"
+
