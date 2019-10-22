@@ -3,5 +3,5 @@
 # crontab: 0 18 * * */2 ~/scripts/cron/mangaup
 # validate using: https://crontab.guru
 
-notify-send "Running cronjob mangaup"
-mangareader-dl update
+~/scripts/cron/cron-notify-send "manga update"
+~/scripts/manga-update

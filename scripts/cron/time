@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ time
+cron notify-send test, annoucing the current time every minute
+
+$ fcrontab -e
+> * * * * * ~/scripts/cron/time
+"
+  exit
+fi
+
+~/scripts/cron/cron-notify-send "The time is $(date +%H:%M)"
+
