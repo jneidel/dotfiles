@@ -113,6 +113,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" toggle paste mode
+set pastetoggle=<F5>
+
 " custom coloring
 " current tab in tabline
   hi TabLineSel ctermfg=Red
@@ -164,7 +167,7 @@ endif
 " Create session automatically on leave
 au VimLeave * :call MakeSession()
 
-" Save history/registers after :q session, shada in nvim
+" Save history/registers after :q session
 set viminfo=%,'20,<100,:20
 " set viminfo=%,'50,\"100,:100,n~/.vim/tmp/viminfo
 

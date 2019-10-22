@@ -13,28 +13,37 @@ setxkbmap -option caps:escape &
 sudo chown jneidel /sys/class/leds/smc::kbd_backlight/brightness
 sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
 
-# start pulseaudio
-/bin/start-pulseaudio-x11
-
 # keyboard repeat
 xset r rate 185 100 &
+# lock screen
+xautolock -time 20 -locker blurlock &
 # bluelight filter
 xflux -k 5000 -l 52 -g 13 &
+# wallpaper
+nitrogen --restore &
+# desktop monitor
+~/scripts/conky/start-conky &
+# mpd cover conky
+~/scripts/mpd/local-cover &
+
+## daemons
+# pulseaudio
+/bin/start-pulseaudio-x11
 # hotkeys
 sxhkd &
-# auto lock screen
-xautolock -time 20 -locker blurlock &
-# wallpaper
-exec nitrogen --restore &
-#exec ~/tmp/imgur/update-wallpaper &
-exec ~/scripts/conky/start-conky &
+# notification
+dunst &
+# music player
+mpd &
 
+## gui application autostart
 kitty ~/scripts/tmux/tmux-startup &
 firefox-nightly &
-mpd &
-dunst &
 signal-desktop &
+
+## take out trash
 rmdir Desktop &
+rm -r ~/.playx &
 
 # status bar
 ~/scripts/lemonbar/run-lemonbar &

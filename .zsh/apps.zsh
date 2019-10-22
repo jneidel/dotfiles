@@ -50,6 +50,7 @@ alias flux="xflux -l 52 -g 13" # bluelight filter
 alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
+alias cal6="cal -mn 6"
 
 ### newsboat
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"

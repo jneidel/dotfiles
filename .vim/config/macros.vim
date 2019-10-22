@@ -52,3 +52,8 @@ au filetype css,scss,sass inoremap ,o {<Enter>}<Esc>O
 "### Java
 au filetype java inoremap ,o {<Enter>}<Esc>O
 
+"### LaTeX
+au filetype tex inoremap ,o {}<Esc>i
+au filetype tex inoremap ,b \begin{}<Enter><++><Enter>\end{<++>}<Esc>02kf{a
+au filetype tex inoremap ,s \section{}<Enter><Enter><++><Esc>02kf{a
+

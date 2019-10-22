@@ -111,7 +111,7 @@
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
-    format = "<b>%s</b>\n%b"
+    format = "<b>%s</b> (%a)\n%b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -151,7 +151,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Arc/devices/16:/usr/share/icons/Arc/status/16
+    icon_path = /usr/share/icons/Arc/devices/16:/usr/share/icons/Arc/status/16:/usr/share/icons/Arc/apps/16
 
     ### History ###
 

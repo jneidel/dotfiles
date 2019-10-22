@@ -19,3 +19,6 @@ lyrics:
   force: yes
 match:
   strong_rec_thresh: 0.1
+fetchart:
+  sources: filesystem coverart itunes amazon albumart wikipedia
+  minwidth: 500

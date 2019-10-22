@@ -176,3 +176,7 @@ create .config/dunst
 
 [fonts]
 .fonts
+
+[zathura]
+create .config/zathura
+.config/zathura/zathurarc

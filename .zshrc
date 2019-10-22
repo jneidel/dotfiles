@@ -28,7 +28,7 @@ export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
 ## Paths
-export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.local/bin
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -f ~/scripts/scripts-path-filter-pattern | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/ct:~/scripts
 
@@ -39,7 +39,8 @@ export BROWSER=firefox-nightly
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
 export MPD_PORT=5555
-export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
+export JAVA_HOME=/home/jneidel/tmp/openjdk-12.0.2_linux-x64_bin.tar/jdk-12.0.2
+#export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
 
 ### Themes
 export GTK_THEME=Arc
