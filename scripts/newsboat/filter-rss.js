@@ -9,7 +9,7 @@
 
 const convert = require( "xml-js" );
 
-function filter( blocklist, cb ) {
+function filter( cb ) {
   const chunks = [];
   process.stdin.on( "readable", () => {
     const chunk = process.stdin.read();
@@ -20,7 +20,7 @@ function filter( blocklist, cb ) {
   process.stdin.on( "end", () => {
     let data = JSON.parse( convert.xml2json( chunks.join( "" ) ) );
 
-    data = cb( data, blocklist );
+    data = cb( data );
 
     const out = convert.json2xml( JSON.stringify( data ) );
     process.stdout.write( out );
