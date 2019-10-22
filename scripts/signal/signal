@@ -1,3 +1,10 @@
 #! /bin/sh
 
-signal-cli -u +4935187472951 "$@"
+NUM="-u $SIGNAL_SENDER"
+
+[ "$1" = "receive" ] && {
+  signal-cli $NUM receive | strip-automated-msgs
+  exit 0
+}
+
+signal-cli $NUM "$@"

@@ -30,6 +30,8 @@ cat "$UPDATES" | while read LINE; do
   CHAPTER=$(echo $LINE | cut -d\( -f2 | cut -d\) -f1)
   if echo "$CHAPTER" | grep "-" >/dev/null; then
     CHAPTER=$(echo "$CHAPTER" | cut -d- -f2)
+  elif echo "$CHAPTER" | grep "," >/dev/null; then
+    CHAPTER=$(echo "$CHAPTER" | cut -d, -f2)
   fi
 
   INFO_ID=$(grep "$NAME-0*$CHAPTER" $DUMP | awk -F , '{ print $3 }')

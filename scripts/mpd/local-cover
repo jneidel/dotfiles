@@ -4,7 +4,7 @@
 # and send a notification of change to a named pipe which should be listened to by
 # any client interested in receiving the cover. Get it on the client using scp.
 
-PORT=5555
+MPD_PORT=5555
 MUSIC_LOCATION=$HOME/music # ffmpeg needs absolute path, not ~
 COVER_LOCATION=~/tmp/cover.jpg
 TMP_LOCATION=/tmp/mpd-cover.jpg
@@ -29,21 +29,30 @@ restartConky() {
 RESTART_CONKY=0
 startConky
 
-while true # kill conky after 3min of not playing anything
-  do {
-    [ ! "$(mpcc status | grep "^\[" | cut -d] -f1 | cut -d\[ -f2)" = "playing" ] && {
-      killConky
+conkyLoop() {
+  while true # kill conky after 3min of not playing anything
+    do {
+      [ ! "$(mpc -p $MPD_PORT status | grep "^\[" | cut -d] -f1 | cut -d\[ -f2)" = "playing" ] && {
+        killConky
+      }
+      sleep 3m
     }
-    sleep 3m
-  }
-done &
+  done &
+}
+conkyLoop
+
+cleanup() {
+  ps | fgrep "local-cover" | awk '{ print $1 }' | xargs -r kill # kill all instances, pgrep does not catch all
+  exit
+}
+trap cleanup EXIT
 
 createCover() {
   while read i;
   do
     [ -z "$(getConkyPid)" ] && startConky # stark conky if killed for not playing for 3min
 
-    FILE="$MUSIC_LOCATION/$(mpc -p $PORT -f %file% | cut -d$'\n' -f1)"
+    FILE="$MUSIC_LOCATION/$(mpc -p $MPD_PORT -f %file% | cut -d$'\n' -f1)"
 
     [ "$LAST_FILE" = "$FILE" ]  && continue
     LAST_FILE="$FILE"
@@ -54,7 +63,7 @@ createCover() {
 
     # check if current cover size is <100kb,
     # which would cause conky not to reload it on changes
-    [ "$(du -sh $COVER_LOCATION | cut -dK -f1)" -lt 100 ] && RESTART_CONKY=1
+    [ "$(du $COVER_LOCATION | cut -d/ -f1 | sed "s/[[:space:]]*$//")" -lt 100 ] && RESTART_CONKY=1
 
     [ $FFMPEG_STATUS -eq 0 ] && { # cover extraction successful
       echo Reloading cover
@@ -71,5 +80,6 @@ createCover() {
   done
 }
 
-mpc -p $PORT idleloop "player" | createCover &
+echo player | createCover # initial exec
+mpc -p $MPD_PORT idleloop "player" | createCover
 

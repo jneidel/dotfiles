@@ -1,0 +1,29 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ spsig
+Send this weeks htw stundenplan to my own number via signal-cli
+"
+  exit
+fi
+
+command -v signal >/dev/null || { echo "signal wrapper is not installed"; exit 1; }
+command -v convert >/dev/null || { echo "imagemagick is not installed"; exit 1; }
+
+WEEK=$(($(date +%U)+1))
+NAME="stundenplan-$(date +%Y)-$WEEK"
+TMP_LOCATION=~/tmp
+PDF="$TMP_LOCATION/$NAME.pdf"
+IMG="$TMP_LOCATION/$NAME.jpg"
+
+[ ! -e "$PDF" ] && {
+  echo "Generating sp"
+  sp +0 --no-viewer
+}
+
+echo "Converting sp"
+convert -density 300 -depth 8 -quality 90 "$PDF" "$IMG"
+
+echo "Sending sp"
+signal send $SIGNAL_SELF -m "" -a "$IMG"
+

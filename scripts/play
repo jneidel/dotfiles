@@ -1,0 +1,20 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ play <query>
+Play music from youtube, soundcloud, etc with mpv
+
+Parameters:
+  \$1: playx input, youtube query, video link
+
+Example:
+  $ play denzel curry ricky
+  $ play https://www.youtube.com/watch?v=3WHm6tfvKlk
+"
+  exit
+fi
+
+command -v playx >/dev/null || { echo "playx is not installed"; exit 1; }
+
+playx -n -d "$@" 2>/dev/null
+

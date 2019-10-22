@@ -1,0 +1,33 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ vtex <latex-filename>
+Create a new tex file with a few defaults
+and open it in vim.
+
+Parameters:
+  \$1: file to be create as '<\$1>.tex'
+
+Example:
+  $ vtex uff
+"
+  exit
+fi
+
+FILE="$1.tex"
+
+echo "\documentclass{article}
+
+\author{Jonathan Neidel}
+\title{<++>}
+
+\begin{document}
+\maketitle
+
+<++>
+
+\end{document}
+" >> "$FILE"
+
+vim "$FILE"
+
