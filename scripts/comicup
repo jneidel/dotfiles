@@ -8,6 +8,6 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 $HOME/code/getcomics-dl/bin/new.js | tee --output-error=warn >(grep -o "http.*$" | while read LINK; do
-  curl -s "$LINK" | grep -P "https://getcomics.info/run.php-urls/.*?\"" -o | head -n 1 | cut -d\" -f1  | sed "s/^h/    h/"
+  curl -s "$LINK" | grep -P "https://getcomics.info/run.php-urls/.*?\"" -o | head -n 1 | cut -d\" -f1  | sed "s/^h/    h/" | xargs -r $BROWSER
 done)
 

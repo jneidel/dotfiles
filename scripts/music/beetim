@@ -1,0 +1,22 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ beetim <music>
+Import music into your library using beet.
+
+Parameters:
+  \$1: music to be imported
+
+Example:
+  $ beetim ./JAY-Z
+"
+  exit
+fi
+
+command -v beet >/dev/null || { echo "beet is not installed"; exit 1; }
+command -v disable-mullvad-for >/dev/null || { echo "disable-mullvad-for script is not in path"; exit 1; }
+command -v mv-music >/dev/null || { echo "mv-music script is not in path"; exit 1; }
+
+disable-mullvad-for beet import "$@" # disable mullvad for import
+mv-music # move new albums to unheard
+

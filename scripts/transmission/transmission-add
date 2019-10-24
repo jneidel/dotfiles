@@ -11,8 +11,12 @@ fi
 
 CLIP=$(clipit -c 2>/dev/null)
 
-tsr -a "$CLIP" && {
+echo "$CLIP" > ~/tmp/clip
+
+if tsr -a "$CLIP" >/dev/null; then
   notify-send "Added magnet link to tsm" -t 800
   tsr -t "$CLIP" --start
-} || notify-send "Adding the magnet failed"
+else
+  notify-send "Adding the magnet failed" -t 1000
+fi
 

@@ -26,7 +26,6 @@ alias cat="bat"
 alias ccat="/bin/cat"
 alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'notify-send \"took screenshot\" -t 1000 -i camera;mv \$f ~/pictures'"
 alias man="colored-man"
-alias beetim="disable-mullvad-for beet import"
 alias scp="disable-mullvad-for /usr/bin/scp"
 alias vim="nvim $@ 2>/dev/null"
 alias v="vim"
@@ -51,6 +50,9 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
 alias cal6="cal -mn 6"
+alias bright="backlight"
+alias max="backlight max"
+alias min="backlight min"
 
 ### newsboat
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"

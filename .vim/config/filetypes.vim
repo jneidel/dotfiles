@@ -22,6 +22,8 @@ au BufRead ~/.config/conky/* setfiletype conkyrc
 
 " spellchecking for Markdown files
 au Filetype markdown setlocal spell spelllang=en_us,de
+" toggle spellchecking
+au Filetype markdown map <Leader>s :setlocal spell! spelllang=en_us,de<CR>
 " wrap text at 80 characters
 au Filetype markdown setlocal textwidth=80
 au FileType markdown setlocal formatoptions+=t

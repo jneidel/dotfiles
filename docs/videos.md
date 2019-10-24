@@ -68,6 +68,7 @@
 #### Vim
 
 - How to easily build language specific macros: [Start Turning vim into a /comfy/ IDE!](https://www.youtube.com/watch?v=Q4I_Ft-VLAg)
+- A practical vim introduction and setup showcase: [Talk on going mouseless with Vim, Tmux, and Hotkeys](https://www.youtube.com/watch?v=E-ZbrtoSuzw)
 
 #### Hardware
 

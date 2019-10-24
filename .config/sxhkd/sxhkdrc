@@ -30,11 +30,11 @@ super + F4
 ## pulseaudio
 ### volume control
 XF86AudioMute
-  ~/scripts/i3/volume/mute.sh
+  ~/scripts/sxhkd/set-volume.sh mute
 XF86AudioLowerVolume
-  ~/scripts/i3/volume/set-vol.sh -2
+  ~/scripts/sxhkd/set-volume.sh -3
 XF86AudioRaiseVolume
-  ~/scripts/i3/volume/set-vol.sh +2
+  ~/scripts/sxhkd/set-volume.sh +3
 
 ### sound mixer
 super + ctrl + m
@@ -44,31 +44,26 @@ super + m
 
 ## mpd
 ### playback control
-#XF86LaunchA
+# Also JBL play button, Alt: XF86LaunchA
 XF86AudioPlay
-  ~/scripts/mpd/mpcc toggle
-#XF86Search
-XF86AudioPrev
-  ~/scripts/mpd/mpcc prev
-#XF86Explorer
+  ~/scripts/sxhkd/control-mpd.sh toggle
+# Also JBL play double press, Alt: XF86Explorer
 XF86AudioNext
   ~/scripts/mpd/mpcc next
+# Alt: XF86Search
+XF86AudioPrev
+  ~/scripts/mpd/mpcc prev
 
 ## mac brightness
-XF86KbdBrightnessUp
-  ~/scripts/mac/keyboard-backlight p +1
-XF86KbdBrightnessDown
-  ~/scripts/mac/keyboard-backlight p -1
-
-#XF86KbdBrightnessUp
-#  "backlight percent +1; notify-send 'backlight $(backlight get)'"
-#XF86KbdBrightnessDown
-#  "backlight percent-1; notify-send 'backlight $(backlight get)'"
-
 XF86MonBrightnessUp
-  ~/scripts/mac/backlight p +02
+  ~/scripts/sxhkd/mac/backlight p +05
 XF86MonBrightnessDown
-  ~/scripts/mac/backlight p -02
+  ~/scripts/sxhkd/mac/backlight p -05
+
+XF86KbdBrightnessUp
+  ~/scripts/sxhkd/mac/keyboard-backlight p +1
+XF86KbdBrightnessDown
+  ~/scripts/sxhkd/mac/keyboard-backlight p -1
 
 ## screenshot
 # command copied from "alias scrot" in ~/.zsh/apps.zsh

@@ -12,13 +12,12 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "    with only notification rights."
   echo "    Format: 'username:token'"
   echo ""
-  echo "Dependencies:"
-  echo "  jq"
-  echo ""
   echo "Example:"
   echo "$ github-notifications jneidel:mytoken"
   exit
 fi
+
+command -v jq >/dev/null || { echo "jq is not installed"; exit 1; }
 
 [ -z "$1" ] && {
   echo "Requires 'username:token' as a parameter"
@@ -26,4 +25,5 @@ fi
 }
 
 curl -sS -u "$1" https://api.github.com/notifications | jq length
+
 

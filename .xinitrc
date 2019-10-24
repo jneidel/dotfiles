@@ -25,6 +25,8 @@ nitrogen --restore &
 ~/scripts/conky/start-conky &
 # mpd cover conky
 ~/scripts/mpd/local-cover &
+# watch bluetooth devices
+~/scripts/bluetooth/bt-watchdog.sh
 
 ## daemons
 # pulseaudio

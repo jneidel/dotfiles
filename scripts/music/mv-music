@@ -1,0 +1,22 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+PATTERN=$DIR/grep-music-pattern
+
+FROM=~/music
+TO=~/music/unheard
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ mv-music
+Move new albums in $FROM to $TO
+"
+  exit
+fi
+
+[ ! -e "$PATTERN" ] && { echo "The grep pattern is missing. Please add it with atleast $TO in it."; exit 1; }
+
+ls -d $FROM/*/ | grep -vf $PATTERN | while read dir; do
+  mv "$dir" "$TO"
+  echo Moved $(echo $dir | rev | cut -d/ -f2 | rev)
+done
+
