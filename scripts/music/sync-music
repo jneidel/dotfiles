@@ -1,0 +1,13 @@
+#! /bin/sh
+
+LOCAL_MUSIC=~/music
+MNT_POINT=/media/usb
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ sync-music"
+  echo "Sync $LOCAL_MUSIC with backup drive mounted on $MNT_POINT"
+  exit
+fi
+
+sudo rsync -avr $LOCAL_MUSIC/ $MNT_POINT # --delete 
+

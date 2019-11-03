@@ -1,0 +1,18 @@
+#! /bin/sh
+
+FIFO=$(mktemp -u)
+mkfifo $FIFO
+
+JAVA_DIR=~/code/java/jneidel
+cd $JAVA_DIR
+
+[ -z "$1" ] && {
+  echo "Missing file to run"; exit 1
+}
+
+ls *.java | entr -n javac *.java 2> $FIFO &
+
+ls *.class | entr -r java "$1" > $FIFO &
+
+cat $FIFO
+
