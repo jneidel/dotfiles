@@ -32,6 +32,9 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-timeout 1 mpc -h "$IP" -p "$PORT" "$@" 2> /dev/null ||
+if $DIR/is-mpd-server; then
+  timeout 1 mpc -h "$IP" -p "$PORT" "$@" 2> /dev/null
+else
   mpc -p $PORT "$@"
+fi
 
