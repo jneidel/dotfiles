@@ -31,9 +31,10 @@ fi
 ## format text
 alias -g PP="| pjson" # pretty print json
 
-## redirect stdout/stderr
-alias -g N1="2> /dev/null"     # only stdout, prev NE
-alias -g N2="> /dev/null 2>&1" # only stderr, prev NUL
+## redirect output
+alias -g N1="> /dev/null"      # no stdout
+alias -g N2="2> /dev/null"     # no stderr
+alias -g NO="> /dev/null 2>&1" # neither
 
 ## misc
 alias -g PB="| nc termbin.com 9999" # terminal pastebin

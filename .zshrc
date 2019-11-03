@@ -26,6 +26,9 @@ source ~/.zsh/init.zsh;
 export LANG=en_US.UTF-8
 # tmux needs to know the encoding: https://github.com/wernight/powerline-web-fonts/issues/8#issuecomment-353081869
 export LC_CTYPE=en_US.UTF-8
+if [ "$TERM" = "screen-256color" ]; then
+  export DISPLAY=:0
+fi
 
 ## Paths
 export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.local/bin

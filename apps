@@ -87,6 +87,7 @@ w3m Terminal browser
 [yacreader]
 #yacreader-nopdf Comicbook reader
 libunarr Dependency
+poppler-qt5 Dependency
 
 ## browsers
 [firefox]
@@ -287,6 +288,7 @@ ncpamixer-git Alternative pulseaudio mixer
 [node]
 nodejs Javascript runtime
 npm Node.js package manager
+yarn npm alternative
 
 [dictcc]
 npm:dict-cc-cli Offline dict.cc
@@ -344,6 +346,7 @@ npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 ## music
 [kid3]
 kid3 Visual (mp3) tag editor
+nemo File manager for dragging images over
 
 [mutagen]
 mutagen-tools Cli tagging tools
@@ -353,3 +356,28 @@ mutagen-tools Cli tagging tools
 wine Run windows applications
 wine-mono wine dependency
 
+[latex]
+texlive-core Core stuff
+biber Bibliography adon
+vim-live-latex-preview Vim plugin
+mupdf Pdf viewer for vim-live-latex-preview
+
+[networks]
+bind-tools Network debugging
+wireshark-qt Network sniffer
+
+[java]
+jdk-openjdk Java environment
+
+[signal]
+signal-desktop-bin Desktop version
+signal-cli CLI version
+
+[cron]
+fcron Cron implementation
+
+[xournalpp]
+xournalpp PDF editing
+
+[factorio]
+factorio-experimental Factorio

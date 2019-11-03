@@ -67,10 +67,10 @@ let mapleader = "#"
 " enable autocomplete
 set wildmode=longest,list,full
 
-" highlight search matches
-set hlsearch
 " highlight search matches while typing
 set incsearch
+" dont highlight search matches at startup
+set nohlsearch
 
 " ignore search case
 set ignorecase

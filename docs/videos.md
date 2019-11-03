@@ -93,6 +93,7 @@
 - Why you should watch redline (the best anime movie you've never heard of): [Why Redline is an Amazing Movie, and Why That Matters Today](https://www.youtube.com/watch?v=uUeaYaI-VAI)
 - How anime and otaku culture came to be: Anime and Otaku | Down the Rabbit Hole [Part 1](https://www.youtube.com/watch?v=zZsFQPdU2dw) [Part 2](https://www.youtube.com/watch?v=brF1zVXG5_0)
 - How a new generation of "battle" manga tell unique stories: ["Non Battle" Battle Anime](https://www.youtube.com/watch?v=kkg9BhISfdA)
+- A look into the world of competitive Tetri: [My Experience at the Classic Tetris World Championships](https://www.youtube.com/watch?v=RfuDrcrGnVQ)
 
 ### Games
 

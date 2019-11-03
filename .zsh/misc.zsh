@@ -1,10 +1,6 @@
 # misc
 
 ## utilities
-### calculator
-# calc() { # for a quick, one off calc
-#   echo "$1" | bc # -l <- spammy
-# } # or use: echo $((<calc>))
 calc() {
   node -e "console.log($@)"
 }
@@ -84,3 +80,5 @@ bindkey -s '\e4' "!:0-3 \t"
 bindkey -s '\e5' "!:0-4 \t"
 bindkey -s '\el' "!:0- \t" # alt+l - all but the last word
 
+# misc...
+alias dir="dirs -v | head -10"

@@ -19,24 +19,22 @@ xset r rate 185 100 &
 xautolock -time 20 -locker blurlock &
 # bluelight filter
 xflux -k 5000 -l 52 -g 13 &
-# wallpaper
-nitrogen --restore &
 # desktop monitor
 ~/scripts/conky/start-conky &
 # mpd cover conky
 ~/scripts/mpd/local-cover &
 # watch bluetooth devices
-~/scripts/bluetooth/bt-watchdog.sh
+~/scripts/bluetooth/bt-watchdog.sh &
+# wallpaper
+nitrogen --restore &
 
 ## daemons
-# pulseaudio
-/bin/start-pulseaudio-x11
 # hotkeys
 sxhkd &
 # notification
 dunst &
-# music player
-mpd &
+# pulseaudio and mpd
+/bin/start-pulseaudio-x11 && mpd &
 
 ## gui application autostart
 kitty ~/scripts/tmux/tmux-startup &

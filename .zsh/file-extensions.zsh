@@ -35,6 +35,7 @@ alias -s sh=bash
 alias -s js=node
 alias -s java=java
 alias -s ts=tsc
+alias -s tex=pdflatex
 
 ## misc
 alias -s json=fx

@@ -50,9 +50,6 @@ alias speed="npx speedo-cli"
 alias npmup="npm-check-updates"
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
 alias cal6="cal -mn 6"
-alias bright="backlight"
-alias max="backlight max"
-alias min="backlight min"
 
 ### newsboat
 alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"
@@ -83,7 +80,7 @@ alias dec="gpg -d"
 
 ## gui
 alias chrome="chromium"
-alias o="xdg-open ." # gui file browser
+alias kid="nemo . 2>/dev/null; kid3 . 2>/dev/null" # gui file browser + kid3
 alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## tui
@@ -94,3 +91,8 @@ alias flat="taskell ~/code/notes/taskell/flat-applications.md 2> /dev/null"
 alias vim-light="vim -c 'source ~/.vim/colors/light.vim'"
 alias vl="vim-light"
 
+## brightness
+alias bright="backlight"
+alias max="bright max N1"
+alias min="bright min N1"
+alias half="bright p 50 N1"
