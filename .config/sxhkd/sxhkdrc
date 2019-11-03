@@ -49,10 +49,10 @@ XF86AudioPlay
   ~/scripts/sxhkd/control-mpd.sh toggle
 # Also JBL play double press, Alt: XF86Explorer
 XF86AudioNext
-  ~/scripts/mpd/mpcc next
+  ~/scripts/sxhkd/control-mpd.sh next
 # Alt: XF86Search
 XF86AudioPrev
-  ~/scripts/mpd/mpcc prev
+  ~/scripts/sxhkd/control-mpd.sh prev
 
 ## mac brightness
 XF86MonBrightnessUp

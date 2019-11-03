@@ -24,7 +24,7 @@ FILE=/sys/class/backlight/intel_backlight/brightness
 # on the brightness file, otherwise you wont be able to write it,
 # not even with sudo
 MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness) # 2777
-MIN=40
+MIN=10
 
 set_brightness() {
   if [ -n "$1" ] && [ "$1" -gt -1 ] && [ "$1" -lt "$(($MAX+1))" ]; then
@@ -60,15 +60,22 @@ percent() {
     fi
     set_brightness $RES
   else
-    echo "Invalid parameter passed to percent"
-    echo "Please pass a number prefixed with '+' or '-'"
+    PERCENTAGE=$1
+    if [ "$PERCENTAGE" -gt 100 ] || [ "$PERCENTAGE" -lt 1 ]; then
+      echo "Percentage need to be in range 1-100"
+      exit 1
+    fi
+
+    RES=$(echo "$MAX*$PERCENTAGE/100" | bc | awk '{printf "%f", $0}' | cut -d . -f 1)
+    set_brightness $RES
   fi
 }
 
 notification() {
-  BRIGHTNESS_PERCENT=$(($(get_brightness)*100/MAX))
-  HEAD="Brightness: $BRIGHTNESS_PERCENT"
-  BODY="$(get-progress-string.sh 28 '▪' ' ' $BRIGHTNESS_PERCENT)"
+  BRIGHTNESS=$(get_brightness)
+  BRIGHTNESS_PERCENT=$(($BRIGHTNESS*100/MAX))
+  HEAD="Brightness: $BRIGHTNESS_PERCENT ($BRIGHTNESS)"
+  BODY="$(get-progress-string.sh 28 '▪' ' ' "$BRIGHTNESS_PERCENT")"
 
   notify-send -i brightness -h string:x-canonical-private-synchronous:brightness -u normal -t 1000 "$HEAD" "$BODY"
 }
@@ -78,7 +85,7 @@ case $1 in
   g|get) get_brightness;;
   max) set_brightness $MAX;;
   min) set_brightness $MIN;;
-  p|perc|percent) notification; percent $2;;
+  p|perc|percent) percent $2; notification;;
   *) echo "Please pass a command. Pass 'help' for help.";;
 esac
 
