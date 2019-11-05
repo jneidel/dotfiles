@@ -180,3 +180,7 @@ create .config/dunst
 [zathura]
 create .config/zathura
 .config/zathura/zathurarc
+
+[khal]
+create .config/khal
+.config/khal/config

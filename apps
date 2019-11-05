@@ -381,3 +381,7 @@ xournalpp PDF editing
 
 [factorio]
 factorio-experimental Factorio
+
+[khal]
+khal Calendar cli
+vdirsyncer CalDAV sync

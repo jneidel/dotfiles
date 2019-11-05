@@ -1,7 +1,6 @@
 zsh
 vim
 scripts
-calcurse
 cmus
 eslint
 newsboat
@@ -69,3 +68,4 @@ fonts
 latex
 signal
 cron
+khal
