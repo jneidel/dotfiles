@@ -132,3 +132,8 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/), [The Boondocks](https://www.imdb.com/title/tt0373732)
 - M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) [[nf](https://www.netflix.com/watch/60024976)]
 
+### Podcasts
+
+- [Edward Snoden on Joe Rogan](https://www.youtube.com/watch?v=efs3QRr8LWw)
+
+

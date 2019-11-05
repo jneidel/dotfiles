@@ -12,6 +12,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "Parameters:"
   echo "  [\$1]: device source, as in '/dev/sd<x>'; default $DEV_SOURCE"
   echo "  [\$2]: mount location; default $DEFAULT_LOCATION"
+  echo "  [\$3]: crypt mapper; default $DEFAULT_MAPPER"
   echo ""
   echo "Examples:"
   echo "$ cryptmount"
@@ -44,16 +45,19 @@ if [ -z "$2" ]; then
     exit 1
   }
 else 
-  [ ! -d "$2" ] &&
-    LOCATION="$2" ||
-    {
-      echo "Passed location '$2' does not exist."
-      exit 1
-    }
+  if [ -d "$2" ]; then
+    LOCATION="$2"
+  else
+    echo "Passed location '$2' does not exist."
+    exit 1
+  fi
 fi
 
 MAPPER=$DEFAULT_MAPPER
 [ -e $MAPPER ] && MAPPER=$DEFAULT_MAPPER2
+if [ -n "$3" ]; then
+  MAPPER="$3"
+fi
 
 # unlock luks
 sudo cryptsetup open $DEV $MAPPER

@@ -31,6 +31,7 @@ alias vim="nvim $@ 2>/dev/null"
 alias v="vim"
 alias vvim="/bin/vim"
 alias ex="extract"
+alias grep="/bin/grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -80,7 +81,7 @@ alias dec="gpg -d"
 
 ## gui
 alias chrome="chromium"
-alias kid="nemo . 2>/dev/null; kid3 . 2>/dev/null" # gui file browser + kid3
+alias kid="nemo . 2>/dev/null &; kid3 . 2>/dev/null" # gui file browser + kid3
 alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 
 ## tui
@@ -96,3 +97,7 @@ alias bright="backlight"
 alias max="bright max N1"
 alias min="bright min N1"
 alias half="bright p 50 N1"
+
+## cat updates files
+alias mup="cat ~/manga/updates"
+alias cup="cat ~/comics/updates"

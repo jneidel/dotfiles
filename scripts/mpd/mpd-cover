@@ -23,7 +23,10 @@ TMP_FILE=$(mktemp --suffix .jpg)
 
 SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
 
-ffmpeg -y -i "$SONG_FILE" $TMP_FILE > /dev/null 2>&1
+if ffmpeg -y -i "$SONG_FILE" $TMP_FILE >/dev/null 2>&1; then
+  kill $(pgrep $IMAGE_VIEWER_BIN) 2> /dev/null # kill previous instance
+  $IMAGE_VIEWER $TMP_FILE
+else
+  echo "Song does not have a cover"
+fi
 
-kill $(pgrep $IMAGE_VIEWER_BIN) 2> /dev/null # kill previous instance
-$IMAGE_VIEWER $TMP_FILE

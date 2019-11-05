@@ -21,12 +21,8 @@ xautolock -time 20 -locker blurlock &
 xflux -k 5000 -l 52 -g 13 &
 # desktop monitor
 ~/scripts/conky/start-conky &
-# mpd cover conky
-~/scripts/mpd/local-cover &
 # watch bluetooth devices
 ~/scripts/bluetooth/bt-watchdog.sh &
-# wallpaper
-nitrogen --restore &
 
 ## daemons
 # hotkeys
@@ -41,9 +37,12 @@ kitty ~/scripts/tmux/tmux-startup &
 firefox-nightly &
 signal-desktop &
 
-## take out trash
+# take out trash
 rmdir Desktop &
-rm -r ~/.playx &
+# wallpaper
+nitrogen --restore &
+# mpd cover conky
+~/scripts/mpd/local-cover &
 
 # status bar
 ~/scripts/lemonbar/run-lemonbar &

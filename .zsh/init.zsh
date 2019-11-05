@@ -1,9 +1,8 @@
-ZSH=~/.zsh;
+#! /bin/sh
 
-for i in $(ls $ZSH)
-  do
-    if [[ $i != "init.zsh" ]]; then
-      source $ZSH/$i
-    fi
+DIR=~/.zsh
+
+for i in $(ls $DIR | grep -v "init.zsh"); do
+  source $DIR/$i
 done
 

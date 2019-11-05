@@ -1,26 +1,19 @@
 # Zsh config
 
 # oh-my-zsh
-OMZ=~/.oh-my-zsh;
-HIST_STAMP="dd.mm.yyyy"
-
-_Z_DATA=$HOME/.z/.z
-plugins=( z )
-# z: jump around; $ z dot; to cd into dir thats most often used an includes 'dot' in the name, e.g. "dotfiles"
-
+OMZ=~/.oh-my-zsh
 source $OMZ/oh-my-zsh.sh
-source $OMZ/themes/cobalt2.zsh-theme;
+source $OMZ/themes/cobalt2.zsh-theme
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # installed with pacman: zsh-syntax-highlighting[-git]
 
 bindkey -v # shell vim mode (default emacs)
-bindkey "^R" history-incremental-pattern-search-backward # history search
+bindkey "^r" history-incremental-pattern-search-backward # history search
 export KEYTIMEOUT=1
 
-#[[ -f $HOME/.LS_COLORS ]] && eval "`dircolors -b $HOME/.LS_COLORS`"
-
 # Import aliases
-source ~/.zsh/init.zsh;
+source ~/.oh-my-zsh/lib/init.zsh
+source ~/.zsh/init.zsh
 
 ## Language
 export LANG=en_US.UTF-8
@@ -31,19 +24,18 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 ## Paths
-export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.local/bin
+export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.local/bin:/usr/bin/vendor_perl
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -f ~/scripts/scripts-path-filter-pattern | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/ct:~/scripts
 
 ## Applications
 export EDITOR=vim
 export PAGER=less
+export LESS="-R"
 export BROWSER=firefox-nightly
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
-export MPD_PORT=5555
-export JAVA_HOME=/home/jneidel/tmp/openjdk-12.0.2_linux-x64_bin.tar/jdk-12.0.2
-#export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
 
 ### Themes
 export GTK_THEME=Arc

@@ -52,7 +52,7 @@ createCover() {
   do
     [ -z "$(getConkyPid)" ] && startConky # stark conky if killed for not playing for 3min
 
-    FILENAME="$(mpc -p $MPD_PORT -f %file% | cut -d$'\n' -f1)"
+    FILENAME="$(mpc-get file)"
     FILE="$MUSIC_LOCATION/$FILENAME"
     if echo "$FILENAME" | grep "volume.*repeat.*random.*single.*consume" >/dev/null; then # no file path (end of playlist reached w/o repeat)
       killConky
@@ -62,6 +62,7 @@ createCover() {
     [ "$LAST_FILE" = "$FILE" ] && continue
     LAST_FILE="$FILE"
 
+    echo $FILE
     ffmpeg -i "$FILE" -y $TMP_LOCATION > /dev/null 2>&1
     # write to tmp location first, so I can do cover size check
     FFMPEG_STATUS=$(echo $?)
