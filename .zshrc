@@ -1,10 +1,10 @@
 # Zsh config
 
 # oh-my-zsh
-OMZ=~/.oh-my-zsh
-source $OMZ/oh-my-zsh.sh
-source ~/.oh-my-zsh/lib/init.zsh
-source $OMZ/themes/cobalt2.zsh-theme
+ZSH_DIR=~/.zsh
+source $ZSH_DIR/oh-my-zsh.sh
+source $ZSH_DIR/lib/init.zsh
+source $ZSH_DIR/cobalt2.zsh-theme
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # installed with pacman: zsh-syntax-highlighting[-git]
 
@@ -13,7 +13,7 @@ bindkey "^r" history-incremental-pattern-search-backward # history search
 export KEYTIMEOUT=1
 
 # Import aliases
-source ~/.zsh/init.zsh
+source $ZSH_DIR/init.zsh
 
 ## Language
 export LANG=en_US.UTF-8

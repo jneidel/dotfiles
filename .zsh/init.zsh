@@ -2,7 +2,7 @@
 
 DIR=~/.zsh
 
-for i in $(ls $DIR | grep -v "init.zsh"); do
-  source $DIR/$i
+for i in $(ls $DIR/*.zsh | grep -v "init.zsh"); do
+  source $i
 done
 
