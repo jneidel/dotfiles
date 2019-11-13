@@ -139,6 +139,16 @@ for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
 for_window [class="mpv"] floating enable
 for_window [class="Bdrive"] floating enable
+for_window [class="conky"] floating enable
+
+# Dont focus on these windows on open
+no_focus [class="mupdf"]
+
+# Open monitors on specific workspaces
+workspace 5 output DP1
+mouse_warping none
+no_focus [class="monitor"]
+assign [class="monitor"] $ws5
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart

@@ -21,7 +21,7 @@ alias -g HP="--help | less" # show help in reader
 alias -g LL="2>&1 | less"   # shallow errors and open in reader
 
 ## filter text
-alias -g G="| grep --color=auto"
+alias -g G="| grep"
 alias -g GP="| grep -P"
 if [ -e ~/scripts/hhighlighter.sh ]; then
   source ~/scripts/hhighlighter.sh;

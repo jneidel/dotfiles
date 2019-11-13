@@ -83,6 +83,8 @@ super + a
   cnsm-add
 super + t
   transmission-add
+super + z
+  open-latest-doc
 
 ## to fix
 # super + Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"

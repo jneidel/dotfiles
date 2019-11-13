@@ -3,6 +3,7 @@
 # oh-my-zsh
 OMZ=~/.oh-my-zsh
 source $OMZ/oh-my-zsh.sh
+source ~/.oh-my-zsh/lib/init.zsh
 source $OMZ/themes/cobalt2.zsh-theme
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # installed with pacman: zsh-syntax-highlighting[-git]
@@ -12,7 +13,6 @@ bindkey "^r" history-incremental-pattern-search-backward # history search
 export KEYTIMEOUT=1
 
 # Import aliases
-source ~/.oh-my-zsh/lib/init.zsh
 source ~/.zsh/init.zsh
 
 ## Language

@@ -365,6 +365,7 @@ mupdf Pdf viewer for vim-live-latex-preview
 [networks]
 bind-tools Network debugging
 wireshark-qt Network sniffer
+traceroute Trace router hops
 
 [java]
 jdk-openjdk Java environment

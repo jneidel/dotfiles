@@ -52,7 +52,7 @@ au filetype json inoremap ,o {<Enter>}<Esc>O
 au filetype css,scss,sass inoremap ,o {<Enter>}<Esc>O
 
 "### Java
-au filetype java inoremap ,o {}<++><Esc>ba
+au filetype java inoremap ,o {<Enter>}<Esc>O
 au filetype java inoremap ,i <Esc>ggIpublic class  {<Enter>public static void main( String[] args ) {<Enter><++><Enter>}<Enter>}<Esc>gg2ela
 au filetype java inoremap ,p System.out.print(  );<Esc>2hi
 au filetype java inoremap ,pl System.out.println(  );<Esc>2hi
@@ -70,11 +70,13 @@ au filetype tex inoremap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
 "#### text style
 au filetype tex inoremap ,b \textbf{}<++><Esc>ba
 au filetype tex inoremap ,it \textit{}<++><Esc>ba
+au filetype tex inoremap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
 
 "#### lists
 au filetype tex inoremap ,ol \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
 au filetype tex inoremap ,ul \begin{enumerate}<Enter>\item <Enter>\end{enumerate}<Enter><++><Esc>2kA
 au filetype tex inoremap ,i \item 
+au filetype tex inoremap ,t \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
 
 "#### math
 au filetype tex inoremap ,m \[  \]<Enter><Enter><++><Esc>02kf[la

@@ -66,9 +66,11 @@ alias mmv="qmv -f do" # massmove
 alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
 
-## Unused
-alias hdmi="xrandr --output HDMI1 --auto" # dublicate screen on connected hdmi
-
+## displays
+alias hdmi="xrandr --auto" # dublicate screen on connected hdmi
+alias home="xrandr --output DP1 --mode 1920x1080 --right-of eDP1 --scale-from 1440x900" # 2nd display
+# alias home="xrandr --output DP1 --mode 1920x1080 --primary --scale-from 1440x900" # clone
+# custom resolution https://askubuntu.com/a/377944
 
 ## previous command hotkeys
 # print previous command but only the first nth arguments

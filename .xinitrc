@@ -23,6 +23,8 @@ xflux -k 5000 -l 52 -g 13 &
 ~/scripts/conky/start-conky &
 # watch bluetooth devices
 ~/scripts/bluetooth/bt-watchdog.sh &
+# disable external monitors
+monitor off &
 
 ## daemons
 # hotkeys
@@ -37,12 +39,14 @@ kitty ~/scripts/tmux/tmux-startup &
 firefox-nightly &
 signal-desktop &
 
-# take out trash
-rmdir Desktop &
-# wallpaper
-nitrogen --restore &
-# mpd cover conky
-~/scripts/mpd/local-cover &
+# don't work if started directly
+{
+  sleep 10
+  # mpd cover conky
+  # ~/scripts/mpd/local-cover &
+  # wallpaper
+  nitrogen --restore &
+} &
 
 # status bar
 ~/scripts/lemonbar/run-lemonbar &
