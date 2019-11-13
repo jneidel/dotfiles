@@ -1,0 +1,15 @@
+#! /bin/sh
+
+DL=~/Downloads
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ open-latest-doc
+Open the latest downloaded document in $DL in zathura
+"; exit
+fi
+
+command -v zathura >/dev/null || { echo "zathura is not installed"; exit 1; }
+command -v exa >/dev/null || { echo "exa is not installed"; exit 1; }
+
+exa -l $DL/*.pdf -snew | tail -n 1 | cut -d: -f2- | cut -d\  -f2- | xargs zathura
+

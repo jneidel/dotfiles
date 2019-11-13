@@ -12,7 +12,7 @@ cd $JAVA_DIR
 
 ls *.java | entr -n javac *.java 2> $FIFO &
 
-ls *.class | entr -r java "$1" > $FIFO &
+ls *.class | entr -r -p java "$1" > $FIFO &
 
 cat $FIFO
 

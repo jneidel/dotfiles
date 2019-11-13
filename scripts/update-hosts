@@ -9,7 +9,7 @@ fi
 
 HOSTS=/etc/hosts
 HOSTS_DENY=/etc/hosts.deny
-OG_HOSTS=/home/jneidel/code/dotfiles/manjaro/etc/hosts
+OG_HOSTS=/home/jneidel/code/dotfiles/etc/hosts
 
 echo "Setting $HOSTS"
 sudo rm $HOSTS 2> /dev/null

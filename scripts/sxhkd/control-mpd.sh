@@ -30,7 +30,7 @@ notification() {
 
   TRACK="$(mpc-get '%title% - %artist%')"
   [ "$TRACK" = " - " ] && {
-    TRACK="basename '$(mpc-get file)'"
+    TRACK="$(basename "$(mpc-get file)" | rev | cut -d. -f2 | rev)"
   }
 
   notify-send -i $1 -h string:x-canonical-private-synchronous:controlMpd -u normal -t 7000 "$2" "$TRACK"

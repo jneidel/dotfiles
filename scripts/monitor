@@ -1,0 +1,37 @@
+#! /bin/sh
+
+MAIN=eDP1
+MAIN_RESOLUTION=1440x900 
+
+MONITOR=DP1
+MONITOR_RESOLUTION=1920x1080 
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ toggle-monitor [on|off]
+Toggle the connected monitor $MONITOR
+Or turn it on/off
+
+Parameters:
+  [\$1]: on|off - turn display on/off
+"; exit
+fi
+
+command -v xrandr >/dev/null || { echo "xrandr is not installed"; exit 1; }
+
+turn_off() {
+  xrandr --output $MONITOR --off
+  echo "Turned external monitor off"
+}
+turn_on() {
+  xrandr --output $MONITOR --mode $MONITOR_RESOLUTION --right-of $MAIN --scale-from $MAIN_RESOLUTION >/dev/null
+  echo "Turned external monitor on"
+}
+
+
+if xrandr --listactivemonitors | grep " $MONITOR" >/dev/null; then
+  [ ! "$1" = "on" ] && turn_off
+else
+  [ ! "$1" = "off" ] && turn_on
+fi
+
+true

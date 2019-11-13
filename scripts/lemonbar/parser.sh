@@ -18,12 +18,22 @@ while read -r line ; do
       # diskspace
       diskspace="${sys_arr[6]}"
       diskspace="%{B${col_main}}${sep_left}  ${diskspace} ${sep_right}"
-      # battery
-      battery="${sys_arr[7]} ${sys_arr[8]}" # icon, percentage
-      battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
-      # network monitor
-      downspeed="${sys_arr[9]}"
-      downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"
+
+      if [ "${sys_arr[7]}" = "G" ]; then # mysterious G dirupts the order
+        # battery
+        battery="${sys_arr[8]} ${sys_arr[9]}" # icon, percentage
+        battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
+        # network monitor
+        downspeed="${sys_arr[10]}${sys_arr[11]}" # speed, unit
+        downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"
+      else
+        # battery
+        battery="${sys_arr[7]} ${sys_arr[8]}" # icon, percentage
+        battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
+        # network monitor
+        downspeed="${sys_arr[9]}${sys_arr[10]}" # speed, unit
+        downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"
+      fi
       ;;
     NET*) # wifi/vpn
       network=""

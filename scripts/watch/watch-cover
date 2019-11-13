@@ -1,0 +1,17 @@
+#! /bin/sh
+
+# TODO: fix shifing focus
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ cover-reload 
+Reload sxiv on monitor on cover change
+"; exit
+fi
+
+command -v entr >/dev/null || { echo "entr is not installed"; exit 1; }
+command -v kitty >/dev/null || { echo "kitty is not installed"; exit 1; }
+
+COVER=~/tmp/cover.jpg
+
+sxiv -fb $COVER
+

@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# TODO: fix conky to work without restart
+
 # On mpd player state change update a tmp file with the cover of the current song
 # and send a notification of change to a named pipe which should be listened to by
 # any client interested in receiving the cover. Get it on the client using scp.
@@ -80,7 +82,7 @@ createCover() {
     }
 
     [ "$RESTART_CONKY" -eq 1 ] && {
-      restartConky
+      # restartConky
       RESTART_CONKY=0
     }
   done

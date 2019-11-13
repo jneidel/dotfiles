@@ -9,5 +9,4 @@ fi
 echo -e "power off\nquit" | bluetoothctl > /dev/null 2>&1
 
 # kill keep alive audio stream
-kill $(pgrep -f "mpv -ao pulse /home/jneidel/scripts/personal/audio.mp3 --mute --loop-file=inf") 2> /dev/null
-
+kill $(pgrep -f "mpv -ao pulse /home/jneidel/scripts/personal/audio.mp3 --mute --loop-file=inf") 2> /dev/null || true
