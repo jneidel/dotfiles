@@ -4,6 +4,7 @@
 # no prefix - yay -S
 # npm       - npm install -g
 # systemd   - systemctl enable
+# pip3      - sudo pip3 install
 #
 # Todo: cleanup, comment broader categories
 
@@ -69,6 +70,9 @@ task-spooler Queue commands for linear execution
 ## viewer/reader
 [fbreader]
 fbreader epub reader
+
+[epr]
+git+https://github.com/wustho/epr.git epub reader
 
 [zathura]
 zathura Reader
@@ -178,6 +182,7 @@ renameutils qmv mass rename util
 [vim]
 vim The text editor
 nvim The newer text editor
+fzf Fuzzy finder
 # par
 
 ## service clients
