@@ -20,6 +20,7 @@ yay -v 2> /dev/null || {
 
 PACMAN_INSTALL=""
 NPM_INSTALL=""
+PIP_INSTALL=""
 POST_INSTALL=""
 
 CATEGORY=""
@@ -47,6 +48,8 @@ function get-files {
           NPM_INSTALL="$NPM_INSTALL $PKG";;
         systemd)
           POST_INSTALL="$POST_INSTALL sudo systemctl enable $PKG; echo systemd: Enabled $PKG;";;
+        systemd)
+          POST_INSTALL="$PIP_INSTALL $PKG";;
         *)
           echo "skipped: $IN"
       esac
@@ -66,6 +69,7 @@ function get-files {
 
   echo "yay -S $PACMAN_INSTALL" > $TMP_INSTALL_FILE
   echo "sudo npm i -g $NPM_INSTALL" >> $TMP_INSTALL_FILE
+  echo "sudo pip3 install $PIP_INSTALL" >> $TMP_INSTALL_FILE
   echo "$POST_INSTALL" >> $TMP_INSTALL_FILE
 }
 
