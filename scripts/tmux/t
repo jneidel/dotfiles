@@ -1,0 +1,33 @@
+#! /bin/sh
+
+DEFAULT_SESSION=main
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ t [session]
+Attach to a tmux session or create it if it doesn't exist.
+
+If no parameter given attach to the default session ($DEFAULT_SESSION).
+
+Parameters:
+  [\$1]: session to attach to
+
+Example:
+  $ t main
+"; exit
+fi
+
+command -v tmux >/dev/null || { echo "tmux is not installed"; exit 1; }
+
+SESSION="$1"
+if [ -z "$SESSION" ]; then
+  SESSION="$DEFAULT_SESSION"
+fi
+
+if tmux list-sessions 2> /dev/null | cut -d: -f1 | grep "^$SESSION$" > /dev/null; then
+  tmux -u attach -t "$SESSION"
+else
+  tmux -u new -s "$SESSION"
+fi
+
+# -u for UTF-8 even if the correct ENV variables are missing
+
