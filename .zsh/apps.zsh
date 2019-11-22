@@ -99,5 +99,5 @@ alias min="bright min N1"
 alias half="bright p 50 N1"
 
 ## cat updates files
-alias mup="cat ~/manga/updates"
-alias cup="cat ~/comics/updates"
+alias mup="show-updates manga"
+alias cup="show-updates comic"

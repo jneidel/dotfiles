@@ -10,32 +10,13 @@ fi
 HOSTS=/etc/hosts
 HOSTS_DENY=/etc/hosts.deny
 OG_HOSTS=/home/jneidel/code/dotfiles/etc/hosts
+TMP_HOSTS=/tmp/hosts
 
 echo "Setting $HOSTS"
-sudo rm $HOSTS 2> /dev/null
-sudo cp $OG_HOSTS $HOSTS
-curl -sSL https://hosts.ubuntu101.co.za/hosts \
-  | sed -e '1,55d' \
-  | sed "/0.0.0.0 soundcloud.com/d" \
-  | sed "/0.0.0.0 imagecomics.com/d" \
-  | sed "/0.0.0.0 humblebundle.com/d" \
-  | sed "/0.0.0.0 www.humblebundle.com/d" \
-  | sed "/0.0.0.0 store.steampowered.com/d" \
-  | sed "/0.0.0.0 steampowered.com/d" \
-  | sed "/0.0.0.0 forums.steampowered.com/d" \
-  | sed "/0.0.0.0 meetup.com/d" \
-  | sed "/0.0.0.0 musicbrainz.org/d" \
-  | sed "/0.0.0.0 xkcd.com/d" \
-  | sed "/0.0.0.0 www.namecheap.com/d" \
-  | sed "/0.0.0.0 1337x.to/d" \
-  | sed "/0.0.0.0 larrysanger.org/d" \
-  | sed "/0.0.0.0 www.theguardian.com/d" \
-  | sed "/0.0.0.0 www.heise.de/d" \
-  | sed "/0.0.0.0 heise.de/d" \
-  | sed "/0.0.0.0 turbobit.net/d" \
-  | sed "/0.0.0.0 boardgamegeek.com/d" \
-  | sed "/0.0.0.0 www.catb.org/d" > /tmp/hosts
-sudo mv /tmp/hosts $HOSTS
+sudo rm $HOSTS $TMP_HOSTS 2> /dev/null
+cp $OG_HOSTS $TMP_HOSTS
+curl -L -# https://hosts.ubuntu101.co.za/hosts | sed "1,55d; /0.0.0.0 soundcloud.com/d; /0.0.0.0 imagecomics.com/d; /0.0.0.0 humblebundle.com/d; /0.0.0.0 www.humblebundle.com/d; /0.0.0.0 store.steampowered.com/d; /0.0.0.0 steampowered.com/d; /0.0.0.0 forums.steampowered.com/d; /0.0.0.0 meetup.com/d; /0.0.0.0 musicbrainz.org/d; /0.0.0.0 xkcd.com/d; /0.0.0.0 www.namecheap.com/d; /0.0.0.0 1337x.to/d; /0.0.0.0 larrysanger.org/d; /0.0.0.0 www.theguardian.com/d; /0.0.0.0 www.heise.de/d; /0.0.0.0 heise.de/d; /0.0.0.0 turbobit.net/d; /0.0.0.0 boardgamegeek.com/d; /0.0.0.0 www.catb.org/d" >> $TMP_HOSTS
+sudo mv $TMP_HOSTS $HOSTS
 
 echo "Setting $HOSTS_DENY"
 sudo rm $HOSTS_DENY > /dev/null

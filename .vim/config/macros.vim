@@ -73,8 +73,8 @@ au filetype tex inoremap ,it \textit{}<++><Esc>ba
 au filetype tex inoremap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
 
 "#### lists
-au filetype tex inoremap ,ol \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
-au filetype tex inoremap ,ul \begin{enumerate}<Enter>\item <Enter>\end{enumerate}<Enter><++><Esc>2kA
+au filetype tex inoremap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
+au filetype tex inoremap ,ol \begin{enumerate}<Enter>\item <Enter>\end{enumerate}<Enter><++><Esc>2kA
 au filetype tex inoremap ,i \item 
 au filetype tex inoremap ,t \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
 

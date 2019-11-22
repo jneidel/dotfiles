@@ -34,7 +34,7 @@ if [ -n "$1" ]; then
   exit 0
 fi
 
-if grep "www.netflix.com" $HOSTS > /dev/null; then
+if grep "netflix.com" $HOSTS > /dev/null; then
   remove
 else
   add

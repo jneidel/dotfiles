@@ -43,6 +43,10 @@ cat "$UPDATES" | while read LINE; do
   #     .schema comic
   #     .schema comic_info 
 
+  if echo "$READ" | fgrep "read BOOLEAN DEFAULT" > /dev/null; then
+    exit # otherwise -gt 0 goes haywire
+  fi
+
   [ "$READ" -gt 0 ] && {
     sed -i "/$NAME/d" $UPDATES
     echo "Removed $LINE from updates"

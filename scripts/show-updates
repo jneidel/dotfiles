@@ -1,0 +1,38 @@
+#! /bin/sh
+
+MANGA=~/manga/updates
+COMIC=~/comics/updates
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ show-updates manga|comic
+Show either manga or comic updates.
+
+Parameters:
+  \$1: manga or comic
+
+Example:
+  $ show-updates manga
+"; exit
+fi
+
+command -v mangasync >/dev/null || { echo "mangasync script is not in PATH"; exit 1; }
+command -v comicsync >/dev/null || { echo "comicsync script is not in PATH"; exit 1; }
+command -v bat >/dev/null || { echo "bat is not installed"; exit 1; }
+
+printFile() {
+  [ -n "$(cat $1)" ] &&
+    bat "$1" --style grid
+  true
+}
+
+case $1 in
+  manga)
+    mangasync
+    printFile "$MANGA"
+    ;;
+  comic)
+    comicsync
+    printFile "$COMIC"
+    ;;
+esac
+

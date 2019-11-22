@@ -6,7 +6,7 @@
 alias -s pdf=zathura #epdfview, mupdf, apvlv
 
 ## ebook
-alias -s epub=FBReader
+alias -s epub=epr
 alias -s mobi=FBReader
 
 ## comic

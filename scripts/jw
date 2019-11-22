@@ -3,7 +3,7 @@
 FIFO=$(mktemp -u)
 mkfifo $FIFO
 
-JAVA_DIR=~/code/java/jneidel
+JAVA_DIR="$(pwd)"
 cd $JAVA_DIR
 
 [ -z "$1" ] && {
