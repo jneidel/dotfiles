@@ -3,6 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 IP_FILE="$DIR/current-mpd-ip"
 IP=$(cat "$IP_FILE")
+PORT=5555
 STATUS_FILE="$DIR/mpd-server-status"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -17,8 +18,10 @@ fi
 
 command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }
 
-if timeout 1 mpc -h "$IP" -p "$PORT" "status" 2> /dev/null; then # if might be redundant
-  true
+if timeout 1 mpc -h "$IP" -p "$PORT" "status" 2> /dev/null >/dev/null; then
+  echo "1" > $STATUS_FILE
 else
-  false
+  echo "0" > $STATUS_FILE
 fi
+
+# ~/scripts/cron/cron-notify-send "pinged for mpd server"

@@ -5,8 +5,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 IP=$(cat "$DIR/current-mpd-ip")
-
 PORT=5555
+STATUS_FILE=$DIR/mpd-server-status
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ ncmpcpps"
@@ -18,9 +18,9 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-# timeout 1.2 mpc -h "$IP" -p "$PORT" status > /dev/null 2> /dev/null
-
-# [ $(echo $?) -eq 0 ] && \
-#   ncmpcpp -h "$IP" -p "$PORT" 2> /dev/null || \
-  ncmpcpp -p "$PORT" 2> /dev/null # try local if pi timedout
+if [ "$(cat $STATUS_FILE)" -gt 0 ]; then
+  ncmpcpp -h "$IP" -p "$PORT" 2> /dev/null
+else
+  ncmpcpp -p "$PORT" 2> /dev/null
+fi
 
