@@ -1,0 +1,17 @@
+#! /bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+PORT=5555
+IP=$(cat "$DIR/current-mpd-ip")
+
+if "$DIR/is-mpd-server"; then
+  IS_SERVER=1
+  CONNECT="-h $IP -p $PORT"
+else
+  IS_SERVER=0
+  CONNECT="-p $PORT"
+fi
+
+command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }
+

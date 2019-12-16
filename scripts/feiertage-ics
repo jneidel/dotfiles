@@ -1,0 +1,45 @@
+#! /bin/sh
+
+LAND=BE # Berlin, find your code on: https://feiertage-api.de
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  printf "$ feiertage-ics <output-file>
+Put this years holidays for Berlin in the specifed ics file
+
+Uses: https://feiertage-api.de for data.
+
+Parameters:
+  \$1: ouput file (will be overwritten)
+
+Example:
+  $ feiertage-ics 2020-holidays.ics
+"; exit
+fi
+
+command -v jshon >/dev/null || { echo "jshon is not installed"; exit 1; }
+command -v xargs >/dev/null || { echo "xargs is not installed"; exit 1; }
+command -v curl >/dev/null || { echo "curl is not installed"; exit 1; }
+
+TMP=$(mktemp)
+
+download() {
+  curl -Ss "https://feiertage-api.de/api/?jahr=$(date +%Y)&nur_land=$LAND" > $TMP
+}
+
+convertToIcs() {
+  printf "BEGIN:VCALENDAR
+VERSION:2.0
+"
+
+  jshon -k < $TMP | while read -r line; do
+    jshon -e "$line" -e datum < $TMP |
+      xargs  date +%Y%m%dT000000 --date |
+      awk '{ print "BEGIN:VEVENT\nSUMMARY:'"$line"'\nDTSTART:"$1"\nUID:"$1"\nEND:VEVENT" }' # UID same as date
+  done
+
+  printf "END:VCALENDAR"
+}
+
+download
+convertToIcs > "$1"
+

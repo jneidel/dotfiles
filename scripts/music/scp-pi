@@ -1,0 +1,39 @@
+#! /bin/sh
+
+IP_FILE=~/scripts/mpd/current-mpd-ip
+IP=$(cat $IP_FILE)
+
+REMOTE_DIR=~/music/unheard
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  printf "$ scp-pi <dir>
+Copy a directory to the pi via scp.
+
+Directory will be copied to $REMOTE_DIR
+
+Parameters:
+  \$1: Directory to be copied over
+
+Example:
+  $ scp-pi Bosshafte\ Beats
+"; exit
+fi
+
+[ -z "$IP" ] && { echo "pi IP is empty. Reading from $IP_FILE"; exit 1; }
+
+command -v scp >/dev/null || { echo "scp is not installed"; exit 1; }
+
+DIR="$1"
+
+IFS='
+'
+for d in `ls -d "$DIR/"*`; do
+   [ -z "$(ls \"$d/\"* 2>/dev/null)" ] && break # skip empty
+
+  REMOTE=$REMOTE_DIR/$d
+  ssh $IP "mkdir -p \"$REMOTE\"" && echo "Created: $REMOTE"
+
+  echo "Moving: $d"
+  scp "$d/"* "$IP:\"$REMOTE/\""
+done
+

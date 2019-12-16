@@ -21,7 +21,7 @@ command -v bat >/dev/null || { echo "bat is not installed"; exit 1; }
 
 printFile() {
   [ -n "$(cat $1)" ] &&
-    bat "$1" --style grid
+    bat "$1" | sort | bat --style grid
   true
 }
 

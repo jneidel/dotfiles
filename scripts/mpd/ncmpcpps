@@ -3,10 +3,7 @@
 # todo: handle mpd error: No route to host
 #  and use localhost instead
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-IP=$(cat "$DIR/current-mpd-ip")
-PORT=5555
-STATUS_FILE=$DIR/mpd-server-status
+source ~/scripts/mpd/shared-mpd-variables
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ ncmpcpps"
@@ -18,9 +15,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-if [ "$(cat $STATUS_FILE)" -gt 0 ]; then
-  ncmpcpp -h "$IP" -p "$PORT" 2> /dev/null
-else
-  ncmpcpp -p "$PORT" 2> /dev/null
-fi
+command -v ncmpcpp >/dev/null || { echo "ncmpcpp is not installed"; exit 1; }
+
+ncmpcpp $CONNECT 2> /dev/null
 

@@ -3,12 +3,10 @@
 # get the ip address from last update instead of the
 # ipa command to make sure it matches the mpd config
 # and read is 6x faster than ipa
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-IP=$(cat "$DIR/current-mpd-ip")
 
-PORT=5555
+source ~/scripts/mpd/shared-mpd-variables
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mpcc <command>"
   echo "mpc command wrapper with the correct mpd config"
   echo ""
@@ -32,9 +30,5 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-if $DIR/is-mpd-server; then
-  timeout 1 mpc -h "$IP" -p "$PORT" "$@" 2> /dev/null
-else
-  mpc -p $PORT "$@"
-fi
+mpc $CONNECT "$@"
 

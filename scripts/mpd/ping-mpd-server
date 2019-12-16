@@ -1,9 +1,6 @@
-#! /bin/sh
+#! /bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-IP_FILE="$DIR/current-mpd-ip"
-IP=$(cat "$IP_FILE")
-PORT=5555
+source ~/scripts/mpd/shared-mpd-variables
 STATUS_FILE="$DIR/mpd-server-status"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -11,17 +8,15 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 Ping the mpd server and write its status to a file.
 To be run regularly run in the background (cron).
 
-IP from: $IP_FILE
 Status to: $STATUS_FILE
 "; exit
 fi
 
-command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }
-
-if timeout 1 mpc -h "$IP" -p "$PORT" "status" 2> /dev/null >/dev/null; then
+if timeout 1 mpc $CONNECT "status" 2> /dev/null >/dev/null; then
   echo "1" > $STATUS_FILE
+  true
 else
   echo "0" > $STATUS_FILE
+  false
 fi
 
-# ~/scripts/cron/cron-notify-send "pinged for mpd server"

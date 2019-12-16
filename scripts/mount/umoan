@@ -8,5 +8,5 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-umount "$MOUNT_LOCATION" && "umounted android" || "unmounting failed"
+fusermount -u "$MOUNT_LOCATION" && echo "umounted android" || echo "unmounting failed"
 

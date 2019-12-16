@@ -38,6 +38,10 @@ cat "$UPDATES" | tr "[A-Z]" "[a-z]" | sed "s|[[:space:]]$||; s|–|-|" | tr " " 
   #     .schema comic
   #     .schema comic_info 
 
+  if echo "$READ" | fgrep "BOOLEAN" > /dev/null; then
+    break # weird error where the wrong value is greped
+  fi
+
   [ "$READ" -gt 0 ] && {
     NAME="$(echo $NAME | tr - ' ' | sed 's|–|-|')"
     sed -i "/$NAME #$ISSUE/Id" $UPDATES

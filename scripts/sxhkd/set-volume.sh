@@ -2,7 +2,7 @@
 
 MAX_VOL=130
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   printf "$ set-volume.sh <command>
 Set the volume and send a notification.
 
@@ -22,6 +22,13 @@ fi
 command -v pulsemixer >/dev/null || { echo "pulsemixer is not installed"; exit 1; }
 
 COMMAND="$1"
+
+MPD=~/scripts/mpd
+if [ "$(cat $MPD/mpd-server-status)" -gt 0 ]; then
+  if $MPD/is-mpd-playing; then # nested for performance
+    echo ok # control mpd server instead of local volume as long as music is playing
+  fi
+fi
 
 if [ "$COMMAND" = "mute" ]; then
   pulsemixer --toggle-mute

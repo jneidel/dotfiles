@@ -9,6 +9,8 @@ fi
 # latex
 cd ~/code/latex
 rm *.aux *.log *.synctex.gz *.pdf
+cd ~/vorlesungen/GrdlInf/tex
+rm *.aux *.log *.synctex.gz *.pdf
 
 # histories
 rm ~/.python_history ~/.sqlite_history ~/.bash_history
