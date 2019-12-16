@@ -40,6 +40,8 @@ networkmanager-dmenu-git Control NetworkManager through rofi
 conky Desktop widgets
 xclip X clipboard interface
 clipit Clipboard interface
+wget Download util
+curl Download util
 
 [conky]
 conky Desktop widgets
