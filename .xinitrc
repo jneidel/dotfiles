@@ -21,8 +21,8 @@ xautolock -time 20 -locker blurlock &
 xflux -k 5000 -l 52 -g 13 &
 # desktop monitor
 ~/scripts/conky/start-conky &
-# watch bluetooth devices
-~/scripts/bluetooth/bt-watchdog.sh &
+# start watchdogs
+~/scripts/watchdogs/watchdoggos.sh &
 # disable external monitors
 monitor off &
 

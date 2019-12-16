@@ -26,12 +26,15 @@ alias cat="bat"
 alias ccat="/bin/cat"
 alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'notify-send \"took screenshot\" -t 1000 -i camera;mv \$f ~/pictures'"
 alias man="colored-man"
-alias scp="disable-mullvad-for /usr/bin/scp"
 alias vim="nvim $@ 2>/dev/null"
 alias v="vim"
 alias vvim="/bin/vim"
 alias ex="extract"
 alias grep="/bin/grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
+_scp() {
+  /usr/bin/scp $@
+}
+alias scp="_scp"
 
 ### shorter script names
 alias rc="rename-comic"

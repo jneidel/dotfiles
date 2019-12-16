@@ -71,6 +71,7 @@ au filetype tex inoremap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex inoremap ,b \textbf{}<++><Esc>ba
 au filetype tex inoremap ,it \textit{}<++><Esc>ba
 au filetype tex inoremap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
+au filetype tex inoremap ,br <Enter>\medskip<Enter>
 
 "#### lists
 au filetype tex inoremap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
