@@ -23,16 +23,16 @@ FILE=/sys/class/backlight/intel_backlight/brightness
 #   sudo chown $USER
 # on the brightness file, otherwise you wont be able to write it,
 # not even with sudo
-MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness) # 2777
+MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness) # 851 on x240
 MIN=10
 
 set_brightness() {
   if [ -n "$1" ] && [ "$1" -gt -1 ] && [ "$1" -lt "$(($MAX+1))" ]; then
     echo $1 > $FILE
-    echo $1
   else
     echo "Invalid number passed to set" 
     echo "It needs to be between 0 and $MAX"
+    exit 1
   fi
 }
 
@@ -41,7 +41,10 @@ get_brightness() {
 }
 
 percent() {
-  if [ "$(echo $1 | cut -c 1)" = "+" ]; then
+  if [ -z "$1" ]; then
+    echo "No argument passed to percent" 
+    exit 1
+  elif [ "$(echo $1 | cut -c 1)" = "+" ]; then
     PERCENTAGE=$(echo $1 | cut -d + -f 2)
     RES=$(echo "$(get_brightness)+(0.$PERCENTAGE*($MAX-5))" | bc | cut -d . -f 1)
     if [ "$RES" -lt -1 ]; then
