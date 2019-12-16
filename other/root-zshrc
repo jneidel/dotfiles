@@ -1,0 +1,18 @@
+# root zsh config
+## rudementary version of my full zshrc
+ZSH_DIR=/home/jneidel/.zsh
+
+source $ZSH_DIR/oh-my-zsh.sh
+source $ZSH_DIR/lib/init.zsh
+source $ZSH_DIR/cobalt2.zsh-theme
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH_DIR/init.zsh
+
+bindkey -v
+
+export EDITOR=vim
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+if [ "$TERM" = "screen-256color" ]; then
+  export DISPLAY=:0
+fi
