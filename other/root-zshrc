@@ -1,12 +1,15 @@
 # root zsh config
 ## rudementary version of my full zshrc
 ZSH_DIR=/home/jneidel/.zsh
+HOME=/home/jneidel
 
 source $ZSH_DIR/oh-my-zsh.sh
 source $ZSH_DIR/lib/init.zsh
 source $ZSH_DIR/cobalt2.zsh-theme
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH_DIR/init.zsh
+
+HOME=/root
 
 bindkey -v
 
