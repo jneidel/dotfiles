@@ -1,4 +1,4 @@
 #! /bin/sh
 
-fkill lemonbar
-~/scripts/status/i3-lemonbar/run-lemonbar &
+kill $(pidof "lemonbar") $(pidof -x "run-lemonbar")
+# ~/scripts/lemonbar/run-lemonbar &

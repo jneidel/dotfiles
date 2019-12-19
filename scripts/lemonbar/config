@@ -2,7 +2,7 @@
 # i3 panel config
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-font="FuraCode Nerd Font Mono-14"
+font="FuraCode Nerd Font Mono-15"
 
 case "$(cat /etc/hostname)" in
   "jneidel-x240")
