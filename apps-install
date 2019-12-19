@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 source $DIR/copy-configs
 APPS="$DIR/apps"
-TMP_INSTALL_FILE="/tmp/install-file"
+TMP_INSTALL_FILE=$(mktemp)
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ app-install"
@@ -48,7 +48,7 @@ function get-files {
           NPM_INSTALL="$NPM_INSTALL $PKG";;
         systemd)
           POST_INSTALL="$POST_INSTALL sudo systemctl enable $PKG; echo systemd: Enabled $PKG;";;
-        systemd)
+        pip3)
           POST_INSTALL="$PIP_INSTALL $PKG";;
         *)
           echo "skipped: $IN"
@@ -67,10 +67,14 @@ function get-files {
   # NPM_INSTALL_ARR=($NPM_INSTALL)
   # unset IFS
 
-  echo "yay -S $PACMAN_INSTALL" > $TMP_INSTALL_FILE
-  echo "sudo npm i -g $NPM_INSTALL" >> $TMP_INSTALL_FILE
-  echo "sudo pip3 install $PIP_INSTALL" >> $TMP_INSTALL_FILE
-  echo "$POST_INSTALL" >> $TMP_INSTALL_FILE
+  printf "yay -S $PACMAN_INSTALL
+
+sudo npm i -g $NPM_INSTALL
+
+$([ -n "$PIP_INSTALL" ] && echo "sudo pip3 install $PIP_INSTALL")
+
+$POST_INSTALL
+" > $TMP_INSTALL_FILE
 }
 
 cat $APPS |
@@ -80,8 +84,7 @@ cat $APPS |
 
 # yay throws if executed within get-files, probably because it
 # requires user input
+echo Install file at: $TMP_INSTALL_FILE
 sh $TMP_INSTALL_FILE
 
-# non 0 error code
-exit 0
-
+true

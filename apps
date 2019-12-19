@@ -26,6 +26,12 @@ sxhkd Hotkey assignment
 lemonbar-xft-git Customizable bar
 perl-anyevent-i3 i3 eventlistener library
 
+[i3]
+i3-wm Window manager
+
+[nitrogen]
+nitrogen Desktop backgrounds
+
 [beets]
 beets Automatic music tagger
 python-beautifulsoup4 beets lyrics plugin dependency
@@ -74,7 +80,8 @@ task-spooler Queue commands for linear execution
 fbreader epub reader
 
 [epr]
-git+https://github.com/wustho/epr.git epub reader
+# to fix, setup in aur
+# git+https://github.com/wustho/epr.git epub reader
 
 [zathura]
 zathura Reader
@@ -183,7 +190,7 @@ renameutils qmv mass rename util
 
 [vim]
 vim The text editor
-nvim The newer text editor
+neovim The newer text editor
 fzf Fuzzy finder
 # par
 
@@ -237,7 +244,8 @@ xf86-video-intel Drivers for intel chips
 # xf86-video-fbdev
 # xf86-video-vesa
 
-#python-pip Python package manager
+[pip]
+python-pip Python package manager
 
 ## building/c
 [c-dev]
@@ -247,10 +255,13 @@ gdb
 ## themes
 [themes]
 arc-gtk-theme GTK theme
-arc-icon-theme Icon theme for dunst
 kvantum-qt5 QT themes
+
 ## fonts
-ttf-joypixels Emoji font
+[fonts]
+ttf-dejavu Default
+ttf-joypixels Emojis
+ttf-roboto Roboto
 
 ## util
 [bluez]
@@ -301,13 +312,12 @@ yarn npm alternative
 npm:dict-cc-cli Offline dict.cc
 # run dict css setup script
 
-#npm:tslide
-
 [mangareader-dl]
-npm:mangareader-dl Manga downloader
+# to fix, dl from server
+# npm:mangareader-dl Manga downloader
 
 [fkill]
-npm:fkill-cli Process killer
+fkill Process killer
 
 [js-dev]
 python-grip Reader markdown file with github styles
@@ -356,7 +366,8 @@ kid3 Visual (mp3) tag editor
 nemo File manager for dragging images over
 
 [mutagen]
-mutagen-tools Cli tagging tools
+# unavailable
+# mutagen-tools Cli tagging tools
 
 ## wine
 [wine]
@@ -379,7 +390,7 @@ jdk-openjdk Java environment
 
 [signal]
 signal-desktop-bin Desktop version
-signal-cli CLI version
+# signal-cli CLI version
 
 [cron]
 fcron Cron implementation
