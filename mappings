@@ -181,3 +181,7 @@ create .config/zathura
 [khal]
 create .config/khal
 .config/khal/config
+
+[rofi]
+create .config/rofi
+.config/rofi/config

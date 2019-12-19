@@ -1,0 +1,3 @@
+rofi.theme: ~/scripts/rofi/rofi-arc-dark.rasi
+rofi.font: yosemite-san-francisco 16
+rofi.width: 60
