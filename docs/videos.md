@@ -101,6 +101,9 @@
 - A look into speedrunning: [Speedrunning Is Awesome, And Here's Why](https://www.youtube.com/watch?v=I5auJOBC828)
 
 ### Art
+
+- [Happiness](https://www.youtube.com/watch?v=e9dZQelULDk)
+
 #### Simpsonwave
 
 - [Sunday Schoool](https://www.youtube.com/watch?v=rTfa-9aCTYg)
