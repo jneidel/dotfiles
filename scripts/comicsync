@@ -30,7 +30,12 @@ cat "$UPDATES" | tr "[A-Z]" "[a-z]" | sed "s|[[:space:]]$||; s|–|-|" | tr " " 
   ISSUE=$(echo $LINE | cut -d# -f2)
 
   INFO_ID=$(grep "$NAME-0*$ISSUE" $DUMP | awk -F , '{ print $3 }')
-  READ=$(grep -P "comic_info.*?$INFO_ID," $DUMP | awk -F , '{ print $29 }') # 0/1
+  if [ -z "$INFO_ID" ]; then
+    >&2 echo "No INFO_ID for $NAME at issue $ISSUE"
+    continue
+  fi
+
+  READ=$(grep -P "comic_info.*?$INFO_ID," $DUMP | awk -F , '{ print $30 }') # 0/1
 
   # to find out more about the structure:
   #   sqlite3 <yacreader-db-file>

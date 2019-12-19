@@ -20,18 +20,20 @@ command -v comicsync >/dev/null || { echo "comicsync script is not in PATH"; exi
 command -v bat >/dev/null || { echo "bat is not installed"; exit 1; }
 
 printFile() {
-  [ -n "$(cat $1)" ] &&
-    bat "$1" | sort | bat --style grid
+  [ -s "$1" ] && # is file non empty
+    sort "$1" |
+      uniq -w 8 | # only check first 8 chars
+      bat --style grid
   true
 }
 
 case $1 in
   manga)
-    mangasync
+    mangasync 2>/dev/null
     printFile "$MANGA"
     ;;
   comic)
-    comicsync
+    comicsync 2>/dev/null
     printFile "$COMIC"
     ;;
 esac
