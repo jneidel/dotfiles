@@ -110,7 +110,7 @@ firefox-nightly Experimental firefox
 firefox-developer-edition Developer edition of firefox
 
 [chromium]
-ungoogled-chromium Free version of chromium
+ungoogled-chromium-bin Free version of chromium
 chromium-widevine Chromium module required for netflix
 
 [surf]
