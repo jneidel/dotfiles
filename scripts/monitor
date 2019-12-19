@@ -1,32 +1,73 @@
 #! /bin/sh
 
-MAIN=eDP1
-MAIN_RESOLUTION=1440x900 
+command -v xrandr >/dev/null || { echo "xrandr is not installed"; exit 1; }
 
-MONITOR=DP1
+case `cat /etc/hostname` in
+  jneidel-x240)
+    MAIN_RESOLUTION=1366x768
+    ;;
+  jneidel-mba-2015)
+    MAIN_RESOLUTION=1440x900 
+    ;;
+  *)
+    MAIN_RESOLUTION=$(xrandr --listmonitors | fgrep "+*" | sed "s/[\ \/]/x/g" | awk -Fx '{ print $4"x"$6}')
+    ;;
+esac
+
+MAIN=`xrandr --listmonitors | pcregrep -o1 "\+\*(\w+\d*)"`
+[ -z "$MAIN" ] && MAIN=eDP1
+
+#MONITOR=DP1
 MONITOR_RESOLUTION=1920x1080 
+MONITOR=DP2
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ toggle-monitor [on|off]
-Toggle the connected monitor $MONITOR
-Or turn it on/off
+  printf "$ toggle-monitor [on|off] [-m]
+Toggle the connected display $MONITOR as a second monitor.
 
 Parameters:
   [\$1]: on|off - turn display on/off
+
+Flags:
+  -m: mirror instead of adding as 2nd monitor 
+
+Example:
+  $ monitor off
+  $ monitor -m
 "; exit
 fi
 
-command -v xrandr >/dev/null || { echo "xrandr is not installed"; exit 1; }
+IS_MIRROR=0
+while getopts "m" OPTION; do
+  case $OPTION in
+  m)
+    IS_MIRROR=1
+  ;;
+  esac
+done
 
 turn_off() {
   xrandr --output $MONITOR --off
   echo "Turned external monitor off"
 }
-turn_on() {
+
+add_monitor() {
   xrandr --output $MONITOR --mode $MONITOR_RESOLUTION --right-of $MAIN --scale-from $MAIN_RESOLUTION >/dev/null
-  echo "Turned external monitor on"
+}
+mirror() {
+  echo "mirroring"
+  xrandr --output $MONITOR --mode $MONITOR_RESOLUTION --scale-from $MAIN_RESOLUTION --same-as $MAIN >/dev/null
 }
 
+turn_on() {
+  if [ "$IS_MIRROR" -gt 0 ]; then
+    mirror || exit 1
+  else
+    add_monitor || exit 1
+  fi
+
+  echo "Turned external monitor on"
+}
 
 if xrandr --listactivemonitors | grep " $MONITOR" >/dev/null; then
   [ ! "$1" = "on" ] && turn_off
