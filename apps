@@ -235,6 +235,7 @@ xflux Flux bluelight filter for X
 
 [sxhkd]
 sxhkd Set hotkey mappings
+clipit Clipboard interface
 
 ## xorg drivers
 [x-drivers]
@@ -300,7 +301,7 @@ pulseaudio Pulseaudio server
 pulseaudio-alsa Alsa integration
 pulseaudio-bluetooth Bluetooth integration
 pulsemixer Pulseaudio mixer
-ncpamixer-git Alternative pulseaudio mixer
+ncpamixer Pulseaudio mixer
 
 # npm
 [node]
