@@ -13,12 +13,6 @@ super + F1
 super + F2
   firefox-nightly
 
-super + F5
-  kitty --class calcurse calcurse
-
-super + F8
-  kitty --class cmus cmus
-
 super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
 
@@ -43,22 +37,29 @@ super + m
   kitty ncpamixer
 
 ## mpd
-### playback control
-# Also JBL play button, Alt: XF86LaunchA
+### playback control, 1st for macbook, 2nd for thinkpad
+# Also JBL play button
 XF86AudioPlay
   ~/scripts/sxhkd/control-mpd.sh toggle
-# Also JBL play double press, Alt: XF86Explorer
+XF86Search
+  ~/scripts/sxhkd/control-mpd.sh toggle
+
+# Also JBL play double press
 XF86AudioNext
   ~/scripts/sxhkd/control-mpd.sh next
-# Alt: XF86Search
+XF86LaunchA
+  ~/scripts/sxhkd/control-mpd.sh next
+
 XF86AudioPrev
+  ~/scripts/sxhkd/control-mpd.sh prev
+XF86Tools
   ~/scripts/sxhkd/control-mpd.sh prev
 
 ## mac brightness
 XF86MonBrightnessUp
-  ~/scripts/sxhkd/mac/backlight p +05
+  ~/scripts/sxhkd/mac/backlight p +10
 XF86MonBrightnessDown
-  ~/scripts/sxhkd/mac/backlight p -05
+  ~/scripts/sxhkd/mac/backlight p -10
 
 XF86KbdBrightnessUp
   ~/scripts/sxhkd/mac/keyboard-backlight p +1
@@ -86,7 +87,7 @@ super + t
 super + z
   open-latest-doc
 
-## to fix
-# super + Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-#bindsym XF86Tools exec xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
+# which key is this?
+XF86Tools
+  xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
 # XF86 keys: http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
