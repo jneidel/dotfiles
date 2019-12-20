@@ -166,6 +166,7 @@ run /home/jneidel/.config/transmission-daemon/set-rpc-password.sh
 [themes]
 create .config/Kvantum
 .config/Kvantum/kvantum.kvconfig
+.icons
 
 [dunst]
 create .config/dunst
