@@ -10,8 +10,8 @@ setxkbmap -option caps:escape &
 # fix permissions for backlight file
 # does not work with sudo
 # reassign file to root after reboot
-sudo chown jneidel /sys/class/leds/smc::kbd_backlight/brightness
-sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
+#sudo chown jneidel /sys/class/leds/smc::kbd_backlight/brightness
+#sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
 
 # keyboard repeat
 xset r rate 185 100 &
@@ -21,8 +21,8 @@ xautolock -time 20 -locker blurlock &
 xflux -k 5000 -l 52 -g 13 &
 # desktop monitor
 ~/scripts/conky/start-conky &
-# start watchdogs
-~/scripts/watchdogs/watchdoggos.sh &
+# watch bluetooth devices
+~/scripts/bluetooth/bt-watchdog.sh &
 # disable external monitors
 monitor off &
 

@@ -145,7 +145,8 @@ for_window [class="conky"] floating enable
 no_focus [class="mupdf"]
 
 # Open monitors on specific workspaces
-workspace 5 output DP1
+# workspace 5 output DP1
+workspace 5 output DP2
 mouse_warping none
 no_focus [class="monitor"]
 assign [class="monitor"] $ws5

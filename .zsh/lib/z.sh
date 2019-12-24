@@ -24,7 +24,7 @@
 #     * z -e foo  # echo the best match, don't cd
 #     * z -c foo  # restrict matches to subdirs of $PWD
 
-_Z_DATA=$HOME/.z/.z
+_Z_DATA=$HOME/.z/data
 
 [ -d "${_Z_DATA:-$HOME/.z}" ] && {
     echo "ERROR: z.sh's datafile (${_Z_DATA:-$HOME/.z}) is a directory."

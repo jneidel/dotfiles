@@ -84,3 +84,19 @@ bindkey -s '\el' "!:0- \t" # alt+l - all but the last word
 
 # misc...
 alias dir="dirs -v | head -10"
+
+mvc() { # mv cd
+  array=( $@ )
+  len=${#array[@]}
+  args=${array[@]:0:$len-1}
+  last="${@: -1}"
+
+  mv $(echo $args) "$last"
+
+  if [ -d "$last" ]; then
+    cd "$last"
+  else
+    base="$(dirname $last)"
+    cd "$base"
+  fi
+}
