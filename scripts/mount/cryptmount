@@ -2,8 +2,6 @@
 
 DEFAULT_DEV=/dev/sdb
 DEFAULT_LOCATION=/mnt
-DEFAULT_MAPPER=cryptroot
-DEFAULT_MAPPER2=cryptroot2
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ cryptmount"
@@ -12,12 +10,13 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "Parameters:"
   echo "  [\$1]: device source, as in '/dev/sd<x>'; default $DEV_SOURCE"
   echo "  [\$2]: mount location; default $DEFAULT_LOCATION"
-  echo "  [\$3]: crypt mapper; default $DEFAULT_MAPPER"
+  echo "  [\$3]: crypt mapper; 3 defaults defined"
   echo ""
   echo "Examples:"
   echo "$ cryptmount"
   echo "$ cryptmount d"
   echo "$ cryptmount c1 /media/hd"
+  echo "$ cryptmount f /media/ext cryptcustom"
   exit
 fi
 
@@ -53,10 +52,19 @@ else
   fi
 fi
 
-MAPPER=$DEFAULT_MAPPER
-[ -e $MAPPER ] && MAPPER=$DEFAULT_MAPPER2
+DEFAULT_MAPPER=cryptroot
 if [ -n "$3" ]; then
-  MAPPER="$3"
+  MAPPER=$3
+elif [ -e /dev/mapper/$DEFAULT_MAPPER ]; then
+  ALT_MAPPER=cryptext
+  if [ -e /dev/mapper/$ALT_MAPPER ]; then
+    FALLBACK_MAPPER=cryptfallback
+    MAPPER=$FALLBACK_MAPPER
+  else
+    MAPPER=$ALT_MAPPER
+  fi
+else
+  MAPPER=$DEFAULT_MAPPER
 fi
 
 # unlock luks
