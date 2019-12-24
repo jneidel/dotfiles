@@ -17,7 +17,7 @@ mkfifo "${panel_fifo}"
 
 ## events
 # i3 workspaces, "WSP"
-sleep 1 && "$DIR/i3-workspaces.pl" > "${panel_fifo}" &
+sleep 1 && "$DIR/i3-workspaces.pl" >"${panel_fifo}" 2>/dev/null &
 
 # conky, "SYS"
 conky -c "$DIR/conkyrc" > "${panel_fifo}" &

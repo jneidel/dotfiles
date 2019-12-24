@@ -1,4 +1,4 @@
 #! /bin/sh
 
-kill $(pidof "lemonbar") $(pidof -x "run-lemonbar")
-# ~/scripts/lemonbar/run-lemonbar &
+kill $(pidof "lemonbar") $(pidof -x "run-lemonbar") 2>/dev/null
+~/scripts/lemonbar/run-lemonbar &
