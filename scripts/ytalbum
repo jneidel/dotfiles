@@ -19,6 +19,11 @@ ALBUM_TMP="$1"
 OUT="$BASE/$ALBUM_TMP"
 
 ALBUM_URL="$2"
+if [ -z "$2" ]; then
+  ALBUM_URL="$(get-clip)"
+fi
+
+echo "Downloading $ALBUM_URL to $OUT"
 
 mkdir -p "$OUT"
 youtube-dl --yes-playlist -c --retries 4 -x --audio-format "mp3" --audio-quality "320K" -o "$OUT/%(title)s.%(ext)s" "$ALBUM_URL"
