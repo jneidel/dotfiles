@@ -186,6 +186,9 @@ Browser extensions, sorted by category.
 | uBlock Origin | Best free (as in freedom) adblocker | [firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) [chrome](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) |
 | Vimium | Navigate browser with vim shortcuts | [firefox](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/) [chrome](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) [github](https://github.com/philc/vimium) |
 | HTTPS Everywhere | Force encrypted connections (HTTPS) | [firefox](https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/) [chrome](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) |
+| Dark Reader | Dark mode for websites | [firefox](https://addons.mozilla.org/en-US/firefox/addon/darkreader) [chrome](https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh) [github](https://github.com/darkreader/darkreader) |
+| Privacy Badger | Stop suspicious trackers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/) [chrome](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
+| KeePassXC-Browser | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk) [github](https://github.com/keepassxreboot/keepassxc-browser) |
 
 **Privacy:**
 
@@ -193,7 +196,6 @@ Firefox (nightly) is my main browser. I have it setup to delete cookies and hist
 
 | name | description | links |
 |--|--|--|
-| Privacy Badger | Stop suspicious trackers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/) [chrome](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) |
 | NoScript | Block domains from executing javascript | [firefox](https://addons.mozilla.org/en-US/firefox/addon/noscript/) |
 | Chameleon | Easily spoof user-agents & more | [firefox](https://addons.mozilla.org/en-US/firefox/addon/chameleon-ext/) [github](https://github.com/sereneblue/chameleon) |
 | Decentraleyes | Stop tracking through CDNs | [firefox](https://addons.mozilla.org/en-US/firefox/addon/decentraleyes) |
@@ -242,13 +244,11 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 
 | name | description | links |
 |--|--|--|
-| KeePassXC-Browser | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk) [github](https://github.com/keepassxreboot/keepassxc-browser) |
 | Easy to RSS | Get the rss feeds of the current site | [firefox](https://addons.mozilla.org/en-GB/firefox/addon/easy-to-rss/) [github](https://github.com/idealclover/Easy-to-RSS) |
 | SoundCloudOG | Filter reposts out of your soundcloud stream | [chrome](https://chrome.google.com/webstore/detail/soundcloudog/enegaliobdmmnlcgdfljpebckdfbgcai) |
 | Dict.cc Translation | Quick translations | [firefox](https://addons.mozilla.org/firefox/addon/dictcc-translation/) [github](https://github.com/Lusito/dict.cc-translation) |
 | Universal Bypass | Bypass annoying link shorteners | [firefox](https://addons.mozilla.org/en-US/firefox/addon/universal-bypass) [github](https://github.com/timmyrs/Universal-Bypass) |
 | Dict.cc Translation | Translate a word on the screen without opening a new tab | [firefox](https://addons.mozilla.org/en-US/firefox/addon/dictcc-translation) [github](https://github.com/Lusito/dict.cc-translation)
-| Dark Reader | Dark mode for websites | [firefox](https://addons.mozilla.org/en-US/firefox/addon/darkreader) [chrome](https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh) [github](https://github.com/darkreader/darkreader) |
 | IMDb Ratings on Netflix | Show ratings on overview pages | [firefox](https://addons.mozilla.org/en-US/firefox/addon/imdb-ratings-on-netflix) [chrome](https://chrome.google.com/webstore/detail/imdb-ratings-on-netflix/ohonjgnjobblbhfeamidafpnbkppbljh) [github](https://github.com/pawanmaurya/imdb-ratings-on-netflix) |
 | StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
 | Toby | Better bookmark manager | [chrome](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
