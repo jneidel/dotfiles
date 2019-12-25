@@ -78,11 +78,7 @@ create .config/pulse
 
 ### monitor
 [conky]
-create .config/conky
-.config/conky/conky.conf
-.config/conky/mpd.conf
-.config/conky/lsblk.conf
-.config/conky/khal.conf
+.config/conky
 scripts/conky
 
 [htop]
