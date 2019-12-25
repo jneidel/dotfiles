@@ -81,6 +81,8 @@ create .config/pulse
 create .config/conky
 .config/conky/conky.conf
 .config/conky/mpd.conf
+.config/conky/lsblk.conf
+.config/conky/khal.conf
 scripts/conky
 
 [htop]
