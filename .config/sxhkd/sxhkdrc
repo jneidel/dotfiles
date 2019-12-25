@@ -69,7 +69,7 @@ XF86KbdBrightnessDown
 ## screenshot
 # command copied from "alias scrot" in ~/.zsh/apps.zsh
 super + p
-  /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv $f ~/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
+  /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv $f ~/ct/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
 
 ## misc
 super + n
