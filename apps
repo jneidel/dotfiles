@@ -395,6 +395,7 @@ signal-desktop-bin Desktop version
 
 [cron]
 fcron Cron implementation
+systemd:fcron Enable cron
 
 [xournalpp]
 xournalpp PDF editing
