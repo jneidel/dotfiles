@@ -184,3 +184,8 @@ create .config/khal
 [rofi]
 create .config/rofi
 .config/rofi/config
+
+[fs]
+btrfs-progs btrfs
+exfat-utils exfat
+ntfs-3g ntfs
