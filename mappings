@@ -165,6 +165,10 @@ run /home/jneidel/.config/transmission-daemon/set-rpc-password.sh
 create .config/Kvantum
 .config/Kvantum/kvantum.kvconfig
 .icons
+create .config/gtk-2.0
+create .config/gtk-3.0
+.config/gtk-2.0/gtkfilechooser.ini
+.config/gtk-3.0/settings.ini
 
 [dunst]
 create .config/dunst
