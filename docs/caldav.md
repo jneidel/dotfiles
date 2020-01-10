@@ -9,17 +9,17 @@ very much personal preference.
 
 **Server:**
 
-[Radicale](https://radicale.org/) - CalDAV server
+- [Radicale](https://radicale.org/) - CalDAV server
 
 **Android:**
 
-[DAVx⁵](https://f-droid.org/packages/at.bitfire.davdroid/) - CalDAV client
-[Simple Calendar](https://f-droid.org/packages/com.simplemobiletools.calendar.pro/) - Calendar
+- [DAVx⁵](https://f-droid.org/packages/at.bitfire.davdroid/) - CalDAV client
+- [Simple Calendar](https://f-droid.org/packages/com.simplemobiletools.calendar.pro/) - Calendar
 
 **Linux:**
 
-[vdirsyncer](https://www.archlinux.org/packages/community/any/vdirsyncer/) - CalDAV client
-[khal](https://www.archlinux.org/packages/community/any/khal/) - Calendar
+- [vdirsyncer](https://www.archlinux.org/packages/community/any/vdirsyncer/) - CalDAV client
+- [khal](https://www.archlinux.org/packages/community/any/khal/) - Calendar
 
 ## Setup the software
 
@@ -63,6 +63,8 @@ Only events created in that calendar will be synced.
 
 ### vdirsyncer
 
+`sudo pacman -S vdirsyncer`
+
 `~/.vdirsyncer/config`:
 ```
 [general]
@@ -90,6 +92,8 @@ Initialize with `vdirsyncer discover main_cal`.
 Update regularly (via cronjob) with `vdirsyncer sync`.
 
 ### khal
+
+`sudo pacman -S khal`
 
 `~/.config/khal/config`:
 ```
