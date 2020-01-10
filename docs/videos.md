@@ -121,6 +121,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
 - Why social media isn't that great for you: [Social Media: Anything for Upcummies! ⬆🍆💦💦](https://www.youtube.com/watch?v=YjbyDU0WzYI)
+- Rules for clean fighting among couples: [How To Fight As a Couple](https://www.youtube.com/watch?v=IE-P11KKYFs&t=113)
 
 ### Political
 

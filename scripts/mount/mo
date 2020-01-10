@@ -26,7 +26,7 @@ fi
 VOLUME="/dev/sd$VOLUME_ID"
 
 LOCATION="$DEFAULT_MOUNT_ROOT/$2"
-if [[ ! -z $2 && -d $LOCATION ]]; then
+if [[ ! -z "$2" && -d "$LOCATION" ]]; then
   $DEFAULT_CMD $VOLUME "$LOCATION"
   echo "mounted $VOLUME to $LOCATION"
 

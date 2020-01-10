@@ -1,4 +1,4 @@
-directory: ~/music
+directory: ~/ct/music
 library: ~/.config/beets/musiclibrary.db
 import:
   copy: yes

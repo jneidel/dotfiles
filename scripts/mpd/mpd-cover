@@ -3,7 +3,7 @@
 IMAGE_VIEWER="sxiv -f"
 IMAGE_VIEWER_BIN="$(echo $IMAGE_VIEWER | cut -d\  -f1)"
 
-MUSIC_DIR="$HOME/music"
+MUSIC_DIR="$(grep '^music_directory' $HOME/.config/mpd/mpd.conf | awk -F\" '{ print $2 }')"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mpd-cover"

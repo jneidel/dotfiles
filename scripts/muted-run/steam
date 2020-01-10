@@ -1,0 +1,6 @@
+#! /bin/sh
+
+command -v muted-run >/dev/null || { echo "muted-run is not in PATH"; exit 1; }
+
+muted-run /usr/bin/steam
+

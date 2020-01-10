@@ -3,8 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PATTERN=$DIR/grep-music-pattern
 
-FROM=~/music
-TO=~/music/unheard
+FROM=~/ct/music
+TO=~/ct/music/unheard
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ mv-music

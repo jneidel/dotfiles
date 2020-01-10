@@ -12,7 +12,7 @@ Status to: $STATUS_FILE
 "; exit
 fi
 
-if timeout 1 mpc $CONNECT "status" 2> /dev/null >/dev/null; then
+if timeout 1 mpc -h $IP -p $PORT "status" 2> /dev/null >/dev/null; then
   echo "1" > $STATUS_FILE
   true
 else

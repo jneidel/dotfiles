@@ -1,9 +1,9 @@
-#! /bin/bash
+#! /bin/sh
 
-CLIP_CMD=get-clip
+CLIP_CMD=~/scripts/get-clip
 VLC_CMD="vv 250"
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ open-in-vlc"
   echo "Open clipboard content in vlc"
   echo ""
@@ -13,7 +13,10 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 CLIP_CONTENT=$($CLIP_CMD)
-echo $CLIP_CONTENT
+
+if [ -t 1 ]; then
+  echo $CLIP_CONTENT
+fi
 
 $VLC_CMD "$CLIP_CONTENT"
 

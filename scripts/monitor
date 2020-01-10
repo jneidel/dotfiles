@@ -6,10 +6,8 @@ case `cat /etc/hostname` in
   jneidel-x240)
     MAIN_RESOLUTION=1366x768
     ;;
-  jneidel-mba-2015)
-    MAIN_RESOLUTION=1440x900 
-    ;;
   *)
+    echo "Device not configured in script, using xrandr output instead"
     MAIN_RESOLUTION=$(xrandr --listmonitors | fgrep "+*" | sed "s/[\ \/]/x/g" | awk -Fx '{ print $4"x"$6}')
     ;;
 esac
@@ -22,7 +20,7 @@ MONITOR_RESOLUTION=1920x1080
 MONITOR=DP2
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ toggle-monitor [on|off] [-m]
+  printf "$ monitor [on|off] [-m]
 Toggle the connected display $MONITOR as a second monitor.
 
 Parameters:

@@ -3,6 +3,7 @@
 # notify-send wrapper including the dbus address
 
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+# export DISPLAY=0:0 # see https://www.reddit.com/r/linuxquestions/comments/8krybf/sending_notifications_after_cron_jobs
 
 notify-send -t 3500 -u low -i preferences-system-notifications -a cron "$@"
 

@@ -16,7 +16,7 @@ alias src="source ~/.zshrc"
 alias W="watch -t -d -n 1" # update 1s
 alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude=package-lock.json" # short: grep -nHsr
 alias b="background"
-alias back="bg; disown"
+alias back="bg 2>/dev/null; disown"
 
 ### recursive
 alias rmr="rm -rf"
@@ -67,10 +67,7 @@ alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
 
 ## displays
-alias hdmi="xrandr --auto" # dublicate screen on connected hdmi
-alias home="xrandr --output DP1 --mode 1920x1080 --right-of eDP1 --scale-from 1440x900" # 2nd display
-# alias home="xrandr --output DP1 --mode 1920x1080 --primary --scale-from 1440x900" # clone
-# custom resolution https://askubuntu.com/a/377944
+alias auto="xrandr --auto" # dublicate screen on connected hdmi
 
 ## previous command hotkeys
 # print previous command but only the first nth arguments
@@ -84,6 +81,7 @@ bindkey -s '\el' "!:0- \t" # alt+l - all but the last word
 
 # misc...
 alias dir="dirs -v | head -10"
+alias own="sudo chown $USER"
 
 mvc() { # mv cd
   array=( $@ )

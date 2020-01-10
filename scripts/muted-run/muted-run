@@ -1,0 +1,16 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  printf "$ muted-run <programm>
+Run a programm while muting it's output (stdout/stderr)
+
+Parameters:
+  \$1: programm to run
+
+Example:
+  $ muted-run /usr/bin/YACReaderLibrary
+"; exit
+fi
+
+$1 >/dev/null 2>/dev/null
+
