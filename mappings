@@ -32,6 +32,7 @@ clean scripts
 [mpv]
 create .config/mpv
 .config/mpv/mpv.conf
+.config/mpv/input.conf
 
 ## system
 ### terminal
