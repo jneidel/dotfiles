@@ -1,0 +1,16 @@
+#! /bin/sh
+# todo: -x print-unread before and after to display new entries to user
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ reload-newsboat
+Reload newsboat caches in the background.
+To be run via cron.
+"; exit
+fi
+
+command -v newsboat >/dev/null || { echo "newsboat is not installed"; exit 1; }
+
+newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet -x reload &
+newsboat -u ~/.newsboat/urls-youtube -c ~/.newsboat/cache-youtube.db --quiet -x reload &
+
+~/scripts/cron/cron-notify-send "Ran reload-newsboat" -t 1000
