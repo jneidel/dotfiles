@@ -9,7 +9,7 @@ player "mpv"
 
 ## reload feeds
 auto-reload yes
-#reload-time 20
+# reload-time 20
 
 ## formatting
 download-filename-format "%t.%e"
@@ -19,8 +19,10 @@ datetime-format "%b %d"
 
 ## ignore pattern
 ignore-mode "display"
-ignore-article "https://feeds.feedwrench.com/JavaScriptJabber.rss" "title =~ \"^MJS\""
-#ignore-article "http://feed.syntax.fm/rss" "title =~ \"^Potluck\""
+ignore-article "https://www.theregister.co.uk/software/headlines.atom" "title =~ \"Microsoft\""
+ignore-article "https://www.theregister.co.uk/software/headlines.atom" "title =~ \"Windows\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCAG1ABZP-c7wuNt0fziHtsA" "title =~ \"Song\""
+# ignore-article "http://feed.syntax.fm/rss" "title =~ \"^Potluck\""
 
 ## misc
 user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"

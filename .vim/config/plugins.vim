@@ -80,8 +80,8 @@ au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-std
 let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank"
 
 " only use coc for specific filetypes
-au Filetype * silent CocDisable
-au Filetype javascript,typescript,json,bash,shell,sh,js,ts,html,css,sass CocEnable
+" au Filetype * silent CocDisable
+" au Filetype javascript,typescript,json,bash,shell,sh,js,ts,html,css,sass CocEnable
 
 "### Solutions to possible problems
 " Some servers have issues with backup files, see #649

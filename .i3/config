@@ -123,16 +123,17 @@ assign [class="Firefox"] $ws2
 assign [class="Nightly"] $ws2
 assign [class="Firefox Developer Edition"] $ws2
 assign [class="firefoxdeveloperedition"] $ws2
+assign [class="qutebrowser"] $ws2
 assign [class="Chromium"] $ws2
 assign [class="Tor Browser"] $ws2
 assign [class="keepassxc"] $ws9
-assign [class="cmus"] $ws8
 assign [class="mosh"] $ws3
-assign [class="calcurse"] $ws3
 assign [class="signal"] $ws3
 assign [class="Signal"] $ws3
 assign [class="YACReaderLibrary"] $ws3
 assign [class="Zeal"] $ws3
+assign [class="cmus"] $ws8
+assign [class="calcurse"] $ws3
 
 # Open specific applications in floating mode
 for_window [class="Nitrogen"] floating enable sticky enable border normal
@@ -143,6 +144,7 @@ for_window [class="conky"] floating enable
 
 # Dont focus on these windows on open
 no_focus [class="mupdf"]
+no_focus [class="Nightly"]
 
 # Open monitors on specific workspaces
 # workspace 5 output DP1

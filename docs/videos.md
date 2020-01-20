@@ -140,4 +140,8 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 
 - [Edward Snoden on Joe Rogan](https://www.youtube.com/watch?v=efs3QRr8LWw)
 
+### Fun
+
+- [A Maury Compilation! The Biggest You Are Not The Father Tantrums!](https://www.youtube.com/watch?v=kEJngCX0UZU)
+- [True Facts: Mating Dance of the Ostrich](https://www.youtube.com/watch?v=wmbEtgw9Pf4)
 

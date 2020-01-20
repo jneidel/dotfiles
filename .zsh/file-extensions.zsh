@@ -22,6 +22,7 @@ alias -s jpeg=sxiv
 alias -s mp4=mpvmv
 alias -s mkv=mpvmv
 alias -s avi=mpvmv
+alias -s m4v=mpvmv
 alias -s webm=mpvo
 
 ## audio

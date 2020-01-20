@@ -52,4 +52,3 @@ export KEYID=B29E6A7A7DFD16FA # GPG keyid
 if [[ "$(tty)" = "/dev/tty1" ]]; then
   pgrep i3 || startx
 fi
-
