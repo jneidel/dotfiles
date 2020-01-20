@@ -406,3 +406,8 @@ factorio-experimental Factorio
 [khal]
 khal Calendar cli
 vdirsyncer CalDAV sync
+
+[fs]
+btrfs-progs btrfs
+exfat-utils exfat
+ntfs-3g ntfs
