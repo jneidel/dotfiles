@@ -2,18 +2,16 @@
 # i3 panel config
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-font="FuraCode Nerd Font Mono-12"
+font="FuraCode Nerd Font Mono-11.5"
 
 case "$(cat /etc/hostname)" in
   "jneidel-x240")
     width=1366 ;;
-  "jneidel-mba-2015")
-    width=1440 ;;
   *)
     echo "Please add a width for your hostname to the lemonbar config"
     exit ;;
 esac
-geometry="${width}x20"
+geometry="${width}x19"
 
 # color definitions
 col_main="#005fd7" # blue
