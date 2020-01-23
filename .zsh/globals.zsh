@@ -1,5 +1,5 @@
 # globals (can be accessed everywhere in a command)
-## usage: $ cat readme.md G match L
+## usage example: $ cat readme.md G match L
 
 expand-global-aliases() {
   # see: https://www.youtube.com/watch?v=WTTIGjZAMGg

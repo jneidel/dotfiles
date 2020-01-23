@@ -1,6 +1,6 @@
 #! /bin/bash
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ human-number"
   echo "Make a long number more easily readable by"
   echo "inserting dots after every 3rd character."

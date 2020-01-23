@@ -1,0 +1,43 @@
+#! /bin/sh
+
+DEFAULT_STORAGE=drive:
+# get from: rclone listremotes
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  printf "$ rcopy <path>
+rclone copy shorthand that implicitly tries multiple file endings
+
+Running: 'rclone copy $DEFAULT_STORAGE:/<your-path> .'
+
+Parameters:
+  \$1: path on storage to copy from
+
+Example:
+  $ rcopy docs/bafög.tgz.gpg
+"; exit
+fi
+
+command -v rclone >/dev/null || { echo "rclone is not installed"; exit 1; }
+
+check() {
+  echo "Checking if file '$1' exists"
+  rclone size "$DEFAULT_STORAGE/$1" >/dev/null 2>&1
+}
+
+copy() {
+  echo "Copying file '$1'"
+  rclone copy "$DEFAULT_STORAGE/$1" . -P
+}
+
+FILE="$1"
+
+if check "$FILE"; then
+  copy "$FILE"
+elif check "$FILE.tgz.gpg"; then
+  copy "$FILE.tgz.gpg"
+elif check "$FILE.gpg"; then
+  copy "$FILE.gpg"
+else
+  echo "'$FILE' or any of it's variants are unavailable."
+fi
+
