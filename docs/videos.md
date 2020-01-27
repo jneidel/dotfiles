@@ -14,8 +14,9 @@
 
 - [Technology](#technology)
   * [Internet](#internet)
+    + [Surveillance](#surveillance)
   * [Linux](#linux)
-    + [Tools](#tools)
+    + [CLIs](#clis)
     + [Arch](#arch)
     + [Vim](#vim)
     + [Hardware](#hardware)
@@ -23,9 +24,14 @@
     + [JavaScript](#javascript)
 - [Entertainment](#entertainment)
   * [Games](#games)
+  * [Art](#art)
+    + [Simpsonwave](#simpsonwave)
+    + [Anime Edits](#anime-edits)
 - [Life](#life)
   * [Political](#political)
   * [Understanding other people](#understanding-other-people)
+  * [Podcasts](#podcasts)
+  * [Fun](#fun)
 
 <!-- tocstop -->
 
@@ -33,10 +39,12 @@
 
 ## Technology
 
-- A: Why we need more stupid programms and why facebook and apple are making us worse users: [Turing Complete User](http://contemporary-home-computing.org/turing-complete-user)
+- Why social media isn't that great for you: [Social Media: Anything for Upcummies! ⬆🍆💦💦](https://www.youtube.com/watch?v=YjbyDU0WzYI)
+- Negative influences of phones: [Open Source Phone? This BOOMER doesn't care! | Purism Librem 5](https://www.youtube.com/watch?v=wIJL-UoDGyk&t=104)
 
 ### Internet
 
+- A: Why we need more stupid programms and why facebook and apple are making us worse users: [Turing Complete User](http://contemporary-home-computing.org/turing-complete-user)
 - Getting a domain: [Cheap or Free Domain Names (and DNS and WHOIS info)](https://www.youtube.com/watch?v=tkV1-BuRrpE)
 - Getting web hosting: [4 Hosting Types Compared: Free and Paid Hosting and VPS](https://www.youtube.com/watch?v=iMmR5UVOz8Q) (If in DE check out [uberspace](https://uberspace.de/), shared hosting with many of the upsides of a VPS)
 - A: How IoT devices will become a massive threat with their increased adoption: [The Internet of Things Will Turn Large-Scale Hacks into Real World Disasters](https://www.vice.com/en_us/article/qkjzwp/the-internet-of-things-will-cause-the-first-ever-large-scale-internet-disaster)
@@ -53,7 +61,7 @@
 - The power of pipes by example: [Layin' down Pipes like a Unix Chad](https://www.youtube.com/watch?v=8E8sUNHdzG8)
 - A: What maintainers do and why they are integral to the linux ecosystem: [Maintainers Matter](http://kmkeen.com/maintainers-matter/)
 
-#### Tools
+#### CLIs
 
 - Write presentations in markdown: [The Easiest Way to Make Presentations! (Pandoc + Markdown)](https://www.youtube.com/watch?v=dum7q6UXiCE)
 - Connect your phone via cable: [How to Mount Android Phones in Linux](https://www.youtube.com/watch?v=lcmJg4OfKzs)
@@ -120,7 +128,6 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 ## Life
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
-- Why social media isn't that great for you: [Social Media: Anything for Upcummies! ⬆🍆💦💦](https://www.youtube.com/watch?v=YjbyDU0WzYI)
 - Rules for clean fighting among couples: [How To Fight As a Couple](https://www.youtube.com/watch?v=IE-P11KKYFs&t=113)
 
 ### Political
