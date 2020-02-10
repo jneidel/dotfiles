@@ -77,7 +77,7 @@ alias mpvmv="mpv --profile=movie"
 
 ### mpd
 alias mpdco="mpd-cover"
-alias mpdly="mpd-lyrics"
+alias mpdly="mpd-lyrics | $PAGER"
 
 ### gpg
 alias enc="gpg -e -r 7dfd16fa"

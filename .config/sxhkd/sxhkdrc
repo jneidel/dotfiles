@@ -4,12 +4,18 @@
 super + d
   ~/scripts/rofi/application-start
 
+super + 0
+  ~/scripts/rofi/power-menu
+
+super + ssharp
+  blurlock
+
 ## start applications
 super + Return
   kitty
 
 super + F1 
-  firefox-developer-edition
+  brave
 super + F2
   firefox-nightly
 

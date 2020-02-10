@@ -176,25 +176,20 @@ set viminfo=%,'20,<100,:20
 set foldmarker={{{,}}}
 set foldmethod=marker
 
-" copy to and from X clipboard
+" copy to and from clipboard
 " src: https://vim.fandom.com/wiki/GNU/Linux_clipboard_copy/paste_with_xclip
 vmap <leader>c :!xclip -f -sel clip<CR>
 map <leader>v mz:-1r !xclip -o -sel clip<CR>`z
 
-" Write file with sudo, eventhough vim wasnt opened with sudo
+" Write file with sudo, eventhough vim wasn't opened with sudo
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Disable automatic commenting on newline
 " autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " ^ not working
 
-" Spell-check set to <leader>o, 'o' for 'orthography'
-"map <leader>o :setlocal spell! spelllang=en_us<CR>
-" ^ not working
-
 " iab jn jneidel
 
-" continue with , as sep
 " set dict=~/.vim/dict.vim
 
 " write file after losing focus, or leaving the window
@@ -207,8 +202,9 @@ au BufEnter * :silent! !
 set autoread " takes 5s
 au CursorHold * checktime
 
-" Increment/Decrement next number
+" Increment/decrement next number
 " src: https://vim.fandom.com/wiki/Increasing_or_decreasing_numbers
+" Overwrites scroll screen on ^y
 function! AddSubtract(char, back)
   let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
   call search(pattern, 'cw' . a:back)
@@ -230,5 +226,6 @@ function! SaveCursorPosition()
 endfunction
 " ^ not working, was supposed to mitigate eslint resetting the cursor location
 
-" source external configs/plugins
+" source other modular configs files
 source ~/.vim/config/init.vim
+

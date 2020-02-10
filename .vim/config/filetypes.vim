@@ -9,9 +9,8 @@
 " action   : setlocal (to set options for this buffer only) <options>
 "
 
-" calcurse notes
-au BufRead,BufNewFile /tmp/calcurse* setfiletype markdown
-au BufRead,BufNewFile ~/.calcurse/notes* setfiletype markdown
+" todo file
+au BufRead ~/todo setfiletype markdown
 
 " eslint configs
 au BufRead *.eslintrc* ~/.eslint/* setfiletype json
@@ -30,7 +29,6 @@ au FileType markdown setlocal formatoptions+=t
 
 " notes
 au BufRead ~/code/notes/journal/* setfiletype markdown
-au BufNewFile ~/code/notes/journal/* r!printf "\# thoughts on <++>\n\n"
 
 " contacts
 au BufRead ~/.contacts/* setfiletype conf

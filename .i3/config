@@ -126,6 +126,7 @@ assign [class="firefoxdeveloperedition"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="Chromium"] $ws2
 assign [class="Tor Browser"] $ws2
+assign [class="brave-browser"] $ws2
 assign [class="keepassxc"] $ws9
 assign [class="mosh"] $ws3
 assign [class="signal"] $ws3
@@ -156,29 +157,11 @@ assign [class="monitor"] $ws5
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# Set shut down, restart and locking features
-bindsym $mod+0 mode "$mode_system"
-# set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-set $mode_system (r)eboot, (s)hutdown, s(u)spend
-mode "$mode_system" {
-    bindsym r exec --no-startup-id reboot
-    bindsym s exec --no-startup-id poweroff
-    bindsym u exec --no-startup-id systemctl suspend
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
 # Resize window
 bindsym $mod+Shift+k resize shrink height 2 px or 2 ppt
 bindsym $mod+Shift+j resize grow height 2 px or 2 ppt
 bindsym $mod+Shift+h resize grow width 2 px or 2 ppt
 bindsym $mod+Shift+l resize shrink width 2 px or 2 ppt
-
-# Manually lock screen (ssharp = ß) - find out keyid with xev
-bindsym $mod+ssharp exec --no-startup-id blurlock
-## As an alternative: https://tools.suckless.org/slock/
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
