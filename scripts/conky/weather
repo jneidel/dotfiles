@@ -12,9 +12,18 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "Get the current weather for your location"
   echo ""
   echo "Parameters:"
-  echo "  \$1: location code, format: 'EUR|DE|GM003|BERLIN'"
+  echo "  [\$1]: location code, format: 'EUR|DE|GM003|DRESDEN'"
+  echo "    Default '$LOCATION'"
   exit
 fi
+
+if [ -n "$1" ]; then
+  case "$1" in
+    dd) LOCATION="EUR|DE|GM003|DRESDEN";;
+    *) LOCATION="$1";;
+  esac
+fi
+
 
 DEGREES_METRIC=1 # 0 = F; 1 = C
 
