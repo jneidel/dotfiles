@@ -1,6 +1,6 @@
 #! /bin/sh
 
-LOCAL_MUSIC=~/music
+LOCAL_MUSIC=~/ct/music
 MNT_POINT=/media/usb
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then

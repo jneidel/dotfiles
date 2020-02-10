@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ lf-preview
+Handle lf previews
+
+Setup in lfrc: set previewer ~/scripts/lf-preview
+"; exit
+fi
+
+case "$1" in
+  # *.pdf) pdftotext "$1" -;;
+  *) cat "$1";;
+esac

@@ -1,0 +1,17 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ power-menu
+Issue a power command
+"; exit
+fi
+
+command -v dmenu >/dev/null || { echo "dmenu is not installed"; exit 1; }
+
+case "$(printf "reboot\nsuspend\nshutdown/poweroff\nlock" | dmenu -lines 4 -p power -width 20)" in
+  reboot) reboot;;
+  suspend) systemctl suspend;;
+  "shutdown/poweroff") poweroff;;
+  lock) blurlock;;
+esac
+

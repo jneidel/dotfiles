@@ -5,7 +5,7 @@
 
 COMIC_DIR=~/comics
 SEPERATOR="-----------------------------------------------------------"
-DEFAULTS="$(ls $HOME/Downloads/*.cbr $HOME/Downloads/*.cbz $HOME/Downloads/**/*.cbr $HOME/Downloads/**/*.cbr 2> /dev/null)" # errout would be 'no matches found'
+DEFAULTS="$(ls $HOME/Downloads/*.cbr $HOME/Downloads/*.cbz $HOME/Downloads/**/*.cbr $HOME/Downloads/**/*.cbz 2> /dev/null)" # suppress 'no matches found'
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "rename-comic: <comic> [<more-comics>]"
@@ -39,7 +39,9 @@ if [ -z "$1" ]; then
     COMIC_NAME=$(format-comic-name.js "$COMIC")
     OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
 
-    printf "moving\n  $COMIC\nto\n  $OUT_FILE\n" mv "$COMIC" "$OUT_FILE" 
+    printf "moving\n  $COMIC\nto\n  $OUT_FILE\n"
+    mv "$COMIC" "$OUT_FILE" 
+
     echo $SEPERATOR
   done
 else

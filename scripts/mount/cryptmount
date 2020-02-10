@@ -52,7 +52,7 @@ else
   fi
 fi
 
-DEFAULT_MAPPER=cryptroot
+DEFAULT_MAPPER=cryptluks
 if [ -n "$3" ]; then
   MAPPER=$3
 elif [ -e /dev/mapper/$DEFAULT_MAPPER ]; then

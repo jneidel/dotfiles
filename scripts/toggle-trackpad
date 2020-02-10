@@ -1,0 +1,24 @@
+#! /bin/sh
+
+# Todo: convert static ids into dynamic ones
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ toggle-trackpad
+Toggle x240 trackpad
+"; exit
+fi
+
+command -v xinput >/dev/null || { echo "xinput is not installed" 1>&2; exit 1; }
+
+
+DEV=$(xinput --list | grep "Synaptics" | cut -d= -f2 | awk '{ print $1 }' || 11)
+PROP=$(xinput --list-props $DEV | grep "Device Enabled" | cut -d\( -f2 | cut -d\) -f1 || 161)
+
+if [ "$(xinput --list-props $DEV | grep 'Device Enabled' | awk '{ print $4 }')" -gt 0 ]; then
+  xinput --set-prop $DEV $PROP 0
+  echo "Toggled off"
+else
+  xinput --set-prop $DEV $PROP 1
+  echo "Toggled on"
+fi
+

@@ -27,11 +27,20 @@ if [ ! "$(mullvad block-when-disconnected get)" = "Network traffic will be allow
 
   sleep 3
   echo "running '$@'"
-  "$@"
+  # switch stdout/stderr, grep stderr on KeybordInterrupt = $?>1
+  "$@" 3>&1 1>&2 2>&3 | grep "KeyboardInterrupt"
+  EXIT_CODE=$?
+  echo "EXIT CODE: $EXIT_CODE"
 
   mullvad block-when-disconnected set on > /dev/null
   mullvad connect
   printf "\033[1;32mturned mullvad back on again\n\033[0m"
+
+  if [ "$EXIT_CODE" -gt 1 ]; then
+    false
+  else
+    true
+  fi
 else
   echo "running '$@'"
   $@

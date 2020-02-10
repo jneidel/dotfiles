@@ -1,8 +1,6 @@
 #! /bin/sh
 
 DEFAULT_LOCATION=/mnt
-DEFAULT_MAPPER=cryptroot
-DEFAULT_MAPPER2=cryptroot2
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ cryptumount"
@@ -14,6 +12,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "Example:"
   echo "$ cryptumount"
   echo "$ cryptumount /media/hd"
+  echo "$ cryptumount /mnt ext"
   exit
 fi
 
@@ -33,8 +32,18 @@ else
     }
 fi
 
-MAPPER=$DEFAULT_MAPPER
-[ ! -e "/dev/mapper/$MAPPER" ] && MAPPER=$DEFAULT_MAPPER2
+DEFAULT_MAPPER=cryptluks
+DEFAULT_MAPPER2=cryptext
+DEFAULT_MAPPER3=cryptfallback
+if [ -n "$2" and -e /dev/mapper/$2 ]; then
+  MAPPER=$2
+elif [ -e /dev/mapper/$DEFAULT_MAPPER2 ]; then
+  MAPPER=$DEFAULT_MAPPER2
+elif [ -e /dev/mapper/$DEFAULT_MAPPER3 ]; then
+  MAPPER=$DEFAULT_MAPPER3
+else
+  MAPPER=$DEFAULT_MAPPER
+fi
 
 # umount
 sudo umount -R $LOCATION || exit 1

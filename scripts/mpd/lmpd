@@ -1,0 +1,44 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ lmpd
+Toggle local mpd instance
+
+If on: mount usb, start mpd
+If off: kill mpd, umount usb
+"; exit
+fi
+
+command -v mpd >/dev/null || { echo "mpd is not installed"; exit 1; }
+
+usb_dev_char() {
+  lsblk | grep "117.5G" | awk '{ print $1 }' | cut -c 3
+}
+
+turn_on() {
+  mo $(usb_dev_char) music &&
+    mpd & >/dev/null 2>&1
+}
+
+turn_off() {
+  kill $(pidof mpd) 2>/dev/null &&
+    umo music
+  true
+}
+
+toggle() {
+  if pidof mpd >/dev/null 2>&1; then
+    turn_off
+  else
+    turn_on
+  fi
+}
+
+case $1 in
+  on|1) turn_on;;
+  off|0) turn_off;;
+  r|re) turn_off; turn_on;;
+  t|toggle) toggle;;
+  *) toggle;;
+esac
+

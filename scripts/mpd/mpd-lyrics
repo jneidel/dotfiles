@@ -1,6 +1,6 @@
 #! /bin/sh
 
-MUSIC_DIR="$HOME/music"
+MUSIC_DIR="/media/music"
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ get-cmus-lyrics"
@@ -25,8 +25,8 @@ SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
 
 LYRICS=$(get-lyrics "$SONG_FILE")
 if [ -n "$LYRICS" ]; then
-  get-lyrics "$SONG_FILE" | less # Reusing $LYRICS messes with the formatting (newlines)
+  get-lyrics "$SONG_FILE" # Reusing $LYRICS messes with the formatting (newlines)
 else
-  echo "Song has no lyrics"
+  echo "Song has no lyrics" 1>&2
 fi
 

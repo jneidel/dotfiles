@@ -20,8 +20,16 @@ fi
 command -v rclone >/dev/null || { echo "rclone is not installed"; exit 1; }
 
 check() {
-  echo "Checking if file '$1' exists"
+  printf "Checking if file '$1' exists: "
   rclone size "$DEFAULT_STORAGE/$1" >/dev/null 2>&1
+
+  if [ "$?" -lt 1 ]; then
+    echo "✓" 
+    true
+  else
+    echo "x"
+    false
+  fi
 }
 
 copy() {

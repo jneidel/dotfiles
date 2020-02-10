@@ -13,13 +13,19 @@ fi
 
 WTTR_FLAGS="FQ1"
 
-[ "$1" = "-f" ] && WTTR_FLAGS="${WTTR_FLAGS:0:-1}" # remove 1 from WTTR_FLAGS
+if [ "$1" = "-f" ] || [ "$2" = "-f" ]; then
+  WTTR_FLAGS="${WTTR_FLAGS:0:-1}" # remove 1 from WTTR_FLAGS
+fi
+
+if [ "$1" = "dd" ] || [ "$2" = "dd" ]; then
+  CITY="dresden"
+fi
 
 WEATHER=$(curl -s "wttr.in/$CITY?${WTTR_FLAGS}")
 
 # remove wind speed, by dynamically replacing the length of the matched str with spaces (minus color codes)
 # src: https://stackoverflow.com/a/7338118
-WEATHER=$(perl -e '$ARGV[0] =~ s!((↓|↙|←|↖|↑|↗|→).*?km/h)!" " x (length($1) -36)!eg; print $ARGV[0]' "$WEATHER")
+WEATHER=$(perl -e '$ARGV[0] =~ s!((↓|↙|←|↖|↑|↗|→|↘).*?km/h)!" " x (length($1) -36)!eg; print $ARGV[0]' "$WEATHER")
 perl -e '$ARGV[0] =~ s!(\d+)\skm!" " x (length($1) +3)!eg; print $ARGV[0]' "$WEATHER" | # remove x km
   sed "s/0.0\smm\s|\s0%/           /g" | # remove 0% rain chance
   sed "s/0.0\smm/      /" | # remove 0.0 mm from current panel

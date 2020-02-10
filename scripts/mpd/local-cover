@@ -7,7 +7,7 @@
 # any client interested in receiving the cover. Get it on the client using scp.
 
 MPD_PORT=5555
-MUSIC_LOCATION=$HOME/music # ffmpeg needs absolute path, not ~
+MUSIC_LOCATION=/media/music # ffmpeg needs absolute path, not ~
 COVER_LOCATION=~/tmp/cover.jpg
 TMP_LOCATION=/tmp/mpd-cover.jpg
 FALLBACK_LOCATION=~/scripts/mpd/fallback-cover.jpg
