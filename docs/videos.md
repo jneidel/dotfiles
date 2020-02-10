@@ -94,6 +94,10 @@
 - Expectation if you're a JS dev compared to more stable languages like java: [How do I increase my value as a programmer on the job market?](https://www.youtube.com/watch?v=G_l0ZZGKrAo)
 - A: How node.js process a lot of requests concurrently: [How, in general, does Node.js handle 10,000 concurrent requests?](https://stackoverflow.com/questions/34855352/how-in-general-does-node-js-handle-10-000-concurrent-requests)
 
+### Programming
+
+- A: Why NOT having specs is a waste of time: [Painless Functional Specifications – Part 1: Why Bother?](https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/)
+
 ## Entertainment
 
 - How Wrestling tells unique stories: [Why Professional Wrestling is Fascinating](https://www.youtube.com/watch?v=BQCPj-bGYro)

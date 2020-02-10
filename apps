@@ -411,3 +411,7 @@ vdirsyncer CalDAV sync
 btrfs-progs btrfs
 exfat-utils exfat
 ntfs-3g ntfs
+simple-mtpfs
+
+[android]
+android-tools
