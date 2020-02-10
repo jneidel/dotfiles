@@ -7,88 +7,108 @@
 
 <!-- toc -->
 
-- [Configurations](#configurations)
-  * [Zsh (shell)](#zsh-shell)
-  * [Terminal](#terminal)
-  * [Tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
-  * [Vim (TUI editor)](#vim-tui-editor)
-  * [Eslint (js linter)](#eslint-js-linter)
-  * [Git (version control)](#git-version-control)
-- [Apps](#apps)
-  * [CLIs](#clis)
-  * [Browser Extensions](#browser-extensions)
-  * [Android](#android)
-  * [Music setup](#music-setup)
+- [Terminal apps](#terminal-apps)
+  * [zsh (shell)](#zsh-shell)
+  * [tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
+  * [vim (terminal editor)](#vim-terminal-editor)
+  * [git (version control)](#git-version-control)
+- [GUI apps](#gui-apps)
+  * [kitty (terminal)](#kitty-terminal)
+  * [mpv (video/audio player)](#mpv-videoaudio-player)
+- [System apps](#system-apps)
+  * [sxhkd (hotkey daemon)](#sxhkd-hotkey-daemon)
+  * [i3 (window manager)](#i3-window-manager)
+- [CLIs](#clis)
+- [Browser Extensions](#browser-extensions)
+- [Android apps](#android-apps)
 - [OSX](#osx)
 - [Related](#related)
 
 <!-- tocstop -->
 
-</details>
+</details></br>
 
-## Configurations
+<details>
+<summary><strong>How this repos config deployment works</strong></summary>
 
-**Warning:** links to config files are outdated.
+Using [`./import-configs`](import-configs) (pull local configs into directory) and
+[`./install-configs`](install-configs) (install configs from directory in the system)
+you can get/set config files based on what you are currently using (listed in
+[`used-apps`](used-apps)).
+The [`used-apps`](used-apps) file lists categories defined in [`mappings`](mappings),
+for example the category `zsh` is defined as:
 
-### Zsh (shell)
-
-I'm using zsh with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
-
-View zsh config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.zshrc) (change the `User specific` section of this config) - `~/.zshrc`
-
-[View oh-my-zsh config](https://raw.githubusercontent.com/jneidel/dotfiles/master/oh-my-zsh.sh) (I removed everything uneccessary to me, as it slowed me down on every new shell instance) - `~/.oh-my-zsh/oh-my-zsh.sh`
-
-View aliases:
-- [manjaro](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/init.zsh) (this file links to all other alias files, which can be found in the same dir) - `~/.zsh/init.zsh`
-
-**Zsh theme:**
-
-[View zsh-theme](https://raw.githubusercontent.com/jneidel/dotfiles/master/cobalt2.zsh-theme) - `~/.oh-my-zsh/themes/cobalt2.zsh-theme`
-
-For the theme to be rendered correctly you will need a [powerline patched font](https://github.com/powerline/fonts) (I use [Roboto Mono](https://github.com/powerline/fonts/blob/master/RobotoMono/Roboto%20Mono%20for%20Powerline.ttf)).
-
-The font will need to be installed on the device. On linux just place the ttf file in `~/.fonts`.
-
-To change the `$` default prompt in the shell, open `~/.oh-my-zsh/themes/cobalt2.zsh-theme` and edit line 52, changing the value between the closing parens and double quote:
-
-```zsh
-prompt_segment black default "%(!.%{%F{yellow}%}.)<insert-prompt-here>"
+```
+[zsh]
+.zshrc
+.zsh
 ```
 
-**Plugins:**
+Which means, that if `zsh` is listed in `used-apps` on import/install the file
+`~/.zshrc` and the directory `~/.zsh/` will be copied.
 
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+</details></br>
 
-Clone into `~/.oh-my-zsh/plugins/` with: `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
+<details>
+<summary><strong>How this repos app install works</strong></summary>
 
-- [z (jump around)](https://github.com/rupa/z) (included with oh-my-zsh)
+Using [`./apps-install`](apps-install) you can install all apps that you are
+currently using.
+These are listed in [`used-apps`](used-apps), the categories of which are
+defined in [`apps`](apps). For example the NetworkManager category:
 
-### Terminal
+```
+[nm]
+networkmanager NetworkManger
+systemd:NetworkManager
+```
 
-[View](manjaro/readme.md#kitty-terminal) Kitty notes
+Which if `nm` is in `used-apps` will run `yay -S networkmanager` and `sudo
+systemctl enable NetworkManager` after the install. The first argument is the
+package, the rest is description. Prefixes (like `systemd:`), are for doing
+non-pacman stuff (npm install, etc.).
 
-### Tmux (terminal mutiplexer)
+</details>
 
-Tmux is a terminal multiplexer, that allows for multiple terminal windows to run within one, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
+**Warning:** Not all configs in the repo are actively being used. See
+explanation above.
 
-View tmux config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.tmux.conf) - `~/.tmux.conf`
+## Terminal apps
 
-**Scripts:**
+### zsh (shell)
 
-View scripts: [manjaro](manjaro/.tmux) - `~/.tmux/`
+Superior shell, extends bash/posix.
 
-- [cmus](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/cmus-current-track) - get current cmus track
-- [mullvad](https://github.com/jneidel/dotfiles/blob/master/manjaro/.tmux/mullvad-running) - check if mullvad is running
+I'm using a stripped down version of
+[oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) with a lot of custom
+aliases.
 
-### Vim (TUI editor)
+- [main config](.zshrc)
+- [secondary configs, aliases](.zsh)
+- [theme](.zsh/cobalt2.zsh-theme)
 
-View vim config: [manjaro](https://raw.githubusercontent.com/jneidel/dotfiles/master/manjaro/.vimrc) - `~/.vimrc`
+### tmux (terminal mutiplexer)
 
-[View plugins](docs/vim.md)
+Multiple shells within the same terminal, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-[View colorscheme](https://github.com/j-tom/vim-old-hope)
+- [main config](.tmux.conf)
+- [scripts](scripts/tmux)
 
-### Eslint (js linter)
+![](images/tmux.png)
+
+### vim (terminal editor)
+
+Neovim with custom macros, hooks and a few plugins.
+
+- [main config](.vimrc)
+- [secondary configs](.vim/config)
+- [plugins](install-scripts/vim-plugins.sh) [writeup](docs/vim.md)
+- [colorscheme](.vim/colors/old-hope.vim)
+- [nvim entry](.config/nvim/init.vim)
+
+![](images/vim.png)
+
+<!--### Eslint (js linter)
 
 [View eslint config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc) - `~/.eslintrc`
 [View eslint typescript config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc-ts) - `~/.eslintrc-ts`
@@ -116,22 +136,45 @@ npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json esli
 ```
 
 For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
+-->
 
-### Git (version control)
+### git (version control)
 
-View global gitignore: [manjaro](manjaro/.gitignore) - `~/.gitignore`
+- [global config](.gitconfig)
+- [global gitignore](.gitignore-global)
 
-Config commands:
+## GUI apps
+### kitty (terminal)
 
-```zsh
-git config core.ignorecase false
-```
+Fast, easy to configure, batteries included.
 
----
+- [main config](.config/kitty/kitty.conf)
+- [main colorscheme](.config/kitty/jneidel-colors.conf)
+- see directory for [light setup](.config/kitty)
 
-## Apps
+### mpv (video/audio player)
 
-### CLIs
+Everything you'll ever need from a video player.
+
+- [config](.config/mpv/mpv.conf)
+- [keybindings](.config/mpv/input.conf)
+
+![](images/mpv.png)
+
+## System apps
+### sxhkd (hotkey daemon)
+
+The essential hotkey daemon.
+
+- [config](.config/sxhkd/sxhkdrc)
+
+### i3 (window manager)
+
+Lightweight window manager.
+
+- [config](.i3/config)
+
+## CLIs
 
 **npm:**
 
@@ -175,7 +218,7 @@ git config core.ignorecase false
 |  |  |  |
 -->
 
-### Browser Extensions
+## Browser Extensions
 
 Browser extensions, sorted by category.
 
@@ -268,7 +311,7 @@ I use **Arc Dark** as I based my terminal colorscheme on it.
 [firefox](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme-we/)
 [chrome](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
 
-### Android
+## Android apps
 
 F-Droid is a software repository hosting free and (mostly) open source apps. If available always try to use F-Droid over the google play store. Read more on [F-Droid](https://f-droid.org/). Most fdroid apps are also on gplay, even if I did not include them here.
 
@@ -320,10 +363,6 @@ Ordered by importance.
 | Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [gplay](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
 
 </details><br/>
-
-### Music setup
-
-You can find a detailed account of my music related setup [here](manjaro/music.md)
 
 ## OSX
 
