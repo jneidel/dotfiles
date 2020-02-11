@@ -23,5 +23,6 @@ update() {
   g push origin master
 }
 
+cp ~/todo $NOTES
 update "$MISC"
 update "$NOTES"

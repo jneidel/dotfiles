@@ -24,7 +24,7 @@ alias -g PE="--playlist-end"
 ### redefining existing commands
 alias cat="bat"
 alias ccat="/bin/cat"
-alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'notify-send \"took screenshot\" -t 1000 -i camera;mv \$f ~/pictures'"
+alias scrot="/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'notify-send \"took screenshot\" -t 1000 -i camera;mv \$f ~/ct/pictures'"
 alias man="colored-man"
 alias vim="nvim $@ 2>/dev/null"
 alias v="vim"
@@ -43,6 +43,7 @@ alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
 alias c3="charge3"
 alias sc="shellcheck"
+alias up="yay --removemake --noeditmenu --nodiffmenu --nocleanmenu -Syu"
 
 ### misc
 function dict {

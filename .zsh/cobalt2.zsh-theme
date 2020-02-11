@@ -1,11 +1,14 @@
+# zsh theme
+## source: https://github.com/wesbos/Cobalt2-iterm
+
+# For the theme to be rendered correctly you will need a
+# [powerline patched font](https://github.com/powerline/fonts).
+# I use [Roboto Mono](https://github.com/powerline/fonts/blob/master/RobotoMono/Roboto%20Mono%20for%20Powerline.ttf)
 #
-# Cobalt2 Theme - https://github.com/wesbos/Cobalt2-iterm
+# The font will need to be installed on the device. Just place the ttf file in `~/.fonts`.
 #
-# # README
-#
-# In order for this theme to render correctly, you will need a
-# [Powerline-patched font](https://gist.github.com/1595572).
-##
+# To change the `$` default prompt in the shell, search for "CHANGE PROMPT" and replace the `$`
+
 ### Segment drawing
 # A few utility functions to make it easy and re-usable to draw segmented prompts
 
@@ -49,7 +52,7 @@ prompt_context() {
   local user=`whoami`
 
   if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)$"
+    prompt_segment black default "%(!.%{%F{yellow}%}.)$" # CHANGE PROMPT HERE
   fi
 }
 
