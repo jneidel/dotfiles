@@ -10,5 +10,6 @@ fi
 
 case "$1" in
   # *.pdf) pdftotext "$1" -;;
+  *.md) glow -s dark "$1";;
   *) cat "$1";;
 esac

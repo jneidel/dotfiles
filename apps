@@ -415,3 +415,7 @@ simple-mtpfs
 
 [android]
 android-tools
+
+[lf]
+lf File manager
+glow-bin Markdown preview
