@@ -2,6 +2,9 @@
 # shared environment and functions
 # for import-configs/install-configs
 
+# Todo:
+# work with /etc files
+
 MAPPINGS="$DIR/mappings"
 IN_USE="$DIR/used-apps"
 IN_USE_TMP=/tmp/used-apps
