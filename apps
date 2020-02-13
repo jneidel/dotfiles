@@ -48,6 +48,7 @@ xclip X clipboard interface
 clipit Clipboard interface
 wget Download util
 curl Download util
+shellcheck Script debugging
 
 [conky]
 conky Desktop widgets

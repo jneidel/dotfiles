@@ -15,6 +15,7 @@
 - [GUI apps](#gui-apps)
   * [kitty (terminal)](#kitty-terminal)
   * [mpv (video/audio player)](#mpv-videoaudio-player)
+  * [rofi (application launcher/dmenu)](#rofi-application-launcherdmenu)
 - [System apps](#system-apps)
   * [sxhkd (hotkey daemon)](#sxhkd-hotkey-daemon)
   * [i3 (window manager)](#i3-window-manager)
@@ -160,6 +161,14 @@ Everything you'll ever need from a video player.
 - [keybindings](.config/mpv/input.conf)
 
 ![](images/mpv.png)
+
+### rofi (application launcher/dmenu)
+
+- [config](.config/rofi/config)
+- [colorscheme](scripts/rofi/rofi-arc-dark.rasi)
+- [scripts](scripts/rofi)
+
+![](images/rofi.png)
 
 ## System apps
 ### sxhkd (hotkey daemon)
