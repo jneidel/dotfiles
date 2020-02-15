@@ -81,8 +81,7 @@ task-spooler Queue commands for linear execution
 fbreader epub reader
 
 [epr]
-# to fix, setup in aur
-# git+https://github.com/wustho/epr.git epub reader
+epr-git epub reader
 
 [zathura]
 zathura Reader
