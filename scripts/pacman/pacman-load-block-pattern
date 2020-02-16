@@ -1,5 +1,6 @@
 Synchronizing package databases
 downloading 
-^ core
-^ extra
-^ community
+core
+extra
+community
+multilib

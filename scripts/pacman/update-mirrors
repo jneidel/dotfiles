@@ -1,0 +1,14 @@
+#! /bin/sh
+
+# Sources:
+#   https://wiki.archlinux.org/index.php/Mirrors#Fetching_and_ranking_a_live_mirror_list
+#   https://wiki.archlinux.org/index.php/Reflector#Examples
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ update-mirrors"
+  echo "Update pacman mirror list with the fasted mirrors from DE"
+  exit
+fi
+
+sudo reflector --country Germany --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+

@@ -1,25 +1,17 @@
-#! /bin/bash
+#! /bin/sh
 
 AUR_HELPER=yay
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ pacman-load"
   echo "Download pacman updates without installing them"
   exit
 fi
 
-# dir this script lives in
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-PKGS_FILE=~/pkgs
-PKGS_NAMES="$DIR/pkg-names"
-
 # download updates
-$AUR_HELPER -Syyuuwp --print-format "%n %v" | grep -f "$DIR/pacman-load-block-pattern" -v | tee $PKGS_FILE >( cut -d " " -f 1 -- > $PKGS_NAMES)
+$AUR_HELPER -Syyuuw --print-format "%n %v" | grep -f pacman-load-block-pattern -v
 # yy - force database reload
 # uu - upgrade pkgs, allow downloading
 # w  - download but dont install
 # p  - print results
-
-# download arch news
-$DIR/arch-news/test-pkgs
 
