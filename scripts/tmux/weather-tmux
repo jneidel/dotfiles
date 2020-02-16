@@ -1,0 +1,42 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ weather-tmux
+Self-updating wrapper for wttr script.
+"; exit
+fi
+
+command -v wttr >/dev/null || { echo "wttr is not in PATH"; exit 1; }
+command -v entr >/dev/null || { echo "entr is not installed"; exit 1; }
+
+OUT=/tmp/tmux-wttr
+touch $OUT
+
+update() {
+  WTTR="$(wttr)"
+  
+  if [ "$?" -lt 1 ]; then
+    echo "$WTTR" | grep "───" -v | tail -n 5 | cut -c 4- | sed 's/.\{2\}$//' > $OUT
+    true
+  else
+    false
+  fi
+
+}
+updateloop() {
+  if update; then
+    sleep 900
+    updateloop
+  else
+    sleep 10
+    updateloop
+  fi
+} 
+
+draw() {
+  ls $OUT | entr -c /bin/cat $OUT
+}
+
+updateloop &
+draw
+

@@ -1,32 +1,27 @@
-#! /bin/bash
+#! /bin/sh
 
 # Source:
 #   https://bbs.archlinux.org/viewtopic.php?id=37381
 # Lookup location codes:
 #   https://pastebin.com/dbtemx5F
 
-LOCATION="EUR|DE|GM003|BERLIN"
+# LOCATION="EUR|DE|GM003|BERLIN" # more complicated, but unneccsary version
+LOCATION="berlin"
+DEGREES_METRIC=1 # 0 = F; 1 = C
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ weather"
   echo "Get the current weather for your location"
   echo ""
   echo "Parameters:"
-  echo "  [\$1]: location code, format: 'EUR|DE|GM003|DRESDEN'"
+  echo "  [\$1]: location name, eg 'berlin'"
   echo "    Default '$LOCATION'"
   exit
 fi
 
-if [ -n "$1" ]; then
-  case "$1" in
-    dd) LOCATION="EUR|DE|GM003|DRESDEN";;
-    *) LOCATION="$1";;
-  esac
-fi
+LOCATION_FILE=~/scripts/weather/location
+[ -e "$LOCATION_FILE" ] && LOCATION="$(cat $LOCATION_FILE)"
 
-
-DEGREES_METRIC=1 # 0 = F; 1 = C
-
-curl -s http://rss.accuweather.com/rss/liveweather_rss.asp\?metric\=$DEGREES_METRIC\&locCode\=$LOCATION | perl -ne 'if (/Currently/) {chomp;/\<title\>Currently: (.*)?\<\/title\>/; print "$1"; }'
+curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=$DEGREES_METRIC&locCode=$LOCATION" | perl -ne 'if (/Currently/) {chomp;/\<title\>Currently: (.*)?\<\/title\>/; print "$1"; }'
 
 

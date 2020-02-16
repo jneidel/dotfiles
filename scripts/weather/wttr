@@ -1,6 +1,7 @@
 #! /bin/sh
 
 CITY="berlin"
+WTTR_FLAGS="FQ1"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ wttr"
@@ -11,17 +12,15 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-WTTR_FLAGS="FQ1"
+LOCATION_FILE=~/scripts/weather/location
+[ -e "$LOCATION_FILE" ] && CITY="$(cat $LOCATION_FILE)"
 
 if [ "$1" = "-f" ] || [ "$2" = "-f" ]; then
   WTTR_FLAGS="${WTTR_FLAGS:0:-1}" # remove 1 from WTTR_FLAGS
 fi
 
-if [ "$1" = "dd" ] || [ "$2" = "dd" ]; then
-  CITY="dresden"
-fi
-
 WEATHER=$(curl -s "wttr.in/$CITY?${WTTR_FLAGS}")
+EXIT=$?
 
 # remove wind speed, by dynamically replacing the length of the matched str with spaces (minus color codes)
 # src: https://stackoverflow.com/a/7338118
@@ -32,6 +31,12 @@ perl -e '$ARGV[0] =~ s!(\d+)\skm!" " x (length($1) +3)!eg; print $ARGV[0]' "$WEA
   sed "s/Morning/   8   /g" | sed "s/Noon/  12/g" | sed "s/Evening/   18  /g" | sed "s/Night/  22 /g" | # replace timeofday with numbers
   sed "s/$(date "+%a %d %b")/  Today   /" | # replace current date with 'today'
   sed "s/$(date -d "+1 days" "+%a %d %b")/Tomorrow  /" | # replace next day with 'tomorrow'
-  sed "s/$(date -d "+2 days" "+%a %d %b")/ $(date -d "+2 days" "+%a") (+2) /" # replace today+2
+  sed "s/$(date -d "+2 days" "+%a %d %b")/ $(date -d "+2 days" "+%a") (+2) /" | # replace today+2
+  sed "s/$(date "+%a %d %b" --date yesterday)/Yesterday /" # replace current date with 'today'
 echo "" # remove % from the last line
 
+if [ "$EXIT" -gt 0 ]; then
+  false
+else
+  true
+fi
