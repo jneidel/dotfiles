@@ -187,8 +187,7 @@ create .config/khal
 .config/khal/config
 
 [rofi]
-create .config/rofi
-.config/rofi/config
+.config/rofi
 
 [lf]
 create .config/lf

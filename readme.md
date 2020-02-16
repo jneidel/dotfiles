@@ -165,7 +165,7 @@ Everything you'll ever need from a video player.
 ### rofi (application launcher/dmenu)
 
 - [config](.config/rofi/config)
-- [colorscheme](scripts/rofi/rofi-arc-dark.rasi)
+- [colorscheme](.config/rofi/rofi-arc-dark.rasi)
 - [scripts](scripts/rofi)
 
 ![](images/rofi.png)
