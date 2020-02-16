@@ -9,13 +9,12 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "  stdin: number to work on"
   echo ""
   echo "Example:"
-  echo "$ echo "12345678910" | human-number"
+  echo "$ echo '12345678910' | human-number"
   echo "-> 12.345.678.910"
   exit
 fi
 
-cat /dev/stdin | # read from stdin
-  sed 's/\(.\)/\1\n/g' | # split at every char, i.e. insert a newline after every char
+sed 's/\(.\)/\1\n/g' </dev/stdin | # split at every char, i.e. insert a newline after every char
   sed '/^\s*$/d' | # remove empty lines (created at the end after spliting)
   sed '1!G;h;$!d' | # reverse order
   sed ': loop; n; n; a .

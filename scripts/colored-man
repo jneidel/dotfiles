@@ -1,20 +1,25 @@
-#! /bin/bash
+#! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ colored-man"
-  echo "Color man page"
-  echo ""
-  echo "Parameters:"
-  echo "  \$1: man page to read"
-  exit
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ colored-man
+man colored with less termcap
+"; exit
 fi
 
+# taken from ~/.zshrc
+# colors: https://jeffkreeftmeijer.com/vim-16-color/
+# reference: https://www.youtube.com/watch?v=OkbHyS15rY8
+# reference: https://github.com/BrodieRobertson/dotfiles/blob/feccb5edfb341bb369e0ab473c55a2de5a2cc83a/.zshenv
+
 export LESS_TERMCAP_mb=$'\e[1;34m'
-export LESS_TERMCAP_md=$'\e[1;33m' # headlines, hyperlinks - yellow
+# headlines, hyperlinks - yellow
+export LESS_TERMCAP_md=$(tput bold; tput setaf 3)
 export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[1;34m' # less status - blue
+# less status/search matches - blue
+export LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4)
 export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;31m' # commands - red
+# commands - red, underlined
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1)
 export LESS_TERMCAP_ue=$'\e[0m'
 
 man $1
