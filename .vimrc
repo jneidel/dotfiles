@@ -192,6 +192,9 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " set dict=~/.vim/dict.vim
 
+" quick replace
+nnoremap S :%s//g<Left><Left>
+
 " write file after losing focus, or leaving the window
 au FocusLost,WinLeave * :silent! w " Doesnt trigger on i3 windows
 " read file after regaining focus, entering the buffer

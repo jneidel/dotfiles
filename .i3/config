@@ -127,6 +127,7 @@ assign [class="qutebrowser"] $ws2
 assign [class="Chromium"] $ws2
 assign [class="Tor Browser"] $ws2
 assign [class="brave-browser"] $ws2
+assign [class="Brave-browser"] $ws2
 assign [class="keepassxc"] $ws9
 assign [class="mosh"] $ws3
 assign [class="signal"] $ws3

@@ -62,4 +62,5 @@ map <c-r>
 map e $$EDITOR "$f"
 map rm remove $f
 map <c-r> source "~/.config/lf/lfrc"
-
+map x cut
+map c copy

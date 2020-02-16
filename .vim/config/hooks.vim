@@ -32,3 +32,6 @@ au BufNewFile ~/code/notes/journal/* r!printf "\# thoughts on %:t \n\n"
 au BufNewFile ~/code/notes/journal/* normal ggddGo
 au BufNewFile ~/code/notes/journal/* setfiletype markdown
 
+" PKGBUILD files
+au BufWritePost PKGBUILD !makepkg --printsrcinfo > .SRCINFO
+
