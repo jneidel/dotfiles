@@ -1,73 +1,14 @@
 # misc
 
-## utilities
-calc() {
-  node -e "console.log($@)"
-}
-alias calculator='python -ic "from __future__ import division; from math import *; from random import *"' # for multiple calculations, interactive
+alias dir="dirs -v | head -10"
 
-## calendar
-alias calendar="cal -mn 6"
-alias cal3="cal -3m"
-
-## shortcuts
-alias h="cd;clear;"
-alias src="source ~/.zshrc"
-alias W="watch -t -d -n 1" # update 1s
-alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude=package-lock.json" # short: grep -nHsr
-alias b="background"
-alias back="bg 2>/dev/null; disown"
-
-### recursive
-alias rmr="rm -rf"
-alias cpr="cp -r -v"
-
-### change permissions
-alias cmx="chmod +x" # add executable
-alias cmd="chmod 755" # default dir
-alias cmf="chmod 644" # default file
-
-### dir/disk info
-alias dirsize="du -sh"
-alias ds="du -sh" # d[ir]s[ize]
-alias disksize="df -h"
-
-mdc() { # MkDirCd
-  mkdir "$1";
-  cd "$1";
-}
-alias mkdir="/usr/bin/mkdir -p"
-
-### package.json
-alias pkg="vim package.json"
-alias pkgl="cat package.json L"
-
-### colortest
+## colortest
 alias colortest="~/.vim/colors/colortest"
 alias colortest2="colortest -w -r -s | grep / --color=never L"
-
-## url en/decode
-alias urlencode='node -e "console.log( encodeURIComponent( process.argv[1] ) )"'
-alias urldecode='node -e "console.log( decodeURIComponent( process.argv[1] ) )"'
-
-## generate a random number
-alias randomnum="shuf -n 1 -i" # As range: 1-100
-alias dice="W $(whence randomnum) 1-6"
-
-## ps tree
-pst() {
-  ps xwjf | awk '{ $1="";$3="";$4="";$5="";$6="";$7="";$8="";$9=""; print $0 }' | grep -v 'firefox-' | bat
-}
-
-## vim mass rename
-alias mmv="qmv -f do" # massmove
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
-
-## displays
-alias auto="xrandr --auto" # dublicate screen on connected hdmi
 
 ## previous command hotkeys
 # print previous command but only the first nth arguments
@@ -79,22 +20,3 @@ bindkey -s '\e4' "!:0-3 \t"
 bindkey -s '\e5' "!:0-4 \t"
 bindkey -s '\el' "!:0- \t" # alt+l - all but the last word
 
-# misc...
-alias dir="dirs -v | head -10"
-alias own="sudo chown $USER"
-
-mvc() { # mv cd
-  array=( $@ )
-  len=${#array[@]}
-  args=${array[@]:0:$len-1}
-  last="${@: -1}"
-
-  mv $(echo $args) "$last"
-
-  if [ -d "$last" ]; then
-    cd "$last"
-  else
-    base="$(dirname $last)"
-    cd "$base"
-  fi
-}

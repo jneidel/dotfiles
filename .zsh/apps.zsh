@@ -31,6 +31,7 @@ alias v="vim"
 alias vvim="/bin/vim"
 alias ex="extract"
 alias grep="/bin/grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
+alias mkdir="/usr/bin/mkdir -p"
 _scp() {
   /usr/bin/scp $@
 }
@@ -43,7 +44,7 @@ alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
 alias c3="charge3"
 alias sc="shellcheck"
-alias up="yay --removemake --noeditmenu --nodiffmenu --nocleanmenu -Syu"
+alias syu="yay --removemake --noeditmenu --nodiffmenu --nocleanmenu -Syu"
 
 ### misc
 function dict {

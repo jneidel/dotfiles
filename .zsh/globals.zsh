@@ -41,4 +41,5 @@ alias -g PB="| nc termbin.com 9999" # terminal pastebin
 alias -g C="| wc -l | human-number" # get line number count
 alias -g CP="| xclip -f -sel clip" # copy to clipboard
 alias -g R="| entr -c" # R[UN]; rerun cmd on file changes; example: ls *.ts R tsc
+alias W="watch -t -d -n 1"
 
