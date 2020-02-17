@@ -1,0 +1,62 @@
+#! /bin/sh
+
+ALBUM_AR=Singles
+ALBUM=Mixed
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ tag-single <mp3s>
+Tag singles as:
+Album Artist: $ALBUM_AR
+Album: $ALBUM
+Artist: from filename
+Title: from filename
+Date: none
+Track: none
+
+Parameters:
+  \$1: files
+
+Parameter:
+  -A: Set custom album artist
+
+Example:
+  $ tag-single 'Louis Cole - Blimp.mp3'
+"; exit
+fi
+
+command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed"; exit 1; }
+
+if [ "$1" = "-A" ]; then
+  ALBUM_AR="$2"
+  shift
+  shift
+fi
+
+tag() {
+  local file_raw="$1"
+  local file="$(echo "$1" | sed 's|^[0-9]*\.\s||')" # remove leading track number
+  local artist=""
+  local title=""
+
+  if echo "$1" | grep " - " >/dev/null; then
+    # has artist + title
+    artist="$(echo "$file" | cut -d- -f1 | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
+    title="$(echo "${file%.*}" | cut -d- -f2 | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
+  else
+    # only has title
+    title="$(echo "${file%.*}" | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
+  fi
+
+  # id3tag --track 0 --year "" "$file_raw" # clears all existing tags, good for dates, bad for lyrics, images
+  id3v2 --track "" --year "" "$file_raw"
+  eyeD3 -2 --album-artist "$ALBUM_AR" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments "$file_raw"
+  # --disc-num 0
+  # --release-year 0 --release-date 0
+}
+
+for f in "$@"; do
+  if [ "$f" != "-A" ] || [ "$f" != "$ALBUM_AR" ]; then
+    tag "$f"
+  fi
+done
+

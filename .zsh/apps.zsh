@@ -36,6 +36,7 @@ _scp() {
   /usr/bin/scp $@
 }
 alias scp="_scp"
+alias glow="/bin/glow -s dark"
 
 ### shorter script names
 alias rc="rename-comic"
