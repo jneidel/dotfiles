@@ -192,3 +192,7 @@ create .config/khal
 [lf]
 create .config/lf
 .config/lf/lfrc
+
+[yay]
+create .config/yay
+.config/yay/config.json
