@@ -7,7 +7,12 @@ set color256
 set nodirfirst
 set relativenumber
 set ratios 5:4
-set shell "bash"
+
+# for working with $fs/$fx
+set shell zsh
+set shellopts '-eu:--shwordsplit'
+set ifs "\n"
+set filesep "\n"
 
 ## custom functions
 cmd open ${{
@@ -30,7 +35,7 @@ cmd open ${{
 		pdf) zathura "$f" &;;
 		mp4|mkv|avi|m4v|webm) mpv --profile=movie "$f" >/dev/null 2>&1 &;;
 		tex) pdflatex "$f";;
-		epub) epr "$f" >/dev/null 2>&1 &;;
+		epub) epr "$f" 2>/dev/null;;
 		cbz|cbr) YACReader "$f" >/dev/null 2>&1 &;;
 		mp3|flac|ogg|wma) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video '$f'" &;;
 		tgz|zip|rar|xz|gz) extract "$f";;
@@ -46,6 +51,10 @@ cmd remove ${{
   rm -rf "$f"
 }}
 
+cmd massmove ${{
+  qmv -f do $fx
+}}
+
 ## bindings
 ### remove defaults
 map m
@@ -56,11 +65,17 @@ map d
 map c
 map e
 map r
-map <c-r>
 
 ### own bindings
 map e $$EDITOR "$f"
 map rm remove $f
-map <c-r> source "~/.config/lf/lfrc"
 map x cut
 map c copy
+map <esc> clear
+map r massmove
+
+### jump
+map gd cd ~/Downloads
+map gm cd ~/ct/movies
+map gv cd ~/ct/review
+map gb cd ~/ct/books
