@@ -86,6 +86,8 @@ set scrolloff=6
 " external formatting program
 set formatprg=par\ -w80
 "   on arch: aur/par
+" format current block of text and remove indention
+nmap <leader>g {j0v99<v}gq
 
 " set whitespace characters
 set listchars=tab:▸\ ,eol:¬

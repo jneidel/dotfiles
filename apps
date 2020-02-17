@@ -49,6 +49,7 @@ clipit Clipboard interface
 wget Download util
 curl Download util
 shellcheck Script debugging
+python-eyed3 Mp3 tagging
 
 [conky]
 conky Desktop widgets
@@ -192,7 +193,7 @@ renameutils qmv mass rename util
 vim The text editor
 neovim The newer text editor
 fzf Fuzzy finder
-# par
+par Text wrapper, 80 chars
 
 ## service clients
 [ffsend]
@@ -419,3 +420,4 @@ android-tools
 [lf]
 lf File manager
 glow-bin Markdown preview
+
