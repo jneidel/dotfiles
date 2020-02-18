@@ -420,4 +420,6 @@ android-tools
 [lf]
 lf File manager
 glow-bin Markdown preview
+xml2 Epub preview
+python-pdftotext Pdf preview
 

@@ -1,0 +1,36 @@
+#! /bin/sh
+
+# Source: https://unix.stackexchange.com/a/340152
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ epub-toc epub
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ epub-toc <++>
+"; exit
+fi
+
+command -v xml2 >/dev/null || { echo "xml2 is not installed"; exit 1; }
+
+file="$1"
+
+opf=$(unzip -p "$file" META-INF/container.xml | 
+  xml2 | 
+  sed -n -e 's:^/container/rootfiles/rootfile/@full-path=::p')
+ncx=$(unzip -p "$file" "$opf" |
+  grep application/x-dtbncx+xml| 
+  xml2 |
+  sed -n -e 's!^/item/@href=!!p')
+opf_filename=${opf##*/}
+opf_path=${opf%$opf_filename}
+unzip -p "$file" ${opf_path}${ncx} |
+  xml2 |
+  sed -n -e 's:^/ncx/navMap/navPoint/navLabel/text=:  :p
+              s!^/ncx/docTitle/text=!Title: !p' |
+  grep -v -e "Cover" -e "Title Page" -e "Copyright" -e "About" -e "Contents" -e "Note" -e "Acknowledgements" -e "Appendix" -e "Epigraph" -e "Index" -e "Dedication" -e "Praise" -e "Also by" -e "Credits" -e "Bibliography" -e "Preface"
+

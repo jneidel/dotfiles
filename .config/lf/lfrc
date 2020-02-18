@@ -72,7 +72,7 @@ map rm remove $f
 map x cut
 map c copy
 map <esc> clear
-map r massmove
+map m massmove
 
 ### jump
 map gd cd ~/Downloads

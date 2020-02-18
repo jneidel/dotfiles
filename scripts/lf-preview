@@ -9,7 +9,8 @@ Setup in lfrc: set previewer ~/scripts/lf-preview
 fi
 
 case "$1" in
-  # *.pdf) pdftotext "$1" -;;
   *.md) glow -s dark "$1";;
+  *.epub) epub-toc "$1";;
+  *.pdf) pdftotext "$1" -;;
   *) cat "$1";;
 esac
