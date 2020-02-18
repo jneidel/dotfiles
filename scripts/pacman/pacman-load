@@ -8,10 +8,12 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-# download updates
-$AUR_HELPER -Syyuuw --print-format "%n %v" | grep -f pacman-load-block-pattern -v
+## yay flags:
 # yy - force database reload
 # uu - upgrade pkgs, allow downloading
 # w  - download but dont install
 # p  - print results
+
+echo "Y" | $AUR_HELPER -Syyuuw # --print-format "%n %v" | grep -f ~/scripts/pacman/pacman-load-block-pattern -v | wc -l
+# maybe save the number of new pkg somewhere, to be displayed in tmux, or something
 

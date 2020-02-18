@@ -26,7 +26,7 @@ let g:html5_aria_attributes_complete = 0
 
 "## goyo
 let g:goyo_width = 84
-nmap <leader>gy :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>:set nornu<cr>:set scrolloff=0<cr>
+nmap <leader>w :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>:set nornu<cr>:set scrolloff=0<cr>
 
 "## prettier
 " Run prettier
