@@ -1,5 +1,7 @@
 #! /bin/sh
 
+BROWSER=$(grep "^export BROWSER=" ~/.zshrc | cut -d\= -f2)
+
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ open-in-browser-without-pluses"
   echo "Remove '+' (pluses) from url before opening them in '$BROWSER'"

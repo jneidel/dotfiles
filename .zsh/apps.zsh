@@ -45,7 +45,6 @@ alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
 alias c3="charge3"
 alias sc="shellcheck"
-alias syu="yay --removemake --noeditmenu --nodiffmenu --nocleanmenu -Syu"
 
 ### misc
 function dict {

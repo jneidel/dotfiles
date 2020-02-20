@@ -89,6 +89,9 @@ set formatprg=par\ -w80
 " format current block of text and remove indention
 nmap <leader>g {j0v99<v}gq
 
+" remap enter to create a newline
+nmap <Enter> o<Esc>
+
 " set whitespace characters
 set listchars=tab:▸\ ,eol:¬
 "   activate   :set list

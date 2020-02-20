@@ -103,7 +103,7 @@ Neovim with custom macros, hooks and a few plugins.
 
 - [main config](.vimrc)
 - [secondary configs](.vim/config)
-- [plugins](install-scripts/vim-plugins.sh) [writeup](docs/vim.md)
+- [plugins](install-scripts/vim-plugins.sh), [writeup](docs/vim.md)
 - [colorscheme](.vim/colors/old-hope.vim)
 - [nvim entry](.config/nvim/init.vim)
 

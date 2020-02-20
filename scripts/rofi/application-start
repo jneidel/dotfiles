@@ -3,5 +3,5 @@
 ## open windows, connect ssh, run applications
 ## config file: ~/.config/rofi/config
 
-rofi -show run -lines 3 -eh 2
+rofi -modi run -show run -lines 3 -eh 2
 

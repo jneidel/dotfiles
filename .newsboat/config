@@ -6,7 +6,7 @@
 download-path "~/podcasts/%n"
 max-downloads 6
 player "mpv"
-browser "$BROWSER"
+browser "brave"
 
 ## reload feeds
 auto-reload yes

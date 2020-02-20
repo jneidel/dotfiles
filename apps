@@ -6,7 +6,7 @@
 # systemd   - systemctl enable
 # pip3      - sudo pip3 install
 #
-# Todo: cleanup, comment broader categories
+# Todo: prefix to run random script (e.g. at epr)
 
 [dunst]
 dunst Notification daemon
@@ -83,6 +83,7 @@ fbreader epub reader
 
 [epr]
 epr-git epub reader
+# sudo sed -i "s|feh|sxiv|" $(which -a epr)
 
 [zathura]
 zathura Reader
