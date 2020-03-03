@@ -242,10 +242,15 @@ clipit Clipboard interface
 ## xorg drivers
 [x-drivers]
 xf86-input-libinput Generic X drivers
-xf86-video-intel Drivers for intel chips
 # xf86-input-synaptics
 # xf86-video-fbdev
 # xf86-video-vesa
+
+[intel]
+xf86-video-intel Video drivers for intel chips
+
+[amd]
+xf86-video-amdgpu Video drivers for intel chips
 
 [pip]
 python-pip Python package manager
