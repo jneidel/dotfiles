@@ -8,13 +8,13 @@ fi
 
 POWER=/sys/class/power_supply
 
-[ -f $POWER/BAT0/charge_now ] && { # macbook
-  CHARGE=$POWER/BAT0/charge_now
-  CAPACITY=$POWER/BAT0/charge_full
-  AC=$POWER/ADP1/online
-} || { # thinkpad
+[ -f $POWER/BAT1/charge_now ] && { # x240
   CHARGE=$POWER/BAT1/energy_now
   CAPACITY=$POWER/BAT1/energy_full
+  AC=$POWER/AC/online
+} || { # e495
+  CHARGE=$POWER/BAT0/energy_now
+  CAPACITY=$POWER/BAT0/energy_full
   AC=$POWER/AC/online
 }
 
