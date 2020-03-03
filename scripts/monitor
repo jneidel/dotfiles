@@ -6,6 +6,9 @@ case `cat /etc/hostname` in
   jneidel-x240)
     MAIN_RESOLUTION=1366x768
     ;;
+  jneidel-e495)
+    MAIN_RESOLUTION=1920x1080
+    ;;
   *)
     echo "Device not configured in script, using xrandr output instead"
     MAIN_RESOLUTION=$(xrandr --listmonitors | fgrep "+*" | sed "s/[\ \/]/x/g" | awk -Fx '{ print $4"x"$6}')
