@@ -7,6 +7,7 @@
 # pip3      - sudo pip3 install
 #
 # Todo: prefix to run random script (e.g. at epr)
+# Todo: replace non-existant pkgs: ungoogled-chromium-bin taskell-bin
 
 [dunst]
 dunst Notification daemon
@@ -112,7 +113,7 @@ firefox-nightly Experimental firefox
 firefox-developer-edition Developer edition of firefox
 
 [chromium]
-ungoogled-chromium-bin Free version of chromium
+# ungoogled-chromium-bin Free version of chromium
 chromium-widevine Chromium module required for netflix
 
 [surf]
@@ -140,7 +141,7 @@ htop Process manager
 mosh Better ssh
 
 [taskell]
-taskell-bin Kanban board
+# taskell-bin Kanban board
 
 [calcurse]
 calcurse Calendar and todos
@@ -418,10 +419,11 @@ vdirsyncer CalDAV sync
 btrfs-progs btrfs
 exfat-utils exfat
 ntfs-3g ntfs
-simple-mtpfs
+simple-mtpfs mount mtpfs (android)
 
 [android]
 android-tools
+simple-mtpfs mount mtpfs
 
 [lf]
 lf File manager
@@ -429,3 +431,5 @@ glow-bin Markdown preview
 xml2 Epub preview
 python-pdftotext Pdf preview
 
+[brave]
+brave-bin Brave Browser
