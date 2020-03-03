@@ -433,3 +433,7 @@ python-pdftotext Pdf preview
 
 [brave]
 brave-bin Brave Browser
+
+[mpd]
+mpd
+mpc
