@@ -7,6 +7,8 @@ font="FuraCode Nerd Font Mono-11.5"
 case "$(cat /etc/hostname)" in
   "jneidel-x240")
     width=1366 ;;
+  "jneidel-e495")
+    width=1920 ;;
   *)
     echo "Please add a width for your hostname to the lemonbar config"
     exit ;;
