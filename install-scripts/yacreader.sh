@@ -14,12 +14,18 @@ command -v qmake-qt5 >/dev/null || { echo "qmake-qt5 is not installed"; exit 1; 
 
 TMP_TAR=/tmp/yacreader9.tar.xz
 
+echo "installing dependencies with yay"
+yay -S libunarr poppler-qt5 glu qt5-base qt5-multimedia qt5-script qt5-quickcontrols qt5-graphicaleffects
+
+echo "downloading yacreader 9.0"
 wget -nc https://jneidel.com/yacreader9.tar.xz -O $TMP_TAR
 cd /tmp
 tar xf $TMP_TAR
 cd yacreader-9.0.0
 
+echo "make yacreader"
 qmake-qt5
 make
+echo "install yacreader"
 sudo make install
 
