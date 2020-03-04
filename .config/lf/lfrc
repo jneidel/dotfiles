@@ -48,11 +48,20 @@ cmd open ${{
 }}
 
 cmd remove ${{
-  rm -rf "$f"
+  rm -rf $fx
 }}
 
 cmd massmove ${{
   qmv -f do $fx
+}}
+
+cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
+
+cmd broot_jump ${{
+  f=$(mktemp)
+  res="$(broot -f --outcmd $f && cat $f | sed 's/cd //')"
+  rm -f "$f"
+  /bin/lf -remote "send $id cd '$res'"
 }}
 
 ## bindings
@@ -73,6 +82,9 @@ map x cut
 map c copy
 map <esc> clear
 map m massmove
+map d mkdir
+map f broot_jump
+map . set hidden!
 
 ### jump
 map gd cd ~/Downloads

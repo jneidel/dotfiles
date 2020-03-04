@@ -12,7 +12,7 @@ alias gap="git add -p" # patch
 ## commit
 alias commit="git commit -m"
 alias gc="commit"
-alias addcom="git add .; git commit -m"
+alias addcom="ga -A; git commit -m"
 alias ac="addcom"
 
 ## commit --amend

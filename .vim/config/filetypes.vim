@@ -40,22 +40,7 @@ au Filetype shell,zsh,bash,sh map <leader>c :w<CR> :!shellcheck %
 " enable javascript syntax folding
 augroup javascript_folding
   au!
-  "au FileType javascript setlocal foldmethod=syntax
-  nnoremap <Leader>f :setlocal foldmethod=syntax<Enter>
+  au FileType javascript setlocal foldmethod=syntax
+  " nnoremap <Leader>f :setlocal foldmethod=syntax<Enter>
 augroup END
-
-" Automatically remove trailing whitespace
-" see: http://vimcasts.org/episodes/tidying-whitespace/
-function! <SID>StripTrailingWhitespaces()
-  " Save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " Replace
-  %s/\s\+$//e
-  " Restore cursor position and last search
-  let @/=_s
-  call cursor(l, c)
-endfunction
-au BufWritePre *.js,*.ts,*.sh,*.pug,*.html,*.css,*.scss :call <SID>StripTrailingWhitespaces()
 

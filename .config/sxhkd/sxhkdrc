@@ -14,7 +14,7 @@ super + ssharp
 super + Return
   kitty
 
-super + F1 
+super + F1
   brave
 super + F2
   firefox-nightly

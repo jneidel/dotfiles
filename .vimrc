@@ -200,6 +200,9 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 " quick replace
 nnoremap S :%s//g<Left><Left>
 
+" sort a block of text
+nnoremap <leader>S {jv}k$:!sort<CR>
+
 " write file after losing focus, or leaving the window
 au FocusLost,WinLeave * :silent! w " Doesnt trigger on i3 windows
 " read file after regaining focus, entering the buffer
@@ -222,8 +225,22 @@ endfunction
 nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
 nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 
-"Delete trailing whitespace on save
-"au BufWritePre * DeleteTrailingWhitespace
+" Automatically remove trailing whitespace
+" see: http://vimcasts.org/episodes/tidying-whitespace/
+function! <SID>StripTrailingWhitespaces()
+  " Save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Replace
+  %s/\s\+$//e
+  " Restore cursor position and last search
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+" au BufWritePre *.js,*.ts,*.sh,*.pug,*.html,*.css,*.scss,*.md :call <SID>StripTrailingWhitespaces()
+au BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " Save cursor position before writing and restore after writing
 function! SaveCursorPosition()

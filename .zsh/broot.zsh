@@ -4,21 +4,22 @@
 # have no useful effect if executed in a subshell.
 
 function br {
-    f=$(mktemp)
-    (
-	set +e
-	broot --outcmd "$f" "$@" --hidden
-	code=$?
-	if [ "$code" != 0 ]; then
-	    rm -f "$f"
-	    exit "$code"
-	fi
-    )
+  f=$(mktemp)
+  (
+    set +e
+    broot --outcmd "$f" "$@" # --hidden
     code=$?
     if [ "$code" != 0 ]; then
-	return "$code"
+        rm -f "$f"
+        exit "$code"
     fi
-    d=$(<"$f")
-    rm -f "$f"
-    eval "$d"
+  )
+  code=$?
+  if [ "$code" != 0 ]; then
+	  return "$code"
+  fi
+
+  d=$(<"$f")
+  rm -f "$f"
+  eval "$d"
 }

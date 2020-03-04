@@ -6,7 +6,7 @@ alias auto="xrandr --auto" # dublicate screen on connected hdmi
 
 ## recursive shortcuts
 alias rmr="rm -rf"
-alias cpr="cp -r -v"
+alias cpr="cp -rvan"
 
 ## permissions
 alias cmx="chmod +x" # add executable

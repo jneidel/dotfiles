@@ -3,7 +3,7 @@
 
 # config
 ## basic config
-download-path "~/podcasts/%n"
+download-path "~/ct/podcasts/%n"
 max-downloads 6
 player "mpv"
 browser "brave"
