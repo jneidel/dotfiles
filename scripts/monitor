@@ -2,26 +2,6 @@
 
 command -v xrandr >/dev/null || { echo "xrandr is not installed"; exit 1; }
 
-case `cat /etc/hostname` in
-  jneidel-x240)
-    MAIN_RESOLUTION=1366x768
-    ;;
-  jneidel-e495)
-    MAIN_RESOLUTION=1920x1080
-    ;;
-  *)
-    echo "Device not configured in script, using xrandr output instead"
-    MAIN_RESOLUTION=$(xrandr --listmonitors | fgrep "+*" | sed "s/[\ \/]/x/g" | awk -Fx '{ print $4"x"$6}')
-    ;;
-esac
-
-MAIN=`xrandr --listmonitors | pcregrep -o1 "\+\*(\w+\d*)"`
-[ -z "$MAIN" ] && MAIN=eDP1
-
-#MONITOR=DP1
-MONITOR_RESOLUTION=1920x1080 
-MONITOR=DP2
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ monitor [on|off] [-m]
 Toggle the connected display $MONITOR as a second monitor.
@@ -37,6 +17,33 @@ Example:
   $ monitor -m
 "; exit
 fi
+
+case `cat /etc/hostname` in
+  jneidel-x240)
+    MAIN_RESOLUTION=1366x768
+    ;;
+  jneidel-e495)
+    MAIN_RESOLUTION=1920x1080
+    MAIN=eDP-1
+    ;;
+  *)
+    echo "Device is not configured in script, using xrandr output instead.";;
+esac
+
+# [ -z "$MAIN" ] && MAIN=`xrandr --listmonitors | pcregrep -o1 "\+\*(\w+\d*)"`
+[ -z "$MAIN" ] && MAIN=$(xrandr | grep primary | cut -d\  -f1)
+[ -z "$MAIN_RESOLUTION" ] && MAIN_RESOLUTION=$(xrandr | grep primary | cut -d\  -f4 | awk -F+ '{ print $1 }')
+
+# first connected monitor (apart from MAIN) it can find
+MONITOR=$(xrandr | grep " connected" | grep -v "$MAIN" | head -n1 | cut -d\  -f1)
+MONITOR_RESOLUTION=1920x1080
+[ -z "$MONITOR_RESOLUTION" ] && MONITOR_RESOLUTION=$(xrandr | grep $MONITOR | cut -d\  -f3 | awk -F+ '{ print $1 }')
+
+printf "Using:
+  Main    : $MAIN - $MAIN_RESOLUTION
+  External: $MONITOR - $MONITOR_RESOLUTION
+\n"
+
 
 IS_MIRROR=0
 while getopts "m" OPTION; do
