@@ -1,11 +1,11 @@
-#! /bin/bash
+#! /bin/sh
 
 DEFAULT_MOUNT_ROOT=/media
 DEFAULT_LOCATION=$DEFAULT_MOUNT_ROOT/usb
 DEFAULT_CMD="sudo mount"
 #DEFAULT_CMD="sudo mount -o nonempty"
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mo"
   echo "mount drives"
   echo ""
@@ -19,22 +19,24 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 VOLUME_ID="$1"
-if [[ -z $VOLUME_ID ]]; then
-  echo "Please supply the volume to be mounted ('b1' for /dev/sdb1)."                                                                   
+if [ -z "$VOLUME_ID" ]; then
+  echo "Please supply the volume to be mounted ('b1' for /dev/sdb1)."
   exit
 fi
 VOLUME="/dev/sd$VOLUME_ID"
 
+if sudo file -sL "$VOLUME" | grep BTRFS >/dev/null 2>&1; then
+  echo "Mounting as a btrfs file system."
+  DEFAULT_CMD="sudo mount -o compress=lzo,subvol=@"
+fi
+
+
 LOCATION="$DEFAULT_MOUNT_ROOT/$2"
-if [[ ! -z "$2" && -d "$LOCATION" ]]; then
-  $DEFAULT_CMD $VOLUME "$LOCATION"
+if [ -n "$2" ] && [ -d "$LOCATION" ]; then
+  $DEFAULT_CMD "$VOLUME" "$LOCATION"
   echo "mounted $VOLUME to $LOCATION"
-
-  cd "$LOCATION"
 else
-  $DEFAULT_CMD $VOLUME $DEFAULT_LOCATION
+  $DEFAULT_CMD "$VOLUME" "$DEFAULT_LOCATION"
   echo "mounted $VOLUME to $DEFAULT_LOCATION"
-
-  cd "$DEFAULT_LOCATION"
 fi
 

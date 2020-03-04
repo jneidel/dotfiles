@@ -1,0 +1,15 @@
+#! /bin/sh
+
+VIEWER=zathura
+DIR=~/ct/zeit
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ zeit-latest
+View the latest (last modified) issue of Die Zeit in $DIR with $VIEWER
+"; exit
+fi
+
+command -v $VIEWER >/dev/null || { echo "$VIEWER is not installed"; exit 1; }
+
+/bin/ls -t $DIR/* | head -n 1 | xargs $VIEWER
+

@@ -1,0 +1,38 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ toggle-location <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ toggle-location <++>
+"; exit
+fi
+
+command -v khal >/dev/null || { echo "khal is not installed"; exit 1; }
+
+LOCATION_FILE="$(dirname $0)/location"
+
+write_loc() {
+  printf "$1" > "$LOCATION_FILE"
+  echo "Location: $1"
+}
+
+toggle_loc() {
+  case "$(cat $LOCATION_FILE)" in
+    berlin) write_loc dresden;;
+    dresden) write_loc berlin;;
+    *) write_loc berlin;;
+  esac
+}
+
+if khal list --format "{title}" --once --day-format "" | grep "[fF]lixbus" >/dev/null; then
+  toggle_loc
+# else
+#   echo "Nothing to do"
+fi
+

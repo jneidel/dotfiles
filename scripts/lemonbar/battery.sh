@@ -8,7 +8,7 @@ fi
 
 POWER=/sys/class/power_supply
 
-[ -f $POWER/BAT1/charge_now ] && { # x240
+[ -f $POWER/BAT1/energy_now ] && { # x240
   CHARGE=$POWER/BAT1/energy_now
   CAPACITY=$POWER/BAT1/energy_full
   AC=$POWER/AC/online

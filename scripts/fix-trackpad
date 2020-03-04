@@ -4,13 +4,13 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ fix-trackpad
 Fix synaptics touchpad
 
-Source: 
+Source:
 https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Touchpad_does_not_work_after_resuming_from_hibernate/suspend
 "; exit
 fi
 
 command -v modprobe >/dev/null || { echo "modprobe is not installed"; exit 1; }
 
-modprobe -r psmouse # touchpad kernel module
-modprobe psmouse
+sudo modprobe -r psmouse # touchpad kernel module
+sudo modprobe psmouse
 
