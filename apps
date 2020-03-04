@@ -243,16 +243,20 @@ clipit Clipboard interface
 
 ## xorg drivers
 [x-drivers]
+mesa General drivers
 xf86-input-libinput Generic X drivers
 # xf86-input-synaptics
 # xf86-video-fbdev
 # xf86-video-vesa
+acpid Handle closing the lid, etc.
+systemd:acpid
 
 [intel]
 xf86-video-intel Video drivers for intel chips
 
 [amd]
 xf86-video-amdgpu Video drivers for intel chips
+xf86-video-ati DDX driver, 2D acceleration in Xorg
 
 [pip]
 python-pip Python package manager
