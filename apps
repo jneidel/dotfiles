@@ -26,6 +26,7 @@ sxhkd Hotkey assignment
 [lemonbar]
 lemonbar-xft-git Customizable bar
 perl-anyevent-i3 i3 eventlistener library
+pod2man Make dependency
 
 [i3]
 i3-wm Window manager
