@@ -1,33 +1,52 @@
-#! /bin/bash
+#! /bin/sh
 # Source: https://askubuntu.com/questions/226773/how-to-read-mp3-tags-in-shell
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ get-lyrics <mp3>"
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ get-lyrics [-n] <mp3s>"
   echo "Get content of 'lyrics-XXX' or 'lyrics-eng' tag of the specified mp3"
   echo ""
   echo "Parameters:"
-  echo "\$1: path to mp3"
+  echo "  \$@: path to mp3"
+  echo ""
+  echo "Flags:"
+  echo "  -n: no file name info (don't print what file is being used)"
   echo ""
   echo "Example:"
   echo "$ get-lyrics The\ Art\ of\ Peer\ Pressure.mp3"
   exit
 fi
 
-MP3=$1
-ARGS=""
+FILENAME_INFO=1
+if [ "$1" = "-n" ]; then
+  FILENAME_INFO=0
+fi
 
-function runCmd() {
+run_ffprobe() {
   TAG=$1
+  MP3="$2"
   ffprobe -loglevel error -show_entries format_tags=$TAG -of default=noprint_wrappers=1:nokey=1 "$MP3"
 }
 
-LYRICS_XXX=$(runCmd lyrics-XXX)
-if [[ -n $LYRICS_XXX ]]; then
-  runCmd lyrics-XXX
-else
-  LYRICS_ENG=$(runCmd lyrics-eng)
-  if [[ -n $LYRICS_ENG ]]; then
-    runCmd lyrics-eng
+getLyrics() {
+  MP3="$1"
+
+  LYRICS_XXX=$(run_ffprobe lyrics-XXX "$MP3")
+  if [ -n "$LYRICS_XXX" ]; then
+    run_ffprobe lyrics-XXX "$MP3"
+  else
+    LYRICS_ENG=$(run_ffprobe lyrics-eng "$MP3")
+    if [ -n "$LYRICS_ENG" ]; then
+      run_ffprobe lyrics-eng "$MP3"
+    fi
   fi
-fi
+}
+
+for mp3 in "$@"; do
+  if [ "${mp3##*.}" = "mp3" ]; then
+    [ "$FILENAME_INFO" -gt 0 ] && printf "Lyrics for: $mp3\n\n"
+    getLyrics "$mp3"
+  elif [ "$mp3" != "-n" ]; then
+    echo "$MP3 is not a mp3 file."
+  fi
+done
 
