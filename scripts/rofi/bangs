@@ -1,0 +1,62 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ bangs
+Portable custom duckduckgo bangs (tpb, lg, etc.)
+Open in \$BROWSER ($BROWSER).
+Should be run via keyboard shortcut.
+
+Commands:
+  list: list all available bangs
+"; exit
+fi
+
+command -v rofi >/dev/null || { echo "rofi is not installed"; exit 1; }
+command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed"; exit 1; }
+command -v node >/dev/null || { echo "node is not installed"; exit 1; }
+
+bangList() {
+  cat << EOF
+lg http://gen.lib.rus.ec/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
+lgf http://libgen.io/foreignfiction/index.php?s=%s&f_lang=English&f_ext=epub
+tpb https://tpb.louifox.house/search/%s/0/99/0
+tpb2 https://www.everybabes.com/search.php?q=%s&page=0&orderby=99
+tpb3 https://knaben.ru/s/?q=%s&page=0&orderby=99
+nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
+1337x https://1337x.to/search/%s/1
+t2 https://www.torrentz2.eu/search?f=%s
+mr https://www.mangareader.net/search/?w=%s&rd=0&status=0&order=0&genre=&p=0
+ml https://manga4life.com/search/?sort=s&desc=false&name=%s
+mi http://www.mangainn.net/advanced-search?term=%s
+gc https://getcomics.info/?s=%s
+fp https://filepursuit.com/pursuit?q=%s
+abb http://audiobookbay.nl/?s=%s
+nd https://www.youtube.com/results?search_query=theneedledrop+%s
+ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r5
+ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
+EOF
+}
+
+if [ "$1" = "list" ]; then
+  bangList
+  exit 0
+fi
+
+prompt() {
+  rofi -dmenu -lines 0 -width 25 -p \!
+}
+
+urlEncode() {
+  node -e "console.log( encodeURIComponent( process.argv[1] ) )" "$1"
+}
+
+res="$(prompt)"
+bang="${res%% *}"
+query="${res#* }"
+query=`urlEncode "$query"`
+
+if bangList | grep "$bang " >/dev/null; then
+  bangList | grep "$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r $BROWSER
+else
+  rofi -e "bang '$bang' does not exist." -width 25
+fi
