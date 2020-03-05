@@ -64,7 +64,7 @@ kitty-git Terminal emulator
 
 [tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
-tmate Share tmux sessions
+# tmate Share tmux sessions
 
 [gimp]
 gimp Photo editing
@@ -81,10 +81,10 @@ task-spooler Queue commands for linear execution
 
 ## viewer/reader
 [fbreader]
-fbreader epub reader
+fbreader GUI epub reader
 
 [epr]
-epr-git epub reader
+epr-git CLI epub reader
 # sudo sed -i "s|feh|sxiv|" $(which -a epr)
 
 [zathura]
@@ -102,7 +102,7 @@ newsboat RSS feed reader
 w3m Terminal browser
 
 [yacreader]
-#yacreader-nopdf Comicbook reader
+# yacreader-nopdf Comicbook reader # wrong version, install manually
 libunarr Dependency
 poppler-qt5 Dependency
 
@@ -440,5 +440,9 @@ python-pdftotext Pdf preview
 brave-bin Brave Browser
 
 [mpd]
-mpd
-mpc
+mpd Music player daemon
+mpc mpd client
+
+[ncmpcpp]
+mpd Music player daemon
+ncmpcpp mpd client
