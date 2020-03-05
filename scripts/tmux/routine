@@ -1,0 +1,13 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ routine
+Open a new tmux session for my routine
+"; exit
+fi
+
+command -v kitty >/dev/null || { echo "kitty is not installed"; exit 1; }
+
+cd ~/code/notes
+kitty ~/scripts/tmux/routine-tmux &
+

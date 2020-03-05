@@ -1,0 +1,28 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ routine-tmux
+Called from routine script, executed in new tmux session
+"; exit
+fi
+
+command -v tmux >/dev/null || { echo "tmux is not installed"; exit 1; }
+
+cleanup() {
+  # cleanup the env before and after
+  tmux kill-session -t routine
+}
+trap cleanup EXIT
+
+cleanup
+tmux -u new-session -s routine \; \
+  send-keys "backlight max" "Enter" \; \
+  new-window -n "meditation" -c "$HOME/ct/Headspace" "exec lf" \; \
+  kill-pane -t 1 \; \
+  move-window -s 2 -t 1 \; \
+  new-window -n "affirmations" "exec vim affirmations.md" \; \
+  new-window -n "reading notes" -c "$HOME/code/notes/books" "exec vim" \; \
+  new-window -n "book" "exec epr" \; \
+  select-window -t 2 \; \
+  select-window -t 1
+# \; for running commands in the same session
