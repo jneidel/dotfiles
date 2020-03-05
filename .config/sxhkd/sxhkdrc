@@ -95,6 +95,8 @@ super + t
   transmission-add
 super + z
   open-latest-doc
+super + b
+  bangs
 
 # which key is this?
 XF86Tools

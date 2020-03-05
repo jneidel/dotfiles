@@ -1,0 +1,21 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ scp-open <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ scp-open <++>
+"; exit
+fi
+
+command -v scp >/dev/null || { echo "scp is not installed"; exit 1; }
+
+scp "k:~/$1" $HOME/tmp/
+ssh k "rm \"$1\""
+zathura "$HOME/tmp/$1"
+
