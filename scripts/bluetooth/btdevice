@@ -9,5 +9,5 @@ fi
 
 CUR=$(echo -e "quit" | bluetoothctl | grep quit | grep "\[" | cut -d "[" -f 3 | cut -d "]" -f 1)
 
-[[ "$CUR" != "bluetooth" ]] && echo $CUR || echo ""
+[ "$CUR" != "bluetooth" ] && echo $CUR || echo ""
 

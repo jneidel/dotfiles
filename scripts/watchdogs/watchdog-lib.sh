@@ -10,7 +10,7 @@ readJournal() {
   fi
 
   journalctl -u $UNIT -f -o cat --since=now | while read -r line; do
-    $CALLBACK $line
+    $CALLBACK "$line"
   done
 }
 

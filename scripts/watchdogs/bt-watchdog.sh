@@ -15,6 +15,7 @@ command -v journalctl >/dev/null || { echo "journalctl is not installed"; exit 1
 
 cb() {
   line="$1"
+  echo "cb on $line"
 
   if echo $line | fgrep " ready" >/dev/null; then
     DEV="$(btdevice)"

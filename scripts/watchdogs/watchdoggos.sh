@@ -10,5 +10,5 @@ Run watchdogs in this directory matching this pattern:
 fi
 
 sh $DIR/keyboard-watchdog.sh
-# sh $DIR/bt-watchdog.sh
+sh $DIR/bt-watchdog.sh
 sh $DIR/battery-watchdog.sh

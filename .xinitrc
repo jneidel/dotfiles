@@ -36,7 +36,8 @@ dunst &
 
 ## gui application autostart
 kitty ~/scripts/tmux/t &
-firefox-nightly &
+# firefox-nightly &
+brave &
 signal-desktop &
 
 # don't work if started directly
@@ -50,5 +51,6 @@ signal-desktop &
 
 # status bar
 ~/scripts/lemonbar/run-lemonbar &
+
 # start window manager
 exec i3
