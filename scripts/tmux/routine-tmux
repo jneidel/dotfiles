@@ -21,8 +21,10 @@ tmux -u new-session -s routine \; \
   kill-pane -t 1 \; \
   move-window -s 2 -t 1 \; \
   new-window -n "affirmations" -c "/tmp" "exec vim $HOME/code/notes/affirmations.md" \; \
+  new-window -n "music" "exec ncmpcpp" \; \
   new-window -n "reading notes" -c "$HOME/code/notes/books" "exec vim" \; \
-  new-window -n "book" "exec epr" \; \
+  new-window -n "book" "exec epr \"$(bookq)\"" \; \
+  new-window -n "c3" "exec ~/scripts/personal/charge3" \; \
   select-window -t 2 \; \
   select-window -t 1
 # \; for running commands in the same session
