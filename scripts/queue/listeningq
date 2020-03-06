@@ -1,0 +1,10 @@
+#! /bin/sh
+
+QUEUE_FILE=~/code/notes/listening-queue
+
+LIB="$(dirname $0)/queue-lib.sh"
+. "$LIB"
+
+help "listeningq" "listening queue" "album" "Liquid Sword" "American Gangster" "$1"
+
+parseCases "$@"

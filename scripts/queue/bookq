@@ -1,0 +1,10 @@
+#! /bin/sh
+
+QUEUE_FILE=~/code/notes/routine-reading-queue
+
+LIB="$(dirname $0)/queue-lib.sh"
+. "$LIB"
+
+help "bookq" "reading queue for my morning" "book" "Atomic Habits" "Make It Stick" "$1"
+
+parseCases "$@"
