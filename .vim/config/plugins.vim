@@ -157,9 +157,13 @@ let g:lightline = {
 \   },
 \   "tabline": { "right": [] },
 \   "tab": {
-\     "active": [ "filename" ], 
-\     "inactive": [ "filename" ], 
+\     "active": [ "filename" ],
+\     "inactive": [ "filename" ],
 \   },
 \   "tabline_separator": { "left": "", "right": "" },
 \   "subseparator": { "left": "", "right": "" },
 \ }
+
+" # sneak
+let g:sneak#s_next = 1
+

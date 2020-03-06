@@ -198,7 +198,7 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 " set dict=~/.vim/dict.vim
 
 " quick replace
-nnoremap S :%s//g<Left><Left>
+nnoremap <C-s> :%s//g<Left><Left>
 
 " sort a block of text
 nnoremap <leader>S {jv}k$:!sort<CR>
