@@ -1,0 +1,66 @@
+#! /bin/sh
+
+# Fill these in:
+EMAIL=""
+PASSWORD=""
+# Need to be urlencoded
+
+. ~/scripts/personal/zeit-data.sh # import my private credentials
+
+INCLUDE_ZEITMAGAZIN=1 # 0|1
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ zeit-dl
+Download the latest issue of ZEIT from zeit.de
+
+Requires valid credentials to a paying account.
+
+Might need to be rerun a few times if it throws errors.
+
+ZEITmagazin is included: $(echo $INCLUDE_ZEITMAGAZIN | sed 's|0|no|; s|1|yes|' )
+"; exit
+fi
+
+COOKIE=""
+DZCOOKIE=""
+
+OUTFILE="$HOME/ct/zeit/issue-$(date +%m.%d.%y).pdf"
+echo "Writing to $OUTFILE"
+
+generate_cookies() {
+  echo "Generating cookies; Expect 100% and 0%"
+
+  COOKIE=$(curl "https://meine.zeit.de/anmelden" --data "email=$EMAIL&pass=$PASSWORD&permanent=on" -H "Cookie: wazn:webfe3" -i | grep set-cookie | cut -d\  -f2- | cut -d\; -f1 | tr "\n\r" "; " )
+
+  DZCOOKIE=$(curl 'https://epaper.zeit.de/login?referer=%2Fabo%2Fdiezeit' -H 'Referer: https://meine.zeit.de/' -H "Cookie: $COOKIE; wazn:webfe3" -i | grep "Set-Cookie: dzcookie" | cut -d\  -f2 | cut -d\; -f1)
+}
+
+generate_cookies
+echo ""
+echo "Using cookies:\ncookie: $COOKIE\ndzcookie: $DZCOOKIE"
+echo ""
+
+echo "Getting link to latest issue"
+LATEST="https://epaper.zeit.de$(curl -Ss 'https://epaper.zeit.de/abo/diezeit' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: https://meine.zeit.de/' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: wazn=webfe4; wt_fa=lv~1573299855120|1588851855120#cv~1|1588851855121#fv~1573299855122|1588851855123#; wt_fa_s=start~1|1604835855124#; wt_rla=981949533494636%2C2%2C1573299855131; '$COOKIE'; '$DZCOOKIE -H 'Upgrade-Insecure-Requests: 1' | grep 'ZUR AKTUELLEN AUSGABE' | grep -Po '/abo/diezeit/\d\d\.\d\d\.\d\d\d\d' | head -n 1)"
+echo "Latest issue link: $LATEST"
+if [ "$LATEST" = "https://epaper.zeit.de" ]; then
+  echo "ERROR: latest is empty"
+  exit 1
+fi
+
+echo "Getting download link"
+if [ "$INCLUDE_ZEITMAGAZIN" -gt 0 ]; then
+  DOWNLOAD="https://epaper.zeit.de$(curl -Ss $LATEST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: wazn=webfe4; wt_fa=lv~1573299855120|1588851855120#cv~1|1588851855121#fv~1573299855122|1588851855123#; wt_fa_s=start~1|1604835855124#; wt_rla=981949533494636%2C2%2C1573299855131; '$COOKIE'; '$DZCOOKIE -H 'Upgrade-Insecure-Requests: 1' | grep 'GESAMT-PDF LADEN' | head -n 1 | grep -Po '/download/\d+\?appendPdfId=\d+')" # only change is arg to the last grep
+else
+  DOWNLOAD="https://epaper.zeit.de$(curl -Ss $LATEST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: wazn=webfe4; wt_fa=lv~1573299855120|1588851855120#cv~1|1588851855121#fv~1573299855122|1588851855123#; wt_fa_s=start~1|1604835855124#; wt_rla=981949533494636%2C2%2C1573299855131; '$COOKIE'; '$DZCOOKIE -H 'Upgrade-Insecure-Requests: 1' | grep 'GESAMT-PDF LADEN' | head -n 1 | grep -Po '/download/\d+')"
+fi
+
+echo "Download link: $DOWNLOAD"
+if [ "$DOWNLOAD" = "https://epaper.zeit.de" ]; then
+  echo "ERROR: download is empty"
+  exit 1
+fi
+
+echo "Downloading pdf"
+curl $DOWNLOAD -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Referer: https://epaper.zeit.de/abo/diezeit/07.11.2019' -H 'Cookie: wazn=webfe4; wt_fa=lv~1573299855120|1588851855120#cv~1|1588851855121#fv~1573299855122|1588851855123#; wt_fa_s=start~1|1604835855124#; wt_rla=981949533494636%2C2%2C1573299855131; '$COOKIE'; '$DZCOOKIE -H 'Upgrade-Insecure-Requests: 1' > "$OUTFILE"
+
