@@ -1,0 +1,81 @@
+#! /bin/bash
+
+TMP_DIR=~/tmp
+TMP_COOKIE=$TMP_DIR/.spc
+
+# Fill these in:
+USERNAME="" # Matrikelnummer
+PASSWORD=""
+  # password needs to be url encoded
+  # for example with:
+  #   node -e "console.log( encodeURIComponent( 'p@$$word!' ) )"
+
+. ~/scripts/personal/sp-data.sh # import USERNAME and PASSWORD from private source (remove this)
+
+# Fill in your pdf viewer:
+PDF_VIEWER=zathura
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  echo "$ sp [+1|-1] [--no-viewer]"
+  echo "Get current Stundenplan from HTW website and open it in $PDF_VIEWER or via xdg-open"
+  echo ""
+  echo "Parameter:"
+  echo "  [\$1]: week modifier, e.g. +1 to show next week, -1 for last week, etc."
+  echo ""
+  echo "Flags:"
+  echo "  --no-viewer: don't open the downloaded file in your pdf viewer"
+  echo ""
+  echo "Example:"
+  echo "  $ sp +1 --no-viewer"
+  exit
+fi
+
+# Validate user variables
+[ -z "$USERNAME" ] && { echo "\$USERNAME is empty, please fill it in"; exit 1; };
+[ -z "$PASSWORD" ] && { echo "\$PASSWORD is empty, please fill it in"; exit 1; };
+
+[ "$2" = "--no-viewer" ] && PDF_VIEWER=""
+
+mkdir -p $TMP_DIR
+
+function updateCookie() {
+  curl -Ssi https://lsf.htw-berlin.de/qisserver/rds\?state\=user\&type\=1 -d "username=$USERNAME&password=$PASSWORD&submit=Einloggen" |
+    grep -F "JSESSIONID" | grep -Po "JSESSIONID=.*?\.ajp13_qis5" | cut -d= -f2 | tee >(cat > $TMP_COOKIE)
+}
+
+SESSION_COOKIE=""
+if [ ! -e "$TMP_COOKIE" ]; then
+  echo "Updating session cookie (file does not exist)"
+  SESSION_COOKIE=$(updateCookie)
+elif [ -z "$(cat $TMP_COOKIE)" ]; then
+  echo "Updating session cookie (file is empty)"
+  SESSION_COOKIE=$(updateCookie)
+else
+  SESSION_COOKIE=$(cat $TMP_COOKIE)
+fi
+
+WEEK=$(($(date +%U | sed "s|^0||")+1))
+[ -n "$1" ] && WEEK=$(($WEEK $1))
+
+YEAR=$(date +%Y)
+FILE="$TMP_DIR/stundenplan-$YEAR-$WEEK.pdf"
+
+if [ ! -e "$FILE" ]; then
+  WEEK_YEAR=$WEEK"_"$YEAR
+  curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE" > "$FILE"
+
+  if cat "$FILE" | grep "Die aufgerufene Funktion kann aufgrund von fehlenden Zugriffsrechten nicht" >/dev/null; then
+    echo "Updating session cookie"
+    SESSION_COOKIE=$(updateCookie)
+    curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE" > "$FILE"
+  fi
+fi
+
+if [ -n "$PDF_VIEWER" ]; then
+  if command -v $PDF_VIEWER >/dev/null; then
+    $PDF_VIEWER "$FILE" || true
+  else
+    xdg-open "$FILE"
+  fi
+fi
+
