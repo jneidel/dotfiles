@@ -10,6 +10,9 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "\$1: directory to be compressed/encryped"
   echo "[\$2]: keyid for encryption (uses gobal \$KEYID if not passed)"
   echo ""
+  echo "Flags:"
+  echo "  -c: Symmetric encryption"
+  echo ""
   echo "Example:"
   echo "$ targpg my-files 7DFD16FA"
   exit
@@ -20,6 +23,9 @@ if [[ ! -d $1 ]]; then
   echo "Pass --help for usage info."
   exit
 fi
+
+SYMMETRIC=0
+[ "$2" = "-c" ] && SYMMETRIC=1
 
 DIR=$1
 DIRTAR=$DIR".tgz"
@@ -42,7 +48,12 @@ fi
 echo "Start archiving"
 tar czf "$DIRTAR" "$DIR"
 echo "Start encryption"
-gpg -r $KEY -e "$DIRTAR"
+
+if [ "$SYMMETRIC" -gt 0 ]; then
+  gpg -c "$DIRTAR"
+else
+  gpg -r $KEY -e "$DIRTAR"
+fi
 echo "Cleanup"
 rm "$DIRTAR"
 

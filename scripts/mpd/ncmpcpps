@@ -17,5 +17,5 @@ fi
 
 command -v ncmpcpp >/dev/null || { echo "ncmpcpp is not installed"; exit 1; }
 
-ncmpcpp $CONNECT 2> /dev/null
+ncmpcpp $CONNECT $@ 2> /dev/null
 

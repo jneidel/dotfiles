@@ -101,9 +101,9 @@ set listchars=tab:▸\ ,eol:¬
 set backup
 set writebackup
 set backupdir=~/.vim/backup
-" swap files
-set swapfile
-set directory=~/.vim/tmp
+" swap files - destroyed two important files
+" set swapfile
+" set directory=~/.vim/tmp
 " undo files
 set undofile
 set undodir=~/.vim/tmp

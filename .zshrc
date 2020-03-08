@@ -24,8 +24,8 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 ## Paths
-export PATH=~/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:~/.local/bin:/usr/bin/vendor_perl
-export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -f ~/scripts/scripts-path-filter-pattern | tr '\n' ':')$PATH"
+export PATH=/bin:/usr/bin:/usr/bin/vendor_perl
+export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data -e i3 | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/ct:~/scripts
 
 ## Applications

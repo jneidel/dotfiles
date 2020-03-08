@@ -15,7 +15,7 @@ fi
 
 [ ! -e "$PATTERN" ] && { echo "The grep pattern is missing. Please add it with atleast $TO in it."; exit 1; }
 
-ls -d $FROM/*/ | grep -vf $PATTERN | while read dir; do
+ls -d $FROM/*/ | grep -v -e Electro -e HipHop -e Monstercat -e Other -e Pop -e Rock -e Singles -e Soundtracks -e unheard -e "Various Artists" -e German | while read dir; do
   mv "$dir" "$TO"
   echo Moved $(echo $dir | rev | cut -d/ -f2 | rev)
 done

@@ -2,6 +2,7 @@
 # connect to my personal JBL Charge 3 speaker
 
 btoff
+sleep 2
 btconnect B8:D5:0B:AD:AA:26
 
 # stream random audio file over bluetooth to stop charge from stuttering

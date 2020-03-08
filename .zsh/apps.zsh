@@ -32,11 +32,9 @@ alias vvim="/bin/vim"
 alias ex="extract"
 alias grep="/bin/grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias mkdir="/usr/bin/mkdir -p"
-_scp() {
-  /usr/bin/scp $@
-}
-alias scp="_scp"
 alias glow="/bin/glow -s dark"
+alias cal="/bin/cal -m"
+alias scp="echo use sscp instead; echo"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -59,9 +57,7 @@ alias cal6="cal -mn 6"
 alias g="grep"
 
 ### newsboat
-alias blog="newsboat -u ~/.newsboat/urls-blog -c ~/.newsboat/cache-blog.db --quiet && clear"
-alias yt="newsboat -u ~/.newsboat/urls-youtube -c ~/.newsboat/cache-youtube.db --quiet && clear"
-alias pod="newsboat -u ~/.newsboat/urls-podcast -c ~/.newsboat/cache-podcast.db --quiet && clear"
+alias new="newsboat -u ~/.newsboat/urls-clean -c ~/.newsboat/cache-blog.db --quiet && clear"
 
 alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 -d ~/tmp/nb-log && clear"
 
