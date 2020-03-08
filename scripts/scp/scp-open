@@ -16,6 +16,6 @@ fi
 command -v scp >/dev/null || { echo "scp is not installed"; exit 1; }
 
 scp "k:~/$1" $HOME/tmp/
-ssh k "rm \"$1\""
+# ssh k "rm \"$1\""
 zathura "$HOME/tmp/$1"
 

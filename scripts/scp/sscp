@@ -1,0 +1,10 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ _scp <normal scp commands>
+Dump scp wrapper
+"; exit
+fi
+
+/bin/scp "$@"
+
