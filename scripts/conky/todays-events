@@ -1,18 +1,25 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ todays-events <++>
+  printf "$ todays-events
 Print todays entries in khal.
+
+Flags:
+  -r: Rightalign text
 "; exit
 fi
 
 command -v khal >/dev/null || { echo "khal is not installed"; exit 1; }
 
-khal list Today Today -f "{title} [{start-time}-{end-time}]" -df "" |
+if [ "$1" = "-r" ]; then
+  khal list Today Today -f "{title} [{start-time}-{end-time}]" -df "" -o --notstarted |
   sed "s/:00//g; s/ /_/g" |
   xargs printf "%60s\n" |
   tr "_" " " |
   grep -v "No events"
+else
+  khal list Today Today -f "[{start-time}-{end-time}] {title}" -df "" -o --notstarted
+fi
 
 exit 0
 

@@ -10,9 +10,11 @@ If no parameter given attach to the default session ($DEFAULT_SESSION).
 
 Parameters:
   [\$1]: session to attach to
+  [\$2]: command to run (only for new sessions), to be used for scripting
 
 Example:
   $ t main
+  $ t code vim
 "; exit
 fi
 
@@ -22,11 +24,16 @@ SESSION="$1"
 if [ -z "$SESSION" ]; then
   SESSION="$DEFAULT_SESSION"
 fi
+CMD="$2"
 
 if tmux list-sessions 2> /dev/null | cut -d: -f1 | grep "^$SESSION$" > /dev/null; then
   tmux -u attach -t "$SESSION"
 else
-  tmux -u new -s "$SESSION"
+  if [ -n "$CMD" ]; then
+    tmux -u new -s "$SESSION" \; send-keys "$CMD" 'Enter'
+  else
+    tmux -u new -s "$SESSION"
+  fi
 fi
 
 # -u for UTF-8 even if the correct ENV variables are missing

@@ -40,7 +40,7 @@ if [ -z "$1" ]; then
     OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
 
     printf "moving\n  $COMIC\nto\n  $OUT_FILE\n"
-    mv "$COMIC" "$OUT_FILE" 
+    mv "$COMIC" "$OUT_FILE"
 
     echo $SEPERATOR
   done
@@ -60,6 +60,5 @@ else
 fi
 
 # remove empty dirs in downloads
-ls -d ~/Downloads/*/ | while read i; do rmdir $i 2>/dev/null; done
-true
+ls -d "~/Downloads/"*/ | xargs -r rmdir --ignore-fail-on-non-empty
 

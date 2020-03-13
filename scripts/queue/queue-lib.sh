@@ -39,8 +39,9 @@ first() {
   head "$QUEUE_FILE" -n 1 2>/dev/null
 }
 remove() {
-  printf "Removed '$(first)' from the queue"
+  echo "Removed '$(first)' from the queue"
   sed "1d" -i "$QUEUE_FILE"
+  echo "Next entry is: $(first)"
 }
 add() {
   printf "$1\n" >> $QUEUE_FILE

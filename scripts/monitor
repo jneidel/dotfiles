@@ -10,7 +10,7 @@ Parameters:
   [\$1]: on|off - turn display on/off
 
 Flags:
-  -m: mirror instead of adding as 2nd monitor 
+  -m: mirror instead of adding as 2nd monitor
 
 Example:
   $ monitor off
@@ -55,8 +55,18 @@ while getopts "m" OPTION; do
 done
 
 turn_off() {
-  xrandr --output $MONITOR --off
-  echo "Turned external monitor off"
+  if [ -z "$MONITOR" ]; then
+    MONITOR="$(xrandr --listmonitors | grep -v "*" | tail -n1 | cut -d\  -f3 | cut -c2-)"
+    if [ -n "$MONITOR" ]; then
+      echo "No monitor connected. Disabling active '$MONITOR' instead."
+    fi
+  fi
+  if [ -n "$MONITOR" ]; then
+    xrandr --output $MONITOR --off
+    echo "Turned external monitor off."
+  else
+    echo "No monitor found, doing nothing."
+  fi
 }
 
 add_monitor() {

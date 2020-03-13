@@ -18,8 +18,12 @@ command -v disable-mullvad-for >/dev/null || { echo "disable-mullvad-for script 
 command -v mv-music >/dev/null || { echo "mv-music script is not in path"; exit 1; }
 
 disable-mullvad-for beet import "$@" && { # disable mullvad for import
-  echo "Removing $@"
-  rm -r "$@"
+  printf "Remove imported files? (y/N): "
+  read -r res
+  if [ "$res" = "y" ]; then
+    echo "Removing $@"
+    rm -r "$@"
+  fi
 }
 mv-music # move new albums to unheard
 

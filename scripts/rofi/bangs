@@ -52,6 +52,7 @@ urlEncode() {
 }
 
 res="$(prompt)"
+[ -z "$res" ] && exit 1
 bang="${res%% *}"
 query="${res#* }"
 query=`urlEncode "$query"`
