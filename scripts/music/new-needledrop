@@ -1,0 +1,61 @@
+#! /bin/sh
+
+LAST=3/12
+[ -n "$1" ] && LAST="$1"
+
+LOVED=PLP4CSgl7K7oo93I49tQa0TLB8qY3u7xuO
+CLASSICS=PLP4CSgl7K7or_7JI7RsEsptyS4wfLFGIN
+WORST_BEST=PLP4CSgl7K7opkZ3eKAs1J_parHzPofQH4
+THINKPIECES=PLP4CSgl7K7ortpLkSSqBxBBogWbVvfBu2
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$LAST" ]; then
+  printf "$ new-needledrop <last-date>
+Get all new needledrop videos since the passed last date.
+Videos from the following playlists (in that order):
+- Loved List
+- Classics
+- Worst to Best
+- Thinkpieces
+
+Parameters:
+  \$1: date when checked last, format can be what ever 'date -d' takes
+
+Example:
+  $ new-needledrop 3/5
+  $ new-needledrop 4/30 2>/dev/null # only show results
+"; exit
+fi
+
+command -v youtube-dl >/dev/null || { echo "youtube-dl is not installed"; exit 1; }
+
+echo "Using last date: $(date -d $LAST)" 1>&2
+LAST=$(date -d $LAST +%s)
+
+download() {
+  PLAYLIST_ID="$1"
+  youtube-dl "https://www.youtube.com/playlist?list=$PLAYLIST_ID" --get-filename -o "%(upload_date)s %(id)s %(title)s" 2>/dev/null
+}
+
+parse_vids() {
+  while read -r LINE; do
+    DATE=$(echo $LINE | awk '{ print $1 }')
+    DATE=$(date -d $DATE +%s)
+
+    TITLE="$(echo $LINE | cut -d\  -f3-)"
+    URL=$(echo $LINE | cut -d\  -f2)
+    URL="https://www.youtube.com/watch?v=$URL"
+
+    if [ "$DATE" -ge "$LAST" ]; then
+      echo "$URL $TITLE"
+    else
+      # echo "Listed all videos since last date. Exiting" 1>&2
+      exit 0
+    fi
+  done < /dev/stdin
+}
+
+download $LOVED | parse_vids
+download $CLASSICS | parse_vids
+download $WORST_BEST | parse_vids
+download $THINKPIECES | parse_vids
+
