@@ -1,0 +1,35 @@
+#! /bin/sh
+
+DEFAULT_OUTPUT="output.pdf"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ] || [ -z "$2" ]; then
+  printf "$ pdfextract <input> <page> [<output>]
+Extract one (or more) page from a pdf document.
+
+Parameters:
+  \$1: input document
+  \$2: page number, to extract multiple specify range using this format '85-88'
+  [\$3]: output doc name (pdf), defaults to $DEFAULT_OUTPUT, '.pdf' can be omitted
+
+Examples:
+  $ pdfextract issue-03-12-20.pdf 86
+  $ pdfextract zeit/issue-02-25-20.pdf 33-35 rezept
+"; exit
+fi
+
+command -v qpdf >/dev/null || { echo "<++> is not installed"; exit 1; }
+
+INPUT="$1"
+PAGE="$2"
+OUTPUT="$3"
+if [ -z "$OUTPUT" ]; then
+  OUTPUT="$DEFAULT_OUTPUT"
+else
+  if [ "${OUTPUT##*.}" != "pdf" ]; then
+    OUTPUT="$OUTPUT.pdf"
+  fi
+fi
+
+echo "Extracting page $PAGE from '$INPUT'"
+qpdf --pages "$INPUT" "$PAGE" -- "$INPUT" "$OUTPUT" && echo "Wrote to $OUTPUT"
+
