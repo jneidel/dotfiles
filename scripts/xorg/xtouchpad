@@ -1,6 +1,8 @@
 #! /bin/bash
 # source: https://unix.stackexchange.com/a/52470
 
+# Todo: merge with toggle-trackpad
+
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ xtouchpad"
   echo "Enable, disable or toggle touchpad"

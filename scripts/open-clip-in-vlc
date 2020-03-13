@@ -18,5 +18,5 @@ if [ -t 1 ]; then
   echo $CLIP_CONTENT
 fi
 
-$VLC_CMD "$CLIP_CONTENT"
+TS_SOCKET=/tmp/tsp-mpv-queue tsp mpv --profile=overlay "${@:2}" 2>/dev/null >/dev/null
 
