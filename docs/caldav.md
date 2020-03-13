@@ -113,3 +113,27 @@ longdatetimeformat = %d/%m/%Y %H:%M
 
 E.g. `khal interative` to check the calendar.
 
+## Adding a new calendar to all platforms
+
+### Radicle
+
+Create the calendar through the Radicle web interface, with you existing user.
+
+Alternatively this can be done through DAVx⁵.
+
+### vdirsyncer
+
+If the server is already setup: `vdirsyncer discover`
+
+### DAVx⁵
+
+Select your account -> CALDAV -> Options -> Refresh calendar list.
+
+Now check any new calendars you want to sync.
+
+### Simple Calendar
+
+Go into the settings -> Mangage synced calendars (under CALDAV).
+
+And toggle those you want to add.
+

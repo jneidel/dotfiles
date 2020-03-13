@@ -40,7 +40,7 @@ au filetype js,ts,javascript,typescript inoremap ,t test( "", () => {<Enter>cons
 au filetype ts,typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi
 
 "### Shell
-au filetype sh,bash,shell,zsh inoremap ,f function<Space><Space>{<Enter><++><Enter>}<Esc>02kf a
+au filetype sh,bash,shell,zsh inoremap ,f <Space>()<Space>{<Enter><++><Enter>}<Esc>2k0i
 au filetype sh,bash,shell,zsh inoremap ,o {<Enter>}<Esc>O
 au filetype sh,bash,shell,zsh inoremap ,i if [ "$" <++> ]; then<Enter><++><Enter>fi<Esc>2kf$a
 au filetype sh,bash,shell,zsh inoremap ,c case $ in<Enter><++>) <++>;;<Enter><++>) <++>;;<Enter>*) <++>;;<Enter>esac<Esc>4k0f$a
@@ -76,7 +76,7 @@ au filetype tex inoremap ,br <Enter>\medskip<Enter>
 "#### lists
 au filetype tex inoremap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
 au filetype tex inoremap ,ol \begin{enumerate}<Enter>\item <Enter>\end{enumerate}<Enter><++><Esc>2kA
-au filetype tex inoremap ,i \item 
+au filetype tex inoremap ,i \item
 au filetype tex inoremap ,t \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
 
 "#### math
@@ -89,5 +89,5 @@ au filetype tex inoremap ,aa \begin{align*}<Enter><Enter>\end{align*}<Esc>kA
 au filetype tex inoremap ,ae \begin{eqnarray*}<Enter><Enter>\end{eqnarray*}<Esc>kA
 
 "### vim borked
-au filetype vim inoremap ,o {\<Enter>}<Esc>i 
+au filetype vim inoremap ,o {\<Enter>}<Esc>i
 

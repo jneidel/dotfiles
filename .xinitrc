@@ -35,7 +35,7 @@ dunst &
 /bin/start-pulseaudio-x11 && mpd &
 
 ## gui application autostart
-kitty ~/scripts/tmux/t &
+kitty ~/scripts/tmux/t main vim &
 # firefox-nightly &
 brave &
 signal-desktop &
