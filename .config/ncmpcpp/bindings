@@ -77,10 +77,12 @@ def_key "v"
 
 def_key "f1"
   show_help
-def_key "="
+def_key "t"
   show_clock
 def_key "@"
   show_server_info
+def_key "L"
+  show_lyrics
 
 ## playback
 def_key "space"
