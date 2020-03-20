@@ -12,6 +12,7 @@
   * [tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
   * [vim (terminal editor)](#vim-terminal-editor)
   * [git (version control)](#git-version-control)
+  * [mpd + ncmpcpp (music player)](#mpd--ncmpcpp-music-player)
 - [GUI apps](#gui-apps)
   * [kitty (terminal)](#kitty-terminal)
   * [mpv (video/audio player)](#mpv-videoaudio-player)
@@ -143,6 +144,15 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 - [global config](.gitconfig)
 - [global gitignore](.gitignore-global)
+
+### mpd + ncmpcpp (music player)
+
+Music player daemon and its client.
+
+- [mpd configs](.config/mpd)
+- [ncmpcpp configs](.config/ncmpcpp)
+
+![](images/ncmpcpp.png)
 
 ## GUI apps
 ### kitty (terminal)
@@ -300,6 +310,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | SoundCloudOG | Filter reposts out of your soundcloud stream | [chrome](https://chrome.google.com/webstore/detail/soundcloudog/enegaliobdmmnlcgdfljpebckdfbgcai) |
 | Universal Bypass | Bypass annoying link shorteners | [firefox](https://addons.mozilla.org/en-US/firefox/addon/universal-bypass) [chrome](https://chrome.google.com/webstore/detail/universal-bypass/aihomhdbhpnpmcnnbckjjcebjoikpihj) [git](https://github.com/timmyrs/Universal-Bypass) |
 | Dict.cc Translation | Quick translations | [firefox](https://addons.mozilla.org/firefox/addon/dictcc-translation/) [git](https://github.com/Lusito/dict.cc-translation) |
+| Block Site | Block domains in the browser | [chrome](https://chrome.google.com/webstore/detail/block-site/nkedbnokglppcmiencngilkkhhnpcfjb) |
 
 <details>
 <summary><strong>Maybes (not in current use)</strong></summary>
