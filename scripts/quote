@@ -1,0 +1,14 @@
+#! /bin/sh
+
+QUOTE_JSON=~/code/notes/data/quotes.json
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ quote
+Get a random quote from $QUOTE_JSON
+"; exit
+fi
+
+command -v json-do >/dev/null || { echo "json-do script is not in PATH"; exit 1; }
+
+json-do "const q = data[Math.floor(Math.random() * Math.floor(data.length-1))]; console.log( \`\${q.quote}\${ q.author ? \` - \${q.author}\` : '' }\` )" < $QUOTE_JSON
+

@@ -1,4 +1,5 @@
 #! /bin/bash
+# Todo: fix updatecookie
 
 TMP_DIR=~/tmp
 TMP_COOKIE=$TMP_DIR/.spc
@@ -62,12 +63,12 @@ FILE="$TMP_DIR/stundenplan-$YEAR-$WEEK.pdf"
 
 if [ ! -e "$FILE" ]; then
   WEEK_YEAR=$WEEK"_"$YEAR
-  curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE" > "$FILE"
+  curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE; download-complete=true" > "$FILE"
 
   if cat "$FILE" | grep "Die aufgerufene Funktion kann aufgrund von fehlenden Zugriffsrechten nicht" >/dev/null; then
     echo "Updating session cookie"
     SESSION_COOKIE=$(updateCookie)
-    curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE" > "$FILE"
+    curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE; download-complete=true" > "$FILE"
   fi
 fi
 

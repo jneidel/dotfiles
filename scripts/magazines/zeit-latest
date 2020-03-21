@@ -11,5 +11,6 @@ fi
 
 command -v $VIEWER >/dev/null || { echo "$VIEWER is not installed"; exit 1; }
 
-/bin/ls -t $DIR/* | head -n 1 | xargs $VIEWER
+/bin/ls -t $DIR/* | head -n 1 | xargs $VIEWER 2>/dev/null &
+sleep 1 && i3-msg fullscreen toggle >/dev/null
 

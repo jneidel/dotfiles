@@ -1,4 +1,5 @@
 #! /bin/sh
+# Todo: handle ' in dmenu prompt
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ bangs
@@ -24,7 +25,7 @@ tpb https://tpb.louifox.house/search/%s/0/99/0
 tpb2 https://www.everybabes.com/search.php?q=%s&page=0&orderby=99
 tpb3 https://knaben.ru/s/?q=%s&page=0&orderby=99
 nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
-1337x https://1337x.to/search/%s/1
+1337x https://1337x.to/search/%s/1/
 t2 https://www.torrentz2.eu/search?f=%s
 mr https://www.mangareader.net/search/?w=%s&rd=0&status=0&order=0&genre=&p=0
 ml https://manga4life.com/search/?sort=s&desc=false&name=%s
@@ -35,6 +36,7 @@ abb http://audiobookbay.nl/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r5
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
+bc https://bandcamp.com/search?q=%s
 EOF
 }
 

@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ chefkoch <url>
@@ -52,7 +52,7 @@ if curl -Ss "$LINK" > $HTML; then
 
   printf "**$TITLE**
 
-![]($IMG) 
+![]($IMG)
 
 $ZUTATEN
 

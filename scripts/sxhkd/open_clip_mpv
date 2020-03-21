@@ -1,7 +1,6 @@
 #! /bin/sh
 
 CLIP_CMD=~/scripts/get-clip
-VLC_CMD="vv 250"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ open-in-vlc"
@@ -18,5 +17,5 @@ if [ -t 1 ]; then
   echo $CLIP_CONTENT
 fi
 
-TS_SOCKET=/tmp/tsp-mpv-queue tsp mpv --profile=overlay "${@:2}" 2>/dev/null >/dev/null
+TS_SOCKET=/tmp/tsp-mpv-queue tsp mpv --profile=overlay "$CLIP_CONTENT" 2>/dev/null >/dev/null
 

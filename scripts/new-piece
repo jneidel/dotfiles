@@ -1,0 +1,54 @@
+#! /bin/sh
+
+MANGA=one-piece
+MANGA_DIR=~/manga/$MANGA
+BACKUP=~/ct/dont_touch/$MANGA
+BATCH_SIZE=17
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ new-piece
+Transfer a new batch of $MANGA to $MANGA_DIR
+"; exit
+fi
+
+command -v sqlite3 >/dev/null || { echo "sqlite3 is not installed"; exit 1; }
+
+DUMP=$(mktemp)
+sqlite3 ~/manga/.yacreaderlibrary/library.ydb .dump > $DUMP
+
+printf "Are you sure? (y/N): "
+read -r res
+[ "$res" != "y" ] && { echo "Exiting"; exit; }
+
+is_read() {
+  ID="$1"
+
+  fgrep "comic_info VALUES($ID" $DUMP | awk -F, '{ print $29 }'
+}
+
+for line in $(grep -Po "\(.+?$MANGA-\d+" "$DUMP"); do
+  ID=$(echo $line | cut -d, -f3)
+  CHAPTER=$(echo $line | rev | cut -c-3 | rev)
+
+  if [ `is_read $ID` -lt 1 ]; then
+    CHAPTER=$(($CHAPTER-1))
+    break
+  fi
+done
+
+echo "Last read chapter was: $CHAPTER"
+
+transfer() {
+  START=$(($1+1))
+  END=$(($START+$BATCH_SIZE))
+
+  transfer_list() {
+    for i in `seq $START 1 $END`; do echo "$BACKUP/$MANGA-$i.cbz"; done | tr "\n\r" " "
+      # | xargs -r ls -la # test if the files exist
+  }
+
+  cp -v $(transfer_list) $MANGA_DIR
+}
+
+transfer $CHAPTER
+

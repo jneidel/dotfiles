@@ -1,0 +1,18 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ figlet-clock
+Print a hour:minute:seconds clock using figlet
+
+Requires figlet-fonts package
+"; exit
+fi
+
+command -v figlet >/dev/null || { echo "figlet is not installed"; exit 1; }
+
+SPACE_ABOVE=$(( ( ( $(tput lines) - 16 ) /2 ) -2 ))
+seq $SPACE_ABOVE | xargs -Iz echo ""
+
+figlet -c -f doh -t $(date +%H:%M:%S)
+# figlet -f univers -w 180 $(date +%H:%M:%S)
+

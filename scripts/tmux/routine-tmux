@@ -12,20 +12,21 @@ cleanup() {
   # cleanup the env before and after
   tmux kill-session -t routine
 }
-trap cleanup EXIT
 
-cleanup
+cleanup # pre-start
+trap cleanup EXIT # pre-exit
+
 tmux -u new-session -s routine \; \
   send-keys "backlight max" "Enter" \; \
   new-window -n "meditation" -c "$HOME/ct/Headspace" "exec lf" \; \
   kill-pane -t 1 \; \
   move-window -s 2 -t 1 \; \
   new-window -n "affirmations" -c "/tmp" "exec vim $HOME/code/notes/affirmations.md" \; \
-  new-window -n "viz" -c "$HOME" "exec watch -t -n 1000 'figlet Visualizations'" \; \
-  new-window -n "music" "exec ncmpcpp" \; \
+  new-window -n "viz" -c "$HOME" "exec watch -t -n 100 'figlet Visualizations'" \; \
+  new-window -n "music" "exec ~/scripts/mpd/ncmpcpps -s playlist" \; \
   new-window -n "reading notes" -c "$HOME/code/notes/books" "exec vim" \; \
   new-window -n "book" "exec epr \"$(~/scripts/queue/bookq)\"" \; \
-  new-window -n "writing" "exec watch -t -n 10000 'figlet Writing'" \; \
+  new-window -n "writing" "exec watch -t -n 100 'figlet Writing'" \; \
   new-window -n "c3" "exec ~/scripts/bluetooth/charge3" \; \
   select-window -t 6 \; \
   select-window -t 5 \; \

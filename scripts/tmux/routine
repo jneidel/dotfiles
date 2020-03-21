@@ -8,6 +8,10 @@ fi
 
 command -v kitty >/dev/null || { echo "kitty is not installed"; exit 1; }
 
+~/scripts/sxhkd/mac/backlight max
+~/scripts/sxhkd/backlight max
+
 cd ~/code/notes
 kitty ~/scripts/tmux/routine-tmux &
+sleep 2 && i3-msg fullscreen
 

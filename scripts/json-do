@@ -1,0 +1,39 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ json-do [-cl] '<js-code>' < <file>.json
+Lets you run js code on a json data set exposed as the 'data' variable.
+
+Flags:
+  -cl: wrap \$2 in console.log
+
+Parameters:
+  \$1: js code to run
+
+Example:
+  $ json-do 'console.log(data.length)' < quotes.json
+  $ json-do -cl 'data.filter( d=>d.author )' < quotes.json
+  $ json-do \"const q = data[Math.floor(Math.random() * Math.floor(data.length-1))]; console.log( \\\`\\\${q.quote}\\\${ q.author ? \\\` - \\\${q.author}\\\` : '' }\\\` )\\\" < quotes.json
+"; exit
+fi
+
+command -v node >/dev/null || { echo "node is not installed"; exit 1; }
+
+CODE="$1"
+if [ "$1" = "-cl" ]; then
+  CODE="console.log( $2 )"
+fi
+
+TMP=$(mktemp)
+
+printf "
+const fs = require( 'fs' );
+const stdinBuffer = fs.readFileSync(0); // STDIN_FILENO = 0
+const data = JSON.parse( stdinBuffer.toString() );
+
+$CODE
+" > $TMP
+
+chmod +x $TMP
+node $TMP < /dev/stdin
+
