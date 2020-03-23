@@ -2,8 +2,10 @@ New tunnel state: Connected
 New tunnel state: Disconnected
 wlp3s0.: Activation: successful
 wlp3s0.: state change: deactivating -> disconnected
+wlp4s0.: Activation: successful
+wlp4s0.: state change: deactivating -> disconnected
 NetworkManager state is now DISCONNECTED
-NetworkManager state is now CONNECTED_LOCAL 
+NetworkManager state is now CONNECTED_LOCAL
 NetworkManager state is now CONNECTED_GLOBAL
 NetworkManager state is now CONNECTED_SITE
 NetworkManager state is now CONNECTING
