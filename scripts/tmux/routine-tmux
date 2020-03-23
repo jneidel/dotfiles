@@ -8,14 +8,6 @@ fi
 
 command -v tmux >/dev/null || { echo "tmux is not installed"; exit 1; }
 
-cleanup() {
-  # cleanup the env before and after
-  tmux kill-session -t routine
-}
-
-cleanup # pre-start
-trap cleanup EXIT # pre-exit
-
 tmux -u new-session -s routine \; \
   send-keys "backlight max" "Enter" \; \
   new-window -n "meditation" -c "$HOME/ct/Headspace" "exec lf" \; \

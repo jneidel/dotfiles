@@ -43,6 +43,7 @@ alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
 alias c3="charge3"
 alias sc="shellcheck"
+alias to="todays-events"
 
 ### misc
 function dict {
@@ -89,6 +90,7 @@ alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
 ## tui
 alias job="taskell ~/code/notes/taskell/job-applications.md 2> /dev/null"
 alias flat="taskell ~/code/notes/taskell/flat-applications.md 2> /dev/null"
+alias sec="watch -t -n 1 figlet-clock"
 
 ## light versions
 alias vim-light="vim -c 'source ~/.vim/colors/light.vim'"

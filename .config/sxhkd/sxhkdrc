@@ -86,7 +86,7 @@ super + n
 super + y
   ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
 super + v
-  ~/scripts/open-clip-in-vlc
+  ~/scripts/sxhkd/open_clip_mpv
 super + o
   ~/scripts/open-clip-in-browser
 super + a

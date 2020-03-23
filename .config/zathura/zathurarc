@@ -1,1 +1,14 @@
 set selection-clipboard clipboard
+set scroll-page-aware true
+set guioptions v
+set adjust-open width
+set filemonitor noop
+
+unmap d
+
+map e scroll half-up
+map d scroll half-down
+map f scroll right
+
+map u scroll half-up
+map i scroll half-down

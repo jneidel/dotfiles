@@ -1,9 +1,19 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ ipa"
-  echo "Get current ip address"
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ ipa
+Get current ip address
+Gets the first ipv4 entry in 'ip addr' that is not loopback or tun
+Returns localhost if offline
+EOF
   exit
 fi
 
-ip addr | egrep "inet\ .+wlp" | awk '{ print $2 }' | cut -d "/" -f 1
+ipa() {
+  ip a | fgrep "inet " | \
+    grep -ve " tun" -e " lo" | head -n1 | \
+    awk '{ print $2 }' | cut -d"/" -f1
+}
+
+[ -n "$(ipa)" ] && ipa || echo "localhost"

@@ -1,0 +1,25 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ diff-unheard
+Print missing albums in the music/unheard directory between the pi and local fs
+EOF
+  exit
+fi
+
+TMP_LOCAL=$(mktemp)
+TMP_PI=$(mktemp)
+
+# echo "Using temp files: local - $TMP_LOCAL pi - $TMP_PI\n"
+
+/bin/ls ~/ct/music/unheard/**/** -D | fgrep : | grep -oP 'unheard/\K.+$' | cut -d: -f1 > $TMP_LOCAL
+ssh pi "ls ~/music/unheard/**/** -D | fgrep : | grep -oP 'unheard/\K.+$' | fgrep / | cut -d: -f1" > $TMP_PI
+
+echo "Missing on local:"
+grep -vxFf $TMP_LOCAL $TMP_PI
+echo ""
+
+echo "Missing on pi:"
+grep -vxFf $TMP_PI $TMP_LOCAL
+

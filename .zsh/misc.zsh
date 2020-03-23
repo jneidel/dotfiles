@@ -10,6 +10,8 @@ alias colortest2="colortest -w -r -s | grep / --color=never L"
 alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
 
+alias relax="mpvo 'https://www.youtube.com/watch?v=5qap5aO4i9A'"
+
 ## previous command hotkeys
 # print previous command but only the first nth arguments
 # see: https://github.com/gotbletu/shownotes/blob/master/bang_previous_commands_hotkeys.md

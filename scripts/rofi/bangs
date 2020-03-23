@@ -37,6 +37,7 @@ nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r5
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
+d https://www.dict.cc/?s=%s
 EOF
 }
 
@@ -57,10 +58,11 @@ res="$(prompt)"
 [ -z "$res" ] && exit 1
 bang="${res%% *}"
 query="${res#* }"
+[ "$query" = "$bang" ] && query=""
 query=`urlEncode "$query"`
 
-if bangList | grep "$bang " >/dev/null; then
-  bangList | grep "$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r $BROWSER
+if bangList | grep "^$bang " >/dev/null; then
+  bangList | grep "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r $BROWSER
 else
   $BROWSER "https://duckduckgo.com/?q=!$bang%20$query"
 fi

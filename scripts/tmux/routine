@@ -12,6 +12,17 @@ command -v kitty >/dev/null || { echo "kitty is not installed"; exit 1; }
 ~/scripts/sxhkd/backlight max
 
 cd ~/code/notes
-kitty ~/scripts/tmux/routine-tmux &
+{
+  kitty ~/scripts/tmux/routine-tmux
+  # cleanup after terminal has been killed
+  tmux kill-session -t routine
+  dunst &
+} &
+
 sleep 2 && i3-msg fullscreen
+
+kill $(pidof dunst)
+{ # restart dunst after an hour and a half
+  sleep 5400 && dunst &
+} &
 

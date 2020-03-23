@@ -1,0 +1,24 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ zeit-extract PAGE
+Extract page from latest zeit.
+
+
+Parameters:
+  \$1: page to be extracted, see 'pdfextract --help' for help
+
+Example:
+  $ zeit-extract 77
+EOF
+  exit
+fi
+
+command -v pdfextract >/dev/null || { echo "pdfextract script is not in PATH"; exit 1; }
+
+PAGE="$1"
+FILE="$(ls -t ~/ct/zeit/* | head -n1)"
+OUTPUT="$HOME/Downloads/zeit-extract-$(date +%d-%m).pdf"
+
+pdfextract "$FILE" "$PAGE" "$OUTPUT"

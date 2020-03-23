@@ -203,6 +203,12 @@ nnoremap <C-s> :%s//g<Left><Left>
 " sort a block of text
 nnoremap <leader>S {jv}k$:!sort<CR>
 
+" open fzf
+nnoremap <A-f> :F<CR>
+
+" open buffer menu
+nnoremap <A-b> :b<Space>
+
 " write file after losing focus, or leaving the window
 au FocusLost,WinLeave * :silent! w " Doesnt trigger on i3 windows
 " read file after regaining focus, entering the buffer

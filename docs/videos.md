@@ -140,6 +140,8 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - Why you should care about climate change: [The Apocalypse](https://www.youtube.com/watch?v=S6GodWn4XMM)
 - How capitalism is the root of many problems: What's Wrong with Capitalism [Part 1](https://www.youtube.com/watch?v=gJW4-cOZt8A) [Part 2](https://www.youtube.com/watch?v=AR7ryg1w_IQ)
 - An overview of how americas systemic racism is alive and well today: [America: Still Racist](https://www.youtube.com/watch?v=GWwiUIVpmNY)
+- How cars increase of dependency of the system and limit you in your personal
+  freedom: [Roads should be abolished!](https://www.youtube.com/watch?v=geBQNOid_7A)
 
 ### Understanding other people
 

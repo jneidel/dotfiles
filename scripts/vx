@@ -20,7 +20,8 @@ FILE="$1"
 echo "#! /bin/sh
 
 if [ \"\$1\" = \"--help\" ] || [ \"\$1\" = \"-h\" ] || [ \"\$1\" = \"help\" ]; then
-  printf \"$ $FILE <++>
+  cat << EOF
+$ $FILE <++>
 <++>
 
 Parameters:
@@ -29,7 +30,8 @@ Parameters:
 
 Example:
   $ $FILE <++>
-\"; exit
+EOF
+  exit
 fi
 
 command -v <++> >/dev/null || { echo \"<++> is not installed\"; exit 1; }

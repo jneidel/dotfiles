@@ -18,10 +18,11 @@ cd $DIR/..
 mkdir -p ~/.zsh ~/.z
 cp -r .zsh/oh-my-zsh.sh .zsh/lib .zsh/cobalt2.zsh-theme ~/.zsh/
 cp other/pi-zshrc ~/.zshrc
+sed -i "s|\$\" # CHANGE PROMPT HERE|pi\"|" ~/.zsh/cobalt2.zsh-theme
 
 echo "Copy mpd configs"
 cd $DIR/..
-mkdir -p ~/.config/mpd ~/.config/ncmpcpp
-cp other/pi-mpd.conf ~/.config/mpd/mpd.conf
+mkdir -p ~/.config/ncmpcpp
+cp other/pi-mpd.conf /etc/mpd.conf
 cp .config/ncmpcpp/config .config/ncmpcpp/bindings ~/.config/ncmpcpp/
 

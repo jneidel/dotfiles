@@ -7,20 +7,22 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 Print todays entries in khal.
 
 Flags:
-  -r: Rightalign text
+  -r: Rightalign text, conky output
 "; exit
 fi
 
 command -v khal >/dev/null || { echo "khal is not installed"; exit 1; }
 
-if [ "$1" = "-r" ]; then
+if [ "$1" = "-r" ]; then # for conky
   khal list Today Today -f "{title} [{start-time}-{end-time}]" -df "" -o --notstarted -a $MAIN |
   sed "s/:00//g; s/ /_/g" |
   xargs printf "%60s\n" |
   tr "_" " " |
   grep -v "No events"
-else
+else # for shell
   khal list Today Today -f "[{start-time}-{end-time}] {title}" -df "" -o --notstarted
+  # Todo: parse line for line, to check if its in the past (done)
+  #   | while loop with date parsing, converting it to unix time and comparing them
 fi
 
 exit 0
