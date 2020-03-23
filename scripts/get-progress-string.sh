@@ -12,8 +12,8 @@ STATUS="$4" # The current progress status in percent
 # \\\033[1;34m
 
 # calculate how many items need to be filled and not filled
-FILLED_ITEMS=$(echo "((${ITEMS} * ${STATUS})/100 + 0.5) / 1" | bc)
-NOT_FILLED_ITEMS=$(echo "$ITEMS - $FILLED_ITEMS" | bc)
+FILLED_ITEMS=$((${ITEMS} * ${STATUS}/100))
+NOT_FILLED_ITEMS=$(($ITEMS - $FILLED_ITEMS))
 
 # Assemble the bar string
 msg=$(printf "%${FILLED_ITEMS}s" | sed "s| |${FILLED_ITEM}|g")

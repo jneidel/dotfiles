@@ -1,5 +1,14 @@
 #! /bin/sh
 
+DIR=/sys/class/backlight
+
+case "$(cat /etc/hostname)" in
+  jneidel-x240) ARCH=intel_backlight ;;
+  jneidel-e495) ARCH=amdgpu_bl0 ;;
+  *) echo "Hostname not configured"; exit 1 ;;
+esac
+
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ backlight <command>
 Interact with the backlight.
@@ -18,19 +27,19 @@ Example:
   exit
 fi
 
-FILE=/sys/class/backlight/intel_backlight/brightness
+FILE=$DIR/$ARCH/brightness
 # you might need to run
 #   sudo chown $USER
 # on the brightness file, otherwise you wont be able to write it,
 # not even with sudo
-MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness) # 851 on x240
+MAX=$(cat $DIR/$ARCH/max_brightness) # 851 on x240
 MIN=10
 
 set_brightness() {
   if [ -n "$1" ] && [ "$1" -gt -1 ] && [ "$1" -lt "$(($MAX+1))" ]; then
     echo $1 > $FILE
   else
-    echo "Invalid number passed to set" 
+    echo "Invalid number passed to set"
     echo "It needs to be between 0 and $MAX"
     exit 1
   fi
@@ -42,7 +51,7 @@ get_brightness() {
 
 percent() {
   if [ -z "$1" ]; then
-    echo "No argument passed to percent" 
+    echo "No argument passed to percent"
     exit 1
   elif [ "$(echo $1 | cut -c 1)" = "+" ]; then
     PERCENTAGE=$(echo $1 | cut -d + -f 2)
@@ -69,7 +78,7 @@ percent() {
       exit 1
     fi
 
-    RES=$(echo "$MAX*$PERCENTAGE/100" | bc | awk '{printf "%f", $0}' | cut -d . -f 1)
+    RES=$(echo $(($MAX*$PERCENTAGE/100)) | awk '{printf "%f", $0}' | cut -d . -f 1)
     set_brightness $RES
   fi
 }

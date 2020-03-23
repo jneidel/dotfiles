@@ -61,16 +61,11 @@ XF86AudioPrev
 XF86Tools
   ~/scripts/sxhkd/control-mpd.sh prev
 
-## mac brightness
+## brightness
 XF86MonBrightnessUp
-  ~/scripts/sxhkd/mac/backlight p +10
+  ~/scripts/sxhkd/backlight p +10
 XF86MonBrightnessDown
-  ~/scripts/sxhkd/mac/backlight p -10
-
-XF86KbdBrightnessUp
-  ~/scripts/sxhkd/mac/keyboard-backlight p +1
-XF86KbdBrightnessDown
-  ~/scripts/sxhkd/mac/keyboard-backlight p -1
+  ~/scripts/sxhkd/backlight p -10
 
 ## screenshot
 # command copied from "alias scrot" in ~/.zsh/apps.zsh
