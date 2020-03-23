@@ -22,6 +22,7 @@ dash Fast shell
 
 [sxhkd]
 sxhkd Hotkey assignment
+bc Calculator
 
 [lemonbar]
 lemonbar-xft-git Customizable bar
