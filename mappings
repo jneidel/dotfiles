@@ -198,3 +198,6 @@ create .config/lf
 [yay]
 create .config/yay
 .config/yay/config.json
+
+[wget]
+.config/wgetrc
