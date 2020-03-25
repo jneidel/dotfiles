@@ -73,6 +73,8 @@ create .config/sxhkd
 [pulseaudio]
 create .config/pulse
 .config/pulse/default.pa
+create .config/ncpamixer
+.config/ncpamixer/ncpamixer.conf
 
 [alsa]
 .asoundrc
@@ -110,7 +112,8 @@ create .config/htop
 .eslintrc-ts
 
 [npm]
-.npmrc
+create .config/npm
+.config/npm/npmrc
 
 [zeal]
 create .config/Zeal
