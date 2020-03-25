@@ -102,8 +102,7 @@ create .config/htop
 ## apps
 ### development
 [git]
-.gitconfig
-.gitignore-global
+.config/git
 
 #### node
 [eslint]

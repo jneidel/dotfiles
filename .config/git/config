@@ -3,13 +3,13 @@
   email = jneidel@jneidel.com
   signingkey = B29E6A7A7DFD16FA
 [core]
-  excludesfile = ~/.gitignore-global
+  excludesfile = ~/.config/git/ignore
 [alias]
   s = status
   b = branch
   l = log --oneline --graph --decorate
   ref = reflog
 [commit]
-  gpgsign = true
+  ; gpgsign = true
   # How to setup commit signing:
   # https://help.github.com/en/articles/managing-commit-signature-verification
