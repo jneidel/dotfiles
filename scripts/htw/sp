@@ -1,7 +1,7 @@
 #! /bin/bash
 # Todo: fix updatecookie
 
-TMP_DIR=~/tmp
+TMP_DIR=~/.cache
 TMP_COOKIE=$TMP_DIR/.spc
 
 # Fill these in:
