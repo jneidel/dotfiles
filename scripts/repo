@@ -6,8 +6,10 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-[ -e "package.json" ] \
-  && $BROWSER $(jq ".repository" < package.json | sed -e 's/"//g' | awk '{ printf "https://github.com/"$1 }') \
-  || echo package.json does not exist in this directory
-
+if [ -e "package.json" ]; then
+  LINK="$(jq ".repository" < package.json | sed -e 's/"//g' | awk '{ printf "https://github.com/"$1 }')"
+  $BROWSER "$LINK" >/dev/null 2>&1 &
+else
+  echo package.json does not exist in this directory
+fi
 

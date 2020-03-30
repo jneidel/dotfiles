@@ -1,4 +1,5 @@
 #! /bin/sh
+# Todo: optimize performance by replacing pulsemixer calls
 
 MAX_VOL=130
 
@@ -23,12 +24,12 @@ command -v pulsemixer >/dev/null || { echo "pulsemixer is not installed"; exit 1
 
 COMMAND="$1"
 
-MPD=~/scripts/mpd
-if [ "$(cat $MPD/mpd-server-status)" -gt 0 ]; then
-  if $MPD/is-mpd-playing; then # nested for performance
-    echo ok # control mpd server instead of local volume as long as music is playing
-  fi
-fi
+# MPD=~/scripts/mpd
+# if [ "$(cat $MPD/mpd-server-status)" -gt 0 ]; then
+#   if $MPD/is-mpd-playing; then # nested for performance
+#     echo ok # control mpd server instead of local volume as long as music is playing
+#   fi
+# fi
 
 if [ "$COMMAND" = "mute" ]; then
   pulsemixer --toggle-mute

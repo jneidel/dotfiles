@@ -29,8 +29,8 @@ function colorls() {
 }
 
 alias ls="exa --git-ignore"
-alias l="exa -1a" # "ls -1aF | filterls | colorls" # all files
-alias la="exa -1 --git-ignore" # "ls -1FG"    # no . files
+alias l="exa -1" # "ls -1aF | filterls | colorls" # all files
+alias la="exa -1a --git-ignore" # "ls -1FG"    # no . files
 alias ld="exa -1D" # "ls -1Gd */" # only dirs
 alias li="exa -lah --git" #"ls -lahoFG" # show permissions
 

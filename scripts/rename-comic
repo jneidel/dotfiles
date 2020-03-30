@@ -3,7 +3,7 @@
 # Todo: handle directories in download (no errors, rmdir them after moving)
 # Todo: refactor code inside loops into a function
 
-COMIC_DIR=~/comics
+COMIC_DIR=~/ct/comics
 SEPERATOR="-----------------------------------------------------------"
 DEFAULTS="$(ls $HOME/Downloads/*.cbr $HOME/Downloads/*.cbz $HOME/Downloads/**/*.cbr $HOME/Downloads/**/*.cbz 2> /dev/null)" # suppress 'no matches found'
 

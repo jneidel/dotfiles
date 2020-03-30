@@ -1,5 +1,7 @@
 #! /bin/bash
 # Todo: fix updatecookie
+# Todo: flag to force refresh given file
+# Todo: if local, and not refresh, dont fetch cookie
 
 TMP_DIR=~/.cache
 TMP_COOKIE=$TMP_DIR/.spc

@@ -57,12 +57,26 @@ export LESS_TERMCAP_ue=$'\e[0m'
 ### Application options
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
 
+### Config dirs
+# reduce number of files in the home dir
+# see: https://wiki.archlinux.org/index.php/XDG_Base_Directory
+# see: https://github.com/LukeSmithxyz/voidrice/blob/master/.profile
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CACHE_HOME=$HOME/.cache
+export LESSHISTFILE="-"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export HISTFILE="$XDG_DATA_HOME/zsh/history"
+
 ## User specific
 export KEYID=B29E6A7A7DFD16FA # GPG keyid
 
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc
-if [[ "$(tty)" = "/dev/tty1" ]]; then
-  pgrep i3 || startx
+if [ "$(tty)" = "/dev/tty1" ]; then
+  pgrep -x Xorg >/dev/null || startx
 fi
+
 

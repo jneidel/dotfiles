@@ -64,6 +64,10 @@ cmd broot_jump ${{
   /bin/lf -remote "send $id cd '$res'"
 }}
 
+cmd gimp ${{
+  gimp "$f" >/dev/null 2>&1 &
+}}
+
 ## bindings
 ### remove defaults
 map m
@@ -85,6 +89,7 @@ map m massmove
 map d mkdir
 map f broot_jump
 map . set hidden!
+map p gimp
 
 ### jump - cd to dirs
 map gd cd ~/Downloads
@@ -94,3 +99,4 @@ map gb cd ~/ct/books
 map gc cd ~/ct
 map gz cd ~/ct/zeit
 map gn cd ~/code/notes
+map gp cd ~/projects

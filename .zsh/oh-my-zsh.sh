@@ -7,4 +7,4 @@
 autoload -U compaudit compinit
 
 # Ignore insecure files and directories, -u to enable
-compinit -i -d "~/tmp/.zcompdump"
+compinit -i -d ~/.cache/zsh/zcompdump-$ZSH_VERSION

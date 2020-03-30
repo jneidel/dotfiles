@@ -1,6 +1,6 @@
 #! /bin/sh
 
-MANGA_DIR=~/manga
+MANGA_DIR=~/ct/manga
 YAC_DB_FILE=$MANGA_DIR/.yacreaderlibrary/library.ydb
 UPDATES=$MANGA_DIR/updates
 
@@ -41,7 +41,7 @@ cat "$UPDATES" | while read LINE; do
   #   sqlite3 <yacreader-db-file>
   #     .tables
   #     .schema comic
-  #     .schema comic_info 
+  #     .schema comic_info
 
   if echo "$READ" | fgrep "read BOOLEAN DEFAULT" > /dev/null; then
     exit # otherwise -gt 0 goes haywire

@@ -175,6 +175,7 @@ au VimLeave * :call MakeSession()
 " Save history/registers after :q session
 set viminfo=%,'20,<100,:20
 " set viminfo=%,'50,\"100,:100,n~/.vim/tmp/viminfo
+set viminfofile=.vim/tmp/viminfo
 
 " Enable folding
 " Set foldmethod=snytax if current language has fold support

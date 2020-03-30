@@ -1,8 +1,13 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ ! -e "$1" ]; then
-  printf "$ format-lsf-ics <++>
-<++>
+  printf "$ format-lsf-ics LSF_Plan.ics
+Cleanup/format lecture ics file from lsf.htw-berlin.de
+
+1. Shorten SUMMARY
+  from: B12Netzwer - B12.1 Netzwerke (SL) (Seide)
+  to:   B12Netzwer (Seide)
+2. Move LOCATION tag into the DESCRIPTION
 
 Parameters:
   \$1: LSF-Plan.ics file to format
@@ -20,7 +25,7 @@ FILE="$1"
 # cleanup summary
 cat "$FILE" | fgrep "SUMMARY" | while read LINE; do {
   TITLE="$(echo $LINE | cut -d: -f2 | cut -d- -f1 | sed 's|[[:space:]]$||')";
-  
+
   UEBUNG="";
   if echo $LINE | fgrep "(Ü)" >/dev/null; then
     UEBUNG="(Ü) ";

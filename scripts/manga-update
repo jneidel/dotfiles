@@ -1,12 +1,11 @@
-#! /bin/bash
+#! /bin/sh
 
-OUT=~/manga/updates
+OUT=~/ct/manga/updates
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ manga-update"
   echo "Run mangareader-dl update and direct its output to $OUT"
   exit
 fi
 
 mangareader-dl --debug update --silent | sed -e 's/^[[:space:]]*//' 1>> $OUT
-

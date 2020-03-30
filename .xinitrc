@@ -13,7 +13,7 @@ setxkbmap -option caps:escape &
 #sudo chown jneidel /sys/class/leds/smc::kbd_backlight/brightness
 #sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
 
-# keyboard repeat
+# set higher keyboard repeat
 xset r rate 185 100 &
 # lock screen
 xautolock -time 120 -locker blurlock &
@@ -46,7 +46,7 @@ signal-desktop &
   # mpd cover conky
   # ~/scripts/mpd/local-cover &
   # wallpaper
-  nitrogen --restore &
+  nitrogen --restore & # replace with xwallpaper --zoom FILE
 } &
 
 # status bar

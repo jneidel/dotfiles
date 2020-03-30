@@ -35,6 +35,7 @@ alias mkdir="/usr/bin/mkdir -p"
 alias glow="/bin/glow -s dark"
 alias cal="/bin/cal -m"
 alias scp="echo use sscp instead; echo"
+alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -58,12 +59,10 @@ alias cal6="cal -mn 6"
 alias g="grep"
 
 ### newsboat
-alias new="newsboat -u ~/.newsboat/urls-clean -c ~/.newsboat/cache-blog.db --quiet && clear"
-
-alias nbtest="newsboat -u ~/.newsboat/urls-blog -c ~/tmp/cache-blog.db --quiet -l 6 -d ~/tmp/nb-log && clear"
-
+alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
 alias q="podqueue"
 alias nbd="podboat --autodownload"
+alias podboat="/bin/podboat -a"
 
 ### players
 alias n="ncmpcpps"

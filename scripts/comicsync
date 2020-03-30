@@ -1,6 +1,6 @@
 #! /bin/sh
 
-COMIC_DIR=~/comics
+COMIC_DIR=~/ct/comics
 YAC_DB_FILE=$COMIC_DIR/.yacreaderlibrary/library.ydb
 UPDATES=$COMIC_DIR/updates
 
@@ -41,7 +41,7 @@ cat "$UPDATES" | tr "[A-Z]" "[a-z]" | sed "s|[[:space:]]$||; s|–|-|" | tr " " 
   #   sqlite3 <yacreader-db-file>
   #     .tables
   #     .schema comic
-  #     .schema comic_info 
+  #     .schema comic_info
 
   if echo "$READ" | fgrep "BOOLEAN" > /dev/null; then
     break # weird error where the wrong value is greped
