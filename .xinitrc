@@ -43,11 +43,13 @@ signal-desktop &
 # don't work if started directly
 {
   sleep 10
-  # mpd cover conky
-  # ~/scripts/mpd/local-cover &
-  # wallpaper
-  nitrogen --restore & # replace with xwallpaper --zoom FILE
+  # conky with local mpd cover
+  ~/scripts/mpd/local-cover &
+  # nitrogen --restore &
 } &
+
+# wallpaper
+xwallpaper --zoom ~/.config/wallpaper.png &
 
 # status bar
 ~/scripts/lemonbar/run-lemonbar &

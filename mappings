@@ -201,3 +201,6 @@ create .config/yay
 
 [wget]
 .config/wgetrc
+
+[xwallpaper]
+.config/wallpaper.png

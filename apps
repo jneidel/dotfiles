@@ -33,7 +33,10 @@ pod2man Make dependency
 i3-wm Window manager
 
 [nitrogen]
-nitrogen Desktop backgrounds
+nitrogen Wallpapers
+
+[xwallpaper]
+xwallpaper Simple wallpapers
 
 [beets]
 beets Automatic music tagger
