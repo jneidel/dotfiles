@@ -56,9 +56,16 @@ urlEncode() {
 
 res="$(prompt)"
 [ -z "$res" ] && exit 1
+
 bang="${res%% *}"
 query="${res#* }"
 [ "$query" = "$bang" ] && query=""
+
+if [ "$bang" = "yt" ]; then # run !yt queries through yt script
+  ~/scripts/yt $query
+  exit
+fi
+
 query=`urlEncode "$query"`
 
 if bangList | grep "^$bang " >/dev/null; then

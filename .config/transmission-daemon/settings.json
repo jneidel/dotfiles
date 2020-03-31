@@ -56,7 +56,7 @@
     "script-torrent-done-filename": "/home/jneidel/scripts/transmission/transmission-done",
     "seed-queue-enabled": false,
     "seed-queue-size": 10,
-    "speed-limit-down": 100,
+    "speed-limit-down": 10000,
     "speed-limit-down-enabled": false,
     "speed-limit-up": 100,
     "speed-limit-up-enabled": true,

@@ -150,7 +150,7 @@ calcurse Calendar and todos
 
 [transmission]
 transmission-cli Torrent daemon
-transmission-remote-cli-git Transmission client
+tremc Transmission TUI
 
 [rclone]
 rclone Sync local and remote directories

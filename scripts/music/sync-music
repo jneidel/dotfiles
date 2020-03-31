@@ -1,7 +1,12 @@
 #! /bin/sh
 
-LOCAL_MUSIC=~/ct/music/unheard
-MNT_POINT=/media/usb/unheard
+LOCAL_MUSIC=~/ct/music
+LOCAL_UNHEARD=$LOCAL_MUSIC/unheard
+
+MNT_POINT=/media/usb
+MNT_UNHEARD=$MNT_POINT/unheard
+
+PI="pi:~/music"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ sync-music"
@@ -9,5 +14,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-sudo rsync -avr $LOCAL_MUSIC/ $MNT_POINT # --delete
+# sudo rsync -avr $LOCAL_MUSIC/ $MNT_POINT # --delete
+
+rsync -avr --inplace --del $LOCAL_MUSIC/ $PI
 

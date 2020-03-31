@@ -79,7 +79,7 @@ super + P
 super + n
   wlan
 super + y
-  ~/scripts/i3/clipboard/clipboard-add-yt-video.sh
+  ~/scripts/yt
 super + v
   ~/scripts/sxhkd/open_clip_mpv
 super + o

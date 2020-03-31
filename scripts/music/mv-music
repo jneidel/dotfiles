@@ -18,3 +18,5 @@ ls -d $FROM/*/ | grep -v -e Electro -e HipHop -e Monstercat -e Other -e Pop -e R
   echo Moved $(echo $dir | rev | cut -d/ -f2 | rev)
 done
 
+# remove covers
+find $TO -name cover.jpg | xargs -d "\n" rm

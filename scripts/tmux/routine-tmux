@@ -18,7 +18,8 @@ tmux -u new-session -s routine \; \
   new-window -n "music" "exec ~/scripts/mpd/ncmpcpps -s playlist" \; \
   new-window -n "timer" "exec watch -t -n 1 ~/scripts/figlet-clock" \; \
   new-window -n "reading notes" -c "$HOME/code/notes/books" "exec vim" \; \
-  new-window -n "book" "exec epr \"$(~/scripts/queue/bookq)\"" \; \
+  new-window -n "book" "exec lf ~/ct/books" \; \
+  # new-window -n "book" "exec epr \"$(~/scripts/queue/bookq)\"" \; \
   new-window -n "writing" "exec watch -t -n 100 'figlet Writing'" \; \
   new-window -n "c3" "exec ~/scripts/bluetooth/charge3" \; \
   select-window -t 7 \; \

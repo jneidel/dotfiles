@@ -20,7 +20,6 @@ alias tsma="tsmadd"
 tsminfo() { # display torrent info
   tsm -t $1 -i G -P "Name:|Total size:|Downloaded:|Peers:"
 }
-alias tsmi="tsminfo"
 # tsminfo() { tsr -t"$1" --info; } # has a lot more information
 
 tsmrm() { tsr -t"$1" --remove; } # delete torrent
@@ -45,3 +44,4 @@ tsmget() {
 }
 alias tsmg="tsmget"
 
+alias tsmi="tremc 2>/dev/null"

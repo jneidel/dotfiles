@@ -35,7 +35,7 @@ cmd open ${{
 		pdf) zathura "$f" &;;
 		mp4|mkv|avi|m4v|webm|mpg) mpv --profile=movie "$f" >/dev/null 2>&1 &;;
 		tex) pdflatex "$f";;
-		epub) epr "$f" 2>/dev/null;;
+		epub) epr "$f" 2>/dev/null || FBReader "$f" &;;
 		cbz|cbr) YACReader "$f" >/dev/null 2>&1 &;;
 		mp3|flac|ogg|wma) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video '$f'" &;;
 		tgz|zip|rar|xz|gz) extract "$f";;
@@ -89,7 +89,7 @@ map m massmove
 map d mkdir
 map f broot_jump
 map . set hidden!
-map p gimp
+# map p gimp
 
 ### jump - cd to dirs
 map gd cd ~/Downloads
