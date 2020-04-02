@@ -41,12 +41,13 @@ brave &
 signal-desktop &
 
 # don't work if started directly
-{
-  sleep 10
-  # conky with local mpd cover
-  ~/scripts/mpd/local-cover &
-  # nitrogen --restore &
-} &
+# {
+#   sleep 10
+#   # conky with local mpd cover
+#   ~/scripts/mpd/local-cover &
+#   # nitrogen --restore &
+# } &
+sudo chmod 777 -R /sys/class/backlight/intel_backlight &
 
 # wallpaper
 xwallpaper --zoom ~/.config/wallpaper.png &

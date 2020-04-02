@@ -16,5 +16,5 @@ fi
 
 # sudo rsync -avr $LOCAL_MUSIC/ $MNT_POINT # --delete
 
-rsync -avr --inplace --del $LOCAL_MUSIC/ $PI
+rsync -avr --inplace $LOCAL_UNHEARD/ pi:~/music/unheard # --del
 

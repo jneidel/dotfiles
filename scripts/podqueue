@@ -18,5 +18,5 @@ URL="$1"
 SAVE_PATH=~/Downloads
 GET_FILENAME="$(echo "$1" | rev | cut -d\/ -f1 | rev | sed -e 's@\%20@\_@g' )"
 
-echo "$URL" "$SAVE_PATH/$GET_FILENAME" >> ~/.config/newsboat/queue
+echo "$URL" "$SAVE_PATH/$GET_FILENAME" >> $HOME/.local/share/newsboat/queue
 

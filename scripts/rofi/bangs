@@ -20,7 +20,7 @@ command -v node >/dev/null || { echo "node is not installed"; exit 1; }
 bangList() {
   cat << EOF
 lg http://gen.lib.rus.ec/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
-lgf http://libgen.io/foreignfiction/index.php?s=%s&f_lang=English&f_ext=epub
+lgf http://gen.lib.rus.ec/fiction/?q=Max+Goldt&f_lang=English&f_ext=epub
 tpb https://knaben.ru/s/?q=%s&page=0&orderby=99
 tpb2 https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb3 https://pirateproxy.page/search/%s/0/99/0

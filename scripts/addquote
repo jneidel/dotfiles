@@ -1,0 +1,34 @@
+#! /bin/sh
+
+QUOTES_FILE=~/code/notes/data/quotes.json
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ addquote QUOTE [AUTHOR]
+Add a quote to your json quotes file at $QUOTES_FILE
+using jsonappend
+
+Parameters:
+  \$1: quote
+  [\$2]: author
+
+Flags:
+  -x: use x clipboard to get the quote
+
+Example:
+  $ addquote "We choose to go to the Moon" JFK
+  $ addquote -x JFK
+EOF
+  exit
+fi
+
+command -v jsonappend >/dev/null || { echo "jsonappend script is not in PATH"; exit 1; }
+
+QUOTE="$1"
+AUTHOR="$2"
+
+if [ "$1" = "-x" ]; then
+  QUOTE=`xclip -o | sed "s:^\s*::g; s:\s*$::g; s:  ::g" | tr "\n" " "`
+fi
+
+jsonappend "$QUOTES_FILE" "quote:$QUOTE" "author:$AUTHOR"

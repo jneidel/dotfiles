@@ -1,0 +1,63 @@
+#! /bin/sh
+
+ERR_FILE=/tmp/jsonappend-errors
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ appendjson FILE "KEY:VAL" ...
+Add a new object with passed key-value pairs, to the json array in the given file
+
+Parameters:
+  \$1: valid json file with an array
+  \$2+: key-value pairs, seperated by a ':'
+
+Example:
+  $ appendjson quotes.json "quote:We choose to go to the Moon" "author:JFK"
+EOF
+  exit
+fi
+
+command -v node >/dev/null || { echo "node is not installed"; exit 1; }
+
+FILE="$1"
+[ ! -e "$FILE" ] && { echo "File does not exist"; exit 2; }
+
+DATA=""
+for keyvalue in "$@"; do
+  if printf $keyvalue | fgrep ":" >/dev/null; then
+    KEY=`printf "$keyvalue" | cut -d: -f1`
+    VALUE=`printf "$keyvalue" | cut -d: -f2`
+
+    [ -n "$DATA" ] && DATA="$DATA,"
+    DATA="$DATA'$KEY':'$VALUE'"
+  fi
+done
+
+TMP=$(mktemp)
+cat > $TMP << EOF
+const fs = require( "fs" );
+const file = fs.readFileSync( "$FILE" );
+const json = JSON.parse( file );
+
+if ( ! Array.isArray( json ) ) {
+  process.stderr.write( "NOT AN ARRAY" )
+  process.exit( 1 )
+}
+
+json.push( { $DATA } )
+console.log( "Appended data:", json[json.length-1] )
+
+fs.writeFileSync( "$FILE", JSON.stringify( json, null, 2 ) );
+EOF
+
+chmod +x $TMP
+node $TMP 2>$ERR_FILE || {
+  if grep "JSON.parse" $ERR_FILE >/dev/null; then
+    echo "Invalid json file"
+  elif grep "NOT AN ARRAY" $ERR_FILE >/dev/null; then
+    echo "Json file is not an array"
+  else
+    echo "Node threw an error:"
+    cat $ERR_FILE
+  fi
+}

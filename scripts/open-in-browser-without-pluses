@@ -16,5 +16,5 @@ fi
 
 URL="$1"
 
-echo "$1" | sed "s/+//" | xargs -r $BROWSER
+echo "$1" | sed "s/+//g" | xargs -r $BROWSER
 

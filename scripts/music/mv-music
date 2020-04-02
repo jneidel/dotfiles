@@ -1,7 +1,4 @@
-#! /bin/bash
-# Todo: Fix cant move into unheard, because artist dir already exists
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+#! /bin/sh
 
 FROM=~/ct/music
 TO=~/ct/music/unheard
@@ -14,9 +11,14 @@ Move new albums in $FROM to $TO
 fi
 
 ls -d $FROM/*/ | grep -v -e Electro -e HipHop -e Monstercat -e Other -e Pop -e Rock -e Singles -e Soundtracks -e unheard -e "Various Artists" -e German | while read dir; do
-  mv "$dir" "$TO"
-  echo Moved $(echo $dir | rev | cut -d/ -f2 | rev)
+  NAME=`basename "$dir"`
+  echo Moving $NAME
+  if ! mv "$dir" "$TO" 2>/dev/null; then
+    printf "  "
+    mv -v "$dir/"* "$TO/$NAME"
+    rmdir "$dir"
+  fi
 done
 
 # remove covers
-find $TO -name cover.jpg | xargs -d "\n" rm
+find $TO -name cover.jpg | xargs -d "\n" rm 2>/dev/null || true

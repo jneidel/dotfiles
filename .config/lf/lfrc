@@ -57,6 +57,8 @@ cmd massmove ${{
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
 
+cmd touch %printf "File Name: "; read ans; touch "$ans"
+
 cmd broot_jump ${{
   f=$(mktemp)
   res="$(broot -f --outcmd $f && cat $f | sed 's/cd //')"
@@ -89,6 +91,7 @@ map m massmove
 map d mkdir
 map f broot_jump
 map . set hidden!
+map t touch
 # map p gimp
 
 ### jump - cd to dirs

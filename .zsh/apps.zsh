@@ -61,7 +61,6 @@ alias g="grep"
 ### newsboat
 alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
 alias q="podqueue"
-alias nbd="podboat --autodownload"
 alias podboat="/bin/podboat -a"
 
 ### players
