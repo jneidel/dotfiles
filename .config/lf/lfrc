@@ -103,3 +103,4 @@ map gc cd ~/ct
 map gz cd ~/ct/zeit
 map gn cd ~/code/notes
 map gp cd ~/projects
+map gu cd ~/projects/uni

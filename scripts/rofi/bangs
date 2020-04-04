@@ -1,5 +1,4 @@
 #! /bin/sh
-# Todo: handle ' in dmenu prompt
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ bangs
@@ -59,7 +58,7 @@ res="$(prompt)"
 
 bang="${res%% *}"
 query="${res#* }"
-[ "$query" = "$bang" ] && query=""
+[ "$query" = "$bang" ] && bang="d" # no bang passed -> dict.cc
 
 if [ "$bang" = "yt" ]; then # run !yt queries through yt script
   ~/scripts/yt $query

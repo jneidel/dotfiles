@@ -81,7 +81,7 @@ def_key "t"
   show_clock
 def_key "@"
   show_server_info
-def_key "L"
+def_key "Y"
   show_lyrics
 
 ## playback

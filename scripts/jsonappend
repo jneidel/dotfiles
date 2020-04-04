@@ -29,7 +29,7 @@ for keyvalue in "$@"; do
     VALUE=`printf "$keyvalue" | cut -d: -f2`
 
     [ -n "$DATA" ] && DATA="$DATA,"
-    DATA="$DATA'$KEY':'$VALUE'"
+    DATA="$DATA\"$KEY\":\"$VALUE\""
   fi
 done
 
@@ -60,4 +60,5 @@ node $TMP 2>$ERR_FILE || {
     echo "Node threw an error:"
     cat $ERR_FILE
   fi
+  false
 }
