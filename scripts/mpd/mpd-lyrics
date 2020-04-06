@@ -1,31 +1,47 @@
 #! /bin/sh
 
-MUSIC_DIR="/media/music"
-
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ mpd-lyrics"
-  echo "Get the lyrics for the current song running in mpd"
-  echo "Uses 'get-lyrics' under the hood"
-  echo ""
-  echo "Example:"
-  echo "$ mpd-lyrics"
+  cat << EOF mpd-lyrics
+Get the lyrics for the current song running in mpd
+
+get-lyrics wrapper
+
+Example:
+$ mpd-lyrics
+EOF
   exit
 fi
 
+. ~/scripts/mpd/shared-mpd-variables
+
 command -v mpc-get >/dev/null &&
   MPC_CMD="mpc-get file" ||
-  MPC_CMD="mpc status -f %file% | head -n 1"
+  MPC_CMD="mpc -p $PORT status -f %file% | head -n 1"
 
-SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
+if is-mpd-server; then
+  SONG_FILE="$REMOTE_DIR/$($MPC_CMD)"
+  [ `ssh $REMOTE_NAME "basename '$SONG_FILE'" | rev | cut -d\. -f1` != "3pm" ] && {
+    echo "File is not a mp3"
+    exit
+  }
+  get_lyrics() {
+    ssh $REMOTE_NAME "~/scripts/get-lyrics '$1' '$2'"
+  }
+else
+  SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
+  [ "$(basename "$SONG_FILE" | rev | cut -d\. -f1)" != "3pm" ] && {
+    echo "File is not a mp3"
+    exit
+  }
+  get_lyrics() {
+    get-lyrics "$1" "$2"
+  }
+fi
 
-[ "$(basename "$SONG_FILE" | rev | cut -d\. -f1)" != "3pm" ] && {
-  echo "File is not a mp3" # get-lyrics works for mp3's
-  exit
-}
 
-LYRICS=$(get-lyrics "$SONG_FILE")
+LYRICS=$(get_lyrics "$SONG_FILE")
 if [ -n "$LYRICS" ]; then
-  get-lyrics -n "$SONG_FILE" # Reusing $LYRICS messes with the formatting (newlines)
+  get_lyrics -n "$SONG_FILE" # Reusing $LYRICS messes with the formatting (newlines)
 else
   echo "Song has no lyrics" 1>&2
 fi

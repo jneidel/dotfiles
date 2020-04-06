@@ -1,6 +1,7 @@
-#! /bin/bash
+#! /bin/sh
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# DIR=`dirname $0`
+DIR=~/scripts/mpd
 
 PORT=5555
 IP=$(cat "$DIR/current-mpd-ip")
@@ -12,6 +13,10 @@ else
   IS_SERVER=0
   CONNECT="-p $PORT"
 fi
+
+REMOTE_NAME=pi
+REMOTE_DIR="/home/jneidel/music"
+LOCAL_DIR="/home/jneidel/ct/music"
 
 command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }
 

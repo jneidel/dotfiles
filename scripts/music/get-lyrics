@@ -2,17 +2,19 @@
 # Source: https://askubuntu.com/questions/226773/how-to-read-mp3-tags-in-shell
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ get-lyrics [-n] <mp3s>"
-  echo "Get content of 'lyrics-XXX' or 'lyrics-eng' tag of the specified mp3"
-  echo ""
-  echo "Parameters:"
-  echo "  \$@: path to mp3"
-  echo ""
-  echo "Flags:"
-  echo "  -n: no file name info (don't print what file is being used)"
-  echo ""
-  echo "Example:"
-  echo "$ get-lyrics The\ Art\ of\ Peer\ Pressure.mp3"
+  cat << EOF
+$ get-lyrics [-n] MP3_PATHS
+Get content of 'lyrics-XXX' or 'lyrics-eng' tag of the specified mp3
+
+Parameters:
+  \$@: path to mp3
+
+Flags:
+  -n: no file name info (don't print what file is being used)
+
+Example:
+$ get-lyrics The\ Art\ of\ Peer\ Pressure.mp3
+EOF
   exit
 fi
 

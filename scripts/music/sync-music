@@ -6,8 +6,6 @@ LOCAL_UNHEARD=$LOCAL_MUSIC/unheard
 MNT_POINT=/media/usb
 MNT_UNHEARD=$MNT_POINT/unheard
 
-PI="pi:~/music"
-
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ sync-music"
   echo "Sync $LOCAL_MUSIC with backup drive mounted on $MNT_POINT"
@@ -16,6 +14,5 @@ fi
 
 # sudo rsync -avr $LOCAL_MUSIC/ $MNT_POINT # --delete
 
-rsync -avr --inplace $LOCAL_UNHEARD/ pi:~/music/unheard # --del
-# rsync -avr --inplace $LOCAL_MUSIC/ pi:~/music --del
+rsync -avr --inplace $LOCAL_UNHEARD/ pi:~/music/unheard
 
