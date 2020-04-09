@@ -19,11 +19,11 @@ fi
 LOCATION=$DEFAULT_LOCATION
 if [ -z "$1" ]; then
   [ ! -d $LOCATION ] && {
-    echo "Default location '$LOCATION' does not exist." 
+    echo "Default location '$LOCATION' does not exist."
     echo "Either create it or pass your own."
     exit 1
   }
-else 
+else
   [ ! -d "$1" ] &&
     LOCATION="$1" ||
     {
@@ -35,7 +35,7 @@ fi
 DEFAULT_MAPPER=cryptluks
 DEFAULT_MAPPER2=cryptext
 DEFAULT_MAPPER3=cryptfallback
-if [ -n "$2" and -e /dev/mapper/$2 ]; then
+if [ -n "$2" ] && [ -e /dev/mapper/$2 ]; then
   MAPPER=$2
 elif [ -e /dev/mapper/$DEFAULT_MAPPER2 ]; then
   MAPPER=$DEFAULT_MAPPER2
