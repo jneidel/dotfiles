@@ -27,6 +27,9 @@ au Filetype markdown,tex map <Leader>s :setlocal spell! spelllang=en_us,de<CR>
 au Filetype markdown setlocal textwidth=80
 au FileType markdown setlocal formatoptions+=t
 
+" remap enter to create a newline
+au Filetype markdown nmap <Enter> o<Esc>
+
 " notes
 au BufRead ~/code/notes/journal/* setfiletype markdown
 

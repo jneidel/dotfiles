@@ -70,10 +70,19 @@ cmd gimp ${{
   gimp "$f" >/dev/null 2>&1 &
 }}
 
+cmd rm_pi ${{
+  # remove a file from the local music lib and the pi's
+  FILE="$(realpath $f | grep -Po '/music/\K.*$')"
+
+  echo "Removing file: $FILE"
+  if [ -n "$FILE" ]; then
+    printf "ssh: " ; ssh pi "rm '$HOME/music/$FILE'" && rm "$f"
+  fi
+}}
+
 ## bindings
 ### remove defaults
 map m
-map n
 map "'"
 map '"'
 map d
@@ -84,6 +93,7 @@ map r
 ### own bindings
 map e $$EDITOR "$f"
 map rm remove $f
+map rp rm_pi
 map x cut
 map c copy
 map <esc> clear

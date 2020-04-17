@@ -112,6 +112,7 @@
 
 - On the state of the games industry and why you need to stop financially supporting companies like EA and Bethesda: [Bethesda VS Critics: How To Save The Games Industry](https://www.youtube.com/watch?v=C6NiXAdMzEk)
 - A look into speedrunning: [Speedrunning Is Awesome, And Here's Why](https://www.youtube.com/watch?v=I5auJOBC828)
+- Video games can be so much more than what they are: [Pathologic is Genius, And Here's Why](https://youtube.com/watch?v=JsNm2YLrk30)
 
 ### Art
 
@@ -135,6 +136,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
 - Rules for clean fighting among couples: [How To Fight As a Couple](https://www.youtube.com/watch?v=IE-P11KKYFs&t=113)
 - 9-5 is not the only or best way to live: [Some Luke Smith FAQ: Over 1,000,000 Hours of Content CONSOOMED!!!](https://www.youtube.com/watch?v=Q-Y5xqDkC50&t=736)
+- Podcast: Staying curious and living in other cultures: [Derek Sivers: Different approaches to curiosity, self-reliance, becoming a world citizen, seeing things from a different point of view](https://m.sivers.org/2020-02-DerekSivers-FeedingCuriosity.mp3) - at 42 min
 
 ### Political
 
