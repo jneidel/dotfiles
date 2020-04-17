@@ -1,0 +1,38 @@
+#! /bin/sh
+
+TMUX_HIST=/tmp/tmux.history
+MAX_CMD_LENGTH=500
+OUTPUT_FILE=/tmp/tmuxcopycmd-result
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ tmuxcopycmd <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ tmuxcopycmd <++>
+EOF
+  exit
+fi
+
+command -v perl >/dev/null || { echo "perl is not installed"; exit 1; }
+command -v tac >/dev/null || { echo "tac is not installed"; exit 1; }
+
+user_choose_cmd() {
+  # grep -P "^ .*? " $TMUX_HIST  | grep -v "$" | perl -pe "s|^ (.*?)  |\$1 |" | dmenu # perl would reformat the prompt
+  grep -P "^ .*? " $TMUX_HIST | tac | dmenu
+}
+
+LINE="$(user_choose_cmd)"
+[ -z "$LINE" ] && exit 1
+
+# get most recent exec of line, get it's output (match till next prompt, which is cut of w/ head)
+tac $TMUX_HIST | grep "$LINE" -m 1 -B $MAX_CMD_LENGTH | tac # | grep -P "^ .*? " -m 2 -B $MAX_CMD_LENGTH | head -n -1 | tee $OUTPUT_FILE
+
+# replace special chars, for better pasting?
+xclip -sel clipboard $OUTPUT_FILE
+
