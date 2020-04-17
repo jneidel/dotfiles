@@ -450,3 +450,6 @@ mpc mpd client
 [ncmpcpp]
 mpd Music player daemon
 ncmpcpp mpd client
+
+[anki]
+anki SRS and flashcards
