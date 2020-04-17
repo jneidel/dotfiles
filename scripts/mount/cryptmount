@@ -22,28 +22,28 @@ fi
 
 DEV=$DEFAULT_DEV
 if [ -z "$1" ]; then
-  [ ! -e $DEV ] && {
+  if [ ! -e $DEV ]; then
     echo "Default device '$DEV' does not exist."
     echo "Insert it or pass a different one."
     exit 1
-  }
+  fi
 else
-  [ -e "/dev/sd$1" ] &&
-    DEV="/dev/sd$1" || 
-    {
-      echo "Passed device '$1' does not exist."
-      exit 1
-    }
+  if [ -e "/dev/sd$1" ]; then
+    DEV="/dev/sd$1"
+  else
+    echo "Passed device '$1' does not exist."
+    exit 1
+  fi
 fi
 
 LOCATION=$DEFAULT_LOCATION
 if [ -z "$2" ]; then
   [ ! -d $LOCATION ] && {
-    echo "Default location '$LOCATION' does not exist." 
+    echo "Default location '$LOCATION' does not exist."
     echo "Either create it or pass your own."
     exit 1
   }
-else 
+else
   if [ -d "$2" ]; then
     LOCATION="$2"
   else
