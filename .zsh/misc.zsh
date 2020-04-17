@@ -11,7 +11,6 @@ alias imgweek="$B https://getcomics.info/tag/image-week/"
 alias imgrel="$B https://imagecomics.com/comics/new-releases"
 
 alias relax="mpvo 'https://www.youtube.com/watch?v=5qap5aO4i9A'"
-alias sync-music="rsync -avr --inplace --del ~/ct/music/ pi:~/music"
 
 ## previous command hotkeys
 # print previous command but only the first nth arguments

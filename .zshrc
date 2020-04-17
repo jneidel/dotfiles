@@ -26,7 +26,7 @@ fi
 ## Paths
 export PATH=/bin:/usr/bin:/usr/bin/vendor_perl
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data -e i3 | tr '\n' ':')$PATH"
-export CDPATH=.:~:~/code:~/Downloads:~/ct:~/scripts
+export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/scripts
 
 ## Applications
 export EDITOR=vim

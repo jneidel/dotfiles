@@ -1,6 +1,7 @@
 #!/bin/sh
 # xinitrc
-# run from ~/.zshrc after logging into the tty for the first time
+## run with 'startx'
+## run after logging into tty1 through ~/.zshrc
 
 # remap caps lock to escape
 # does not work via xmodmap without display manager
@@ -21,8 +22,6 @@ xautolock -time 120 -locker blurlock &
 xflux -k 5000 -l 52 -g 13 &
 # desktop monitor
 ~/scripts/conky/start-conky &
-# watch bluetooth devices
-~/scripts/bluetooth/bt-watchdog.sh &
 # disable external monitors
 monitor off &
 

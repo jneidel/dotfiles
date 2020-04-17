@@ -19,7 +19,7 @@ command -v node >/dev/null || { echo "node is not installed"; exit 1; }
 bangList() {
   cat << EOF
 lg http://gen.lib.rus.ec/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
-lgf http://gen.lib.rus.ec/fiction/?q=Max+Goldt&f_lang=English&f_ext=epub
+lgf http://gen.lib.rus.ec/fiction/?q=%s
 tpb https://knaben.ru/s/?q=%s&page=0&orderby=99
 tpb2 https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb3 https://pirateproxy.page/search/%s/0/99/0
@@ -37,6 +37,7 @@ ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r5
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
+cs https://curiositystream.com/search/%s
 EOF
 }
 

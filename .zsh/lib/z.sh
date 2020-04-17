@@ -213,7 +213,10 @@ _z() {
     fi
 }
 
-alias ${_Z_CMD:-z}='_z 2>&1'
+# alias ${_Z_CMD:-z}='_z 2>&1'
+
+# replace z with zoxide
+eval "$(zoxide init zsh)"
 
 [ "$_Z_NO_RESOLVE_SYMLINKS" ] || _Z_RESOLVE_SYMLINKS="-P"
 
