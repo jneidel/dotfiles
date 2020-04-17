@@ -1,21 +1,27 @@
-#! /bin/bash
+#! /bin/sh
 
 # todo: handle mpd error: No route to host
 #  and use localhost instead
 
-source ~/scripts/mpd/shared-mpd-variables
+. ~/scripts/mpd/shared-mpd-variables
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ ncmpcpps"
-  echo "Connect ncmpcpp to mpd running on this devices ip address"
-  echo ""
-  echo "Connection params:"
-  echo "  -h $IP"
-  echo "  -p $PORT"
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ ncmpcpps [l]
+Dynamically connect ncmpcpp to mpd running locally or on the pi
+
+Arguments:
+  l: run local
+EOF
   exit
 fi
 
 command -v ncmpcpp >/dev/null || { echo "ncmpcpp is not installed"; exit 1; }
+
+if [ "$1" = "l" ]; then
+  ncmpcpp -p $PORT -h localhost
+  exit
+fi
 
 ncmpcpp $CONNECT $@ 2> /dev/null
 

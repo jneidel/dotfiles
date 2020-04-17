@@ -14,16 +14,44 @@ fi
 
 command -v khal >/dev/null || { echo "khal is not installed"; exit 1; }
 
+print_list() {
+  KHAL_FLAGS="--day-format '' -o --notstarted"
+  KHAL_FORMAT="[{start-time}-{end-time}] {title}"
+
+  if [ "$1" = "conky" ]; then
+    KHAL_FLAGS="$KHAL_FLAGS -a $MAIN -a $UNI"
+    KHAL_FORMAT="{title} [{start-time}-{end-time}]"
+  fi
+
+  TMP=$(mktemp)
+  echo "khal list Today Today $KHAL_FLAGS -f '$KHAL_FORMAT'" > $TMP
+
+  NOW=$(date +%s)
+  sh $TMP | while read -r line; do {
+    # once a future events has been found, skip checking
+    [ -n "$DONE" ] && {
+      echo $line
+      continue
+    }
+
+    # strip events that are in the past
+    END_TIME=$(echo $line | cut -d\[ -f2 | cut -d\- -f2 | cut -d] -f1 | xargs date +%s -d)
+    [ "$NOW" -lt "$END_TIME" ] && {
+      echo $line
+      DONE=1
+    }
+  }; done
+}
+
 if [ "$1" = "-r" ]; then # for conky
-  khal list Today Today -f "{title} [{start-time}-{end-time}]" -df "" -o --notstarted -a $MAIN -a $UNI |
-  sed "s/:00//g; s/ /_/g" |
+  print_list conky |
+  grep -v "No events" |
+  sed "s/:00//g; s/ /_/g; s/Ü/?/g" |
   xargs printf "%60s\n" |
   tr "_" " " |
-  grep -v "No events"
+  sed "s:?:Ü:g" # Ü takes up 2 chars for %60s
 else # for shell
-  khal list Today Today -f "[{start-time}-{end-time}] {title}" -df "" -o --notstarted
-  # Todo: parse line for line, to check if its in the past (done)
-  #   | while loop with date parsing, converting it to unix time and comparing them
+  print_list
 fi
 
 exit 0
