@@ -16,8 +16,9 @@ fi
 MODULE_NAME="$1"
 MODULE_DIR="$UNI_DIR/$MODULE_NAME"
 
-mkdir -p $MODULE_DIR/folien $MODULE_DIR/books $MODULE_DIR/ueb
-printf "# orga\n\n\n" >> $MODULE_DIR/orga.md
-printf "# resources\n\n\n" >> $MODULE_DIR/resources.md
+mkdir -p "$MODULE_DIR/folien/done" "$MODULE_DIR/books" "$MODULE_DIR/ueb"
+printf "# orga\n\n\n" >> "$MODULE_DIR/orga.md"
+printf "# resources\n\n\n" >> "$MODULE_DIR/resources.md"
+printf "# glossary\n\n\n" >> "$MODULE_DIR/glossary.md"
 
 echo "Created module at $MODULE_DIR"
