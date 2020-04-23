@@ -3,6 +3,18 @@
 LOGO=`dirname $0`/arch-logo.png
 IMG=/tmp/screen_locked.png
 
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ lock
+Lock screen
+EOF
+  exit
+fi
+
+command -v scrot >/dev/null || { echo "scot is not installed"; exit 1; }
+command -v convert >/dev/null || { echo "convert (imagemagick) is not installed"; exit 1; }
+command -v i3lock >/dev/null || { echo "i3lock is not installed"; exit 1; }
+
 # take a screenshot
 scrot -o $IMG
 
@@ -17,5 +29,4 @@ convert $IMG $LOGO -gravity center -geometry +0-10 -composite $IMG
 convert $IMG -font Roboto-Mono-for-Powerline -fill grey -pointsize 16 -gravity center -draw "text 0,-110 '$USER@$(hostname)'" $IMG
 ## list of fonts: identify -list font
 
-# lock screen displaying this image.
 i3lock -i $IMG --ignore-empty-password
