@@ -236,7 +236,7 @@ arandr Control display outputs (GUI)
 
 [x-lock]
 xautolock X display lock system
-oblogout-blurlock Display lock
+i3lock screen locker
 
 [xflux]
 xflux Flux bluelight filter for X

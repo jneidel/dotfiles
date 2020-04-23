@@ -1,0 +1,44 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ rec [OUTPUT]
+Record the screen
+
+Parameters:
+  [\$1]: Name of the output file (automatic .mkv)
+    defaults to: recording_$(date +%Y-%b-%d_%H_%M_%S)
+
+Example:
+  $ vid output
+EOF
+  exit
+fi
+
+OUTPUT="recording_$(date +%Y-%b-%d_%H_%M_%S).mkv"
+[ -n "$1" ] && OUTPUT="$1.mkv"
+
+command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
+
+test_audio() {
+  # play sound and check on stream if sound is being played
+  timeout 3 mpv --no-audio-display --no-video ~/scripts/personal/audio.mp3 >/dev/null 2>&1
+  sleep 7 && timeout 3 mpv --profile=overlay "$OUTPUT" >/dev/null 2>&1
+}
+test_audio &
+
+# -s size (dimension)
+# -f format (x/alsa)
+# -i input (x display/pulse/default)
+# -y to overwrite files
+
+ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
+  -f x11grab -i :0.0 \
+  -f alsa -i pulse \
+  -c:v libx264 \
+  "$OUTPUT"
+
+# -c:v libx264 -r 30 -c:a flac
+
+# change the recording device in pavucontrol
+##  https://askubuntu.com/questions/682144/capturing-only-desktop-audio-with-ffmpeg
