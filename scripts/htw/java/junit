@@ -10,14 +10,11 @@ if [ "$1" = "help" ] || [ -z "$1" ]; then
 $ junit JUNIT_PARAMS
 Run junit (java unit testing framework)
 
+Local jar will be written to: $LOCAL_JAR
+
 non-junit stuff:
   -v, --version: Print version
 EOF
-  exit
-fi
-
-if [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
-  java -cp $LOCAL_JAR junit.runner.Version
   exit
 fi
 
@@ -25,6 +22,11 @@ command -v java >/dev/null || { echo "java is not installed"; exit 1; }
 
 if [ ! -e "$LOCAL_JAR" ]; then
   wget "https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/$LATEST_VERSION/junit-platform-console-standalone-$LATEST_VERSION.jar" -O "$LOCAL_JAR"
+fi
+
+if [ "$1" = "--version" ] || [ "$1" = "-v" ] || [ "$1" = "-V" ]; then
+  java -cp $LOCAL_JAR junit.runner.Version
+  exit
 fi
 
 java -jar "$LOCAL_JAR" $@

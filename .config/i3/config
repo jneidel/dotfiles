@@ -134,6 +134,7 @@ assign [class="YACReaderLibrary"] $ws3
 assign [class="Zeal"] $ws3
 assign [class="cmus"] $ws8
 assign [class="calcurse"] $ws3
+assign [class="anki"] $ws3
 
 # Open specific applications in floating mode
 for_window [class="Nitrogen"] floating enable sticky enable border normal
