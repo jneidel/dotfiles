@@ -24,6 +24,8 @@ xflux -k 5000 -l 52 -g 13 &
 ~/scripts/conky/start-conky &
 # disable external monitors
 monitor off &
+# disable annoying system beep
+xset -b &
 
 ## daemons
 # hotkeys
