@@ -43,6 +43,7 @@ cmd open ${{
 		html) $BROWSER "$f" >/dev/null 2>&1 &;;
 		exe) wine "$f" >/dev/null 2>&1 &;;
     gpg) extracthere "$f";;
+    sh) bash "$f";;
 		*) $EDITOR "$f";;
 	esac
 }}

@@ -57,6 +57,7 @@ alias npmup="npm-check-updates"
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
 alias cal6="cal -mn 6"
 alias g="grep"
+alias gw="./gradlew"
 
 ### newsboat
 alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
