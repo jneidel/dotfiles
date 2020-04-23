@@ -2,9 +2,18 @@
 
 # Receive the cover from send-cover
 
+REMOTE_NAME=pi
 REMOTE_COVER_LOCATION=/tmp/mpd-cover.jpg
+REMOTE_PIPE=~/tmp/mpd-pipe
 COVER_LOCATION=~/tmp/cover.jpg
-TMP_LOCATION=/tmp/mpd-cover.jpg
+TMP_LOCATION=/tmp/cover.jpg
+
+if ! ssh $REMOTE_NAME '[ -e "$HOME/tmp/mpd-pipe" ] || exit 1'; then
+  printf "Remote pipe does not exist.\nIs 'send-cover' running on the server?\n"
+  exit 1
+fi
+
+echo "Writing cover to: $TMP_LOCATION"
 
 startConky() {
   conky -c ~/.config/conky/mpd.conf 2> /dev/null
@@ -35,10 +44,10 @@ while true # kill conky after 3min of not playing anything
 done &
 
 while true
-  do ssh pidd 'cat mpd-pipe' | {
+  do ssh $REMOTE_NAME "cat $REMOTE_PIPE" | {
     [ -z "$(getConkyPid)" ] && startConky # stark conky if killed for not playing for 3min
 
-    scp pidd:$REMOTE_COVER_LOCATION $TMP_LOCATION
+    scp $REMOTE_NAME:$REMOTE_COVER_LOCATION $TMP_LOCATION
 
     # check if current cover size is <100kb,
     # which would cause conky not to reload it on changes

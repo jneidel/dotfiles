@@ -6,7 +6,7 @@ DIR=~/scripts/mpd
 PORT=5555
 IP=$(cat "$DIR/current-mpd-ip")
 
-if "$DIR/is-mpd-server"; then
+if "$DIR/is-mpd-server" && ! "$DIR/is-mpd-playing-local"; then
   IS_SERVER=1
   CONNECT="-h $IP -p $PORT"
 else
