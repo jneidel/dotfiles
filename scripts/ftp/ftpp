@@ -2,7 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-IP_FILE=$DIR/phone-ip
+ONEPLUS=$DIR/oneplus-ip
+S6=$DIR/s6-ip
 PORT=2121
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -11,7 +12,11 @@ Connect to phone via sftp
 "; exit
 fi
 
-command -v sftp >/dev/null || { echo "<++> is not installed"; exit 1; }
+command -v sftp >/dev/null || { echo "sftp is not installed"; exit 1; }
+
+IP_FILE=$ONEPLUS
+
+[ "$1" = "s6" ] && IP_FILE=$S6
 
 IP=$(< $IP_FILE)
 

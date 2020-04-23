@@ -20,6 +20,7 @@
 - [System apps](#system-apps)
   * [sxhkd (hotkey daemon)](#sxhkd-hotkey-daemon)
   * [i3 (window manager)](#i3-window-manager)
+  * [lock screen](#lock-screen)
 - [CLIs](#clis)
 - [Browser Extensions](#browser-extensions)
 - [Android apps](#android-apps)
@@ -192,6 +193,14 @@ The essential hotkey daemon.
 Lightweight window manager.
 
 - [config](.i3/config)
+
+### lock screen
+
+i3lock with a custom screenshot script.
+
+- [script](scripts/i3/lock/lock)
+
+![](images/lockscreen.png)
 
 ## CLIs
 

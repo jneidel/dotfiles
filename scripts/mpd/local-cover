@@ -38,7 +38,7 @@ createCover() {
   while read i; do
     [ -z "$(getConkyPid)" ] && startConky # start conky if killed for not playing for 3min
 
-    FILENAME="$(mpc-get file)"
+    FILENAME="$(mpc -p $MPD_PORT -f %file% | head -n1)"
     if echo "$FILENAME" | grep "volume.*repeat.*random.*single.*consume" >/dev/null; then # no file path (end of playlist reached w/o repeat)
       killConky
       continue

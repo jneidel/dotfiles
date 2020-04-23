@@ -1,8 +1,5 @@
 #! /bin/sh
 
-# todo: handle mpd error: No route to host
-#  and use localhost instead
-
 . ~/scripts/mpd/shared-mpd-variables
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
@@ -11,17 +8,16 @@ $ ncmpcpps [l]
 Dynamically connect ncmpcpp to mpd running locally or on the pi
 
 Arguments:
-  l: run local
+  l, local: run on localhost
 EOF
   exit
 fi
 
 command -v ncmpcpp >/dev/null || { echo "ncmpcpp is not installed"; exit 1; }
 
-if [ "$1" = "l" ]; then
-  ncmpcpp -p $PORT -h localhost
-  exit
-fi
-
-ncmpcpp $CONNECT $@ 2> /dev/null
-
+case "$1" in
+  l|local|localhost)
+    ncmpcpp -p $PORT -h localhost ;;
+  *)
+    ncmpcpp $CONNECT $@ 2> /dev/null ;;
+esac

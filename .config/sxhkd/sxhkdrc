@@ -8,7 +8,7 @@ super + 0
   ~/scripts/rofi/power-menu
 
 super + ssharp
-  blurlock
+  ~/scripts/i3/lock/lock
 
 ## start applications
 super + Return
