@@ -1,0 +1,21 @@
+#! /bin/sh
+
+LOGO=`dirname $0`/arch-logo.png
+IMG=/tmp/screen_locked.png
+
+# take a screenshot
+scrot -o $IMG
+
+# blur screenshot
+convert $IMG -blur 0x6 $IMG
+## see for customizing blur: https://www.imagemagick.org/Usage/blur/#blur_args
+
+# add small arch logo to screen center
+convert $IMG $LOGO -gravity center -geometry +0-10 -composite $IMG
+
+# add user@hostname above the logo
+convert $IMG -font Roboto-Mono-for-Powerline -fill grey -pointsize 16 -gravity center -draw "text 0,-110 '$USER@$(hostname)'" $IMG
+## list of fonts: identify -list font
+
+# lock screen displaying this image.
+i3lock -i $IMG --ignore-empty-password
