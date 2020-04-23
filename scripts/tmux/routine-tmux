@@ -14,7 +14,7 @@ tmux -u new-session -s routine \; \
   kill-pane -t 1 \; \
   move-window -s 2 -t 1 \; \
   new-window -n "affirmations" -c "/tmp" "exec vim $HOME/code/notes/affirmations.md" \; \
-  new-window -n "viz" -c "$HOME" "exec watch -t -n 100 'figlet Visualizations'" \; \
+  new-window -n "viz" -c "/tmp" "exec vim $HOME/code/notes/visualizations.md" \; \
   new-window -n "music" "exec ~/scripts/mpd/ncmpcpps -s playlist" \; \
   new-window -n "timer" "exec watch -t -n 1 ~/scripts/figlet-clock" \; \
   new-window -n "reading notes" -c "$HOME/code/notes/books" "exec vim" \; \

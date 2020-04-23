@@ -38,6 +38,8 @@ ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
 cs https://curiositystream.com/search/%s
+- https://duckduckgo.com/?q=%s
+ddg https://duckduckgo.com/?q=%s
 EOF
 }
 
