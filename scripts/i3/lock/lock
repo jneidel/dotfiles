@@ -2,6 +2,9 @@
 
 LOGO=`dirname $0`/arch-logo.png
 IMG=/tmp/screen_locked.png
+PARTS=/tmp/lock_parts_
+PART1=${PARTS}0.jpg
+PART2=${PARTS}1.jpg
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
@@ -18,15 +21,29 @@ command -v i3lock >/dev/null || { echo "i3lock is not installed"; exit 1; }
 # take a screenshot
 scrot -o $IMG
 
-# blur screenshot
-convert $IMG -blur 0x6 $IMG
-## see for customizing blur: https://www.imagemagick.org/Usage/blur/#blur_args
+process_image() {
+  # blur screenshot
+  convert $1 -blur 0x6 $1
+  ## see for customizing blur: https://www.imagemagick.org/Usage/blur/#blur_args
 
-# add small arch logo to screen center
-convert $IMG $LOGO -gravity center -geometry +0-10 -composite $IMG
+  # add small arch logo to screen center
+  convert $1 $LOGO -gravity center -geometry +0-10 -composite $1
 
-# add user@hostname above the logo
-convert $IMG -font Roboto-Mono-for-Powerline -fill grey -pointsize 16 -gravity center -draw "text 0,-110 '$USER@$(hostname)'" $IMG
-## list of fonts: identify -list font
+  # add user@hostname above the logo
+  convert $1 -font Roboto-Mono-for-Powerline -fill grey -pointsize 16 -gravity center -draw "text 0,-110 '$USER@$(hostname)'" $1
+  ## list of fonts: identify -list font
+}
+
+if [ "$(xrandr | grep -c ' connected ')" -gt 1 ]; then # 2 monitors
+  convert $IMG -crop 2x1@ $PARTS%d.jpg
+
+  process_image $PART1
+  process_image $PART2
+
+  convert $PARTS*.jpg +append $IMG
+else
+  process_image $IMG
+fi
 
 i3lock -i $IMG --ignore-empty-password
+

@@ -49,11 +49,15 @@ XF86AudioPlay
   ~/scripts/sxhkd/control-mpd.sh toggle
 XF86Search
   ~/scripts/sxhkd/control-mpd.sh toggle
+XF86Bluetooth
+  ~/scripts/sxhkd/control-mpd.sh toggle
 
 # Also JBL play double press
 XF86AudioNext
   ~/scripts/sxhkd/control-mpd.sh next
 XF86LaunchA
+  ~/scripts/sxhkd/control-mpd.sh next
+XF86Keyboard
   ~/scripts/sxhkd/control-mpd.sh next
 
 XF86AudioPrev

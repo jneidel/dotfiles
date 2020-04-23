@@ -1,0 +1,6 @@
+#! /bin/sh
+
+command -v monitor >/dev/null || { echo "monitor script is not in PATH"; exit 1; }
+
+monitor >/dev/null 2>&1
+
