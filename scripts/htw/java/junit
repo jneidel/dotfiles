@@ -29,4 +29,5 @@ if [ "$1" = "--version" ] || [ "$1" = "-v" ] || [ "$1" = "-V" ]; then
   exit
 fi
 
-java -jar "$LOCAL_JAR" $@
+# java -jar "$LOCAL_JAR" $@
+java -cp .:$LOCAL_JAR org.junit.runner.JUnitCore $@
