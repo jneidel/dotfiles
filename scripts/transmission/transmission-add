@@ -9,7 +9,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-CLIP=$(clipit -c 2>/dev/null)
+CLIP=$(xclip -sel clipboard -o 2>/dev/null)
 
 echo "$CLIP" > ~/tmp/clip
 

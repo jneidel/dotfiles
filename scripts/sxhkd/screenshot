@@ -1,0 +1,27 @@
+#! /bin/sh
+
+PIC_DIR=~/ct/pictures
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ screenshot <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ screenshot <++>
+EOF
+  exit
+fi
+
+command -v scrot >/dev/null || { echo "scrot is not installed"; exit 1; }
+
+mkdir -p $PIC_DIR
+
+notify-send "screen shot in 5s" -t 1000 -i camera
+sleep 5s && \
+/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e "notify-send \"took screenshot\" -t 1000 -i camera;mv \$f $PIC_DIR" --silent --freeze --select
+

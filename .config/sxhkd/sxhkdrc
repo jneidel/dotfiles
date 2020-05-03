@@ -77,7 +77,9 @@ super + p
   /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv $f ~/ct/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
 
 super + P
-  /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -u -e 'mv $f ~/ct/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
+  ~/scripts/sxhkd/screenshot
+
+# /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -u -e 'mv $f ~/ct/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
 
 ## misc
 super + n
