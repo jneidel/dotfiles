@@ -1,0 +1,23 @@
+#! /bin/sh
+
+QUEUE=~/.local/share/newsboat/queue
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ newsboat-mpv-enqueued-podcast
+Play the last podcast in the podboat queue.
+Enqueue podcasts in newsboat and then play them via a macro.
+EOF
+  exit
+fi
+
+command -v mpv >/dev/null || { echo "<++> is not installed"; exit 1; }
+
+[ ! -e "$QUEUE" ] && { echo "Queue file does not exist"; exit 2; }
+[ "$(wc -l $QUEUE | awk '{ print $1 }')" -lt 1 ] && { echo "Queue is empty"; exit 3; }
+
+URL="$(tail -n1 $QUEUE | awk '{print $1}')"
+sed -i '$d' $QUEUE
+
+echo "Playing: $URL"
+mpv --no-audio-display "$URL"

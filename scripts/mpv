@@ -1,0 +1,19 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ mpv MPV_ARGS
+mpv wrapper to add correct latency from bluetooth
+EOF
+  exit
+fi
+
+command -v /bin/mpv >/dev/null || { echo "mpv is not installed"; exit 1; }
+
+if btdevice >/dev/null; then
+  echo "Adapting for bluetooth delay"
+  /bin/mpv --audio-delay='-.120' "$@"
+else
+  /bin/mpv "$@"
+fi
+

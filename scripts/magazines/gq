@@ -37,7 +37,7 @@ function testUrl() {
 function download() {
   DOWNLOAD_URL=$(curl -Ss "$1" | grep -P -o '"https://vk.com/doc.*?"' | cut -d\" -f2)
 
-  FILE="$DOWNLOAD_LOCATION/gq-$3-$2.pdf"
+  FILE="$DOWNLOAD_LOCATION/gq-$3-$2-$4.pdf"
   wget -q --show-progress -c "$DOWNLOAD_URL" -O "$FILE"
   if [ "$(du -s "$FILE" | cut -f1)" -gt 1000 ]; then
     printf "\nSucessfully downloaded $FILE\n\n"
@@ -50,11 +50,11 @@ function download() {
 
 function testAndDownloadUSA() {
   URL="$(genUSA $1 $2)"
-  testUrl "$URL" && download "$URL" $1 $2
+  testUrl "$URL" && download "$URL" $1 $2 us
 }
 function testAndDownloadBritish() {
   URL="$(genBritish $1 $2)"
-  testUrl "$URL" && download "$URL" $1 $2
+  testUrl "$URL" && download "$URL" $1 $2 br
 }
 
 MONTH=$(date +%B | tr A-Z a-z)

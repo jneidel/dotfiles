@@ -40,6 +40,7 @@ d https://www.dict.cc/?s=%s
 cs https://curiositystream.com/search/%s
 - https://duckduckgo.com/?q=%s
 ddg https://duckduckgo.com/?q=%s
+mw https://www.merriam-webster.com/dictionary/%s
 EOF
 }
 

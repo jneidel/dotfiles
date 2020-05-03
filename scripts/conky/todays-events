@@ -30,7 +30,7 @@ print_list() {
   sh $TMP | while read -r line; do {
     # once a future events has been found, skip checking
     [ -n "$DONE" ] && {
-      echo $line
+      echo "$line "
       continue
     }
 
@@ -46,7 +46,7 @@ print_list() {
 if [ "$1" = "-r" ]; then # for conky
   print_list conky |
   grep -v "No events" |
-  sed "s/:00//g; s/ /_/g; s/Ü/?/g" |
+  sed "s/[[:space:]]*$//g; s/:00//g; s/ /_/g; s/Ü/?/g" |
   xargs printf "%60s\n" |
   tr "_" " " |
   sed "s:?:Ü:g" # Ü takes up 2 chars for %60s

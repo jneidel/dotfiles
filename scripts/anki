@@ -1,0 +1,13 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ anki
+Anki wrapper for passing a qt style
+EOF
+  exit
+fi
+
+command -v /bin/anki >/dev/null || { echo "/bin/anki is not installed"; exit 1; }
+
+/bin/anki -style Fusion 2>/dev/null

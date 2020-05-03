@@ -137,6 +137,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - Rules for clean fighting among couples: [How To Fight As a Couple](https://www.youtube.com/watch?v=IE-P11KKYFs&t=113)
 - 9-5 is not the only or best way to live: [Some Luke Smith FAQ: Over 1,000,000 Hours of Content CONSOOMED!!!](https://www.youtube.com/watch?v=Q-Y5xqDkC50&t=736)
 - Podcast: Staying curious and living in other cultures: [Derek Sivers: Different approaches to curiosity, self-reliance, becoming a world citizen, seeing things from a different point of view](https://m.sivers.org/2020-02-DerekSivers-FeedingCuriosity.mp3) - at 42 min
+- A: Consider the downsides of having children: [Why it is important not to have children](https://stallman.org/articles/children.html)
 
 ### Political
 
@@ -149,7 +150,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 
 ### Understanding other people
 
-- Transgender: [ContraPoints](https://www.youtube.com/user/ContraPoints/videos) - Especially ["Are Traps Gay?"](https://www.youtube.com/watch?v=PbBzhqJK3bg)
+- Transgender: [ContraPoints](https://www.youtube.com/user/ContraPoints/videos) - Especially ["Are Traps Gay?"](https://www.youtube.com/watch?v=PbBzhqJK3bg) and [Shame](https://www.youtube.com/watch?v=K7WvHTl_Q7I)
 - S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/), [The Boondocks](https://www.imdb.com/title/tt0373732)
 - M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) [[nf](https://www.netflix.com/watch/60024976)]
 

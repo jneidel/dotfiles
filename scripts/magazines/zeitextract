@@ -18,6 +18,6 @@ command -v pdfextract >/dev/null || { echo "pdfextract script is not in PATH"; e
 
 PAGE="$1"
 FILE="$(ls -t ~/ct/zeit/*.pdf | head -n1)"
-OUTPUT="$HOME/Downloads/zeit-extract-$(date +%d-%m-%H:%M:%S).pdf"
+OUTPUT="$HOME/ct/zeit/extracts/zeit-extract-$(date +%d-%m-%H:%M:%S).pdf"
 
 pdfextract "$FILE" "$PAGE" "$OUTPUT"
