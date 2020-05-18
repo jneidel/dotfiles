@@ -18,7 +18,7 @@ command -v mpc-get >/dev/null &&
   MPC_CMD="mpc-get file" ||
   MPC_CMD="mpc -p $PORT status -f %file% | head -n 1"
 
-if is-mpd-server; then
+if [ "$IS_SERVER" -eq 1 ]; then
   SONG_FILE="$REMOTE_DIR/$($MPC_CMD)"
   [ `ssh $REMOTE_NAME "basename '$SONG_FILE'" | rev | cut -d\. -f1` != "3pm" ] && {
     echo "File is not a mp3"
@@ -28,7 +28,8 @@ if is-mpd-server; then
     ssh $REMOTE_NAME "~/scripts/get-lyrics '$1' '$2'"
   }
 else
-  SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
+  SONG_FILE="$LOCAL_DIR/$($MPC_CMD)"
+  echo $SONG_FILE
   [ "$(basename "$SONG_FILE" | rev | cut -d\. -f1)" != "3pm" ] && {
     echo "File is not a mp3"
     exit

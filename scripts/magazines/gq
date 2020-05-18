@@ -9,6 +9,9 @@ function genBritish() {
 function genUSA() {
   echo "https://magazinelib.com/all/gq-usa-$1-$2/"
 }
+function genUSAStyle() {
+  echo "https://magazinelib.com/all/gq-style-usa-$1-$2/"
+}
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ gq"
@@ -56,6 +59,11 @@ function testAndDownloadBritish() {
   URL="$(genBritish $1 $2)"
   testUrl "$URL" && download "$URL" $1 $2 br
 }
+function testAndDownloadUSAStyle() {
+  URL="$(genUSAStyle $1 $2)"
+  testUrl "$URL" && download "$URL" $1 $2 br
+}
+
 
 MONTH=$(date +%B | tr A-Z a-z)
 YEAR=$(date +%Y)
@@ -72,9 +80,12 @@ THIRD_2_LAST_YEAR=$(date +%Y --date "-3 month")
 # if one of these is download the script exits
 testAndDownloadBritish $MONTH $YEAR
 testAndDownloadUSA $MONTH $YEAR
+testAndDownloadUSAStyle $MONTH $YEAR
 testAndDownloadBritish $LAST_MONTH $LAST_YEAR
 testAndDownloadUSA $LAST_MONTH $LAST_YEAR
+testAndDownloadUSAStyle $MONTH $YEAR
 testAndDownloadBritish $SECOND_2_LAST_MONTH $SECOND_2_LAST_YEAR
 testAndDownloadUSA $SECOND_2_LAST_MONTH $SECOND_2_LAST_YEAR
-testAndDownloadBritish $THIRD_2_LAST_MONTH $THIRD_2_LAST_YEAR
-testAndDownloadUSA $THIRD_2_LAST_MONTH $THIRD_2_LAST_YEAR
+testAndDownloadUSAStyle $MONTH $YEAR
+# testAndDownloadBritish $THIRD_2_LAST_MONTH $THIRD_2_LAST_YEAR
+# testAndDownloadUSA $THIRD_2_LAST_MONTH $THIRD_2_LAST_YEAR

@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ autostart-lock
+xautostart using a custom lock
+EOF
+  exit
+fi
+
+command -v xautolock >/dev/null || { echo "xautolock is not installed"; exit 127; }
+
+xautolock -time 120 -locker ~/scripts/i3/lock/lock &
+

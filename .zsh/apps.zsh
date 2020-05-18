@@ -37,6 +37,7 @@ alias glow="/bin/glow -s dark"
 alias cal="/bin/cal -m"
 alias scp="echo use sscp instead; echo"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
+alias webtorrent="/bin/webtorrent --mpv"
 
 ### shorter script names
 alias rc="rename-comic"

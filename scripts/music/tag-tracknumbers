@@ -1,0 +1,24 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ tag-tracknumbers [DIR]
+Loop over mp3 in a directory and assign a track number.
+
+Parameters:
+  [\$1]: album directory to tag, default: pwd ('.')
+EOF
+  exit
+fi
+
+command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed"; exit 127; }
+
+DIR="$1"
+[ -z "$DIR" ] && DIR=.
+
+IFS=$'\n'
+for mp3 in $(find "$DIR" -iname "*.mp3"); do
+  printf "Track number for '$mp3'? "
+  read n
+  eyeD3 --track "$n" "$mp3"
+done

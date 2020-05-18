@@ -27,6 +27,15 @@ test_audio() {
 }
 test_audio &
 
+echo "Killing xautolock"
+kill $(pidof xautolock)
+
+cleanup() {
+  echo "Starting xautolock"
+  ~/scripts/i3/lock/autostart-lock
+}
+trap cleanup EXIT # does not work
+
 # -s size (dimension)
 # -f format (x/alsa)
 # -i input (x display/pulse/default)
@@ -45,6 +54,7 @@ ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
 # -r 30 \
 
   # -acodec pcm_s16le -vcodec libx264 -preset fast -crf 0 -threads 0 \
+
 
 # adapt quality/size options
 ## https://ubuntuforums.org/showthread.php?p=8746719#post8746719

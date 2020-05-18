@@ -33,7 +33,7 @@ alias tsmd="tsmdone"
 
 alias tsmc="transmission-clear"
 
-alias tsmk="tsmc 2>/dev/null; transmission-kill"
+alias tsmk="transmission-kill"
 
 alias tsmsite="$BROWSER http://localhost:9091" # open transmission site
 

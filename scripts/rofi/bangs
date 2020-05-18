@@ -20,9 +20,9 @@ bangList() {
   cat << EOF
 lg http://gen.lib.rus.ec/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
 lgf http://gen.lib.rus.ec/fiction/?q=%s
-tpb https://knaben.ru/s/?q=%s&page=0&orderby=99
-tpb2 https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
-tpb3 https://pirateproxy.page/search/%s/0/99/0
+tpb https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
+tpb2 https://pirateproxy.page/search/%s/0/99/0
+tpb3 https://knaben.ru/s/?q=%s&page=0&orderby=99
 nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
 1337x https://1337x.to/search/%s/1/
 t2 https://www.torrentz2.eu/search?f=%s
@@ -66,6 +66,9 @@ query="${res#* }"
 
 if [ "$bang" = "yt" ]; then # run !yt queries through yt script
   ~/scripts/yt $query
+  exit
+elif [ "$bang" = "nd" ]; then
+  ~/scripts/yt "needledrop $query"
   exit
 fi
 

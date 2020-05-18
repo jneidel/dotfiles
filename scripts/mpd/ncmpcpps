@@ -18,7 +18,7 @@ command -v ncmpcpp >/dev/null || { echo "ncmpcpp is not installed"; exit 1; }
 case "$1" in
   l|local|localhost)
     if ! pgrep mpd >/dev/null 2>&1; then
-      mpd &
+      mpd
     fi
     ncmpcpp -p $PORT -h localhost --quiet ;;
   *)
