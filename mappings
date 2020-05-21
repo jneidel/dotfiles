@@ -106,9 +106,7 @@ create .config/htop
 
 #### node
 [eslint]
-.eslint
-.eslintrc
-.eslintrc-ts
+.config/eslint
 
 [npm]
 create .config/npm

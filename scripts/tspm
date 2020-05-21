@@ -1,0 +1,5 @@
+#! /bin/sh
+
+command -v tsp >/dev/null || { echo "tsp (task spooler) is not installed"; exit 127; }
+
+TS_SOCKET=/tmp/tsp-mpv-queue tsp "$@"

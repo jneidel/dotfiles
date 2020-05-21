@@ -27,18 +27,37 @@ test_audio() {
 }
 test_audio &
 
+echo "Killing xautolock"
+kill $(pidof xautolock)
+
+cleanup() {
+  echo "Starting xautolock"
+  ~/scripts/i3/lock/autostart-lock
+}
+trap cleanup EXIT # does not work
+
 # -s size (dimension)
 # -f format (x/alsa)
 # -i input (x display/pulse/default)
 # -y to overwrite files
+# -r framerate
+# -preset fast ~30% ultrafast ~20% cpu
 
 ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
   -f x11grab -i :0.0 \
   -f alsa -i pulse \
-  -c:v libx264 \
+  -r 20 \
+  -threads 0 \
+  -vcodec libx264 \
+  -preset fast \
   "$OUTPUT"
+# -r 30 \
 
-# -c:v libx264 -r 30 -c:a flac
+  # -acodec pcm_s16le -vcodec libx264 -preset fast -crf 0 -threads 0 \
+
+
+# adapt quality/size options
+## https://ubuntuforums.org/showthread.php?p=8746719#post8746719
 
 # change the recording device in pavucontrol
 ##  https://askubuntu.com/questions/682144/capturing-only-desktop-audio-with-ffmpeg

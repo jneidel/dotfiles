@@ -16,5 +16,9 @@ fi
 
 URL="$1"
 
-echo "$1" | sed "s/+//g" | xargs -r $BROWSER
+if echo $URL | fgrep "youtube.com/watch?v=" >/dev/null; then
+  tspm mpv --profile=overlay "$1"
+else
+  echo "$1" | sed "s/+//g" | xargs -r $BROWSER
+fi
 

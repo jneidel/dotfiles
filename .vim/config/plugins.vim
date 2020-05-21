@@ -73,8 +73,8 @@ let g:prettier#config#config_precedence = 'cli-override'
 
 "## eslint
 " using eslint_d (npm i -g eslint_d)
-au BufRead,BufNewFile *.js nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc<CR>`F
-au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.eslintrc-ts<CR>`F
+au BufRead,BufNewFile *.js nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc --resolve-plugins-relative-to /usr/lib/node_modules<CR>`F
+au BufRead,BufNewFile *.ts nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc-ts<CR>`F
 
 "## coc
 let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank"
@@ -167,3 +167,7 @@ let g:lightline = {
 " # sneak
 let g:sneak#s_next = 1
 
+" # vim motion
+nmap dw de
+nmap cw ce
+" restore 'normal' dw/cw behavior, see: https://github.com/chaoren/vim-wordmotion#caveats

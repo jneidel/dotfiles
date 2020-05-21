@@ -9,4 +9,3 @@ start() {
 start conky.conf
 start lsblk.conf
 start khal.conf
-

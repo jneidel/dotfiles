@@ -17,7 +17,7 @@ setxkbmap -option caps:escape &
 # set higher keyboard repeat
 xset r rate 185 100 &
 # lock screen
-xautolock -time 120 -locker ~/scripts/i3/lock/lock &
+~/scripts/i3/lock/autostart-lock
 # bluelight filter
 xflux -k 5000 -l 52 -g 13 &
 # desktop monitor

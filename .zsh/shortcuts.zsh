@@ -1,7 +1,7 @@
 # shortcuts
 
 alias src="source ~/.zshrc"
-alias mmv="qmv -f do" # massmove
+alias mmv="qmv -f do -d" # massmove
 alias auto="xrandr --auto" # dublicate screen on connected hdmi
 
 ## recursive shortcuts

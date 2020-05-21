@@ -19,6 +19,7 @@ alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
+alias ytstream="youtube-dl --format 'mp4' -o - '$1' | mpv -"
 alias -g PE="--playlist-end"
 
 ### redefining existing commands
@@ -37,6 +38,8 @@ alias glow="/bin/glow -s dark"
 alias cal="/bin/cal -m"
 alias scp="echo use sscp instead; echo"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
+alias webtorrent="/bin/webtorrent --mpv"
+alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 
 ### shorter script names
 alias rc="rename-comic"

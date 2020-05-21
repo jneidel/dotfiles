@@ -56,6 +56,7 @@ wget Download util
 curl Download util
 shellcheck Script debugging
 python-eyed3 Mp3 tagging
+id3v2 Mp3 tagging
 
 [conky]
 conky Desktop widgets
@@ -364,19 +365,14 @@ npm:jest Test runner
 [eslint]
 npm:eslint@5 Javascript linter
 npm:eslint_d Eslint script for vim
-
-npm:prettier Code formatter
-
-npm:typescript Typescript compiler
-
-npm:eslint-config-xo xo eslint config
-npm:eslint-config-xo-typescript Typescript eslint config
+npm:prettier Code formatter (for vim)
 
 npm:eslint-plugin-node Eslint node ruleset
 npm:eslint-plugin-unicorn Eslint unicorn ruleset
 
 npm:@typescript-eslint/parser Typescript eslint parser
 npm:@typescript-eslint/eslint-plugin Typescript eslint rules
+npm:typescript Typescript compiler
 
 ## music
 [kid3]
@@ -453,3 +449,6 @@ ncmpcpp mpd client
 
 [anki]
 anki SRS and flashcards
+
+[webtorrent]
+webtorrent-cli Torrent streaming

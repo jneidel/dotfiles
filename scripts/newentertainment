@@ -1,0 +1,102 @@
+#! /bin/sh
+
+DATE_FILE=$HOME/.local/share/newentertainment_date
+DIR=$HOME/ct/dont_touch
+ORDER=$DIR/order
+MOVED=$DIR/moved
+WATCH_DIR=$HOME/ct/movies
+
+PENSUM=120
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ newentertainment
+Once a day, you can add media corresponding to the pensum of $PENSUM to your watch directory.
+EOF
+  exit
+fi
+
+if [ "$(date -d "$(cat $DATE_FILE)" +%s)" -gt "$(date -d 'today 0' +%s)" ]; then
+  echo "You had your share for today. Check in tomorrow."
+  exit 0
+fi
+
+# pensum can't behandled in a variable, as its inconsistend between functions
+PENSUM_FILE=$(mktemp)
+printf $PENSUM > $PENSUM_FILE
+read_pensum() {
+  cat $PENSUM_FILE
+}
+write_pensum() {
+  printf $1 > $PENSUM_FILE
+}
+
+has_pensum() {
+  media_type="$1"
+  pensum=$(read_pensum)
+  case "$media_type" in
+    s_60) [ "$pensum" -ge 60 ] && true || false;;
+    s_20) [ "$pensum" -ge 20 ] && true || false;;
+    m) [ "$pensum" -ge 120 ] && true || false;;
+  esac
+}
+
+decrement_pensum() {
+  media_type="$1"
+  case "$media_type" in
+    s_60) write_pensum $(($(read_pensum) - 60));;
+    s_20) write_pensum $(($(read_pensum) - 20));;
+    m) write_pensum 0;;
+  esac
+  echo "pens: $media_type $(read_pensum)"
+}
+
+rm_line() {
+  line="$1"
+  tmp=$(mktemp)
+  grep -Fv "$line" $ORDER > $tmp
+  cp $tmp $ORDER
+}
+
+move() {
+  file="$1"
+  echo "move: $(basename $1)"
+  cp "$1" "$WATCH_DIR"
+  mv "$1" "$MOVED"
+}
+
+handle_series() {
+  name="$1"
+
+  find "$DIR/$name" -regextype posix-extended -regex '.*\.(mkv|mp4|avi)' | sort | while read -r file; do
+    if echo $file | fgrep "/s_20/" >/dev/null; then
+      media_type=s_20
+    else
+      media_type=s_60
+    fi
+
+    if has_pensum $media_type; then
+      move "$file"
+      decrement_pensum $media_type
+    fi
+  done
+}
+handle_movie() {
+  name="$1"
+  media_type="m"
+
+  if has_pensum $media_type; then
+    move "$name"
+    decrement_pensum $media_type
+    rm_line "$1"
+  fi
+}
+
+while read -r name; do
+  case $name in
+    s_60*|s_20*) handle_series "$name" ;;
+    m*) handle_movie "$name" ;;
+  esac
+done <$ORDER
+
+date > $DATE_FILE

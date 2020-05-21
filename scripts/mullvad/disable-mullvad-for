@@ -43,6 +43,6 @@ if [ ! "$(mullvad block-when-disconnected get)" = "Network traffic will be allow
   fi
 else
   echo "running '$@'"
-  $@
+  "$@"
 fi
 

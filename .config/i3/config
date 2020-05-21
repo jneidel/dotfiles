@@ -158,8 +158,8 @@ assign [class="monitor"] $ws5
 bindsym $mod+Shift+r restart
 
 # Resize window
-bindsym $mod+Shift+k resize shrink height 2 px or 2 ppt
-bindsym $mod+Shift+j resize grow height 2 px or 2 ppt
+bindsym $mod+Shift+j resize shrink height 2 px or 2 ppt
+bindsym $mod+Shift+k resize grow height 2 px or 2 ppt
 bindsym $mod+Shift+h resize grow width 2 px or 2 ppt
 bindsym $mod+Shift+l resize shrink width 2 px or 2 ppt
 
