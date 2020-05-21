@@ -56,6 +56,7 @@ wget Download util
 curl Download util
 shellcheck Script debugging
 python-eyed3 Mp3 tagging
+id3v2 Mp3 tagging
 
 [conky]
 conky Desktop widgets
@@ -453,3 +454,6 @@ ncmpcpp mpd client
 
 [anki]
 anki SRS and flashcards
+
+[webtorrent]
+webtorrent-cli Torrent streaming

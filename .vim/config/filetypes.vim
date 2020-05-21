@@ -37,7 +37,7 @@ au BufRead ~/code/notes/journal/* setfiletype markdown
 au BufRead ~/.contacts/* setfiletype conf
 
 " shell scripts
-au Filetype shell,zsh,bash,sh map <leader>c :w<CR> :!shellcheck %
+au Filetype shell,zsh,bash,sh map <leader>k :w<CR> :!shellcheck %
 " Todo: how can I close preview window on 0 exit code
 
 " enable javascript syntax folding

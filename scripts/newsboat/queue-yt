@@ -1,0 +1,3 @@
+#! /bin/sh
+
+tspm mpv --profile=overlay "$1"

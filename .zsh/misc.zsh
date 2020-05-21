@@ -15,14 +15,3 @@ mpdg() {
   $B "https://genius.com/search?q=$(urlencode "$(mpc-get '%artist% %title%')")"
   # todo: strip feat.
 }
-
-## previous command hotkeys
-# print previous command but only the first nth arguments
-# see: https://github.com/gotbletu/shownotes/blob/master/bang_previous_commands_hotkeys.md
-bindkey -s '\e1' "!:0 \t" # alt+1
-bindkey -s '\e2' "!:0-1 \t" # alt+2
-bindkey -s '\e3' "!:0-2 \t"
-bindkey -s '\e4' "!:0-3 \t"
-bindkey -s '\e5' "!:0-4 \t"
-bindkey -s '\el' "!:0- \t" # alt+l - all but the last word
-

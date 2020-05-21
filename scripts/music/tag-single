@@ -14,13 +14,14 @@ Date: none
 Track: none
 
 Parameters:
-  \$1: files
+  \$1+: files
 
 Parameter:
   -A: Set custom album artist
 
 Example:
   $ tag-single 'Louis Cole - Blimp.mp3'
+  $ tag-single -A 'Black Muffin' 'Black Muffin - Warrior.mp3'
 "; exit
 fi
 
