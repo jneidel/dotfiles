@@ -11,8 +11,7 @@
     "node"
   ],
   "extends": [
-    "eslint:recommended",
-    "xo"
+    "eslint:recommended"
   ],
   "rules": {
     "no-undef": 2,

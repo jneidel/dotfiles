@@ -37,6 +37,8 @@ export BROWSER=brave
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
 export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
+export NODE_PATH=/usr/lib/node_module
+# for eslint, see: https://github.com/eslint/eslint/issues/11914#issuecomment-525498682
 
 ### Themes
 export GTK_THEME=Arc
