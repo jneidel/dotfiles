@@ -7,7 +7,6 @@
     }
   },
   "plugins": ["@typescript-eslint"],
-  "extends": ["xo-typescript"],
   "rules": {
     "@typescript-eslint/array-type": [2, "array"],
     "@typescript-eslint/ban-types": [

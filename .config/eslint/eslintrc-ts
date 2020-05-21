@@ -12,9 +12,7 @@
     "@typescript-eslint"
   ],
   "extends": [
-    "eslint:recommended",
-    "xo",
-    "xo-typescript"
+    "eslint:recommended"
   ],
   "rules": {
     "no-undef": 2,

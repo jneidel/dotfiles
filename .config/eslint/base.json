@@ -7,7 +7,7 @@
     "jest": true
   },
   "plugins": ["unicorn", "node"],
-  "extends": ["eslint:recommended", "xo"],
+  "extends": ["eslint:recommended"],
   "rules": {
     "no-undef": 2,
     "no-console": 0,
