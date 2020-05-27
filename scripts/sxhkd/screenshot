@@ -1,18 +1,16 @@
 #! /bin/sh
 
 PIC_DIR=~/ct/pictures
+FORMAT='screenshot_%Y-%b-%d_%H:%M:%S.png'
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
-$ screenshot <++>
-<++>
+$ screenshot [-s]
+Take a screenshot
 
-Parameters:
-  \$1: <++>
-  [\$1]: <++>
-
-Example:
-  $ screenshot <++>
+Flags:
+  -s: select screen snippet (+3s delay)
+  -s [delay]: select with custom delay (in secs)
 EOF
   exit
 fi
@@ -21,7 +19,14 @@ command -v scrot >/dev/null || { echo "scrot is not installed"; exit 1; }
 
 mkdir -p $PIC_DIR
 
-notify-send "screen shot in 5s" -t 1000 -i camera
-sleep 5s && \
-/usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e "notify-send \"took screenshot\" -t 1000 -i camera;mv \$f $PIC_DIR" --silent --freeze --select
+DELAY="3"
+[ -n "$2" ] && DELAY="$2"
+
+if [ "$1" = "-s" ]; then
+  notify-send "screen shot in ${DELAY}s" -t 1000 -i camera
+  sleep "$DELAY"s && \
+  /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z --freeze --select
+else
+  /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z
+fi
 

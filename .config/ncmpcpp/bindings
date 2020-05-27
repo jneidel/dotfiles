@@ -1,47 +1,63 @@
 # ncmpcpp bindings
 ## movement (vim keys)
 def_key "j"
-    scroll_down
+  scroll_down
 def_key "k"
-    scroll_up
+  scroll_up
 def_key "h"
-    previous_column
+  previous_column
 def_key "l"
-    next_column
-
+  next_column
 
 def_key "u"
-    page_up
+  page_up
 def_key "d"
-    page_down
-
-def_key "G"
-  move_end
-def_key "g"
-  move_home
-
-def_key "h"
-  jump_to_parent_directory
-def_key "l"
-  enter_directory
-
-def_key "l"
-  run_action
-def_key "l"
-  play_item
-
-def_key "n"
-    next_found_item
-def_key "N"
-    previous_found_item
+  page_down
 
 def_key "ctrl-b"
   page_up
 def_key "ctrl-f"
   page_down
 
+def_key "G"
+  move_end
+def_key "g"
+  move_home
+
 def_key "i"
  jump_to_playing_song
+
+def_key "h"
+  jump_to_parent_directory
+def_key "l"
+  enter_directory
+
+## playback
+def_key "l"
+  run_action
+def_key "l"
+  play_item
+
+def_key "space"
+  pause
+
+## next/prev
+def_key "b"
+  next
+#def_key "z"
+# prev
+def_key ">"
+  next
+def_key "<"
+  previous
+
+## search
+def_key "/"
+  find
+def_key "n"
+  next_found_item
+def_key "N"
+  previous_found_item
 
 ## view modes
 ### media
@@ -62,7 +78,7 @@ def_key "p"
 def_key "P"
   show_playlist_editor
 
-### search
+### search engine
 def_key "s"
   show_search_engine
 def_key "s"
@@ -70,32 +86,21 @@ def_key "s"
 def_key "r"
   reset_search_engine
 
+### visualizer (local only)
 def_key "v"
   show_visualizer
 def_key "v"
   toggle_visualization_type
 
-def_key "f1"
-  show_help
-def_key "t"
-  show_clock
-def_key "@"
-  show_server_info
+### other views
 def_key "Y"
   show_lyrics
-
-## playback
-def_key "space"
-  pause
-
-def_key "b"
-  next
-#def_key "z"
-# prev
-def_key ">"
-  next
-def_key "<"
-  previous
+def_key "t"
+  show_clock
+def_key "f1"
+  show_help
+def_key "@"
+  show_server_info
 
 ## volume
 def_key "+"
@@ -133,7 +138,7 @@ def_key "C"
 def_key "U"
   update_database
 
-## track position
+## track position/seek
 def_key "L"
   seek_forward
 def_key "H"
@@ -142,18 +147,16 @@ def_key "H"
 def_key "T"
   jump_to_position_in_song
 
+## selections
+def_key "B"
+  select_album
+#def_key "v"
+#  reverse_selection
+#
+#def_key "V"
+#  remove_selection
 
-#
-#def_key "s"
-#  stop
-#
-#def_key "p"
-#  pause
-#
-#
-#def_key "ctrl-h"
-#  jump_to_parent_directory
-#
+
 #def_key "ctrl-h"
 #  replay_song
 #
@@ -162,14 +165,6 @@ def_key "T"
 #
 #def_key "backspace"
 #  replay_song
-#
-#
-#
-#def_key "y"
-#  save_tag_changes
-#
-#
-#
 #
 #def_key "Y"
 #  toggle_replay_gain_mode
@@ -177,23 +172,11 @@ def_key "T"
 #def_key "T"
 #  toggle_add_mode
 #
-#def_key "|"
-#  toggle_mouse
-#
-#def_key "#"
-#  toggle_bitrate_visibility
-#
-#def_key "Z"
-#  shuffle
-#
 #def_key "x"
 #  toggle_crossfade
 #
 #def_key "X"
 #  set_crossfade
-#
-#def_key "u"
-#  update_database
 #
 #def_key "ctrl-s"
 #  sort_playlist
@@ -214,9 +197,6 @@ def_key "T"
 #  select_found_items
 #
 #def_key "/"
-#  find
-#
-#def_key "/"
 #  find_item_forward
 #
 #def_key "?"
@@ -233,9 +213,6 @@ def_key "T"
 #
 #def_key "w"
 #  toggle_find_mode
-#
-#def_key "e"
-#  edit_song
 #
 #def_key "e"
 #  edit_library_tag
@@ -261,21 +238,8 @@ def_key "T"
 #def_key "g"
 #  jump_to_position_in_song
 #
-#def_key "l"
-#  show_lyrics
-#
 #def_key "ctrl-v"
 #  select_range
-#
-#def_key "v"
-#  reverse_selection
-#
-#def_key "V"
-#  remove_selection
-#
-#def_key "B"
-#  select_album
-#
 #
 #def_key "c"
 #  clear_playlist

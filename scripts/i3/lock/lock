@@ -42,7 +42,7 @@ process_image() {
   add_logo_user $1
 }
 
-if [ "$(xrandr | grep -c ' connected ')" -gt 1 ]; then # 2 monitors
+if [ "$(xrandr --listmonitors | head -n1 | awk '{ print $2 }')" -ge 2 ]; then # 2 monitors
   convert $IMG -crop 2x1@ $PARTS%d.jpg
 
   process_image $PART1
@@ -54,4 +54,3 @@ else
 fi
 
 i3lock -i $IMG --ignore-empty-password
-
