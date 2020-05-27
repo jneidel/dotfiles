@@ -59,6 +59,8 @@ XF86LaunchA
   ~/scripts/sxhkd/control-mpd.sh next
 XF86Keyboard
   ~/scripts/sxhkd/control-mpd.sh next
+XF86Favorites
+  ~/scripts/sxhkd/control-mpd.sh next
 
 XF86AudioPrev
   ~/scripts/sxhkd/control-mpd.sh prev
@@ -72,14 +74,10 @@ XF86MonBrightnessDown
   ~/scripts/sxhkd/backlight p -10
 
 ## screenshot
-# command copied from "alias scrot" in ~/.zsh/apps.zsh
 super + p
-  /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -e 'mv $f ~/ct/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
-
-super + P
   ~/scripts/sxhkd/screenshot
-
-# /usr/bin/scrot 'screenshot_%Y-%b-%d_%H:%M:%S.png' -u -e 'mv $f ~/ct/pictures; notify-send \"took screenshot\" -t 1000 -i camera'
+super + P
+  ~/scripts/sxhkd/screenshot -s
 
 ## misc
 super + n
