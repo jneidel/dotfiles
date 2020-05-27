@@ -60,7 +60,8 @@ rm_line() {
 
 move() {
   file="$1"
-  echo "move: $(basename $1)"
+  cd "$DIR"
+  echo "move: $(basename "$1")"
   cp "$1" "$WATCH_DIR"
   mv "$1" "$MOVED"
 }

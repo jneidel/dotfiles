@@ -212,9 +212,11 @@ browser_display_mode = columns
 search_engine_display_mode = columns
 playlist_editor_display_mode = columns
 
-# center cursor
-autocenter_mode = yes
+### cursor stuff
+# keep centered while moving
 centered_cursor = yes
+# # move cursor to current track on track change
+# autocenter_mode = yes
 
 #discard_colors_if_item_is_selected = yes
 #show_duplicate_tags = true

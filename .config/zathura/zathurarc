@@ -1,6 +1,6 @@
 set selection-clipboard clipboard
-set scroll-page-aware true
-set guioptions v
+set scroll-page-aware false
+set guioptions ""
 set adjust-open width
 set filemonitor noop
 

@@ -40,6 +40,8 @@ alias scp="echo use sscp instead; echo"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
 alias webtorrent="/bin/webtorrent --mpv"
 alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
+alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
+alias npm="/bin/npm -s"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -49,6 +51,7 @@ alias ht="hosts-toggle"
 alias c3="charge3"
 alias sc="shellcheck"
 alias to="todays-events"
+alias open="mimeopen"
 
 ### misc
 function dict {
@@ -64,7 +67,7 @@ alias g="grep"
 alias gw="./gradlew"
 
 ### newsboat
-alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
+alias new="between 13 && newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear || echo 'not yet'"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 

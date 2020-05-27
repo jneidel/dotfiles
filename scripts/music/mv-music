@@ -12,12 +12,11 @@ fi
 
 ls -d $FROM/*/ | grep -v -e Electro -e HipHop -e Monstercat -e Other -e Pop -e Rock -e Singles -e Soundtracks -e unheard -e "Various Artists" -e German | while read dir; do
   NAME=`basename "$dir"`
-  echo "Not Moving $NAME (disabled in script)"
-  # if ! mv "$dir" "$TO" 2>/dev/null; then
-  #   printf "  "
-  #   mv -v "$dir/"* "$TO/$NAME"
-  #   rmdir "$dir"
-  # fi
+  if ! mv "$dir" "$TO" 2>/dev/null; then
+    printf "  "
+    mv -v "$dir/"* "$TO/$NAME"
+    rmdir "$dir"
+  fi
 done
 
 # remove covers

@@ -1,0 +1,69 @@
+#! /bin/sh
+
+AVAILABLE_ENVS="lf"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ mimeopen FILE
+Open a file with it's correspondant opener programm
+
+Parameters:
+  \$1: file to be opened
+
+Flags:
+  -e ENV: set an preconfigure environment for different openers
+          available: $AVAILABLE_ENVS
+
+Example:
+  $ mimeopen pictures
+  #=> opens dir in sxiv
+  $ mimeopen podcast
+  #=> plays dir in mpvm
+EOF
+  exit
+fi
+
+command -v mime >/dev/null || { echo "mime script is not in PATH"; exit 127; }
+
+ENV_=""
+FILE=""
+
+if [ "$1" = "-e" ]; then
+  FILE="$3"
+  ENV_="$2"
+elif [ "$2" = "-e" ]; then
+  FILE="$1"
+  ENV_="$3"
+else
+  FILE="$1"
+fi
+
+EXT=$(mime "$FILE")
+EXIT_CODE="$?"
+[ "$EXIT_CODE" -gt 0 ] && { echo $EXT ; exit "$EXIT_CODE" ; }
+
+# environment specific extensions
+if [ "$ENV_" = "lf" ]; then
+  case $EXT in
+    mp3|flac|ogg|wma|m4b) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video '$FILE'" &
+    exit 0;;
+  esac
+elif [ -z "$ENV_" ]; then
+  true
+else
+  printf "Environment not supported.\n  Available: $AVAILABLE_ENVS\n"
+  exit 1
+fi
+
+# generic handlers
+HANDLER="$(mimehandler $EXT)"
+EXIT_CODE="$?"
+[ "$EXIT_CODE" -ge 10 ] && { echo $HANDLER ; exit "$EXIT_CODE" ; }
+
+# exit 1 means the handler does not like to be run in the background (&)
+if [ "$EXIT_CODE" -eq 0 ]; then
+  sh -c "$HANDLER \"$FILE\" &"
+elif [ "$EXIT_CODE" -eq 1 ]; then
+  sh -c "$HANDLER \"$FILE\""
+fi
+

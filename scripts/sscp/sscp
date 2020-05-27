@@ -6,5 +6,5 @@ Dump scp wrapper
 "; exit
 fi
 
-/bin/scp "$@"
+/bin/scp -r "$@"
 

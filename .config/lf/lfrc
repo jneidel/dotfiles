@@ -16,36 +16,10 @@ set filesep "\n"
 
 ## custom functions
 cmd open ${{
-  # get file ext
-  basename="$f"
-  fileext=
-  while [[ "$basename" = ?*.@(bz2|gz|gpg) ]]; do
-    fileext=${basename##*.}.$fileext
-    basename=${basename%.*}
-  done
-  if [[ "$basename" = ?*.* ]]; then
-    fileext=${basename##*.}.$fileext
-    basename=${basename%.*}
-  fi
-  fileext=${fileext%.}
-
-  # file cases, same as in ~/.zsh/file-extensions.zsh
-	case $fileext in
-		png|jpg|jpeg) sxiv "$f" &;;
-		pdf) zathura "$f" &;;
-		mp4|mkv|avi|m4v|webm|mpg) mpv --profile=overlay --fs "$f" >/dev/null 2>&1 &;;
-		tex) pdflatex "$f";;
-		epub) epr "$f" 2>/dev/null || FBReader "$f" &;;
-		cbz|cbr) YACReader "$f" >/dev/null 2>&1 &;;
-		mp3|flac|ogg|wma|m4b) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video '$f'" &;;
-		tgz|zip|rar|xz|gz) extract "$f";;
-    tgz.gpg) untargpg "$f";;
-		html) $BROWSER "$f" >/dev/null 2>&1 &;;
-		exe) wine "$f" >/dev/null 2>&1 &;;
-    gpg) extracthere "$f";;
-    sh) bash "$f";;
-		*) $EDITOR "$f";;
-	esac
+  ~/scripts/mimeopen -e lf "$f"
+}}
+cmd diropen ${{
+  ~/scripts/lf-handle-dir "$f"
 }}
 
 cmd remove ${{
@@ -54,6 +28,11 @@ cmd remove ${{
 
 cmd massmove ${{
   qmv -f do -d $fx
+
+  # if spaces in name, qmv spawns annoying empty dirs
+  find . -maxdepth 1  -type d | tail -n+2 | while read -r dir; do
+    rmdir "$dir" 2>/dev/null
+  done
 }}
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
@@ -100,6 +79,7 @@ map c copy
 map <esc> clear
 map m massmove
 map d mkdir
+map D diropen
 map f broot_jump
 map . set hidden!
 map t touch

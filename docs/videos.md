@@ -53,6 +53,7 @@
 
 #### Surveillance
 
+- Why Privacy is an unrealist expectation in today's and tomorrow's age: [2030: Privacy's Dead. What happens next?](https://www.youtube.com/watch?v=_kBlH-DQsEg)
 - A: An alternative to the current state of survailance: [A radical proposal to keep your personal data safe](https://www.theguardian.com/commentisfree/2018/apr/03/facebook-abusing-data-law-privacy-big-tech-surveillance)
 
 ### Linux

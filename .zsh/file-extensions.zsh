@@ -32,7 +32,7 @@ alias -s ogg=mpvm
 alias -s wma=mpvm
 
 ## code
-alias -s sh=bash
+alias -s sh=mimeopen
 alias -s js=node
 alias -s java=java
 alias -s ts=tsc

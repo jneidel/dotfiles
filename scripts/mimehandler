@@ -1,0 +1,53 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ mimehandler EXTENSION
+Return the handler for the given extension
+
+Parameters:
+  \$1: file extension to get the handler for
+
+Example:
+  $ mimehandler mkv
+  #=> mpv --fs
+EOF
+  exit
+fi
+
+[ -e "$1" ] && { echo "Don't pass in file, file extensions only" ; exit 12 ; }
+EXT="$1"
+
+e404() {
+  printf "ERR: corresponding handler not installed.\nPlease install: $1\n"
+  exit 11
+}
+
+# exit 1 means the handler does not like to be run in the background (&)
+case $EXT in
+  png|jpg|jpeg) echo sxiv;;
+  pdf) echo zathura;;
+  sh) echo sh; exit 1;;
+  bash) echo bash; exit 1;;
+  mp4|mkv|avi|m4v|webm|mpg) echo "mpv --fs >/dev/null 2>&1";;
+  tex) echo pdflatex; exit 1;;
+  epub) if command -v epr >/dev/null; then
+      echo "epr 2>/dev/null"; exit 1
+    elif command -v FBReader >/dev/null; then
+      echo FBReader
+    else
+      e404 'epr or FBReader'
+    fi;;
+  mp3|flac|ogg|wma|m4b) echo "mpv --no-audio-display --no-video"; exit 1;;
+  cbz|cbr) echo "YACReader >/dev/null 2>&1";;
+  tgz|zip|rar|xz|gz) echo extract; exit 1;;
+  tgz.gpg) echo untargpg; exit 1;;
+  html) echo "$BROWSER >/dev/null 2>&1";;
+  exe) echo "wine >/dev/null 2>&1";;
+  gpg) echo extracthere; exit 1;;
+  txt) echo "$EDITOR"; exit 1;;
+  *) printf "ERR: no handler setup for: $EXT\n"
+    exit 10;;
+esac
+
+exit 0

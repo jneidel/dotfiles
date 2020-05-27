@@ -1,0 +1,44 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ lf-handle-dir DIRECTORY
+Do something with directory depending on contents
+
+Parameters:
+  \$1: name of the directory
+
+Example:
+  $ lf-handle-dir pictures
+  #=> opens directory in sxiv
+EOF
+  exit
+fi
+
+DIR="$1"
+[ -d "$DIR" ] || { echo "Not a directory."  ; exit 1 ; }
+
+MIME_LIST=$(mktemp)
+find "$DIR" -type f | while read -r file; do
+  mime "$file" >> $MIME_LIST
+done
+
+TOP_EXT=$(uniq -c $MIME_LIST | head -n1 | awk '{print $2}')
+printf "Most common extension for this directory is: $TOP_EXT\n\n"
+
+# special lf case from mimeopen
+case $TOP_EXT in
+  mp3|flac|ogg|wma|m4b) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video '$DIR'" &
+  exit 0;;
+esac
+
+# handler routine from mimeopen
+HANDLER="$(mimehandler $TOP_EXT)"
+EXIT_CODE="$?"
+[ "$EXIT_CODE" -ge 10 ] && { echo $HANDLER ; exit "$EXIT_CODE" ; }
+
+if [ "$EXIT_CODE" -eq 0 ]; then
+  sh -c "$HANDLER \"$DIR\" &"
+elif [ "$EXIT_CODE" -eq 1 ]; then
+  sh -c "$HANDLER \"$DIR\""
+fi

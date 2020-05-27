@@ -1,0 +1,34 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ between AFTER [BEFORE]
+Check if its currently after a certain time and before another.
+
+Parameters:
+  \$1: after or start time, 5 checks if after 5am
+  [\$2]: before or end time, 22 checks if after 11pm
+
+Example:
+  $ between 18 22
+EOF
+  exit
+fi
+
+AFTER="$1"
+BEFORE="$2"
+NOW="$(date +%H)"
+
+if [ -n "$BEFORE" ]; then
+  if [ "$AFTER" -le "$NOW" ] && [ "$BEFORE" -gt "$NOW" ]; then
+    exit 0
+  else
+    exit 1
+  fi
+else
+  if [ "$AFTER" -le "$NOW" ]; then
+    exit 0
+  else
+    exit 1
+  fi
+fi

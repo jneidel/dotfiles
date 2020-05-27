@@ -1,0 +1,55 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ mime FILE
+Classify file type and return a file extension
+
+Parameters:
+  \$1: name of the file
+
+Example:
+  $ mime mime
+  #=> bash
+  $ mime song.mp3
+  #=> mp3
+EOF
+  exit
+fi
+
+FILE="$(readlink -f $1)"
+
+classify_file() {
+  basename="$1"
+  fileext=
+  while [[ "$basename" = ?*.@(bz2|gz|gpg) ]]; do
+    fileext=${basename##*.}.$fileext
+    basename=${basename%.*}
+  done
+  if [[ "$basename" = ?*.* ]]; then
+    fileext=${basename##*.}.$fileext
+    basename=${basename%.*}
+  fi
+  fileext=${fileext%.}
+
+  if [ -z "$fileext" ]; then
+    FILE_OUTPUT="$( file -b "$1" | cut -d, -f1)"
+    if fgrep "cannot open" <<< $FILE_OUTPUT >/dev/null; then
+      echo "[ERR] file does not exist: $FILE"
+      exit 2
+    fi
+
+    case "$FILE_OUTPUT" in
+      "POSIX shell script") echo sh;;
+      "Bourne-Again shell script") echo bash;;
+      "UTF-8 Unicode text"|"ASCII text") echo txt;;
+      *) echo [ERR] mime not configured: $FILE_OUTPUT
+        exit 1;;
+    esac
+  else
+    echo $fileext
+  fi
+}
+
+classify_file "$FILE"
+
