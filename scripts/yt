@@ -1,0 +1,30 @@
+#! /bin/sh
+
+export TS_SOCKET=/tmp/tsp-mpv-queue
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  printf "$ yt <query>
+Play the first video for the given query in mpv
+
+Example:
+  $ yt samurai champloo
+  #=> plays first episode of samurai champloo
+"; exit
+fi
+
+QUERY="$(echo $@)"
+[ -z "$1" ] && QUERY="$(rofi -dmenu -lines 0 -width 35 -p yt)"
+[ -z "$QUERY" ] && exit 1
+
+if echo "$QUERY" | grep -ie "welyn" -e "aquafps" -e "tarkov" -e "sterling" -e "mrbeast" -e "pewdie" >/dev/null; then
+  rofi -e "Prohibited query" -width 35
+  exit 2
+fi
+
+QUERY=$(node -e "console.log( encodeURIComponent( '$QUERY' ) )")
+
+curl -s "https://www.youtube.com/results?search_query=$QUERY" | \
+  grep -Po "/watch\?v=\K.+?\"" | head -n1 | cut -d\" -f1 | \
+  awk '{ print "https://youtube.com/watch?v="$1 }' | \
+  xargs -r tsp mpv --profile=overlay 2>/dev/null
+

@@ -16,5 +16,4 @@ scripts/personal
 scripts/mpd/current-mpd-ip
 scripts/mpd/mpd-server-status
 scripts/weather/location
-scripts/yt
 scripts/*/data
