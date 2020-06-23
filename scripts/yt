@@ -1,5 +1,6 @@
 #! /bin/sh
 
+YT_FILTER_FILE=~/scripts/personal/ytfilters
 export TS_SOCKET=/tmp/tsp-mpv-queue
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -16,9 +17,11 @@ QUERY="$(echo $@)"
 [ -z "$1" ] && QUERY="$(rofi -dmenu -lines 0 -width 35 -p yt)"
 [ -z "$QUERY" ] && exit 1
 
-if echo "$QUERY" | grep -ie "welyn" -e "aquafps" -e "tarkov" -e "sterling" -e "mrbeast" -e "pewdie" >/dev/null; then
-  rofi -e "Prohibited query" -width 35
-  exit 2
+if [ -e "$YT_FILTER_FILE" ]; then
+  if echo "$QUERY" | grep -if $YT_FILTER_FILE >/dev/null; then
+    rofi -e "Prohibited query" -width 35
+    exit 2
+  fi
 fi
 
 QUERY=$(node -e "console.log( encodeURIComponent( '$QUERY' ) )")

@@ -1,5 +1,7 @@
 #! /bin/sh
 
+ICP_SOCK="--input-ipc-server=/tmp/mpv_socket"
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ mpv MPV_ARGS
@@ -12,8 +14,8 @@ command -v /bin/mpv >/dev/null || { echo "mpv is not installed"; exit 1; }
 
 if btdevice >/dev/null; then
   echo "Adapting for bluetooth delay"
-  /bin/mpv --audio-delay='-.120' "$@"
+  /bin/mpv $ICP_SOCK --audio-delay='-.120' "$@"
 else
-  /bin/mpv "$@"
+  /bin/mpv $ICP_SOCK "$@"
 fi
 

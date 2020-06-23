@@ -37,7 +37,7 @@ cmd massmove ${{
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
 
-cmd touch %printf "File Name: "; read ans; touch "$ans"
+cmd touch %printf "File Name: "; read ans; vim "$ans"
 
 cmd broot_jump ${{
   f=$(mktemp)

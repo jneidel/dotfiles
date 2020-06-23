@@ -39,7 +39,7 @@ if [ -z "$1" ]; then
     COMIC_NAME=$(format-comic-name.js "$COMIC")
     OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
 
-    printf "moving\n  $(basename $COMIC)\nto\n  $OUT_FILE\n"
+    printf "moving\n  $(basename "$COMIC")\nto\n  $OUT_FILE\n"
     mv "$COMIC" "$OUT_FILE"
 
     echo $SEPERATOR
@@ -52,7 +52,7 @@ else
     COMIC_NAME=$(format-comic-name.js "$COMIC")
     OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
 
-    printf "moving\n  $(basename $COMIC)\nto\n  $OUT_FILE\n"
+    printf "moving\n  $(basename "$COMIC")\nto\n  $OUT_FILE\n"
     mv "$COMIC" "$OUT_FILE"
     rmdir `dirname $COMIC`
 

@@ -3,7 +3,7 @@
 MANGA=~/ct/manga/updates
 COMIC=~/ct/comics/updates
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   printf "$ show-updates manga|comic
 Show either manga or comic updates.
 
@@ -35,6 +35,10 @@ case $1 in
   comic)
     comicsync 2>/dev/null
     printFile "$COMIC"
+    ;;
+  *)
+    echo "Wrong argument"
+    exit 1
     ;;
 esac
 

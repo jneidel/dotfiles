@@ -3,12 +3,15 @@ set scroll-page-aware false
 set guioptions ""
 set adjust-open width
 set filemonitor noop
+set default-bg "#1C1C1C"
+set recolor-lightcolor "#1C1C1C"
 
 unmap d
 
 map e scroll half-up
 map d scroll half-down
 map f scroll right
+map D set recolor
 
 map u scroll half-up
 map i scroll half-down

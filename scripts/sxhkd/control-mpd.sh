@@ -44,7 +44,12 @@ run_cmd() {
 }
 
 case $1 in
-  toggle) run_cmd toggle;;
+  toggle)
+    if mpvctl get pause && [ "$(mpvctl get pause)" = "false" ]; then
+      mpvctl toggle
+    else
+      run_cmd toggle
+    fi;;
   next)
     ICON=player_end
     HEAD=Next

@@ -1,0 +1,48 @@
+#! /bin/sh
+# see man at: List of Input Commands
+
+SOCKET=/tmp/mpv_socket
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ mpvctl CMD
+Control mpv through the IPC socket at $SOCKET
+
+Commands:
+  play|toggle|pause: toggle playback
+
+Example:
+  $ mpvctl toggle
+EOF
+  exit
+fi
+
+command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
+command -v socat >/dev/null || { echo "socat is not installed"; exit 127; }
+# command -v <++> >/dev/null || { echo "<++> is not installed"; exit 127; }
+
+send_cmd() {
+  res=$(echo "{\"command\": $1}" | socat - $SOCKET)
+  if echo $res | fgrep '"error":"success"' >/dev/null; then
+    echo $res | cut -d: -f2 | cut -d, -f1
+  else
+    if [ -n "$res" ]; then
+      echo $res 1>&2
+    fi
+    exit 1
+  fi
+}
+send_keypress() {
+  echo "sending keypress: $1"
+  send_cmd "[\"keypress\", \"$1\"]" >/dev/null
+}
+send_get() {
+  send_cmd "[\"get_property\", \"$1\"]"
+  # property-list: https://github.com/mpv-player/mpv/issues/7562
+}
+
+case "$1" in
+  play|toggle|pause) send_keypress space;;
+  get) send_get $2;;
+  key) send_keypress $2;;
+esac
