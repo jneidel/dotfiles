@@ -35,11 +35,11 @@ print_list() {
     }
 
     # strip events that are in the past
-    END_TIME=$(echo $line | cut -d\[ -f2 | cut -d\- -f2 | cut -d] -f1 | xargs date +%s -d)
-    [ "$NOW" -lt "$END_TIME" ] && {
+    END_TIME=$(echo $line | cut -d\[ -f2 | cut -d\- -f2 | cut -d] -f1 | grep -v "-" | xargs -r date +%s -d)
+    if [ -z "$END_TIME" ] || [ "$NOW" -lt "$END_TIME" ]; then
       echo $line
       DONE=1
-    }
+    fi
   }; done
 }
 

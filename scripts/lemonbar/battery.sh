@@ -1,24 +1,24 @@
 #! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ battery"
-  echo "Print current battery charge"
+POWER=/sys/class/power_supply
+
+if [ -f $POWER/BAT1/energy_now ]; then
+  BAT=$POWER/BAT1 # x240
+else
+  BAT=$POWER/BAT0 # e495
+fi
+
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ "$1" = "-h" ]; then
+  echo "$ battery.sh"
+  echo "Print current battery charge for: $BAT"
   exit
 fi
 
-POWER=/sys/class/power_supply
+CHARGE=$BAT/energy_now
+CAPACITY=$BAT/energy_full
+AC=$POWER/AC/online
 
-[ -f $POWER/BAT1/energy_now ] && { # x240
-  CHARGE=$POWER/BAT1/energy_now
-  CAPACITY=$POWER/BAT1/energy_full
-  AC=$POWER/AC/online
-} || { # e495
-  CHARGE=$POWER/BAT0/energy_now
-  CAPACITY=$POWER/BAT0/energy_full
-  AC=$POWER/AC/online
-}
-
-PERCENT=$(python -c "print($(cat $CHARGE)/$(cat $CAPACITY)*100)" | cut -d "." -f1)
+PERCENT=$(($(< $CHARGE)*100/$(< $CAPACITY)))
 PERCENT_ICON=$(
   if [ "$PERCENT" -gt 96 ] && [ "$PERCENT" -le 105 ]; then
       echo " "
@@ -45,8 +45,7 @@ PERCENT_ICON=$(
   fi
 )
 
-IS_CHARGING=$(cat $AC)
+IS_CHARGING=$(< $AC)
 CHARGING_ICON=$([ "$IS_CHARGING" -eq 1 ] && echo "")
 
 echo "${CHARGING_ICON}${PERCENT_ICON}${PERCENT}%"
-

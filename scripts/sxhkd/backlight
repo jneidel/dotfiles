@@ -56,10 +56,13 @@ percent() {
   elif [ "$(echo $1 | cut -c 1)" = "+" ]; then
     PERCENTAGE=$(echo $1 | cut -d + -f 2)
     RES=$(echo "$(get_brightness)+(0.$PERCENTAGE*($MAX-5))" | bc | cut -d . -f 1)
+    echo "r $RES"
     if [ "$RES" -lt -1 ]; then
       RES=0
     elif [ "$RES" -gt "$MAX" ]; then
       RES=$MAX
+    elif [ "$(get_brightness)" -eq 0 ]; then
+      RES=10
     fi
     set_brightness $RES
   elif [ "$(echo $1 | cut -c 1)" = "-" ]; then

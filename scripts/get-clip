@@ -7,4 +7,3 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
 fi
 
 xclip -sel clip -o 2>/dev/null
-

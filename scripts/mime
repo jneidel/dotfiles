@@ -17,7 +17,7 @@ EOF
   exit
 fi
 
-FILE="$(readlink -f $1)"
+FILE="$(readlink -f "$1")"
 
 classify_file() {
   basename="$1"
