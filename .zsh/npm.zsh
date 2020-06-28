@@ -33,6 +33,7 @@ alias build="nr build"
 ### watch
 alias nw="nr watch"
 alias nwt="nr watch-test"
+alias nwb="nr watch-build"
 alias nwts="nr watch-ts"
 alias nww="nr watch-webpack"
 alias nwu="nr watch-unit"
@@ -42,3 +43,7 @@ alias ntw="nr watch-test"
 alias npmls="npm list -g --depth=0" # list npm -g pkgs
 alias npml="sudo npm link"
 
+## package.json
+alias pkg="cat package.json"
+alias pkge="vim package.json"
+alias pkgs="cat package.json | jq .scripts"

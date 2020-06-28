@@ -373,7 +373,12 @@
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 
-[ignore]
+[brave_ads]
   # This notification will not be displayed
   appname = Brave
+  format = ""
+
+[kitty_updates]
+  appname = kitty
+  summary = "*kitty*version*"
   format = ""

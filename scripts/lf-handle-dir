@@ -6,7 +6,7 @@ $ lf-handle-dir DIRECTORY
 Do something with directory depending on contents
 
 Parameters:
-  \$1: name of the directory
+  \$1: name of the directory, default: current dir
 
 Example:
   $ lf-handle-dir pictures
@@ -16,7 +16,7 @@ EOF
 fi
 
 DIR="$1"
-[ -d "$DIR" ] || { echo "Not a directory."  ; exit 1 ; }
+[ -d "$DIR" ] || DIR="$(pwd)"
 
 MIME_LIST=$(mktemp)
 find "$DIR" -type f | while read -r file; do
