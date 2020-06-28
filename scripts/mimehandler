@@ -45,7 +45,7 @@ case $EXT in
   html) echo "$BROWSER >/dev/null 2>&1";;
   exe) echo "wine >/dev/null 2>&1";;
   gpg) echo extracthere; exit 1;;
-  txt|md) echo "$EDITOR"; exit 1;;
+  txt|md|java) echo "$EDITOR"; exit 1;;
   *) printf "ERR: no handler setup for: $EXT\n"
     exit 10;;
 esac

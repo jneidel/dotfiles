@@ -25,8 +25,12 @@ get_active_sink() {
   if RUNNING_SINKS="$(pactl list sinks short | fgrep 'RUNNING')"; then
     echo $RUNNING_SINKS | tail -n1 | awk '{ print $1 }'
   else
-    echo 0
     # "@DEFAULT_SINK@"
+    case "$(hostname)" in
+      *x240) echo 0;;
+      *e495) echo 1;;
+      *) echo 0;;
+    esac
   fi
 }
 SINK="$(get_active_sink)"

@@ -83,6 +83,7 @@ map D diropen
 map f broot_jump
 map . set hidden!
 map t touch
+map R reload
 # map p gimp
 
 ### jump - cd to dirs

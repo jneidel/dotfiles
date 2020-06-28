@@ -53,7 +53,7 @@ def_key "<"
 
 ## search
 def_key "/"
-  find
+  find_item_forward
 def_key "n"
   next_found_item
 def_key "N"
