@@ -167,7 +167,3 @@ let g:lightline = {
 " # sneak
 let g:sneak#s_next = 1
 
-" # vim motion
-nmap dw de
-nmap cw ce
-" restore 'normal' dw/cw behavior, see: https://github.com/chaoren/vim-wordmotion#caveats

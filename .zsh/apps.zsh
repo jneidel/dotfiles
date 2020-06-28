@@ -19,7 +19,6 @@ alias ytdl="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=720]' -o '~/
 alias ytmp3="youtube-dl --yes-playlist -c --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
 alias ytlow="youtube-dl --yes-playlist -c --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
-alias ytstream="youtube-dl --format 'mp4' -o - '$1' | mpv -"
 alias -g PE="--playlist-end"
 
 ### redefining existing commands
@@ -65,6 +64,7 @@ alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
 alias cal6="cal -mn 6"
 alias g="grep"
 alias gw="./gradlew"
+alias pg="sudo -u postgres"
 
 ### newsboat
 alias new="between 13 && newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear || echo 'not yet'"

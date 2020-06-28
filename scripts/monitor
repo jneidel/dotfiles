@@ -85,6 +85,8 @@ turn_on() {
   fi
 
   echo "Turned external monitor on"
+
+  xwallpaper --zoom ~/.config/wallpaper.png &
 }
 
 if xrandr --listactivemonitors | grep " $MONITOR" >/dev/null; then

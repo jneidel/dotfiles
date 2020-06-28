@@ -8,10 +8,10 @@ fi
 
 command -v dmenu >/dev/null || { echo "dmenu is not installed"; exit 1; }
 
-case "$(printf "reboot\nsuspend\nshutdown/poweroff\nlock" | dmenu -lines 4 -p power -width 20)" in
+case "$(printf "suspend\nreboot/restart\nshutdown/power off\nlock" | dmenu -lines 4 -p power -width 20)" in
   reboot) reboot;;
   suspend) systemctl suspend;;
   "shutdown/poweroff") poweroff;;
-  lock) blurlock;;
+  lock) ~/scripts/i3/lock/lock;;
 esac
 

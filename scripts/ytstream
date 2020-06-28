@@ -1,0 +1,18 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ ytstream LINK
+Stream youtube-dl via mpv
+
+Parameters:
+  \$1: link to url
+  [\$2]: ytdl options
+EOF
+  exit
+fi
+
+command -v youtube-dl >/dev/null || { echo "youtube-dl is not installed"; exit 127; }
+command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
+
+youtube-dl -o - "$1" $2 $3 | mpv -

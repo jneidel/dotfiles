@@ -6,5 +6,5 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-clipit -c 2>/dev/null
+xclip -sel clip -o 2>/dev/null
 
