@@ -30,6 +30,7 @@ while read -r line ; do
         # battery
         battery="${sys_arr[7]} ${sys_arr[8]}" # icon, percentage
         battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
+        # todo: change foreground to red if battery < 5%, same for load/cpu
         # network monitor
         downspeed="${sys_arr[9]}${sys_arr[10]}" # speed, unit
         downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"

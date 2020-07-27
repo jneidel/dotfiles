@@ -27,13 +27,14 @@ get_active_sink() {
   else
     # "@DEFAULT_SINK@"
     case "$(hostname)" in
-      *x240) echo 0;;
+      *x240) echo 1;;
       *e495) echo 1;;
       *) echo 0;;
     esac
   fi
 }
 SINK="$(get_active_sink)"
+echo $SINK
 
 case "$COMMAND" in
   mute) pactl set-sink-mute "$SINK" toggle ;;

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   echo "$ btoff"
@@ -6,7 +6,7 @@ if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
   exit
 fi
 
-echo -e "power off\nquit" | bluetoothctl > /dev/null 2>&1
+bluetoothctl power off >/dev/null 2>&1
 
 # kill keep alive audio stream
-kill $(pgrep -f "mpv -ao pulse /home/jneidel/scripts/personal/audio.mp3 --mute --loop-file=inf") 2> /dev/null || true
+kill $(pgrep -f "mpv -ao pulse /home/jneidel/scripts/personal/audio.mp3 --mute --loop-file=inf") 2>/dev/null || true

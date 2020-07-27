@@ -37,7 +37,6 @@ dunst &
 
 ## gui application autostart
 kitty ~/scripts/tmux/t main vim &
-# firefox-nightly &
 brave &
 signal-desktop &
 

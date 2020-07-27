@@ -18,7 +18,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-printf "power on\nquit" | bluetoothctl > /dev/null
+bluetoothctl power on >/dev/null
 
 echo "Started connecting"
 

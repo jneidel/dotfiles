@@ -27,6 +27,18 @@ super + F3
 super + F4
   kitty --class mosh uber
 
+## bspwm
+# super + alt + r
+#   bspc wm -r
+
+# super + Q
+#   bspc node -c
+# super + alt + q
+#   bspc node -k
+
+# super + {_,shift + }{1-9}
+#   bspc {desktop -f,node -d} '^{1-9}'
+
 ## pulseaudio
 ### volume control
 XF86AudioMute

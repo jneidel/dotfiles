@@ -10,6 +10,9 @@ Control mpv through the IPC socket at $SOCKET
 
 Commands:
   play|toggle|pause: toggle playback
+  seek:              seek by specified amount
+  get:               get info by property name
+  keypress:          send a keypress
 
 Example:
   $ mpvctl toggle
@@ -41,8 +44,25 @@ send_get() {
   # property-list: https://github.com/mpv-player/mpv/issues/7562
 }
 
+notify() {
+  notify-send -i $1 -u normal -t 4000 "$2" "mpv"
+}
+seek() {
+  send_cmd "[\"seek\", \"$1\"]"
+}
+
 case "$1" in
-  play|toggle|pause) send_keypress space;;
-  get) send_get $2;;
-  key) send_keypress $2;;
+  play|toggle|pause)
+    send_keypress space
+    notify player_pause "Pause"
+    ;;
+  seek)
+    seek "$2"
+    if echo $2 | grep -F '-' >/dev/null; then
+      notify player_start "Seek $2"
+    else
+      notify player_end "Seek $2"
+    fi;;
+  get) send_get "$2";;
+  key|keypress) send_keypress "$2";;
 esac

@@ -37,7 +37,7 @@ cmd massmove ${{
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
 
-cmd touch %printf "File Name: "; read ans; vim "$ans"
+cmd touch %printf "File Name: "; read ans; touch "$ans"
 
 cmd broot_jump ${{
   f=$(mktemp)
@@ -84,7 +84,7 @@ map f broot_jump
 map . set hidden!
 map t touch
 map R reload
-# map p gimp
+map I gimp # [I]mage
 
 ### jump - cd to dirs
 map gd cd ~/Downloads
@@ -96,3 +96,4 @@ map gz cd ~/ct/zeit
 map gn cd ~/code/notes
 map gp cd ~/projects
 map gu cd ~/projects/uni
+map gP cd ~/ct/pictures
