@@ -17,6 +17,7 @@
   * [kitty (terminal)](#kitty-terminal)
   * [mpv (video/audio player)](#mpv-videoaudio-player)
   * [rofi (application launcher/dmenu)](#rofi-application-launcherdmenu)
+  * [brave (browser)](#brave-browser)
 - [System apps](#system-apps)
   * [sxhkd (hotkey daemon)](#sxhkd-hotkey-daemon)
   * [i3 (window manager)](#i3-window-manager)
@@ -180,6 +181,22 @@ Everything you'll ever need from a video player.
 - [scripts](scripts/rofi)
 
 ![](images/rofi.png)
+
+### brave (browser)
+
+- [extensions](#browser-extensions)
+- [color scheme](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
+
+<details>
+<summary>Manual Config</summary>
+
+**Disallow sites to ask if they can send notifications**
+
+Looking at you reddit...
+
+Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
+
+</details>
 
 ## System apps
 ### sxhkd (hotkey daemon)

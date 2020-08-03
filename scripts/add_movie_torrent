@@ -4,7 +4,7 @@ DATA_DIR=~/ct/dont_touch
 ORDER="$DATA_DIR/order"
 MOVIES="$DATA_DIR/m"
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
   cat << EOF
 $ add_movie_torrent NAME MAGNET
 Add a movie for consumption with the newentertainment script
@@ -25,6 +25,7 @@ format() {
 cat << EOF
 #! /bin/sh
 webtorrent --mpv "$MAGNET"
+rm -r /tmp/webtorrent
 EOF
 }
 

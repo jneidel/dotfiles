@@ -48,7 +48,7 @@ decrement_pensum() {
     s_20) write_pensum $(($(read_pensum) - 20));;
     m) write_pensum 0;;
   esac
-  echo "pens: $media_type $(read_pensum)"
+  echo "pnsm: $media_type $(read_pensum)"
 }
 
 rm_line() {
