@@ -6,15 +6,15 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-if [ "$(mullvad block-when-disconnected get)" = "Network traffic will be allowed when the VPN is disconnected" ]; then
-  mullvad block-when-disconnected set on > /dev/null
+if [ "$(mullvad always-require-vpn get)" = "Network traffic will be allowed when the VPN is disconnected" ]; then
+  mullvad always-require-vpn set on > /dev/null
   printf "block-when-disconnected set \033[1;32mon\n"
   mullvad connect
   echo "mullvad connect"
 else
   transmission.sh > /dev/null && transmission-kill
 
-  mullvad block-when-disconnected set off > /dev/null
+  mullvad always-require-vpn set off > /dev/null
   printf "block-when-disconnected set \033[1;31moff\n"
   mullvad disconnect
   echo "mullvad disconnect"

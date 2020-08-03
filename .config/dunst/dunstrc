@@ -380,5 +380,5 @@
 
 [kitty_updates]
   appname = kitty
-  summary = "*kitty*version*"
+  summary = "*kitty*"
   format = ""
