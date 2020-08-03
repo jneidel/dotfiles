@@ -221,6 +221,13 @@ i3lock with a custom screenshot script.
 
 ## CLIs
 
+Out of date. For a current overview please refer to the [used-apps](used-apps)
+list in conjunction with the corresponding [apps](apps) package list (see ["How
+this repos app install works"](#dotfiles) for an explaination).
+
+<details>
+<summary><strong>Outdated, incomplete list:</strong></summary>
+
 **npm:**
 
 | name | description | links |
@@ -262,6 +269,8 @@ i3lock with a custom screenshot script.
 |--|--|--|
 |  |  |  |
 -->
+
+</details>
 
 ## Browser Extensions
 
