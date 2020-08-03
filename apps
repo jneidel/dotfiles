@@ -1,10 +1,13 @@
 # List of packages, grouped by categories
+#   Format: [PREFIX:]PKG_NAME DESCRIPTION...
 #
-# What commands to run:
-# no prefix - yay -S
-# npm       - npm install -g
-# systemd   - systemctl enable
-# pip3      - sudo pip3 install
+# Prefixes and which commands they translate to:
+#   no prefix - yay -S
+#   npm       - npm install -g
+#   systemd   - systemctl enable
+#   pip3      - sudo pip3 install
+#
+# See used-apps for the list of active categories
 #
 # Todo: prefix to run random script (e.g. at epr)
 # Todo: replace non-existant pkgs: ungoogled-chromium-bin taskell-bin
@@ -76,9 +79,6 @@ gimp Photo editing
 
 [zeal]
 zeal Programming language/tool offline documentation
-
-[vlc]
-vlc Video player
 
 [mpv]
 mpv Minimal player
@@ -165,15 +165,7 @@ rsync Sync local and remote directories
 [youtube-dl]
 youtube-dl Youtube downloader
 
-## file managers
-[ranger]
-ranger File manager
-# vimfm
-
 # cli
-## apps
-#nodejs-webtorrent-cli Streaming torrent client
-
 ## text
 [figlet]
 figlet Print text as big ascii letters
