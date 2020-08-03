@@ -59,6 +59,7 @@ au filetype java inoremap ,pl System.out.println(  );<Esc>2hi
 au filetype java inoremap ,pf System.out.printf( , <++> );<Esc>F,i
 au filetype java inoremap ,f for ( ; <++>; <++> ) {<Enter><++><Enter>}<Esc>2kf(la
 au filetype java inoremap ,w while (  ) {<Enter><++><Enter>}<Esc>2kf(la
+au filetype java inoremap ,t @Test<Enter>public void () {<Enter><++><Enter>}<Esc>02kf(i
 
 "### LaTeX
 au filetype tex inoremap ,o {}<Esc>i

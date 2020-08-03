@@ -1,15 +1,12 @@
 #! /bin/sh
 
+# Todo: how does the script know that I am in dresden after the day of the bus ride?
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ toggle-location <++>
-<++>
+  printf "$ toggle-location
+Toggle a local location file for determining the location for the weather script.
 
-Parameters:
-  \$1: <++>
-  [\$1]: <++>
-
-Example:
-  $ toggle-location <++>
+Toggles between: Berlin & Dresden
 "; exit
 fi
 

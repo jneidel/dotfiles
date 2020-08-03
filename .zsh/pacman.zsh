@@ -26,3 +26,5 @@ alias pacr="yay -Rsn"
 alias paco="yay -Qdt" # list orphans
 alias pacor"yay -Rsn $(pacman -Qtdq)" # rm orphans
 
+## variables
+export MAKEFLAGS="-j$(nproc)" # parallel compilation on make/makepkg
