@@ -294,7 +294,7 @@ For an more infos on why these plugins are important view [privacytools.io](http
 
 [See my exported settings](.firefox-extension-data/readme.md) for some of the addons.
 
-</details><br/>
+</details>
 
 <details>
 <summary><strong>Coding:</strong></summary>
@@ -331,7 +331,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 <!-- |  |  | [chrome]() [git]() | -->
 
 </details><br/>
-</details><br/>
+</details>
 
 **Misc:**
 
