@@ -148,8 +148,8 @@ no_focus [class="mupdf"]
 no_focus [class="Nightly"]
 
 # Open monitors on specific workspaces
-# workspace 5 output DP1
 workspace 5 output DP2
+workspace 5 output DP-5
 mouse_warping none
 no_focus [class="monitor"]
 assign [class="monitor"] $ws5
