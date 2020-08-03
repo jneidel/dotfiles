@@ -10,7 +10,7 @@ unmap d
 
 map e scroll half-up
 map d scroll half-down
-map f scroll right
+# map f scroll right
 map D set recolor
 
 map u scroll half-up

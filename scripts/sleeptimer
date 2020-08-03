@@ -24,7 +24,7 @@ pause() {
   if mpvctl get name >/dev/null 2&>1; then
     mpvctl key Q # quit, save state
   else
-    ~/scripts/sxhkd/control-mpd.sh pause
+    ~/scripts/sxhkd/control-mpd.sh toggle
   fi
 }
 

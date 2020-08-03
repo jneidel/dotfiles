@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ refreshnm
+Refresh connection by turning nm networking off and on again.
+EOF
+  exit
+fi
+
+command -v nmcli >/dev/null || { echo "nmcli is not installed"; exit 127; }
+
+nmcli networking off
+nmcli networking on
