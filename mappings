@@ -202,3 +202,6 @@ create .config/yay
 
 [xwallpaper]
 .config/wallpaper.png
+
+[xob]
+.config/xob
