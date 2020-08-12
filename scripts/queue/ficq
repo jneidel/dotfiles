@@ -1,0 +1,10 @@
+#! /bin/sh
+
+QUEUE_FILE=~/code/notes/fiction-reading-queue
+
+LIB="$(dirname $0)/queue-lib.sh"
+. "$LIB"
+
+help "ficq" "reading queue for fiction books" "book" "Infinite Jest" "Seven Eves" "$1"
+
+parseCases "$@"

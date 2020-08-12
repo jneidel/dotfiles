@@ -28,6 +28,8 @@ monitor off &
 xset -b &
 
 ## daemons
+mkfifo /tmp/xobpipe
+tail -f /tmp/xobpipe | xob &
 # hotkeys
 sxhkd &
 # notification

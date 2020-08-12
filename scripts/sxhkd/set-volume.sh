@@ -1,5 +1,7 @@
 #! /bin/sh
 
+XOB=/tmp/xobpipe
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   printf "$ set-volume.sh <command>
 Set the volume and send a notification.
@@ -22,7 +24,7 @@ command -v pulsemixer >/dev/null || { echo "pulsemixer is not installed"; exit 1
 COMMAND="$1"
 
 get_active_sink() {
-  if RUNNING_SINKS="$(pactl list sinks short | fgrep 'RUNNING')"; then
+  if RUNNING_SINKS="$(pactl list sinks short | fgrep 'RUNNING' -m1)"; then
     echo $RUNNING_SINKS | tail -n1 | awk '{ print $1 }'
   else
     # "@DEFAULT_SINK@"
@@ -52,23 +54,26 @@ notification() {
 
   echo mute: $MUTE, vol: $VOL
 
-  if [ "$MUTE" -eq 1 ]; then
-    ICON="mute"
-    HEAD="Volume Muted"
-  else
-    if [ "$VOL" -lt 5 ]; then
-      ICON="volume-none"
-    elif [ "$VOL" -lt 50 ]; then
-      ICON="volume-less"
-    else
-      ICON="volume-more"
-    fi
+  # if [ "$MUTE" -eq 1 ]; then
+  #   ICON="mute"
+  #   HEAD="Volume Muted"
+  # else
+  #   if [ "$VOL" -lt 5 ]; then
+  #     ICON="volume-none"
+  #   elif [ "$VOL" -lt 50 ]; then
+  #     ICON="volume-less"
+  #   else
+  #     ICON="volume-more"
+  #   fi
 
-    HEAD="Volume: $VOL%"
-    BODY="$(get-progress-string.sh 28 '▪' ' ' $VOL)"
-  fi
+  #   HEAD="Volume: $VOL%"
+  #   BODY="$(get-progress-string.sh 28 '▪' ' ' $VOL)"
+  # fi
 
-  notify-send -i $ICON -h string:x-canonical-private-synchronous:volume -u normal -t 1000 "$HEAD" "$BODY"
+  # notify-send -i $ICON -h string:x-canonical-private-synchronous:volume -u normal -t 1000 "$HEAD" "$BODY"
+  IS_MUTE=""
+  [ "$MUTE" -eq 1 ] && IS_MUTE=!
+  echo "$VOL$IS_MUTE" > $XOB
 }
 notification
 

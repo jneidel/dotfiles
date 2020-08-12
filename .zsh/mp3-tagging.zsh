@@ -7,7 +7,7 @@ alias idarr="eyeD3 --album-artist"
 alias idt="eyeD3 --title"
 alias ids="eyeD3 --title"
 alias idn="eyeD3 --track"
-alias idco="eyeD3 --add-image"
+alias idco="eyeD3 --add-image" # image:FRONT_COVER mp3
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 # see ~/scripts/idmi
 

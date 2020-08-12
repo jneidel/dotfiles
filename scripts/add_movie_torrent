@@ -24,8 +24,7 @@ MAGNET="$2"
 format() {
 cat << EOF
 #! /bin/sh
-webtorrent --mpv "$MAGNET"
-rm -r /tmp/webtorrent
+stream-movie "$TORRENT"
 EOF
 }
 

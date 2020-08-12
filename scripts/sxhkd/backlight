@@ -1,6 +1,7 @@
 #! /bin/sh
 
 DIR=/sys/class/backlight
+XOB=/tmp/xobpipe
 
 case "$(cat /etc/hostname)" in
   jneidel-x240) ARCH=intel_backlight ;;
@@ -89,10 +90,11 @@ percent() {
 notification() {
   BRIGHTNESS=$(get_brightness)
   BRIGHTNESS_PERCENT=$(($BRIGHTNESS*100/MAX))
-  HEAD="Brightness: $BRIGHTNESS_PERCENT ($BRIGHTNESS)"
-  BODY="$(get-progress-string.sh 28 '▪' ' ' "$BRIGHTNESS_PERCENT")"
+  # HEAD="Brightness: $BRIGHTNESS_PERCENT ($BRIGHTNESS)"
+  # BODY="$(get-progress-string.sh 28 '▪' ' ' "$BRIGHTNESS_PERCENT")"
 
-  notify-send -i brightness -h string:x-canonical-private-synchronous:brightness -u normal -t 1000 "$HEAD" "$BODY"
+  # notify-send -i brightness -h string:x-canonical-private-synchronous:brightness -u normal -t 1000 "$HEAD" "$BODY"
+  echo $BRIGHTNESS_PERCENT > $XOB
 }
 
 case $1 in

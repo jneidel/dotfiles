@@ -16,9 +16,9 @@ while read -r line; do
       VPN=1 ;;
     "New tunnel state: Disconnected")
       VPN=0 ;;
-    "w*): Activation: successful"|"NetworkManager state is now CONNECTED_GLOBAL"|"NetworkManager state is now CONNECTED_SITE")
+    "(w*): Activation: successful"|"NetworkManager state is now CONNECTED_GLOBAL"|"NetworkManager state is now CONNECTED_SITE")
       WIFI=1 ;;
-    "w*): state change: deactivating -> disconnected"|"NetworkManager state is now DISCONNECTED")
+    "(w*): state change: deactivating -> disconnected"|"NetworkManager state is now DISCONNECTED")
       WIFI=0 ;;
     "NetworkManager state is now CONNECTED_LOCAL"|"NetworkManager state is now CONNECTING")
       WIFI=2 ;; # connected local

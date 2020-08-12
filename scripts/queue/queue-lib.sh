@@ -22,6 +22,7 @@ help() {
     a, add : append new $unit
     r, rm  : unshift, remove first entry
     l, list: list all entries
+    e, edit: edit the queue in $EDITOR
 
   Examples:
     $ $name
@@ -50,6 +51,10 @@ add() {
 list() {
   cat "$QUEUE_FILE"
 }
+edit() {
+  cd /tmp
+  $EDITOR "$QUEUE_FILE"
+}
 
 parseCases() {
   case $1 in
@@ -59,6 +64,7 @@ parseCases() {
       add "$input";;
     r|rm) remove;;
     l|list) list;;
+    e|edit) edit;;
     *) first;;
   esac
 }

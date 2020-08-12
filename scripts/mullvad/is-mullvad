@@ -1,0 +1,17 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ is-mullvad
+Check if mullvad is active
+EOF
+  exit
+fi
+
+command -v mullvad >/dev/null || { echo "mullvad is not installed"; exit 127; }
+
+if [ "$(mullvad always-require-vpn get)" = "Network traffic will be blocked when the VPN is disconnected" ]; then
+  exit 0
+else
+  exit 1
+fi
