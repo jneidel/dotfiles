@@ -91,6 +91,7 @@ map gd cd ~/Downloads
 map gm cd ~/ct/movies
 map gv cd ~/ct/review
 map gb cd ~/ct/books
+map gB cd ~/code/notes/books
 map gc cd ~/ct
 map gz cd ~/ct/zeit
 map gn cd ~/code/notes

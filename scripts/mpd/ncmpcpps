@@ -22,5 +22,5 @@ case "$1" in
     fi
     ncmpcpp -p $PORT -h localhost --quiet ;;
   *)
-    ncmpcpp  $CONNECT --quiet 2> /dev/null ;;
+    ncmpcpp  $CONNECT --quiet 2>/dev/null ;;
 esac

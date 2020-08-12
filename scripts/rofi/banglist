@@ -1,4 +1,4 @@
-lg http://gen.lib.rus.ec/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
+lg http://libgen.is/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
 lgf http://gen.lib.rus.ec/fiction/?q=%s
 tpb https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb2 https://pirateproxy.page/search/%s/0/99/0
@@ -23,4 +23,5 @@ ddg https://duckduckgo.com/?q=%s
 mw https://www.merriam-webster.com/dictionary/%s
 dl https://duckduckgo.com/?q=%s+mp3+download
 du https://www.duden.de/rechtschreibung/%s
-in https://watch.nettohikari.com/search?q=%s
+in https://yewtu.be/search?q=%s
+imdb https://www.imdb.com/find?s=all&q=%s

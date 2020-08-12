@@ -1,0 +1,24 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ stream-movie TORRENT
+Stream a movie via webtorrent
+
+Parameters:
+  \$1: torrent as magnet link
+EOF
+  exit
+fi
+
+command -v is-mullvad >/dev/null || { echo "is-mullvad scripts is not in PATH"; exit 127; }
+command -v webtorrent >/dev/null || { echo "webtorrent is not installed"; exit 127; }
+command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
+command -v rofi >/dev/null || { echo "rofi is not installed"; exit 127; }
+
+if is-mullvad; then
+  webtorrent --mpv "$1"
+  rm -r /tmp/webtorrent
+else
+  rofi -e "Mullvad is off" -width 35
+fi
