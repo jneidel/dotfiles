@@ -4,6 +4,7 @@
 alias idar="eyeD3 --artist"
 alias idal="eyeD3 --album"
 alias idarr="eyeD3 --album-artist"
+alias idt="eyeD3 --title"
 alias ids="eyeD3 --title"
 alias idn="eyeD3 --track"
 alias idco="eyeD3 --add-image"
