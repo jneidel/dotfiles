@@ -42,6 +42,7 @@
 
 - Why social media isn't that great for you: [Social Media: Anything for Upcummies! ⬆🍆💦💦](https://www.youtube.com/watch?v=YjbyDU0WzYI)
 - Negative influences of phones: [Open Source Phone? This BOOMER doesn't care! | Purism Librem 5](https://www.youtube.com/watch?v=wIJL-UoDGyk&t=104)
+- Don't get dazzled by the hype: [Hype Tech](https://ptrace.fefe.de/hype2)
 
 ### Internet
 
@@ -55,6 +56,7 @@
 
 - Why Privacy is an unrealist expectation in today's and tomorrow's age: [2030: Privacy's Dead. What happens next?](https://www.youtube.com/watch?v=_kBlH-DQsEg)
 - A: An alternative to the current state of survailance: [A radical proposal to keep your personal data safe](https://www.theguardian.com/commentisfree/2018/apr/03/facebook-abusing-data-law-privacy-big-tech-surveillance)
+- How Big Tech operates and why monopolies are their foundation: [How to Destroy Surveillance Capitalism](https://onezero.medium.com/how-to-destroy-surveillance-capitalism-8135e6744d59)
 
 ### Linux
 
@@ -90,6 +92,7 @@
 - Why you need to learn a language in-depth (saying refers to expressing an idea in code) _[snippet]_: [Why don't some big websites use React?](https://www.youtube.com/watch?v=5oTVvBlWvNs&feature=youtu.be&t=300)
 - Why your first job should be with a bigger company: [Should I work for a big company or a small one?](https://www.youtube.com/watch?v=kSirn_2mf6U)
 - Finding a good company as a junior developer: [Finding the right employer](https://www.youtube.com/watch?v=Kka7sis8rxI)
+- The politics of compatibility: [Dear Google Cloud: Your Deprecation Policy is Killing You](https://medium.com/@steve.yegge/dear-google-cloud-your-deprecation-policy-is-killing-you-ee7525dc05dc)
 
 #### JavaScript
 
@@ -131,6 +134,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 
 - [AKATSUKI GANG ft. $UICIDEBOY$](https://www.youtube.com/watch?v=6wmRQUc96yM)
 - [Not what it looks like #VHS](https://www.youtube.com/watch?v=mPUzhKjsnBM)
+- [SPACE GOD - FIJI - *AFRO SAMURAI*](https://www.youtube.com/watch?v=mj0FcNiEOdM)
 
 ## Life
 
