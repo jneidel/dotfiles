@@ -29,8 +29,8 @@ au filetype md,markdown inoremap ,l - [] <++><Esc>F[a
 au filetype md,markdown nnoremap ,d :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
 
 "### JavaScript/Typescript
+au filetype js,ts,javascript,typescript,pug inoremap ,o {<Enter>}<Esc>O
 au filetype js,ts,javascript,typescript inoremap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
-au filetype js,ts,javascript,typescript inoremap ,o {<Enter>}<Esc>O
 au filetype js,ts,javascript,typescript inoremap ,a [  ]<Esc>hi
 au filetype js,ts,javascript,typescript inoremap ,i import  from "<++>";<++><Esc>Ffhi
 au filetype js,ts,javascript,typescript inoremap ,l console.log(  )<Esc>hi

@@ -1,22 +1,34 @@
 #! /bin/sh
 
+# todo: prompt user to continue if file to move is not indicated by the first line in the order list (implicit move)
+
 DATE_FILE=$HOME/.local/share/newentertainment_date
 PENS_FILE=$HOME/.local/share/newentertainment_pensum
 DIR=$HOME/ct/dont_touch
 ORDER=$DIR/order
 MOVED=$DIR/moved
 WATCH_DIR=$HOME/ct/movies
+FULL_PENSUM=120
 TESTING=0
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ ! -d "$DIR" ] || [ ! -d "$WATCH_DIR" ] || [ ! -e "$ORDER" ]; then
   cat << EOF
 $ newentertainment
-Once a day, you can add media corresponding to the pensum of $PENSUM to your watch directory.
+Regulate media consumption, by limiting access to ${FULL_PENSUM}m a day.
+This is done by sorting media into categories (m,s20,s60 - movies, series 20m, series 60m)
+  and filling a list with the order you'd like to watch these in.
+This script itself keeps watch over how much time you have left for today and giving you access to the next item in your watch list.
+
+Set these variables in the script:
+- directory that contains the media files: $DIR
+- watch list: $ORDER
+- directory that you move the media files to that you have allowed yourself to watch: $WATCH_DIR
+- backup directory for everything that is moved: $MOVED
 EOF
   exit
 fi
 
-PENSUM="$(cat $PENS_FILE || 120)"
+PENSUM="$(cat $PENS_FILE || $FULL_PENSUM)"
 
 if [ "$(date -d "$(cat $DATE_FILE)" +%s)" -gt "$(date -d 'today 0' +%s)" ]; then
   if [ "$PENSUM" -eq 0 ]; then
@@ -26,9 +38,9 @@ if [ "$(date -d "$(cat $DATE_FILE)" +%s)" -gt "$(date -d 'today 0' +%s)" ]; then
     echo "info: Using leftover pensum of: $PENSUM"
   fi
 else
-  echo "info: First usage with pens of 120"
-  PENSUM=120
-  printf 120 > $PENS_FILE
+  echo "info: First usage with pens of $FULL_PENSUM"
+  PENSUM=$FULL_PENSUM
+  printf $FULL_PENSUM > $PENS_FILE
 fi
 
 # pensum can't behandled in a variable, as its inconsistend between functions
@@ -70,10 +82,11 @@ rm_line() {
 
 move() {
   file="$1"
+  filename="$(basename "$1")"
   cd "$DIR"
-  echo "move: $(basename "$1")"
-  [ "$TESTING" -eq 0 ] && cp "$1" "$WATCH_DIR"
-  [ "$TESTING" -eq 0 ] &&  mv "$1" "$MOVED"
+  echo "move: $filename"
+  [ "$TESTING" -eq 0 ] && mv "$1" "$MOVED"
+  [ "$TESTING" -eq 0 ] && ln -sf "$MOVED/$filename" "$WATCH_DIR/$filename"
 }
 
 handle_series() {

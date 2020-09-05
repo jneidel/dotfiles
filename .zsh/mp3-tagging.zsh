@@ -1,12 +1,12 @@
 # mp3 tagging
 
 # set tags
-alias idar="eyeD3 --artist"
-alias idal="eyeD3 --album"
-alias idarr="eyeD3 --album-artist"
-alias idt="eyeD3 --title"
-alias ids="eyeD3 --title"
-alias idn="eyeD3 --track"
+alias idar="eyeD3 --artist" # -a
+alias idal="eyeD3 --album" # -A
+alias idarr="eyeD3 --album-artist" # -b
+alias idt="eyeD3 --title" # -t
+alias ids="idt"
+alias idn="eyeD3 --track" # -n (-n 0 -N 0 to clear)
 alias idco="eyeD3 --add-image" # image:FRONT_COVER mp3
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 # see ~/scripts/idmi
@@ -19,15 +19,15 @@ function mpdcoloop() { # requires sxiv, fkill (npm: fkill-cli)
     prev=$1
 
     if [ $prev != $file ]; then
-      cmco &
+      mdpco &
     fi
   fi
 
   sleep 5
-  cmcoloop $file &
+  mpdcoloop $file &
 }
 function mpdcol() { # get cover & update cover once song changes
-  cmco &
-  cmcoloop N1 &
+  mpdco &
+  mpdcoloop N1 &
 }
 

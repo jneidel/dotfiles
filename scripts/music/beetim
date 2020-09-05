@@ -26,9 +26,9 @@ disable-mullvad-for beet import -I "$@" && { # disable mullvad for import
   fi
 }
 
-echo "---Files in ~/ct/music---"
-ls ~/ct/music | fgrep -v "unheard"
-echo "---"
+# echo "---Files in ~/ct/music---"
+# ls ~/ct/music | fgrep -v "unheard"
+# echo "---"
 
 # mv-music # move new albums to unheard
 

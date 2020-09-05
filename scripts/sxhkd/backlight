@@ -100,8 +100,8 @@ notification() {
 case $1 in
   s|set) set_brightness $2; notification;;
   g|get) get_brightness;;
-  max) set_brightness $MAX;;
-  min) set_brightness $MIN;;
+  max) set_brightness $MAX; notification;;
+  min) set_brightness $MIN; notification;;
   p|perc|percent) percent $2; notification;;
   *) echo "Please pass a command. Pass 'help' for help.";;
 esac

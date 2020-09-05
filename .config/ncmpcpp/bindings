@@ -93,8 +93,6 @@ def_key "v"
   toggle_visualization_type
 
 ### other views
-def_key "Y"
-  show_lyrics
 def_key "t"
   show_clock
 def_key "f1"
@@ -150,12 +148,17 @@ def_key "T"
 ## selections
 def_key "B"
   select_album
-#def_key "v"
-#  reverse_selection
-#
-#def_key "V"
-#  remove_selection
+def_key "V"
+  remove_selection
+# Z shuffe selection
+# shift+arrow_up select upwards
+# shift+arrow_down select downwards
 
+## run mpd scripts
+def_key "C"
+  run_external_command "mpd-cover &"
+def_key "Y"
+  run_external_command "tmux split-window -p 45 'mpd-lyrics | less'"
 
 #def_key "ctrl-h"
 #  replay_song

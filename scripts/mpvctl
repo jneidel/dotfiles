@@ -1,5 +1,4 @@
 #! /bin/sh
-# see man at: List of Input Commands
 
 SOCKET=/tmp/mpv_socket
 
@@ -22,9 +21,9 @@ fi
 
 command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
 command -v socat >/dev/null || { echo "socat is not installed"; exit 127; }
-# command -v <++> >/dev/null || { echo "<++> is not installed"; exit 127; }
 
 send_cmd() {
+  # see man at: list of input commands
   res=$(echo "{\"command\": $1}" | socat - $SOCKET)
   if echo $res | fgrep '"error":"success"' >/dev/null; then
     echo $res | cut -d: -f2 | cut -d, -f1
@@ -41,28 +40,42 @@ send_keypress() {
 }
 send_get() {
   send_cmd "[\"get_property\", \"$1\"]"
-  # property-list: https://github.com/mpv-player/mpv/issues/7562
+  # pass 'property-list' for all properties
+  #  https://github.com/mpv-player/mpv/issues/7562
 }
 
 notify() {
-  notify-send -i $1 -u normal -t 4000 "$2" "mpv"
+  notify-send -i $1 -u normal -t 4000 "$2" "$(send_get media-title | cut -d\" -f2)"
 }
-seek() {
-  send_cmd "[\"seek\", \"$1\"]"
+next() {
+  if [ "$(send_get chapters)" -gt 0 ]; then # has chapters
+    send_cmd "[\"add\", \"chapter\", \"1\"]"
+  elif [ "$(send_get playlist-count)" -gt 0 ]; then # has playlist
+    send_cmd "[\"playlist-next\", \"force\" ]"
+  else # just regular file
+    send_cmd "[\"seek\", \"60\"]"
+  fi
+}
+prev() {
+  if [ "$(send_get chapters)" -gt 0 ]; then # has chapters
+    send_cmd "[\"add\", \"chapter\", \"-1\"]"
+  elif [ "$(send_get playlist-count)" -gt 0 ]; then # has playlist
+    send_cmd "[\"playlist-prev\", \"weak\" ]"
+  else # just regular file
+    send_cmd "[\"seek\", \"-60\"]"
+  fi
 }
 
 case "$1" in
   play|toggle|pause)
-    send_keypress space
-    notify player_pause "Pause"
-    ;;
-  seek)
-    seek "$2"
-    if echo $2 | grep -F '-' >/dev/null; then
-      notify player_start "Seek $2"
-    else
-      notify player_end "Seek $2"
-    fi;;
+    send_keypress space >/dev/null
+    notify player_pause "Pause";;
+  next)
+    next
+    notify player_end "Next";;
+  prev)
+    prev
+    notify player_start "Previous";;
   get) send_get "$2";;
   key|keypress) send_keypress "$2";;
 esac

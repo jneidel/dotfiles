@@ -13,10 +13,8 @@ vacuum() {
   sqlite3 "$1" VACUUM;
 }
 
-MANGA=~/manga/.yacreaderlibrary/library.ydb
-COMIC=~/comics/.yacreaderlibrary/library.ydb
-ARR="$MANGA $COMIC"
+ARR="ct/manga/.yacreaderlibrary/library.ydb ct/comics/.yacreaderlibrary/library.ydb .config/newsboat/cache-blog.db .config/newsboat/cache-manga.db .config/newsboat/cache-pod.db"
 
 echo "$ARR" | tr ' ' '\n' | while read dir; do
-  vacuum $dir
+  vacuum "$HOME/$dir"
 done

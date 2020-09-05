@@ -26,13 +26,19 @@ if [ -z "$SESSION" ]; then
 fi
 CMD="$2"
 
-if tmux list-sessions 2> /dev/null | cut -d: -f1 | grep "^$SESSION$" > /dev/null; then
+CD="" # depending on session name set a default path to cd to
+case "$SESSION" in
+  code|dev|js|ts) CD="-c $HOME/code";;
+  uni) CD="-c $HOME/projects/uni";;
+esac
+
+if tmux list-sessions 2>/dev/null | cut -d: -f1 | grep "^$SESSION$" >/dev/null; then
   tmux -u attach -t "$SESSION"
 else
   if [ -n "$CMD" ]; then
-    tmux -u new -s "$SESSION" \; send-keys "$CMD" 'Enter'
+    tmux -u new -s "$SESSION" $CD \; send-keys "$CMD" 'Enter'
   else
-    tmux -u new -s "$SESSION"
+    tmux -u new -s "$SESSION" $CD
   fi
 fi
 

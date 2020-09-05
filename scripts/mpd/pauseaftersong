@@ -1,0 +1,17 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ pauseaftersong
+Pause (toggle) after the next mpd action
+EOF
+  exit
+fi
+
+command -v mpcc >/dev/null || { echo "mpcc is not in PATH"; exit 127; }
+command -v control-mpd >/dev/null || { echo "control-mpd is not in PATH"; exit 127; }
+
+run() {
+  mpcc idle player >/dev/null && control-mpd pause >/dev/null
+}
+run &

@@ -15,7 +15,7 @@ else
 fi
 
 REMOTE_NAME=pi
-REMOTE_DIR="/home/jneidel/music"
+REMOTE_DIR="/home/jneidel/usb/music"
 LOCAL_DIR="/home/jneidel/ct/music"
 
 command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }

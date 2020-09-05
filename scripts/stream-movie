@@ -17,7 +17,13 @@ command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
 command -v rofi >/dev/null || { echo "rofi is not installed"; exit 127; }
 
 if is-mullvad; then
-  webtorrent --mpv "$1"
+  if [ -n "$(find ~/Downloads -type f -iname '*.srt')" ]; then
+    SUB_FILE="$(find ~/Downloads -type f -iname '*.srt' | head -n1)"
+    echo "Using sub-file: $SUB_FILE"
+    webtorrent --mpv --quiet "$1" -t "$SUB_FILE"
+  else
+    webtorrent --mpv "$1"
+  fi
   rm -r /tmp/webtorrent
 else
   rofi -e "Mullvad is off" -width 35

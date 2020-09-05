@@ -11,9 +11,11 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
+. ~/scripts/mpd/shared-mpd-variables
+# Todo: use $IS_SERVER and is-mpd-playing to get remote cover
+
 command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
 command -v $IMAGE_VIEWER_BIN >/dev/null || { echo "your selected image viewer ($IMAGE_VIEWER_BIN) is not installed"; exit 1; }
-command -v mpc >/dev/null || { echo "mpc is not installed"; exit 1; }
 
 command -v mpc-get >/dev/null &&
   MPC_CMD="mpc-get file" ||

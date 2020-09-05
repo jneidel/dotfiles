@@ -20,12 +20,12 @@ command -v mpc-get >/dev/null &&
 
 if [ "$IS_SERVER" -eq 1 ]; then
   SONG_FILE="$REMOTE_DIR/$($MPC_CMD)"
-  [ `ssh $REMOTE_NAME "basename '$SONG_FILE'" | rev | cut -d\. -f1` != "3pm" ] && {
+  [ `ssh $REMOTE_NAME "basename \"$SONG_FILE\"" | rev | cut -d\. -f1` != "3pm" ] && {
     echo "File is not a mp3"
     exit
   }
   get_lyrics() {
-    ssh $REMOTE_NAME "~/scripts/get-lyrics '$1' '$2'"
+    ssh $REMOTE_NAME "~/scripts/get-lyrics \"$1\" \"$2\""
   }
 else
   SONG_FILE="$LOCAL_DIR/$($MPC_CMD)"
@@ -39,8 +39,7 @@ else
   }
 fi
 
-
-LYRICS=$(get_lyrics "$SONG_FILE")
+LYRICS="$(get_lyrics "$SONG_FILE")"
 if [ -n "$LYRICS" ]; then
   get_lyrics -n "$SONG_FILE" # Reusing $LYRICS messes with the formatting (newlines)
 else

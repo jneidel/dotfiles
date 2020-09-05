@@ -226,8 +226,8 @@ function! AddSubtract(char, back)
   execute 'normal! ' . v:count1 . a:char
   silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
-nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
-nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
+nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-a>", '')<CR>
+nnoremap <silent> <C-c> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 
 " Automatically remove trailing whitespace
 " see: http://vimcasts.org/episodes/tidying-whitespace/

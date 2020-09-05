@@ -17,7 +17,7 @@ rm ~/.python_history ~/.sqlite_history ~/.bash_history
 
 # dirs
 rmdir ~/Desktop
+rm ~/1
 rm -r ~/.w3m
 
-~/scripts/cron/cron-notify-send "Cleaned up fs"
-
+# ~/scripts/cron/cron-notify-send "Cleaned up fs"

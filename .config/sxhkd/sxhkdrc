@@ -58,26 +58,26 @@ super + m
 ### playback control, 1st for macbook, 2nd for thinkpad
 # Also JBL play button
 XF86AudioPlay
-  ~/scripts/sxhkd/control-mpd.sh toggle
+  ~/scripts/sxhkd/control-mpd toggle
 XF86Search
-  ~/scripts/sxhkd/control-mpd.sh toggle
+  ~/scripts/sxhkd/control-mpd toggle
 XF86Bluetooth
-  ~/scripts/sxhkd/control-mpd.sh toggle
+  ~/scripts/sxhkd/control-mpd toggle
 
 # Also JBL play double press
 XF86AudioNext
-  ~/scripts/sxhkd/control-mpd.sh next
+  ~/scripts/sxhkd/control-mpd next
 XF86LaunchA
-  ~/scripts/sxhkd/control-mpd.sh next
+  ~/scripts/sxhkd/control-mpd next
 XF86Keyboard
-  ~/scripts/sxhkd/control-mpd.sh next
+  ~/scripts/sxhkd/control-mpd next
 XF86Favorites
-  ~/scripts/sxhkd/control-mpd.sh next
+  ~/scripts/sxhkd/control-mpd next
 
 XF86AudioPrev
-  ~/scripts/sxhkd/control-mpd.sh prev
+  ~/scripts/sxhkd/control-mpd prev
 XF86Tools
-  ~/scripts/sxhkd/control-mpd.sh prev
+  ~/scripts/sxhkd/control-mpd prev
 
 ## brightness
 XF86MonBrightnessUp

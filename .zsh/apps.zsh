@@ -37,7 +37,6 @@ alias glow="/bin/glow -s dark"
 alias cal="/bin/cal -m"
 alias scp="echo use sscp instead; echo"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
-alias webtorrent="/bin/webtorrent --mpv"
 alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
 alias npm="/bin/npm -s"
@@ -65,10 +64,38 @@ alias cal6="cal -mn 6"
 alias g="grep"
 alias gw="./gradlew"
 alias pg="sudo -u postgres"
+alias status="journalctl --no-pager -f -u"
 
 ### newsboat
-# alias new="between 13 && newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear || echo 'not yet'"
-alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
+TEXTS=~/scripts/personal/newsboat-texts
+SLEEP=12
+new() {
+  shuf -n1 $TEXTS
+  sleep $SLEEP
+  printf "(y/N): "
+  read -r ANS
+  if [ "$ANS" = 'y' ]; then
+    echo "Go ahead..."
+    sleep 1
+    newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet # && clear
+  else
+    echo "Good on you, pal."
+  fi
+}
+ma() {
+  shuf -n1 $TEXTS
+  sleep $SLEEP
+  printf "(y/N): "
+  read -r ANS
+  if [ "$ANS" = 'y' ]; then
+    echo "Go ahead..."
+    sleep 1
+    newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet # && clear
+  else
+    echo "Good on you, pal."
+  fi
+}
+alias pod="newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet && clear"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 
@@ -77,22 +104,23 @@ alias n="ncmpcpps"
 
 #### mpv
 alias mpvo="mpv --profile=overlay"
-alias mpvm="mpv --no-audio-display --no-video" # mpv music
+alias mpvm="mpv --profile=music"
 alias mpvan="mpv --profile=anime"
 alias mpvmv="mpv --profile=movie"
+alias mpvtest="mpv --input-test --force-window --idle"
 
 ### mpd
 alias mpdco="mpd-cover"
 alias mpdly="mpd-lyrics | $PAGER"
 
 ### gpg
-alias enc="gpg -e -r 7dfd16fa"
+alias enc="gpg -e -r $KEYID"
 alias dec="gpg -d"
 
 ## gui
 alias chrome="chromium"
 alias kid="nemo . 2>/dev/null &; kid3 . 2>/dev/null" # gui file browser + kid3
-alias tordl="cd ~/.bin/tor-browser/Browser/Downloads"
+alias pdfe="masterpdfeditor5"
 
 ## tui
 alias job="taskell ~/code/notes/taskell/job-applications.md 2> /dev/null"
@@ -112,3 +140,20 @@ alias half="bright p 50 N1"
 ## cat updates files
 alias mup="show-updates manga"
 alias cup="show-updates comic"
+
+## webtorrent
+alias wt="webtorrent --mpv --quiet"
+wts() {
+  TORRENT="$1"
+  SELECT="$2"
+  if [ -z "$SELECT" ]; then
+    webtorrent "$TORRENT" --quiet -s
+  else
+    webtorrent "$TORRENT" --mpv --quiet -s "$SELECT" 2>/dev/null
+  fi
+}
+wtsn() {
+  TORRENT="$1"
+  SELECT="$2"
+  webtorrent "$TORRENT" --not-on-top --no-quit -s "$SELECT"
+}

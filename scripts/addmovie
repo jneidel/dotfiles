@@ -1,0 +1,60 @@
+#! /bin/sh
+
+DATA_DIR=~/ct/dont_touch
+ORDER="$DATA_DIR/order"
+MOVIES="$DATA_DIR/m"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ add_movie [NAME MAGNET] [FILE]
+Add a movie for consumption with the newentertainment script
+Either as a name + magent link or file
+
+Parameters (torrent):
+  \$1: name of the movie
+  \$2: magnet link for the movie
+
+Parameters (file):
+  \$1: file path
+EOF
+  exit
+fi
+
+command -v webtorrent >/dev/null || { echo "webtorrent is not installed"; exit 127; }
+
+FILE_NAME="$1"
+MAGNET="$2"
+
+format() {
+cat << EOF
+#! /bin/sh
+stream-movie "$MAGNET"
+EOF
+}
+add_torrent() {
+  FILE="$MOVIES/$FILE_NAME"
+  format > "$FILE"
+  chmod +x "$FILE"
+  echo "$FILE" | rev | cut -d/ -f1-2 | rev >> "$ORDER"
+
+  echo "Added file: $FILE"
+}
+
+add_file() {
+  mv "$FILE_NAME" "$MOVIES/"
+  echo m/$(basename "$FILE_NAME") >> "$ORDER"
+
+  echo "Moved file into: $MOVIES"
+}
+
+if [ -f "$FILE_NAME" ]; then
+  echo "Adding as file"
+  add_file
+else
+  if [ -z "$MAGNET" ]; then
+    echo "Missing Magnet link"
+    exit 1
+  fi
+  echo "Adding as torrent"
+  add_torrent
+fi

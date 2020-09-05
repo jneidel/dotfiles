@@ -1,0 +1,36 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ tpb QUERY [CAT]
+Query the pirate bay api
+Response is a json array of the results
+
+Parameters:
+  \$1: thing you are searching for
+  [\$2]: category to search in (example: 101)
+
+Examples:
+  $ tpb drive 207
+  $ tpb 2pac 101
+EOF
+  exit
+fi
+
+command -v curl >/dev/null || { echo "curl is not installed"; exit 127; }
+
+curl 'https://piratesbaycc.com/api.php?url=/q.php?q=drive&cat=' \
+  -H 'authority: piratesbaycc.com' \
+  -H 'pragma: no-cache' \
+  -H 'cache-control: no-cache' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36' \
+  -H 'accept: */*' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'referer: https://piratesbaycc.com/search.php?q=drive&page=0&orderby=99' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'cookie: __cfduid=d46b9ae5f91bc478d6f5ce09dd1cef3dd1596374301' \
+  --compressed | jq ".[0,1,2,3,4,5,6,7,8,9].name, .[0,1,2,3,4,5,6,7,8,9].seeders, .[0,1,2,3,4,5,6,7,8,9].id, .[0,1,2,3,4,5,6,7,8,9].category" > /tmp/tpb
+
+# sed -n "31,40p;41q" /tmp/tpb # print range

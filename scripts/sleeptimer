@@ -2,15 +2,14 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
-$ sleeptimer <++>
-<++>
+$ sleeptimer TIME
+Set a sleeptimer to stop mpv/mpd after
 
 Parameters:
-  \$1: <++>
-  [\$1]: <++>
+  \$1: timer given to sleep
 
 Example:
-  $ sleeptimer <++>
+  $ sleeptimer 20m
 EOF
   exit
 fi
@@ -18,13 +17,13 @@ fi
 TIMER="$1"
 
 command -v mpvctl >/dev/null || { echo "mpvctl is not in PATH"; exit 127; }
-# command -v <++> >/dev/null || { echo "<++> is not installed"; exit 127; }
+command -v control-mpd >/dev/null || { echo "control-mpd is not installed"; exit 127; }
 
 pause() {
   if mpvctl get name >/dev/null 2&>1; then
     mpvctl key Q # quit, save state
   else
-    ~/scripts/sxhkd/control-mpd.sh toggle
+    control-mpd pause
   fi
 }
 

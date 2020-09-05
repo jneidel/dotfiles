@@ -1,0 +1,23 @@
+#! /bin/sh
+
+FILE=~/projects/anki/english_vocab
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ "$1" = "-X" ]; then
+  cat << EOF
+$ add_vocab VOCABULARY
+Add a new line to the vocabulary file
+
+Arguments:
+  No argument passed: system clipboard
+  -x: X clipboard
+  VOCAB: that vocabulary
+EOF
+  exit
+fi
+
+VOCAB="$1"
+[ -z "$1" ] && VOCAB="$(xclip -sel clip -o)"
+[ "$1" = "-x" ] && VOCAB="$(xclip -o)" # x clipboard
+
+printf "$VOCAB\n" >> "$FILE"
+echo "Appendend '$VOCAB'"
