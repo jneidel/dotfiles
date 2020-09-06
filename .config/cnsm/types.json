@@ -1,0 +1,73 @@
+{
+  "movie": {
+    "short": "mv",
+    "back": "blue",
+    "open": "https://jneidel.com/re/tpb/%s",
+    "open_name": "tpb",
+    "alt": "https://www.imdb.com/find?s=all&q=%s",
+    "alt_name": "imdb"
+  },
+  "art": {
+    "short": "ar",
+    "front": "green",
+    "back": "red",
+    "open": "name",
+    "primary_desc": true
+  },
+  "comic": {
+    "short": "c",
+    "front": "black",
+    "back": "red",
+    "open": "https://getcomics.info/?s=%s",
+    "open_name": "getcomics"
+  },
+  "manga": {
+    "short": "ma",
+    "back": "red",
+    "open": "https://manga4life.com/search/?sort=s&desc=false&name=%s",
+    "open_name": "manga4life",
+    "alt": "https://www.mangareader.net/search/?w=%s&rd=0&status=0&order=0&genre=&p=0",
+    "alt_name": "mangareader"
+  },
+  "series": {
+    "short": "s",
+    "front": "black",
+    "back": "blue",
+    "open": "https://jneidel.com/re/tpb/%s",
+    "open_name": "tpb",
+    "alt": "https://www.imdb.com/find?s=all&q=%s",
+    "alt_name": "imdb"
+  },
+  "anime": {
+    "short": "an",
+    "front": "black",
+    "back": "cyan",
+    "open": "https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s",
+    "open_name": "nyaa",
+    "alt": "https://www.imdb.com/find?s=all&q=%s",
+    "alt_name": "imdb"
+  },
+  "book": {
+    "short": "b",
+    "front": "red",
+    "back": "yellow",
+    "open": "https://jneidel.com/re/lg/%s",
+    "open_name": "libgen",
+    "alt": "https://www.goodreads.com/search?q=%s",
+    "alt_name": "goodreads"
+  },
+  "article": {
+    "short": "at",
+    "front": "black",
+    "back": "yellowBright",
+    "open": "name",
+    "primary_desc": true
+  },
+  "video": {
+    "short": "v",
+    "front": "black",
+    "back": "green",
+    "open": "name",
+    "primary_desc": true
+  }
+}

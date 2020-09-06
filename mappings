@@ -205,3 +205,7 @@ create .config/yay
 
 [xob]
 .config/xob
+
+[cnsm]
+create .config/cnsm
+.config/cnsm/types.json
