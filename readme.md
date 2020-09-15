@@ -198,6 +198,29 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 
 </details>
 
+### signal (messaging)
+
+Secure messaging.
+
+**signal-desktop**
+
+My preferred way to use Signal.
+
+Notifications use [dunst](#dunst) (notification daemon).
+
+- [keyboard shortcuts](https://support.signal.org/hc/en-us/articles/360036517511-Signal-Desktop-Keyboard-Shortcuts)
+
+**signal-cli**
+
+Runs on my server under a different phone number to send (cron scheduled)
+messages to myself.
+
+Example use case: cut down todays meal plan into one simple image and send it to
+myself just before lunch time (only on days when I'm in school of course)
+[see](scripts/htw/send-mensa-plan).
+
+- [scripts](scripts/signal)
+
 ## System apps
 ### sxhkd (hotkey daemon)
 
