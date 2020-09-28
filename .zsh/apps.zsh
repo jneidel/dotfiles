@@ -71,7 +71,7 @@ TEXTS=~/scripts/personal/newsboat-texts
 SLEEP=12
 new() {
   shuf -n1 $TEXTS
-  sleep $SLEEP
+  # sleep $SLEEP
   printf "(y/N): "
   read -r ANS
   if [ "$ANS" = 'y' ]; then
@@ -84,7 +84,7 @@ new() {
 }
 ma() {
   shuf -n1 $TEXTS
-  sleep $SLEEP
+  # sleep $SLEEP
   printf "(y/N): "
   read -r ANS
   if [ "$ANS" = 'y' ]; then
@@ -112,6 +112,7 @@ alias mpvtest="mpv --input-test --force-window --idle"
 ### mpd
 alias mpdco="mpd-cover"
 alias mpdly="mpd-lyrics | $PAGER"
+alias ml="mpd-toggle-local"
 
 ### gpg
 alias enc="gpg -e -r $KEYID"

@@ -1,19 +1,21 @@
 #! /usr/bin/env node
 
+const path = require( "path" );
 const { promisify } = require( "util" );
 const fs = require( "fs" );
 const writeFile = promisify( fs.writeFile );
 
 const base = require( "./base" );
 
+const dir = file => path.resolve( __dirname, file );
 const paths = [
   {
-    in : "/home/jneidel/.config/eslint/js",
-    out: "/home/jneidel/.config/eslint/eslintrc",
+    in : dir( "js" ),
+    out: dir( "eslintrc" ),
   },
   {
-    in : "/home/jneidel/.config/eslint/ts",
-    out: "/home/jneidel/.config/eslint/eslintrc-ts",
+    in : dir( "ts" ),
+    out: dir( "eslintrc-ts" ),
   },
 ];
 

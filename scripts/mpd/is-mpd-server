@@ -1,28 +1,20 @@
-#! /bin/bash
+#! /bin/sh
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DIR=`dirname $0`
 STATUS_FILE="$DIR/mpd-server-status"
+LOCAL_FILE="$DIR/mpd-local-status"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ is-mpd-server <++>
-<++>
-
-Parameters:
-  \$1: <++>
-  [\$1]: <++>
-
-Example:
-  $ is-mpd-server <++>
+  printf "$ is-mpd-server
+Whether remote server (0 exit) is active or local one (1 exit)
 "
   exit
 fi
 
-if [ ! -e "$STATUS_FILE" ]; then
-  echo "sever status file does not exist at $STATUS_FILE"
-  exit 1
-fi
+[ ! -e "$STATUS_FILE" ] && printf '0' >$STATUS_FILE
+[ ! -e "$LOCAL_FILE" ] && printf '0' >$LOCAL_FILE
 
-if [ "$(cat $STATUS_FILE)" -gt 0 ]; then
+if [ `<$LOCAL_FILE` -eq 0 ] && [ `<$STATUS_FILE` -eq 1 ] && ! $DIR/is-mpd-playing-local; then
   true
 else
   false

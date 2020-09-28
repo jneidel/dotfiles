@@ -1,0 +1,26 @@
+#! /bin/sh
+
+FILE=`dirname $0`/mpd-local-status
+DEFAULT=0
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ mpd-toggle-local
+Toggle whether to use local mpd server over remote or not
+EOF
+  exit
+fi
+
+if [ ! -e "$FILE" ]; then
+  printf '0' >$FILE
+  echo "Created file, toggled remote"
+  exit 0
+fi
+
+if [ `<$FILE` -eq 0 ]; then
+  printf '1' >$FILE
+  printf "Toggled local\n"
+else # 1
+  printf '0' >$FILE
+  printf "Toggled \033[1;33mremote\n"
+fi

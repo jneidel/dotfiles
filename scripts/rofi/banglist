@@ -1,4 +1,4 @@
-lg http://libgen.is/search.php?&req=%s&view=simple&res=100&phrase=1&column=def&sort=extension&sortmode=ASC
+lg https://jneidel.com/re/lg/%s
 lgf http://gen.lib.rus.ec/fiction/?q=%s
 tpb https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb2 https://pirateproxy.page/search/%s/0/99/0

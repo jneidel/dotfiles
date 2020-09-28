@@ -1,7 +1,5 @@
 #! /bin/sh
 
-# todo: prompt user to continue if file to move is not indicated by the first line in the order list (implicit move)
-
 DATE_FILE=$HOME/.local/share/newentertainment_date
 PENS_FILE=$HOME/.local/share/newentertainment_pensum
 DIR=$HOME/ct/dont_touch
@@ -92,13 +90,15 @@ move() {
 handle_series() {
   name="$1"
 
-  find "$DIR/$name" -regextype posix-extended -regex '.*\.(mkv|mp4|avi)' | sort | while read -r file; do
-    if echo $file | fgrep "/s20/" >/dev/null; then
-      media_type=s20
-    else
-      media_type=s60
-    fi
+  firstOnOrder="$(head "$ORDER" -n1)"
+  if [ "$firstOnOrder" != "$name" ]; then
+    printf "'$name' is not the first entry in order.\nContinue? (y/N): "
+    read ans
+    [ "$ans" != "y" ] && return 13
+  fi
 
+  media_type=`echo $name | cut -d\/ -f1`
+  find "$DIR/$name" -regextype posix-extended -regex '.*\.(mkv|mp4|avi)' | sort | while read -r file; do
     if has_pensum $media_type; then
       move "$file"
       decrement_pensum $media_type
@@ -112,24 +112,29 @@ handle_series() {
 }
 handle_movie() {
   name="$1"
-  media_type="m"
 
-  if has_pensum $media_type; then
-    move "$name"
-    decrement_pensum $media_type
-    [ "$TESTING" -eq 0 ] && rm_line "$1"
-  fi
+  move "$name"
+  decrement_pensum m
+  [ "$TESTING" -eq 0 ] && rm_line "$1"
 }
 
-while read -r name; do
+while read -r name <&10; do
   case $name in
-    s60*|s20*) handle_series "$name"
-      if [ "$?" -eq 12 ]; then # reached half pens
-        break
-      fi ;;
-    m*) handle_movie "$name" ;;
-  esac
-done <$ORDER
+    s60*|s20*)
+      has_pensum `echo $name | cut -d\/ -f1` || break
 
-printf "$(read_pensum)" > $PENS_FILE # write to persistent pensum file
-date > $DATE_FILE
+      handle_series "$name"
+      EXIT_CODE="$?"
+      if [ "$EXIT_CODE" -eq 12 ] || [ "$EXIT_CODE" -eq 13 ]; then
+        break
+        # 12: reached half pens
+        # 13: not first entry in order, user exit
+      fi ;;
+    m*)
+      has_pensum `echo $name | cut -d\/ -f1` || break
+      handle_movie "$name";;
+  esac
+done 10<$ORDER # 10 as not to block other read calls
+
+[ "$TESTING" -eq 0 ] && printf `read_pensum` > $PENS_FILE # write to persistent pensum file
+[ "$TESTING" -eq 0 ] && date >$DATE_FILE

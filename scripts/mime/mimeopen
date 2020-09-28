@@ -2,14 +2,14 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
-$ mimehandler EXTENSION
-Return the handler for the given extension
+$ mimeopen EXTENSION
+Return the open handler for the given extension
 
 Parameters:
   \$1: file extension to get the handler for
 
 Example:
-  $ mimehandler mkv
+  $ mimeopen mkv
   #=> mpv --fs
 EOF
   exit
@@ -46,9 +46,9 @@ case $EXT in
   exe) echo "wine >/dev/null 2>&1";;
   gpg|*.gpg) echo extracthere; exit 1;;
   txt|md|java) echo "$EDITOR"; exit 1;;
-  ods|docx) echo libreoffice;;
+  ods) echo libreoffice;;
+  docx) echo "libreoffice --convert-to pdf"; exit 1;;
   *) printf "ERR: no handler setup for: $EXT\n"
     exit 10;;
 esac
-
-exit 0
+exit 0 # explicit 0 exit for handlers fine to run in the background

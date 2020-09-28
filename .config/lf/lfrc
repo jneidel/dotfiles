@@ -16,7 +16,7 @@ set filesep "\n"
 
 ## custom functions
 cmd open ${{
-  ~/scripts/mimeopen -e lf "$f"
+  ~/scripts/mime/mime -e lf open "$f"
 }}
 cmd diropen ${{
   ~/scripts/lf-handle-dir "$f"
@@ -24,6 +24,10 @@ cmd diropen ${{
 
 cmd remove ${{
   rm -rf $fx
+}}
+
+cmd edit ${{
+  ~/scripts/mime/mime -e lf edit "$f"
 }}
 
 cmd massmove ${{
@@ -52,12 +56,23 @@ cmd gimp ${{
 
 cmd rm_pi ${{
   # remove a file from the local music lib and the pi's
-  FILE="$(realpath $f | grep -Po '/music/\K.*$')"
-
-  echo "Removing file: $FILE"
-  if [ -n "$FILE" ]; then
-    printf "ssh: " ; ssh pi "rm '$HOME/music/$FILE'" && rm "$f"
+  REMOTE_FILE=""
+  if realpath $f | grep 'unheard'; then
+    FILE="$(realpath $f | grep -Po '/unheard/\K.*$')"
+    REMOTE_FILE="\$HOME/usb/unheard/$FILE"
+  else
+    FILE="$(realpath $f | grep -Po '/music/\K.*$')"
+    REMOTE_FILE="\$HOME/usb/music/$FILE"
   fi
+
+  echo "Removing file: '$FILE' at\n  '$REMOTE_FILE'\nContinue (y/N): "
+  read ans
+  if [ "$ans" != "y" ]; then
+    exit 0
+  fi
+
+  ssh pi "rm -r \"$REMOTE_FILE\""
+  rm -r "$f"
 }}
 
 ## bindings
@@ -71,7 +86,7 @@ map e
 map r
 
 ### own bindings
-map e $$EDITOR "$f"
+map e edit
 map rm remove $f
 map rp rm_pi
 map x cut

@@ -1,0 +1,121 @@
+#! /bin/sh
+
+DIR=`dirname $0`
+AVAILABLE_ENVS="lf"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ mime CMD FILE
+Do something with a file depending on its type
+
+Commands:
+  open (default): open the given file
+  edit: edit a given file
+  preview: preview a given file
+
+Parameters:
+  [\$1]: command
+  \$2: file to be opened
+
+Flags:
+  -e ENV: set an preconfigure environment for different openers
+          available: $AVAILABLE_ENVS
+
+Example:
+  $ mime pictures
+  #=> opens dir in sxiv
+  $ mime open podcast
+  #=> plays dir in mpvm
+
+  $ mime edit doc.docx
+  #=> edit in libreoffice
+  $ mime edit file
+  #=> edit in $EDITOR
+
+  $ mime preview todo.md
+  #=> render markdown preview
+EOF
+  exit
+fi
+
+# command -v mimetype >/dev/null || { echo "mimetype script is not in PATH"; exit 127; }
+# command -v mimeopen >/dev/null || { echo "mimeopen script is not in PATH"; exit 127; }
+# command -v mimeedit >/dev/null || { echo "mimeedit script is not in PATH"; exit 127; }
+# command -v mimepreview >/dev/null || { echo "mimepreview script is not in PATH"; exit 127; }
+
+CMD=""
+FILE=""
+ENV_=""
+
+if [ "$1" = "-e" ]; then # -e ENV [CMD] FILE
+  ENV_="$2"
+  if [ -z "$4" ]; then
+    CMD="open"
+    FILE="$3"
+  else
+    CMD="$3"
+    FILE="$4"
+  fi
+elif [ "$2" = "-e" ]; then # [CMD]/FILE -e ENV [FILE]
+  ENV_="$3"
+  if [ -z "$4" ]; then
+    CMD="open"
+    FILE="$1"
+  else
+    CMD="$1"
+    FILE="$4"
+  fi
+elif [ "$3" = "-e" ]; then # CMD FILE -e ENV
+  ENV_="$4"
+  CMD="$1"
+  FILE="$2"
+else # [CMD] FILE
+  if [ -z "$2" ]; then
+    CMD="open"
+    FILE="$1"
+  else
+    CMD="$1"
+    FILE="$2"
+  fi
+fi
+
+EXT=`$DIR/mimetype "$FILE"`
+EXIT_CODE="$?"
+[ "$EXIT_CODE" -gt 0 ] && { echo $EXT ; exit "$EXIT_CODE" ; }
+
+# environment specific extensions
+if [ "$ENV_" = "lf" ]; then
+  case $EXT in
+    mp3|flac|ogg|wma|m4b) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video \"$FILE\"" &
+    exit 0;;
+  esac
+elif [ -z "$ENV_" ]; then
+  true
+else
+  printf "Environment not supported.\n  Available: $AVAILABLE_ENVS\n"
+  exit 1
+fi
+
+# generic handlers
+HANDLER=""
+EXIT_CODE=""
+case "$CMD" in
+  open)
+    HANDLER=`$DIR/mimeopen $EXT`
+    EXIT_CODE="$?";;
+  edit)
+    HANDLER=`$DIR/mimeedit $EXT`
+    EXIT_CODE="$?";;
+  preview)
+    HANDLER=`$DIR/mimepreview $EXT`
+    EXIT_CODE="$?";;
+  *) echo "Invalid command. See --help";;
+esac
+[ "$EXIT_CODE" -ge 10 ] && { echo $HANDLER ; exit "$EXIT_CODE" ; }
+
+# exit 1 means the handler does not like to be run in the background (&)
+if [ "$EXIT_CODE" -eq 0 ]; then
+  sh -c "$HANDLER \"$FILE\" &"
+elif [ "$EXIT_CODE" -eq 1 ]; then
+  sh -c "$HANDLER \"$FILE\""
+fi

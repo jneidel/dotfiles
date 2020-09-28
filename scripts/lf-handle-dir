@@ -20,10 +20,10 @@ DIR="$1"
 
 MIME_LIST=$(mktemp)
 find "$DIR" -type f | while read -r file; do
-  mime "$file" >> $MIME_LIST
+  mimetype "$file" >> $MIME_LIST
 done
 
-TOP_EXT=$(uniq -c $MIME_LIST | head -n1 | awk '{print $2}')
+TOP_EXT=$(uniq -c $MIME_LIST | sort -br | head -n1 | awk '{print $2}')
 printf "Most common extension for this directory is: $TOP_EXT\n\n"
 
 # special lf case from mimeopen
@@ -33,7 +33,7 @@ case $TOP_EXT in
 esac
 
 # handler routine from mimeopen
-HANDLER="$(mimehandler $TOP_EXT)"
+HANDLER="$(mimeopen $TOP_EXT)"
 EXIT_CODE="$?"
 [ "$EXIT_CODE" -ge 10 ] && { echo $HANDLER ; exit "$EXIT_CODE" ; }
 

@@ -8,9 +8,4 @@ Setup in lfrc: set previewer ~/scripts/lf-preview
 "; exit
 fi
 
-case "$1" in
-  *.md) glow -s dark "$1";;
-  *.epub) epub-toc "$1";;
-  *.pdf) pdftotext "$1" -;;
-  *) cat "$1";;
-esac
+~/scripts/mime/mime preview "$1"

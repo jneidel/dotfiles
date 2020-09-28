@@ -42,6 +42,7 @@ alias pushup="git push --set-upstream origin"
 alias pull="git pull origin"
 alias master="git pull origin master; git push origin master"
 alias gpu="git push uber master"
+alias clone="git clone"
 
 ## checkout
 alias co="git checkout"

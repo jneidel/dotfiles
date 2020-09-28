@@ -2,16 +2,16 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
-$ mime FILE
+$ mimetype FILE
 Classify file type and return a file extension
 
 Parameters:
   \$1: name of the file
 
 Example:
-  $ mime mime
-  #=> bash
-  $ mime song.mp3
+  $ mimetype mime
+  #=> sh
+  $ mimetype song.mp3
   #=> mp3
 EOF
   exit
@@ -43,7 +43,8 @@ classify_file() {
       "POSIX shell script") echo sh;;
       "Bourne-Again shell script") echo bash;;
       "UTF-8 Unicode text"|"ASCII text") echo txt;;
-      *) echo [ERR] mime not configured: $FILE_OUTPUT
+      "empty") echo txt;;
+      *) echo [ERR] mimetype not configured: $FILE_OUTPUT
         exit 1;;
     esac
   else
@@ -52,4 +53,3 @@ classify_file() {
 }
 
 classify_file "$FILE"
-

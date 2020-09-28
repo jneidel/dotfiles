@@ -137,9 +137,13 @@ def_key "U"
   update_database
 
 ## track position/seek
-def_key "L"
+def_key "up"
   seek_forward
-def_key "H"
+def_key "down"
+ seek_backward
+def_key "right"
+  seek_forward
+def_key "left"
  seek_backward
 
 def_key "T"
@@ -158,7 +162,15 @@ def_key "V"
 def_key "C"
   run_external_command "mpd-cover &"
 def_key "Y"
-  run_external_command "tmux split-window -p 45 'mpd-lyrics | less'"
+  run_external_command "tmux split-window -p 45 'mpd-lyrics | less --quit-at-eof'"
+def_key "M"
+  run_external_command "tmux split-window -p 18 \; send-keys 'clear && ssm' 'Enter'"
+
+## quit
+def_key "q"
+  quit
+def_key "ctrl-d"
+  quit
 
 #def_key "ctrl-h"
 #  replay_song
@@ -313,8 +325,6 @@ def_key "Y"
 #def_key "ctrl-p"
 #  set_selected_items_priority
 #
-#def_key "q"
-#  quit
 #
 #
 #def_key "f"

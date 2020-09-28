@@ -42,6 +42,26 @@ fi
 LYRICS="$(get_lyrics "$SONG_FILE")"
 if [ -n "$LYRICS" ]; then
   get_lyrics -n "$SONG_FILE" # Reusing $LYRICS messes with the formatting (newlines)
+  echo "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+" # with less, if the pane is 16 lines long pressing space will
+# always advance by 16 lines, except! when you hit the EOF, then
+# it advances until it hits the end (no overflow)
+# makes sense, but it leads to no being able to predict where what you
+# were reading will continue, these 16 empty lines fix that for ncmpcpp's Y
 else
   echo "Song has no lyrics" 1>&2
 fi

@@ -15,3 +15,14 @@ mpdg() {
   $B "https://genius.com/search?q=$(urlencode "$(mpc-get '%artist% %title%')")"
   # todo: strip feat.
 }
+
+## dice
+roll_dice() {
+  shuf -n1 -i 1-$1
+}
+alias d20="roll_dice 20"
+alias d12="roll_dice 12"
+alias d10="roll_dice 10"
+alias d8="roll_dice 8"
+alias d6="roll_dice 6"
+alias d4="roll_dice 4"
