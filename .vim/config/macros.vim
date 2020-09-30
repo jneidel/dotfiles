@@ -40,7 +40,7 @@ au filetype js,ts,javascript,typescript inoremap ,t test( "", () => {<Enter>cons
 au filetype ts,typescript inoremap ,c class<Space><Space>{<Enter>constructor( <++> )<Space>{<Enter><++><Enter>}<Enter>}<Esc>4kf{hi
 
 "### Shell
-au filetype sh,bash,shell,zsh inoremap ,f <Space>()<Space>{<Enter><++><Enter>}<Esc>2k0i
+au filetype sh,bash,shell,zsh inoremap ,f ()<Space>{<Enter><++><Enter>}<Esc>2k0i
 au filetype sh,bash,shell,zsh inoremap ,o {<Enter>}<Esc>O
 au filetype sh,bash,shell,zsh inoremap ,i if [ "$" <++> ]; then<Enter><++><Enter>fi<Esc>2kf$a
 au filetype sh,bash,shell,zsh inoremap ,c case $ in<Enter><++>) <++>;;<Enter><++>) <++>;;<Enter>*) <++>;;<Enter>esac<Esc>4k0f$a

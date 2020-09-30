@@ -13,3 +13,6 @@ map d scroll half-down
 
 map u scroll half-up
 map i scroll half-down
+
+map < navigate previous
+map > navigate next

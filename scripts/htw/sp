@@ -1,10 +1,8 @@
 #! /bin/bash
-# Todo: fix updatecookie
-# Todo: flag to force refresh given file
-# Todo: if local, and not refresh, dont fetch cookie
 
-TMP_DIR=~/.cache
+TMP_DIR=~/.cache/sp
 TMP_COOKIE=$TMP_DIR/.spc
+mkdir -p $TMP_DIR
 
 # Fill these in:
 USERNAME="" # Matrikelnummer
@@ -15,33 +13,48 @@ PASSWORD=""
 
 . ~/scripts/personal/sp-data.sh # import USERNAME and PASSWORD from private source (remove this)
 
-# Fill in your pdf viewer:
-PDF_VIEWER=zathura
-
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ sp [+1|-1] [--no-viewer]"
-  echo "Get current Stundenplan from HTW website and open it in $PDF_VIEWER or via xdg-open"
-  echo ""
-  echo "Parameter:"
-  echo "  [\$1]: week modifier, e.g. +1 to show next week, -1 for last week, etc."
-  echo ""
-  echo "Flags:"
-  echo "  --no-viewer: don't open the downloaded file in your pdf viewer"
-  echo ""
-  echo "Example:"
-  echo "  $ sp +1 --no-viewer"
+  cat << EOF
+$ sp [+n|-n] [--no-viewer]
+Get current Stundenplan from HTW website and open it in $PDF_VIEWER
+
+Parameter:
+  [\$1]: week modifier - default: current week (+0)
+    e.g. +1 to show next week, -1 for prev week, etc.
+
+Flags:
+  --no-viewer: don't open the downloaded file in your pdf viewer
+
+Commands:
+  clear, clear: remove cache
+  dl, download: load the next month worth of plans
+
+Examples:
+  $ sp
+  #=> open current week
+  $ sp +1 --no-viewer
+  #=> download next week
+EOF
   exit
 fi
 
-# Validate user variables
+command -v zathura >/dev/null || { echo "zathura is not installed" 1>&2; exit 127; }
+command -v convert >/dev/null || { echo "imagemagick (convert) is not installed" 1>&2; exit 127; }
+command -v pdfunite >/dev/null || { echo "poppler (pdfunite) is not installed" 1>&2; exit 127; }
 [ -z "$USERNAME" ] && { echo "\$USERNAME is empty, please fill it in"; exit 1; };
 [ -z "$PASSWORD" ] && { echo "\$PASSWORD is empty, please fill it in"; exit 1; };
 
+case "$1" in
+  clear|clean) rm $TMP_DIR/stundenplan*
+    echo "Removed cached versions"
+    exit 0;;
+esac
+
+WEEK_OFFSET="$1"
+[ -z "$1" ] && WEEK_OFFSET="+0"
 [ "$2" = "--no-viewer" ] && PDF_VIEWER=""
 
-mkdir -p $TMP_DIR
-
-function updateCookie() {
+updateCookie() {
   curl -Ssi https://lsf.htw-berlin.de/qisserver/rds\?state\=user\&type\=1 -d "username=$USERNAME&password=$PASSWORD&submit=Einloggen" |
     grep -F "JSESSIONID" | grep -Po "JSESSIONID=.*?\.ajp13_qis5" | cut -d= -f2 | tee >(cat > $TMP_COOKIE)
 }
@@ -49,36 +62,88 @@ function updateCookie() {
 SESSION_COOKIE=""
 if [ ! -e "$TMP_COOKIE" ]; then
   echo "Updating session cookie (file does not exist)"
-  SESSION_COOKIE=$(updateCookie)
+  SESSION_COOKIE=`updateCookie`
 elif [ -z "$(cat $TMP_COOKIE)" ]; then
   echo "Updating session cookie (file is empty)"
-  SESSION_COOKIE=$(updateCookie)
+  SESSION_COOKIE=`updateCookie`
 else
-  SESSION_COOKIE=$(cat $TMP_COOKIE)
+  SESSION_COOKIE=`<$TMP_COOKIE`
 fi
 
-WEEK=$(($(date +%U | sed "s|^0||")+1))
-[ -n "$1" ] && WEEK=$(($WEEK $1))
-
-YEAR=$(date +%Y)
-FILE="$TMP_DIR/stundenplan-$YEAR-$WEEK.pdf"
-
-if [ ! -e "$FILE" ]; then
-  WEEK_YEAR=$WEEK"_"$YEAR
-  curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE; download-complete=true" > "$FILE"
-
-  if cat "$FILE" | grep "Die aufgerufene Funktion kann aufgrund von fehlenden Zugriffsrechten nicht" >/dev/null; then
-    echo "Updating session cookie"
-    SESSION_COOKIE=$(updateCookie)
-    curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE; download-complete=true" > "$FILE"
-  fi
-fi
-
-if [ -n "$PDF_VIEWER" ]; then
-  if command -v $PDF_VIEWER >/dev/null; then
-    $PDF_VIEWER "$FILE" || true
+BASE_WEEK=$(($(date +%U | sed "s|^0||")+1))
+calcWeek() {
+  OFFSET="$1"
+  RES=$(($BASE_WEEK "$OFFSET"))
+  if [ "$RES" -lt 10 ]; then
+    echo 0$RES
   else
-    xdg-open "$FILE"
+    echo $RES
   fi
-fi
+}
+YEAR=$(date +%Y)
 
+IS_NEW_PDF=0
+getWeek() {
+  WEEK_OFFSET="$1"
+  WEEK=`calcWeek $WEEK_OFFSET`
+  FILE="$TMP_DIR/stundenplan-$YEAR-$WEEK.pdf"
+
+  if [ ! -e "$FILE" ] || [ -L "$FILE" ]; then
+    rm "$FILE" 2>/dev/null # remove symlink
+    WEEK_YEAR=$WEEK"_"$YEAR
+    curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE; download-complete=true" >"$FILE"
+
+    if grep "Die aufgerufene Funktion kann aufgrund von fehlenden Zugriffsrechten nicht" "$FILE" >/dev/null; then
+      echo "Updating session cookie" 1>&2
+      SESSION_COOKIE=$(updateCookie)
+      curl -Ss "https://lsf.htw-berlin.de/qisserver/rds?state=pdfplan&moduleCall=freePositionPlanStudy&week=$WEEK_YEAR&planid=0" -b "JSESSIONID=$SESSION_COOKIE; download-complete=true" >"$FILE"
+    fi
+    IS_NEW_PDF=1
+  fi
+  echo $FILE
+}
+
+EMPTY_FILE="$TMP_DIR/stundenplan-empty.pdf"
+createEmpty() {
+  convert xc:none -page A6 $EMPTY_FILE
+  # see: https://unix.stackexchange.com/a/277987
+}
+[ ! -e "$EMPTY_FILE" ] && createEmpty
+
+createSymlink() {
+  WEEK="$1"
+  [ "$WEEK" -lt 10 ] && WEEK="0$WEEK"
+  ln -s $EMPTY_FILE "$TMP_DIR/stundenplan-$YEAR-$WEEK.pdf" 2>/dev/null
+}
+createAllSymlinks() {
+  for i in $(seq 52); do
+    createSymlink $i
+  done
+}
+[ `ls $TMP_DIR | wc -l` -lt 53 ] && createAllSymlinks
+
+YEAR_PDF="$TMP_DIR/stundenplan-$YEAR.pdf"
+buildYearPdf() {
+  pdfunite $TMP_DIR/stundenplan-$YEAR-*.pdf "$YEAR_PDF"
+}
+
+case "$1" in
+  dl|download) echo "Downloading next month"
+    buildYearPdf
+    getWeek "+0"
+    for i in $(seq 4); do
+      getWeek "+$i"
+    done
+    buildYearPdf
+    exit 0;;
+esac
+
+getWeek $WEEK_OFFSET
+WEEK=`calcWeek $WEEK_OFFSET`
+
+  buildYearPdf
+if [ "$IS_NEW_PDF" -eq 1 ]; then
+  buildYearPdf
+  timeout 0.3 zathura "$YEAR_PDF" -P $WEEK # opens empty the first time around
+fi
+zathura "$YEAR_PDF" -P $WEEK || true

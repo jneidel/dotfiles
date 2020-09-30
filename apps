@@ -94,7 +94,7 @@ epr-git CLI epub reader
 
 [zathura]
 zathura Reader
-zathura-pdf-mupdf Pdf plugin
+zathura-pdf-poppler Pdf plugin
 
 [sxiv]
 sxiv Minimal image viewer
