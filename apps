@@ -122,9 +122,6 @@ firefox-developer-edition Developer edition of firefox
 # ungoogled-chromium-bin Free version of chromium
 chromium-widevine Chromium module required for netflix
 
-[surf]
-surf Minimal browser
-
 ## utils
 [polybar]
 polybar Status bar
@@ -446,4 +443,4 @@ anki SRS and flashcards
 webtorrent-cli Torrent streaming
 
 [xob]
-xob
+xob Volume bar

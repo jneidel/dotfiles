@@ -41,14 +41,11 @@ query="${res#* }"
 [ "$query" = "$bang" ] && bang="d" # no bang passed -> dict.cc
 
 case "$bang" in
-  yt)
+  y)
   ~/scripts/yt $query
   exit;;
   yts)
   ~/scripts/yts $query
-  exit;;
-  nd)
-  ~/scripts/yt "needledrop $query"
   exit;;
 esac
 

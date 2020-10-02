@@ -10,9 +10,8 @@ cd $JAVA_DIR
   echo "Missing file to run"; exit 1
 }
 
-ls *.java | entr -n javac *.java 2> $FIFO &
+ls *.java | entr -n javac *.java 2>$FIFO &
 
-ls *.class | entr -r -p java "$1" > $FIFO &
+ls *.class | entr -r -p java "$1" >$FIFO &
 
-cat $FIFO
-
+<$FIFO

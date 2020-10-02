@@ -22,7 +22,7 @@ FILE="$(readlink -f "$1")"
 classify_file() {
   basename="$1"
   fileext=
-  while [[ "$basename" = ?*.@(bz2|gz|gpg) ]]; do
+  while [[ "$basename" = ?*.@(bz2|gz|gpg|part) ]]; do
     fileext=${basename##*.}.$fileext
     basename=${basename%.*}
   done

@@ -43,6 +43,7 @@ export NODE_PATH=/usr/lib/node_module
 ### Themes
 export GTK_THEME=Arc
 export QT_STYLE_OVERRIDE=kvantum-dark
+export BAT_THEME=ansi-dark
 
 #### less coloring (man pages), see colored-man script
 export LESS_TERMCAP_mb=$'\e[1;34m'

@@ -5,12 +5,15 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ rec [OUTPUT]
 Record the screen
 
+Fix what audio is being recorded in pavucontrol
+
 Parameters:
   [\$1]: Name of the output file (automatic .mkv)
     defaults to: recording_$(date +%Y-%b-%d_%H_%M_%S)
 
 Example:
-  $ vid output
+  $ rec
+  $ rec out
 EOF
   exit
 fi
@@ -34,7 +37,7 @@ cleanup() {
   echo "Starting xautolock"
   ~/scripts/i3/lock/autostart-lock
 }
-trap cleanup EXIT # does not work
+trap cleanup EXIT
 
 # -s size (dimension)
 # -f format (x/alsa)

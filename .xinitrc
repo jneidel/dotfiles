@@ -26,6 +26,8 @@ xflux -k 5000 -l 52 -g 13 &
 monitor off &
 # disable annoying system beep
 xset -b &
+# hide cursor after 2 sec
+unclutter --timeout 2 &
 
 ## daemons
 mkfifo /tmp/xobpipe

@@ -14,6 +14,7 @@ fp https://filepursuit.com/pursuit?q=%s
 abb http://audiobookbay.nl/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r5
+yt https://www.youtube.com/results?search_query=%s
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
