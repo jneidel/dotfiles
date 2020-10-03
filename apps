@@ -107,9 +107,10 @@ newsboat RSS feed reader
 w3m Terminal browser
 
 [yacreader]
-# yacreader-nopdf Comicbook reader # wrong version, install manually
-libunarr Dependency
-poppler-qt5 Dependency
+# yacreader-nopdf Comicbook reader # shit version, compile manually from https://jneidel.com/yacreader9.tar.xz
+libunarr Build dependency
+poppler-qt5 Build dependency
+qt5-script Build dependency
 
 ## browsers
 [firefox]
