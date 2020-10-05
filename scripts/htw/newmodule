@@ -19,6 +19,6 @@ MODULE_DIR="$UNI_DIR/$MODULE_NAME"
 mkdir -p "$MODULE_DIR/2_folien/1_done" "$MODULE_DIR/3_books" "$MODULE_DIR/3_ueb" "$MODULE_DIR/3_abgaben"
 printf "# todo\nEach todo should have a list of sub-tasks and a time-box\n\n\n" >> "$MODULE_DIR/1_todo.md"
 printf "# notes\n\n\n\n## glossary" >> "$MODULE_DIR/2_notes.md"
-printf "# orga\n\n**What do I want from this module?**\n\n\n## requirements\n\n\n\n## resources\n\n\n\n" >> "$MODULE_DIR/4_orga.md"
+printf "# orga\n## motivation {{{\n\n**What do I want from this module?**\n\n\n> }}}\n## format {{{\n\n\n\n> }}}\n## requirements {{{\n\n\n\n> }}}\n## resources\n\n\n\n" >> "$MODULE_DIR/4_orga.md"
 
 echo "Created module at $MODULE_DIR"
