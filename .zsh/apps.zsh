@@ -65,6 +65,7 @@ alias g="grep"
 alias gw="./gradlew"
 alias pg="sudo -u postgres"
 alias status="journalctl --no-pager -f -u"
+alias s-sshd="sudo systemctl start sshd"
 
 ### newsboat
 TEXTS=~/scripts/personal/newsboat-texts
