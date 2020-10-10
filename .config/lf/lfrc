@@ -75,6 +75,15 @@ cmd rm_pi ${{
   rm -r "$f"
 }}
 
+cmd vl ${{
+  printf "Vorlesungsname: "
+  read name
+  printf "Url: "
+  read url
+
+  printf "#!/bin/sh\nmpv -fs '$url'" > "$name"
+}}
+
 ## bindings
 ### remove defaults
 map m
@@ -100,6 +109,7 @@ map . set hidden!
 map t touch
 map R reload
 map I gimp # [I]mage
+map v vl
 
 ### jump - cd to dirs
 map gd cd ~/Downloads
