@@ -27,6 +27,7 @@ au filetype md,markdown inoremap ,a [](<++>)<Esc>F]i
 au filetype md,markdown inoremap ,c ```<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown inoremap ,l - [] <++><Esc>F[a
 au filetype md,markdown nnoremap ,d :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
+au filetype md,markdown inoremap ,i - [ ]<Space>
 
 "### JavaScript/Typescript
 au filetype js,ts,javascript,typescript,pug inoremap ,o {<Enter>}<Esc>O
@@ -69,15 +70,15 @@ au filetype tex inoremap ,ss \subsection{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex inoremap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
 
 "#### text style
-au filetype tex inoremap ,b \textbf{}<++><Esc>ba
-au filetype tex inoremap ,it \textit{}<++><Esc>ba
+au filetype tex inoremap ,b \textbf{} <++><Esc>2ba
+au filetype tex inoremap ,it \textit{} <++><Esc>2ba
 au filetype tex inoremap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
 au filetype tex inoremap ,br <Enter>\medskip<Enter>
 
 "#### lists
 au filetype tex inoremap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
 au filetype tex inoremap ,ol \begin{enumerate}<Enter>\item <Enter>\end{enumerate}<Enter><++><Esc>2kA
-au filetype tex inoremap ,i \item
+au filetype tex inoremap ,i \item<Space>
 au filetype tex inoremap ,t \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
 
 "#### math

@@ -16,7 +16,7 @@ fi
 MODULE_NAME="$1"
 MODULE_DIR="$UNI_DIR/$MODULE_NAME"
 
-mkdir -p "$MODULE_DIR/2_folien/1_done" "$MODULE_DIR/3_books" "$MODULE_DIR/3_ueb" "$MODULE_DIR/3_abgaben" "$MODULE_DIR/3_vl"
+mkdir -p "$MODULE_DIR/2_folien/0_done" "$MODULE_DIR/3_books" "$MODULE_DIR/3_ueb" "$MODULE_DIR/3_abgaben" "$MODULE_DIR/3_vl/0_done"
 
 TODO="$MODULE_DIR/1_todo.md"
 [ ! -e "$TODO" ] && printf "# todo\nEach todo should have a list of sub-tasks and a time-box\n\n\n" >> "$TODO"

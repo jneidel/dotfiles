@@ -3,7 +3,6 @@
 # show clicks, date
 
 YT_FILTER_FILE=~/scripts/personal/ytfilters
-export TS_SOCKET=/tmp/tsp-mpv-queue
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ yts QUERY

@@ -32,7 +32,7 @@ classify_file() {
   fi
   fileext=${fileext%.}
 
-  if [ -z "$fileext" ]; then
+  if [ -z "$fileext" ] || echo "$fileext" | grep " " >/dev/null; then
     FILE_OUTPUT="$( file -b "$1" | cut -d, -f1)"
     if fgrep "cannot open" <<< $FILE_OUTPUT >/dev/null; then
       echo "[ERR] file does not exist: $FILE"

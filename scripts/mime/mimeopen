@@ -29,7 +29,7 @@ case $EXT in
   pdf) echo zathura;;
   sh) echo sh; exit 1;;
   bash) echo bash; exit 1;;
-  mp4|mkv|avi|m4v|webm|mpg|mp4.part) echo "export TS_SOCKET=/tmp/tsp-mpv-queue && tsp mpv --fs >/dev/null 2>&1";;
+  mp4|mkv|avi|m4v|webm|mpg|mp4.part) echo "tsp mpv --fs >/dev/null 2>&1";;
   tex) echo pdflatex; exit 1;;
   epub) if command -v epr >/dev/null; then
       echo "epr 2>/dev/null"; exit 1
