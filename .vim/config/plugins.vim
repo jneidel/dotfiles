@@ -73,7 +73,7 @@ let g:prettier#config#config_precedence = 'cli-override'
 
 "## eslint
 " using eslint_d (npm i -g eslint_d)
-au filetype js,javascript nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc --resolve-plugins-relative-to /usr/lib/node_modules<CR>`F
+au filetype js,javascript,vue nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc --resolve-plugins-relative-to /usr/lib/node_modules<CR>`F
 au filetype ts,typescript nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc-ts --resolve-plugins-relative-to /usr/lib/node_modules --parser '@typescript-eslint/parser' <CR>`F
 
 "## coc

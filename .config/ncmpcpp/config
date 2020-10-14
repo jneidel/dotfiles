@@ -146,9 +146,10 @@ current_item_inactive_column_suffix = $/r$(end)
 now_playing_prefix = $(yellow)$b
 now_playing_suffix = $(end)$/b
 
+selected_item_prefix = $(red)
+# selected_item_suffix = $9
+
 #browser_playlist_prefix = "$2playlist$9 "
-#selected_item_prefix = $6
-#selected_item_suffix = $9
 #modified_item_prefix = $3> $9
 #song_window_title_format = {%a - }{%t}|{%f}
 
@@ -197,7 +198,7 @@ now_playing_suffix = $(end)$/b
 ##   display artist tag and then composer and performer if previous ones are not
 ##   available.
 ##
-song_columns_list_format = (25)[]{aE} (55)[]{t|f:Title} (17)[blue]{bE} (6)[magenta]{lr}
+song_columns_list_format = (25)[]{aE} (55)[green]{t|f:Title} (17)[blue]{bE} (6)[red]{lr}
 
 ### customize playlist screen
 playlist_show_mpd_host = yes
