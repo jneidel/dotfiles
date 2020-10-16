@@ -1,0 +1,11 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ kw
+Aktuelle Kalenderwoche
+EOF
+  exit
+fi
+
+echo $((`date +%U` +1))

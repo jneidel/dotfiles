@@ -16,7 +16,7 @@ fi
 
 FILE="$1.tex"
 
-echo "\documentclass{article}
+printf "\documentclass{article}
 
 \author{Jonathan Neidel}
 \title{<++>}
@@ -26,8 +26,6 @@ echo "\documentclass{article}
 
 <++>
 
-\end{document}
-" >> "$FILE"
+\end{document}" >> "$FILE"
 
 vim "$FILE"
-

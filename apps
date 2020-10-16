@@ -364,6 +364,9 @@ npm:@typescript-eslint/parser Typescript eslint parser
 npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 npm:typescript Typescript compiler
 
+# npm:eslint-config-xo Eslint ruleset to extend
+# npm:eslint-config-xo-typescript Eslint ts ruleset to extend
+
 ## music
 [kid3]
 kid3 Visual (mp3) tag editor
