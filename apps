@@ -384,6 +384,7 @@ wine-mono wine dependency
 [latex]
 texlive-core Core stuff
 biber Bibliography adon
+texlive-bibtexextra Biber latex file
 vim-live-latex-preview Vim plugin
 mupdf Pdf viewer for vim-live-latex-preview
 
