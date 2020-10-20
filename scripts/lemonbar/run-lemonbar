@@ -20,18 +20,18 @@ mkfifo "${panel_fifo}"
 sleep 1 && "$DIR/i3-workspaces.pl" >"${panel_fifo}" 2>/dev/null &
 
 # conky, "SYS"
-conky -c "$DIR/conkyrc" >"${panel_fifo}" &
+conky -c "$DIR/conkyrc" > "${panel_fifo}" &
 
 while true # recover conky after it dies for no reason
   do {
-    [ -z "$(ps | grep " conky")" ] && conky -c "$DIR/conkyrc" >"${panel_fifo}" &
+    [ -z "$(ps | grep " conky")" ] && conky -c "$DIR/conkyrc" > "${panel_fifo}" &
     sleep 30
   }
 done &
 
 
 # wifi/vpn, "NET"
-journalctl -u mullvad-daemon -u NetworkManager --no-pager -f -o cat | grep -f "$DIR/network-patterns" -o --line-buffered | "$DIR/network.sh" >"${panel_fifo}" &
+journalctl -u mullvad-daemon -u NetworkManager --no-pager -f -o cat | grep -f "$DIR/network-patterns" -o --line-buffered | "$DIR/network.sh" > "${panel_fifo}" &
 
 ## fifo loop
 cat "${panel_fifo}" | "$DIR/parser.sh" \

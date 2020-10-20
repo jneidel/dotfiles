@@ -1,12 +1,19 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ transmission-startup"
-  echo "Start the transmission-daemon with my prefered flags"
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ transmission-startup
+Start the transmission-daemon with prefered flags
+EOF
   exit
 fi
 
-echo "Starting the transmission daemon"
-transmission-daemon -c ~/Downloads --encryption-preferred
-# --paused
+command -v transmission-daemon >/dev/null || { echo "transmission-daemon is not installed"; exit 127; }
+command -v is-mullvad >/dev/null || { echo "is-mullvad script is not in PATH"; exit 127; }
 
+echo "Starting transmission-daemon"
+if is-mullvad; then
+  transmission-daemon -c ~/Downloads --encryption-preferred
+else
+  transmission-daemon -c ~/Downloads --encryption-preferred --paused
+fi

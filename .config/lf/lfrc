@@ -3,6 +3,7 @@
 ## example: https://raw.githubusercontent.com/BrodieRobertson/dotfiles/master/config/lf/lfrc
 
 set previewer ~/scripts/lf-preview
+set color256
 set nodirfirst
 set relativenumber
 set ratios 5:4

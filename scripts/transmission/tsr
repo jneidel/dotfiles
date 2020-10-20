@@ -1,20 +1,19 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ tsr <transmission-remote command>"
-  echo ""
-  echo "A transmission-remote wrapper"
-  echo ""
-  echo "Parameters:"
-  echo "  \$1: "
-  echo ""
-  echo "Example:"
-  echo "  $ tsr"
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ tsr CMD
+Pass a command to transmission-remote
+EOF
   exit
 fi
 
-# redirect stderr to stdout and redirect stdout to /dev/null
-[ "$(transmission-remote -l 2>&1 >/dev/null | grep "Couldn't connect to server" )" ] && ~/scripts/transmission/transmission-startup && sleep 7
+command -v transmission-remote >/dev/null || { echo "transmission-remote is not installed"; exit 127; }
+command -v transmission-startup >/dev/null || { echo "transmission-startup script is not in PATH"; exit 127; }
+
+if transmission-remote -l 2>&1 | grep "Couldn't connect to server" >/dev/null; then
+  transmission-startup
+  sleep 7
+fi
 
 transmission-remote "${@:1}" || exit 1
-

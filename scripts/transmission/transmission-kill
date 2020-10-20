@@ -6,11 +6,10 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-transmission-clear 2> /dev/null
+transmission-clear 2>/dev/null
 
-kill $(pgrep -u "$USER" -f "watch.*tsr") 2> /dev/null # kill tsmw
-kill $(pgrep -u "$USER" -f "transmission-daemon") 2> /dev/null && # kill daemon
+kill $(pgrep -u "$USER" -f "watch.*tsr") 2>/dev/null # kill tsmw
+kill $(pgrep -u "$USER" -f "transmission-daemon") 2>/dev/null && # kill daemon
   echo "Killed transmission-daemon"
 
-exit 0 # clean exit even if 'ps aux | grep' fails
-
+exit 0
