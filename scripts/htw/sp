@@ -146,5 +146,5 @@ if [ "$IS_NEW_PDF" -eq 1 ]; then
   buildYearPdf
   timeout 0.3 zathura "$YEAR_PDF" -P $WEEK # opens empty the first time around
 fi
-zathura "$YEAR_PDF" -P $WEEK &
+zathura "$YEAR_PDF" -P $WEEK 2>&1 | grep -v "warning:" & # filter out warnings
 true
