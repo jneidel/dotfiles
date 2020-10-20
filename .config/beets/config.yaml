@@ -1,4 +1,4 @@
-directory: ~/ct/music
+directory: ~/ct/music/_imported
 library: ~/.local/share/musiclibrary.db
 import:
   copy: yes
@@ -14,7 +14,7 @@ paths:
   albumtype:soundtrack: Soundtracks/$album/$track. $artist - $title
 asciify_paths: yes
 art_filename: cover
-plugins: fetchart embedart lyrics fromfilename scrub
+plugins: fetchart embedart lyrics fromfilename scrub convert
 lyrics:
   force: yes
   sources: google lyricwiki musixmatch genius

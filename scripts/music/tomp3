@@ -1,0 +1,29 @@
+#! /bin/sh
+
+FORMATS_TO_BE_CONVERTED="flac" # seperate by |
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ tomp3 DIR
+Recursively convert to mp3
+
+format that are converted: $FORMATS_TO_BE_CONVERTED
+
+Parameters:
+  \$1: directory to be converted
+EOF
+  exit
+fi
+
+command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 127; }
+
+DIR="$1"
+[ -z "$1" ] && DIR="."
+
+find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" -exec sh -c \
+  'echo "converting $1"; ffmpeg -loglevel error -nostdin -i "$1" "${1%.*}".mp3' sh {} ';'
+# src: https://unix.stackexchange.com/a/428414
+
+printf "remove source files? (y/N): "
+read ans
+[ "$ans" = "y" ] && find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" -exec sh -c 'rm "$1"' sh {} ';'

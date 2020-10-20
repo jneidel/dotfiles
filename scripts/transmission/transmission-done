@@ -12,4 +12,3 @@ fi
 notify-send "transmission-daemon" "$TR_TORRENT_NAME has finished downloading."
 
 transmission-clear # remove torrent
-
