@@ -1,0 +1,50 @@
+#! /bin/sh
+
+DIR="$HOME/projects/uni"
+TODO_FILE_PATTERN="1_todo.md"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ todo
+Print a list of uni todo collected from:
+  1. the main todo list
+  2. course specific lists
+EOF
+  exit
+fi
+
+list() {
+  KW=$(kw)
+  ACTIVE_KW=""
+  printf "\033[1;34m$KW\033[0m:\n"
+
+  PREV_IFS="$IFS"
+  IFS=$'\n'
+  for line in $(<$DIR/1_list.md); do
+    [ "${line:0:1}" = "#" ] && {
+      ACTIVE_KW=`echo $line | cut -d\  -f3`
+      continue
+    }
+
+    [ -z "$ACTIVE_KW" ] && continue
+    if [ "$ACTIVE_KW" -ne "$KW" ] || [ "$ACTIVE_KW" = "uni" ] || [ "$ACTIVE_KW" = "aufgaben" ]; then
+      continue
+    fi
+
+    echo $line
+  done
+  echo ""
+}
+list 2>/dev/null
+
+IFS="$PREV_IFS"
+find "$DIR" -maxdepth 2 -iname "$TODO_FILE_PATTERN" | while read -r file; do
+  TODOS=`cat $file | sed '1d;2d' | grep -ve "^\s*$" -e "^#"`
+  if [ -n "$TODOS" ]; then
+    cat << EOF
+$(printf "\033[1;34m$(basename $(dirname $file))\033[0m:\n" )
+$TODOS
+
+EOF
+  fi
+done
