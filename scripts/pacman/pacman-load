@@ -14,6 +14,5 @@ fi
 # w  - download but dont install
 # p  - print results
 
-echo "Y" | $AUR_HELPER -Syyuuw # --print-format "%n %v" | grep -f ~/scripts/pacman/pacman-load-block-pattern -v | wc -l
-# maybe save the number of new pkg somewhere, to be displayed in tmux, or something
-
+echo "Y" | $AUR_HELPER -Syyuuw
+echo "" | $AUR_HELPER -Sua # aur

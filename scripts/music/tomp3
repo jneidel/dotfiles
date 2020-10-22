@@ -1,6 +1,6 @@
 #! /bin/sh
 
-FORMATS_TO_BE_CONVERTED="flac" # seperate by |
+FORMATS_TO_BE_CONVERTED="flac|m4a" # seperate by |
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
