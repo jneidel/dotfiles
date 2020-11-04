@@ -1,7 +1,7 @@
 lg https://jneidel.com/re/lg/%s
 lgf http://gen.lib.rus.ec/fiction/?q=%s
-tpb https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
-tpb2 https://pirateproxy.page/search/%s/0/99/0
+tpb https://pirateproxy.page/search/%s/0/99/0
+tpb2 https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb3 https://knaben.xyz/s/?q=%s&page=0&orderby=99
 nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
 1337x https://1337x.to/search/%s/1/

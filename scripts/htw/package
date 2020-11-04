@@ -1,0 +1,31 @@
+#! /bin/sh
+
+HERE=`pwd`
+OUT_LOCATION="$HOME/Downloads"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ package.sh
+Package project as zip
+EOF
+  exit
+fi
+
+command -v zip >/dev/null || { echo "zip is not installed"; exit 1; }
+
+DIR="$1"
+OUT="${DIR}_Jonathan_Neidel_573619"
+
+# cleanup prev runs
+rm "$OUT_LOCATION/$OUT.zip" 2>/dev/null
+rm -r "/tmp/$OUT"
+
+cp -r "$HERE/$DIR" "/tmp/$OUT"
+# cleanup inside dir
+rm -r /tmp/$OUT/out /tmp/$OUT/node_modules /tmp/$OUT/build 2>/dev/null
+
+# change into dir to avoid annoying sub-directory w/ same name
+cd /tmp/$OUT
+
+zip -r $OUT .
+mv $OUT.zip "$OUT_LOCATION/"

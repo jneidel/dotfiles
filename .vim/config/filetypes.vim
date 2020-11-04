@@ -46,4 +46,3 @@ augroup javascript_folding
   au FileType javascript setlocal foldmethod=syntax
   " nnoremap <Leader>f :setlocal foldmethod=syntax<Enter>
 augroup END
-

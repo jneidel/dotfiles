@@ -52,7 +52,7 @@ esac
 query=`urlEncode "$query"`
 
 if bangList | grep "^$bang " >/dev/null; then
-  bangList | grep "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r $BROWSER
+  bangList | grep "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $BROWSER
 else
   $BROWSER "https://duckduckgo.com/?q=!$bang%20$query"
 fi

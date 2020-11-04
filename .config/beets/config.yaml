@@ -1,3 +1,5 @@
+# docs: https://beets.readthedocs.io/en/stable/reference/config.html
+#
 directory: ~/ct/music/_imported
 library: ~/.local/share/musiclibrary.db
 import:
@@ -19,7 +21,10 @@ lyrics:
   force: yes
   sources: google lyricwiki musixmatch genius
 match:
-  strong_rec_thresh: 0.1
+  strong_rec_thresh: 0.15
+  medium_rec_thresh: 0.27
+  max_rec:
+    track_index: low
 fetchart:
   sources: filesystem coverart itunes amazon albumart wikipedia
   minwidth: 500

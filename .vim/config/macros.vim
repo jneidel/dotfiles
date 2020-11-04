@@ -89,6 +89,7 @@ au filetype tex inoremap ,_ _{}<++><Esc>ba
 au filetype tex inoremap ,^ ^{}<++><Esc>bla
 au filetype tex inoremap ,aa \begin{align*}<Enter><Enter>\end{align*}<Esc>kA
 au filetype tex inoremap ,ae \begin{eqnarray*}<Enter><Enter>\end{eqnarray*}<Esc>kA
+au filetype tex inoremap ,d \cdot<Space>
 
 "### vim borked
 au filetype vim inoremap ,o {\<Enter>}<Esc>i

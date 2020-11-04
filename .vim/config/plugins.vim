@@ -113,6 +113,9 @@ nmap <leader>rn <Plug>(coc-rename)
 
 "## lightline
 
+" activate the bar
+set laststatus=2
+
 " hide -- INSERT -- in line below statusline
 set noshowmode
 

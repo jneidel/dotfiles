@@ -14,7 +14,7 @@ while read -r line; do
   case "$line" in
     "New tunnel state: Connected")
       VPN=1 ;;
-    "New tunnel state: Disconnected")
+    "New tunnel state: Disconnected"|"Error: Failed to set DNS")
       VPN=0 ;;
     "(w*): Activation: successful"|"NetworkManager state is now CONNECTED_GLOBAL"|"NetworkManager state is now CONNECTED_SITE")
       WIFI=1 ;;

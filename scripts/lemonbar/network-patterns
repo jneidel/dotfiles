@@ -13,3 +13,4 @@ NetworkManager state is now CONNECTED_LOCAL
 NetworkManager state is now CONNECTED_GLOBAL
 NetworkManager state is now CONNECTED_SITE
 NetworkManager state is now CONNECTING
+Error: Failed to set DNS

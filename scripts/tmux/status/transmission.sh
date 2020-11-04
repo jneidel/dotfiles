@@ -9,4 +9,8 @@ fi
 # transmission-remote -l 2> /dev/null | egrep "(Downloading)|(Idle)" | fgrep -v 100% | wc -l
 # too cpu intensive
 
-ps -ux | grep "transmission-daemon" | grep -v grep && echo " tsm " || exit 1
+if ps -ux | grep "transmission-daemon" | grep -v grep >/dev/null; then
+  echo " tsm "
+else
+  exit 1
+fi

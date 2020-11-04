@@ -15,10 +15,13 @@ command -v tsr >/dev/null || { echo "tsr script is not in PATH"; exit 127; }
 command -v transmission-clear >/dev/null || { echo "transmission-clear script is not in PATH"; exit 127; }
 command -v transmission-kill >/dev/null || { echo "transmission-kill script is not in PATH"; exit 127; }
 
-notify-send "transmission" "$TR_TORRENT_NAME has finished downloading." -t 5000
+notify-send "tsm dl finished" "$TR_TORRENT_NAME" -t 5000
 
 transmission-clear # remove finished torrents
 
+sleep 10
 if tsr -l | grep -ve "Done" -e "Sum:" >/dev/null; then
+  exit 0
+else
   transmission-kill # was last torrent
 fi

@@ -72,7 +72,7 @@ TEXTS=~/scripts/personal/newsboat-texts
 SLEEP=12
 new() {
   shuf -n1 $TEXTS
-  # sleep $SLEEP
+  sleep $SLEEP
   printf "(y/N): "
   read -r ANS
   if [ "$ANS" = 'y' ]; then
@@ -143,19 +143,22 @@ alias half="bright p 50 N1"
 alias mup="show-updates manga"
 alias cup="show-updates comic"
 
+## mullvad
+alias ms="mullvad status"
+
 ## webtorrent
-alias wt="webtorrent --mpv --quiet"
+alias wt="webtorrent -o /tmp --mpv --quiet"
 wts() {
   TORRENT="$1"
   SELECT="$2"
   if [ -z "$SELECT" ]; then
-    webtorrent "$TORRENT" --quiet -s
+    webtorrent "$TORRENT" -o /tmp --quiet -s
   else
-    webtorrent "$TORRENT" --mpv --quiet -s "$SELECT" 2>/dev/null
+    webtorrent "$TORRENT" -o /tmp --mpv --quiet -s "$SELECT" 2>/dev/null
   fi
 }
 wtsn() {
   TORRENT="$1"
   SELECT="$2"
-  webtorrent "$TORRENT" --not-on-top --no-quit -s "$SELECT"
+  webtorrent "$TORRENT" -o /tmp --not-on-top --no-quit -s "$SELECT"
 }

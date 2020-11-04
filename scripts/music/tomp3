@@ -20,10 +20,28 @@ command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 127; }
 DIR="$1"
 [ -z "$1" ] && DIR="."
 
+COUNT=$(mktemp)
+
 find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" -exec sh -c \
-  'echo "converting $1"; ffmpeg -loglevel error -nostdin -i "$1" "${1%.*}".mp3' sh {} ';'
+  'echo "converting $1"; echo "$1" >>'$COUNT'; ffmpeg -loglevel error -nostdin -i "$1" "${1%.*}".mp3' sh {} ';'
 # src: https://unix.stackexchange.com/a/428414
 
-printf "remove source files? (y/N): "
-read ans
-[ "$ans" = "y" ] && find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" -exec sh -c 'rm "$1"' sh {} ';'
+if [ -s "$COUNT" ]; then
+  COUNT_CONVERTED=$(wc -l <$COUNT)
+  COUNT_CURRENT_FILE=$(mktemp)
+  find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" >$COUNT_CURRENT_FILE
+  COUNT_CURRENT=$(wc -l <$COUNT_CURRENT_FILE)
+  if [ "$COUNT_CONVERTED" != "$COUNT_CURRENT" ]; then
+    echo "[WARN] discrepancy between the number of converted files vs current matched files."
+    echo "  it is advised to rerun the script."
+    printf "diff: "
+    diff $COUNT $COUNT_CURRENT_FILE
+    printf "continue? (y/N): "
+    read con
+    [ "$ans" != "y" ] && exit 0
+  fi
+
+  printf "remove source files? (y/N): "
+  read ans
+  [ "$ans" = "y" ] && find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" -exec sh -c 'rm "$1"' sh {} ';'
+fi

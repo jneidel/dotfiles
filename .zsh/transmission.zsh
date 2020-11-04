@@ -7,9 +7,11 @@ alias tsm="tsr -l" # list torrents
 
 tsmpause() { tsr -t"$1" --stop }  # stop id or all
 alias tsmp="tsmpause"
+alias tsmpa="tsmp all"
 
 tsmstart() { tsr -t"$1" --start } # start id or all
 alias tsms="tsmstart"
+alias tsmsa="tsms all"
 
 tsmadd() { # add torrent
   tsr -a "$1"

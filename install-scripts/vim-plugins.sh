@@ -66,11 +66,7 @@ git clone https://github.com/othree/html5.vim.git $VB/syntax-html
 git clone https://github.com/PotatoesMaster/i3-vim-syntax.git $VB/syntax-i3
 
 color_echo "install indent-js" # better js indention
-cd $VB;
-mkdir indent-js
-cd indent-js
-wget https://raw.githubusercontent.com/vim-scripts/JavaScript-Indent/master/indent/html.vim
-wget https://raw.githubusercontent.com/vim-scripts/JavaScript-Indent/master/indent/javascript.vim
+git clone git@github.com:jason0x43/vim-js-indent.git $VB/indent-javascript
 
 color_echo "install prettier" # run prettier on current buffer
 git clone https://github.com/prettier/vim-prettier $VB/prettier
