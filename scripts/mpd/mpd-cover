@@ -12,24 +12,34 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 . ~/scripts/mpd/shared-mpd-variables
-# Todo: use $IS_SERVER and is-mpd-playing to get remote cover
 
 command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
 command -v $IMAGE_VIEWER_BIN >/dev/null || { echo "your selected image viewer ($IMAGE_VIEWER_BIN) is not installed"; exit 1; }
 
-command -v mpc-get >/dev/null &&
-  MPC_CMD="mpc-get file" ||
-  MPC_CMD="mpc status -f %file% | head -n 1"
-
 TMP_FILE=$(mktemp --suffix .jpg)
-
-SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
-
-if ffmpeg -y -i "$SONG_FILE" $TMP_FILE >/dev/null 2>&1; then
-  kill $(pgrep $IMAGE_VIEWER_BIN) 2> /dev/null # kill previous instance
-  $IMAGE_VIEWER $TMP_FILE
+displayCover() {
+  kill $(pgrep $IMAGE_VIEWER_BIN) 2>/dev/null # kill previous instance
+  $IMAGE_VIEWER $TMP_FILE &
   ln -sf $TMP_FILE /tmp/mpd-cover.jpg
-else
-  echo "Song does not have a cover"
-fi
+}
 
+if [ "$IS_SERVER" -eq 0 ]; then
+  command -v mpc-get >/dev/null &&
+    MPC_CMD="mpc-get file" ||
+    MPC_CMD="mpc status -f %file% | head -n 1"
+
+  SONG_FILE="$MUSIC_DIR/$($MPC_CMD)"
+
+  if ffmpeg -y -i "$SONG_FILE" $TMP_FILE >/dev/null 2>&1; then
+    displayCover
+  else
+    echo "[local] Song does not have a cover"
+  fi
+else
+  if ssh $REMOTE_NAME "sh scripts/get-cover-once"; then
+    scp $REMOTE_NAME:/tmp/mpd-cover.jpg $TMP_FILE >/dev/null
+    displayCover
+  else
+    echo "[server] Song does not have a cover"
+  fi
+fi
