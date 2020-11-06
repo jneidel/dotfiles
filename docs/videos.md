@@ -158,6 +158,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - Transgender: [ContraPoints](https://www.youtube.com/user/ContraPoints/videos) - Especially ["Are Traps Gay?"](https://www.youtube.com/watch?v=PbBzhqJK3bg) and [Shame](https://www.youtube.com/watch?v=K7WvHTl_Q7I)
 - S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/), [The Boondocks](https://www.imdb.com/title/tt0373732)
 - M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) [[nf](https://www.netflix.com/watch/60024976)]
+- S: St. Pauli inhabitants: [Der Penny-Markt auf der Reeperbahn](https://www.youtube.com/playlist?list=PLPu_yl89uGlrQPHjLRRIsy1F_r5Jy7aX3)
 
 ### Podcasts
 
