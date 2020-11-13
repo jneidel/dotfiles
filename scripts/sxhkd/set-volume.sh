@@ -30,7 +30,7 @@ get_active_sink() {
     # "@DEFAULT_SINK@"
     case "$(hostname)" in
       *x240) echo 1;;
-      *e495) echo 1;;
+      *e495) echo 0;;
       *) echo 0;;
     esac
   fi
@@ -73,7 +73,7 @@ notification() {
   # notify-send -i $ICON -h string:x-canonical-private-synchronous:volume -u normal -t 1000 "$HEAD" "$BODY"
   IS_MUTE=""
   [ "$MUTE" -eq 1 ] && IS_MUTE=!
-  echo "$VOL$IS_MUTE" > $XOB
+  echo "$VOL$IS_MUTE" >$XOB
 }
 notification
 
