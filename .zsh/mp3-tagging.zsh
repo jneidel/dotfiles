@@ -9,6 +9,17 @@ alias ids="idt"
 alias idn="eyeD3 --track" # -n (-n 0 -N 0 to clear)
 alias idco="eyeD3 --add-image" # image:FRONT_COVER mp3
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
+idcoa() {
+  if [ -e "cover.jpg" ]; then
+    echo "Tagging all mp3 files in this and all its subdirectories with cover.jpg"
+    printf "Ok? (Y/n): "
+    read ans
+    [ "$ans" != "n" ] && find . -name '*.mp3' -exec sh -c 'eyeD3 --add-image cover.jpg:FRONT_COVER "$1"' sh {} ';'
+  else
+    echo "cover.jpg does not exist"
+    false
+  fi
+}
 # see ~/scripts/idmi
 
 ## get cover

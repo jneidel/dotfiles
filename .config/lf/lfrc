@@ -34,9 +34,7 @@ cmd massmove ${{
   qmv -f do -d $fx
 
   # if spaces in name, qmv spawns annoying empty dirs
-  find . -maxdepth 1  -type d | tail -n+2 | while read -r dir; do
-    rmdir "$dir" 2>/dev/null
-  done
+  findex . -type d 'rmdir "$1"'
 }}
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
