@@ -188,5 +188,5 @@ map gp cd ~/projects
 map gu cd ~/projects/uni
 map gP cd ~/ct/pictures
 map gM cd ~/ct/music
-map n jump-out
-map N jump-in
+map o jump-out
+map i jump-in

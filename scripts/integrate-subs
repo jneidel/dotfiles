@@ -1,0 +1,39 @@
+#! /bin/sh
+
+OUT=output
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat << EOF
+$ integrate-subs MOVIE SUBS
+Integrate the subtitle file into the movie. Output to '$OUT'
+
+Parameters:
+  \$1: movie file
+  \$2: .srt subs file
+
+Example:
+  $ integrate-subs One\ Cut\ of\ the\ Dead.mkv One\ Cut\ of\ the\ Dead.srt
+EOF
+  exit
+fi
+
+command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 127; }
+
+MV="$1"
+SUB="$2"
+if [ "${SUB##*.}" != "srt" ]; then
+  echo subs file does not have the .srt file extension
+  exit 1
+fi
+
+FILE_EXT="${MV##*.}"
+OUT="$OUT.$FILE_EXT"
+
+case "$FILE_EXT" in
+  mkv) ffmpeg -i "$MV" -sub_charenc 'UTF-8' -f srt -i "$SUB" -map 0 -map 1:0 -c:v copy -c:a copy -c:s srt "$OUT";;
+  mp4) ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";;
+  *) echo Invalid format: $FILE_EXT
+    exit 1;;
+esac
+
+du -sh "$MV" "$OUT"

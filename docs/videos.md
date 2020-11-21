@@ -143,6 +143,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - 9-5 is not the only or best way to live: [Some Luke Smith FAQ: Over 1,000,000 Hours of Content CONSOOMED!!!](https://www.youtube.com/watch?v=Q-Y5xqDkC50&t=736)
 - Podcast: Staying curious and living in other cultures: [Derek Sivers: Different approaches to curiosity, self-reliance, becoming a world citizen, seeing things from a different point of view](https://m.sivers.org/2020-02-DerekSivers-FeedingCuriosity.mp3) - at 42 min
 - A: Consider the downsides of having children: [Why it is important not to have children](https://stallman.org/articles/children.html)
+- "Anyone is perfectly loyal to their own personal convictions" or why temptation is only tempting if you allow it to be: [Resisting Temptation...](https://www.youtube.com/watch?v=BsvYEkTzmGQ)
 
 ### Political
 

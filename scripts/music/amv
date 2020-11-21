@@ -1,5 +1,7 @@
 #! /bin/sh
 
+MUSIC_DIR=$HOME/ct/music
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
 $ amv ALBUM [OUT]
@@ -18,7 +20,7 @@ fi
 
 ALBUM=`realpath "$1"`
 OUT="$2"
-[ -z "$2" ] && OUT="$HOME/ct/music/_tomove-data"
+[ -z "$2" ] && OUT="$MUSIC_DIR/_tomove-data"
 
 ARTIST=`basename "$(dirname "$ALBUM")"`
 OUT_DIR=""
@@ -31,3 +33,6 @@ fi
 mkdir -p "$OUT_DIR"
 mv "$ALBUM" "$OUT_DIR"
 echo "moved to $OUT_DIR"
+
+rmdir $MUSIC_DIR/*
+true

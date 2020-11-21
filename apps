@@ -162,6 +162,7 @@ rsync Sync local and remote directories
 
 [youtube-dl]
 youtube-dl Youtube downloader
+bandcamp-dl-git Bandcamp downloader
 
 # cli
 ## text

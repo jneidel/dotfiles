@@ -46,4 +46,4 @@ alias npml="sudo npm link"
 ## package.json
 alias pkg="cat package.json"
 alias pkge="vim package.json"
-alias pkgs="cat package.json | jq .scripts"
+alias pkgs="jq .scripts <package.json"

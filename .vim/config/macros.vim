@@ -21,6 +21,7 @@ au filetype html,pug inoremap ,a <a href=""><++></a><Space><++><Esc>F"i
 au filetype html,pug inoremap ,b <b></b><Space><++><Esc>2T>i
 au filetype html,pug inoremap ,i <i></i><Space><++><Esc>2T>i
 au filetype html,pug inoremap ,c <code></code><Space><++><Esc>2T>i
+au filetype html inoremap ,o {<Enter>}<Esc>O
 
 "### Markdown
 au filetype md,markdown inoremap ,a [](<++>)<Esc>F]i

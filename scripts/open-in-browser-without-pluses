@@ -17,7 +17,7 @@ fi
 URL="$1"
 
 if echo $URL | fgrep "youtube.com/watch?v=" >/dev/null; then
-  tspm mpv --profile=overlay "$1"
+  tsp mpv --profile=overlay "$1"
 elif echo $URL | fgrep "twitter.com" >/dev/null; then
   echo "$1" | sed 's|twitter.com|nitter.net|' | xargs -r $BROWSER
 else

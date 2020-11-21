@@ -14,5 +14,5 @@ fi
 # w  - download but dont install
 # p  - print results
 
-echo "Y" | $AUR_HELPER -Syyuuw
+echo "Y" | $AUR_HELPER -Syuuw
 echo "" | $AUR_HELPER -Sua # aur

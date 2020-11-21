@@ -22,4 +22,3 @@ do {
   id3tag -A "Mixed" "$SONG"
 }
 done
-

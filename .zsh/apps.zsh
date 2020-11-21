@@ -2,9 +2,18 @@
 
 ## clis
 ### programming
-alias readme="grip -b 7777" # render readme.md with github styles
 alias py="python"
 alias color="gcolor2"
+alias readme="grip -b 7777" # render readme.md with github styles
+[ -n "$GH_ACCESS_TOKEN" ] && alias readme="grip -b 7777 --user $USER --pass $GH_ACCESS_TOKEN" # remove rate limit
+mdo() {
+  FILE="$1"
+ if [ -n "$GH_ACCESS_TOKEN" ]; then
+  grip "$FILE" -b 7777 --user $USER --pass $GH_ACCESS_TOKEN
+ else
+   grip "$FILE" -b 7777
+ fi
+}
 
 ### download
 alias manga="mangareader-dl --debug"
@@ -66,37 +75,42 @@ alias gw="./gradlew"
 alias pg="sudo -u postgres"
 alias status="journalctl --no-pager -f -u"
 alias s-sshd="sudo systemctl start sshd"
+gho() {
+  [ -e "package.json" ] && \
+    grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
+}
 
 ### newsboat
 TEXTS=~/scripts/personal/newsboat-texts
 SLEEP=12
-new() {
-  shuf -n1 $TEXTS
-  sleep $SLEEP
-  printf "(y/N): "
-  read -r ANS
-  if [ "$ANS" = 'y' ]; then
-    echo "Go ahead..."
-    sleep 1
-    newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet # && clear
-  else
-    echo "Good on you, pal."
-  fi
-}
-ma() {
-  shuf -n1 $TEXTS
-  # sleep $SLEEP
-  printf "(y/N): "
-  read -r ANS
-  if [ "$ANS" = 'y' ]; then
-    echo "Go ahead..."
-    sleep 1
-    newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet # && clear
-  else
-    echo "Good on you, pal."
-  fi
-}
+# new() {
+#   shuf -n1 $TEXTS
+#   sleep $SLEEP
+#   printf "(y/N): "
+#   read -r ANS
+#   if [ "$ANS" = 'y' ]; then
+#     echo "Go ahead..."
+#     sleep 1
+#   else
+#     echo "Good on you, pal."
+#   fi
+# }
+# ma() {
+#   shuf -n1 $TEXTS
+#   # sleep $SLEEP
+#   printf "(y/N): "
+#   read -r ANS
+#   if [ "$ANS" = 'y' ]; then
+#     echo "Go ahead..."
+#     sleep 1
+#   else
+#     echo "Good on you, pal."
+#   fi
+# }
+alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
+alias ma="newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet && clear"
 alias pod="newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet && clear"
+alias mus="newsboat -u ~/.config/newsboat/urls-music -c ~/.config/newsboat/cache-music.db --quiet && clear"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 

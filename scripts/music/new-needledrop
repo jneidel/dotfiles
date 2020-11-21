@@ -1,12 +1,15 @@
 #! /bin/sh
 
-LAST=3/20
+LAST=11/9
 [ -n "$1" ] && LAST="$1"
 
 LOVED=PLP4CSgl7K7oo93I49tQa0TLB8qY3u7xuO
 CLASSICS=PLP4CSgl7K7or_7JI7RsEsptyS4wfLFGIN
 WORST_BEST=PLP4CSgl7K7opkZ3eKAs1J_parHzPofQH4
 THINKPIECES=PLP4CSgl7K7ortpLkSSqBxBBogWbVvfBu2
+
+LOG=new-needledrop.log
+echo "" > $LOG
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$LAST" ]; then
   printf "$ new-needledrop <last-date>
@@ -47,6 +50,7 @@ parse_vids() {
 
     if [ "$DATE" -ge "$LAST" ]; then
       echo "$URL $TITLE"
+      echo "$URL $TITLE" >> $LOG
     else
       # echo "Listed all videos since last date. Exiting" 1>&2
       exit 0

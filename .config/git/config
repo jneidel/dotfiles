@@ -13,3 +13,5 @@
   ; gpgsign = true
   # How to setup commit signing:
   # https://help.github.com/en/articles/managing-commit-signature-verification
+[pull]
+	rebase = true

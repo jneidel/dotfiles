@@ -1,0 +1,29 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat << EOF
+$ mcut FILE START [END]
+mp3cut wrapper
+
+Parameters:
+  \$1: input file
+  \$2: start time
+  [\$3]: end time, default: end of the song
+
+Time Format:
+  00:00, min:sec
+
+Example:
+  $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39
+EOF
+  exit
+fi
+
+command -v mp3cut >/dev/null || { echo "mp3cut is not installed"; exit 127; }
+
+IN="$1"
+START="$2"
+END="$3"
+[ -z "$3" ] && END="00:00"
+
+mp3cut -o "$IN.new" -t "00:$START+000-00:$END+000" "$1"
