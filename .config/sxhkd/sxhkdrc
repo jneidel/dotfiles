@@ -25,7 +25,7 @@ super + F9
 super + F3
   kitty --class mosh --name kudu mosh k
 super + F4
-  kitty --class mosh uber
+  kitty --class mosh --name uber mosh -p 44940 u
 
 ## bspwm
 # super + alt + r

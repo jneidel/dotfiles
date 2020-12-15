@@ -10,9 +10,22 @@ alias gai="git add -i" # interactive
 alias gap="git add -p" # patch
 
 ## commit
-alias commit="git commit -m"
+git-commit() {
+  MSG="$1"
+  DESC="$2"
+  if [ -z "$MSG" ]; then
+    false
+  else
+    if [ -z "$DESC" ]; then
+      git commit -m "$MSG"
+    else
+      git commit -m "$MSG" -m "$DESC"
+    fi
+  fi
+}
+alias commit="git-commit"
 alias gc="commit"
-alias addcom="ga -A; git commit -m"
+alias addcom="ga -A; git-commit"
 alias ac="addcom"
 
 ## commit --amend
@@ -46,7 +59,7 @@ alias clone="git clone"
 
 ## checkout
 alias co="git checkout"
-alias com="git checkout master"
+alias com="git checkout master || git checkout main"
 alias cob="git checkout -b"
 
 ## rebase

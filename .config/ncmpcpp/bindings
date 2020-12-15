@@ -336,8 +336,6 @@ def_key "ctrl-d"
 #def_key "ctrl-p"
 #  set_selected_items_priority
 #
-#
-#
 #def_key "f"
 #	find
 #def_key "f"

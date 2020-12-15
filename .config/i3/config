@@ -136,6 +136,7 @@ assign [class="anki"] $ws3
 # Open specific applications in floating mode
 for_window [class="mpv"] floating enable
 for_window [class="conky"] floating enable
+for_window [class="gui.Main"] floating enable
 
 # Dont focus on these windows on open
 no_focus [class="mupdf"]

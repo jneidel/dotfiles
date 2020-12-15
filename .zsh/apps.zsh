@@ -75,7 +75,8 @@ alias gw="./gradlew"
 alias pg="sudo -u postgres"
 alias status="journalctl --no-pager -f -u"
 alias s-sshd="sudo systemctl start sshd"
-gho() {
+alias tspc="tsp -C && tsp"
+gh() {
   [ -e "package.json" ] && \
     grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
 }
@@ -157,8 +158,8 @@ alias half="bright p 50 N1"
 alias mup="show-updates manga"
 alias cup="show-updates comic"
 
-## mullvad
-alias ms="mullvad status"
+## psql
+export PGPASSFILE="$HOME/.config/psql/pgpass"
 
 ## webtorrent
 alias wt="webtorrent -o /tmp --mpv --quiet"

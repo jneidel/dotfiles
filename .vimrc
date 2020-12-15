@@ -109,11 +109,11 @@ set undodir=~/.vim/tmp
 set splitbelow " on sp
 set splitright " on vsp
 
-" remap ^w + <movement> to ^<movement> for easier window changing
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" change between vim splits & tmux panes - provided by vim-tmux-navigator
+" nnoremap <silent> <C-H> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <C-J> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
 
 " toggle paste mode
 set pastetoggle=<F5>

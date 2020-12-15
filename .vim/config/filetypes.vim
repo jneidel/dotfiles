@@ -39,10 +39,3 @@ au BufRead ~/.contacts/* setfiletype conf
 " shell scripts
 au Filetype shell,zsh,bash,sh map <leader>k :w<CR> :!shellcheck -e SC2006,SC1090,SC1001,SC2086 %<CR>
 " Todo: how can I close preview window on 0 exit code
-
-" enable javascript syntax folding
-augroup javascript_folding
-  au!
-  au FileType javascript setlocal foldmethod=syntax
-  " nnoremap <Leader>f :setlocal foldmethod=syntax<Enter>
-augroup END
