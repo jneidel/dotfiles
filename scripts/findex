@@ -4,6 +4,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ findex FIND_OPTS.. CMD
 find execute - shorthand for 'find .. -exec sh -c .. sh {} ';'
+do something with every find match
 
 Parameters:
   \$1+: find options
@@ -19,6 +20,10 @@ command -v find >/dev/null || { echo "find is not installed"; exit 127; }
 
 OPTS=`echo "$@" | perl -pe "s| ([^ ]*?\*.*?) | '\1' |" | cut -d\  -f -$(($#-1))`
 EXEC=`echo "$@" | cut -d\  -f $#-`
+
+if [ -z "$EXEC" ]; then
+  EXEC='echo "$1"'
+fi
 
 echo "Using opts: $OPTS"
 echo "Using exec: $EXEC"

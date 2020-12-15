@@ -1,0 +1,23 @@
+#! /bin/sh
+
+# Todo: how to handle wired
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ wifiname
+Get name of connected wifi
+EOF
+  exit
+fi
+
+command -v nmcli >/dev/null || { echo "networkmanager is not installed" 1>&2; exit 127; }
+
+check() {
+  nmcli connection show --active | grep wifi
+}
+
+if NAME="$(check)" >/dev/null; then
+  echo $NAME | cut -d\  -f1
+else
+  false
+fi

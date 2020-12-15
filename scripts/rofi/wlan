@@ -2,5 +2,4 @@
 # Wrapper for networkmanager_dmenu
 # From the package: networkmanager-dmenu-git
 
-networkmanager_dmenu
-
+networkmanager_dmenu -l 20

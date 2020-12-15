@@ -6,7 +6,7 @@ DIR=$HOME/ct/dont_touch
 ORDER=$DIR/order
 MOVED=$DIR/moved
 WATCH_DIR=$HOME/ct/movies
-FULL_PENSUM=120
+FULL_PENSUM=240
 TESTING=0
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ ! -d "$DIR" ] || [ ! -d "$WATCH_DIR" ] || [ ! -e "$ORDER" ]; then
@@ -66,7 +66,7 @@ decrement_pensum() {
   case "$media_type" in
     s60) write_pensum $(($(read_pensum) - 60));;
     s20) write_pensum $(($(read_pensum) - 20));;
-    m) write_pensum 0;;
+    m) write_pensum $(($(read_pensum) - 120));;
   esac
   echo "pens: $media_type $(read_pensum)"
 }
@@ -102,16 +102,24 @@ handle_series() {
     if has_pensum $media_type; then
       move "$file"
       decrement_pensum $media_type
+      return 12 # break after each item
     fi
 
-    if [ "$(read_pensum)" -eq 60 ]; then
-      echo "info: Breaking at half pensum: $(read_pensum)"
-      return 12 # exit early
-    fi
+    # if [ "$(read_pensum)" -eq "$(($FULL_PENSUM/2))" ]; then
+    #   echo "info: Breaking at half pensum: $(read_pensum)"
+    #   return 12 # exit early
+    # fi
   done
 }
 handle_movie() {
   name="$1"
+
+  firstOnOrder="$(head "$ORDER" -n1)"
+  if [ "$firstOnOrder" != "$name" ]; then
+    printf "'$name' is not the first entry in order.\nContinue? (y/N): "
+    read ans
+    [ "$ans" != "y" ] && return 13
+  fi
 
   move "$name"
   decrement_pensum m
@@ -127,12 +135,14 @@ while read -r name <&10; do
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" -eq 12 ] || [ "$EXIT_CODE" -eq 13 ]; then
         break
-        # 12: reached half pens
+        # 12: break
         # 13: not first entry in order, user exit
       fi ;;
     m*)
       has_pensum `echo $name | cut -d\/ -f1` || break
-      handle_movie "$name";;
+
+      handle_movie "$name"
+      break;; # break after each movie
   esac
 done 10<$ORDER # 10 as not to block other read calls
 

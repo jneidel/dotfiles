@@ -15,3 +15,4 @@ run() {
   mpcc idle player >/dev/null && control-mpd pause >/dev/null
 }
 run &
+clear # i alway do this manually

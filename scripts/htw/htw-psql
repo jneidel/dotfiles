@@ -1,0 +1,27 @@
+#! /bin/sh
+
+MATRIKEL=s0573619
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat << EOF
+$ htw-psql DB
+Connect to the htw psql server
+
+Parameters:
+  \$1: db name
+  [\$2]: other psql flags, commands
+
+Example:
+  $ htw-psql uni
+EOF
+  exit
+fi
+
+command -v psql >/dev/null || { echo "psql is not installed" 1>&2; exit 127; }
+
+if pidof openconnect >/dev/null; then
+  psql -h db.f4.htw-berlin.de "_${MATRIKEL}__$1" $MATRIKEL ${@:2}
+else
+  echo "htw-vpn not running"
+  false
+fi

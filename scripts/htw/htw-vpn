@@ -1,0 +1,21 @@
+#! /bin/sh
+
+MATRIKEL=s0573619
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ htw-vpn
+Connect to htw vpn
+EOF
+  exit
+fi
+
+command -v openconnect >/dev/null || { echo "openconnect is not installed" 1>&2; exit 127; }
+
+if is-mullvad; then
+  echo "Isn't going to work with mullvad running"
+  exit 1
+fi
+
+# sudo openconnect -u $MATRIKEL --authgroup HTW-SSL-VPN-Split --passwd-on-stdin vpncl.htw-berlin.de <$HOME/.sensitive/.vpn-pass
+sudo openconnect -u $MATRIKEL --authgroup HTW-SSL-VPN-Full --passwd-on-stdin vpncl.htw-berlin.de <$HOME/.sensitive/.vpn-pass

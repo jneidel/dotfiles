@@ -6,6 +6,7 @@
 COMIC_DIR=~/ct/comics
 SEPERATOR="-----------------------------------------------------------"
 DEFAULTS="$(ls $HOME/Downloads/*.cbr $HOME/Downloads/*.cbz $HOME/Downloads/**/*.cbr $HOME/Downloads/**/*.cbz 2> /dev/null)" # suppress 'no matches found'
+UPDATES="$COMIC_DIR/updates"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "rename-comic: <comic> [<more-comics>]"
@@ -38,6 +39,7 @@ if [ -z "$1" ]; then
 
     COMIC_NAME=$(format-comic-name.js "$COMIC")
     OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
+    echo $COMIC_NAME >>$UPDATES
 
     printf "moving\n  $(basename "$COMIC")\nto\n  $OUT_FILE\n"
     mv "$COMIC" "$OUT_FILE"
@@ -51,6 +53,7 @@ else
 
     COMIC_NAME=$(format-comic-name.js "$COMIC")
     OUT_FILE="$COMIC_DIR/$DIR_NAME/$COMIC_NAME"
+    echo $COMIC_NAME >>$UPDATES
 
     printf "moving\n  $(basename "$COMIC")\nto\n  $OUT_FILE\n"
     mv "$COMIC" "$OUT_FILE"

@@ -1,6 +1,10 @@
 #! /bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# Todo: ip based on network name
+# time eater: 192.168.178.91
+# jneidel-hotspot: 192.168.43.126
+
+DIR="$(dirname $0)"
 
 ONEPLUS=$DIR/oneplus-ip
 S6=$DIR/s6-ip
@@ -15,10 +19,7 @@ fi
 command -v sftp >/dev/null || { echo "sftp is not installed"; exit 1; }
 
 IP_FILE=$ONEPLUS
-
 [ "$1" = "s6" ] && IP_FILE=$S6
 
 IP=$(< $IP_FILE)
-
-sftp -P $PORT $IP
-
+sftp -P $PORT -i $HOME/.ssh/private $IP

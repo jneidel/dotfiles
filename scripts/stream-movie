@@ -26,5 +26,5 @@ if is-mullvad; then
   fi
   rm -r /tmp/webtorrent
 else
-  rofi -e "Mullvad is off" -width 35
+  rofi -e "Mullvad is off" -width 35 2>/dev/null
 fi

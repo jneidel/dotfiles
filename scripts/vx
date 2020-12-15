@@ -1,26 +1,30 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ -z "$1" ]; then
-  echo "$ vx <script-name>"
-  echo "Create a new executable file,"
-  echo "add a --help menu and open the file in vim."
-  echo ""
-  echo "Parameters:"
-  echo "  \$1: name of the script file to be created"
-  echo ""
-  echo "Example:"
-  echo "  $ vx connect.sh"
+  cat <<EOF
+$ vx FILENAME
+Create a new executable file,
+add a --help menu and open it in vim.
+
+Parameters:
+  \$1: name of the script to be created
+
+Example:
+  $ vx connect.sh
+EOF
   exit
 fi
 
 command -v vim >/dev/null || { echo \"vim is not installed\" 1>&2; exit 127; }
 
 FILE="$1"
+file_content() {
+  cat <<EOF
+#! /bin/sh
 
-echo "#! /bin/sh
-
-if [ \"\$1\" = \"--help\" ] || [ \"\$1\" = \"-h\" ] || [ \"\$1\" = \"help\" ]; then
-  cat << EOF
+if [ "\$1" = "--help" ] || [ "\$1" = "-h" ] || [ "\$1" = "help" ]; then
+if [ "\$1" = "--help" ] || [ "\$1" = "-h" ] || [ "\$1" = "help" ] || [ -z "\$1" ]; then
+  cat <<EOF
 $ $FILE <++>
 <++>
 
@@ -30,13 +34,15 @@ Parameters:
 
 Example:
   $ $FILE <++>
-EOF
+$(printf EOF)
   exit
 fi
 
-command -v <++> >/dev/null || { echo \"<++> is not installed\"; exit 127; }
-" >> "$FILE"
+command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+EOF
+}
+file_content >>"$FILE"
 
 chmod +x "$FILE"
 vim "$FILE"
-

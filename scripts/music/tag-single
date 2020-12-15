@@ -3,6 +3,9 @@
 ALBUM_AR=Singles
 ALBUM=Mixed
 
+MUSIC_DIR="$HOME/ct/music"
+SINGLES_DIR="$MUSIC_DIR/_tomove-data/Singles"
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ tag-single <mp3s>
 Tag singles as:
@@ -31,13 +34,11 @@ command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed"; exit 1; }
 ARTIST_AS_ALBUM_AR=0
 if [ "$1" = "-A" ]; then
   ALBUM_AR="$2"
-  if [ -e "$2" ]; then
-    ARTIST_AS_ALBUM_AR=1
-  else
-    shift
-  fi
+  ARTIST_AS_ALBUM_AR=1
+  shift
   shift
 fi
+echo $@
 
 tag() {
   local file_raw="$1"
@@ -63,6 +64,7 @@ tag() {
   id3v2 --track "" --year "" "$file_raw"
   if [ -e "$coverFile" ]; then
     eyeD3 -2 --album-artist "$album_ar" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments --add-image "$coverFile":FRONT_COVER "$file_raw"
+    rm "$coverFile"
   else
     eyeD3 -2 --album-artist "$ALBUM_AR" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments $cover "$file_raw"
   fi
@@ -71,8 +73,17 @@ tag() {
 }
 
 for f in "$@"; do
-  if [ "$f" != "-A" ] || [ "$f" != "$ALBUM_AR" ]; then
-    tag "$f"
-  fi
+  tag "$f"
 done
 
+if [ "$ARTIST_AS_ALBUM_AR" = 0 ]; then
+  mv -v "$@" $SINGLES_DIR
+else
+  DIR="$MUSIC_DIR/$ALBUM_AR"
+  [ -d "$DIR" ] || DIR="$MUSIC_DIR/unheard/$ALBUM_AR"
+  DIR="$DIR/Mixed"
+  echo Using: $DIR
+  mkdir -p "$DIR"
+
+  mv -v "$@" "$DIR"
+fi

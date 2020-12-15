@@ -47,7 +47,7 @@ echo ""
 
 IFS="$PREV_IFS"
 find "$DIR" -maxdepth 2 -iname "$TODO_FILE_PATTERN" | while read -r file; do
-  TODOS=`cat $file | sed '1d;2d' | grep -ve "^\s*$" -e "^#" -e "^>"`
+  TODOS=`cat $file | sed '1d;2d' | grep -ve "^\s*$" -e "^#" -e "^>" | sed 's|^[- ]*|- |'`
   if [ -n "$TODOS" ]; then
     cat << EOF
 $(printf "\033[1;34m$(basename $(dirname $file))\033[0m:\n" )

@@ -42,7 +42,7 @@ classify_file() {
     case "$FILE_OUTPUT" in
       "POSIX shell script") echo sh;;
       "Bourne-Again shell script") echo bash;;
-      "UTF-8 Unicode text"|"ASCII text") echo txt;;
+      "UTF-8 Unicode text"|"ASCII text"|"JSON data") echo txt;;
       "empty") echo txt;;
       *) echo [ERR] mimetype not configured: $FILE_OUTPUT
         exit 1;;

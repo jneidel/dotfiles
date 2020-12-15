@@ -5,6 +5,8 @@ tpb2 https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb3 https://knaben.xyz/s/?q=%s&page=0&orderby=99
 nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
 1337x https://1337x.to/search/%s/1/
+1337 https://1337x.to/search/%s/1/
+13 https://1337x.to/search/%s/1/
 t2 https://www.torrentz2.is/search?f=%s
 mr https://www.mangareader.net/search/?w=%s&rd=0&status=0&order=0&genre=&p=0
 ml https://manga4life.com/search/?sort=s&desc=false&name=%s
@@ -26,7 +28,9 @@ dl https://duckduckgo.com/?q=%s+mp3+download
 du https://www.duden.de/rechtschreibung/%s
 in https://yewtu.be/search?q=%s
 imdb https://www.imdb.com/find?s=all&q=%s
+im https://www.imdb.com/find?s=all&q=%s
 tw https://nitter.net/search?f=users&q=%s
 ic https://imagecomics.com/search/results?s=%s
 ck https://www.chefkoch.de/rs/s0/%s/Rezepte.html
 u https://www.urbandictionary.com/define.php?term=%s
+e https://www.ebay.de/sch/i.html?_nkw=%s
