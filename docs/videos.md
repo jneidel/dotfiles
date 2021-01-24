@@ -28,6 +28,7 @@
   * [Art](#art)
     + [Simpsonwave](#simpsonwave)
     + [Anime Edits](#anime-edits)
+  * [Movies](#movies)
 - [Life](#life)
   * [Political](#political)
   * [Understanding other people](#understanding-other-people)
@@ -136,6 +137,10 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - [Not what it looks like #VHS](https://www.youtube.com/watch?v=mPUzhKjsnBM)
 - [SPACE GOD - FIJI - *AFRO SAMURAI*](https://www.youtube.com/watch?v=mj0FcNiEOdM)
 
+### Movies
+
+- Movie making mechanics explained: [Every Frame a Painting](https://www.youtube.com/c/everyframeapainting/videos?view=0&sort=p&flow=grid)
+
 ## Life
 
 - "If you want to improve your life, don't do it by adding extra junk to it, do it by taking things away": [Do you know the Via Negativa](https://www.youtube.com/watch?v=WjBIqnTC1nk)
@@ -153,6 +158,9 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - An overview of how americas systemic racism is alive and well today: [America: Still Racist](https://www.youtube.com/watch?v=GWwiUIVpmNY)
 - How cars increase of dependency of the system and limit you in your personal
   freedom: [Roads should be abolished!](https://www.youtube.com/watch?v=geBQNOid_7A)
+- A: Essay: high paid jobs are bullshit, low paid job produce most all of the
+  value, a system designed by the 1% to keep us unhappy and invested in the
+  status quo: [On the Phenomenon of Bullshit Jobs](https://www.strike.coop/bullshit-jobs/)
 
 ### Understanding other people
 
@@ -169,4 +177,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 
 - [A Maury Compilation! The Biggest You Are Not The Father Tantrums!](https://www.youtube.com/watch?v=kEJngCX0UZU)
 - [True Facts: Mating Dance of the Ostrich](https://www.youtube.com/watch?v=wmbEtgw9Pf4)
-
+- A battle of dedication between two insane men: The Great Potatoe War
+[pt. 1](https://www.youtube.com/watch?v=5qjnDd1rsII)
+[pt. 2](https://www.youtube.com/watch?v=0PAEqgfAts4)
+[pt. 3](https://www.youtube.com/watch?v=09CeBwGbCeg)

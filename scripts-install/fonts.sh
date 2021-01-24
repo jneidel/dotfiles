@@ -19,4 +19,3 @@ cd ~/.fonts;
 unzip yosemite-sf.zip;
 mv YosemiteSanFranciscoFont-master/System\ San\ Francisco\ Display\ Regular.ttf yosemite-san-francisco.ttf;
 rm -rf yosemite-sf.zip YosemiteSanFranciscoFont-master;
-

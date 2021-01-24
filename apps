@@ -131,8 +131,9 @@ polybar Status bar
 [bleachbit]
 bleachbit System cleaner
 
-[gcolor]
+[colorpicking]
 gcolor2 Color picker
+colorpicker Better colorpicker
 
 # tui
 [cmus]
