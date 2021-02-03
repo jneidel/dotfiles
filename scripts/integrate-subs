@@ -1,6 +1,6 @@
 #! /bin/sh
 
-OUT=$(mktemp)
+TEMP=$(mktemp)
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
@@ -33,13 +33,17 @@ elif [ "${SUB##*.}" != "srt" ]; then
 fi
 
 FILE_EXT="${MV##*.}"
-OUT="$OUT.$FILE_EXT"
+OUT="$TEMP.$FILE_EXT"
 
 convert() {
   case "$FILE_EXT" in
     mkv) ffmpeg -i "$MV" -sub_charenc 'UTF-8' -f srt -i "$SUB" -map 0 -map 1:0 -c:v copy -c:a copy -c:s srt "$OUT";
       return $?;;
     mp4) ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";
+      return $?;;
+    avi)
+      OUT="$TEMP.mp4";
+      ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";
       return $?;;
     *) echo Invalid format: $FILE_EXT
       exit 1;;

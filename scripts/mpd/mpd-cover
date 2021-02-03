@@ -1,8 +1,5 @@
 #! /bin/sh
 
-IMAGE_VIEWER="sxiv -f"
-IMAGE_VIEWER_BIN="$(echo $IMAGE_VIEWER | cut -d\  -f1)"
-
 MUSIC_DIR="$(grep '^music_directory' $HOME/.config/mpd/mpd.conf | awk -F\" '{ print $2 }')"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
@@ -14,13 +11,13 @@ fi
 . ~/scripts/mpd/shared-mpd-variables
 
 command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
-command -v $IMAGE_VIEWER_BIN >/dev/null || { echo "your selected image viewer ($IMAGE_VIEWER_BIN) is not installed"; exit 1; }
+command -v sxiv >/dev/null || { echo "sxiv is not installed"; exit 1; }
 
 TMP_FILE=$(mktemp --suffix .jpg)
 displayCover() {
-  kill $(pgrep $IMAGE_VIEWER_BIN) 2>/dev/null # kill previous instance
-  $IMAGE_VIEWER $TMP_FILE &
+  kill $(pgrep sxiv) 2>/dev/null # kill previous instance
   ln -sf $TMP_FILE /tmp/mpd-cover.jpg
+  sxiv -f /tmp/mpd-cover.jpg >/dev/null 2>&1 &
 }
 
 if [ "$IS_SERVER" -eq 0 ]; then

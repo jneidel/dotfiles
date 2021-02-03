@@ -5,7 +5,6 @@ tpb2 https://piratesbaycc.com/search.php?q=%s&page=0&orderby=99
 tpb3 https://knaben.xyz/s/?q=%s&page=0&orderby=99
 nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
 1337x https://1337x.to/search/%s/1/
-1337 https://1337x.to/search/%s/1/
 13 https://1337x.to/search/%s/1/
 t2 https://www.torrentz2.is/search?f=%s
 mr https://www.mangareader.net/search/?w=%s&rd=0&status=0&order=0&genre=&p=0
@@ -34,3 +33,8 @@ ic https://imagecomics.com/search/results?s=%s
 ck https://www.chefkoch.de/rs/s0/%s/Rezepte.html
 u https://www.urbandictionary.com/define.php?term=%s
 e https://www.ebay.de/sch/i.html?_nkw=%s
+ns https://www.namecheap.com/domains/registration/results/?domain=%s
+sh https://sci-hub.scihubtw.tw/%s
+man https://man.archlinux.org/search?q=%s
+fi https://www.flaticon.com/search?word=%s&search-type=icons&license=selection&order_by=4&grid=big
+wa https://www.wolframalpha.com/input/?i=%s

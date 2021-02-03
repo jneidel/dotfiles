@@ -23,13 +23,17 @@ command -v sqlite3 >/dev/null || { echo "sqlite3 is not installed"; exit 1; }
 }
 
 DUMP=$(mktemp)
-sqlite3 $YAC_DB_FILE .dump > $DUMP
+sqlite3 $YAC_DB_FILE .dump >$DUMP
 
 cat "$UPDATES" | tr "[A-Z]" "[a-z]" | sed "s|[[:space:]]$||; s|–|-|" | tr " " - | while read LINE; do
   NAME=$(echo $LINE | cut -d# -f1 | sed 's|-$||')
   ISSUE=$(echo $LINE | cut -d# -f2)
 
   INFO_ID=$(grep "$NAME-0*$ISSUE" $DUMP | awk -F , '{ print $3 }')
+  if [ "$ISSUE" = "$NAME" ]; then
+    INFO_ID=$(grep "$NAME" $DUMP | awk -F , '{ print $3 }')
+  fi
+
   if [ -z "$INFO_ID" ]; then
     >&2 echo "No INFO_ID for $NAME at issue $ISSUE"
     continue
@@ -43,14 +47,18 @@ cat "$UPDATES" | tr "[A-Z]" "[a-z]" | sed "s|[[:space:]]$||; s|–|-|" | tr " " 
   #     .schema comic
   #     .schema comic_info
 
-  if echo "$READ" | fgrep "BOOLEAN" > /dev/null; then
+  if echo "$READ" | fgrep "BOOLEAN" >/dev/null; then
     break # weird error where the wrong value is greped
   fi
 
   [ "$READ" -gt 0 ] && {
-    NAME="$(echo $NAME | tr - ' ' | sed 's|–|-|')"
-    sed -i "/$NAME #$ISSUE/Id" $UPDATES
-    echo "Removed $NAME #$ISSUE from updates"
+    if [ "$NAME" = "$ISSUE" ]; then
+      sed -i "/$NAME/Id" $UPDATES
+      echo "Removed ${NAME%%.*} from updates"
+    else
+      NAME="$(echo $NAME | tr - ' ' | sed 's|–|-|')"
+      sed -i "/$NAME #$ISSUE/Id" $UPDATES
+      echo "Removed $NAME #$ISSUE from updates"
+    fi
   } || true
 done
-

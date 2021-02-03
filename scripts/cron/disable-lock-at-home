@@ -27,12 +27,12 @@ turn_off_lock() {
 }
 turn_on_lock() {
   if ! is_lock >/dev/null; then
-    $LOCK_PROGRAM_SCRIPT
+    $LOCK_PROGRAM_SCRIPT >/dev/null
     notify "Lock on"
   fi
 }
 
 case "$(wifiname)" in
-  TimeEater47) turn_off_lock;;
+  TimeEater47|KDG-D750D) turn_off_lock;;
   *) turn_on_lock;;
 esac

@@ -34,5 +34,5 @@ mkdir -p "$OUT_DIR"
 mv "$ALBUM" "$OUT_DIR"
 echo "moved to $OUT_DIR"
 
-rmdir $MUSIC_DIR/*
+rmdir $MUSIC_DIR/* 2>/dev/null
 true

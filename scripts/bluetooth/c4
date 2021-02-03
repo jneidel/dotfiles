@@ -1,0 +1,3 @@
+#! /bin/sh
+
+btconnect 98:52:3D:CE:EF:09

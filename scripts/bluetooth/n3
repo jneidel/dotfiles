@@ -1,0 +1,5 @@
+#! /bin/sh
+
+# btoff
+# sleep 2
+btconnect 00:42:79:ED:44:32

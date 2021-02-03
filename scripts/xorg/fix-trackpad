@@ -6,6 +6,11 @@ Fix synaptics touchpad
 
 Source:
 https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Touchpad_does_not_work_after_resuming_from_hibernate/suspend
+
+Permanent solution:
+Add 'psmouse.synaptics_intertouch=0' as a kernal parameter:
+  See: https://wiki.archlinux.org/index.php/Kernel_parameters#GRUB
+  edit /etc/default/grub by adding it to GRUB_CMDLINE_LINUX_DEFAULT="xyz"
 "; exit
 fi
 
@@ -13,4 +18,3 @@ command -v modprobe >/dev/null || { echo "modprobe is not installed"; exit 1; }
 
 sudo modprobe -r psmouse # touchpad kernel module
 sudo modprobe psmouse
-

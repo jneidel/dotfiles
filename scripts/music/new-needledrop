@@ -1,6 +1,6 @@
 #! /bin/sh
 
-LAST=11/9
+LAST=12/19
 [ -n "$1" ] && LAST="$1"
 
 LOVED=PLP4CSgl7K7oo93I49tQa0TLB8qY3u7xuO
@@ -9,7 +9,6 @@ WORST_BEST=PLP4CSgl7K7opkZ3eKAs1J_parHzPofQH4
 THINKPIECES=PLP4CSgl7K7ortpLkSSqBxBBogWbVvfBu2
 
 LOG=new-needledrop.log
-echo "" > $LOG
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$LAST" ]; then
   printf "$ new-needledrop <last-date>
@@ -62,4 +61,3 @@ download $LOVED | parse_vids
 download $CLASSICS | parse_vids
 download $WORST_BEST | parse_vids
 download $THINKPIECES | parse_vids
-

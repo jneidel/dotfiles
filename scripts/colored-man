@@ -23,4 +23,3 @@ export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1)
 export LESS_TERMCAP_ue=$'\e[0m'
 
 man $1
-

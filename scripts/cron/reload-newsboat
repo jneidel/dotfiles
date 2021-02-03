@@ -10,9 +10,9 @@ fi
 
 command -v newsboat >/dev/null || { echo "newsboat is not installed"; exit 1; }
 
-newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet -x reload &
+newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet -x reload &
 newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet -x reload &
 newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet -x reload &
-newsboat -u ~/.config/newsboat/urls-music -c ~/.config/newsboat/cache-music.db --quiet -x reload &
+newsboat -u ~/.config/newsboat/urls-misc -c ~/.config/newsboat/cache-misc.db --quiet -x reload &
 
 ~/scripts/cron/cron-notify-send "Ran reload-newsboat" -t 1000

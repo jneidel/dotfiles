@@ -2,6 +2,7 @@
 
 ALBUM_AR=Singles
 ALBUM=Mixed
+BASE_ALBUM=$ALBUM
 
 MUSIC_DIR="$HOME/ct/music"
 SINGLES_DIR="$MUSIC_DIR/_tomove-data/Singles"
@@ -21,11 +22,13 @@ Parameters:
 
 Parameter:
   -A: Set custom album artist (if empty use Artist)
+  -AA: Set custom album artist and album
 
 Example:
   $ tag-single 'Louis Cole - Blimp.mp3'
   $ tag-single -A 'Black Muffin' 'Black Muffin - Warrior.mp3'
   $ tag-single -A 'Black Muffin - Warrior.mp3'
+  $ tag-single -AA Ollie 'means to an end' *
 "; exit
 fi
 
@@ -38,10 +41,27 @@ if [ "$1" = "-A" ]; then
   shift
   shift
 fi
-echo $@
+if [ "$1" = "-AA" ]; then
+  ALBUM_AR="$2"
+  ALBUM="$3"
+  ARTIST_AS_ALBUM_AR=1
+  shift
+  shift
+  shift
+fi
+
+echo "## Tagging these files:"
+echo "   $@"
+echo "## with album artist: $ALBUM_AR"
+echo "## with album       : $ALBUM"
 
 tag() {
   local file_raw="$1"
+  if [ "${file_raw##*.}" != "mp3" ]; then
+    echo "skipping: $file_raw - not an mp3"
+    break;
+  fi
+
   local file="$(echo "$1" | sed 's|^[0-9]*\.\s||')" # remove leading track number
   local artist=""
   local title=""
@@ -59,12 +79,16 @@ tag() {
   [ "$ARTIST_AS_ALBUM_AR" -eq 1 ] && album_ar="$artist"
 
   local coverFile="${file_raw%.*}.jpg"
+  [ ! -e "$coverFile" ] && coverFile="cover.jpg"
+  [ ! -e "$coverFile" ] && coverFile="cover.png"
+  [ ! -e "$coverFile" ] && coverFile="${file_raw%.*}.webp"
 
   # id3tag --track 0 --year "" "$file_raw" # clears all existing tags, good for dates, bad for lyrics, images
   id3v2 --track "" --year "" "$file_raw"
   if [ -e "$coverFile" ]; then
     eyeD3 -2 --album-artist "$album_ar" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments --add-image "$coverFile":FRONT_COVER "$file_raw"
-    rm "$coverFile"
+
+    [ "${coverFile%.*}" != "cover" ] && rm "$coverFile"
   else
     eyeD3 -2 --album-artist "$ALBUM_AR" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments $cover "$file_raw"
   fi
@@ -76,14 +100,26 @@ for f in "$@"; do
   tag "$f"
 done
 
+rm cover.jpg 2>/dev/null # remove shared cover
+
+if [ "$ALBUM" != "$BASE_ALBUM" ]; then
+  printf "Add tracknumbers to album? (Y/n): "
+  read ans
+  if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then
+    tag-tracknumbers
+  fi
+fi
+
 if [ "$ARTIST_AS_ALBUM_AR" = 0 ]; then
+  mkdir -p $SINGLES_DIR
   mv -v "$@" $SINGLES_DIR
 else
   DIR="$MUSIC_DIR/$ALBUM_AR"
   [ -d "$DIR" ] || DIR="$MUSIC_DIR/unheard/$ALBUM_AR"
-  DIR="$DIR/Mixed"
+  DIR="$DIR/$ALBUM"
   echo Using: $DIR
   mkdir -p "$DIR"
 
-  mv -v "$@" "$DIR"
+  mv -v "$@" "$DIR" 2>/dev/null
 fi
+true

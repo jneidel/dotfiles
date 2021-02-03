@@ -1,4 +1,5 @@
 #! /bin/sh
+# Todo: add option to pass stuff via args
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ bangs

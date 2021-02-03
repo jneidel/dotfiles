@@ -9,8 +9,6 @@ fi
 # latex
 cd ~/code/latex
 rm *.aux *.log *.synctex.gz *.pdf
-cd ~/vorlesungen/GrdlInf/tex
-rm *.aux *.log *.synctex.gz *.pdf
 
 # histories
 rm ~/.python_history ~/.sqlite_history ~/.bash_history
@@ -19,5 +17,6 @@ rm ~/.python_history ~/.sqlite_history ~/.bash_history
 rmdir ~/Desktop
 rm ~/1
 rm -r ~/.w3m
+rm ~/.newsboat
 
 # ~/scripts/cron/cron-notify-send "Cleaned up fs"

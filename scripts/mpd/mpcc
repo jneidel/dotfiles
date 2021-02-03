@@ -31,4 +31,3 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 mpc $CONNECT "$@"
-

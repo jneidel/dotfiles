@@ -1,8 +1,8 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ get-clip"
-  echo "Get clipboard content using clipit"
+  echo "Get clipboard content"
   exit
 fi
 
