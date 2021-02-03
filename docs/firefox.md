@@ -1,5 +1,7 @@
 # firefox
 
+Edit: I don't use firefox anymore.
+
 ## My setup
 
 My [firefox](https://www.mozilla.org/en-US/firefox/nightly/notes/) is configured for maximum privacy. (If you want even more privacy use [Tor](https://www.torproject.org).)
@@ -42,7 +44,7 @@ Check "Block websites from automatically playing sound" and "Block pop-up window
 
 The `open with` prompt is based on the mime types that the server sends. For
 most you can set an `always do` option, but for example for `.cbz` files
-you can't. 
+you can't.
 
 Now open the mime tpye handlers file for your firefox installation:
 

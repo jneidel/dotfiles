@@ -118,6 +118,7 @@
 - On the state of the games industry and why you need to stop financially supporting companies like EA and Bethesda: [Bethesda VS Critics: How To Save The Games Industry](https://www.youtube.com/watch?v=C6NiXAdMzEk)
 - A look into speedrunning: [Speedrunning Is Awesome, And Here's Why](https://www.youtube.com/watch?v=I5auJOBC828)
 - Video games can be so much more than what they are: [Pathologic is Genius, And Here's Why](https://youtube.com/watch?v=JsNm2YLrk30)
+- What a really good rpg lookes like: [Fallout: New Vegas Is Genius, And Here's Why](https://www.youtube.com/watch?v=gzF7aHxk4Y4)
 
 ### Art
 
@@ -181,3 +182,9 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 [pt. 1](https://www.youtube.com/watch?v=5qjnDd1rsII)
 [pt. 2](https://www.youtube.com/watch?v=0PAEqgfAts4)
 [pt. 3](https://www.youtube.com/watch?v=09CeBwGbCeg)
+- 4chan: [HWNBD 1](https://www.youtube.com/watch?v=_p4h3jwJob0) [HWNDU
+  3](https://www.youtube.com/watch?v=vw9zyxm860Q) [HWNDU
+  4](https://www.youtube.com/watch?v=3aZuj_SDqDo) [Bikelock
+  Fugitive](https://www.youtube.com/watch?v=muoR8Td44UE) [iPhone
+  massacre](https://www.youtube.com/watch?v=MQEEJ57Gsow)
+- sseth: [Space Station 13](https://www.youtube.com/watch?v=URJ_qSXruW0) and most of his other vids
