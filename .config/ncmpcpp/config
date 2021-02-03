@@ -44,12 +44,10 @@ user_interface = alternative
 #   path   "/tmp/mpd.fifo"
 #   format "44100:16:2"
 # }
-visualizer_fifo_path = /tmp/mpd.fifo
+visualizer_data_source = /tmp/mpd.fifo
 
 # if you set format to 44100:16:2, make it 'yes'
 visualizer_in_stereo = yes
-
-visualizer_sync_interval = 30
 
 # available values: spectrum, wave, wave_filled, ellipse
 visualizer_type = spectrum
@@ -230,7 +228,7 @@ lyrics_directory = ~/.cache/lyrics
 follow_now_playing_lyrics = yes
 fetch_lyrics_for_current_song_in_background = no
 store_lyrics_in_song_dir = no
-lyrics_fetchers = lyricwiki, azlyrics, genius, sing365, lyricsmania, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet
+lyrics_fetchers = azlyrics, genius, sing365, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet
 
 #space_add_mode = add_remove
 #

@@ -15,9 +15,9 @@ super + Return
   kitty
 
 super + F1
-  brave
+  iridium-browser >/dev/null 2>&1
 super + F2
-  firefox-nightly
+  brave
 
 super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc

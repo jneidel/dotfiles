@@ -108,10 +108,10 @@ SLEEP=12
 #     echo "Good on you, pal."
 #   fi
 # }
-alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-blog.db --quiet && clear"
+alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet && clear"
 alias ma="newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet && clear"
 alias pod="newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet && clear"
-alias mus="newsboat -u ~/.config/newsboat/urls-music -c ~/.config/newsboat/cache-music.db --quiet && clear"
+alias mi="newsboat -u ~/.config/newsboat/urls-misc -c ~/.config/newsboat/cache-misc.db --quiet && clear"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 

@@ -48,13 +48,11 @@ python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
 
 [scripts]
-ack hhlighlighter dependency
 jq JSON processor
 rofi Prompt (dmenu alternative)
 networkmanager-dmenu-git Control NetworkManager through rofi
 conky Desktop widgets
 xclip X clipboard interface
-clipit Clipboard interface
 wget Download util
 curl Download util
 shellcheck Script debugging

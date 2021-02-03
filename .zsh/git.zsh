@@ -31,7 +31,7 @@ alias ac="addcom"
 ## commit --amend
 alias amend="git commit --amend"
 alias amendd="git commit --amend --no-edit"
-alias addam="git add .; git commit --amend --no-edit"
+alias addam="ga -A; git commit --amend --no-edit"
 amd() { # set commit date to passed date
   # pass dayOfTheWeek, month, date, hour
   # eg: Sun Apr 6 12
@@ -56,6 +56,7 @@ alias pull="git pull origin"
 alias master="git pull origin master; git push origin master"
 alias gpu="git push uber master"
 alias clone="git clone"
+alias stash="git stash"
 
 ## checkout
 alias co="git checkout"

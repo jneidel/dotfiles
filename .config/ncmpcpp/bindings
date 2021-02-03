@@ -171,11 +171,13 @@ def_key "alt-L"
 
 ## run mpd scripts
 def_key "C"
-  run_external_command "mpd-cover &"
+  run_external_command "mpd-cover"
 def_key "Y"
   run_external_command "tmux split-window -p 45 'mpd-lyrics | less --quit-at-eof'"
 def_key "M"
   run_external_command "tmux split-window -p 18 \; send-keys 'clear && ssm' 'Enter'"
+# def_key "ctrl-g"
+#   run_external_command ""
 
 ## quit
 def_key "q"

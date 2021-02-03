@@ -27,6 +27,18 @@ let g:html5_aria_attributes_complete = 0
 "## goyo
 let g:goyo_width = 84
 nmap <leader>w :Goyo<cr>:set textwidth=80<cr>:set formatoptions+=t<cr>:set nornu<cr>:set scrolloff=0<cr>
+autocmd BufLeave goyo_pad setlocal norelativenumber
+function! s:goyo_enter()
+  set norelativenumber
+  set nonumber
+endfunction
+function! s:goyo_leave()
+  set relativenumber
+  set number
+endfunction
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+let g:numbers_exclude = ['goyo_pad']
 
 "## prettier
 " Run prettier

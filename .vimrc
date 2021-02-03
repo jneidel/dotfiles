@@ -257,4 +257,3 @@ endfunction
 
 " source other modular configs files
 source ~/.vim/config/init.vim
-

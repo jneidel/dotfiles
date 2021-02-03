@@ -26,6 +26,8 @@ au filetype html inoremap ,o {<Enter>}<Esc>O
 "### Markdown
 au filetype md,markdown inoremap ,a [](<++>)<Esc>F]i
 au filetype md,markdown inoremap ,c ```<Enter>```<Enter><++><Esc>kO
+au filetype md,markdown inoremap ,j ```json<Enter>```<Enter><++><Esc>kO
+au filetype md,markdown inoremap ,s ```sh<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown inoremap ,l - [] <++><Esc>F[a
 au filetype md,markdown nnoremap ,d :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
 au filetype md,markdown inoremap ,i - [ ]<Space>
@@ -34,7 +36,7 @@ au filetype md,markdown inoremap ,i - [ ]<Space>
 au filetype js,ts,javascript,typescript,pug inoremap ,o {<Enter>}<Esc>O
 au filetype js,ts,javascript,typescript inoremap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
 au filetype js,ts,javascript,typescript inoremap ,a [  ]<Esc>hi
-au filetype js,ts,javascript,typescript inoremap ,i import  from "<++>";<++><Esc>Ffhi
+au filetype js,ts,javascript,typescript inoremap ,i import  from "<++>";<Esc>Ffhi
 au filetype js,ts,javascript,typescript inoremap ,l console.log(  )<Esc>hi
 au filetype js,ts,javascript,typescript inoremap ,t test( "", () => {<Enter>const <Enter>const answer <Enter><Enter>const result <Enter>expect( result ).toBe( answer );<Enter>} );<Esc>02k2ela= <++><Esc>02k2ela= <++><Esc>0kela<++><Esc>0kf"a
 
