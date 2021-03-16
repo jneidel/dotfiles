@@ -5,7 +5,8 @@
 alias py="python"
 alias color="gcolor2"
 alias readme="grip -b 7777" # render readme.md with github styles
-[ -n "$GH_ACCESS_TOKEN" ] && alias readme="grip -b 7777 --user $USER --pass $GH_ACCESS_TOKEN" # remove rate limit
+[ -n "$GH_ACCESS_TOKEN" ] && alias readme="grip --browser --user $USER --pass $GH_ACCESS_TOKEN" # remove rate limit
+[ -n "$GH_ACCESS_TOKEN" ] && alias gripa="readme"
 mdo() {
   FILE="$1"
  if [ -n "$GH_ACCESS_TOKEN" ]; then
@@ -14,6 +15,8 @@ mdo() {
    grip "$FILE" -b 7777
  fi
 }
+alias great="timeout 5 grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/code/notes/great-books.md >/dev/null 2>&1 &"
+alias greata="grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/code/notes/great-books.md >/dev/null 2>&1"
 
 ### download
 alias manga="mangareader-dl --debug"
@@ -59,6 +62,7 @@ alias c3="charge3"
 alias sc="shellcheck"
 alias to="todays-events"
 alias open="mimeopen"
+alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 
 ### misc
 function dict {

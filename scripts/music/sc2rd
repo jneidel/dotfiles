@@ -1,0 +1,84 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ sc2rd SC_ALBUM_URL
+Soundcloud to Real-Debrid.
+Translate a soundcloud GO+ album into a list of song urls for download w/ real-debrid.
+
+Parameters:
+  \$1: soundcloud album url
+
+Flags:
+  -n: no download
+
+Example:
+  $ sc-to-rd https://soundcloud.com/madlib/sets/shades-of-blue-madlib-invades
+EOF
+  exit
+fi
+
+command -v youtube-dl >/dev/null || { echo "youtube-dl is not installed" 1>&2; exit 127; }
+
+NO_DOWNLOAD=0
+[ "$1" = "-n" ] && {
+  NO_DOWNLOAD=1
+  ALBUM="$2"
+}
+[ "$2" = "-n" ] && {
+  NO_DOWNLOAD=1
+  ALBUM="$1"
+}
+
+TMP_IDS=$(mktemp)
+TMP_URLS=$(mktemp)
+
+get_ids() {
+  youtube-dl "$ALBUM" --get-filename -o "%(id)s"
+}
+
+id_to_url() {
+  ID="$1"
+
+  # src: https://stackoverflow.com/a/43390556
+  curl -Ss "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/$ID" |
+    grep -Po '<link rel="canonical" href="\K.*?">' |
+    cut -d\" -f1
+}
+
+ALBUM_NAME="$(echo $ALBUM | rev | cut -d\/ -f1 | rev)"
+ALBUM_SC="$ALBUM_NAME-sc"
+if [ ! -e "$ALBUM_SC" ]; then
+  echo "# get ids"
+  get_ids >$TMP_IDS
+
+  echo "# get urls"
+  for i in $(<$TMP_IDS); do
+    id_to_url "$i" | tee -a $TMP_URLS
+  done
+
+  cp $TMP_URLS $ALBUM_SC
+fi
+
+if [ -n "$REALDEBRID_USERNAME" ]; then
+  ALBUM_RD="$ALBUM_NAME-rd"
+  echo "# converting w/ rd"
+  rm "$ALBUM_RD" 2>/dev/null
+  cat $ALBUM_SC | while read url; do rdcli -p "$url" | tee -a "$ALBUM_RD"; done
+
+  if [ "$NO_DOWNLOAD" -eq 0 ]; then
+    ALBUM_DIR="$ALBUM_NAME-data"
+    mkdir -p "$ALBUM_DIR"
+    echo "# download album"
+    cd "$ALBUM_DIR"
+    wget -nc -i "../$ALBUM_RD"
+  fi
+fi
+
+if [ "$NO_DOWNLOAD" -eq 0 ]; then
+  printf "Delete extraneous files? (Y/n): "
+  read ans
+  if [ "$ans" != "n" ]; then
+    rm "$ALBUM_SC" "$ALBUM_RD" 2>/dev/null
+  fi
+fi

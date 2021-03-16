@@ -26,14 +26,13 @@ fi
 ## Paths
 export PATH=/bin:/usr/bin:/usr/bin/vendor_perl
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
-export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/scripts
+export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/scripts:~/ct/music
 
 ## Applications
 export EDITOR=vim
 export PAGER=less
 export LESS="-R"
-# export BROWSER=firefox-nightly
-export BROWSER=iridium-browser
+export BROWSER=brave
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
 export JAVA_HOME=/usr/lib/jvm/java-14-openjdk
@@ -43,7 +42,7 @@ export NODE_PATH=/usr/lib/node_module
 ### Themes
 export GTK_THEME=Arc
 export QT_STYLE_OVERRIDE=kvantum-dark
-export BAT_THEME=ansi-dark
+export BAT_THEME=ansi
 
 #### less coloring (man pages), see colored-man script
 export LESS_TERMCAP_mb=$'\e[1;34m'

@@ -16,8 +16,9 @@ fi
 
 URL="$1"
 
-if echo $URL | fgrep "youtube.com/watch?v=" >/dev/null; then
-  tsp mpv --profile=overlay "$1"
+if echo $URL | grep -e "youtube.com/watch?v=" -e "invidious.*watch" >/dev/null; then
+  echo $URL | xclip -sel clip -i
+  open_clip_mpv
 elif echo $URL | fgrep "twitter.com" >/dev/null; then
   echo "$1" | sed 's|twitter.com|nitter.net|' | xargs -r $BROWSER
 else

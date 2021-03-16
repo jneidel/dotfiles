@@ -13,4 +13,3 @@ alias megaw="W mega-transfers --path-display-size=53 --limit=14" # megaw[atch]
 alias megar="mega-transfers -r -a" # megar[esume]
 alias megap="mega-transfers -p -a" # megap[ause]
 alias megac="mega-transfers -c"    # megac[ancel]
-

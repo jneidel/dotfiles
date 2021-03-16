@@ -1,7 +1,7 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ beetim <music>
+  printf "$ beetim MUSIC
 Import music into your library using beet.
 
 Parameters:
@@ -17,7 +17,7 @@ command -v beet >/dev/null || { echo "beet is not installed"; exit 1; }
 command -v disable-mullvad-for >/dev/null || { echo "disable-mullvad-for script is not in path"; exit 1; }
 command -v mv-music >/dev/null || { echo "mv-music script is not in path"; exit 1; }
 
-echo "No more new music for now. Listen the the $(du -sh ~/ct/music/unheard | cut -d\G -f1)G of unheard music first."
+echo "No more new music for now. Listen the the $(du -sh ~/ct/music | cut -d\G -f1)G of unheard music first."
 exit 0
 
 disable-mullvad-for beet import -I "$@" && {

@@ -1,21 +1,20 @@
 #! /bin/sh
 
-CLIP_CMD=~/scripts/get-clip
-
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ open-in-vlc"
-  echo "Open clipboard content in vlc"
-  echo ""
-  echo "Parameters:"
-  echo "  clipboard: link to open in vlc"
+  echo "$ open_clip_mpv"
+  echo "Play clipboard content in mpv"
   exit
 fi
 
-CLIP_CONTENT=$($CLIP_CMD)
+CLIP_CONTENT=$(get-clip)
 
 if [ -t 1 ]; then
   echo $CLIP_CONTENT
 fi
 
-tsp mpv --profile=overlay --fs "$CLIP_CONTENT" 2>/dev/null >/dev/null
+if echo $CLIP_CONTENT | grep invidious >/dev/null; then
+  CLIP_CONTENT="$(echo $CLIP_CONTENT | sed 's|//.*invidious.*/|//www.youtube.com/|')"
+fi
+echo $CLIP_CONTENT
 
+tsp mpv --profile=overlay --fs "$CLIP_CONTENT" 2>/dev/null >/dev/null

@@ -43,4 +43,3 @@ else
 fi
 
 # -u for UTF-8 even if the correct ENV variables are missing
-

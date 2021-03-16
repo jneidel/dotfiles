@@ -41,7 +41,7 @@ dunst &
 
 ## gui application autostart
 kitty ~/scripts/tmux/t main vim &
-# brave &
+brave &
 signal-desktop &
 
 # don't work if started directly

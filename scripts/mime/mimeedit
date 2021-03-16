@@ -24,6 +24,7 @@ EXT="$1"
 case $EXT in
   ods|odt|docx) echo libreoffice;;
   pdf) echo masterpdfeditor5;;
+  sc) echo sc-im; exit 1;;
   *) echo $EDITOR; exit 1;;
 esac
 exit 0 # explicit 0 exit for handlers fine to run in the background

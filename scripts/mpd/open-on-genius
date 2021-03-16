@@ -1,0 +1,16 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ open-on-genius
+Open the currently playing track on genius
+EOF
+  exit
+fi
+
+command -v mpc-get >/dev/null || { echo "mpc-get script is not in PATH" 1>&2; exit 127; }
+
+QUERY=`mpc-get "[[%artist% - ]%title%]|[%file%]" | sed "s|\.mp3||"`
+QUERY=`node -e "console.log( encodeURIComponent( '$QUERY' ) )"`
+
+brave "https://genius.com/search?q=$QUERY" >/dev/null 2>&1 &

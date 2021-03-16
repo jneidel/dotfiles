@@ -15,7 +15,8 @@ fp https://filepursuit.com/pursuit?q=%s
 abb http://audiobookbay.nl/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-10437/%s/k0l3491r5
-yt https://www.youtube.com/results?search_query=%s
+ytt https://www.youtube.com/results?search_query=%s
+yt https://invidious.namazso.eu/search?q=%s
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
@@ -38,3 +39,9 @@ sh https://sci-hub.scihubtw.tw/%s
 man https://man.archlinux.org/search?q=%s
 fi https://www.flaticon.com/search?word=%s&search-type=icons&license=selection&order_by=4&grid=big
 wa https://www.wolframalpha.com/input/?i=%s
+ede https://www.ebay.de/sch/i.html?_nkw=%s
+dm https://www.dm.de/search?query=%s&searchType=product
+rc https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-Bibliothek
+ama https://www.amazon.de/s?k=%s
+dhl https://www.dhl.com/cgi-bin/tracking.pl?AWB=%s
+sc https://soundcloud.com/search?q=%s

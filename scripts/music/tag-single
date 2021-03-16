@@ -8,14 +8,15 @@ MUSIC_DIR="$HOME/ct/music"
 SINGLES_DIR="$MUSIC_DIR/_tomove-data/Singles"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ tag-single <mp3s>
+  printf "$ tag-single MP3S
 Tag singles as:
 Album Artist: $ALBUM_AR
 Album: $ALBUM
 Artist: from filename
-Title: from filename
+Title: from filename (format: 'artist - title.mp3')
 Date: none
 Track: none
+Cover: if cover.jpg|png or filename.jpg available
 
 Parameters:
   \$1+: files
@@ -81,7 +82,6 @@ tag() {
   local coverFile="${file_raw%.*}.jpg"
   [ ! -e "$coverFile" ] && coverFile="cover.jpg"
   [ ! -e "$coverFile" ] && coverFile="cover.png"
-  [ ! -e "$coverFile" ] && coverFile="${file_raw%.*}.webp"
 
   # id3tag --track 0 --year "" "$file_raw" # clears all existing tags, good for dates, bad for lyrics, images
   id3v2 --track "" --year "" "$file_raw"

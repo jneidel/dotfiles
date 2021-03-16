@@ -11,10 +11,6 @@ alias imgweek="$B https://getcomics.info/tag/image-week >/dev/null 2>&1 &; disow
 alias imgrel="$B https://imagecomics.com/comics/new-releases >/dev/null 2>&1 &; disown"
 
 alias relax="mpvo 'https://www.youtube.com/watch?v=5qap5aO4i9A'"
-mpdg() {
-  $B "https://genius.com/search?q=$(urlencode "$(mpc-get '%artist% %title%')")"
-  # todo: strip feat.
-}
 
 ## dice
 roll_dice() {

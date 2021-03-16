@@ -176,6 +176,8 @@ def_key "Y"
   run_external_command "tmux split-window -p 45 'mpd-lyrics | less --quit-at-eof'"
 def_key "M"
   run_external_command "tmux split-window -p 18 \; send-keys 'clear && ssm' 'Enter'"
+def_key "O"
+  run_external_command "open-on-genius >>/tmp/o"
 # def_key "ctrl-g"
 #   run_external_command ""
 

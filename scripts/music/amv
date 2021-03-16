@@ -1,29 +1,47 @@
 #! /bin/sh
 
 MUSIC_DIR=$HOME/ct/music
+OUT="$MUSIC_DIR/_tomove-data"
+U_OUT="$MUSIC_DIR"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
-$ amv ALBUM [OUT]
-Move an album to another dir, while creating the enclosing artist directory
+$ amv ALBUM
+a[lbum]m[o]v[e]
+Move an album to another dir, while creating the enclosing artist directory.
 
 Parameters:
   \$1: album dir
-  [\$2]: out dir
+
+Flags:
+  -u: move out of unheard
 
 Example:
-  $ amv "Clispe/Lord Willin'" out
-  #=> out/Clispe/Lord Willin'
+  $ amv "Clispe/Lord Willin'"
+  #=> $OUT/Clispe/Lord Willin'
 EOF
   exit
 fi
 
+if pwd | grep -v music >/dev/null; then
+  printf "music isn't in your pwd, did you really want to run this? y/N: "
+  read ans
+  [ "$ans" != "y" ] && exit 1
+fi
+
 ALBUM=`realpath "$1"`
-OUT="$2"
-[ -z "$2" ] && OUT="$MUSIC_DIR/_tomove-data"
+U=0
+
+if [ "$1" = "-u" ]; then
+  ALBUM=`realpath "$2"`
+  U=1
+elif [ "$2" = "-u" ]; then
+  ALBUM=`realpath "$1"`
+  U=1
+fi
+[ "$U" -eq 1 ] && OUT=$U_OUT
 
 ARTIST=`basename "$(dirname "$ALBUM")"`
-OUT_DIR=""
 if [ "$ARTIST" = "music" ] || [ "$ARTIST" = "unheard" ]; then
   OUT_DIR="$OUT"
 else

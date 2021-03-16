@@ -17,7 +17,7 @@ command -v transmission-kill >/dev/null || { echo "transmission-kill script is n
 
 notify-send "tsm dl finished" "$TR_TORRENT_NAME" -t 5000
 
-transmission-clear # remove finished torrents
+# transmission-clear # remove finished torrents
 
 sleep 10
 if tsr -l | grep -ve "Done" -e "Sum:" >/dev/null; then
