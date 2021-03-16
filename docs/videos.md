@@ -24,7 +24,7 @@
     + [JavaScript](#javascript)
   * [Programming](#programming)
 - [Entertainment](#entertainment)
-  * [Games](#games)
+  * [Video Games/Drugs](#video-gamesdrugs)
   * [Art](#art)
     + [Simpsonwave](#simpsonwave)
     + [Anime Edits](#anime-edits)
@@ -33,7 +33,9 @@
   * [Political](#political)
   * [Understanding other people](#understanding-other-people)
   * [Podcasts](#podcasts)
+  * [Psychology](#psychology)
   * [Fun](#fun)
+- [Interviews](#interviews)
 
 <!-- tocstop -->
 
@@ -113,12 +115,14 @@
 - How a new generation of "battle" manga tell unique stories: ["Non Battle" Battle Anime](https://www.youtube.com/watch?v=kkg9BhISfdA)
 - A look into the world of competitive Tetri: [My Experience at the Classic Tetris World Championships](https://www.youtube.com/watch?v=RfuDrcrGnVQ)
 
-### Games
+### Video Games/Drugs
 
-- On the state of the games industry and why you need to stop financially supporting companies like EA and Bethesda: [Bethesda VS Critics: How To Save The Games Industry](https://www.youtube.com/watch?v=C6NiXAdMzEk)
-- A look into speedrunning: [Speedrunning Is Awesome, And Here's Why](https://www.youtube.com/watch?v=I5auJOBC828)
-- Video games can be so much more than what they are: [Pathologic is Genius, And Here's Why](https://youtube.com/watch?v=JsNm2YLrk30)
-- What a really good rpg lookes like: [Fallout: New Vegas Is Genius, And Here's Why](https://www.youtube.com/watch?v=gzF7aHxk4Y4)
+- Fulfill your potential, make more of your (free) time, only consume when you are 100% exhausted: [Quit Video Games: Learn More, Live More, Be More.](https://www.youtube.com/watch?v=Th2GOi0EbaU)
+- Consider the effects of your pleasure-seeking short term thinking on the
+  people and society around you: [Quitting Video Games: Subjectivity, Objectivity, Responsibility.](https://www.youtube.com/watch?v=tJzaRg9ZD-4)
+- Consider the time cost that alcohol & caffein incur (apart from the physical damage);
+  veganism is about questioning cultural rituals - the same should be done for
+  alcohol & cafine: [Alcohol & Caffeine: Unnatural Vegan is WRONG](https://www.youtube.com/watch?v=e5KxIq3SOtM)
 
 ### Art
 
@@ -150,6 +154,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - Podcast: Staying curious and living in other cultures: [Derek Sivers: Different approaches to curiosity, self-reliance, becoming a world citizen, seeing things from a different point of view](https://m.sivers.org/2020-02-DerekSivers-FeedingCuriosity.mp3) - at 42 min
 - A: Consider the downsides of having children: [Why it is important not to have children](https://stallman.org/articles/children.html)
 - "Anyone is perfectly loyal to their own personal convictions" or why temptation is only tempting if you allow it to be: [Resisting Temptation...](https://www.youtube.com/watch?v=BsvYEkTzmGQ)
+- Reading as a means to develop character and better understand oneself: [Harold Bloom Interview](https://www.youtube.com/watch?v=EVWiwd0P0c0)
 
 ### Political
 
@@ -162,17 +167,24 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - A: Essay: high paid jobs are bullshit, low paid job produce most all of the
   value, a system designed by the 1% to keep us unhappy and invested in the
   status quo: [On the Phenomenon of Bullshit Jobs](https://www.strike.coop/bullshit-jobs/)
+- A: Feeling bad about too little politcal activity is the wrong answer, giving
+  to charity is the right one: [Nobody Is Perfect, Everything Is Commensurable](https://slatestarcodex.com/2014/12/19/nobody-is-perfect-everything-is-commensurable/) - Effectively donate to charities: [Giving what we can](https://www.givingwhatwecan.org/)
+- A: Bringing conservatism and liberalism together, a better world fantasy: [Archipelago and Atomic Communitarianism](https://slatestarcodex.com/2014/06/07/archipelago-and-atomic-communitarianism/)
 
 ### Understanding other people
 
 - Transgender: [ContraPoints](https://www.youtube.com/user/ContraPoints/videos) - Especially ["Are Traps Gay?"](https://www.youtube.com/watch?v=PbBzhqJK3bg) and [Shame](https://www.youtube.com/watch?v=K7WvHTl_Q7I)
 - S: African-Americans: [ATLANTA](https://www.imdb.com/title/tt4288182/), [The Boondocks](https://www.imdb.com/title/tt0373732)
-- M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) [[nf](https://www.netflix.com/watch/60024976)]
+- M: Comedians: [Jerry Seinfeld: Comedian](https://www.imdb.com/title/tt0328962) ([nf](https://www.netflix.com/watch/60024976))
 - S: St. Pauli inhabitants: [Der Penny-Markt auf der Reeperbahn](https://www.youtube.com/playlist?list=PLPu_yl89uGlrQPHjLRRIsy1F_r5Jy7aX3)
 
 ### Podcasts
 
 - [Edward Snoden on Joe Rogan](https://www.youtube.com/watch?v=efs3QRr8LWw)
+
+### Psychology
+
+- Shame is a positive thing: [What if Shame Gets Results? Beyond "Body Shaming" & "Fat Shaming"](https://www.youtube.com/watch?v=wAvi8raKlyo)
 
 ### Fun
 
@@ -188,3 +200,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
   Fugitive](https://www.youtube.com/watch?v=muoR8Td44UE) [iPhone
   massacre](https://www.youtube.com/watch?v=MQEEJ57Gsow)
 - sseth: [Space Station 13](https://www.youtube.com/watch?v=URJ_qSXruW0) and most of his other vids
+
+## Interviews
+
+- [David Foster Wallace](https://www.youtube.com/watch?v=iGLzWdT7vGc)

@@ -1,0 +1,3 @@
+USB_BLACKLIST="8087:07dc"
+# id from lsusb
+# see: https://bbs.archlinux.org/viewtopic.php?id=233527
