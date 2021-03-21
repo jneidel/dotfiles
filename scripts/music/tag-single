@@ -35,17 +35,14 @@ fi
 
 command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed"; exit 1; }
 
-ARTIST_AS_ALBUM_AR=0
 if [ "$1" = "-A" ]; then
   ALBUM_AR="$2"
-  ARTIST_AS_ALBUM_AR=1
   shift
   shift
 fi
 if [ "$1" = "-AA" ]; then
   ALBUM_AR="$2"
   ALBUM="$3"
-  ARTIST_AS_ALBUM_AR=1
   shift
   shift
   shift
@@ -74,10 +71,8 @@ tag() {
   else
     # only has title
     title="$(echo "${file%.*}" | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
+    [ -n "$ALBUM_AR" ] && artist="$ALBUM_AR"
   fi
-
-  local album_ar="$ALBUM_AR"
-  [ "$ARTIST_AS_ALBUM_AR" -eq 1 ] && album_ar="$artist"
 
   local coverFile="${file_raw%.*}.jpg"
   [ ! -e "$coverFile" ] && coverFile="cover.jpg"
@@ -86,7 +81,7 @@ tag() {
   # id3tag --track 0 --year "" "$file_raw" # clears all existing tags, good for dates, bad for lyrics, images
   id3v2 --track "" --year "" "$file_raw"
   if [ -e "$coverFile" ]; then
-    eyeD3 -2 --album-artist "$album_ar" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments --add-image "$coverFile":FRONT_COVER "$file_raw"
+    eyeD3 -2 --album-artist "$ALBUM_AR" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments --add-image "$coverFile":FRONT_COVER "$file_raw"
 
     [ "${coverFile%.*}" != "cover" ] && rm "$coverFile"
   else

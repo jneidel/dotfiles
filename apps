@@ -22,6 +22,7 @@ systemd:NetworkManager
 
 [dash]
 dash Fast shell
+dashbinsh Install as /bin/sh
 
 [sxhkd]
 sxhkd Hotkey assignment

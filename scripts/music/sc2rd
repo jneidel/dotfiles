@@ -1,5 +1,9 @@
 #! /bin/sh
 
+# Todo:
+# put artist name (from url) into $ALBUM
+# fix extaneous file removal at end
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
 $ sc2rd SC_ALBUM_URL
@@ -12,6 +16,10 @@ Parameters:
 Flags:
   -n: no download
 
+Requires these env variables to be set:
+  REALDEBRID_USERNAME
+  REALDEBRID_PASSWORD
+
 Example:
   $ sc-to-rd https://soundcloud.com/madlib/sets/shades-of-blue-madlib-invades
 EOF
@@ -20,14 +28,15 @@ fi
 
 command -v youtube-dl >/dev/null || { echo "youtube-dl is not installed" 1>&2; exit 127; }
 
+ALBUM="$1"
 NO_DOWNLOAD=0
 [ "$1" = "-n" ] && {
-  NO_DOWNLOAD=1
   ALBUM="$2"
+  NO_DOWNLOAD=1
 }
 [ "$2" = "-n" ] && {
-  NO_DOWNLOAD=1
   ALBUM="$1"
+  NO_DOWNLOAD=1
 }
 
 TMP_IDS=$(mktemp)
@@ -82,3 +91,4 @@ if [ "$NO_DOWNLOAD" -eq 0 ]; then
     rm "$ALBUM_SC" "$ALBUM_RD" 2>/dev/null
   fi
 fi
+true

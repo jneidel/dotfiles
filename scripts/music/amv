@@ -29,7 +29,7 @@ if pwd | grep -v music >/dev/null; then
   [ "$ans" != "y" ] && exit 1
 fi
 
-ALBUM=`realpath "$1"`
+ALBUM=`realpath "$1" 2>/dev/null`
 U=0
 
 if [ "$1" = "-u" ]; then
