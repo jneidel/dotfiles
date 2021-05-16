@@ -1,6 +1,6 @@
 #! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ btoff"
   echo "Turn off bluetooth via bluetoothctl"
   exit

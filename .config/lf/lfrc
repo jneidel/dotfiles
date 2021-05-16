@@ -182,6 +182,7 @@ map gB cd ~/code/notes/books
 map gc cd ~/ct
 map gz cd ~/ct/zeit
 map gn cd ~/code/notes
+map gr cd ~/code/notes/research
 map gp cd ~/projects
 map gu cd ~/projects/uni
 map gP cd ~/ct/pictures

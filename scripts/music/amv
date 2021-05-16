@@ -1,4 +1,5 @@
 #! /bin/sh
+# Todo: handle artist dir as $1
 
 MUSIC_DIR=$HOME/ct/music
 OUT="$MUSIC_DIR/_tomove-data"
@@ -52,5 +53,7 @@ mkdir -p "$OUT_DIR"
 mv "$ALBUM" "$OUT_DIR"
 echo "moved to $OUT_DIR"
 
-rmdir $MUSIC_DIR/* 2>/dev/null
+{
+  rmdir "$ARTIST" 2>/dev/null || cd ..; rmdir "$ARTIST" 2>/dev/null
+} && echo "Removed enclosing directory: $ARTIST"
 true

@@ -1,0 +1,18 @@
+#! /bin/bash
+
+MUSIC_DIR="$HOME/ct/music"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ unhrd
+Print your amount of unheard music
+
+Example:
+  $ unhrd
+  #=> 48G
+EOF
+  exit
+fi
+
+du -sc -B M --apparent-size $MUSIC_DIR/[^_]* | # exclude anything starting w/ _ from match
+  tail -n1 | cut -dM -f1 | human-number | awk '{print $1" MB"}'

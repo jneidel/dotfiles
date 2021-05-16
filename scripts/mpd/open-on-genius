@@ -10,7 +10,20 @@ fi
 
 command -v mpc-get >/dev/null || { echo "mpc-get script is not in PATH" 1>&2; exit 127; }
 
+get_top_result() {
+  curl -Ss "https://genius.com/api/search/multi?per_page=1&q=$1" |
+    jq 'if .response.sections[0].type == "top_hit" then .response.sections[0].hits[0].result.path else "no" end'
+}
+eval_genius() {
+  RES="$(get_top_result "$1" | cut -d\" -f2)"
+  if [ "$RES" = "no" ] || [ "$RES" = "null" ]; then
+    echo "https://genius.com/search?q=$1"
+  else
+    echo "https://genius.com$RES"
+  fi
+}
+
 QUERY=`mpc-get "[[%artist% - ]%title%]|[%file%]" | sed "s|\.mp3||"`
 QUERY=`node -e "console.log( encodeURIComponent( '$QUERY' ) )"`
 
-brave "https://genius.com/search?q=$QUERY" >/dev/null 2>&1 &
+$BROWSER `eval_genius "$QUERY"` >/dev/null 2>&1 &

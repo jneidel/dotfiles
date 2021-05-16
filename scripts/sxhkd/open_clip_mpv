@@ -6,14 +6,15 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-CLIP_CONTENT=$(get-clip)
+CLIP_CONTENT="$1"
+[ -z "$1" ] && CLIP_CONTENT=$(get-clip)
 
 if [ -t 1 ]; then
   echo $CLIP_CONTENT
 fi
 
-if echo $CLIP_CONTENT | grep invidious >/dev/null; then
-  CLIP_CONTENT="$(echo $CLIP_CONTENT | sed 's|//.*invidious.*/|//www.youtube.com/|')"
+if echo $CLIP_CONTENT | grep -e invidious -e yewtu >/dev/null; then
+  CLIP_CONTENT="$(echo $CLIP_CONTENT | sed 's|//.*invidious.*/|//www.youtube.com/|' | sed 's|//yewtu\.be/|//www.youtube.com/|')"
 fi
 echo $CLIP_CONTENT
 

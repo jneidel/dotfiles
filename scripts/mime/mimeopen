@@ -38,7 +38,7 @@ case $EXT in
     else
       e404 'epr or FBReader'
     fi;;
-  mp3|flac|ogg|wma|m4b|m4a) echo "mpv --profile=music"; exit 1;;
+  mp3|flac|ogg|wma|m4b|m4a|wav) echo "mpv --profile=music"; exit 1;;
   cbz|cbr) echo "YACReader >/dev/null 2>&1";;
   tgz|zip|rar|xz|gz|tar.gz) echo extract; exit 1;;
   tgz.gpg) echo untargpg; exit 1;;
@@ -47,7 +47,7 @@ case $EXT in
   gpg|*.gpg) echo extracthere; exit 1;;
   txt|md|java) echo "$EDITOR"; exit 1;;
   ods) echo libreoffice;;
-  docx|pptx) echo "libreoffice --convert-to pdf"; exit 1;;
+  docx|pptx|odp|odt) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
   sc) echo sc-im; exit 1;;
   *) printf "ERR: no handler setup for: $EXT\n"

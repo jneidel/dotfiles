@@ -2,8 +2,10 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
-$ pauseaftersong
-Pause (toggle) after the next mpd action
+$ pauseaftersong [COUNT]
+Pause mpd after the next player interaction (next, pause/play)
+
+See: mpd player event
 EOF
   exit
 fi
@@ -12,7 +14,21 @@ command -v mpcc >/dev/null || { echo "mpcc is not in PATH"; exit 127; }
 command -v control-mpd >/dev/null || { echo "control-mpd is not in PATH"; exit 127; }
 
 run() {
-  mpcc idle player >/dev/null && control-mpd pause >/dev/null
+  mpcc idle player && control-mpd pause
 }
-run &
-clear # i alway do this manually
+runTimes() {
+  cmd="mpcc idle player"
+  for n in $(seq $1); do # invalid seq, exec once
+    [ "$n" -gt 1 ] &&
+      cmd="$cmd; mpcc idle player"
+  done
+  cmd="$cmd; control-mpd pause"
+  sh -c "$cmd"
+}
+
+if [ -n "$1" ]; then
+  runTimes $1 >/dev/null &
+else
+  run >/dev/null &
+fi
+clear # I always did this manually

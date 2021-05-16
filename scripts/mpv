@@ -5,17 +5,25 @@ ICP_SOCK="--input-ipc-server=/tmp/mpv_socket"
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ mpv MPV_ARGS
-mpv wrapper to add correct latency from bluetooth
+Preconfigured mpv launch:
+- using ICP socket (remote control)
+- delay if connected to bluetooth speaker
+- adjust speed hearing uni lectures
 EOF
   exit
 fi
 
 command -v /bin/mpv >/dev/null || { echo "mpv is not installed"; exit 1; }
 
-if btdevice >/dev/null; then
-  echo "Adapting for bluetooth delay"
-  /bin/mpv $ICP_SOCK --audio-delay='-.120' "$@"
-else
-  /bin/mpv $ICP_SOCK "$@"
+OPTIONS=""
+if echo "$@" | grep -e "projects/uni" -e "mediathek.htw-berlin.de" >/dev/null; then
+  OPTIONS="--speed=1.40"
 fi
 
+if btdevice >/dev/null; then
+  echo "Adapting for bluetooth delay (-120ms)"
+  /bin/mpv $ICP_SOCK $OPTIONS --audio-delay='-.120' "$@"
+else
+  echo "Adapting for speaker delay (+100ms)"
+  /bin/mpv $ICP_SOCK $OPTIONS --audio-delay='+.100' "$@"
+fi

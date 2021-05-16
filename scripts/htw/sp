@@ -41,6 +41,7 @@ fi
 command -v zathura >/dev/null || { echo "zathura is not installed" 1>&2; exit 127; }
 command -v convert >/dev/null || { echo "imagemagick (convert) is not installed" 1>&2; exit 127; }
 command -v pdfunite >/dev/null || { echo "poppler (pdfunite) is not installed" 1>&2; exit 127; }
+command -v kw >/dev/null || { echo "kw script is not in PATH" 1>&2; exit 127; }
 [ -z "$USERNAME" ] && { echo "\$USERNAME is empty, please fill it in"; exit 1; };
 [ -z "$PASSWORD" ] && { echo "\$PASSWORD is empty, please fill it in"; exit 1; };
 
@@ -70,7 +71,7 @@ else
   SESSION_COOKIE=`<$TMP_COOKIE`
 fi
 
-BASE_WEEK=$(($(date +%U | sed "s|^0||")+1))
+BASE_WEEK=$(kw)
 calcWeek() {
   OFFSET="$1"
   RES=$(($BASE_WEEK "$OFFSET"))

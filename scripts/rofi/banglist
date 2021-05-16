@@ -17,6 +17,7 @@ nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-10437/%s/k0l3491r5
 ytt https://www.youtube.com/results?search_query=%s
 yt https://invidious.namazso.eu/search?q=%s
+yt https://yewtu.be/search?q=%s
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
@@ -45,3 +46,5 @@ rc https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-B
 ama https://www.amazon.de/s?k=%s
 dhl https://www.dhl.com/cgi-bin/tracking.pl?AWB=%s
 sc https://soundcloud.com/search?q=%s
+sample https://www.whosampled.com/search/?q=%s
+l https://www.online-latin-dictionary.com/latin-english-dictionary.php?parola=%s

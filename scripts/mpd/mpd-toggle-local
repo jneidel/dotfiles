@@ -17,7 +17,7 @@ if [ ! -e "$FILE" ]; then
   exit 0
 fi
 
-if [ `<$FILE` -eq 0 ]; then
+if [ `cat $FILE` -eq 0 ]; then
   printf '1' >$FILE
   printf "Toggled local\n"
 else # 1

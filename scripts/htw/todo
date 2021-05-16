@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 DIR="$HOME/projects/uni"
 TODO_FILE_PATTERN="1_todo.md"

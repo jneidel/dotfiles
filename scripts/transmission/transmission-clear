@@ -10,6 +10,6 @@ fi
 
 tsr -l | grep -e "100%" -e "Done" | # match completed torrents
   awk '{print $1}' | # get their id
-  xargs -n 1 -I % tsr -t % -r | # pass id to transmission to remove
+  xargs -n 1 -I % tsr -t % -r 2>/dev/null | # pass id to transmission to remove
   awk '{ print "tsm-clear: "$0 }' # prefix output with script name
 

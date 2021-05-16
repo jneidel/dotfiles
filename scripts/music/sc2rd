@@ -62,7 +62,7 @@ if [ ! -e "$ALBUM_SC" ]; then
   get_ids >$TMP_IDS
 
   echo "# get urls"
-  for i in $(<$TMP_IDS); do
+  for i in $(cat $TMP_IDS); do
     id_to_url "$i" | tee -a $TMP_URLS
   done
 
@@ -81,6 +81,7 @@ if [ -n "$REALDEBRID_USERNAME" ]; then
     echo "# download album"
     cd "$ALBUM_DIR"
     wget -nc -i "../$ALBUM_RD"
+    cd ..
   fi
 fi
 

@@ -18,7 +18,7 @@ CHARGE=$BAT/energy_now
 CAPACITY=$BAT/energy_full
 AC=$POWER/AC/online
 
-PERCENT=$(($(< $CHARGE)*100/$(< $CAPACITY)))
+PERCENT=$(($(cat $CHARGE)*100/$(cat $CAPACITY)))
 PERCENT_ICON=$(
   if [ "$PERCENT" -gt 96 ] && [ "$PERCENT" -le 105 ]; then
       echo " "
@@ -45,7 +45,7 @@ PERCENT_ICON=$(
   fi
 )
 
-IS_CHARGING=$(< $AC)
+IS_CHARGING=$(cat $AC)
 CHARGING_ICON=$([ "$IS_CHARGING" -eq 1 ] && echo "")
 
 echo "${CHARGING_ICON}${PERCENT_ICON}${PERCENT}%"

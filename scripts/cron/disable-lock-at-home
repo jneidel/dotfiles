@@ -33,6 +33,6 @@ turn_on_lock() {
 }
 
 case "$(wifiname)" in
-  TimeEater47|KDG-D750D) turn_off_lock;;
+  TimeEater47|KDG-D750D|FRITZ!Box) turn_off_lock;;
   *) turn_on_lock;;
 esac

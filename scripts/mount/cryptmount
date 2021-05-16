@@ -82,5 +82,5 @@ echo "Mounted to $LOCATION"
 [ -e "$LOCATION/mount" ] && {
   echo "Running custom mount script"
   sh $LOCATION/mount
-}
+} || true
 

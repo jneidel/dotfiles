@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 DATE_FILE=$HOME/.local/share/newentertainment_date
 PENS_FILE=$HOME/.local/share/newentertainment_pensum
@@ -41,34 +41,36 @@ else
   printf $FULL_PENSUM > $PENS_FILE
 fi
 
-# pensum can't behandled in a variable, as its inconsistend between functions
+# pensum can't behandled in a variable, as its does not persist between executions
 PENSUM_FILE=$(mktemp)
-printf $PENSUM > $PENSUM_FILE
+printf $PENSUM >$PENSUM_FILE
 read_pensum() {
   cat $PENSUM_FILE
 }
 write_pensum() {
-  printf $1 > $PENSUM_FILE
+  printf $1 >$PENSUM_FILE
 }
 
 has_pensum() {
   media_type="$1"
   pensum=$(read_pensum)
   case "$media_type" in
+    s90) [ "$pensum" -ge 90 ] && true || false;;
     s60) [ "$pensum" -ge 60 ] && true || false;;
     s30) [ "$pensum" -ge 30 ] && true || false;;
     s20) [ "$pensum" -ge 20 ] && true || false;;
-    m) [ "$pensum" -ge 120 ] && true || false;;
+      m) [ "$pensum" -ge 120 ] && true || false;;
   esac
 }
 
 decrement_pensum() {
   media_type="$1"
   case "$media_type" in
+    s90) write_pensum $(($(read_pensum) - 90));;
     s60) write_pensum $(($(read_pensum) - 60));;
     s30) write_pensum $(($(read_pensum) - 30));;
     s20) write_pensum $(($(read_pensum) - 20));;
-    m) write_pensum $(($(read_pensum) - 120));;
+      m) write_pensum $(($(read_pensum) - 120));;
   esac
   echo "pens: $media_type $(read_pensum)"
 }
@@ -130,7 +132,7 @@ handle_movie() {
 
 while read -r name <&10; do
   case $name in
-    s60*|s20*|s30*)
+    s90*|s60*|s20*|s30*)
       has_pensum `echo $name | cut -d\/ -f1` || break
 
       handle_series "$name"
@@ -148,5 +150,5 @@ while read -r name <&10; do
   esac
 done 10<$ORDER # 10 as not to block other read calls
 
-[ "$TESTING" -eq 0 ] && printf `read_pensum` > $PENS_FILE # write to persistent pensum file
+[ "$TESTING" -eq 0 ] && printf `read_pensum` >$PENS_FILE # persist pensum on disk
 [ "$TESTING" -eq 0 ] && date >$DATE_FILE

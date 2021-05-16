@@ -14,9 +14,8 @@ fi
 [ ! -e "$STATUS_FILE" ] && printf '0' >$STATUS_FILE
 [ ! -e "$LOCAL_FILE" ] && printf '0' >$LOCAL_FILE
 
-if [ `<$LOCAL_FILE` -eq 0 ] && [ `<$STATUS_FILE` -eq 1 ] && ! $DIR/is-mpd-playing-local; then
+if [ `cat $LOCAL_FILE` -eq 0 ] && [ `cat $STATUS_FILE` -eq 1 ] && ! $DIR/is-mpd-playing-local; then
   true
 else
   false
 fi
-

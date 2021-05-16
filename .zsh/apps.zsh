@@ -31,6 +31,7 @@ alias ytdl="youtube-dl --yes-playlist -c -i --retries 4 -f 'mp4[height=720]' -o 
 alias ytmp3="youtube-dl --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1 --write-thumbnail"
 alias ytlow="youtube-dl --yes-playlist -c -i --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
 alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
+alias ythere="youtube-dl -c -i --retries 4 -f 'mp4[height=720]'"
 alias -g PE="--playlist-end"
 
 ### redefining existing commands
@@ -58,7 +59,6 @@ alias rc="rename-comic"
 alias shasum="sha256sum"
 alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
-alias c3="charge3"
 alias sc="shellcheck"
 alias to="todays-events"
 alias open="mimeopen"
@@ -112,7 +112,15 @@ SLEEP=12
 #     echo "Good on you, pal."
 #   fi
 # }
-alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet && clear"
+# alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet && clear"
+new() {
+  out=$(mktemp)
+  if ! newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet; then
+    newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db >$out
+    echo "Waiting for reload-newsboat to finish"
+    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet && clear
+  fi
+}
 alias ma="newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet && clear"
 alias pod="newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet && clear"
 alias mi="newsboat -u ~/.config/newsboat/urls-misc -c ~/.config/newsboat/cache-misc.db --quiet && clear"
@@ -135,8 +143,10 @@ alias mpdly="mpd-lyrics | $PAGER"
 alias ml="mpd-toggle-local"
 
 ### gpg
-alias enc="gpg -e -r $KEYID"
+alias enc="gpg -er $KEYID"
 alias dec="gpg -d"
+alias encs="gpg -c" # enc symmetric
+alias encsk="gpg -cer $KEYID" # enc symmetric key
 
 ## gui
 alias chrome="chromium"

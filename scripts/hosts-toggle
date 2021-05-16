@@ -1,16 +1,16 @@
-#! /bin/bash
+#! /bin/sh
 
 HOSTS=/etc/hosts
 TMP=/etc/hostss
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ toggle-hosts"
   echo "Move $HOSTS to temporary location $TMP and back"
   echo "Easily deactivate and reactive your hosts file"
   exit
 fi
 
-if [[ -e $TMP ]]; then
+if [ -e "$TMP" ]; then
   echo "Moving $TMP to $HOSTS"
   sudo mv $TMP $HOSTS
   printf "Blocklist is \033[1;32mACTIVE\n"
@@ -19,4 +19,3 @@ else
   sudo mv $HOSTS $TMP
   printf "Blocklist is \033[1;31mINACTIVE\n"
 fi
-

@@ -7,7 +7,9 @@ alias idarr="eyeD3 --album-artist" # -b
 alias idt="eyeD3 --title" # -t
 alias ids="idt"
 alias idn="eyeD3 --track" # -n (-n 0 -N 0 to clear)
-alias idco="eyeD3 --add-image" # image:FRONT_COVER mp3
+idco() {
+  eyeD3 --add-image "$1:FRONT_COVER" "$2"
+}
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 idcoa() {
   if [ -e "cover.jpg" ]; then

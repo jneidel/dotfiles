@@ -155,6 +155,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - A: Consider the downsides of having children: [Why it is important not to have children](https://stallman.org/articles/children.html)
 - "Anyone is perfectly loyal to their own personal convictions" or why temptation is only tempting if you allow it to be: [Resisting Temptation...](https://www.youtube.com/watch?v=BsvYEkTzmGQ)
 - Reading as a means to develop character and better understand oneself: [Harold Bloom Interview](https://www.youtube.com/watch?v=EVWiwd0P0c0)
+- Happiness is different than in the movies: [How BoJack Horseman Subverts Narrative](https://invidious.namazso.eu/watch?v=H7zZYnFADxk)
 
 ### Political
 
