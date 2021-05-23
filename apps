@@ -450,3 +450,12 @@ webtorrent-cli Torrent streaming
 
 [xob]
 xob Volume bar
+
+[stopwatch]
+npm:raw-stopwatch Basic stopwatch
+
+[remind]
+remind Calendar programm
+wyrd-git TUI
+tk GUI
+tcllib tk dependency

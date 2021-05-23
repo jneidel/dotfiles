@@ -60,7 +60,7 @@ alias stash="git stash"
 
 ## checkout
 alias co="git checkout"
-alias com="git checkout master || git checkout main"
+alias com="git checkout master 2>/dev/null || git checkout main"
 alias cob="git checkout -b"
 
 ## rebase

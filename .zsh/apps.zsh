@@ -63,6 +63,7 @@ alias sc="shellcheck"
 alias to="todays-events"
 alias open="mimeopen"
 alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
+alias sw="raw-stopwatch"
 
 ### misc
 function dict {

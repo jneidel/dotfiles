@@ -34,4 +34,3 @@ au BufNewFile ~/code/notes/journal/* setfiletype markdown
 
 " PKGBUILD files
 au BufWritePost PKGBUILD !makepkg --printsrcinfo > .SRCINFO
-

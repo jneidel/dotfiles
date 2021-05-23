@@ -55,6 +55,9 @@ au filetype json inoremap ,o {<Enter>}<Esc>O
 "### CSS, SCSS
 au filetype css,scss,sass inoremap ,o {<Enter>}<Esc>O
 
+"### C, C++
+au filetype c,cpp inoremap ,o {<Enter>}<Esc>O
+
 "### Java
 au filetype java inoremap ,o {<Enter>}<Esc>O
 au filetype java inoremap ,i <Esc>ggIpublic class  {<Enter>public static void main( String[] args ) {<Enter><++><Enter>}<Enter>}<Esc>gg2ela

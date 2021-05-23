@@ -109,14 +109,11 @@ set undodir=~/.vim/tmp
 set splitbelow " on sp
 set splitright " on vsp
 
-" change between vim splits & tmux panes - provided by vim-tmux-navigator
-" nnoremap <silent> <C-H> :TmuxNavigateLeft<cr>
-" nnoremap <silent> <C-J> :TmuxNavigateDown<cr>
-" nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
-" nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
-
 " toggle paste mode
 set pastetoggle=<F5>
+
+" unmap ex mode, src: https://unix.stackexchange.com/a/180927
+map Q <Nop>
 
 " custom coloring
 " current tab in tabline
@@ -208,9 +205,8 @@ nnoremap <A-f> :F<CR>
 nnoremap <A-b> :b<Space>
 
 " write file after losing focus, or leaving the window
-au FocusLost,WinLeave * :silent! w " Doesnt trigger on i3 windows
+au FocusLost,WinLeave * :silent w " Doesnt trigger on i3 windows
 " read file after regaining focus, entering the buffer
-"au FocusGained,BufEnter * :silent! !
 au BufEnter * :silent! !
 " source: https://stackoverflow.com/a/20418591
 " maybe checkout: https://stackoverflow.com/a/8610556

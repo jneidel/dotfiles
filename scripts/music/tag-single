@@ -48,13 +48,8 @@ if [ "$1" = "-AA" ]; then
   shift
 fi
 
-INPUT_FILES="$@"
-if [ -z "$1" ]; then
-  INPUT_FILES="$(echo *.mp3)"
-fi
-
 echo "## Tagging these files:"
-echo "   $INPUT_FILES"
+echo "   $@"
 echo "## with album artist: $ALBUM_AR"
 echo "## with album       : $ALBUM"
 
@@ -104,7 +99,7 @@ tag() {
   # --release-year 0 --release-date 0
 }
 
-for f in "$INPUT_FILES"; do
+for f in "$@"; do
   tag "$f"
 done
 
@@ -120,7 +115,7 @@ fi
 
 if [ "$ARTIST_AS_ALBUM_AR" = 0 ]; then
   mkdir -p $SINGLES_DIR
-  mv -v "$INPUT_FILES" $SINGLES_DIR
+  mv -v "$@" $SINGLES_DIR
 else
   DIR="$MUSIC_DIR/$ALBUM_AR"
   [ -d "$DIR" ] || DIR="$MUSIC_DIR/unheard/$ALBUM_AR"
@@ -128,6 +123,6 @@ else
   echo Using: $DIR
   mkdir -p "$DIR"
 
-  mv -v "$INPUT_FILES" "$DIR" 2>/dev/null
+  mv -v "$@" "$DIR" 2>/dev/null
 fi
 true

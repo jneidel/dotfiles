@@ -28,7 +28,7 @@ test_audio() {
   timeout 3 mpv --no-audio-display --no-video ~/scripts/personal/audio.mp3 >/dev/null 2>&1
   sleep 7 && timeout 3 mpv --profile=overlay "$OUTPUT" >/dev/null 2>&1
 }
-test_audio &
+# test_audio &
 
 echo "Killing xautolock"
 kill $(pidof xautolock)

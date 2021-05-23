@@ -20,7 +20,7 @@ if echo $URL | grep -e "youtube.com/watch?v=" -e "yewtu.be" >/dev/null; then
   echo $URL | xclip -sel clip -i
   open_clip_mpv
 elif echo $URL | fgrep "twitter.com" >/dev/null; then
-  echo "$1" | sed 's|twitter.com|nitter.net|' | xargs -r $BROWSER
+  echo "$1" | sed 's|twitter.com|nitter.exonip.de|' | xargs -r $BROWSER
 else
   echo "$1" | sed "s/+//g" | xargs -r $BROWSER
 fi
