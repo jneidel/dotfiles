@@ -1,0 +1,2 @@
+#! /bin/bash
+youtube-dl -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' $1 >/dev/null &

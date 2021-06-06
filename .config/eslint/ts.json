@@ -1,7 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 10,
     "ecmaFeatures": {
       "impliedStrict": true
     }

@@ -1,0 +1,53 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ] || [ ! -f "$1" ]; then
+  cat <<EOF
+$ mp3len MP3s
+Print the length of (multiple) mp3 files
+
+Parameters:
+  \$1: mp3s
+
+Example:
+  $ mp3len *.mp3
+EOF
+  exit
+fi
+
+command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed" 1>&2; exit 127; }
+
+get_len() {
+  ffmpeg -i "$1" 2>&1 | grep Duration | cut -d. -f1 | cut -d\  -f4
+}
+
+TOTAL_H=0
+TOTAL_M=0
+TOTAL_S=0
+add_to_total() { # Todo: optimize for performace, dont mod/rest for each, but only once for result
+  ADDER_H=$(echo $1 | cut -d: -f1)
+  ADDER_M=$(echo $1 | cut -d: -f2 | sed "s|0||")
+  ADDER_S=$(echo $1 | cut -d: -f3 | sed "s|0||")
+  # sed, otherwise base 8 error possible: (0+08: value too great for base (error token is "08")
+
+  MOD_M=$((($TOTAL_M+$ADDER_M)%60))
+  MOD_S=$((($TOTAL_S+$ADDER_S)%60))
+
+  REST_M=$((($TOTAL_M+$ADDER_M)/60))
+  REST_S=$((($TOTAL_S+$ADDER_S)/60))
+
+  TOTAL_S=$MOD_S
+
+  TOTAL_M=$(($MOD_M+$REST_S))
+  if [ "$TOTAL_M" -gt 60 ]; then
+    REST_M=$((($TOTAL_M)/60+$REST_M))
+    TOTAL_M=$((($TOTAL_M)%60))
+  fi
+
+  TOTAL_H=$(($TOTAL_H+$ADDER_H))
+}
+
+for i in "$@"; do
+  add_to_total $(get_len "$i")
+done
+
+printf "%02d:%02d:%02d\n" "$TOTAL_H" "$TOTAL_M" "$TOTAL_S"

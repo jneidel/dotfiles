@@ -54,7 +54,7 @@ visualizer_type = spectrum
 visualizer_look = "▪▪"
 
 # duplicating every color but the first, makes the middle block for spectrum smaller
-visualizer_color = blue, cyan, cyan, green, green, yellow, yellow, magenta, magenta, red, red
+visualizer_color = blue, cyan, cyan, cyan, green, green, green, yellow, yellow, yellow, magenta, magenta, magenta, red, red, red, red, red
 
 playlist_disable_highlight_delay = 0
 message_delay_time = 1

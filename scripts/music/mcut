@@ -11,19 +11,40 @@ Parameters:
   [\$3]: end time, default: end of the song
 
 Time Format:
-  00:00, min:sec
+  00:00+000, min:sec+mili
+
+Flags:
+  -r, replace the old with the new cut version
 
 Example:
   $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39
+  $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39 -r
 EOF
   exit
 fi
 
 command -v mp3cut >/dev/null || { echo "mp3cut is not installed"; exit 127; }
+command -v copy_id3.py >/dev/null || { echo "copy_id3.py script is not installed"; exit 127; }
 
 IN="$1"
+OUT="$IN.new"
+
 START="$2"
 END="$3"
 [ -z "$3" ] && END="00:00"
 
-mp3cut -o "$IN.new" -t "00:$START+000-00:$END+000" "$1"
+REPLACE=0
+if [ "$3" = "-r" ]; then
+  REPLACE=1
+  END="00:00"
+fi
+[ "$4" = "-r" ] && REPLACE=1
+
+if [ "$REPLACE" -gt 0 ]; then
+  mp3cut -o "$OUT" -t "00:$START+000-00:$END+000" "$IN"
+  echo "=== Replacing original with cut version ==="
+  copy_id3.py "$IN" "$OUT"
+  mv "$OUT" "$IN"
+else
+  mp3cut -o "$OUT" -t "00:$START+000-00:$END+000" "$IN"
+fi

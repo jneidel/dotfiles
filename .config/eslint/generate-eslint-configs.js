@@ -26,6 +26,8 @@ paths.forEach( ( { in: inPath, out: outPath } ) => {
   const config = Object.assign( {}, base, configData );
   // Merge rules
   config.rules = Object.assign( {}, base.rules, configData.rules );
+  // Merge parser options
+  config.parserOptions = configData.parserOptions ? Object.assign( {}, base.parserOptions, configData.parserOptions ) : base.parserOptions;
   // Merge plugins
   config.plugins = configData.plugins
     ? base.plugins.concat( configData.plugins )

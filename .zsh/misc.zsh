@@ -9,6 +9,7 @@ alias colortest2="colortest -w -r -s | grep / --color=never L"
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week >/dev/null 2>&1 &; disown"
 alias imgrel="$B https://imagecomics.com/comics/new-releases >/dev/null 2>&1 &; disown"
+alias img="imgweek; imgrel;"
 
 alias relax="mpvo 'https://www.youtube.com/watch?v=5qap5aO4i9A'"
 

@@ -6,6 +6,9 @@
     "worker": true,
     "jest": true
   },
+  "parserOptions": {
+    "ecmaVersion": 10
+  },
   "plugins": ["unicorn", "node"],
   "extends": ["eslint:recommended"],
   "rules": {
@@ -222,7 +225,7 @@
     "node/process-exit-as-throw": 2,
     "node/shebang": 0,
     "node/no-deprecated-api": 2,
-    "node/exports-style": [2, "exports", { "allowBatchAssign": true }],
+    "node/exports-style": [0, "exports", { "allowBatchAssign": true }],
     "node/prefer-global/buffer": 2,
     "node/prefer-global/console": 2,
     "node/prefer-global/process": 2,

@@ -6,6 +6,13 @@
     "worker": true,
     "jest": true
   },
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "plugins": [
     "unicorn",
     "node"
@@ -359,7 +366,7 @@
     "node/shebang": 0,
     "node/no-deprecated-api": 2,
     "node/exports-style": [
-      2,
+      0,
       "exports",
       {
         "allowBatchAssign": true
@@ -372,12 +379,5 @@
     "node/prefer-global/text-encoder": 2,
     "node/prefer-global/url-search-params": 2,
     "node/prefer-global/url": 2
-  },
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
   }
 }

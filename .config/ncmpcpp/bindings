@@ -170,16 +170,16 @@ def_key "alt-L"
   move_selected_items_to
 
 ## run mpd scripts
-def_key "C"
+def_key "C" # open cover
   run_external_command "mpd-cover"
-def_key "Y"
+def_key "Y" # print lyrics
   run_external_command "tmux split-window -p 45 'mpd-lyrics | less --quit-at-eof'"
-def_key "M"
+def_key "M" # enter album directory
   run_external_command "tmux split-window -p 18 \; send-keys 'clear && ssm' 'Enter'"
-def_key "O"
+def_key "L" # print album length
+  run_external_command "tmux split-window -p 18 \; send-keys \"ssm && mp3len *.mp3 | less --quit-at-eof; tmux rename-window -t $(tmux list-windows | grep '(active)' | cut -c1) ncmpcpp; exit 0\" 'Enter'"
+def_key "O" # open current track on genius
   run_external_command "open-on-genius >>/tmp/o"
-# def_key "ctrl-g"
-#   run_external_command ""
 
 ## quit
 def_key "q"

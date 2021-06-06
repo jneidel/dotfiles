@@ -22,7 +22,7 @@ list() {
 
   PREV_IFS="$IFS"
   IFS=$'\n'
-  for line in $(cat $DIR/1_list.md | grep -ve '^>'); do
+  for line in $(cat $DIR/1_list.md | grep -ve '^>' -e '^<'); do
     [ "${line:0:1}" = "#" ] && {
       ACTIVE_KW=`echo $line | cut -d\  -f3`
       continue
@@ -47,7 +47,7 @@ echo ""
 
 IFS="$PREV_IFS"
 find "$DIR" -maxdepth 2 -iname "$TODO_FILE_PATTERN" | while read -r file; do
-  TODOS=`cat $file | sed '1d;2d' | grep -ve "^\s*$" -e "^#" -e "^>" | sed 's|^[- ]*|- |'`
+  TODOS=`cat $file | sed '1d;2d' | grep -ve "^\s*$" -e "^#" -e "^>" -e "^<" | sed 's|^[- ]*|- |'`
   if [ -n "$TODOS" ]; then
     cat << EOF
 $(printf "\033[1;34m$(basename $(dirname $file))\033[0m:\n" )

@@ -206,6 +206,7 @@ nnoremap <A-b> :b<Space>
 
 " write file after losing focus, or leaving the window
 au FocusLost,WinLeave * :silent w " Doesnt trigger on i3 windows
+" Todo: how to ignore errors
 " read file after regaining focus, entering the buffer
 au BufEnter * :silent! !
 " source: https://stackoverflow.com/a/20418591

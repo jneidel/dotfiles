@@ -6,6 +6,12 @@
     "worker": true,
     "jest": true
   },
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "ecmaFeatures": {
+      "impliedStrict": true
+    }
+  },
   "plugins": [
     "unicorn",
     "node",
@@ -360,7 +366,7 @@
     "node/shebang": 0,
     "node/no-deprecated-api": 2,
     "node/exports-style": [
-      2,
+      0,
       "exports",
       {
         "allowBatchAssign": true
@@ -460,11 +466,5 @@
     "@typescript-eslint/ban-ts-ignore": 0,
     "@typescript-eslint/await-thenable": 2
   },
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 10,
-    "ecmaFeatures": {
-      "impliedStrict": true
-    }
-  }
+  "parser": "@typescript-eslint/parser"
 }

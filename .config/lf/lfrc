@@ -6,7 +6,7 @@ set previewer ~/scripts/lf-preview
 set nodirfirst
 set relativenumber
 set ratios 5:4
-set hiddenfiles ".*:*.aux:*.log:*.synctex.gz:*.bcf:*.run.xml:*.bbl:*.blg:*.toc:package-lock.json:node_modules:prog3"
+set hiddenfiles ".*:*.aux:*.log:*.synctex.gz:*.bcf:*.run.xml:*.bbl:*.blg:*.toc:*.nav:*.out:*.snm:package-lock.json:node_modules:prog3" # ignore
 
 # for working with $fs/$fx
 set shell zsh

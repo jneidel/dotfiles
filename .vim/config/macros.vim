@@ -35,6 +35,7 @@ au filetype md,markdown inoremap ,i - [ ]<Space>
 "### JavaScript/Typescript
 au filetype js,ts,javascript,typescript,pug inoremap ,o {<Enter>}<Esc>O
 au filetype js,ts,javascript,typescript inoremap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
+au filetype js,ts,javascript,typescript inoremap ,s async function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
 au filetype js,ts,javascript,typescript inoremap ,a [  ]<Esc>hi
 au filetype js,ts,javascript,typescript inoremap ,i import  from "<++>";<Esc>Ffhi
 au filetype js,ts,javascript,typescript inoremap ,l console.log(  )<Esc>hi
@@ -79,7 +80,7 @@ au filetype tex inoremap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex inoremap ,b \textbf{} <++><Esc>2ba
 au filetype tex inoremap ,it \textit{} <++><Esc>2ba
 au filetype tex inoremap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
-au filetype tex inoremap ,br <Enter>\medskip<Enter>
+au filetype tex inoremap ,sk <Enter>\medskip<Enter>
 
 "#### lists
 au filetype tex inoremap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
@@ -90,12 +91,21 @@ au filetype tex inoremap ,t \begin{table}[h!]<Enter>\begin{center}<Enter>\captio
 "#### math
 au filetype tex inoremap ,m \[  \]<Enter><Enter><++><Esc>02kf[la
 au filetype tex inoremap ,mm \[<Enter><Enter>\]<Esc>0ka
-au filetype tex inoremap ,f \frac{}{<++>} <++><Esc>2ba
+au filetype tex inoremap ,br \frac{}{<++>} <++><Esc>2ba
 au filetype tex inoremap ,_ _{}<++><Esc>ba
 au filetype tex inoremap ,^ ^{}<++><Esc>bla
 au filetype tex inoremap ,aa \begin{align*}<Enter><Enter>\end{align*}<Esc>kA
 au filetype tex inoremap ,ae \begin{eqnarray*}<Enter><Enter>\end{eqnarray*}<Esc>kA
 au filetype tex inoremap ,d \cdot<Space>
+
+"#### beamer
+au filetype tex inoremap ,fr \begin{frame}\end{frame}<Enter><Enter><++><Esc><<2k0f}a<Enter><Esc>O
+au filetype tex inoremap ,ft \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter>\end{frame}<Enter><Enter><++><Esc>5kf{a
+
+"#### misc
+au filetype tex inoremap ,< \textless
+au filetype tex inoremap ,> \textgreater
+au filetype tex inoremap ,im \includegraphics[scale=0.5]{}<Enter><Esc>kf{a
 
 "### vim borked
 au filetype vim inoremap ,o {\<Enter>}<Esc>i
