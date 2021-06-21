@@ -1,6 +1,6 @@
 #! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ] || [ ! -f "$1" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ] || [ ! -e "$1" ]; then
   cat <<EOF
 $ mp3len MP3s
 Print the length of (multiple) mp3 files
@@ -23,7 +23,7 @@ get_len() {
 TOTAL_H=0
 TOTAL_M=0
 TOTAL_S=0
-add_to_total() { # Todo: optimize for performace, dont mod/rest for each, but only once for result
+add_to_total() {
   ADDER_H=$(echo $1 | cut -d: -f1)
   ADDER_M=$(echo $1 | cut -d: -f2 | sed "s|0||")
   ADDER_S=$(echo $1 | cut -d: -f3 | sed "s|0||")
@@ -39,11 +39,14 @@ add_to_total() { # Todo: optimize for performace, dont mod/rest for each, but on
 
   TOTAL_M=$(($MOD_M+$REST_S))
   if [ "$TOTAL_M" -gt 60 ]; then
-    REST_M=$((($TOTAL_M)/60+$REST_M))
-    TOTAL_M=$((($TOTAL_M)%60))
+    _MOD_M=$((($TOTAL_M)%60))
+    _REST_M=$((($TOTAL_M)/60))
+
+    TOTAL_M=$_MOD_M
+    TOTAL_H=$(($TOTAL_H+$_REST_M))
   fi
 
-  TOTAL_H=$(($TOTAL_H+$ADDER_H))
+  TOTAL_H=$(($TOTAL_H+$ADDER_H+$REST_M))
 }
 
 for i in "$@"; do

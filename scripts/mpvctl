@@ -26,7 +26,7 @@ send_cmd() {
   # see man at: list of input commands
   res=$(echo "{\"command\": $1}" | socat - $SOCKET)
   if echo $res | fgrep '"error":"success"' >/dev/null; then
-    echo $res | cut -d: -f2 | cut -d, -f1
+    echo $res | jq .data
   else
     if [ -n "$res" ]; then
       echo $res 1>&2
@@ -39,6 +39,7 @@ send_keypress() {
   send_cmd "[\"keypress\", \"$1\"]" >/dev/null
 }
 send_get() {
+  # see: man "Properties" for descriptions
   send_cmd "[\"get_property\", \"$1\"]"
   # pass 'property-list' for all properties
   #  https://github.com/mpv-player/mpv/issues/7562
@@ -69,7 +70,12 @@ prev() {
 case "$1" in
   play|toggle|pause)
     send_keypress space >/dev/null
-    notify player_pause "Pause";;
+
+    if [ `send_get pause 2>/dev/null` = "false" ]; then
+      notify player_play "Play"
+    else
+      notify player_pause "Pause"
+    fi;;
   next)
     next
     notify player_end "Next";;

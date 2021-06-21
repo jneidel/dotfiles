@@ -204,6 +204,10 @@ nnoremap <A-f> :F<CR>
 " open buffer menu
 nnoremap <A-b> :b<Space>
 
+" shorten vert sb, src: https://stackoverflow.com/a/56798858
+cabbrev vb vert sb
+cabbrev vsb vert sb
+
 " write file after losing focus, or leaving the window
 au FocusLost,WinLeave * :silent w " Doesnt trigger on i3 windows
 " Todo: how to ignore errors

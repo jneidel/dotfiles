@@ -4,11 +4,17 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ open-on-genius
 Open the currently playing track on genius
+
+Flags:
+  --search
 EOF
   exit
 fi
 
 command -v mpc-get >/dev/null || { echo "mpc-get script is not in PATH" 1>&2; exit 127; }
+
+SEARCH=0
+[ "$1" = "--search" ] && SEARCH=1
 
 get_top_result() {
   curl -Ss "https://genius.com/api/search/multi?per_page=1&q=$1" |
@@ -16,7 +22,7 @@ get_top_result() {
 }
 eval_genius() {
   RES="$(get_top_result "$1" | cut -d\" -f2)"
-  if [ "$RES" = "no" ] || [ "$RES" = "null" ]; then
+  if [ "$RES" = "no" ] || [ "$RES" = "null" ] || [ "$SEARCH" -gt 0 ]; then
     echo "https://genius.com/search?q=$1"
   else
     echo "https://genius.com$RES"
@@ -24,6 +30,6 @@ eval_genius() {
 }
 
 QUERY=`mpc-get "[[%artist% - ]%title%]|[%file%]" | sed "s|\.mp3||"`
-QUERY=`node -e "console.log( encodeURIComponent( '$QUERY' ) )"`
+QUERY=`node -e "console.log( encodeURIComponent( \"$QUERY\" ) )"`
 
 $BROWSER `eval_genius "$QUERY"` >/dev/null 2>&1 &

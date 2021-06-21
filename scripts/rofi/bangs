@@ -48,6 +48,9 @@ case "$bang" in
   yts)
   ~/scripts/yts $query
   exit;;
+  dot)
+  $BROWSER "https://jneidel.com/dot/$query"
+  exit;;
 esac
 
 query=`urlEncode "$query"`

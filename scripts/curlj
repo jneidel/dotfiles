@@ -35,10 +35,14 @@ fi
 
 METHOD=$1
 URL="$2"
-DATA=`node -e 'console.log(JSON.stringify(eval("("+process.argv[1]+")")))' "$3" 2>/tmp/curlj_err`
-if [ "$?" -gt 0 ]; then
-  echo "Error while parsing json:\n$(cat /tmp/curlj_err | head -n3 | tail -n2)"
-  exit 1
+DATA=
+if [ -n "$3" ]; then
+  DATA=`node -e 'console.log(JSON.stringify(eval("("+process.argv[1]+")")))' "$3" 2>/tmp/curlj_err`
+
+  if [ "$?" -gt 0 ]; then
+    echo "Error while parsing json:\n$(cat /tmp/curlj_err | head -n3 | tail -n2)"
+    exit 1
+  fi
 fi
 
 if [ "$METHOD" = "GET" ]; then

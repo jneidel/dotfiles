@@ -40,7 +40,7 @@ case $EXT in
     fi;;
   mp3|flac|ogg|wma|m4b|m4a|wav) echo "mpv --profile=music"; exit 1;;
   cbz|cbr) echo "YACReader >/dev/null 2>&1";;
-  tgz|zip|rar|xz|gz|tar.gz) echo extract; exit 1;;
+  tgz|zip|rar|xz|gz|tar.gz|deb) echo extract; exit 1;;
   tgz.gpg) echo untargpg; exit 1;;
   html) echo "$BROWSER >/dev/null 2>&1";;
   exe) echo "wine >/dev/null 2>&1";;

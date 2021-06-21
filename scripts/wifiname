@@ -1,23 +1,23 @@
 #! /bin/sh
 
-# Todo: how to handle wired
-
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -n "$1" ]; then
   cat << EOF
 $ wifiname
-Get name of connected wifi
+Get name of connected wifi/ethernet
 EOF
   exit
 fi
 
 command -v nmcli >/dev/null || { echo "networkmanager is not installed" 1>&2; exit 127; }
 
-check() {
-  nmcli connection show --active | grep wifi
-}
-
-if NAME="$(check)" >/dev/null; then
-  echo $NAME | cut -d\  -f1
+CONNECTION=`nmcli connection show --active`
+if [ -n "$CONNECTION" ]; then
+  nmcli connection show --active | grep -v UUID | while read line; do
+    NAME=`echo $line | rev | cut -d\  -f4- | rev`
+    DEVICE=`echo $line | rev | cut -d\  -f1 | rev`
+    echo "$NAME ($DEVICE)"
+  done
 else
+  echo "Not connected"
   false
 fi

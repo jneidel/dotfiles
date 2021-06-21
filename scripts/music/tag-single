@@ -23,13 +23,14 @@ Parameters:
 
 Parameter:
   -A: Set custom album artist (if empty use Artist)
+  -a: Set custom album
   -AA: Set custom album artist and album
 
 Example:
   $ tag-single 'Louis Cole - Blimp.mp3'
   $ tag-single -A 'Black Muffin' 'Black Muffin - Warrior.mp3'
-  $ tag-single -A 'Black Muffin - Warrior.mp3'
   $ tag-single -AA Ollie 'means to an end' *
+  $ tag-single -a Party 'Burak Yeter - Tuesday.mp3'
 "; exit
 fi
 
@@ -40,6 +41,12 @@ if [ "$1" = "-A" ]; then
   shift
   shift
 fi
+if [ "$1" = "-a" ]; then
+  ALBUM="$2"
+  shift
+  shift
+fi
+
 if [ "$1" = "-AA" ]; then
   ALBUM_AR="$2"
   ALBUM="$3"

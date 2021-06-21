@@ -16,8 +16,9 @@ abb http://audiobookbay.nl/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-10437/%s/k0l3491r5
 ytt https://www.youtube.com/results?search_query=%s
-yt https://invidious.namazso.eu/search?q=%s
+yt https://invidious.exonip.de/search?q=%s
 yt https://yewtu.be/search?q=%s
+ytp https://invidious.namazso.eu/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
@@ -48,3 +49,5 @@ dhl https://www.dhl.com/cgi-bin/tracking.pl?AWB=%s
 sc https://soundcloud.com/search?q=%s
 sample https://www.whosampled.com/search/?q=%s
 l https://www.online-latin-dictionary.com/latin-english-dictionary.php?parola=%s
+dot https://jneidel.com/dot/%s
+node https://duckduckgo.com/?q=site%3Ahttps%3A%2F%2Fnodejs.org%2Fapi%2F+%s
