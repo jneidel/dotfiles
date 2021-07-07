@@ -1,0 +1,23 @@
+#! /bin/sh
+
+# Todo: don't overwrite existing files (scr)
+
+DIR=$HOME/code/notes/slackcentral
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ scnext
+Start the next sprint by creating the necessary files from templates.
+EOF
+  exit
+fi
+
+cd $DIR
+
+ITERATION=$(find . -regextype egrep -regex "./sprint-planning-[0-9]+.md" | sort -r | head -n1 | cut -d. -f2 | cut -d- -f3)
+NEXT_ITERATION=`printf "%03d" "$(($ITERATION+1))"`
+
+# to create:
+# sprint-planning-$NEXT_ITERATION
+# sprint-review-$ITERATION
+# sprint-retro-$ITERATION

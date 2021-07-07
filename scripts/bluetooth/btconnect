@@ -18,16 +18,18 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-bluetoothctl power on >/dev/null
+bluetoothctl power on # >/dev/null
 
-echo "Started connecting"
+# echo "Started connecting"
 
-while [ 1 -eq 1 ]; do
-  if printf "connect %s\nquit" "$1" | bluetoothctl | grep "# quit" | grep "bluetooth" > /dev/null; then
-    sleep 1
-  else
-    echo "Connected"
-    break
-  fi
-done
+bluetoothctl connect "$1"
+
+# while [ 1 -eq 1 ]; do
+#   if printf "connect %s\nquit" "$1" | bluetoothctl | grep "# quit" | grep "bluetooth" > /dev/null; then
+#     sleep 1
+#   else
+#     echo "Connected"
+#     break
+#   fi
+# done
 

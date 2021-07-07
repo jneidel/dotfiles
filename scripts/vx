@@ -15,7 +15,7 @@ EOF
   exit
 fi
 
-command -v vim >/dev/null || { echo \"vim is not installed\" 1>&2; exit 127; }
+command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR var not set" 1>&2; exit 127; }
 
 FILE="$1"
 file_content() {
@@ -45,4 +45,4 @@ EOF
 file_content >>"$FILE"
 
 chmod +x "$FILE"
-vim "$FILE"
+$EDITOR "$FILE"

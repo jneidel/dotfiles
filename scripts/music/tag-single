@@ -112,7 +112,7 @@ done
 
 rm cover.jpg 2>/dev/null # remove shared cover
 
-if [ "$ALBUM" != "$BASE_ALBUM" ]; then
+if [ "$ALBUM" != "$BASE_ALBUM" ] && [ "$ALBUM_AR" != "Singles" ]; then
   printf "Add tracknumbers to album? (Y/n): "
   read ans
   if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then

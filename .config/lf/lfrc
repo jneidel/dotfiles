@@ -175,17 +175,20 @@ map v vl
 
 ### jump - cd to dirs
 map gd cd ~/Downloads
-map gm cd ~/ct/movies
-map gv cd ~/ct/review
-map gb cd ~/ct/books
-map gB cd ~/code/notes/books
-map gc cd ~/ct
-map gz cd ~/ct/zeit
-map gn cd ~/code/notes
-map gr cd ~/code/notes/research
 map gp cd ~/projects
 map gu cd ~/projects/uni
+map gG cd ~/projects/geldhochschule
+map gc cd ~/ct
 map gP cd ~/ct/pictures
+map gm cd ~/ct/movies
 map gM cd ~/ct/music
+map gb cd ~/ct/books
+map gB cd ~/code/notes/books
+map gz cd ~/ct/zeit
+map gv cd ~/ct/review
+map gn cd ~/code/notes
+map gr cd ~/code/notes/research
+map gs cd ~/code/notes/slackcentral
+
 map o jump-out
 map i jump-in

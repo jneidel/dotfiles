@@ -13,6 +13,10 @@ fi
 
 command -v wifiname >/dev/null || { echo "wifiname script is not in PATH" 1>&2; exit 127; }
 
+wifi() {
+  wifiname | grep "(w" | cut -d\( -f1 | sed -e 's/[[:space:]]*$//'
+}
+
 notify() {
   $(dirname $0)/cron-notify-send $1
 }
@@ -22,17 +26,17 @@ is_lock() {
 turn_off_lock() {
   if is_lock >/dev/null; then
     kill $(pidof $LOCK_PROGRAM_NAME)
-    notify "Lock off"
   fi
+  notify "Lock off"
 }
 turn_on_lock() {
   if ! is_lock >/dev/null; then
     $LOCK_PROGRAM_SCRIPT >/dev/null
-    notify "Lock on"
   fi
+  notify "Lock on"
 }
 
-case "$(wifiname)" in
-  TimeEater47|KDG-D750D|FRITZ!Box) turn_off_lock;;
+case `wifi` in
+  KDG-D750D|'FRITZ!Box Gastzugang Toni') turn_off_lock;;
   *) turn_on_lock;;
 esac

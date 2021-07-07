@@ -48,3 +48,10 @@ tsmget() {
 alias tsmg="tsmget"
 
 alias tsmi="tremc 2>/dev/null"
+
+tsmin() {
+  cd $HOME/.local/share/transmission-daemon/incomplete
+  if [ `find . -type d | grep -v "^.$" | wc -l` -eq 1 ]; then
+    cd "$(find . -type d | grep -v '^.$')"
+  fi
+}

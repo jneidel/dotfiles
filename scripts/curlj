@@ -49,12 +49,12 @@ if [ "$METHOD" = "GET" ]; then
   if [ "$ECHO_MODE" -eq 1 ]; then
     echo "curl -Ss \"$URL\""
   else
-    curl -Ss "$URL" | jq -C
+    curl -Ss "$URL" | jq
   fi
 else
   if [ "$ECHO_MODE" -eq 1 ]; then
     echo "curl -Ss -X $METHOD \"$URL\" -d '$DATA' -H \"Content-Type: application/json\""
   else
-    curl -Ss -X $METHOD "$URL" -d "$DATA" -H "Content-Type: application/json" | jq -C
+    curl -Ss -X $METHOD "$URL" -d "$DATA" -H "Content-Type: application/json" | jq
   fi
 fi

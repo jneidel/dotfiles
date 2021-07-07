@@ -1,0 +1,21 @@
+#! /bin/sh
+
+# Todo: fill based on tamplate if does not exist
+
+DIR=$HOME/code/notes/slackcentral
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ scr
+Open the current sprint review
+EOF
+  exit
+fi
+
+command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR variable not set" 1>&2; exit 127; }
+
+cd $DIR
+
+ITERATION=$(find . -regextype egrep -regex "./sprint-planning-[0-9]+.md" | sort -r | head -n1 | cut -d. -f2 | cut -d- -f3)
+
+$EDITOR sprint-review-$ITERATION.md sprint-retro-$ITERATION.md

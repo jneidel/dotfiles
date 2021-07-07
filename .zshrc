@@ -26,10 +26,10 @@ fi
 ## Paths
 export PATH=/bin:/usr/bin:/usr/bin/vendor_perl
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
-export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/scripts:~/ct/music
+export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 
 ## Applications
-export EDITOR=vim
+export EDITOR=nvim
 export PAGER=less
 export LESS="-R"
 export BROWSER=brave
