@@ -2,4 +2,5 @@
 
 command -v waterfox-classic >/dev/null || { echo "waterfox-classic is not installed"; exit 1; }
 
+numpad
 waterfox-classic 2>&1

@@ -182,3 +182,20 @@ let g:lightline = {
 " # sneak
 let g:sneak#s_next = 1
 
+" # vim markdown
+" docs: https://github.com/plasticboy/vim-markdown#options
+let g:vim_markdown_follow_anchor = 1 " ge to follow: [local](file.md#myheader)
+let g:vim_markdown_no_extensions_in_markdown = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_edit_url_in = 'vsplit'
+
+let g:vim_markdown_folding_style_pythonic = 1 " fold on headlines
+let g:vim_markdown_folding_level = 2 " ## is unfolded at open
+
+let g:vim_markdown_new_list_item_indent = 0
+
+" concealing: https://github.com/plasticboy/vim-markdown#syntax-concealing
+set conceallevel=2
+let g:tex_conceal = ""
+let g:vim_markdown_math = 0
+let g:vim_markdown_strikethrough = 1

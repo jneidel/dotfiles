@@ -16,3 +16,6 @@ map i scroll half-down
 
 map < navigate previous
 map > navigate next
+
+map <Space> navigate next
+map b navigate previous

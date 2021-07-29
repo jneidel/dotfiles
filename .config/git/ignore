@@ -7,3 +7,8 @@ node-modules/
 Session.vim
 tmp/
 .yo-rc.json
+
+*.mp3
+*.mp4
+*.mkv
+*.avi

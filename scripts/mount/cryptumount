@@ -1,6 +1,7 @@
 #! /bin/sh
 
 DEFAULT_LOCATION=/mnt
+FALLBACK_LOCATION=/media/ext
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ cryptumount"
@@ -23,13 +24,23 @@ if [ -z "$1" ]; then
     echo "Either create it or pass your own."
     exit 1
   }
-else
-  [ ! -d "$1" ] &&
-    LOCATION="$1" ||
-    {
-      echo "Passed location '$1' does not exist."
+  if [ -z "$(/bin/ls -A -- "$LOCATION")" ]; then
+    LOCATION=$FALLBACK_LOCATION
+    echo "Using fallback location"
+
+    [ ! -d $LOCATION ] && {
+      echo "Default location '$LOCATION' does not exist."
+      echo "Either create it or pass your own."
       exit 1
     }
+  fi
+else
+  if [ ! -d "$1" ]; then
+    LOCATION="$1"
+  else
+    echo "Passed location '$1' does not exist."
+    exit 1
+  fi
 fi
 
 DEFAULT_MAPPER=cryptluks

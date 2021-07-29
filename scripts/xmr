@@ -1,0 +1,79 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ xmr [MULTIPLICATOR]
+Fetch current Monero (XMR) to EUR rate
+
+Parameters:
+  \$1: "eur" to reverse rate (eur -> xmr)
+  \$2: multiplicate the course with a given nr, eg. 0.5 to get the course for 0.5 xmr -> eur
+
+Example:
+  $ xmr .1
+  $ xmr eur 20
+  $ xmr fees 51.5 0.30248
+EOF
+  exit
+fi
+
+command -v jq >/dev/null || { echo "jq is not installed" 1>&2; exit 127; }
+command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
+
+TO_EUR=0
+EUROS=0 # fees
+DIRECTION_STR="XMR -> EUR"
+MULTIPLICATOR=1
+if [ "$1" = "EUR" ] || [ "$1" = "eur" ] || [ "$1" = "e" ]; then
+  TO_EUR=1
+  DIRECTION_STR="EUR -> XMR"
+
+  if [ -n "$2" ]; then
+    MULTIPLICATOR="$2"
+  fi
+elif [ "$1" = "fee" ] || [ "$1" = "fees" ]; then
+  [ -z "$3" ] && exit 1
+  DIRECTION_STR="EUR -> XMR fees"
+  EUROS="$2"
+  MULTIPLICATOR="$3"
+elif [ -n "$1" ]; then
+  MULTIPLICATOR="$1"
+fi
+
+get_rate() {
+  DIRECTION=xmr-eur
+  if [ "$TO_EUR" -eq 1 ]; then
+    DIRECTION=eur-xmr
+  fi
+  curl -Ss "https://duckduckgo.com/js/spice/cryptocurrency/ticker/$DIRECTION/1" | sed 's|.*(||; s|);||' | jq .ticker.price | sed 's|"||g'
+}
+RATE=`get_rate`
+
+if [ `echo "$MULTIPLICATOR == 1" |bc -l)` -ne 1 ]; then
+  RATE=`node -e "console.log( $RATE*$MULTIPLICATOR )"`
+  MULTIPLICATOR=`node -e "console.log( $MULTIPLICATOR )"`
+fi
+
+print_conversion() {
+  DECIMALS=2
+  if [ "$TO_EUR" -eq 1 ]; then
+    DECIMALS=6
+  fi
+
+  printf "$MULTIPLICATOR $DIRECTION_STR\n" >&2
+  printf "%.${DECIMALS}f\n" $RATE
+}
+print_fees() {
+  FEES_PER=`node -e "console.log( 100-$RATE*100/$EUROS )"`
+  FEES_EUR=`node -e "console.log( $EUROS-$RATE )"`
+  printf "$DIRECTION_STR\n$EUROS -> $MULTIPLICATOR\n" >&2
+  printf "%% %.3f\n€ %.3f\n" $FEES_PER $FEES_EUR
+}
+
+if [ "$EUROS" -eq 0 ] 2>/dev/null; then
+  print_conversion
+else
+  print_fees
+fi
+
+

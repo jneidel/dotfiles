@@ -1,0 +1,32 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ numpad <++>
+<++>
+
+Parameters:
+  \$1: re
+EOF
+  exit
+fi
+
+command -v xinput >/dev/null || { echo "xinput is not installed" 1>&2; exit 127; }
+command -v setxkbmap >/dev/null || { echo "setxkbmap is not installed" 1>&2; exit 127; }
+
+DEV=`xinput | grep "Sunreed" | grep -ve "Consumer Control" | cut -d= -f2 | cut -d\[ -f1 | sed -e "s/[[:space:]]*$//"`
+if [ -z "$DEV" ]; then
+  echo "Numpad not connected"
+  exit
+fi
+
+setxkbmap -device $DEV -option '' -option keypad:oss -option kpdl:dot
+# src: https://askubuntu.com/a/222640
+# keypad options: https://manpages.ubuntu.com/manpages/trusty/man7/xkeyboard-config.7.html
+
+if [ "$1" = "re" ]; then
+  numlockx on
+  numlockx off
+  numlockx off
+  numlockx off
+fi

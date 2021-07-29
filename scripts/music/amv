@@ -5,8 +5,7 @@ MUSIC_DIR=$HOME/ct/music
 OUT="$MUSIC_DIR/_tomove-data"
 U_OUT="$MUSIC_DIR"
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
-  cat << EOF
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then cat << EOF
 $ amv ALBUM
 a[lbum]m[o]v[e]
 Move an album to another dir, while creating the enclosing artist directory.
@@ -54,6 +53,6 @@ mv "$ALBUM" "$OUT_DIR"
 echo "moved to $OUT_DIR"
 
 {
-  rmdir "$ARTIST" 2>/dev/null || cd ..; rmdir "$ARTIST" 2>/dev/null
+  rmdir "$ARTIST" 2>/dev/null || cd ..; rmdir "$ARTIST" 2>/dev/null || cd ..; rmdir "$ARTIST" 2>/dev/null
 } && echo "Removed enclosing directory: $ARTIST"
 true

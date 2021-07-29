@@ -27,6 +27,9 @@ git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers
 color_echo "install tabular" # align text
 git clone git://github.com/godlygeek/tabular.git $VB/tabular
 
+color_echo "insitall vim markdown"
+git clone https://github.com/plasticboy/vim-markdown.git $VB/markdown
+
 color_echo "install goyo" # clean writing interface
 git clone https://github.com/junegunn/goyo.vim $VB/goyo
 
