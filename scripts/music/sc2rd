@@ -3,6 +3,7 @@
 # Todo:
 # put artist name (from url) into $ALBUM
 # fix extaneous file removal at end
+# check for mp3len of an album (30 preview clips)
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF

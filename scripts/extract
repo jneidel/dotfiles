@@ -37,6 +37,7 @@ if [ -f "$archive" ] ; then
     *.Z) uncompress "$archive" ;;
     *.7z) 7z x "$archive" ;;
     *.xz) unxz "$archive" ;;
+    *.zst) zstd -d "$archive" ;;
     *.exe) cabextract "$archive" ;;
     *.deb) ar x "$archive" ;;
     *.tgz.gpg) untargpg "$archive" ;;

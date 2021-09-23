@@ -1,6 +1,6 @@
 #! /bin/sh
 
-DIR=$HOME/code/notes/slackcentral
+. "$(dirname $0)/shared-environment"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -15,7 +15,7 @@ command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR va
 
 cd $DIR
 
-ITERATION=$(find . -regextype egrep -regex "./sprint-planning-[0-9]+.md" | sort -r | head -n1 | cut -d. -f2 | cut -d- -f3)
+ITERATION=`cat $SPRINT_NR`
 PREV_ITERATION=`printf "%03d" "$(($ITERATION-1))"`
 
-$EDITOR -c "vsp sprint-planning-checklist.md | sp future-habits.md | wincmd h | tabe sprint-review-$PREV_ITERATION.md | vsp sprint-review-checklist.md | sp z_fail-log.md | wincmd h | sp sprint-planning-$PREV_ITERATION.md | wincmd k | tabe sprint-retro-$PREV_ITERATION.md | vsp sprint-retro-checklist.md | wincmd h | tabn" sprint-planning-$ITERATION.md
+$EDITOR -c "vsp sprint-planning-checklist.md | sp ../future-habits.md | wincmd h | tabe sprint-review-$PREV_ITERATION.md | vsp sprint-review-checklist.md | sp z_fail-log.md | wincmd h | sp sprint-planning-$PREV_ITERATION.md | wincmd k | tabe sprint-retro-$PREV_ITERATION.md | vsp sprint-retro-checklist.md | wincmd h | tabn" sprint-planning-$ITERATION.md

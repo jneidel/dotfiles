@@ -1,0 +1,31 @@
+#! /bin/sh
+
+MAIN=main
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ new-day <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ new-day <++>
+EOF
+  exit
+fi
+
+# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+if ! tmux has-session -t $MAIN 2>/dev/null; then
+  exit 1
+fi
+
+tmux -u new-window -t $MAIN
+tmux send-keys "mc" "enter"
+tmux split-window -v
+tmux send-keys "clear" "enter" "wttr" "enter"
+# mc
+# wttr

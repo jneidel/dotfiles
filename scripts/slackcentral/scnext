@@ -1,8 +1,6 @@
 #! /bin/sh
 
-# Todo: don't overwrite existing files (scr)
-
-DIR=$HOME/code/notes/slackcentral
+. "$(dirname $0)/shared-environment"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -14,10 +12,23 @@ fi
 
 cd $DIR
 
-ITERATION=$(find . -regextype egrep -regex "./sprint-planning-[0-9]+.md" | sort -r | head -n1 | cut -d. -f2 | cut -d- -f3)
+ITERATION=`cat $SPRINT_NR`
 NEXT_ITERATION=`printf "%03d" "$(($ITERATION+1))"`
 
-# to create:
-# sprint-planning-$NEXT_ITERATION
-# sprint-review-$ITERATION
-# sprint-retro-$ITERATION
+echo "Incrementing iteration to: $NEXT_ITERATION"
+
+# Todo: templates auslagern damit reusable by others
+planning() {
+  FILE=sprint-planning-$NEXT_ITERATION.md
+  [ -e "$FILE" ] && return
+}
+review() {
+  FILE=sprint-review-$ITERATION.md
+  [ -e "$FILE" ] && return
+}
+retro() {
+  FILE=sprint-retro-$ITERATION.md
+  [ -e "$FILE" ] && return
+}
+
+# printf $NEXT_ITERATION >$SPRINT_NR

@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 CITY="berlin"
 WTTR_FLAGS="FQ1"
@@ -15,7 +15,7 @@ fi
 LOCATION_FILE=~/scripts/weather/location
 [ -e "$LOCATION_FILE" ] && CITY="$(cat $LOCATION_FILE)"
 
-if [ "$1" = "-f" ] || [ "$2" = "-f" ]; then
+if [ "$1" = "-f" ] || [ "$2" = "-f" ] || [ "$1" = "-3" ] || [ "$2" = "-3" ]; then
   WTTR_FLAGS="${WTTR_FLAGS:0:-1}" # remove 1 from WTTR_FLAGS
 fi
 
@@ -28,7 +28,7 @@ WEATHER=$(perl -e '$ARGV[0] =~ s!((↓|↙|←|↖|↑|↗|→|↘).*?km/h)!" " 
 perl -e '$ARGV[0] =~ s!(\d+)\skm!" " x (length($1) +3)!eg; print $ARGV[0]' "$WEATHER" | # remove wind speed
   sed "s/0.0\smm\s|\s0%/           /g" | # remove 0% rain chance
   sed "s/0.0\smm |/        /; s/0.0\smm/      /" | # remove 0.0mm precipitation w/ & w/o pipe
-  sed "s/Morning/   8   /g; s/Noon/  12/g; s/Evening/   18  /g; s/Night/  22 /g" | # replace timeofday with numbers
+  sed "s/Morning/   6   /g; s/Noon/  12/g; s/Evening/   18  /g; s/Night/  0  /g" | # replace timeofday with numbers
   sed "s/$(date "+%a %d %b")/  Today   /" | # replace current date with 'today'
   sed "s/$(date -d "+1 days" "+%a %d %b")/Tomorrow  /" | # replace next day with 'tomorrow'
   sed "s/$(date -d "+2 days" "+%a %d %b")/ $(date -d "+2 days" "+%a") (+2) /" | # replace today+2

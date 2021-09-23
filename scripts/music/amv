@@ -18,7 +18,9 @@ Flags:
 
 Example:
   $ amv "Clispe/Lord Willin'"
-  #=> $OUT/Clispe/Lord Willin'
+  #=> moved to: $OUT/Clispe/Lord Willin'
+  $ amv -u .
+  #=> moved to: unheard
 EOF
   exit
 fi

@@ -1,10 +1,10 @@
-#! /bin/bash
+#! /bin/sh
 
 # get the ip address from last update instead of the
 # ipa command to make sure it matches the mpd config
 # and read is 6x faster than ipa
 
-source ~/scripts/mpd/shared-mpd-variables
+. ~/scripts/mpd/shared-mpd-variables
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mpcc <command>"

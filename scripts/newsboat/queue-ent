@@ -1,0 +1,48 @@
+#! /bin/sh
+
+FILE=~/.local/share/queue-ent-`date +%W`
+TIME_MAX=`node -e "console.log( 60*60*2.5 )"` # in seconds
+URL="$1"
+
+if [ -z "$URL" ]; then
+  exit 1
+fi
+
+get_time_spent() {
+  if [ -e "$FILE" ]; then
+    cat $FILE
+  else
+    echo 0
+  fi
+}
+TIME_SPENT=`get_time_spent`
+
+if [ "$TIME_SPENT" -gt "$TIME_MAX" ]; then
+  echo "Entertainment time for this week has been used up."
+  rofi -e "Entertainment time for this week has been used up." 2>/dev/null
+  exit 0
+fi
+
+TSP_ID=`tsp mpv --profile=overlay "$1"`
+
+wait_for_exit() {
+  tsp -w $TSP_ID
+  TIME_RUN=`tsp -i $TSP_ID | grep "Time run" | cut -d. -f1 | cut -d\  -f3`
+
+  if mpvctl get duration >/dev/null 2>&1; then
+    DURATION=`mpvctl get duration`
+    if [ "$DURATION" -lt "$TIME_RUN" ]; then
+      TIME_RUN=$DURATION
+      # take the minimum of both
+      # if vid paused in between -> duration < time_run
+      # if didn't watch till end -> duration > time_run
+    fi
+  fi
+
+  if [ "$TIME_RUN" -gt 20 ]; then
+    TIME_SPENT=`get_time_spent`
+    NEW_TIME=$((TIME_SPENT+TIME_RUN))
+    echo "$NEW_TIME" >$FILE
+  fi
+}
+wait_for_exit &

@@ -1,0 +1,4 @@
+#! /bin/sh
+
+DIR=$HOME/code/notes/slackcentral/sprints
+SPRINT_NR=$DIR/sprint-nr

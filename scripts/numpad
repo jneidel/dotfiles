@@ -2,11 +2,8 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ numpad <++>
-<++>
-
-Parameters:
-  \$1: re
+$ numpad
+Configure my numpad
 EOF
   exit
 fi
@@ -20,13 +17,13 @@ if [ -z "$DEV" ]; then
   exit
 fi
 
-setxkbmap -device $DEV -option '' -option keypad:oss -option kpdl:dot
 # src: https://askubuntu.com/a/222640
 # keypad options: https://manpages.ubuntu.com/manpages/trusty/man7/xkeyboard-config.7.html
+setxkbmap -device $DEV -option '' -option keypad:oss -option kpdl:dot
 
-if [ "$1" = "re" ]; then
-  numlockx on
-  numlockx off
-  numlockx off
-  numlockx off
-fi
+# toggle numpad
+# works inconstently, just rerun the script
+numlockx on
+numlockx off
+numlockx off
+numlockx off

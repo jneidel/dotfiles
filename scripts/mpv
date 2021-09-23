@@ -27,3 +27,4 @@ else
   echo "Adapting for speaker delay (+100ms)"
   /bin/mpv $ICP_SOCK $OPTIONS --audio-delay='+.100' "$@"
 fi
+# jbl connect ideal: -.380

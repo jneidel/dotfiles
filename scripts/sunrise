@@ -1,0 +1,57 @@
+#! /bin/sh
+
+LAT=52.289
+LONG=13.355
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ sunrise [MODE] [DATE]
+Get sunrise/sunset times
+Powered by: https://sunrise-sunset.org/api
+
+Parameters:
+  [\$1]:
+    rise - sunrise (default)
+    set  - sunset
+    both - the both of them
+  [\$2]: date (default: today)
+    either relative or YYYY-MM-DD
+    relative: https://www.php.net/manual/en/datetime.formats.relative.php
+
+Example:
+  $ sunrise both tomorrow
+  $ sunrise set 2021-12-24
+EOF
+  exit
+fi
+
+command -v jq >/dev/null || { echo "jq is not installed" 1>&2; exit 127; }
+command -v curlj >/dev/null || { echo "curlj script is not in PATH" 1>&2; exit 127; }
+
+get_utc_time() {
+  TIME="sunrise"
+  [ -n "$1" ] && TIME="$1"
+  DATE="today"
+  [ -n "$2" ] && DATE="$2"
+  curlj GET "https://api.sunrise-sunset.org/json?lat=$LAT&lng=$LONG&date=$DATE" | jq .results.$TIME
+}
+to_german_time() {
+  TIME_RAW=`cat /dev/stdin`
+  TIME=`echo $TIME_RAW | cut -d: -f1-2 | cut -d\" -f2`
+  HOUR=$((${TIME%:*}+2))
+  if echo $TIME_RAW | grep pm -qi; then
+    HOUR=$(($HOUR+12))
+  fi
+  MIN=${TIME#*:}
+  echo $HOUR:$MIN
+}
+
+case "$1" in
+  set)
+    get_utc_time "sunset" "$2" | to_german_time ;;
+  both)
+    get_utc_time "sunrise" "$2" | to_german_time
+    get_utc_time "sunset" "$2" | to_german_time ;;
+  rise|*)
+    get_utc_time "sunrise" "$2" | to_german_time ;;
+esac

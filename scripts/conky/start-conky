@@ -3,7 +3,7 @@
 CONF=~/.config/conky
 
 start() {
-  conky -c "$CONF/$1" &
+  nice -n 5 conky -c "$CONF/$1" &
 }
 
 start conky.conf

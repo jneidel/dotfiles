@@ -1,6 +1,6 @@
 #! /bin/sh
 
-command -v waterfox-classic >/dev/null || { echo "waterfox-classic is not installed"; exit 1; }
+# command -v waterfox-classic >/dev/null || { echo "waterfox-classic is not installed"; exit 1; }
 
-numpad
-waterfox-classic 2>&1
+# numpad
+chromium 2>&1

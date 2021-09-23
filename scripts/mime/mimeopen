@@ -46,7 +46,7 @@ case $EXT in
   exe) echo "wine >/dev/null 2>&1";;
   gpg|*.gpg) echo extracthere; exit 1;;
   txt|md|java) echo "$EDITOR"; exit 1;;
-  ods|xlsx) echo libreoffice;;
+  ods|xlsx|csv) echo libreoffice;;
   docx|pptx|odp|odt) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
   sc) echo sc-im; exit 1;;

@@ -1,0 +1,49 @@
+#! /bin/sh
+
+SPRINT_DATE="2021-08-02"
+SPRINT_DATE_NR="004"
+SPRINT_WEEKDAY="mon"
+MAX_ITERATIONS=20
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ rem-sprint-nr DATE
+Convert a sprint starting date into that sprints nr
+
+Parameters:
+  \$1: date like %Y-%m-%d, eg. 2021-08-02
+       has to be a valid sprint starting day
+       max $MAX_ITERATIONS sprints in the future, starting from $SPRINT_DATE
+
+Example:
+  $ rem-sprint-nr 2021-08-16
+  #=> 005
+  $ rem-sprint-nr 2021-08-17
+  #=> far # wrong sprint starting day
+EOF
+  exit
+fi
+
+calc_next_date() {
+  date -d "$SPRINT_WEEKDAY 2 weeks $1" +"%Y-%m-%d"
+}
+eval_sprint_date() {
+  local testdate="$1"
+  local date=$SPRINT_DATE
+  local sprint_nr=$SPRINT_DATE_NR
+  local it=1
+
+  while [ "$it" -le "$MAX_ITERATIONS" ]; do
+    if [ "$testdate" = "$date" ]; then
+      printf "%03d\n" $sprint_nr
+      exit 0
+    fi
+
+    date=`calc_next_date "$date"`
+    sprint_nr=$((sprint_nr+1))
+
+    it=$(($it+1))
+  done
+}
+eval_sprint_date $1
+echo far # >$MAX_ITERATIONS away

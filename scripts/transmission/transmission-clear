@@ -8,8 +8,15 @@ EOF
   exit
 fi
 
-tsr -l | grep -e "100%" -e "Done" | # match completed torrents
-  awk '{print $1}' | # get their id
-  xargs -n 1 -I % tsr -t % -r 2>/dev/null | # pass id to transmission to remove
-  awk '{ print "tsm-clear: "$0 }' # prefix output with script name
+FILE=/tmp/tsmc
 
+tsr -l | grep -v "n/a" | grep "100%" | grep "Done" | # match completed torrents
+  tee $FILE | # save matches
+  awk '{print $1}' | # get their id
+  xargs -n 1 -I % tsr -t % -r 2>/dev/null # pass id to transmission to remove
+
+if grep -q '[^[:space:]]' <$FILE; then # https://unix.stackexchange.com/a/386505
+  echo "-- Removed: --"
+  # src: https://unix.stackexchange.com/a/561579
+  awk -v n=10 '{ for (i=n; i<=NF; i++) printf "%s%s", $i, (i<NF ? OFS : ORS)}' $FILE
+fi

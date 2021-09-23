@@ -16,8 +16,8 @@ abb http://audiobookbay.nl/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-10437/%s/k0l3491r5
 ytt https://www.youtube.com/results?search_query=%s
-yt https://ytb.trom.tf/search?q=%s
 yt https://yewtu.be/search?q=%s
+yt https://ytb.trom.tf/search?q=%s
 ytp https://invidious.namazso.eu/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s

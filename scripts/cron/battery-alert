@@ -1,0 +1,46 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ battery-alert
+Notify of low battery levels
+EOF
+  exit
+fi
+
+# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+POWER=/sys/class/power_supply
+IS_CHARGING=$(cat $POWER/AC/online)
+
+case `cat /etc/hostname` in
+  *x240)
+    BAT=$POWER/BAT1
+    ;;
+  *e495|*)
+    BAT=$POWER/BAT0
+    ;;
+esac
+CHARGE=`cat $BAT/energy_now`
+CAPACITY=`cat $BAT/energy_full`
+
+alert_at() {
+  ALERT_PERCENT=$1
+
+  if [ "$IS_CHARGING" -eq 1 ]; then
+    exit 0
+  fi
+
+  UPPER=`echo "($ALERT_PERCENT+0.5)*$CAPACITY/100" | bc`
+  LOWER=`echo "($ALERT_PERCENT-0.5)*$CAPACITY/100" | bc`
+
+  echo $UPPER $LOWER $CHARGE $ALERT_PERCENT
+
+  if [ "$CHARGE" -le "$UPPER" ] && [ "$CHARGE" -ge "$LOWER" ]; then
+    ~/scripts/cron/cron-notify-send "Battery at: $ALERT_PERCENT" -t 10000 -u critical
+  fi
+}
+
+alert_at 4
+alert_at 20
+alert_at 50

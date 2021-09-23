@@ -15,9 +15,15 @@ if ps -p $ppid -o command | tail -n1 | grep -vi cron >/dev/null; then
   exit 1
 fi
 
-newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet -x reload &
-newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet -x reload &
-newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet -x reload &
-newsboat -u ~/.config/newsboat/urls-misc -c ~/.config/newsboat/cache-misc.db --quiet -x reload &
+reload() {
+  local NAME=$1
+  newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet -x reload &
+}
+
+reload clean
+reload manga
+reload ent
+reload pod
+reload misc
 
 ~/scripts/cron/cron-notify-send "Ran reload-newsboat" -t 1000

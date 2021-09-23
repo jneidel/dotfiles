@@ -15,7 +15,7 @@ command -v khal >/dev/null || { echo "khal is not installed"; exit 1; }
 LOCATION_FILE="$(dirname $0)/location"
 
 write_loc() {
-  printf "$1" > "$LOCATION_FILE"
+  printf "$1" >"$LOCATION_FILE"
   echo "Location: $1"
 }
 
@@ -27,9 +27,4 @@ toggle_loc() {
   esac
 }
 
-if khal list --format "{title}" --once --day-format "" | grep "[fF]lixbus" >/dev/null; then
-  toggle_loc
-# else
-#   echo "Nothing to do"
-fi
-
+toggle_loc
