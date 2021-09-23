@@ -207,3 +207,9 @@ create .config/yay
 [cnsm]
 create .config/cnsm
 .config/cnsm/types.json
+
+[octave]
+.octaverc
+
+[xmrig]
+.config/xmrig.json

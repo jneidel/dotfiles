@@ -459,3 +459,9 @@ remind Calendar programm
 wyrd-git TUI
 tk GUI
 tcllib tk dependency
+
+[office]
+libreoffice-still
+
+[octave]
+octave
