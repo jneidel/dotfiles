@@ -2,8 +2,8 @@
   "movie": {
     "short": "mv",
     "back": "blue",
-    "open": "https://jneidel.com/re/tpb/%s",
-    "open_name": "tpb",
+    "open": "https://1337x.to/search/%s/1/",
+    "open_name": "1337x",
     "alt": "https://www.imdb.com/find?s=all&q=%s",
     "alt_name": "imdb"
   },

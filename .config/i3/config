@@ -132,6 +132,9 @@ assign [class="Signal"] $ws3
 assign [class="YACReaderLibrary"] $ws3
 assign [class="Zeal"] $ws3
 assign [class="anki"] $ws3
+assign [class="sun-awt-X11-XFramePeer"] $ws3
+assign [title="Interactive Brokers"] $ws3
+# tws
 
 # Open specific applications in floating mode
 for_window [class="mpv"] floating enable

@@ -187,7 +187,7 @@ let g:sneak#s_next = 1
 let g:vim_markdown_follow_anchor = 1 " ge to follow: [local](file.md#myheader)
 let g:vim_markdown_no_extensions_in_markdown = 1
 let g:vim_markdown_autowrite = 1
-let g:vim_markdown_edit_url_in = 'vsplit'
+let g:vim_markdown_edit_url_in = 'current' " current, vsplit, hsplit
 
 let g:vim_markdown_folding_style_pythonic = 1 " fold on headlines
 let g:vim_markdown_folding_level = 2 " ## is unfolded at open

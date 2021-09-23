@@ -178,7 +178,9 @@ map gd cd ~/Downloads
 map gp cd ~/projects
 map gu cd ~/projects/uni
 map gG cd ~/projects/geldhochschule
+map gt cd ~/projects/geldhochschule/Trades
 map gc cd ~/ct
+map gC cd ~/ct/podcasts
 map gP cd ~/ct/pictures
 map gm cd ~/ct/movies
 map gM cd ~/ct/music

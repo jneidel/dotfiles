@@ -80,6 +80,7 @@ au filetype tex inoremap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex inoremap ,b \textbf{} <++><Esc>2ba
 au filetype tex inoremap ,it \textit{} <++><Esc>2ba
 au filetype tex inoremap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
+au filetype tex inoremap ,r \begin{flushright}<Enter><Enter>\end{flushright}<Esc>0kA
 au filetype tex inoremap ,sk <Enter>\medskip<Enter>
 
 "#### lists

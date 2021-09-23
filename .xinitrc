@@ -17,7 +17,7 @@ setxkbmap -option caps:escape &
 # set higher keyboard repeat
 xset r rate 185 100 &
 # lock screen
-~/scripts/i3/lock/autostart-lock
+# ~/scripts/i3/lock/autostart-lock
 # bluelight filter
 xflux -k 5000 -l 52 -g 13 &
 # desktop monitor
@@ -42,7 +42,7 @@ dunst &
 ## gui application autostart
 kitty ~/scripts/tmux/t main vim &
 brave &
-signal-desktop &
+nice -n 7 signal-desktop &
 
 # don't work if started directly
 # {
@@ -57,7 +57,10 @@ signal-desktop &
 xwallpaper --zoom ~/.config/wallpaper.png &
 
 # status bar
-~/scripts/lemonbar/run-lemonbar &
+nice -n -3 ~/scripts/lemonbar/run-lemonbar &
+
+# fix backlight
+sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
 # start window manager
 exec i3

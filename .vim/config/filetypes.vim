@@ -42,3 +42,7 @@ au Filetype shell,zsh,bash,sh map <leader>k :w<CR> :!shellcheck -e SC2006,SC1090
 
 " remind
 autocmd FileType remind setlocal commentstring=#\ %s
+
+" fragmentshader / vertexshader
+au BufRead *.fragmentshader setfiletype cpp
+au BufRead *.vertexshader setfiletype cpp
