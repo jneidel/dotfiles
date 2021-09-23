@@ -12,6 +12,15 @@ bindkey -v # shell vim mode (default emacs)
 bindkey "^r" history-incremental-pattern-search-backward # history search
 export KEYTIMEOUT=1
 
+## Colors
+autoload -U colors && colors
+zstyle ':completion:*' list-colors 'di=01;34:ln=35:so=32:pi=33:ex=01;32:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30' # in completion
+
+## Options
+# http://bolyai.cs.elte.hu/zsh-manual/zsh_16.html
+setopt MULTIOS
+setopt PROMPT_SUBST
+
 # Import aliases
 source $ZSH_DIR/init.zsh
 
@@ -24,7 +33,7 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 ## Paths
-export PATH=/bin:/usr/bin:/usr/bin/vendor_perl
+export PATH=/bin:/usr/bin:/usr/bin/vendor_perl:$HOME/.local/bin
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 

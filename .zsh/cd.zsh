@@ -1,8 +1,9 @@
 # cd aliases
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushdminus
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHDMINUS
 
+setopt AUTO_CD
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
@@ -18,3 +19,7 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
+
+alias 2..='...'
+alias 2...='....'
+alias 3..='....'

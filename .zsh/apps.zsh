@@ -47,7 +47,6 @@ alias grep="/bin/grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias mkdir="/usr/bin/mkdir -p"
 alias glow="/bin/glow -s dark"
 alias cal="/bin/cal -m"
-alias scp="echo use sscp instead; echo"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
 alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
@@ -85,46 +84,43 @@ gh() {
     grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
 }
 alias wcurl="curl -OJ" # better wget
+alias bud="libreoffice ~/ct/reference/budget.ods"
+alias mr="~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
 
 ### newsboat
-TEXTS=~/scripts/personal/newsboat-texts
-SLEEP=12
-# new() {
-#   shuf -n1 $TEXTS
-#   sleep $SLEEP
-#   printf "(y/N): "
-#   read -r ANS
-#   if [ "$ANS" = 'y' ]; then
-#     echo "Go ahead..."
-#     sleep 1
-#   else
-#     echo "Good on you, pal."
-#   fi
-# }
-# ma() {
-#   shuf -n1 $TEXTS
-#   # sleep $SLEEP
-#   printf "(y/N): "
-#   read -r ANS
-#   if [ "$ANS" = 'y' ]; then
-#     echo "Go ahead..."
-#     sleep 1
-#   else
-#     echo "Good on you, pal."
-#   fi
-# }
-# alias new="newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet && clear"
-new() {
+wait_for_newsboat() {
+  local NAME="$1"
   out=$(mktemp)
-  if ! newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet; then
-    newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db >$out
+  if ! newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet; then
+    newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db >$out
     echo "Waiting for reload-newsboat to finish"
-    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-clean -c ~/.config/newsboat/cache-clean.db --quiet && clear
+    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet && clear
   fi
 }
-alias ma="newsboat -u ~/.config/newsboat/urls-manga -c ~/.config/newsboat/cache-manga.db --quiet && clear"
-alias pod="newsboat -u ~/.config/newsboat/urls-pod -c ~/.config/newsboat/cache-pod.db --quiet && clear"
-alias mi="newsboat -u ~/.config/newsboat/urls-misc -c ~/.config/newsboat/cache-misc.db --quiet && clear"
+alias new="wait_for_newsboat clean"
+alias pod="wait_for_newsboat pod"
+alias misc="wait_for_newsboat misc"
+alias ma="wait_for_newsboat manga"
+ent() {
+  # echo "No youtube and gaming entertainment for now"
+  # return 1
+
+  local WEEKDAY=`date +%a`
+  local HOUR=`date +%H`
+  # if [ "$WEEKDAY" != "Sun" ] && [ "$WEEKDAY" != "Sat" ]; then
+  #   if [ "$HOUR" -lt 18 ] && [ "$HOUR" -gt 4 ]; then
+  #     echo "It's not the right time."
+  #     return
+  #   fi
+  # fi
+  local NAME="ent"
+  out=$(mktemp)
+  if ! newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent --quiet; then
+    newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent >$out
+    echo "Waiting for reload-newsboat to finish"
+    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent --quiet && clear
+  fi
+}
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 
@@ -142,6 +138,8 @@ alias mpvtest="mpv --input-test --force-window --idle"
 alias mpdco="mpd-cover"
 alias mpdly="mpd-lyrics | $PAGER"
 alias ml="mpd-toggle-local"
+alias lt="mpd-toggle-local"
+alias rt="mpd-toggle-local"
 
 ### gpg
 alias enc="gpg -er $KEYID"
@@ -178,6 +176,8 @@ export PGPASSFILE="$HOME/.config/psql/pgpass"
 
 ## webtorrent
 alias wt="webtorrent -o /tmp --mpv --quiet"
+alias wtm="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv --quiet " # wtm[ovie]
+alias wtc="wtm" # wtc[lipboard]
 wts() {
   TORRENT="$1"
   SELECT="$2"
@@ -192,3 +192,14 @@ wtsn() {
   SELECT="$2"
   webtorrent "$TORRENT" -o /tmp --not-on-top --no-quit -s "$SELECT"
 }
+
+## remind
+alias mc="clear && rem -b1 -c+u2 -m -@2,0 2>/dev/null"
+alias mcm="clear && rem -b1 -c+u4 -m -@2,0 2>/dev/null"
+alias mc4=mcm
+alias mce='rem -b1 -c+u2 -m -@2,0 2>&1 | grep -ve "│" -e "trigger" -e "┬" -e "┼" -e "┴"'
+
+## xmr
+alias mine="sudo cpulimit -l 100 nice xmrig"
+alias mine+="sudo cpulimit -l 225 nice xmrig"
+alias mine++="sudo cpulimit -l 350 nice xmrig"

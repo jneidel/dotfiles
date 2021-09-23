@@ -3,11 +3,10 @@ zmodload -i zsh/complist
 
 WORDCHARS=''
 
-unsetopt menu_complete   # do not autoselect the first completion entry
-unsetopt flowcontrol
-setopt auto_menu         # show completion menu on successive tab press
-setopt complete_in_word
-setopt always_to_end
+unsetopt FLOW_CONTROL
+setopt AUTO_MENU # show completion menu on successive tab press
+# setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END
 setopt COMPLETE_ALIASES # aliases and more
 
 # should this be in keybindings?

@@ -3,8 +3,10 @@
 alias dir="dirs -v | head -10"
 
 ## colortest
-alias colortest="~/.vim/colors/colortest"
-alias colortest2="colortest -w -r -s | grep / --color=never L"
+alias colortest="~/.vim/colors/colortest -w -r -s | grep / --color=never L"
+hex() {
+  echo $1 | tr a-z A-Z | awk '{ print "ibase=16;"$1 }' | bc
+}
 
 ## Open links
 alias imgweek="$B https://getcomics.info/tag/image-week >/dev/null 2>&1 &; disown"

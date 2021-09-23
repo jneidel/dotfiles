@@ -2,6 +2,13 @@
 
 ## calculator
 calc() {
+  if [ -n "$1" ]; then
+    node -e "console.log(($@).toFixed(2))"
+  else
+    octave -q
+  fi
+}
+calcd() {
   node -e "console.log($@)"
 }
 alias calculator='python -ic "from __future__ import division; from math import *; from random import *"' # for multiple calculations, interactive
