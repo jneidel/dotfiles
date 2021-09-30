@@ -39,7 +39,7 @@ res="$(prompt)"
 
 bang="${res%% *}"
 query="${res#* }"
-[ "$query" = "$bang" ] && bang="d" # no bang passed -> dict.cc
+[ "$query" = "$bang" ] && bang="mw" # no bang passed -> merriam webster
 
 case "$bang" in
   y)

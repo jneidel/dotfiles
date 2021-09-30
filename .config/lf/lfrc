@@ -191,6 +191,7 @@ map gv cd ~/ct/review
 map gn cd ~/code/notes
 map gr cd ~/code/notes/research
 map gs cd ~/code/notes/slackcentral
+map gl cd ~/projects/latin
 
 map o jump-out
 map i jump-in

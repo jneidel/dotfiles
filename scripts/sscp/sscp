@@ -7,4 +7,3 @@ Dump scp wrapper
 fi
 
 /bin/scp -r "$@"
-

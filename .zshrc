@@ -89,3 +89,8 @@ export KEYID=B29E6A7A7DFD16FA # GPG keyid
 if [ "$(tty)" = "/dev/tty1" ]; then
   pgrep -x Xorg >/dev/null || startx
 fi
+
+
+# BEGIN_KITTY_SHELL_INTEGRATION
+if test -e "/usr/lib/kitty/shell-integration/kitty.zsh"; then source "/usr/lib/kitty/shell-integration/kitty.zsh"; fi
+# END_KITTY_SHELL_INTEGRATION

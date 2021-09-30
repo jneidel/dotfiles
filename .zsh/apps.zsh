@@ -84,7 +84,7 @@ gh() {
     grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
 }
 alias wcurl="curl -OJ" # better wget
-alias bud="libreoffice ~/ct/reference/budget.ods"
+alias bud="libreoffice ~/ct/reference/budget.ods &"
 alias mr="~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
 
 ### newsboat
