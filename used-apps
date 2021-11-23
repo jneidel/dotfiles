@@ -26,7 +26,6 @@ transmission
 rclone
 rsync
 youtube-dl
-figlet
 neofetch
 scrot
 js-dev
@@ -77,4 +76,4 @@ stopwatch
 remind
 office
 octave
-xmrig
+vnstat
