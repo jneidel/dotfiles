@@ -16,8 +16,6 @@ super + Return
 
 super + F1
   brave
-super + F2
-firefox
 
 super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
@@ -26,6 +24,12 @@ super + F3
   kitty --class mosh --name kudu mosh k
 super + F4
   kitty --class mosh --name uber mosh -p 44940 u
+
+### websites
+alt + F1
+  moodle
+alt + F2
+  lfe
 
 ## bspwm
 # super + alt + r
@@ -42,11 +46,11 @@ super + F4
 ## pulseaudio
 ### volume control
 XF86AudioMute
-  ~/scripts/sxhkd/set-volume.sh mute
+  ~/scripts/sxhkd/set-volume mute >/dev/null
 XF86AudioLowerVolume
-  ~/scripts/sxhkd/set-volume.sh -3
+  ~/scripts/sxhkd/set-volume -3 >/dev/null
 XF86AudioRaiseVolume
-  ~/scripts/sxhkd/set-volume.sh +3
+  ~/scripts/sxhkd/set-volume +3 >/dev/null
 
 ### sound mixer
 super + ctrl + m
@@ -81,15 +85,24 @@ XF86Tools
 
 ## brightness
 XF86MonBrightnessUp
-  ~/scripts/sxhkd/backlight p +10
+  ~/scripts/sxhkd/backlight p +10 >/dev/null
 XF86MonBrightnessDown
-  ~/scripts/sxhkd/backlight p -10
+  ~/scripts/sxhkd/backlight p -10 >/dev/null
+
 
 ## screenshot
 super + p
   ~/scripts/sxhkd/screenshot
 super + P
   ~/scripts/sxhkd/screenshot -s
+
+## dunst
+super + c
+  dunstctl close
+super + C
+  dunstctl close-all
+super + i
+  dunstctl history-pop
 
 ## misc
 super + n

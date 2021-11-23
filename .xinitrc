@@ -28,6 +28,8 @@ monitor off &
 xset -b &
 # hide cursor after 2 sec
 unclutter --timeout 2 &
+# X styles
+xrdb .Xresources &
 
 ## daemons
 mkfifo /tmp/xobpipe

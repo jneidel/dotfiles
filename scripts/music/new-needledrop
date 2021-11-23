@@ -1,6 +1,6 @@
 #! /bin/sh
 
-LAST=12/19
+LAST="12/19/2019"
 [ -n "$1" ] && LAST="$1"
 
 LOVED=PLP4CSgl7K7oo93I49tQa0TLB8qY3u7xuO
@@ -19,12 +19,8 @@ Videos from the following playlists (in that order):
 - Worst to Best
 - Thinkpieces
 
-Parameters:
-  \$1: date when checked last, format can be what ever 'date -d' takes
-
-Example:
-  $ new-needledrop 3/5
-  $ new-needledrop 4/30 2>/dev/null # only show results
+Only checking for stuff newer than: $LAST
+  can be configure in script
 "; exit
 fi
 
@@ -49,7 +45,7 @@ parse_vids() {
 
     if [ "$DATE" -ge "$LAST" ]; then
       echo "$URL $TITLE"
-      echo "$URL $TITLE" >> $LOG
+      echo "$URL $TITLE" >>$LOG
     else
       # echo "Listed all videos since last date. Exiting" 1>&2
       exit 0

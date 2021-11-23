@@ -25,6 +25,6 @@ NOTES="$MODULE_DIR/2_notes.md"
 [ ! -e "$NOTES" ] && printf "# notes\n\n\n\n## glossary" >> "$NOTES"
 
 ORGA="$MODULE_DIR/4_orga.md"
-[ ! -e "$ORGA" ] && printf "# orga\n## motivation {{{\n\n**What do I want from this module?**\n\n\n> }}}\n## format {{{\n\n\n\n> }}}\n## requirements {{{\n\n\n\n> }}}\n## resources\n\n\n\n" >> "$ORGA"
+[ ! -e "$ORGA" ] && printf "# orga\n## motivation\n\n**What do I want from this module?**\n\n\n\n## format\n\n\n\n\n## requirements\n\n\n\n\n## resources\n\n\n\n" >> "$ORGA"
 
 echo "Created module at $MODULE_DIR"

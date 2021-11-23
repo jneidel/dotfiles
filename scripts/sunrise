@@ -47,11 +47,11 @@ to_german_time() {
 }
 
 case "$1" in
-  set)
+  set|down)
     get_utc_time "sunset" "$2" | to_german_time ;;
   both)
     get_utc_time "sunrise" "$2" | to_german_time
     get_utc_time "sunset" "$2" | to_german_time ;;
-  rise|*)
+  rise|up|*)
     get_utc_time "sunrise" "$2" | to_german_time ;;
 esac

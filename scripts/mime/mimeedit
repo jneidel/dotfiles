@@ -17,7 +17,7 @@ EOF
   exit
 fi
 
-[ -e "$1" ] && { echo "Don't pass in file, file extensions only" ; exit 12 ; }
+[ -f "$1" ] && { echo "Don't pass in file, file extensions only" ; exit 12 ; }
 EXT="$1"
 
 # exit 1 means the handler does not like to be run in the background (&)

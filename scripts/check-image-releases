@@ -1,0 +1,41 @@
+#! /bin/sh
+
+COMIC_DIR=$HOME/ct/comics
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ check-image-releases
+Check https://imagecomics.com/comics/new-releases for new releases
+by comparing to the contents of $COMIC_DIR
+
+Example output:
+
+#newcomicsday was 10.11.
+
+-- updates:
+   a-righteous-thirst-for-vengeance-2
+   ordinary-gods-5
+   stillwater-by-zdarsky-pérez-11
+
+-- fresh series
+   https://imagecomics.com/comics/releases/phenom-x-1
+   https://imagecomics.com/comics/releases/whats-the-furthest-place-from-here-1
+EOF
+  exit
+fi
+
+releases=/tmp/imgage-releases.html
+curl -Ss https://imagecomics.com/comics/new-releases >$releases
+
+updates() {
+  echo "-- updates:"
+  find $COMIC_DIR -type d | grep -v yac | tail +2 | rev | cut -d/ -f1 | rev | grep -f- $releases | grep -v class= | grep -Po "releases/\K.+" | awk -F\" '{ print "   "$1 }' && echo ""
+}
+new() {
+  echo "-- fresh series"
+  grep '\-1"' $releases | grep -v class= | awk -F\" '{ print "   "$2 }'
+}
+
+grep "#newcomicsday" $releases | grep -Po "\K#newcomicsday.+" | cut -d\< -f1 | sed -E 's|([0-9]+)/([0-9]+)|\2.\1.|' ; echo ""
+updates
+new

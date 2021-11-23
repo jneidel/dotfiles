@@ -37,7 +37,8 @@ run_cmd() {
 
   case "$CMD" in
     toggle)
-      if grep "^\[playing" $TMP; then
+      # echo $TMP
+      if grep "playing" $TMP >/dev/null; then
         ICON=player_play
         HEAD=Play
       else

@@ -1,0 +1,34 @@
+#! /bin/bash
+
+FILE=~/projects/anki/english_vocab
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ copyvocab
+Going through the vocab list, copy to clip and open in mw
+EOF
+  exit
+fi
+
+command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed or \$BROWSER is not set" 1>&2; exit 127; }
+command -v xclip >/dev/null || { echo "xclip is not installed" 1>&2; exit 127; }
+
+while read -r i <&10; do
+  echo "current: $i"
+
+  SITE=https://www.merriam-webster.com/dictionary
+  if echo $i | grep DE >/dev/null; then
+    SITE=https://www.duden.de/suchen/dudenonline
+    i=`echo $i | sed 's| DE||'`
+  fi
+  echo $i | xclip -sel clip -i
+  $BROWSER "$SITE/$i" >/dev/null 2>&1 &
+
+  printf "Next? (Y/n) "
+  read ans
+  if [ "$ans" = "n" ]; then
+    exit 0
+  fi
+
+  sed "/$i/d" -i $FILE
+done 10<$FILE

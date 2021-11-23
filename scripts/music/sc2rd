@@ -22,7 +22,7 @@ Requires these env variables to be set:
   REALDEBRID_PASSWORD
 
 Example:
-  $ sc-to-rd https://soundcloud.com/madlib/sets/shades-of-blue-madlib-invades
+  $ sc2rd https://soundcloud.com/madlib/sets/shades-of-blue-madlib-invades
 EOF
   exit
 fi
@@ -82,6 +82,8 @@ if [ -n "$REALDEBRID_USERNAME" ]; then
     echo "# download album"
     cd "$ALBUM_DIR"
     wget -nc -i "../$ALBUM_RD"
+    echo "# mp3len of album (sus if around: $(node -e \"console.log($(ls *.mp3 | wc -l)*30/60).toFixed(2)\"), $(ls *.mp3 | wc -l) tracks)"
+    mp3len *.mp3
     cd ..
   fi
 fi

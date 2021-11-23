@@ -1,0 +1,42 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ filmDerWoche
+Add movie of the week at cubix to my calendar (remind)
+EOF
+  exit
+fi
+
+command -v curl >/dev/null || { echo "curl is not installed" 1>&2; exit 127; }
+command -v jq >/dev/null || { echo "jq is not installed" 1>&2; exit 127; }
+
+IS_SINGLE=0
+IDS=
+
+IDS=`curl -Ss "https://www.cinestar.de/kino-berlin-cubix-am-alexanderplatz/film-der-woche" | grep -Po 'data-show-ids="\K\d+,\d+"' | cut -d\" -f1`
+if [ -z "$IDS" ]; then
+  IS_SINGLE=1
+  IDS=`curl -Ss "https://www.cinestar.de/kino-berlin-cubix-am-alexanderplatz/film-der-woche" | grep -Po 'data-show-ids="\K\d+"' | cut -d\" -f1`
+fi
+
+query_title() {
+  ID=$1
+  curl "https://www.cinestar.de/api/show/$ID" --compressed -Ss | jq .title | cut -d\" -f2
+}
+
+ID1=`echo $IDS | cut -d, -f1`
+TITLES_STR=`query_title $ID1`
+
+if [ "$IS_SINGLE" -eq 0 ]; then
+  ID2=`echo $IDS | cut -d, -f2`
+  TITLE2=`query_title $ID2`
+  TITLES_STR="$TITLES_STR; $TITLE2"
+fi
+
+DATE=`date "+%b %d %Y"`
+if [ `date +%a` != "Thu" ]; then
+  DATE=`date -d "last thu" "+%b %d %Y"`
+fi
+
+echo "$DATE TAG https://www.cinestar.de/kino-berlin-cubix-am-alexanderplatz/film-der-woche SPECIAL COLOR 222 137 55 FdW: $TITLES_STR" >>~/.reminders/random.rem

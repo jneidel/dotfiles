@@ -47,6 +47,7 @@ export ALT_BROWSER=firefox-developer-edition
 export JAVA_HOME=/usr/lib/jvm/java-14-openjdk
 export NODE_PATH=/usr/lib/node_module
 # for eslint, see: https://github.com/eslint/eslint/issues/11914#issuecomment-525498682
+export LUA_SERVER_PATH="$HOME/.local/share/nvim/lua-language-server"
 
 ### Themes
 export GTK_THEME=Arc
@@ -89,6 +90,11 @@ export KEYID=B29E6A7A7DFD16FA # GPG keyid
 if [ "$(tty)" = "/dev/tty1" ]; then
   pgrep -x Xorg >/dev/null || startx
 fi
+
+
+
+
+alias luamake=/home/jneidel/.local/share/nvim/lua-language-server/3rd/luamake/luamake
 
 
 # BEGIN_KITTY_SHELL_INTEGRATION

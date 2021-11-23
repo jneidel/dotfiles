@@ -105,4 +105,3 @@ case $1 in
   p|perc|percent) percent $2; notification;;
   *) echo "Please pass a command. Pass 'help' for help.";;
 esac
-

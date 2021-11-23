@@ -225,23 +225,6 @@
     # where there are multiple screens with very different dpi values.
     per_monitor_dpi = false
 
-[shortcuts]
-    # Shortcuts are specified as [modifier+][modifier+]...key
-    # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
-    # "mod3" and "mod4" (windows-key).
-
-    # close notification
-    close = mod4+c
-
-    # close all notifications
-    close_all = mod4+shift+c
-
-    # redisplay last message
-    history = mod4+i
-
-    # Context menu.
-    #context = mod4+shift+i
-
 [urgency_low]
     background = "#1c1c1c"
     foreground = "#767676"
@@ -372,11 +355,6 @@
 #[stack-volumes]
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
-
-[brave_ads]
-  # This notification will not be displayed
-  appname = Brave
-  format = ""
 
 [kitty_updates]
   appname = kitty

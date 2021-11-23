@@ -171,6 +171,7 @@ Related: [The Bizarre Modern Reality of The Simpsons](https://www.youtube.com/wa
 - A: Feeling bad about too little politcal activity is the wrong answer, giving
   to charity is the right one: [Nobody Is Perfect, Everything Is Commensurable](https://slatestarcodex.com/2014/12/19/nobody-is-perfect-everything-is-commensurable/) - Effectively donate to charities: [Giving what we can](https://www.givingwhatwecan.org/)
 - A: Bringing conservatism and liberalism together, a better world fantasy: [Archipelago and Atomic Communitarianism](https://slatestarcodex.com/2014/06/07/archipelago-and-atomic-communitarianism/)
+- How oil influences politics: Öl. Macht. Geschichte [Teil 1 Aufstieg und Fall](https://yewtu.be/watch?v=-aggpYRhW-8) [Teil 2 Gier und Verderben](https://yewtu.be/watch?v=qMFnRZFtDXQ)
 
 ### Understanding other people
 

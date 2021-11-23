@@ -1,9 +1,5 @@
 #! /bin/bash
 
-# Todo: ip based on network name
-# time eater: 192.168.178.91
-# jneidel-hotspot: 192.168.43.126
-
 DIR="$(dirname $0)"
 
 ONEPLUS=$DIR/oneplus-ip
@@ -18,8 +14,31 @@ fi
 
 command -v sftp >/dev/null || { echo "sftp is not installed"; exit 1; }
 
+NET_NAME=`wifiname`
+if [ "$NET_NAME" = "Not connected" ]; then
+  echo "Not connected to any network"
+  exit 1
+  # test with ethernet connection
+fi
+NET_NAME=`echo $NET_NAME | sed 's| |_|g'`
+
 IP_FILE=$ONEPLUS
 [ "$1" = "s6" ] && IP_FILE=$S6
 
-IP=$(< $IP_FILE)
-sftp -P $PORT -i $HOME/.ssh/private $IP
+IP=`grep $NET_NAME <$IP_FILE | cut -d\  -f2`
+
+if [ -z "$IP" ]; then
+  echo "$NET_NAME is not configured in $IP_FILE"
+  printf "edit file? (Y/n)"
+  read ans
+  if [ "$ans" != "n" ]; then
+    echo "$NET_NAME 192.168.<++>.<++>" >>$IP_FILE
+    nvim $IP_FILE
+    IP=`grep $NET_NAME <$IP_FILE | cut -d\  -f2`
+  else
+    exit 1
+  fi
+fi
+
+# sftp -P $PORT -i $HOME/.ssh/private $IP
+sftp -P $PORT -i $HOME/.ssh/private -oHostKeyAlgorithms=+ssh-rsa $IP

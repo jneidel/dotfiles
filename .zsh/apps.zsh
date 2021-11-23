@@ -51,6 +51,7 @@ alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
 alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
 alias npm="/bin/npm -s"
+alias ani-cli="/bin/ani-cli -q 720"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -59,7 +60,6 @@ alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
 alias sc="shellcheck"
 alias to="todays-events"
-alias open="mimeopen"
 alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 alias sw="raw-stopwatch"
 
@@ -115,10 +115,12 @@ ent() {
   # fi
   local NAME="ent"
   out=$(mktemp)
-  if ! newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent --quiet; then
-    newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent >$out
+  if ! newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet; then
+    echo 'didnt you want to finish dune first?'; return
+    newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db >$out
+    # newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent >$out
     echo "Waiting for reload-newsboat to finish"
-    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent --quiet && clear
+    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet && clear
   fi
 }
 alias q="podqueue"
@@ -174,6 +176,9 @@ alias cup="show-updates comic"
 ## psql
 export PGPASSFILE="$HOME/.config/psql/pgpass"
 
+## vnstat
+alias vnstatq="vnstat --query wlp3s0"
+
 ## webtorrent
 alias wt="webtorrent -o /tmp --mpv --quiet"
 alias wtm="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv --quiet " # wtm[ovie]
@@ -198,6 +203,7 @@ alias mc="clear && rem -b1 -c+u2 -m -@2,0 2>/dev/null"
 alias mcm="clear && rem -b1 -c+u4 -m -@2,0 2>/dev/null"
 alias mc4=mcm
 alias mce='rem -b1 -c+u2 -m -@2,0 2>&1 | grep -ve "│" -e "trigger" -e "┬" -e "┼" -e "┴"'
+alias to="rem 2> /dev/null | grep -v Reminders"
 
 ## xmr
 alias mine="sudo cpulimit -l 100 nice xmrig"

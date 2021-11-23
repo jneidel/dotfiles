@@ -25,7 +25,7 @@ e404() {
 
 # exit 1 means the handler does not like to be run in the background (&)
 case $EXT in
-  png|jpg|jpeg|gif|webp) echo sxiv;;
+  png|jpg|jpeg|gif|webp) echo nsxiv -b;;
   pdf) echo zathura;;
   sh) echo sh; exit 1;;
   bash) echo bash; exit 1;;
@@ -50,6 +50,7 @@ case $EXT in
   docx|pptx|odp|odt) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
   sc) echo sc-im; exit 1;;
+  py) echo python3; exit 1;;
   *) printf "ERR: no handler setup for: $EXT\n"
     exit 10;;
 esac

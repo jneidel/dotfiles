@@ -21,6 +21,9 @@ cmd open ${{
 cmd diropen ${{
   ~/scripts/lf-handle-dir "$f"
 }}
+cmd diropenShuffle ${{
+  ~/scripts/lf-handle-dir "$f" -s
+}}
 
 cmd remove ${{
   rm -rf $fx
@@ -165,6 +168,7 @@ map <esc> clear
 map m massmove
 map d mkdir
 map D diropen
+map Y diropenShuffle
 map f broot_jump
 map . set hidden!
 map t touch

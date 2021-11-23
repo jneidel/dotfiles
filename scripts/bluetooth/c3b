@@ -4,5 +4,5 @@
 btconnect 98:52:3D:A7:45:A9
 
 # stream random audio file over bluetooth to stop charge from stuttering when using it in connect mode
-kill $(pgrep -f "$HOME/scripts/personal/audio.mp3") 2>/dev/null
-/bin/mpv -ao pulse ~/scripts/personal/audio.mp3 --mute --loop-file=inf >/dev/null 2>&1 &
+# kill $(pgrep -f "$HOME/scripts/personal/audio.mp3") 2>/dev/null
+# /bin/mpv -ao pulse ~/scripts/personal/audio.mp3 --mute --loop-file=inf >/dev/null 2>&1 &

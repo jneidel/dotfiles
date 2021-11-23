@@ -28,6 +28,7 @@ ddg https://duckduckgo.com/?q=%s
 mw https://www.merriam-webster.com/dictionary/%s
 dl https://duckduckgo.com/?q=%s+mp3+download
 du https://www.duden.de/rechtschreibung/%s
+duden https://www.duden.de/suchen/dudenonline/%s
 in https://yewtu.be/search?q=%s
 imdb https://www.imdb.com/find?s=all&q=%s
 im https://www.imdb.com/find?s=all&q=%s
@@ -51,3 +52,4 @@ sample https://www.whosampled.com/search/?q=%s
 l https://www.online-latin-dictionary.com/latin-english-dictionary.php?parola=%s
 dot https://jneidel.com/dot/%s
 node https://duckduckgo.com/?q=site%3Ahttps%3A%2F%2Fnodejs.org%2Fapi%2F+%s
+la https://dela.dict.cc/?s=%s

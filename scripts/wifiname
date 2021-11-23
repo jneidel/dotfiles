@@ -1,22 +1,42 @@
 #! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -n "$1" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ wifiname
 Get name of connected wifi/ethernet
+
+Flags:
+  -d: display device network is connected to
 EOF
   exit
 fi
 
 command -v nmcli >/dev/null || { echo "networkmanager is not installed" 1>&2; exit 127; }
 
+IS_DEV=0
+[ "$1" = "-d" ] && IS_DEV=1
+
+INTERFACE="wlp*"
+case "$(cat /etc/hostname)" in
+    *x240) INTERFACE=wlp3s0;;
+esac
+
 CONNECTION=`nmcli connection show --active`
 if [ -n "$CONNECTION" ]; then
-  nmcli connection show --active | grep -v UUID | while read line; do
-    NAME=`echo $line | rev | cut -d\  -f4- | rev`
-    DEVICE=`echo $line | rev | cut -d\  -f1 | rev`
-    echo "$NAME ($DEVICE)"
-  done
+  if echo $CONNECTION | grep "$INTERFACE" >/dev/null; then
+    nmcli connection show --active | grep "$INTERFACE" | head -n1 | while read line; do
+      NAME=`echo $line | rev | cut -d\  -f4- | rev`
+      DEVICE=
+      [ "$IS_DEV" -eq 1 ] && DEVICE=" ($(echo $line | rev | cut -d\  -f1 | rev))"
+      echo "$NAME$DEVICE"
+    done
+  else
+    nmcli connection show --active | grep -ve "$INTERFACE" -e UUID | grep "en*" | head -n1 | while read line; do
+      NAME=`echo $line | rev | cut -d\  -f4- | rev`
+      DEVICE=`echo $line | rev | cut -d\  -f1 | rev`
+      echo "$NAME ($DEVICE)"
+    done
+  fi
 else
   echo "Not connected"
   false

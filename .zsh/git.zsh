@@ -83,3 +83,5 @@ alias reflog="git reflog"
 ## diff
 alias gd="git diff"
 
+## ignore
+alias ignore="git update-index --assume-unchanged"

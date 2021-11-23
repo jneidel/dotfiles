@@ -37,6 +37,14 @@ HANDLER="$(mimeopen $TOP_EXT)"
 EXIT_CODE="$?"
 [ "$EXIT_CODE" -ge 10 ] && { echo $HANDLER ; exit "$EXIT_CODE" ; }
 
+# shuffle imgs
+if [ "$2" = "-s" ]; then
+  if echo $HANDLER | grep sxiv >/dev/null; then
+    find "$DIR" -type f | shuf | $HANDLER -i
+    exit 0
+  fi
+fi
+
 if [ "$EXIT_CODE" -eq 0 ]; then
   sh -c "$HANDLER \"$DIR\" &"
 elif [ "$EXIT_CODE" -eq 1 ]; then

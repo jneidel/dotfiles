@@ -32,9 +32,9 @@ fi
 alias -g PP="| pjson" # pretty print json
 
 ## redirect output
-alias -g N1="> /dev/null"      # no stdout
-alias -g N2="2> /dev/null"     # no stderr
-alias -g NO="> /dev/null 2>&1" # neither
+alias -g N1=">/dev/null"      # no stdout
+alias -g N2="2>/dev/null"     # no stderr
+alias -g NO=">/dev/null 2>&1" # neither
 
 ## misc
 alias -g PB="| nc termbin.com 9999" # terminal pastebin

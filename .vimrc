@@ -87,7 +87,8 @@ set scrolloff=6
 set formatprg=par\ -w80
 "   on arch: aur/par
 " format current block of text and remove indention
-nmap <leader>g {j0v99<v}gq
+" nmap <leader>g {j0v99<v}gq
+nmap <leader>g {v}:!par -w80<Enter>}
 
 " set whitespace characters
 set listchars=tab:▸\ ,eol:¬

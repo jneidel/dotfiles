@@ -29,7 +29,8 @@ au filetype md,markdown inoremap ,c ```<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown inoremap ,j ```json<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown inoremap ,s ```sh<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown inoremap ,l - [] <++><Esc>F[a
-au filetype md,markdown nnoremap ,d :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
+au filetype md,markdown nnoremap ,d :r !date +"\#\#\# \%a \%d.\%m.\%y"<Enter>A<Enter>
+au filetype md,markdown nnoremap ,j :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
 au filetype md,markdown inoremap ,i - [ ]<Space>
 
 "### JavaScript/Typescript
@@ -111,3 +112,5 @@ au filetype tex inoremap ,im \includegraphics[scale=0.5]{}<Enter><Esc>kf{a
 "### vim borked
 au filetype vim inoremap ,o {\<Enter>}<Esc>i
 
+"### scala
+au filetype scala inoremap ,o {<Enter>}<Esc>O

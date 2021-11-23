@@ -70,7 +70,7 @@ turn_off() {
 }
 
 add_monitor() {
-  xrandr --output $MONITOR --mode $MONITOR_RESOLUTION --left-of $MAIN --scale-from $MAIN_RESOLUTION >/dev/null
+  xrandr --output $MONITOR --mode $MONITOR_RESOLUTION --right-of $MAIN --scale-from $MAIN_RESOLUTION >/dev/null
 }
 mirror() {
   echo "mirroring"

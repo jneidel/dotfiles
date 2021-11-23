@@ -9,9 +9,13 @@ hex() {
 }
 
 ## Open links
-alias imgweek="$B https://getcomics.info/tag/image-week >/dev/null 2>&1 &; disown"
+get_latest_imgweek() {
+  curl -Ss "https://getcomics.info/tag/image-week/" | grep -Po "href=\"\Khttps://getcomics.info/other-comics/.*?weekly-pack/\">" | grep -ve "comments" | head -n1 | cut -d\" -f1
+}
+alias imgweek="get_latest_imgweek | xargs $B >/dev/null 2>&1 &; disown"
+# alias imgweek="$B https://getcomics.info/tag/image-week >/dev/null 2>&1 &; disown"
 alias imgrel="$B https://imagecomics.com/comics/new-releases >/dev/null 2>&1 &; disown"
-alias img="imgweek; imgrel;"
+alias img="imgweek; echo ""; check-image-releases"
 
 alias relax="mpvo 'https://www.youtube.com/watch?v=5qap5aO4i9A'"
 

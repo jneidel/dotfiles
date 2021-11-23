@@ -1,0 +1,44 @@
+#! /bin/sh
+
+DIR=$HOME/.local/lib/vnstat-dashboard
+PORT=8023
+HOST=0.0.0.0
+URL="http://$HOST:$PORT/"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ vnstatg
+vnstat-g[raphs]
+
+Opens vnstat dashboard (install on first exec):
+https://github.com/microhacker07/vnstat-dashboard
+
+Requires to have vnstat running (and have some data collected).
+EOF
+  exit
+fi
+
+command -v pip3 >/dev/null || { echo "python3 is not installed" 1>&2; exit 127; }
+command -v python3 >/dev/null || { echo "python3 is not installed" 1>&2; exit 127; }
+command -v $BROWSER >/dev/null || { echo "\$BROWSER: $BROWSER is not installed" 1>&2; exit 127; }
+
+install() {
+  echo "### Installing into $DIR"
+  git clone git@github.com:microhacker07/vnstat-dashboard.git $DIR
+  cd $DIR
+  pip3 install -r requirements.txt
+  sed "s|8080|$PORT|" main.py -i
+}
+open() {
+  echo "### Opened in $BROWSER"
+  cd $DIR
+  $BROWSER $URL >/dev/null 2>&1
+  python3 main.py >/dev/null 2>&1
+}
+
+if [ -d "$DIR" ]; then
+  open
+else
+  install
+  open
+fi

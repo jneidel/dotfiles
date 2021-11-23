@@ -1,0 +1,19 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ earn TICKER
+Open next earning date for ticker symbol
+
+Parameters:
+  \$1: ticker
+
+Example:
+  $ earn AAPL
+EOF
+  exit
+fi
+
+command -v chromium >/dev/null || { echo "chromium is not installed" 1>&2; exit 127; }
+
+chromium "https://www.earningswhispers.com/stocks/$1" >/dev/null 2>&1 &
