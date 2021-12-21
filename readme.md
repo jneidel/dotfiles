@@ -152,6 +152,7 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 Music player daemon and its client.
 
+- [my music setup in detail](docs/music.md)
 - [mpd config](.config/mpd/mpd.conf)
 - [ncmpcpp configs](.config/ncmpcpp)
 
