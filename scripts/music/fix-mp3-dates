@@ -1,0 +1,67 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ fix-mp3-dates MP3S
+Set the recording date tag to the value of original recording date.
+And strip month & day (year only).
+
+Parameters:
+  \$@: mp3 files to apply to
+
+Example:
+  $ fix-mp3-dates Ghost/*.mp3
+  #=> Set 2016 for: Ghost/01. RAF Camora - R.R.B.B_.mp3
+      Set 2016 for: Ghost/02. RAF Camora - NOAH.mp3
+      etc.
+EOF
+  exit
+fi
+
+command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed" 1>&2; exit 127; }
+
+get_date_strings() {
+  FILE="$1"
+  eyeD3 "$FILE" | grep "date:"
+}
+
+check_if_done() {
+  DATE_STR=$1
+  if echo $DATE_STR | grep -Po "recording date: \d{4}$" >/dev/null; then
+    true
+  else
+    false
+  fi
+}
+
+get_og_year() {
+  DATE_STR="$1"
+  echo "$DATE_STR" | grep -Po "^original release date: \K\d{4}"
+}
+
+set_recording_year() {
+  FILE="$1"
+  YEAR=$2
+  eyeD3 "$FILE" --recording-date $YEAR >/dev/null
+}
+
+for file in "$@"; do
+  DATE_STR=`get_date_strings "$file"`
+  if [ -z "$DATE_STR" ]; then
+    echo "Empty DATE_STR; file: '$file'" >&2
+    continue
+  fi
+
+  if check_if_done "$DATE_STR"; then
+    echo "Already done: $file" >&2
+    continue
+  fi
+
+  OG_YEAR=`get_og_year "$DATE_STR"`
+  if [ -z "$OG_YEAR" ]; then
+    echo "Empty OG_YEAR, DATE_STR was:\n $DATE_STR\n" >&2
+    continue
+  fi
+
+  set_recording_year "$file" $OG_YEAR && echo "Set $OG_YEAR for: $file"
+done

@@ -24,6 +24,7 @@ TO_EUR=0
 EUROS=0 # fees
 DIRECTION_STR="XMR -> EUR"
 MULTIPLICATOR=1
+RAW_MODE=0
 if [ "$1" = "EUR" ] || [ "$1" = "eur" ] || [ "$1" = "e" ]; then
   TO_EUR=1
   DIRECTION_STR="EUR -> XMR"
@@ -36,16 +37,30 @@ elif [ "$1" = "fee" ] || [ "$1" = "fees" ]; then
   DIRECTION_STR="EUR -> XMR fees"
   EUROS="$2"
   MULTIPLICATOR="$3"
+elif [ "$1" = "raw" ]; then
+  RAW_MODE=1
 elif [ -n "$1" ]; then
   MULTIPLICATOR="$1"
 fi
+
+fetch_rate_from_ddg() {
+  curl -Ss "https://duckduckgo.com/js/spice/cryptocurrency/ticker/$1/1" | sed 's|.*(||; s|);||'
+}
 
 get_rate() {
   DIRECTION=xmr-eur
   if [ "$TO_EUR" -eq 1 ]; then
     DIRECTION=eur-xmr
   fi
-  curl -Ss "https://duckduckgo.com/js/spice/cryptocurrency/ticker/$DIRECTION/1" | sed 's|.*(||; s|);||' | jq .ticker.price | sed 's|"||g'
+
+  TMP=$(mktemp)
+  fetch_rate_from_ddg $DIRECTION >$TMP
+
+  if jq -e '.ticker.markets[]|select(.market == "Kraken").price' $TMP >/dev/null 2>&1; then
+    jq -e '.ticker.markets[]|select(.market == "Kraken").price' $TMP | sed 's|"||g'
+  else
+    jq .ticker.price $TMP | sed 's|"||g'
+  fi
 }
 RATE=`get_rate`
 
@@ -69,11 +84,14 @@ print_fees() {
   printf "$DIRECTION_STR\n$EUROS -> $MULTIPLICATOR\n" >&2
   printf "%% %.3f\n€ %.3f\n" $FEES_PER $FEES_EUR
 }
+print_raw() {
+  printf "%.2f\n" $RATE
+}
 
-if [ "$EUROS" -eq 0 ] 2>/dev/null; then
+if [ "$RAW_MODE" -eq 1 ]; then
+  print_raw
+elif [ "$EUROS" -eq 0 ] 2>/dev/null; then
   print_conversion
 else
   print_fees
 fi
-
-

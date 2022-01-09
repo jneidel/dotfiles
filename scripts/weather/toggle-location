@@ -1,5 +1,7 @@
 #! /bin/sh
 
+BERLIN=12459
+
 # Todo: how does the script know that I am in dresden after the day of the bus ride?
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -21,9 +23,9 @@ write_loc() {
 
 toggle_loc() {
   case "$(cat $LOCATION_FILE)" in
-    berlin) write_loc dresden;;
-    dresden) write_loc berlin;;
-    *) write_loc berlin;;
+    $BERLIN) write_loc 01099;;
+    dresden) write_loc $BERLIN;;
+    *) write_loc $BERLIN;;
   esac
 }
 

@@ -173,6 +173,7 @@ Everything you'll ever need from a video player.
 
 - [config](.config/mpv/mpv.conf)
 - [keybindings](.config/mpv/input.conf)
+- [scripts](scripts/mpv)
 
 ![](images/mpv.png)
 

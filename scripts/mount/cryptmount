@@ -4,7 +4,7 @@ DEFAULT_DEV=/dev/sdb
 DEFAULT_LOCATION=/mnt
 FALLBACK_LOCATION=/media/ext
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "help" ] || [ "$1" = "-h" ]; then
   echo "$ cryptmount"
   echo "Mount a luks encrypted external (hard)disk"
   echo ""

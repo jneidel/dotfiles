@@ -1,0 +1,45 @@
+#! /bin/bash
+
+FILE=~/.local/share/price-alert
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ price-alert
+Compare the XMR price against a list of strike prices and altert if matching
+
+Arguments:
+  none: check if alert
+  list: list prices to watch
+  edit: edit price list
+EOF
+  exit
+fi
+
+if [ "$1" = "list" ] || [ "$1" = "l" ]; then
+  cat $FILE
+elif [ "$1" = "edit" ] || [ "$1" = "e" ]; then
+  cd /tmp
+  $EDITOR $FILE
+else
+  CURRENT_PRICE=$(~/scripts/xmr raw)
+
+  notify() {
+    BODY="$1"
+    ~/scripts/cron/cron-notify-send "XMR at $CURRENT_PRICE" "$BODY" -t 100000 -u normal -i xmr
+  }
+
+  while read -r line; do
+    line_array=( $line )
+    STRIKE_PRICE=${line_array[0]}
+
+    if echo $line | grep "below$" >/dev/null; then
+      if [ $(bc <<< "$CURRENT_PRICE <= $STRIKE_PRICE") -eq 1 ]; then
+        notify "below alert of $STRIKE_PRICE"
+      fi
+    else
+      if [ $(bc <<< "$CURRENT_PRICE >= $STRIKE_PRICE") -eq 1 ]; then
+        notify "above alert of $STRIKE_PRICE"
+      fi
+    fi
+  done <$FILE
+fi

@@ -22,8 +22,18 @@ reload() {
 
 reload clean
 reload manga
-reload ent
 reload pod
 reload misc
+
+reload_ent() {
+  TMP=$(mktemp)
+  cat ~/projects/bad_habits/gpg_key_pass | gpg --pinentry-mode loopback --batch --passphrase-fd 0 --output $TMP -d ~/.sensitive/.config/newsboat/cache-ent.db.gpg >/dev/null 2>&1
+  newsboat -u ~/.sensitive/.config/newsboat/urls-ent -c $TMP --quiet -x reload
+  mv $TMP /tmp/cache-ent.db
+  gpg -er 75EEDD9E /tmp/cache-ent.db >/dev/null
+  rm /tmp/cache-ent.db
+  mv /tmp/cache-ent.db.gpg ~/.sensitive/.config/newsboat/
+}
+# reload_ent &
 
 ~/scripts/cron/cron-notify-send "Ran reload-newsboat" -t 1000

@@ -9,10 +9,10 @@ Print your amount of unheard music
 
 Example:
   $ unhrd
-  #=> 48G
+  #=> 37.194 MB
 EOF
   exit
 fi
 
 du -sc -B M --apparent-size $MUSIC_DIR/[^_]* | # exclude anything starting w/ _ from match
-  tail -n1 | cut -dM -f1 | human-number | awk '{print $1" MB"}'
+  tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'

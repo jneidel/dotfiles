@@ -14,7 +14,7 @@ EOF
   exit
 fi
 
-command -v scrot >/dev/null || { echo "scot is not installed"; exit 1; }
+command -v scrot >/dev/null || { echo "scrot is not installed"; exit 1; }
 command -v convert >/dev/null || { echo "convert (imagemagick) is not installed"; exit 1; }
 command -v i3lock >/dev/null || { echo "i3lock is not installed"; exit 1; }
 
@@ -53,4 +53,5 @@ else
   process_image $IMG
 fi
 
-i3lock -i $IMG --ignore-empty-password
+i3lock -i $IMG --ignore-empty-password --24
+# uses fork: https://github.com/Lixxia/i3lock

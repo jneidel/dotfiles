@@ -1,0 +1,36 @@
+#! /bin/env node
+
+if ( process.argv[2] == "help"  || process.argv[2] == "--help" || process.argv[2] == "-h" ) {
+  console.log( `fib N
+Generate the first up to n fibonacci numbers
+
+Parameter:
+  n: print first n numbers of the sequence; default: 8
+
+Example:
+  $ fib 5
+  => 1 2 3 5 8` )
+  return
+}
+
+const N = process.argv[2] || 8;
+
+function* FibonacciGenerator() {
+  let a = 1;
+  let b = 1;
+
+  while (true) {
+    yield b;
+
+    const temp = a + b;
+    a = b;
+    b = temp;
+  }
+}
+
+const fibonacciGenerator = FibonacciGenerator();
+let outString = "";
+for ( let i = 0; i < N; i++ ) {
+  outString += fibonacciGenerator.next().value + " ";
+}
+console.log( outString );

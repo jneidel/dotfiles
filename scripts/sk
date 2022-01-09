@@ -1,0 +1,27 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ sk
+Saisonkalender
+EOF
+  exit
+fi
+
+case "$(date +%m)" in
+  1) LINK="https://www.chefkoch.de/magazin/artikel/5659,0/Chefkoch/Saisonkalender-Januar-typisches-Obst-und-Saisongemuese.html";;
+  2) LINK="https://www.chefkoch.de/magazin/artikel/5753,0/Chefkoch/Saisonkalender-Februar-typisches-Obst-und-Saisongemuese.html";;
+  3) LINK="https://www.chefkoch.de/magazin/artikel/5889,0/Chefkoch/Saisonkalender-Maerz-typisches-Obst-und-Saisongemuese.html";;
+  4) LINK="https://www.chefkoch.de/magazin/artikel/5890,0/Chefkoch/Saisonkalender-April-typisches-Obst-und-Saisongemuese.html";;
+  5) LINK="https://www.chefkoch.de/magazin/artikel/5891,0/Chefkoch/Saisonkalender-Mai-typisches-Obst-und-Saisongemuese.html";;
+  6) LINK="https://www.chefkoch.de/magazin/artikel/4974,0/Chefkoch/Saisonkalender-Juni-typisches-Obst-und-Saisongemuese.html";;
+  7) LINK="https://www.chefkoch.de/magazin/artikel/5236,0/Chefkoch/Saisonkalender-Juli-typisches-Obst-und-Saisongemuese.html";;
+  8) LINK="https://www.chefkoch.de/magazin/artikel/5378,0/Chefkoch/Saisonkalender-August-typisches-Obst-und-Saisongemuese.html";;
+  9) LINK="https://www.chefkoch.de/magazin/artikel/5379,0/Chefkoch/Saisonkalender-September-typisches-Obst-und-Saisongemuese.html";;
+  10) LINK="https://www.chefkoch.de/magazin/artikel/5380,0/Chefkoch/Saisonkalender-Oktober-typisches-Obst-und-Saisongemuese.html";;
+  11) LINK="https://www.chefkoch.de/magazin/artikel/5381,0/Chefkoch/Saisonkalender-November-typisches-Obst-und-Saisongemuese.html";;
+  12) LINK="https://www.chefkoch.de/magazin/artikel/5382,0/Chefkoch/Saisonkalender-Dezember-typisches-Obst-und-Saisongemuese.html";;
+esac
+
+echo $LINK
+$B $LINK >/dev/null 2>&1 &

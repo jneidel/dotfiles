@@ -240,13 +240,13 @@ something you just pulled off of Soundcloud, a random Single and the like.
 The script read artist and title from the filename. Album artist and album name
 can be supplemented by the user.
 
-- [tag-single](../scripts/music/tag-single):
+- [single](../scripts/music/single):
 
 ```sh
 # usage (refer to script --help for more)
-tag-single *.mp3
-tag-single -A "Black Muffin" *.mp3
-tag-single -AA "Black Muffin" "Totem" *.mp3
+single *.mp3 # -> Singles/Mixed
+single -A "Black Muffin" *.mp3 # ->  -> Black Muffin/Mixed
+single -AA "Black Muffin" "Totem" *.mp3 # ->  -> Black Muffin/Totem
 ```
 
 #### 3.2.3 Scripting: eyeD3

@@ -1,8 +1,8 @@
 #! /bin/sh
 
-SPRINT_DATE="2021-10-11"
-SPRINT_DATE_NR="001"
-SPRINT_WEEKDAY="mon"
+SPRINT_DATE="2021-12-12"
+SPRINT_DATE_NR="004"
+SPRINT_WEEKDAY="sun"
 MAX_ITERATIONS=20
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
@@ -25,7 +25,7 @@ EOF
 fi
 
 calc_next_date() {
-  date -d "$SPRINT_WEEKDAY 2 weeks $1" +"%Y-%m-%d"
+  date -d "$SPRINT_WEEKDAY 1 weeks $1" +"%Y-%m-%d"
 }
 eval_sprint_date() {
   local testdate="$1"

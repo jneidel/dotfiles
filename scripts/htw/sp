@@ -26,7 +26,7 @@ Flags:
   --no-viewer: don't open the downloaded file in your pdf viewer
 
 Commands:
-  clear, clear: remove cache
+  clear, clean, rm, remove: remove cache
   dl, download: load the next month worth of plans
 
 Examples:
@@ -46,7 +46,7 @@ command -v kw >/dev/null || { echo "kw script is not in PATH" 1>&2; exit 127; }
 [ -z "$PASSWORD" ] && { echo "\$PASSWORD is empty, please fill it in"; exit 1; };
 
 case "$1" in
-  clear|clean) rm $TMP_DIR/stundenplan*
+  clear|clean|rm|remove) rm $TMP_DIR/stundenplan*
     echo "Removed cached versions"
     exit 0;;
 esac
@@ -57,7 +57,7 @@ WEEK_OFFSET="$1"
 
 updateCookie() {
   curl -Ssi https://lsf.htw-berlin.de/qisserver/rds\?state\=user\&type\=1 -d "username=$USERNAME&password=$PASSWORD&submit=Einloggen" |
-    grep -F "JSESSIONID" | grep -Po "JSESSIONID=.*?\.ajp13_qis5" | cut -d= -f2 | tee >(cat > $TMP_COOKIE)
+    grep -F "JSESSIONID" | grep -Po "JSESSIONID=.*?\.ajp13_qis." | cut -d= -f2 | tee >(cat > $TMP_COOKIE)
 }
 
 SESSION_COOKIE=""

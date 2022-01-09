@@ -11,6 +11,9 @@ Parameters:
   [\$1]: Name of the output file (automatic .mkv)
     defaults to: recording_$(date +%Y-%b-%d_%H_%M_%S)
 
+Flags:
+  -60: recording in 60 fps (instead of 20)
+
 Example:
   $ rec
   $ rec out
@@ -18,8 +21,14 @@ EOF
   exit
 fi
 
+FPS=20
 OUTPUT="recording_$(date +%Y-%b-%d_%H_%M_%S).mkv"
-[ -n "$1" ] && OUTPUT="$1.mkv"
+if [ "$1" = "-60" ]; then
+  FPS=60
+elif [ -n "$1" ]; then
+  OUTPUT="$1.mkv"
+fi
+
 
 command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
 
@@ -49,12 +58,11 @@ trap cleanup EXIT
 ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
   -f x11grab -i :0.0 \
   -f alsa -i pulse \
-  -r 20 \
+  -r $FPS \
   -threads 0 \
   -vcodec libx264 \
   -preset fast \
   "$OUTPUT"
-# -r 30 \
 
   # -acodec pcm_s16le -vcodec libx264 -preset fast -crf 0 -threads 0 \
 

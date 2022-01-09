@@ -1,6 +1,6 @@
 #! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
 $ mcut FILE START [END]
 mp3cut wrapper
@@ -26,8 +26,14 @@ fi
 command -v mp3cut >/dev/null || { echo "mp3cut is not installed"; exit 127; }
 command -v copy_id3.py >/dev/null || { echo "copy_id3.py script is not installed"; exit 127; }
 
+
 IN="$1"
 OUT="$IN.new"
+
+if [ -z "$2" ]; then
+  mpv --profile=music "$IN"
+  exit 0
+fi
 
 START="$2"
 END="$3"
@@ -47,5 +53,6 @@ if [ "$REPLACE" -gt 0 ]; then
   mv "$OUT" "$IN"
   chmod -x "$IN"
 else
-  mp3cut -o "$OUT" -t "00:$START+000-00:$END+000" "$IN"
+  mp3cut -o - -t "00:$START+000-00:$END+000" "$IN" | mpv --profile=music -
+  # mp3cut -o "$IN.new" -t "00:$START+000-00:$END+000" "$IN"
 fi

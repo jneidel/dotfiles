@@ -40,7 +40,7 @@ EXIT_CODE="$?"
 # shuffle imgs
 if [ "$2" = "-s" ]; then
   if echo $HANDLER | grep sxiv >/dev/null; then
-    find "$DIR" -type f | shuf | $HANDLER -i
+    find "$DIR" -type f | shuf | $HANDLER -i &
     exit 0
   fi
 fi

@@ -8,29 +8,49 @@ MUSIC_DIR="$HOME/ct/music"
 SINGLES_DIR="$MUSIC_DIR/_tomove-data/Singles"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ tag-single MP3S
-Tag singles as:
+  printf "$ single MP3_FILES
+Automatic tagging and moving based on filename and defaults or arguments
+
+Supported filename formats:
+- 'artist - title.mp3'
+- 'title.mp3' (uses album artist as artist)
+- 'n. artist - title.mp3'
+- 'n. title.mp3'
+
+Defaults (can be changed in script file and overwritten through arguments below):
 Album Artist: $ALBUM_AR
 Album: $ALBUM
-Artist: from filename
-Title: from filename (format: 'artist - title.mp3')
-Date: none
 Track: none
 Cover: if cover.jpg|png or filename.jpg available
 
+Filenames will be left intact.
+
 Parameters:
-  \$1+: files
+  \$1+: mp3 files
 
-Parameter:
-  -A: Set custom album artist (if empty use Artist)
-  -a: Set custom album
-  -AA: Set custom album artist and album
+Arguments:
+  none                  : results in: $ALBUM_AR/$ALBUM
+  -A ARTIST             : Set custom album artist (if empty use Artist)
+                          results in: ARTIST/$ALBUM
+  -a ALBUM              : Set custom album
+                          results in: $ALBUM_AR/ALBUM
+  -AA ALBUM_ARTIST ALBUM: Set custom album artist and album
+                          results in: ALBUM_ARTIST/ALBUM
 
-Example:
-  $ tag-single 'Louis Cole - Blimp.mp3'
-  $ tag-single -A 'Black Muffin' 'Black Muffin - Warrior.mp3'
-  $ tag-single -AA Ollie 'means to an end' *
-  $ tag-single -a Party 'Burak Yeter - Tuesday.mp3'
+Examples:
+  $ single 'Louis Cole - Blimp.mp3'
+    #=> moved to $MUSIC_DIR/$ALBUM_AR/$ALBUM/Louis Cole - Blimp.mp3
+
+  $ single -A James\ Blake '08. James Blake feat. Andre 3000 - Where's the Catch_.mp3'
+    #=> moved to $MUSIC_DIR/James Blake/$ALBUM/08. James Blake feat. Andre 3000 - Where's the Catch_.mp3
+  $ single -A 'Black Muffin' 'Warrior.mp3'
+    #=> moved to $MUSIC_DIR/Black Muffin/$ALBUM/Warrior.mp3
+
+  $ single -a Energy 'Sesto Sento - Apollo 11.mp3'
+    #=> moved to $MUSIC_DIR/$ALBUM_AR/Energy/Sesto Sento - Apollo 11.mp3
+
+  $ single -AA JAY-Z 'The Blueprint' *.mp3
+    #=> moved to $MUSIC_DIR/JAY-Z/The Blueprint/SONGS
 "; exit
 fi
 
@@ -67,14 +87,18 @@ tag() {
     break;
   fi
 
+  # local trackNr=""
+  # if echo "$1" | grep -P "^\d+\.\s" >/dev/null; then
+  #   trackNr=$(echo "$1" | grep -Po "^\d+(?=\.\s)")
+  # fi
   local file="$(echo "$1" | sed 's|^[0-9]*\.\s||')" # remove leading track number
   local artist=""
   local title=""
 
   if echo "$1" | grep " - " >/dev/null; then
     # has artist + title
-    artist="$(echo "$file" | cut -d- -f1 | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
-    title="$(echo "${file%.*}" | cut -d- -f2 | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
+    artist="$(echo "$file" | grep -Po '.+(?= - )')" # inverse of \K: https://unix.stackexchange.com/a/437408
+    title="$(echo "${file%.*}" | grep -Po '(?<= - ).+')" # \K
   else
     # only has title
     title="$(echo "${file%.*}" | sed 's|^[[:space:]]*||; s|[[:space:]]*$||')"
@@ -93,15 +117,14 @@ tag() {
   [ ! -e "$coverFile" ] && coverFile="cover.jpg"
   [ ! -e "$coverFile" ] && coverFile="cover.png"
 
-  # id3tag --track 0 --year "" "$file_raw" # clears all existing tags, good for dates, bad for lyrics, images
   id3v2 --track "" --year "" "$file_raw"
   if [ -e "$coverFile" ]; then
     eyeD3 -2 --album-artist "$ALBUM_AR" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments --add-image "$coverFile":FRONT_COVER "$file_raw"
-
     [ "${coverFile%.*}" != "cover" ] && rm "$coverFile"
   else
     eyeD3 -2 --album-artist "$ALBUM_AR" --album "$ALBUM" --artist "$artist" --title "$title" --remove-all-comments $cover "$file_raw"
   fi
+  chmod 644 "$file_raw"
   # --disc-num 0
   # --release-year 0 --release-date 0
 }

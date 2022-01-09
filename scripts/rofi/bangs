@@ -43,14 +43,20 @@ query="${res#* }"
 
 case "$bang" in
   y)
-  ~/scripts/yt $query
-  exit;;
+    ~/scripts/yt $query
+    exit;;
   yts)
-  ~/scripts/yts $query
-  exit;;
+    ~/scripts/yts $query
+    exit;;
+  yt)
+    if [ -f "$HOME/scripts/personal/youtube.html" ]; then
+      {
+        sleep 1 && $BROWSER $HOME/scripts/personal/youtube.html >/dev/null 2>&1
+      } &
+    fi;;
   dot)
-  $BROWSER "https://jneidel.com/dot/$query"
-  exit;;
+    $BROWSER "https://jneidel.com/dot/$query"
+    exit;;
 esac
 
 query=`urlEncode "$query"`

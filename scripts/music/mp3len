@@ -1,15 +1,16 @@
-#! /bin/sh
+#! /bin/bash
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ] || [ ! -e "$1" ]; then
   cat <<EOF
-$ mp3len MP3s
+$ mp3len MP3s|DIRECTORY
 Print the length of (multiple) mp3 files
 
 Parameters:
-  \$1: mp3s
+  \$1: mp3 files or a directory containing them
 
 Example:
   $ mp3len *.mp3
+  $ mp3len KRS-One
 EOF
   exit
 fi
@@ -17,16 +18,20 @@ fi
 command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed" 1>&2; exit 127; }
 
 get_len() {
-  ffmpeg -i "$1" 2>&1 | grep Duration | cut -d. -f1 | cut -d\  -f4
+  if echo "$1" | grep "\.mp3" >/dev/null; then
+    ffmpeg -i "$1" 2>&1 | grep Duration | cut -d. -f1 | cut -d\  -f4
+  else
+    echo 0:0:0
+  fi
 }
 
 TOTAL_H=0
 TOTAL_M=0
 TOTAL_S=0
 add_to_total() {
-  ADDER_H=$(echo $1 | cut -d: -f1)
-  ADDER_M=$(echo $1 | cut -d: -f2 | sed "s|0||")
-  ADDER_S=$(echo $1 | cut -d: -f3 | sed "s|0||")
+  ADDER_H=$(echo "$1" | cut -d: -f1)
+  ADDER_M=$(echo "$1" | cut -d: -f2 | sed "s|0||")
+  ADDER_S=$(echo "$1" | cut -d: -f3 | sed "s|0||")
   # sed, otherwise base 8 error possible: (0+08: value too great for base (error token is "08")
 
   MOD_M=$((($TOTAL_M+$ADDER_M)%60))
@@ -49,8 +54,14 @@ add_to_total() {
   TOTAL_H=$(($TOTAL_H+$ADDER_H+$REST_M))
 }
 
-for i in "$@"; do
-  add_to_total $(get_len "$i")
-done
+if [ -d "$1" ]; then
+  while read i; do
+    add_to_total $(get_len "$i")
+  done <<<$(find "$1" -name '*.mp3')
+else
+  for i in "$@"; do
+    add_to_total $(get_len "$i")
+  done
+fi
 
 printf "%02d:%02d:%02d\n" "$TOTAL_H" "$TOTAL_M" "$TOTAL_S"

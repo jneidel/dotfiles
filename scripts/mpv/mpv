@@ -1,7 +1,5 @@
 #! /bin/sh
 
-ICP_SOCK="--input-ipc-server=/tmp/mpv_socket"
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ mpv MPV_ARGS
@@ -14,6 +12,10 @@ EOF
 fi
 
 command -v /bin/mpv >/dev/null || { echo "mpv is not installed"; exit 1; }
+command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not in PATH"; exit 127; }
+
+SOCKET=$(manage-mpv-sockets open)
+ICP_SOCK="--input-ipc-server=$SOCKET"
 
 OPTIONS=""
 if echo "$@" | grep -e "projects/uni" -e "mediathek.htw-berlin.de" >/dev/null; then

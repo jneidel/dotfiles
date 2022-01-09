@@ -1,7 +1,5 @@
 #! /bin/sh
 
-SOCKET=/tmp/mpv_socket
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
 $ mpvctl CMD
@@ -21,6 +19,14 @@ fi
 
 command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
 command -v socat >/dev/null || { echo "socat is not installed"; exit 127; }
+command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not in PATH"; exit 127; }
+
+if SOCKET=$(manage-mpv-sockets get_playing); then
+  continue
+else
+  echo "mpv not playing on any socket"
+  exit 10
+fi
 
 send_cmd() {
   # see man at: list of input commands

@@ -35,7 +35,7 @@ if [ -z "$1" ]; then
     }
   fi
 else
-  if [ ! -d "$1" ]; then
+  if [ -d "$1" ]; then
     LOCATION="$1"
   else
     echo "Passed location '$1' does not exist."

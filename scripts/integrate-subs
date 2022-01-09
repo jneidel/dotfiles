@@ -50,7 +50,10 @@ convert() {
   esac
 }
 
-convert && {
+# multiple sub files:
+# ffmpeg -i test.mp4 -i Love.Actually.2003.1080p.BluRay.x264.YIFY_SDH.srt -i Tatsaechlich.Liebe.2003.TL.1080p.x264_ger2.srt -map 0:v -map 0:a -map 1 -map 2 -c:v copy -c:a copy -c:s srt -metadata:s:s:0 language=eng -metadata:s:s:1 language=ger out2.mkv
+
+nice convert && {
   rm "$SUB"
   mv "$OUT" "$MV"
 }

@@ -1,0 +1,77 @@
+#! /bin/sh
+
+SCHEMA=/tmp/mpv_socket_
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ manage-mpv-sockets ARG
+Routing to relevant mpv sockets
+
+Arguments:
+  list       : list open sockets
+  open       : open a new socket, returns address
+  get_playing: get the first socket playing audio, exit code 10 if none
+
+Example:
+  $ manage-mpv-sockets open
+  #=> ${SCHEMA}7
+  $ manage-mpv-sockets get_playing
+  #=> ${SCHEMA}1
+EOF
+  exit
+fi
+
+command -v mpv >/dev/null || { echo "mpv is not installed" 1>&2; exit 127; }
+command -v ss >/dev/null || { echo "ss is not installed" 1>&2; exit 127; }
+command -v tac >/dev/null || { echo "tac is not installed" 1>&2; exit 127; }
+# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+list_open_sockets() {
+  ss -l -x src "${SCHEMA}*" | grep -Po "${SCHEMA}.*?(?=\s)" | tac
+}
+
+get_latest_open_socket() {
+  latest_open_socket="$(list_open_sockets | head -n1)"
+  if [ -z "$latest_open_socket" ]; then
+    echo "${SCHEMA}0"
+  else
+    echo "$latest_open_socket"
+  fi
+}
+
+create_new_socket() {
+  nOfLatestOpenSocket=$(get_latest_open_socket | grep -Po "${SCHEMA}\K\d+")
+  nPlus1=$((nOfLatestOpenSocket+1))
+  echo "${SCHEMA}${nPlus1}"
+}
+
+send_command_to_socket() {
+  socket="$1"
+  cmd="$2"
+
+  # reponses:
+  #   is playing : {"data":false,"request_id":0,"error":"success"}
+  #   not playing: {"data":true,"request_id":0,"error":"success"}
+  echo "{\"command\": $cmd}" | socat - $socket | fgrep '"data":false' >/dev/null 2>/dev/null
+}
+
+test_if_socket_playing() {
+  socket="$1"
+  send_command_to_socket "$socket" "[\"get_property\", \"pause\"]"
+}
+
+get_first_playing_socket() {
+  for socket in $(list_open_sockets); do
+    if test_if_socket_playing "$socket"; then
+      echo "$socket"
+      return 0
+    fi
+  done
+  return 10
+}
+
+case "$1" in
+  open) create_new_socket;;
+  list) list_open_sockets;;
+  get_playing) get_first_playing_socket;;
+esac

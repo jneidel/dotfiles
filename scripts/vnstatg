@@ -32,7 +32,7 @@ install() {
 open() {
   echo "### Opened in $BROWSER"
   cd $DIR
-  $BROWSER $URL >/dev/null 2>&1
+  $BROWSER $URL >/dev/null 2>&1 &
   python3 main.py >/dev/null 2>&1
 }
 
