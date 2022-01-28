@@ -2,7 +2,6 @@ zsh
 vim
 scripts
 newsboat
-taskell
 tmux
 pulseaudio
 git
@@ -21,6 +20,7 @@ yacreader
 sxiv
 zathura
 firefox
+chromium
 mosh
 transmission
 rclone
@@ -63,16 +63,15 @@ lf
 yay
 amd
 brave
-npm
 wget
 anki
 webtorrent
 eslint
 xob
 cnsm
-colorpicking
 stopwatch
 remind
 office
 octave
 vnstat
+xmr

@@ -77,6 +77,7 @@ create .config/pulse
 .config/pulse/default.pa
 create .config/ncpamixer
 .config/ncpamixer/ncpamixer.conf
+.asoundrc
 
 [alsa]
 .asoundrc
@@ -128,23 +129,9 @@ create .config/ncmpcpp
 .config/ncmpcpp/bindings
 .config/ncmpcpp/config
 
-[cmus]
-create .cmus
-.cmus/cmus.theme
-.cmus/rc
-
 [beets]
 create .config/beets
 .config/beets/config.yaml
-
-### orga
-[calcurse]
-create .calcurse
-.calcurse/conf
-.calcurse/keys
-
-[taskell]
-.taskell
 
 ### rss
 [newsboat]
@@ -213,3 +200,6 @@ create .config/cnsm
 
 [xmrig]
 .config/xmrig.json
+
+[sxiv]
+.Xresources

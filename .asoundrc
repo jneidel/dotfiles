@@ -16,3 +16,5 @@ pcm.dsp {
   type plug
   slave.pcm "dmix"
 }
+
+amixer sset "Auto-Mute" unmute

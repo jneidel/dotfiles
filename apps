@@ -47,6 +47,9 @@ beets Automatic music tagger
 python-beautifulsoup4 beets lyrics plugin dependency
 python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
+rdcli real-debrid download util
+python-eyed3 Mp3 tagging
+id3v2 Mp3 tagging
 
 [scripts]
 jq JSON processor
@@ -57,8 +60,7 @@ xclip X clipboard interface
 wget Download util
 curl Download util
 shellcheck Script debugging
-python-eyed3 Mp3 tagging
-id3v2 Mp3 tagging
+octave Math language
 
 [conky]
 conky Desktop widgets
@@ -113,14 +115,14 @@ qt5-script Build dependency
 
 ## browsers
 [firefox]
-firefox-nightly Experimental firefox
+firefox Firefox
 
 [firefox-dev]
 firefox-developer-edition Developer edition of firefox
 
 [chromium]
 # ungoogled-chromium-bin Free version of chromium
-chromium-widevine Chromium module required for netflix
+chromium Chromium for tradingview
 
 ## utils
 [polybar]
@@ -135,20 +137,11 @@ gcolor2 Color picker
 colorpicker Better colorpicker
 
 # tui
-[cmus]
-cmus Music player
-
 [htop]
 htop Process manager
 
 [mosh]
 mosh Better ssh
-
-[taskell]
-# taskell-bin Kanban board
-
-[calcurse]
-calcurse Calendar and todos
 
 [transmission]
 transmission-cli Torrent daemon
@@ -163,6 +156,7 @@ rsync Sync local and remote directories
 [youtube-dl]
 youtube-dl Youtube downloader
 bandcamp-dl-git Bandcamp downloader
+yt-dlp-git Better yt-dl
 
 # cli
 ## text
@@ -193,6 +187,9 @@ vim The text editor
 neovim The newer text editor
 fzf Fuzzy finder
 par Text wrapper, 80 chars
+
+npm:vscode-langservers-extracted Language servers
+npm:typescript-language-server Lua language server
 
 ## service clients
 [ffsend]
@@ -334,10 +331,7 @@ python-grip Reader markdown file with github styles
 
 npm:np npm release helper
 
-npm:yo Scaffolding tool
-npm:generator-jneidel Personal yo generator
-
-npm:typescript Typescript compiler
+typescript Typescript compiler
 
 npm:webpack Javscript build tool
 npm:webpack-cli Webpack interface
@@ -347,14 +341,15 @@ npm:nodemon Restart node command on changes
 npm:browser-sync Reload browser on changes
 
 npm:markdown-toc Create a md toc
-npm:doctoc Create a md toc
 
 npm:updates npm update manager
 
 npm:jest Test runner
 
+npm:@captainsafia/legit Create license files
+
 [eslint]
-npm:eslint@5 Javascript linter
+npm:eslint Javascript linter
 npm:eslint_d Eslint script for vim
 npm:prettier Code formatter (for vim)
 
@@ -461,14 +456,17 @@ tk GUI
 tcllib tk dependency
 
 [office]
-libreoffice-still
+libreoffice-still Excel
 
 [octave]
-octave
+octave Math language
 
 [xmr]
-monero-gui
+monero-gui Monero wallet
 
 [vnstat]
-vnstat
+vnstat Network traffic monitor
 systemd:vnstat
+
+[jdownloader]
+jdownloader2 Download util

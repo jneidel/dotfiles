@@ -8,8 +8,6 @@ EOF
   exit
 fi
 
-# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
-
 POWER=/sys/class/power_supply
 IS_CHARGING=$(cat $POWER/AC/online)
 
