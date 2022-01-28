@@ -7,12 +7,17 @@
     "jest": true
   },
   "parserOptions": {
-    "ecmaVersion": 10,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
   },
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "coverage"
+  ],
   "plugins": [
     "unicorn",
     "node"
@@ -101,7 +106,10 @@
     "prefer-template": 2,
     "no-useless-concat": 2,
     "no-unreachable": 2,
-    "func-call-spacing": 2,
+    "func-call-spacing": [
+      2,
+      "never"
+    ],
     "no-trailing-spaces": [
       2,
       {
@@ -195,7 +203,7 @@
     ],
     "no-else-return": 0,
     "vars-on-top": 0,
-    "prefer-rest-params": 2,
+    "prefer-rest-params": 1,
     "prefer-spread": 2,
     "one-var": 0,
     "no-shadow": 0,
@@ -236,7 +244,7 @@
     "no-return-await": 2,
     "dot-notation": 2,
     "no-useless-return": 2,
-    "require-await": 2,
+    "require-await": 0,
     "no-return-assign": 0,
     "no-await-in-loop": 0,
     "arrow-parens": 0,

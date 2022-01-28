@@ -1,15 +1,16 @@
 {
-  "parser": "@typescript-eslint/parser",
+  "parser": "/usr/lib/node_modules/@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "impliedStrict": true
-    }
+    },
+    "project": [ "./tsconfig.json" ]
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/array-type": [2, "array"],
+    "@typescript-eslint/array-type": [2, {"default": "array-simple"}],
     "@typescript-eslint/ban-types": [
-      "off",
+      0,
       {
         "types": {
           "Array": { "message": "Use [] instead", "fixWith": "[]" },
@@ -22,16 +23,14 @@
       }
     ],
     "@typescript-eslint/camelcase": 0,
-    "@typescript-eslint/class-name-casing": 2,
-    "@typescript-eslint/explicit-function-return-type": 1,
-    "@typescript-eslint/explicit-member-accessibility": 1,
-    "@typescript-eslint/generic-type-naming": 1,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/explicit-member-accessibility": [0, {
+      "accessibility": "explicit",
+      "overrides": { "methods": "explicit" }
+    } ],
     "@typescript-eslint/indent": 0,
-    "@typescript-eslint/interface-name-prefix": 2,
     "@typescript-eslint/member-delimiter-style": 2,
-    "@typescript-eslint/member-naming": [2, { "private": "^_" }],
-    "@typescript-eslint/member-ordering": 2,
-    "@typescript-eslint/no-angle-bracket-type-assertion": 2,
+    "@typescript-eslint/member-ordering": 0,
     "@typescript-eslint/no-array-constructor": 2,
     "@typescript-eslint/no-empty-interface": 2,
     "@typescript-eslint/no-explicit-any": 0,
@@ -41,11 +40,9 @@
     "@typescript-eslint/no-misused-new": 2,
     "@typescript-eslint/no-namespace": 2,
     "@typescript-eslint/no-non-null-assertion": 2,
-    "@typescript-eslint/no-object-literal-type-assertion": 2,
     "@typescript-eslint/no-parameter-properties": 2,
     "@typescript-eslint/no-require-imports": 0,
     "@typescript-eslint/no-this-alias": 2,
-    "@typescript-eslint/no-triple-slash-reference": 2,
     "@typescript-eslint/no-type-alias": [
       2,
       {
@@ -55,15 +52,20 @@
         "allowMappedTypes": "always"
       }
     ],
-    "@typescript-eslint/no-unnecessary-type-assertion": 2,
+    "@typescript-eslint/no-unnecessary-type-assertion": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-useless-constructor": 2,
     "@typescript-eslint/no-var-requires": 1,
-    "@typescript-eslint/prefer-interface": 1,
     "@typescript-eslint/prefer-namespace-keyword": 2,
-    "@typescript-eslint/promise-function-async": 2,
-    "@typescript-eslint/restrict-plus-operands": 2,
+    "@typescript-eslint/promise-function-async": 0,
+    "@typescript-eslint/restrict-plus-operands": [
+      2,
+      {
+        "checkCompoundAssignments": true,
+        "allowAny": true
+      }
+    ],
     "@typescript-eslint/type-annotation-spacing": 2,
     "@typescript-eslint/ban-ts-ignore": 0,
     "@typescript-eslint/await-thenable": 2

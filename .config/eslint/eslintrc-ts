@@ -7,11 +7,19 @@
     "jest": true
   },
   "parserOptions": {
-    "ecmaVersion": 10,
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "impliedStrict": true
-    }
+    },
+    "project": [
+      "./tsconfig.json"
+    ]
   },
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "coverage"
+  ],
   "plugins": [
     "unicorn",
     "node",
@@ -101,7 +109,10 @@
     "prefer-template": 2,
     "no-useless-concat": 2,
     "no-unreachable": 2,
-    "func-call-spacing": 2,
+    "func-call-spacing": [
+      2,
+      "never"
+    ],
     "no-trailing-spaces": [
       2,
       {
@@ -195,7 +206,7 @@
     ],
     "no-else-return": 0,
     "vars-on-top": 0,
-    "prefer-rest-params": 2,
+    "prefer-rest-params": 1,
     "prefer-spread": 2,
     "one-var": 0,
     "no-shadow": 0,
@@ -236,7 +247,7 @@
     "no-return-await": 2,
     "dot-notation": 2,
     "no-useless-return": 2,
-    "require-await": 2,
+    "require-await": 0,
     "no-return-assign": 0,
     "no-await-in-loop": 0,
     "arrow-parens": 0,
@@ -381,10 +392,12 @@
     "node/prefer-global/url": 2,
     "@typescript-eslint/array-type": [
       2,
-      "array"
+      {
+        "default": "array-simple"
+      }
     ],
     "@typescript-eslint/ban-types": [
-      "off",
+      0,
       {
         "types": {
           "Array": {
@@ -415,21 +428,19 @@
       }
     ],
     "@typescript-eslint/camelcase": 0,
-    "@typescript-eslint/class-name-casing": 2,
-    "@typescript-eslint/explicit-function-return-type": 1,
-    "@typescript-eslint/explicit-member-accessibility": 1,
-    "@typescript-eslint/generic-type-naming": 1,
-    "@typescript-eslint/indent": 0,
-    "@typescript-eslint/interface-name-prefix": 2,
-    "@typescript-eslint/member-delimiter-style": 2,
-    "@typescript-eslint/member-naming": [
-      2,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/explicit-member-accessibility": [
+      0,
       {
-        "private": "^_"
+        "accessibility": "explicit",
+        "overrides": {
+          "methods": "explicit"
+        }
       }
     ],
-    "@typescript-eslint/member-ordering": 2,
-    "@typescript-eslint/no-angle-bracket-type-assertion": 2,
+    "@typescript-eslint/indent": 0,
+    "@typescript-eslint/member-delimiter-style": 2,
+    "@typescript-eslint/member-ordering": 0,
     "@typescript-eslint/no-array-constructor": 2,
     "@typescript-eslint/no-empty-interface": 2,
     "@typescript-eslint/no-explicit-any": 0,
@@ -439,11 +450,9 @@
     "@typescript-eslint/no-misused-new": 2,
     "@typescript-eslint/no-namespace": 2,
     "@typescript-eslint/no-non-null-assertion": 2,
-    "@typescript-eslint/no-object-literal-type-assertion": 2,
     "@typescript-eslint/no-parameter-properties": 2,
     "@typescript-eslint/no-require-imports": 0,
     "@typescript-eslint/no-this-alias": 2,
-    "@typescript-eslint/no-triple-slash-reference": 2,
     "@typescript-eslint/no-type-alias": [
       2,
       {
@@ -453,18 +462,23 @@
         "allowMappedTypes": "always"
       }
     ],
-    "@typescript-eslint/no-unnecessary-type-assertion": 2,
+    "@typescript-eslint/no-unnecessary-type-assertion": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-useless-constructor": 2,
     "@typescript-eslint/no-var-requires": 1,
-    "@typescript-eslint/prefer-interface": 1,
     "@typescript-eslint/prefer-namespace-keyword": 2,
-    "@typescript-eslint/promise-function-async": 2,
-    "@typescript-eslint/restrict-plus-operands": 2,
+    "@typescript-eslint/promise-function-async": 0,
+    "@typescript-eslint/restrict-plus-operands": [
+      2,
+      {
+        "checkCompoundAssignments": true,
+        "allowAny": true
+      }
+    ],
     "@typescript-eslint/type-annotation-spacing": 2,
     "@typescript-eslint/ban-ts-ignore": 0,
     "@typescript-eslint/await-thenable": 2
   },
-  "parser": "@typescript-eslint/parser"
+  "parser": "/usr/lib/node_modules/@typescript-eslint/parser"
 }
