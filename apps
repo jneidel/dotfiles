@@ -89,14 +89,14 @@ fbreader GUI epub reader
 
 [epr]
 epr-git CLI epub reader
-# sudo sed -i "s|feh|sxiv|" $(which -a epr)
+# sudo sed -i "s|feh|nsxiv|" $(which -a epr)
 
 [zathura]
 zathura Reader
 zathura-pdf-poppler Pdf plugin
 
 [sxiv]
-sxiv Minimal image viewer
+nsxiv Minimal image viewer
 
 [gwenview]
 gwenview Extensive image viewer
