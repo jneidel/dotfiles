@@ -22,6 +22,9 @@ elif [ "$1" = "edit" ] || [ "$1" = "e" ]; then
   $EDITOR $FILE
 else
   CURRENT_PRICE=$(~/scripts/xmr raw)
+  if [ "$CURRENT_PRICE" = "0.00" ]; then
+    exit 1
+  fi
 
   notify() {
     BODY="$1"

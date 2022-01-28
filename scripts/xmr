@@ -5,6 +5,12 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ xmr [MULTIPLICATOR]
 Fetch current Monero (XMR) to EUR rate
 
+Arguments:
+  none        : XMR -> EUR
+  raw         : XMR -> EUR (only price)
+  eur EUR     : EUR -> XMR
+  fees EUR XMR: calculate fees hidden in the exchange rate (difference between the two)
+
 Parameters:
   \$1: "eur" to reverse rate (eur -> xmr)
   \$2: multiplicate the course with a given nr, eg. 0.5 to get the course for 0.5 xmr -> eur
