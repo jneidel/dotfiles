@@ -199,3 +199,41 @@ set conceallevel=2
 let g:tex_conceal = ""
 let g:vim_markdown_math = 0
 let g:vim_markdown_strikethrough = 1
+
+" # fern - file explorer
+nnoremap <leader>f :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
+let g:fern#renderer = "nerdfont"
+let g:fern_git_status#disable_ignored = 1
+let g:fern_git_status#disable_untracked = 1
+let g:fern_git_status#disable_submodules = 1
+let g:fern_git_status#disable_directories = 1
+let g:fern#disable_default_mappings = 1
+
+au Filetype fern nmap <buffer> <CR> <Plug>(fern-action-open-or-enter)
+au Filetype fern nmap <buffer> L <Plug>(fern-action-open) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
+au Filetype fern nmap <buffer> l <Plug>(fern-action-open-or-expand)
+au Filetype fern nmap <buffer> h <Plug>(fern-action-collapse)
+au Filetype fern nmap <buffer> H <Plug>(fern-action-leave)
+au Filetype fern nmap <buffer> K <Plug>(fern-action-leave)
+au Filetype fern nmap <buffer> J <Plug>(fern-action-expand)
+au Filetype fern nmap <buffer> <BS> <Plug>(fern-action-leave)
+
+au Filetype fern nmap <buffer> u <Plug>(fern-action-hidden:toggle)
+au Filetype fern nmap <buffer> rm <Plug>(fern-action-remove)
+" au Filetype fern nmap <buffer> t <Plug>(fern-action-new-file)
+" au Filetype fern nmap <buffer> d <Plug>(fern-action-new-dir)
+
+" tips: https://github.com/lambdalisue/fern.vim/wiki/Tips
+
+au Filetype fern nmap <buffer> t <Plug>(fern-action-open:tabedit)
+au Filetype fern nmap <buffer> s <Plug>(fern-action-open:side) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
+au Filetype fern nmap <buffer> v <Plug>(fern-action-open:below) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
+" au Filetype fern nmap <buffer>
+" <Plug>(fern-action-open:select)
+" <Plug>(fern-action-open:system)
+" open:below
+
+au Filetype fern nmap <silent> <buffer> p     <Plug>(fern-action-preview:toggle)
+
+" au Filetype fern nmap <buffer> <++>
+

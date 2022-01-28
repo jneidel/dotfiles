@@ -1,10 +1,17 @@
-todo.md
-*.un~
-.vscode/
 package-lock.json
 yarn.lock
 node-modules/
+
+dist/
+build/
+target/
+coverage/
+
+todo.md
+*.un~
 Session.vim
+.vscode/
+.DS_Store
 tmp/
 .yo-rc.json
 
@@ -12,3 +19,12 @@ tmp/
 *.mp4
 *.mkv
 *.avi
+
+# latex
+*.aux
+*.nav
+*.out
+*.snm
+*.tec
+*.log
+*.toc

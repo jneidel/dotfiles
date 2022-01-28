@@ -1,7 +1,7 @@
 #!/bin/sh
 # xinitrc
-## run with 'startx'
-## run after logging into tty1 through ~/.zshrc
+## run manually with 'startx'
+## run automatically after logging into tty1 through ~/.zshrc
 
 # remap caps lock to escape
 # does not work via xmodmap without display manager
@@ -53,7 +53,6 @@ nice -n 7 signal-desktop &
 #   ~/scripts/mpd/local-cover &
 #   # nitrogen --restore &
 # } &
-# sudo chmod 777 -R /sys/class/backlight/intel_backlight &
 
 # wallpaper
 xwallpaper --zoom ~/.config/wallpaper.png &

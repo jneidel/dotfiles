@@ -7,7 +7,6 @@
 " condition: au BufRead <filepath>
 " action   : setfiletype <filetype>
 " action   : setlocal (to set options for this buffer only) <options>
-"
 
 " todo file
 au BufRead ~/todo setfiletype markdown
@@ -29,6 +28,8 @@ au FileType markdown setlocal formatoptions+=t
 
 " remap enter to create a newline
 au Filetype markdown nmap <Enter> o<Esc>
+" interesting is a filler word that does not say anything
+au Filetype markdown match error /[iI]nteresting/
 
 " notes
 au BufRead ~/code/notes/journal/* setfiletype markdown
@@ -46,3 +47,6 @@ autocmd FileType remind setlocal commentstring=#\ %s
 " fragmentshader / vertexshader
 au BufRead *.fragmentshader setfiletype cpp
 au BufRead *.vertexshader setfiletype cpp
+
+" octave
+au FileType octave set ft=matlab

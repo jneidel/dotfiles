@@ -11,8 +11,8 @@ au BufWritePost ~/code/dotfiles/docs/music.md !markdown-toc -i ~/code/dotfiles/d
 au BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
 " generate eslint configs on save and restart eslint daemon
-au BufWritePost ~/.eslint/*.json !~/.eslint/generate-eslint-configs.js
-au BufWritePost ~/.eslint/*.json !eslint_d restart
+au BufWritePost ~/.config/eslint/*.json !~/.config/eslint/generate-eslint-configs.js
+" au BufWritePost ~/.eslint/*.json !eslint_d restart
 
 " restart sxhdk on config write
 au BufWritePost ~/.config/sxhkd/sxhkdrc !kill $(pidof sxhkd); sxhkd 2>/dev/null &
@@ -26,6 +26,8 @@ au BufRead ~/comics/updates silent !comicsync
 
 " format fcrontab buffer after writing
 au BufWritePost /tmp/fcr-* silent %!column -t
+
+au BufEnter /tmp/latinueb silent %!column -t
 
 " create header for new notes file
 au BufNewFile ~/code/notes/journal/* r!printf "\# thoughts on %:t \n"

@@ -182,7 +182,7 @@ map gd cd ~/Downloads
 map gp cd ~/projects
 map gu cd ~/projects/uni
 map gG cd ~/projects/geldhochschule
-map gt cd ~/projects/geldhochschule/Trades
+map gt cd ~/projects/geldhochschule/1_Trades
 map gc cd ~/ct
 map gC cd ~/ct/podcasts
 map gP cd ~/ct/pictures

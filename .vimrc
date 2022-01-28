@@ -210,14 +210,17 @@ cabbrev vb vert sb
 cabbrev vsb vert sb
 
 " write file after losing focus, or leaving the window
-au FocusLost,WinLeave * :silent w " Doesnt trigger on i3 windows
-" Todo: how to ignore errors
+au FocusLost,WinLeave * :silent! w! " Doesnt trigger on i3 windows
+
 " read file after regaining focus, entering the buffer
-au BufEnter * :silent! !
+" was this required? just throws errors on nvim
+" au BufEnter * :silent! !
 " source: https://stackoverflow.com/a/20418591
 " maybe checkout: https://stackoverflow.com/a/8610556
+
 set autoread " takes 5s
-au CursorHold * checktime
+" au CursorHold * checktime
+" throws errors
 
 " Increment/decrement next number
 " src: https://vim.fandom.com/wiki/Increasing_or_decreasing_numbers

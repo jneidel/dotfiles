@@ -33,7 +33,7 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 ## Paths
-export PATH=/bin:/usr/bin:/usr/bin/vendor_perl:$HOME/.local/bin
+export PATH=$HOME/.local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl
 export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 
@@ -44,7 +44,8 @@ export LESS="-R"
 export BROWSER=brave
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
-export JAVA_HOME=/usr/lib/jvm/java-14-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+export JAVA=$(readlink -f /bin/java)
 export NODE_PATH=/usr/lib/node_module
 # for eslint, see: https://github.com/eslint/eslint/issues/11914#issuecomment-525498682
 export LUA_SERVER_PATH="$HOME/.local/share/nvim/lua-language-server"

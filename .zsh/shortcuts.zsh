@@ -21,7 +21,7 @@ alias disksize="df -h"
 
 ## calendar
 alias calendar="cal -mn 6"
-alias cal3="khal calendar -f '' -df ''"
+alias cal3="cal -3"
 
 ## background
 alias b="background"
