@@ -16,6 +16,9 @@ fi
 if echo $CLIP_CONTENT | grep -e invidious -e yewtu >/dev/null; then
   CLIP_CONTENT="$(echo $CLIP_CONTENT | sed 's|//.*invidious.*/|//www.youtube.com/|' | sed 's|//yewtu\.be/|//www.youtube.com/|')"
 fi
-echo $CLIP_CONTENT
 
-tsp mpv --profile=overlay --fs "$CLIP_CONTENT" 2>/dev/null >/dev/null
+if echo $CLIP_CONTENT | grep ".mp3" >/dev/null; then
+  tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video --profile=music '$CLIP_CONTENT'"
+else
+  tsp mpv --profile=overlay --fs "$CLIP_CONTENT" 2>/dev/null >/dev/null
+fi

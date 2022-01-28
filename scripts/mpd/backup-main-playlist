@@ -1,0 +1,19 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ backup-main-playlist
+Save current main playlist as backup
+mpd sometimes drops the main playlist (on update)
+
+To be run as a cronjob
+EOF
+  exit
+fi
+
+command -v ~/scripts/mpd/mpcc >/dev/null || { echo "~/scripts/mpd/mpcc is not installed" 1>&2; exit 127; }
+
+~/scripts/mpd/mpcc save "backup_$(date +'%Y-%m-%d')"
+# saves in MUSIC_DIR/.mpd/playlists
+
+~/scripts/cron/cron-notify-send "mpd" "saved backup"

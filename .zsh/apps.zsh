@@ -26,11 +26,10 @@ alias comic="getcomics-dl"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
-alias ytdl="youtube-dl --yes-playlist -c -i --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1"
-alias ytmp3="youtube-dl --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1 --write-thumbnail"
-alias ytlow="youtube-dl --yes-playlist -c -i --retries 4 -f 'mp4[height=480]' -o '~/Downloads/%(title)s.%(ext)s' $2 $3 $1" # dont use for youtube, has no sound
-alias ytraw="youtube-dl -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s' $1" # Does not force height, try --write-pages if not working
-alias ythere="youtube-dl -c -i --retries 4 -f 'mp4[height=720]'"
+alias ytdl="yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height=720]' -o '~/Downloads/%(title)s.%(ext)s'"
+alias ytmp3="yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' --embed-thumbnail"
+alias ytraw="yt-dlp -c --retries 4 -o '~/Downloads/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working
+alias ythere="yt-dlp -c -i --retries 4 -f 'mp4[height=720]'"
 alias -g PE="--playlist-end"
 
 ### redefining existing commands
@@ -52,6 +51,8 @@ alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
 alias npm="/bin/npm -s"
 alias ani-cli="/bin/ani-cli -q 720"
+alias yay="nice /bin/yay"
+alias mv="/bin/mv -v"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -61,7 +62,8 @@ alias ht="hosts-toggle"
 alias sc="shellcheck"
 alias to="todays-events"
 alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
-alias sw="raw-stopwatch"
+alias sw="date +'%a %b %d'; raw-stopwatch"
+alias license="legit put gpl-3.0"
 
 ### misc
 function dict {
@@ -70,7 +72,6 @@ function dict {
 alias tree="alder --depth 3" # print filetree, nig @aweary/alder
 alias flux="xflux -l 52 -g 13" # bluelight filter
 alias speed="npx speedo-cli"
-alias npmup="npm-check-updates"
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
 alias cal6="cal -mn 6"
 alias g="grep"
@@ -101,7 +102,7 @@ alias new="wait_for_newsboat clean"
 alias pod="wait_for_newsboat pod"
 alias misc="wait_for_newsboat misc"
 alias ma="wait_for_newsboat manga"
-ent() {
+nomoreent() {
   # echo "No youtube and gaming entertainment for now"
   # return 1
 
@@ -201,11 +202,12 @@ wtsn() {
 ## remind
 alias mc="clear && rem -b1 -c+u2 -m -@2,0 2>/dev/null"
 alias mcm="clear && rem -b1 -c+u4 -m -@2,0 2>/dev/null"
+alias mcmm="clear && rem -b1 -c+u6 -m -@2,0 2>/dev/null"
 alias mc4=mcm
+alias mc6=mcmm
+alias mc8="clear && rem -b1 -c+u8 -m -@2,0 2>/dev/null"
+alias mc12="clear && rem -b1 -c+u12 -m -@2,0 2>/dev/null"
+alias mc14="clear && rem -b1 -c+u14 -m -@2,0 2>/dev/null"
+alias mc16="clear && rem -b1 -c+u16 -m -@2,0 2>/dev/null"
 alias mce='rem -b1 -c+u2 -m -@2,0 2>&1 | grep -ve "│" -e "trigger" -e "┬" -e "┼" -e "┴"'
-alias to="rem 2> /dev/null | grep -v Reminders"
-
-## xmr
-alias mine="sudo cpulimit -l 100 nice xmrig"
-alias mine+="sudo cpulimit -l 225 nice xmrig"
-alias mine++="sudo cpulimit -l 350 nice xmrig"
+alias to="rem 2>/dev/null | grep -v Reminders"

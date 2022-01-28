@@ -57,8 +57,8 @@ node https://duckduckgo.com/?q=site%3Ahttps%3A%2F%2Fnodejs.org%2Fapi%2F+%s
 div https://dividata.com/stock/%s
 divd https://dividata.com/stock/%s
 dividend https://dividata.com/stock/%s
-earn https://www.earningswhispers.com/stocks/%s
-earnings https://www.earningswhispers.com/stocks/%s
+earn https://alpha.earningswhispers.com/stocks/%s
+earnings https://alpha.earningswhispers.com/stocks/%s
 ups https://www.ups.com/track?tracknum=%s
 vl https://research.valueline.com/research#sec=company&sym=%s
 inside http://openinsider.com/screener?s=%s&td=30&grp=2&nol=1&nil=2&v2l=1000&oc2l=3

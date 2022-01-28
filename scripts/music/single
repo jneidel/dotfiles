@@ -65,6 +65,13 @@ if [ "$1" = "-a" ]; then
   ALBUM="$2"
   shift
   shift
+  case "$ALBUM" in # I structure my singles by atmosphere, going into one of these bins
+    1|Chill ) ALBUM=1_Chill ;;
+    2|Chilly) ALBUM=2_Chilly;;
+    3|Normal) ALBUM=3_Normal;;
+    4|Upbeat) ALBUM=4_Upbeat;;
+    5|Energy) ALBUM=5_Energy;;
+  esac
 fi
 
 if [ "$1" = "-AA" ]; then

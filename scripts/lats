@@ -1,0 +1,17 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ lat[in]s[ession]
+Open all apps for a latin study session
+EOF
+  exit
+fi
+
+command -v tmux >/dev/null || { echo "tmux is not installed" 1>&2; exit 127; }
+command -v $B >/dev/null || { echo "$B is not installed" 1>&2; exit 127; }
+command -v anki >/dev/null || { echo "anki is not installed" 1>&2; exit 127; }
+
+tmux new-window lf ~/projects/latin
+$B "https://www.online-latin-dictionary.com/" >/dev/null 2>&1 &
+anki >/dev/null 2>&1 &

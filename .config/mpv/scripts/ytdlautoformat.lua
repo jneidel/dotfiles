@@ -61,12 +61,9 @@ local function ytdlAutoChange(name, value)
 		mp.set_property("ytdl-format", ytdlChange)
 		msg.info("Domain match found, ytdl-format has been changed.")
 		msg.info("Changed ytdl-format: "..mp.get_property("ytdl-format"))
-	else
-		msg.info("No domain match, ytdl-format unchanged.")
 	end
 
 	mp.unobserve_property(ytdlAutoChange)
-	msg.info("Finished check, script no longer running.")
 end
 
 local function ytdlCheck()
@@ -74,10 +71,9 @@ local function ytdlCheck()
 
 	if string.match(string.lower(path), "^(%a+://)") then
 		mp.set_property("ytdl-format", ytdlDefault)
-		msg.info("Current ytdl-format: "..mp.get_property("ytdl-format"))
+		-- msg.info("Current ytdl-format: "..mp.get_property("ytdl-format"))
 
 		mp.observe_property("path", "string", ytdlAutoChange)
-		msg.info("Observing path to determine ytdlAutoChange status...")
 	end
 end
 

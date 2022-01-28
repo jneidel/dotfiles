@@ -29,31 +29,37 @@ elif [ -n "$1" ]; then
   OUTPUT="$1.mkv"
 fi
 
-
 command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 1; }
+command -v xdpyinfo >/dev/null || { echo "xdpyinfo is not installed"; exit 1; }
 
 test_audio() {
   # play sound and check on stream if sound is being played
   timeout 3 mpv --no-audio-display --no-video ~/scripts/personal/audio.mp3 >/dev/null 2>&1
   sleep 7 && timeout 3 mpv --profile=overlay "$OUTPUT" >/dev/null 2>&1
 }
-# test_audio &
+test_audio &
 
-echo "Killing xautolock"
-kill $(pidof xautolock)
+circumvent_lockscreen() {
+  echo "Killing xautolock"
+  kill $(pidof xautolock)
 
-cleanup() {
-  echo "Starting xautolock"
-  ~/scripts/i3/lock/autostart-lock
+  cleanup() {
+    echo "Starting xautolock"
+    ~/scripts/i3/lock/autostart-lock
+  }
+  trap cleanup EXIT
 }
-trap cleanup EXIT
+circumvent_lockscreen
 
 # -s size (dimension)
-# -f format (x/alsa)
-# -i input (x display/pulse/default)
-# -y to overwrite files
+# -f format (X) -i input (X display)
+# -f format (alsa) -i input (pulse/default)
 # -r framerate
-# -preset fast ~30% ultrafast ~20% cpu
+# -threads run multi threaded
+# -vcodec video codec
+# -preset
+#   fast ~30%
+#   ultrafast ~20% cpu
 
 ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
   -f x11grab -i :0.0 \
@@ -64,8 +70,8 @@ ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
   -preset fast \
   "$OUTPUT"
 
-  # -acodec pcm_s16le -vcodec libx264 -preset fast -crf 0 -threads 0 \
-
+# -acodec pcm_s16le
+# -crf 0
 
 # adapt quality/size options
 ## https://ubuntuforums.org/showthread.php?p=8746719#post8746719

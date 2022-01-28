@@ -16,7 +16,7 @@ fi
 
 URL="$1"
 
-if echo $URL | grep -e "youtube.com/watch?v=" -e "yewtu.be/watch" >/dev/null; then
+if echo $URL | grep -e "youtube.com/watch?v=" -e "yewtu.be/watch" -e ".mp3" >/dev/null; then
   echo $URL | xclip -sel clip -i
   open_clip_mpv
 elif echo $URL | fgrep "twitter.com" >/dev/null; then

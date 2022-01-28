@@ -12,8 +12,6 @@ Toggles between: Berlin & Dresden
 "; exit
 fi
 
-command -v khal >/dev/null || { echo "khal is not installed"; exit 1; }
-
 LOCATION_FILE="$(dirname $0)/location"
 
 write_loc() {

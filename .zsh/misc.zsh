@@ -29,3 +29,10 @@ alias d10="roll_dice 10"
 alias d8="roll_dice 8"
 alias d6="roll_dice 6"
 alias d4="roll_dice 4"
+
+## money greed index
+feargreed() {
+  FILE=$HOME/tmp/moneygreed-$(date +%m-%d).png
+  curl -Ss https://money.cnn.com/data/fear-and-greed/ | grep -Po "http://markets.money.cnn.com/Marketsdata/.+?.png" | xargs curl -Ss -H 'Referer: ' --compressed --output $FILE
+  sxiv $FILE
+}
