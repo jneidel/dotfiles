@@ -470,3 +470,7 @@ systemd:vnstat
 
 [jdownloader]
 jdownloader2 Download util
+
+[haveged]
+haveged RNG to add randomness
+systemd:haveged
