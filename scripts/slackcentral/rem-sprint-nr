@@ -1,8 +1,8 @@
 #! /bin/sh
 
-SPRINT_DATE="2021-12-12"
-SPRINT_DATE_NR="004"
-SPRINT_WEEKDAY="sun"
+SPRINT_DATE="2022-01-31"
+SPRINT_DATE_NR="013"
+SPRINT_WEEKDAY="mon"
 MAX_ITERATIONS=20
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then

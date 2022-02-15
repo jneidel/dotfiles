@@ -18,6 +18,10 @@ set filesep "\n"
 cmd open ${{
   ~/scripts/mime/mime -e lf open "$f"
 }}
+cmd openAndSwitch ${{
+  ~/scripts/mime/mime -e lf open "$f"
+  tmux next-window
+}}
 cmd diropen ${{
   ~/scripts/lf-handle-dir "$f"
 }}
@@ -169,7 +173,8 @@ map m massmove
 map d mkdir
 map D diropen
 map Y diropenShuffle
-map f broot_jump
+map L openAndSwitch
+# map f broot_jump
 map . set hidden!
 map t touch
 map T touchTex

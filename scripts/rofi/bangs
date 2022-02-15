@@ -17,6 +17,8 @@ command -v rofi >/dev/null || { echo "rofi is not installed"; exit 1; }
 command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed"; exit 1; }
 command -v node >/dev/null || { echo "node is not installed"; exit 1; }
 
+DEFAULT_BANG="l" # latin
+
 bangList() {
   cat $(dirname $0)/banglist
 }
@@ -39,7 +41,7 @@ res="$(prompt)"
 
 bang="${res%% *}"
 query="${res#* }"
-[ "$query" = "$bang" ] && bang="mw" # no bang passed -> merriam webster
+[ "$query" = "$bang" ] && bang=$DEFAULT_BANG
 
 case "$bang" in
   y)

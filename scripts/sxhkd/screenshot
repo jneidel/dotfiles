@@ -19,7 +19,7 @@ command -v scrot >/dev/null || { echo "scrot is not installed"; exit 1; }
 
 mkdir -p $PIC_DIR
 
-DELAY="3"
+DELAY="1"
 [ -n "$2" ] && DELAY="$2"
 
 if [ "$1" = "-s" ]; then

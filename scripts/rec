@@ -37,7 +37,7 @@ test_audio() {
   timeout 3 mpv --no-audio-display --no-video ~/scripts/personal/audio.mp3 >/dev/null 2>&1
   sleep 7 && timeout 3 mpv --profile=overlay "$OUTPUT" >/dev/null 2>&1
 }
-test_audio &
+# test_audio &
 
 circumvent_lockscreen() {
   echo "Killing xautolock"
@@ -62,6 +62,7 @@ circumvent_lockscreen
 #   ultrafast ~20% cpu
 
 ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
+  -use_wallclock_as_timestamps true \
   -f x11grab -i :0.0 \
   -f alsa -i pulse \
   -r $FPS \
@@ -71,7 +72,7 @@ ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
   "$OUTPUT"
 
 # -acodec pcm_s16le
-# -crf 0
+# -crf 0 - 25 # quality?
 
 # adapt quality/size options
 ## https://ubuntuforums.org/showthread.php?p=8746719#post8746719

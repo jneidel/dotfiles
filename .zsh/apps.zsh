@@ -53,6 +53,8 @@ alias npm="/bin/npm -s"
 alias ani-cli="/bin/ani-cli -q 720"
 alias yay="nice /bin/yay"
 alias mv="/bin/mv -v"
+alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
+alias pba="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
 
 ### shorter script names
 alias rc="rename-comic"

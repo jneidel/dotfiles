@@ -1,0 +1,226 @@
+#! /bin/sh
+
+DIR="$HOME/.local/share/ran"
+MAPPINGS="$HOME/.local/share/ran/mappings"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ ran[dom]
+Pick a random entry from a file.
+
+Provides temporary or reusable and namable files.
+
+
+Edit & Select:
+  N   : edit and select from named buffer (N is 1..9)
+  NAME: edit and select from named buffer (NAME can be any alias)
+  l   : edit and select from last open buffer
+
+Selecting an entry will delete it from the buffer unless prefixed by "$ ".
+
+Select:
+  <none>         : temporary buffer
+  FILE           : select from the given file
+  Ns, N s, NAME s: select from named buffer
+
+Edit:
+  a              : edit all named buffers
+  Ne, N e, NAME e: edit named buffer
+
+Commands:
+  N as NAME: add NAME as an alias for the give named buffer
+
+Stdin:
+  If stdin is passed it will be selected from.
+  If an N is passed also it will append to that named buffer.
+
+Examples:
+  # from temporary list
+  $ ran
+  $ echo "stay\ngo" | ran
+
+  # work with last used lists
+  $ ran l
+  $ ran ls
+
+  # manipulate named buffers by their number
+  $ ran 2
+  $ ran 3s
+  $ ran 3 e
+  $ ran a
+
+  # use named buffers with their name
+  $ ran 1 as chores
+  $ ran chores
+  $ ran chores e
+
+  # append to a named buffer
+  $ echo "watch a movie" | ran 4
+  $ echo "dishes" | ran chores
+  $ echo "shoe shining\ncleanup the kitchen" | sed 's/^/$ /' | ran chores
+EOF
+  exit
+fi
+
+command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed" 1>&2; exit 127; }
+
+cd /tmp # don't screw with vim last opened file
+mkdir -p "$DIR"
+
+selectFromFile() {
+  FILE="$1"
+
+  contentsFilteredIfListMode() {
+    if grep "^- " "$FILE" >/dev/null; then # list mode, only select from lines starting with "- "
+      grep "^- " "$FILE"
+    else
+      cat "$FILE"
+    fi
+  }
+  contentsFilteredIfListMode | grep -v "^$" | shuf -n1
+}
+
+select() {
+  FILE="$1"
+  SELECTION=`selectFromFile "$FILE"`
+
+  if ! echo $SELECTION | grep "\$ " >/dev/null; then # remove line if not a constant
+    echo $SELECTION
+    sed -i "/$SELECTION/d" "$FILE"
+  else
+    echo $SELECTION | cut -c3- # cut off leading "$ " (constant identifier)
+  fi
+}
+
+translateAlias() {
+  ALIAS="$1"
+
+  if ! grep " $ALIAS$" "$MAPPINGS" >/dev/null; then
+    cat <<EOF
+alias does not exist
+create it using the sytax:
+  N as ALIAS
+EOF
+    exit 1
+  fi
+  grep " $ALIAS$" "$MAPPINGS" | cut -c1
+}
+
+translateNtoAlias() {
+  N="$1"
+
+  if grep "^$N " "$MAPPINGS" >/dev/null; then
+    grep "^$N " "$MAPPINGS" | head -n1 | cut -d\  -f2-
+  else
+    echo $N
+  fi
+}
+
+case $# in
+  0)
+    TMP=$(mktemp --suffix=.ran)
+    if ! [ -t 0 ]; then # | ran
+      cat /dev/stdin >$TMP
+    else # none
+      $EDITOR $TMP
+    fi
+    select $TMP
+    ;;
+  1)
+    if [ -f "$1" ]; then # FILE
+      select "$1"
+      exit 0
+    fi
+
+    case "$1" in
+      l)
+        FILE=`find /tmp -name '*.ran' -exec stat -c '%X %n' {} \; 2>/dev/null | sort -nr | head -n1 | cut -d/ -f3`
+        $EDITOR "$FILE"
+        select "$FILE"
+        ;;
+      le)
+        FILE=`find /tmp -name '*.ran' -exec stat -c '%X %n' {} \; 2>/dev/null | sort -nr | head -n1 | cut -d/ -f3`
+        $EDITOR "$FILE"
+        ;;
+      ls)
+        FILE=`find /tmp -name '*.ran' -exec stat -c '%X %n' {} \; 2>/dev/null | sort -nr | head -n1 | cut -d/ -f3`
+        select "$FILE"
+        ;;
+      a)
+        idList=
+        for n in $(seq 1 9); do
+          identifier=`translateNtoAlias $n`
+          if [ ! -L "/tmp/$identifier.ran" ]; then
+            ln -s "$DIR/$n.ran" "/tmp/$identifier.ran" 2>/dev/null
+          fi
+          idList="$idList $identifier.ran"
+        done
+        $EDITOR -p $idList 2>/dev/null
+        ;;
+      1|2|3|4|5|6|7|8|9) # N
+        N=$1
+        if ! [ -t 0 ]; then # | ran N
+          cat /dev/stdin >>$DIR/$N.ran
+          echo "Appended to $N"
+          exit 0
+        fi
+        cd "$DIR"
+        $EDITOR "$DIR/$N.ran"
+        select "$DIR/$N.ran"
+        ;;
+      1e|2e|3e|4e|5e|6e|7e|8e|9e) # Ne
+        N=`echo $1 | cut -c1`
+        $EDITOR "$DIR/$N.ran"
+        ;;
+      1s|2s|3s|4s|5s|6s|7s|8s|9s) # Ns
+        N=`echo $1 | cut -c1`
+        select "$DIR/$N.ran"
+        ;;
+      *) # NAME
+        N=`translateAlias "$1"`
+        if ! [ -t 0 ]; then # | ran NAME
+          cat /dev/stdin >>$DIR/$1.ran
+          echo "Appended to $N ($1)"
+          exit 0
+        fi
+        cd "$DIR"
+        $EDITOR "$DIR/$N.ran"
+        select "$DIR/$N.ran"
+        ;;
+    esac
+    ;;
+  2)
+    case $2 in
+      s)
+        case $1 in
+          1|2|3|4|5|6|7|8|9) # N s
+            select "$DIR/$1.ran"
+            ;;
+          *) # NAME s
+            N=`translateAlias "$1"`
+            select "$DIR/$N.ran"
+            ;;
+        esac
+        ;;
+      e)
+        cd "$DIR"
+        case $1 in
+          1|2|3|4|5|6|7|8|9) # N e
+            $EDITOR "$DIR/$1.ran"
+            ;;
+          *) # NAME e
+            N=`translateAlias "$1"`
+            $EDITOR "$DIR/$N.ran"
+            ;;
+        esac
+        ;;
+    esac
+    ;;
+  3) # N as NAME
+    N="$1"
+    if [ "$2" = "as" ] && echo "$N" | grep "[1-9]" >/dev/null; then
+      ALIAS="$3"
+      echo "$N $ALIAS" >>"$MAPPINGS"
+    fi
+    ;;
+esac

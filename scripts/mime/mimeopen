@@ -47,7 +47,7 @@ case $EXT in
   gpg|*.gpg) echo extracthere; exit 1;;
   txt|md|java) echo "$EDITOR"; exit 1;;
   ods|xlsx|csv) echo libreoffice;;
-  docx|pptx|odp|odt) echo "libreoffice --convert-to pdf"; exit 1;;
+  docx|pptx|odp|odt|xltx) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
   sc) echo sc-im; exit 1;;
   py) echo python3; exit 1;;
