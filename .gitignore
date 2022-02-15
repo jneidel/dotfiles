@@ -18,3 +18,5 @@ scripts/mpd/mpd-server-status
 scripts/weather/location
 scripts/*/data
 scripts/ftp/*-ip
+
+.config/nvim/jaspers-neovim

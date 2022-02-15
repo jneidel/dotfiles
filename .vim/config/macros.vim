@@ -115,6 +115,9 @@ au filetype vim imap ,o {\<Enter>}<Esc>i
 "### scala
 au filetype scala imap ,o {<Enter>}<Esc>O
 
+"### python
+au filetype python imap ,l print(  )<Esc>hi
+
 "### remind (.rem)
 au filetype remind imap ,r SPECIAL COLOR 225 0 0<Space>
 au filetype remind imap ,g SPECIAL COLOR 0 225 0<Space>
