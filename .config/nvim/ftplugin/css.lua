@@ -1,35 +1,22 @@
--- css lsp
 -- installation: sudo npm i -g vscode-langservers-extracted
 
-local root_dir = vim.loop.cwd
-local custom_on_attach = require('utils').custom_on_attach
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local custom_attach, updated_capabilities, root_dir = require('utils').lsp_setup()
 
 require('lspconfig').cssls.setup {
   cmd = { 'vscode-css-language-server', '--stdio' },
-  filetypes = { 'css' },
-  capabilities = capabilities,
+  filetypes = { 'css', 'sass', 'scss' },
   settings = {
     css = { validate = true },
     scss = { validate = true },
     sass = { validate = true },
   },
+  capabilities = updated_capabilities,
   root_dir = root_dir,
   on_attach = custom_on_attach,
-}
-
--- emmet lsp
--- installation: sudo npm i -g ls_emmet
-require('lspconfig/configs').ls_emmet = {
-  default_config = {
-    cmd = { 'ls_emmet', '--stdio' },
-    filetypes = { 'css' },
-    root_dir = root_dir,
-    on_attach = custom_on_attach,
+  flags = {
+    debounce_text_changes = 150,
   },
 }
-require('lspconfig').ls_emmet.setup { capabilities = capabilities }
 
 -- automatically start lsp
 vim.api.nvim_command(':LspStart')

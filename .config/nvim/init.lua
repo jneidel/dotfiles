@@ -2,8 +2,9 @@
 -- https://github.com/jasper-schnabel/neovim
 -- https://github.com/ChristianChiarulli/LunarVim
 
-require( "plugins" )
+-- import files in ./lua/
 require( "options" )
+require( "plugins" )
 require( "mappings" )
 
 vim.api.nvim_command( "set runtimepath^=~/.vim runtimepath+=~/.vim/after" )

@@ -14,9 +14,9 @@ require('nvim-autopairs').setup {
 }
 
 -- map <CR> to work with nvim-cmp
-require('nvim-autopairs.completion.cmp').setup {
+--[[ require('nvim-autopairs.completion.cmp').setup { -- deprecated
   map_cr = true,
   map_complete = true,
   auto_select = true,
   insert = true
-}
+} ]]

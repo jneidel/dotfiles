@@ -6,7 +6,7 @@ local custom_on_attach = require('utils').custom_on_attach
 
 require('lspconfig').bashls.setup {
   cmd = { 'bash-language-server', 'start' },
-  filetypes = { 'sh' },
+  filetypes = { 'sh', 'bash', 'zsh' },
   root_dir = root_dir,
   on_attach = custom_on_attach,
 }

@@ -1,7 +1,7 @@
 -- zsh lsp
 -- installation: sudo npm i -g bash-language-server
 
-local root_dir = vim.loop.cwd
+--[[ local root_dir = vim.loop.cwd
 local custom_on_attach = require('utils').custom_on_attach
 
 require('lspconfig').bashls.setup {
@@ -12,4 +12,4 @@ require('lspconfig').bashls.setup {
 }
 
 -- automatically start lsp
-vim.api.nvim_command(':LspStart')
+vim.api.nvim_command(':LspStart') ]]

@@ -1,7 +1,7 @@
 -- scss lsp
 -- installation: sudo npm i -g vscode-langservers-extracted
 
-local root_dir = vim.loop.cwd
+--[[ local root_dir = vim.loop.cwd
 local custom_on_attach = require('utils').custom_on_attach
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -32,4 +32,4 @@ require('lspconfig/configs').ls_emmet = {
 require('lspconfig').ls_emmet.setup { capabilities = capabilities }
 
 -- automatically start lsp
-vim.api.nvim_command(':LspStart')
+vim.api.nvim_command(':LspStart') ]]

@@ -237,3 +237,4 @@ au Filetype fern nmap <silent> <buffer> p     <Plug>(fern-action-preview:toggle)
 
 " au Filetype fern nmap <buffer> <++>
 
+let g:gutentags_enabled = 0
