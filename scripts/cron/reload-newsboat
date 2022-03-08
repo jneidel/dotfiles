@@ -10,10 +10,11 @@ fi
 
 command -v newsboat >/dev/null || { echo "newsboat is not installed"; exit 1; }
 
-ppid=$(ps -o ppid= -p $$)
-if ps -p $ppid -o command | tail -n1 | grep -vi cron >/dev/null; then
-  exit 1
-fi
+# disallow reload-newsboat to be run anywhere else but through cron
+# ppid=$(ps -o ppid= -p $$)
+# if ps -p $ppid -o command | tail -n1 | grep -vi cron >/dev/null; then
+#   exit 1
+# fi
 
 reload() {
   local NAME=$1

@@ -13,5 +13,6 @@ command -v $B >/dev/null || { echo "$B is not installed" 1>&2; exit 127; }
 command -v anki >/dev/null || { echo "anki is not installed" 1>&2; exit 127; }
 
 tmux new-window lf ~/projects/latin
+backlight max >/dev/null
 $B "https://www.online-latin-dictionary.com/" >/dev/null 2>&1 &
 anki >/dev/null 2>&1 &

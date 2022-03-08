@@ -67,6 +67,7 @@ git clone https://github.com/styled-components/vim-styled-components.git $VB/syn
 git clone https://github.com/digitaltoad/vim-pug.git $VB/syntax-pug
 git clone https://github.com/othree/html5.vim.git $VB/syntax-html
 git clone https://github.com/PotatoesMaster/i3-vim-syntax.git $VB/syntax-i3
+git clone https://github.com/lumiliet/vim-twig.git $VB/syntax-twig
 
 color_echo "install indent-js" # better js indention
 git clone git@github.com:jason0x43/vim-js-indent.git $VB/indent-javascript

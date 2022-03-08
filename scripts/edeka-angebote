@@ -1,0 +1,30 @@
+#! /bin/sh
+
+Kottmeierstr=10003134
+Center=8001126
+MARKET_ID=$Kottmeierstr
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ edeka-angebote
+Print fruit and vegetables on offer this week at my local Edeka.
+EOF
+  exit
+fi
+
+command -v curl >/dev/null || { echo "curl is not installed" 1>&2; exit 127; }
+command -v jq >/dev/null || { echo "jq is not installed" 1>&2; exit 127; }
+
+FILE="$HOME/.local/share/edeka-angebote-$(date +%U).json"
+
+fetch() {
+  echo "[" >$FILE
+  curl -Ss "https://www.edeka.de/eh/service/eh/offers?marketId=$MARKET_ID&limit=89899" |
+    jq '.docs[]|select(.warengruppe == "Obst & Gemüse")| {titel, preis, beschreibung, img:.bild_app}' |
+    sed "s|}|},|" | head -n-1 >>$FILE
+  echo "}]" >>$FILE
+}
+
+[ ! -f "$FILE" ] && fetch
+
+cat $FILE | jq

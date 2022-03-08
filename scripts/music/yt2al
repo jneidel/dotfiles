@@ -1,0 +1,73 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ yt2al URL|FILE_OF_URLS
+Download albums from various sites
+EOF
+  exit
+fi
+
+command -v yt-dlp >/dev/null || { echo "yt-dlp is not installed" 1>&2; exit 127; }
+command -v bandcamp-dl >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+command -v tsr >/dev/null || { echo "tsr script is not installed" 1>&2; exit 127; }
+command -v 1337x-to-magnet >/dev/null || { echo "1337x-to-magnet is not installed" 1>&2; exit 127; }
+command -v $BROWSER >/dev/null || { echo "$BROWSER (\$BROWSER) is not installed" 1>&2; exit 127; }
+command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed" 1>&2; exit 127; }
+
+get_playlist_name() {
+  yt-dlp --get-filename -o '%(playlist_title)s' "$1" --playlist-end 1 2>/dev/null
+}
+get_sc_name() {
+  yt-dlp --get-filename -o '%(playlist_title)s ^ %(uploader)s' "$1" --playlist-end 1
+}
+
+run() {
+  link="$1"
+  if echo $link | grep -Fe bandcamp -e monstercat; then
+    bandcamp-dl "$1" --base-dir=.
+    return
+  elif echo $link | grep -F datpiff; then
+    curl -Ss "$link" | grep "openDownload" | grep -Po "openDownload\( '\K.+(?=')" | awk '{ print "https://www.datpiff.com/pop-mixtape-download.php?id="$1 }' | xargs $BROWSER >/dev/null 2>/dev/null
+    return
+  elif echo $link | grep -F 1337x; then
+    tsr -a "$(1337x-to-magnet "$link")"
+    return
+  elif echo $link | grep -F soundcloud >/dev/null; then
+    playlist_name="$(get_sc_name "$link")"
+
+    artist="$(echo $playlist_name | cut -d^ -f2-)"
+    album="$(echo $playlist_name | cut -d^ -f1)"
+  else
+    playlist_name="$(get_playlist_name "$link")"
+
+    if [ -n "$2" ]; then
+      artist="$2"
+      album="$playlist_name"
+    else
+      artist="$(echo $playlist_name | cut -d- -f1)"
+      album="$(echo $playlist_name | cut -d- -f2-)"
+      [ -z "$album" ] && album="$artist"
+    fi
+  fi
+  echo "$playlist_name $link ($artist - $album)"
+
+  mkdir -p "$playlist_name"
+  yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o "./$playlist_name/%(title)s.%(ext)s" "$link" | grep -Fve "pass -k to keep" -e "[info]" -e "[ThumbnailsConvertor]" -e ".webm" -e "API" -e "[youtube:tab]" -e "[EmbedThumbnail]" -e "Downloading webpage"
+
+# --embed-thumbnail
+
+  echo "Tagging: artist: $artist - album: $album"
+  eyeD3 --album "$album" --artist "$artist" "$playlist_name/"*.mp3 >/dev/null
+}
+
+if [ -f "$1" ]; then
+  while read i; do
+    link="$(echo $i | cut -d\  -f1)"
+    artist="$(echo $i | cut -d\  -f2-)"
+    [ "$link" = "$artist" ] && artist=""
+    run "$link" "$artist"
+  done <"$1"
+else
+  run "$1" "$2"
+fi

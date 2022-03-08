@@ -16,6 +16,7 @@ command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is
 
 SOCKET=$(manage-mpv-sockets open)
 ICP_SOCK="--input-ipc-server=$SOCKET"
+YTDL_OPTIONS="--ytdl-raw-options=sponsorblock-remove=\"sponsor,selfpromo,outro,preview,interaction,music_offtopic\",sponsorblock-mark=\"intro,filler\""
 
 OPTIONS=""
 if echo "$@" | grep -e "projects/uni" -e "mediathek.htw-berlin.de" >/dev/null; then
@@ -24,9 +25,9 @@ fi
 
 if btdevice >/dev/null; then
   echo "Adapting for bluetooth delay (-120ms)"
-  /bin/mpv $ICP_SOCK $OPTIONS --audio-delay='-.120' "$@"
+  /bin/mpv $ICP_SOCK $YTDL_OPTIONS $OPTIONS --audio-delay='-.120' "$@"
 else
   echo "Adapting for speaker delay (+100ms)"
-  /bin/mpv $ICP_SOCK $OPTIONS --audio-delay='+.100' "$@"
+  /bin/mpv $ICP_SOCK $YTDL_OPTIONS $OPTIONS --audio-delay='+.100' "$@"
 fi
 # jbl connect ideal: -.380

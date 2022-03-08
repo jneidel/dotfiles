@@ -23,8 +23,10 @@ DIR="$1"
 COUNT=$(mktemp)
 
 find "$DIR" -regextype posix-egrep -type f -regex ".*\.($FORMATS_TO_BE_CONVERTED)" -exec sh -c \
-  'echo "converting $1"; echo "$1" >>'$COUNT'; ffmpeg -loglevel error -nostdin -i "$1" "${1%.*}".mp3' sh {} ';'
+  'echo "converting $1"; echo "$1" >>'$COUNT'; ffmpeg -loglevel error -nostdin -i "$1" -ab 320k "${1%.*}".mp3' sh {} ';'
 # src: https://unix.stackexchange.com/a/428414
+
+# maybe "-c:a libmp3lame -b:a 320k" if 320 does not work
 
 if [ -s "$COUNT" ]; then
   COUNT_CONVERTED=$(wc -l <$COUNT)

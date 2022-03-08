@@ -1,0 +1,17 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ 1337x-to-magnet [URL]
+Convert a 1337x.to url to the contained magnet link
+
+Parameters:
+  \$1: 1337x.to url
+
+Example:
+  $ 1337x-to-magnet https://1337x.to/torrent/4931902/Kanye-West-DONDA-2021-Mp3-320kbps-PMEDIA/
+EOF
+  exit
+fi
+
+curl -Ss "$1" | grep -Po 'href="\Kmagnet:.+?(?=")' | head -n1

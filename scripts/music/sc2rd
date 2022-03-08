@@ -27,7 +27,8 @@ EOF
   exit
 fi
 
-command -v youtube-dl >/dev/null || { echo "youtube-dl is not installed" 1>&2; exit 127; }
+command -v yt-dlp >/dev/null || { echo "yt-dlp is not installed" 1>&2; exit 127; }
+command -v rdcli >/dev/null || { echo "rdcli is not installed" 1>&2; exit 127; }
 
 ALBUM="$1"
 NO_DOWNLOAD=0
@@ -58,7 +59,9 @@ id_to_url() {
 
 ALBUM_NAME="$(echo $ALBUM | rev | cut -d\/ -f1 | rev)"
 ALBUM_SC="$ALBUM_NAME-sc"
-if [ ! -e "$ALBUM_SC" ]; then
+echo "working on $ALBUM_NAME"
+
+if [ ! -e "$ALBUM_SC" ] && [ ! -e "$ALBUM_RD" ]; then
   echo "# get ids"
   get_ids >$TMP_IDS
 
@@ -72,19 +75,24 @@ fi
 
 if [ -n "$REALDEBRID_USERNAME" ]; then
   ALBUM_RD="$ALBUM_NAME-rd"
-  echo "# converting w/ rd"
-  rm "$ALBUM_RD" 2>/dev/null
-  cat $ALBUM_SC | while read url; do rdcli -p "$url" | tee -a "$ALBUM_RD"; done
+  if [ ! -f "$ALBUM_RD" ]; then
+    echo "# converting w/ rd"
+    rm "$ALBUM_RD" 2>/dev/null
+    cat $ALBUM_SC | while read url; do timeout 10 rdcli -p "$url" | tee -a "$ALBUM_RD"; done
+  fi
 
   if [ "$NO_DOWNLOAD" -eq 0 ]; then
     ALBUM_DIR="$ALBUM_NAME-data"
     mkdir -p "$ALBUM_DIR"
     echo "# download album"
     cd "$ALBUM_DIR"
-    wget -nc -i "../$ALBUM_RD"
-    echo "# mp3len of album (sus if around: $(node -e \"console.log($(ls *.mp3 | wc -l)*30/60).toFixed(2)\"), $(ls *.mp3 | wc -l) tracks)"
-    mp3len *.mp3
+    wget -nv -nc -i "../$ALBUM_RD" 2>&1 | grep -v "SSL"
+    if ls *.mp3 2>/dev/null; then
+      echo "# mp3len of album (sus if around: $(node -e \"console.log\(\($(ls *.mp3 | wc -l)*30/60\).toFixed\(2\)\)\"), $(ls *.mp3 | wc -l) tracks\)"
+      mp3len *.mp3
+    fi
     cd ..
+    rmdir $ALBUM_DIR 2>/dev/null
   fi
 fi
 
