@@ -1,0 +1,11 @@
+# - name: "Classify hosts depending on their OS distribution: os_{{ ansible_facts['distribution'] }}"
+#   group_by:
+#     key: os_{{ ansible_facts['distribution'] }}
+
+# - hosts: os_Archlinux
+#   tasks:
+
+- name: Engage!
+  hosts: local
+  roles:
+    - role: vim

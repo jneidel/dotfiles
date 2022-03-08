@@ -1,0 +1,24 @@
+# docs
+# npm: https://docs.ansible.com/ansible/2.3/npm_module.html
+# git: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html
+
+- name: vim | Creates directory for vim files
+  file:
+    path: $HOME/.vim
+    state: directory
+
+- name: nvim | Creates directory for neovim files
+  file:
+    path: $HOME/.config/nvim
+    state: directory
+
+- name: nvim | Clone Paq
+  git:
+    repo: https://github.com/savq/paq-nvim.git
+    dest: ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/paqs/start/paq-nvim
+    clone: yes
+    depth: 1
+    update: no
+
+# - name: nvim | Update and install Paq packages
+#   command: /usr/bin/nvim -c 'PaqUpdate' -c 'PaqInstall' -c 'q!'

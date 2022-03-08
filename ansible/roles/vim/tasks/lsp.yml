@@ -1,0 +1,45 @@
+- name: lsp | Install typescript
+  npm:
+    name: typescript
+    global: yes
+
+- name: lsp | Install js/ts lsp
+  npm:
+    name: typescript-language-server
+    global: yes
+
+- name: lsp | Install css/sass/html/json lsp
+  npm:
+    name: vscode-langservers-extracted
+    global: yes
+
+- name: lsp | Install bash lsp
+  npm:
+    name: bash-language-server
+    global: yes
+
+- name: lsp | Clone php lsp
+  git:
+    repo: https://github.com/phpactor/phpactor
+    dest: $HOME/.local/lib/phpactor
+
+- name: lsp | Install php lsp composer dependencies
+  composer:
+    command: install
+    working_dir: $HOME/.local/lib/phpactor
+
+- name: lsp | Link php lsp
+  file:
+    state: link
+    src: $HOME/.local/lib/phpactor/bin/phpactor
+    dest: /usr/bin/phpactor
+
+- name: lsp | Install ansible lsp
+  npm:
+    name: "@ansible/ansible-language-server"
+    global: yes
+
+- name: lsp | Install yaml lsp
+  npm:
+    name: yaml-language-server
+    global: yes
