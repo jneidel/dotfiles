@@ -10,11 +10,10 @@ A comprehensive rundown of my setup in regards to music.
   * [1.1 Short description](#11-short-description)
   * [1.2 My needs; A comparison to Spotify](#12-my-needs-a-comparison-to-spotify)
   * [MP3 vs FLAC](#mp3-vs-flac)
-- [2. Retrival](#2-retrival)
+- [2. Retrieval](#2-retrieval)
   * [2.1 Bandcamp](#21-bandcamp)
   * [2.2 Torrents](#22-torrents)
   * [2.3 Soundcloud](#23-soundcloud)
-    + [2.3.1 Paywalled: Real-debrid](#231-paywalled-real-debrid)
   * [2.4 YouTube](#24-youtube)
   * [2.5 German forum](#25-german-forum)
 - [3. Tagging](#3-tagging)
@@ -44,10 +43,10 @@ managing, transmitting and backing up existing music.
 
 ### 1.2 My needs; A comparison to Spotify
 
-A comparison to why Spotify would not work for me draws out what my needs toward
+A comparison to why Spotify would not work for me, draws out what my needs toward
 a music setup are.
 As a disclaimer, I haven't used Spotify for any length of time, so my view of
-what it is might not be wholly acurate (but sufficient to get my point across).
+what it is might not be wholly accurate (but sufficient to get my point across).
 
 **Offline access:**
 
@@ -58,15 +57,16 @@ Offline access brings with it a host of advantages:
 - independent of internet speed (I'm not used to always having a stable
 connection)
 - uses a consistent interface
-([mpv](https://github.com/mpv-player/mpv) for video,
+(like [mpv](https://github.com/mpv-player/mpv) for video,
 [YACReader](https://github.com/YACReader/yacreader) for comics)
 - is configurable to the way I use it
 - always accessible
 
-Spotify can also download music, but at that point managing what downloaded in
-the app is not really easier that managing my mp3s.
+Spotify can also download music, but at that point managing whats been
+downloaded in the app is not really easier that managing my mp3s (especially
+since mp3s are just file, so you can use all your favorite tools.)
 
-**Licensing/Control:**
+**Licensing:**
 
 Not all music is on Spotify. And that is just not something I can accept.
 
@@ -76,26 +76,28 @@ I want to be in control of my music. And using Spotify I wouldn't be.
 
 **Convenience:**
 
-I think it compares pretty well to Arch Linux vs. Windows/MacOS.
-Sure, figuring out Arch Linux and setting up my perfect system took a lot of
-time. But after having set it up my system is extremely stable. To the point
-where in the last 1.5 years I only had like 3h of combined need to service the
+I think it compares pretty well to Arch Linux vs. Windows/MacOS. Sure, figuring
+out Arch Linux and setting up my perfect system took a lot of time. But after
+having set it up my system is extremely stable. To the point where in the
+last 1.5 years I only had to put in a minimal amount of time to service the
 system. Because I have understood my system I can solve what crops up without
 frustration. All other systems I had before: Windows, MacOS and even Manjaro
 always had some annoyances wearing me down. They could not fit me, because they
 were not made to fit me and change within them was limited.
 
-So you either spend the time upfront in building the perfect system for you.
-Or you use something built for the general population that will for fit your
-needs and spend even more time with the quirks of a system not designed for you.
+So you either spend the time upfront in building the perfect system for you. Or
+you use something built for the general population that is designed with the
+average users needs in mind and then spend even more energy with the quirks of a
+system not designed for you.
 
-Thats how I feel about Spotify as well.
+That's how I feel about Spotify as well.
 
-**Libary management:**
+**Changing the music:**
 
-Most albums I don't leave as they originally are. I delete songs and I cut off
-intros/outros, skits and blank space where it annoys me. I make the music my
-own. Spotify does not allow me to mess with MY music.
+Most albums I listen to don't stay intact after I've really gotten into them.
+I delete songs and cut off intros/outros, skits and blank space where it
+annoys me. I make the music my own. Spotify does not allow me to mess with MY
+music.
 
 ### MP3 vs FLAC
 
@@ -116,7 +118,7 @@ stacks: flacs as a primary and mp3 as a backup. Complicates everything.
 Whereas flac can always be downgraded to mp3s. So even if only flacs are
 available, that is still an advantage for mp3s.
 
-## 2. Retrival
+## 2. Retrieval
 
 You can almost always get music by paying for it. This section is concerned with
 acquiring it without the paying-part.
@@ -138,6 +140,7 @@ To download: [bandcamp-dl](https://github.com/iheanyi/bandcamp-dl)
 Sites to check:
 - [1337x](https://1337x.to/)
 - [tpb](https://pirate-proxy.me/)
+- [rutracker](https://rutracker.org/forum/index.php)
 - [Find proxies, if those instances down](https://unblockit.tv/)
 
 To download:
@@ -150,7 +153,7 @@ To download:
 
 **What is available:** wide range; pretty much all major label releases; huge back-catalog
 
-If the album is not behing a paywall you can just download it with
+If the album is not behind a paywall you can just download it with
 [youtube-dl](https://github.com/ytdl-org/youtube-dl).
 
 My [alias](../.zsh/apps.zsh):
@@ -158,20 +161,6 @@ My [alias](../.zsh/apps.zsh):
 ```sh
 alias ytmp3="youtube-dl --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '~/Downloads/%(title)s.%(ext)s' --embed-thumbnail"
 ```
-
-#### 2.3.1 Paywalled: Real-debrid
-
-The paywal makes things a bit trickier. After some looking I found a solution
-that works for me: [real-debrid](http://real-debrid.com/?id=3301710).
-You pay 3€ (15 days account) to circumvent their GO+ crap by downloading the stuff
-through their service.
-To make the most use of this I keep a file where I gather the paywalled links
-for albums I want to get and then download them all at once after buying a
-premium account.
-
-- [sc2rd script](../scripts/music/sc2rd) - to automate the process of converting
-the soundcloud links to downloadable real-debrid links
-
 ### 2.4 YouTube
 
 **What is available:** almost everything; inconsistent quality and sometimes
