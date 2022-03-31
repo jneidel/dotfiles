@@ -145,8 +145,8 @@ For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslin
 
 ### git (version control)
 
-- [global config](.gitconfig)
-- [global gitignore](.gitignore-global)
+- [global config](.config/git/config)
+- [global gitignore](.config/git/ignore)
 
 ### mpd + ncmpcpp (music player)
 
