@@ -242,7 +242,7 @@ lyrics_fetchers = azlyrics, genius, sing365, metrolyrics, justsomelyrics, jahlyr
 ask_before_clearing_playlists = yes
 
 display_volume_level = yes
-display_remaining_time = yes
+display_remaining_time = no
 
 ## Available values: none, basic, extended, perl.
 ##

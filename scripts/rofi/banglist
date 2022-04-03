@@ -70,3 +70,4 @@ unicode https://unicode-table.com/en/search/?q=%s
 w https://en.wikipedia.org/wiki/Special:Search?search=%s
 wde https://de.wikipedia.org/wiki/Special:Search?search=%s
 ru https://rutracker.org/forum/tracker.php?nm=%s
+gh https://github.com/jneidel/%s

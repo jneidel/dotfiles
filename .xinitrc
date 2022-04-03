@@ -37,13 +37,13 @@ tail -f /tmp/xobpipe | xob &
 # hotkeys
 sxhkd &
 # notification
-dunst &
+nice -n 5 dunst &
 # pulseaudio and mpd
 /bin/start-pulseaudio-x11 && mpd &
 
 ## gui application autostart
-kitty ~/scripts/tmux/t main vim &
-brave &
+nice -n -7 kitty ~/scripts/tmux/t main vim &
+nice -n 7 brave &
 nice -n 7 signal-desktop &
 
 # don't work if started directly
@@ -58,7 +58,7 @@ nice -n 7 signal-desktop &
 xwallpaper --zoom ~/.config/wallpaper.png &
 
 # status bar
-nice -n -3 ~/scripts/lemonbar/run-lemonbar &
+nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 
 # fix backlight
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &

@@ -50,12 +50,12 @@ case "$bang" in
   yts)
     ~/scripts/yts $query
     exit;;
-  yt)
-    if [ -f "$HOME/scripts/personal/youtube.html" ]; then
-      {
-        sleep 1 && $BROWSER $HOME/scripts/personal/youtube.html >/dev/null 2>&1
-      } &
-    fi;;
+  # yt)
+  #   if [ -f "$HOME/scripts/personal/youtube.html" ]; then
+  #     {
+  #       sleep 1 && $BROWSER $HOME/scripts/personal/youtube.html >/dev/null 2>&1
+  #     } &
+  #   fi;;
   dot)
     $BROWSER "https://jneidel.com/dot/$query"
     exit;;

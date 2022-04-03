@@ -49,23 +49,11 @@ elif [ -n "$1" ]; then
   MULTIPLICATOR="$1"
 fi
 
-fetch_rate_from_ddg() {
-  curl -Ss "https://duckduckgo.com/js/spice/cryptocurrency/ticker/$1/1" | sed 's|.*(||; s|);||'
-}
-
-get_rate() {
+get_rate() { # 1 xmr
+  curl -Ss 'https://currencio.co/json/rate' --data-raw 'from=XMR&to=EUR&history=24h' | jq ".[-1][1]"
   DIRECTION=xmr-eur
   if [ "$TO_EUR" -eq 1 ]; then
     DIRECTION=eur-xmr
-  fi
-
-  TMP=$(mktemp)
-  fetch_rate_from_ddg $DIRECTION >$TMP
-
-  if jq -e '.ticker.markets[]|select(.market == "Kraken").price' $TMP >/dev/null 2>&1; then
-    jq -e '.ticker.markets[]|select(.market == "Kraken").price' $TMP | sed 's|"||g'
-  else
-    jq .ticker.price $TMP | sed 's|"||g'
   fi
 }
 RATE=`get_rate`
