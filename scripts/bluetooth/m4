@@ -1,0 +1,4 @@
+#! /bin/sh
+# connect to bluetooth headphones
+
+btconnect 14:3F:A6:67:91:D1

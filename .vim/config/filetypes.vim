@@ -49,4 +49,7 @@ au BufRead *.fragmentshader setfiletype cpp
 au BufRead *.vertexshader setfiletype cpp
 
 " octave
-au FileType octave set ft=matlab
+au FileType octave setfiletype matlab
+
+" pubs
+au BufRead */pubs/notes/*.txt setfiletype markdown

@@ -1,0 +1,82 @@
+#! /bin/sh
+
+FILE="$HOME/.config/pulse/default.pa"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ pulsecombine [toggle|on|off]
+Toggle the pulseaudio combined sink on and off
+
+Commands:
+  <none>: current status
+  toggle: toggle the status
+  on    : turn combined on
+  off   : turn combined off
+
+What is this for?:
+  Using the combined output you can listen to a single playback stream (like a
+  movie) on two different output devices (like a pair of bluetooth headphones
+  and a pair of earbuds plugged into the AUX) simultaneously.
+EOF
+  exit
+fi
+
+command -v pulseaudio >/dev/null || { echo "pulseaudio is not installed" 1>&2; exit 127; }
+
+COMBINE_COMMAND="load-module module-combine-sink sink_name=combined"
+# ref: https://wiki.archlinux.org/title/PulseAudio/Examples#Simultaneous_HDMI_and_analog_output
+
+insertCombineCommand() {
+  sed "4 i\\$COMBINE_COMMAND" -i "$FILE"
+}
+removeCombineCommand() {
+  sed "/$COMBINE_COMMAND/d" -i "$FILE"
+}
+
+status() {
+  grep -F "$COMBINE_COMMAND" "$FILE" >/dev/null # 0 on, 1 off
+}
+printStatus() {
+  if status; then
+    printf "Combine is \033[1;32mON\n"
+  else
+    printf "Combine is \033[1;31mOFF\n"
+  fi
+}
+
+restartPulse() {
+  echo "Restarting pulseaudio"
+  pulseaudio --kill
+  sleep 2
+  pulseaudio --start # running pulseaudio in userland
+}
+
+if [ -z "$1" ]; then
+  printStatus
+  exit 0
+fi
+case "$1" in
+  on)
+    insertCombineCommand
+    printStatus
+    restartPulse
+    ;;
+  off)
+    removeCombineCommand
+    printStatus
+    restartPulse
+    ;;
+  toggle)
+    if status; then
+      removeCombineCommand
+    else
+      insertCombineCommand
+    fi
+    printStatus
+    restartPulse
+    ;;
+  *)
+    echo "invalid command, see --help"
+    false
+    ;;
+esac

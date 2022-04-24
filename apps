@@ -422,7 +422,7 @@ simple-mtpfs mount mtpfs
 
 [lf]
 lf File manager
-glow-bin Markdown preview
+glow Markdown preview
 xml2 Epub preview
 python-pdftotext Pdf preview
 
@@ -477,3 +477,6 @@ systemd:haveged
 
 [dark-mode]
 lxappearance
+
+[ausweis]
+ausweisapp2 Use german Personalausweis

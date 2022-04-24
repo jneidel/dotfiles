@@ -2,7 +2,7 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
-$ yt2al URL|FILE_OF_URLS
+$ ytal URL|FILE_OF_URLS
 Download albums from various sites
 EOF
   exit
@@ -61,6 +61,7 @@ run() {
   eyeD3 --album "$album" --artist "$artist" "$playlist_name/"*.mp3 >/dev/null
 }
 
+cd ~/Downloads
 if [ -f "$1" ]; then
   while read i; do
     link="$(echo $i | cut -d\  -f1)"

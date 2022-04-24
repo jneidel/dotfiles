@@ -22,7 +22,7 @@ alias randomnum="shuf -n 1 -i" # As range: 1-100
 alias dice="W $(whence randomnum) 1-6"
 
 ## grep
-alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude=package-lock.json" # short: grep -nHsr
+alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude-dir=vendor --exclude=package-lock.json" # short: grep -nHsr
 
 ## ps
 pst() {

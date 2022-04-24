@@ -1,29 +1,29 @@
-#! /bin/bash
+#! /bin/sh
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ github-notifications"
-  echo "Get the number of notifications of your github account."
-  echo "For usage in scripts."
-  echo ""
-  echo "Parameters:"
-  echo "  \$1: Username and access token."
-  echo "    Create a new token in"
-  echo "      'github>settings>developer settings'"
-  echo "    with only notification rights."
-  echo "    Format: 'username:token'"
-  echo ""
-  echo "Example:"
-  echo "$ github-notifications jneidel:mytoken"
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ github-notifications
+Get the number of notifications of your github account.
+For usage in scripts.
+
+Parameters:
+  \$1: Username and access token.
+    Create a new token in
+      'github>settings>developer settings'
+    with only notification rights.
+    Format: 'username:token'
+
+Example:
+$ github-notifications jneidel:mytoken
+EOF
   exit
 fi
 
 command -v jq >/dev/null || { echo "jq is not installed"; exit 1; }
 
-[ -z "$1" ] && {
+if [ -z "$1" ]; then {
   echo "Requires 'username:token' as a parameter"
   exit
 }
 
 curl -sS -u "$1" https://api.github.com/notifications | jq length
-
-

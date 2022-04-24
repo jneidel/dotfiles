@@ -199,7 +199,7 @@ map gz cd ~/ct/zeit
 map gv cd ~/ct/review
 map gn cd ~/code/notes
 map gr cd ~/code/notes/research
-map gs cd ~/code/notes/slackcentral
+map gs cd ~/projects/spanish
 map gl cd ~/projects/latin
 
 map o jump-out

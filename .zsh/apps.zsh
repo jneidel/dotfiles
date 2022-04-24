@@ -55,7 +55,6 @@ alias ani-cli="/bin/ani-cli -q 720"
 alias yay="nice /bin/yay"
 alias mv="/bin/mv -v"
 alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
-alias pba="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -217,3 +216,20 @@ alias to="rem 2>/dev/null | grep -v Reminders"
 
 ## nvim
 alias luamake=/home/jneidel/.local/share/nvim/lua-language-server/3rd/luamake/luamake
+
+## pubs
+alias pba="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
+alias pbad="pba doc open"
+alias pbadoc="pbad"
+alias pban="pba note"
+alias pbanote="pban"
+pbao() {
+  local citekey="$1"
+  if [ -z "$citekey" ]; then
+    echo "Pass a citekey"
+    return 1
+  fi
+  pbad "$citekey"
+  pban "$citekey"
+}
+alias pbaopen="pbao"
