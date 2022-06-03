@@ -7,7 +7,7 @@ end
 
 require('cmp').setup {
   snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
-  documentation = { maxwidth = 60, maxheight = 40, border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' } },
+  -- documentation = { maxwidth = 60, maxheight = 40, border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' } },
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = vim.lsp.protocol.CompletionItemKind[vim_item.kind] .. ' ' .. vim_item.kind

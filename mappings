@@ -161,6 +161,7 @@ create .config/dunst
 
 [fonts]
 .fonts
+create .config/fontconfig
 .config/fontconfig/fonts.conf
 
 [zathura]
