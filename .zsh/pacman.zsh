@@ -1,5 +1,7 @@
 # pacman
 
+alias yaya="yay -Quq --aur | xargs -n 1 yay -S --noconfirm" # https://github.com/Jguer/yay/issues/848
+
 # uses yay as a pacman/yaourt wrapper
 # searche, install, update for both
 # remove needs to happen separately
