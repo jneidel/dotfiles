@@ -1,0 +1,32 @@
+#! /bin/sh
+
+DOWNLOAD_DIR=$HOME/Downloads/neuro_streams
+STREAM_LINK="http://server10077.streamplus.de:27368/stream.mp3"
+TIMEOUT=2h
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ dl-neurostream CATEGORY [TIMEOUT]
+Download the currently running neurostream
+see: https://neurostreams.de/radio
+
+Parameters:
+  \$1: category
+  [\$2]: timeout duration
+
+Example:
+  $ dl-neurostream dna_talk
+  $ dl-neurostream gaia_club_radio 3h
+EOF
+  exit
+fi
+
+CATEGORY="$1"
+[ -n "$2" ] && TIMEOUT=$2
+
+command -v wget >/dev/null || { echo "wget is not installed" 1>&2; exit 127; }
+
+~/scripts/cron/cron-notify-send "capturing neurostream" "$CATEGORY"
+
+mkdir -p "$DOWNLOAD_DIR/$CATEGORY"
+timeout $TIMEOUT wget "$STREAM_LINK" -O "$DOWNLOAD_DIR/$CATEGORY/$(date +%y-%m-%d).mp3" --no-verbose --background -o /dev/null >/dev/null
