@@ -17,7 +17,7 @@ command -v rofi >/dev/null || { echo "rofi is not installed"; exit 1; }
 command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed"; exit 1; }
 command -v node >/dev/null || { echo "node is not installed"; exit 1; }
 
-DEFAULT_BANG="l" # latin
+DEFAULT_BANG="e" # spanish
 
 bangList() {
   cat $(dirname $0)/banglist

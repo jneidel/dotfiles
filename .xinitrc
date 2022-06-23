@@ -63,5 +63,8 @@ nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 # fix backlight
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
+# disable systemd broadcast till v252 ships
+sudo busctl set-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager EnableWallMessages b false
+
 # start window manager
 exec i3

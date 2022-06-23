@@ -5,8 +5,10 @@ local function check_back_space()
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
+
 require('cmp').setup {
   snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
+  -- window.documentation = cmp.config.window.bordered()
   -- documentation = { maxwidth = 60, maxheight = 40, border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' } },
   formatting = {
     format = function(entry, vim_item)

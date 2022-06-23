@@ -13,7 +13,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 LOCATION_FILE=~/scripts/weather/location
-[ -e "$LOCATION_FILE" ] && CITY="$(cat $LOCATION_FILE)"
+# [ -e "$LOCATION_FILE" ] && CITY="$(cat $LOCATION_FILE)"
 
 if [ "$1" = "-f" ] || [ "$2" = "-f" ] || [ "$1" = "-3" ] || [ "$2" = "-3" ]; then
   WTTR_FLAGS="${WTTR_FLAGS:0:-1}" # remove 1 from WTTR_FLAGS

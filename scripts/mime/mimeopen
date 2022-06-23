@@ -38,7 +38,7 @@ case $EXT in
     else
       e404 'epr or FBReader'
     fi;;
-  mp3|flac|ogg|wma|m4b|m4a|wav) echo "mpv --profile=music"; exit 1;;
+  mp3|flac|ogg|wma|m4b|m4a|wav|aac) echo "mpv --profile=music"; exit 1;;
   cbz|cbr) echo "YACReader >/dev/null 2>&1";;
   tgz|zip|rar|xz|gz|tar.gz|deb) echo extract; exit 1;;
   tgz.gpg) echo untargpg; exit 1;;

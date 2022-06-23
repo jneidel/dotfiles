@@ -3,7 +3,8 @@
 XOB=/tmp/xobpipe
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
-  printf "$ set-volume.sh <command>
+  cat <<EOF
+$ set-volume.sh COMMAND
 Set the volume and send a notification.
 
 Commands:
@@ -15,7 +16,7 @@ Example:
   $ set-volume.sh +5
   $ set-volume.sh -5
   $ set-volume.sh mute
-"
+EOF
   exit
 fi
 
@@ -27,7 +28,6 @@ get_active_sink() {
   if RUNNING_SINKS="$(pactl list sinks short | fgrep 'RUNNING' -m1)"; then
     echo $RUNNING_SINKS | tail -n1 | awk '{ print $1 }'
   else
-    # "@DEFAULT_SINK@"
     case "$(hostname)" in
       *x240) echo 1;;
       *e495) echo 0;;
@@ -35,15 +35,6 @@ get_active_sink() {
     esac
   fi
 }
-SINK="$(get_active_sink)"
-echo $SINK
-
-case "$COMMAND" in
-  mute) pactl set-sink-mute "$SINK" toggle ;;
-  +*|-*) pactl set-sink-volume "$SINK" "${COMMAND}%" ;;
-  *) echo Invalid command, see --help ;;
-esac
-
 notification() {
   PROPS="$(pactl list sinks | fgrep "Sink #$SINK" -A 32)"
 
@@ -51,30 +42,28 @@ notification() {
 
   VOL="$(echo $PROPS | grep -Po '\d+%' )"
   VOL="$(echo $VOL | awk -F % '{print $1}' )"
+  [ -z "$VOL" ] && VOL=0
 
   echo mute: $MUTE, vol: $VOL
 
-  # if [ "$MUTE" -eq 1 ]; then
-  #   ICON="mute"
-  #   HEAD="Volume Muted"
-  # else
-  #   if [ "$VOL" -lt 5 ]; then
-  #     ICON="volume-none"
-  #   elif [ "$VOL" -lt 50 ]; then
-  #     ICON="volume-less"
-  #   else
-  #     ICON="volume-more"
-  #   fi
-
-  #   HEAD="Volume: $VOL%"
-  #   BODY="$(get-progress-string.sh 28 '▪' ' ' $VOL)"
-  # fi
-
-  # notify-send -i $ICON -h string:x-canonical-private-synchronous:volume -u normal -t 1000 "$HEAD" "$BODY"
   IS_MUTE=""
   [ "$MUTE" -eq 1 ] && IS_MUTE=!
-  echo "$VOL$IS_MUTE" >$XOB
+
+  if [ -p $XOB ]; then
+    echo "$VOL$IS_MUTE"
+    echo "$VOL$IS_MUTE" >$XOB
+  fi
 }
+
+SINK="$(get_active_sink)"
+echo "using sink: $SINK"
+
+case "$COMMAND" in
+  mute) pactl set-sink-mute "$SINK" toggle ;;
+  +*|-*) pactl set-sink-volume "$SINK" "${COMMAND}%" ;;
+  *) echo Invalid command, see --help ;;
+esac
+
 notification
 
 # MPD=~/scripts/mpd
@@ -83,4 +72,3 @@ notification
 #     echo ok # control mpd server instead of local volume as long as music is playing
 #   fi
 # fi
-

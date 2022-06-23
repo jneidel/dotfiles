@@ -49,6 +49,10 @@ restartPulse() {
   pulseaudio --kill
   sleep 2
   pulseaudio --start # running pulseaudio in userland
+  # sleep 2
+  # pulseaudio --kill
+  # sleep 2
+  # pulseaudio --start # running pulseaudio in userland
 }
 
 if [ -z "$1" ]; then

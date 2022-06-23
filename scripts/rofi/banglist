@@ -38,7 +38,6 @@ tw https://nitter.net/search?f=users&q=%s
 ic https://imagecomics.com/search/results?s=%s
 ck https://www.chefkoch.de/rs/s0/%s/Rezepte.html
 u https://www.urbandictionary.com/define.php?term=%s
-e https://www.ebay.de/sch/i.html?_nkw=%s
 ns https://www.namecheap.com/domains/registration/results/?domain=%s
 sh https://sci-hub.scihubtw.tw/%s
 man https://man.archlinux.org/search?q=%s

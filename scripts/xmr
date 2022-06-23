@@ -50,7 +50,8 @@ elif [ -n "$1" ]; then
 fi
 
 get_rate() { # 1 xmr
-  curl -Ss 'https://currencio.co/json/rate' --data-raw 'from=XMR&to=EUR&history=24h' | jq ".[-1][1]"
+  curl -Ss "https://api.kraken.com/0/public/Ticker?pair=XMREUR" | jq ".result.XXMRZEUR.c[0]" | cut -d\" -f2
+  # docs: https://docs.kraken.com/rest/#operation/getTickerInformation
   DIRECTION=xmr-eur
   if [ "$TO_EUR" -eq 1 ]; then
     DIRECTION=eur-xmr
