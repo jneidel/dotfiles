@@ -17,7 +17,7 @@ require("paq") {
   "nvim-treesitter/nvim-treesitter", -- dynamic syntax highlighting independant of lang
 
   "windwp/nvim-autopairs",
-  "b3nj5m1n/kommentary", -- comments
+  "numToStr/Comment.nvim", -- comments
   -- "TheBlob42/drex.nvim", -- file explorer
   "justinmk/vim-dirvish",
   "lambdalisue/fern.vim",

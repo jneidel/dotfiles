@@ -18,5 +18,4 @@ require('lspconfig').cssls.setup {
   },
 }
 
--- automatically start lsp
-vim.api.nvim_command(':LspStart')
+vim.api.nvim_cmd({ cmd = 'LspStart' }, {})

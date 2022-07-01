@@ -18,9 +18,6 @@ color_echo "## general"
 color_echo "install sensible" # better defaults
 git clone git://github.com/tpope/vim-sensible.git $VB/sensible
 
-color_echo "install commentary" # (un)comment with: gcc
-git clone https://github.com/tpope/vim-commentary.git $VB/commentary
-
 color_echo "install numbers" # better relativenumber
 git clone https://github.com/myusuf3/numbers.vim.git $VB/numbers
 

@@ -21,9 +21,9 @@ fi
 
 command -v jq >/dev/null || { echo "jq is not installed"; exit 1; }
 
-if [ -z "$1" ]; then {
+if [ -z "$1" ]; then
   echo "Requires 'username:token' as a parameter"
   exit
-}
+fi
 
 curl -sS -u "$1" https://api.github.com/notifications | jq length

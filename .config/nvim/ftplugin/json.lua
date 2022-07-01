@@ -21,5 +21,4 @@ require('lspconfig').jsonls.setup {
   on_attach = custom_on_attach,
 }
 
--- automatically start lsp
---vim.api.nvim_command(':LspStart')
+vim.api.nvim_cmd({ cmd = 'LspStart' }, {})

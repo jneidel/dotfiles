@@ -1,0 +1,48 @@
+#! /bin/sh
+
+DATA=$HOME/code/notes/data/unhrd-data.txt
+
+# epoch to date
+# $ date -d @EPOCH
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ unhrd-bar
+Plot the value of the 'unhrd' script over time.
+
+The data file is created with a daily cronjob like so:
+echo "$(date +%s) $(~/scripts/music/unhrd | cut -d\  -f1 | sed 's|\.||g')" >>~/code/notes/data/unhrd-data.txt
+EOF
+  exit
+fi
+
+command -v octave >/dev/null || { echo "octave is not installed" 1>&2; exit 127; }
+
+SCRIPT=$(mktemp)
+
+get_epoch() {
+  cat $DATA | cut -d\  -f1 | tr "\n" " "
+}
+get_values() {
+  cat $DATA | cut -d\  -f2 | tr "\n" " "
+}
+
+echo $SCRIPT
+
+cat <<EOF >$SCRIPT
+min([ $(get_values) ]) - 50
+EOF
+MIN=$(octave $SCRIPT | cut -d\  -f3)
+
+cat <<EOF >$SCRIPT
+dates = [ $(get_epoch) ] / 60 / 60 / 24;
+values = [ $(get_values) ];
+
+# b = bar( dates, values, "hist", "basevalue", 37325 );
+b = plot(dates, values);
+# axis tight tic[y];
+title("unheard");
+waitfor(b);
+EOF
+
+octave $SCRIPT

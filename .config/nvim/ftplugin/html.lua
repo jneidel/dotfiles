@@ -21,17 +21,4 @@ require('lspconfig').html.setup {
   on_attach = custom_on_attach,
 }
 
--- emmet lsp
--- installation: sudo npm i -g ls_emmet
---[[ require('lspconfig/configs').ls_emmet = {
-  default_config = {
-    cmd = { 'ls_emmet', '--stdio' },
-    filetypes = { 'html' },
-    root_dir = root_dir,
-    on_attach = custom_on_attach,
-  },
-}
-require('lspconfig').ls_emmet.setup { capabilities = capabilities } ]]
-
--- automatically start lsp
-vim.api.nvim_command(':LspStart')
+vim.api.nvim_cmd({ cmd = 'LspStart' }, {})
