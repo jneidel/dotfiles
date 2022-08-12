@@ -1,6 +1,6 @@
 #! /bin/bash
 
-CITY="berlin"
+CITY="doberlug-kirchhain"
 WTTR_FLAGS="FQ1"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then

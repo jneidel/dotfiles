@@ -1,0 +1,8 @@
+#! /bin/sh
+# connect to my second black JBL Charge 3 speaker
+
+btconnect F8:DF:15:A9:B7:D7
+
+# stream random audio file over bluetooth to stop charge from stuttering when using it in connect mode
+# kill $(pgrep -f "$HOME/scripts/personal/audio.mp3") 2>/dev/null
+# /bin/mpv -ao pulse ~/scripts/personal/audio.mp3 --mute --loop-file=inf >/dev/null 2>&1 &

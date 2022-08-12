@@ -138,7 +138,7 @@
     icon_position = left
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 32
+    max_icon_size = 16
 
     # Paths to default icons.
     icon_path = /home/jneidel/.icons:/usr/share/icons/Arc/devices/16:/usr/share/icons/Arc/status/16:/usr/share/icons/Arc/apps/16:/usr/share/icons/Arc/actions/16

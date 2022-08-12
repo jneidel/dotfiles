@@ -1,4 +1,4 @@
 #! /bin/sh
-# connect to bluetooth headphones
+# connect to MK4 headphones
 
 btconnect 14:3F:A6:67:91:D1

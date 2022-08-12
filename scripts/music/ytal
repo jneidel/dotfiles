@@ -28,7 +28,7 @@ run() {
     bandcamp-dl "$1" --base-dir=.
     return
   elif echo $link | grep -F datpiff; then
-    curl -Ss "$link" | grep "openDownload" | grep -Po "openDownload\( '\K.+(?=')" | awk '{ print "https://www.datpiff.com/pop-mixtape-download.php?id="$1 }' | xargs $BROWSER >/dev/null 2>/dev/null
+    datpiff "$1"
     return
   elif echo $link | grep -F 1337x; then
     tsr -a "$(1337x-to-magnet "$link")"
@@ -54,8 +54,6 @@ run() {
 
   mkdir -p "$playlist_name"
   yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o "./$playlist_name/%(title)s.%(ext)s" "$link" | grep -Fve "pass -k to keep" -e "[info]" -e "[ThumbnailsConvertor]" -e ".webm" -e "API" -e "[youtube:tab]" -e "[EmbedThumbnail]" -e "Downloading webpage"
-
-# --embed-thumbnail
 
   echo "Tagging: artist: $artist - album: $album"
   eyeD3 --album "$album" --artist "$artist" "$playlist_name/"*.mp3 >/dev/null

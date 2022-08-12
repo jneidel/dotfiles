@@ -2,15 +2,23 @@
 
 DIR="/etc/NetworkManager/system-connections"
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ wifipass"
-  echo "Print wifi password for currently connected wifi"
-  echo "and put it in the clipboard"
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ wifipass
+Print current wifi connection and save the PSK to the clipboard
+EOF
   exit
 fi
 
-NAME=$(nmcli device | grep "wifi " | grep -F connected | awk '{ print $4 }')
+command -v tee >/dev/null || { echo "tee is not installed" 1>&2; exit 127; }
+command -v nmcli >/dev/null || { echo "nmcli is not installed" 1>&2; exit 127; }
+command -v xclip >/dev/null || { echo "xclip is not installed" 1>&2; exit 127; }
+command -v su >/dev/null || { echo "su is not installed" 1>&2; exit 127; }
+command -v notify-send >/dev/null || { echo "notify-send is not installed" 1>&2; exit 127; }
 
-sudo su -c "cat '$DIR/$NAME'*" | grep "^psk" | cut -d= -f2 | tail -n 1 | tee >(xclip -sel clip)
+NAME=$(nmcli device | fgrep "wifi " | fgrep connected | awk '{ $1=$2=$3=""; print $0 }' | cut -d\  -f4-)
 
-notify-send "Saved wifi password to clip" -t 1200
+printf "Wifi Connection\nSSID: %s\nPSK : \033[1;32m" "$NAME"
+sudo su -c "cat \"$DIR/$NAME\"*" | grep "^psk" | cut -d= -f2 | tail -n 1 | tee >(xclip -sel clip)
+
+notify-send "Saved wifi password to clip" -t 1202

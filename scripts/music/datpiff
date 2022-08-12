@@ -1,0 +1,44 @@
+#! /bin/sh
+
+DOWNLOAD_DIR=~/Downloads
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ datpiff MIXTAPE_URL
+Download the mixtape at MIXTAPE_URL into $DOWNLOAD_DIR
+
+Parameters:
+  \$1: url to the mixtape on datpiff
+
+Example:
+  $ datpiff "https://www.datpiff.com/Chief-Keef-Back-From-The-Dead-mixtape.324584.html"
+EOF
+  exit
+fi
+
+command -v curl >/dev/null || { echo "curl is not installed" 1>&2; exit 127; }
+
+mixtape_url="$1"
+id="$(curl -Ss "$mixtape_url" | grep "openDownload" | grep -Po "openDownload\( '\K.+(?=')")"
+cookie="Cookie: $(curl -Ss -I "$mixtape_url" | grep -Po 'datpiff=.*?(?=;)')"
+
+echo "Downloading datpiff id: $id"
+[ -z "$id" ] && exit 1
+
+tmp_file="$(mktemp)"
+cd $DOWNLOAD_DIR
+
+for i in $(seq 1 10); do
+  url="http://hws-zip.datpiff.com/$i/$id/mixtape.zip"
+  if curl -I "$url" -Ss | head -n1 | grep "200" >/dev/null; then
+    curl "$url" -H "$cookie" --output "$tmp_file"
+    unzip "$tmp_file" # into cwd (i.e. DOWNLOAD_DIR)
+    rm "$tmp_file"
+    exit 0
+  fi
+done
+
+echo "could not find the correct location to the mixtape file"
+echo "please try manually and adjust the script"
+$BROWSER $download_url >/dev/null 2>/dev/null & # debug
+exit 1

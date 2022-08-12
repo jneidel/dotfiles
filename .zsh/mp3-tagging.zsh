@@ -8,7 +8,9 @@ alias idt="eyeD3 --title" # -t
 alias ids="idt"
 alias idn="eyeD3 --track" # -n (-n 0 -N 0 to clear)
 idco() {
-  eyeD3 --add-image "$1:FRONT_COVER" "$2"
+  local cover="$1:FRONT_COVER"
+  shift
+  eyeD3 --add-image "$cover" "$@"
 }
 alias getco="ffmpeg -y -i" # mp3 tmp/jpg
 idcoa() {

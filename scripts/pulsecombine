@@ -61,7 +61,9 @@ if [ -z "$1" ]; then
 fi
 case "$1" in
   on)
-    insertCombineCommand
+    if ! status; then
+      insertCombineCommand
+    fi
     printStatus
     restartPulse
     ;;
