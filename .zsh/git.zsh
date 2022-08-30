@@ -59,7 +59,7 @@ alias clone="git clone"
 alias stash="git stash"
 
 ## checkout
-alias co="git checkout"
+# alias co="git checkout" # replace by script of the same name
 alias com="git checkout master 2>/dev/null || git checkout main"
 alias cob="git checkout -b"
 

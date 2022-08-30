@@ -52,7 +52,13 @@ alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
 alias npm="/bin/npm -s"
 alias ani-cli="/bin/ani-cli -q 720"
-alias yay="nice /bin/yay"
+yay() {
+  if [ -z "$1" ]; then
+    nice /bin/yay --overwrite /usr/lib/node_modules/\* -Syu
+  else
+    nice /bin/yay $@
+  fi
+}
 alias mv="/bin/mv -v"
 alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
 
@@ -104,6 +110,7 @@ alias new="wait_for_newsboat clean"
 alias pod="wait_for_newsboat pod"
 alias misc="wait_for_newsboat misc"
 alias ma="wait_for_newsboat manga"
+alias yt="wait_for_newsboat yt"
 nomoreent() {
   # echo "No youtube and gaming entertainment for now"
   # return 1
@@ -138,6 +145,7 @@ alias mpvm="mpv --profile=music"
 alias mpvan="mpv --profile=anime"
 alias mpvmv="mpv --profile=movie"
 alias mpvtest="mpv --input-test --force-window --idle"
+alias mpyt="mpv --profile=yt"
 
 ### mpd
 alias mpdco="mpd-cover"

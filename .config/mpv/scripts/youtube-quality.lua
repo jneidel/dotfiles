@@ -67,7 +67,6 @@ opts.quality_strings = utils.parse_json(opts.quality_strings)
 
 local destroyer = nil
 
-
 function show_menu()
     local selected = 1
     local active = 0
@@ -204,7 +203,6 @@ function download_formats()
     local command = {ytdl.path, "--no-warnings", "--no-playlist", "-J"}
     table.insert(command, url)
     local es, json, result = exec(command)
-
     if (es < 0) or (json == nil) or (json == "") then
         mp.osd_message("fetching formats failed...", 1)
         msg.error("failed to get format list: " .. err)
@@ -212,7 +210,6 @@ function download_formats()
     end
 
     local json, err = utils.parse_json(json)
-
     if (json == nil) then
         mp.osd_message("fetching formats failed...", 1)
         msg.error("failed to parse JSON data: " .. err)

@@ -48,6 +48,8 @@ Examples:
 
   $ single -a Energy 'Sesto Sento - Apollo 11.mp3'
     #=> moved to $MUSIC_DIR/$ALBUM_AR/Energy/Sesto Sento - Apollo 11.mp3
+  $ single -a 5 'Sesto Sento - Apollo 11.mp3'
+    #=> moved to $MUSIC_DIR/$ALBUM_AR/Energy/Sesto Sento - Apollo 11.mp3
 
   $ single -AA JAY-Z 'The Blueprint' *.mp3
     #=> moved to $MUSIC_DIR/JAY-Z/The Blueprint/SONGS

@@ -21,4 +21,7 @@ NAME=$(nmcli device | fgrep "wifi " | fgrep connected | awk '{ $1=$2=$3=""; prin
 printf "Wifi Connection\nSSID: %s\nPSK : \033[1;32m" "$NAME"
 sudo su -c "cat \"$DIR/$NAME\"*" | grep "^psk" | cut -d= -f2 | tail -n 1 | tee >(xclip -sel clip)
 
+echo "----------------------------------------------------------------------------------------------------------------------------------"
+figlet $(xclip -sel clip -o) -w 180 -f roman
+
 notify-send "Saved wifi password to clip" -t 1202

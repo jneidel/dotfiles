@@ -53,3 +53,6 @@ au FileType octave setfiletype matlab
 
 " pubs
 au BufRead */pubs/notes/*.txt setfiletype markdown
+
+" pubs
+au BufRead ~/.config/newsboat/urls-* setfiletype conf

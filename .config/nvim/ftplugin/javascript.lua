@@ -13,4 +13,4 @@ require('lspconfig').tsserver.setup {
   },
 }
 
-vim.api.nvim_cmd({ cmd = 'LspStart' }, {})
+-- vim.api.nvim_cmd({ cmd = 'LspStart' }, {})
