@@ -16,12 +16,10 @@ fi
 
 URL="$1"
 
-# if echo $URL | grep -e "youtube.com/watch?v=" -e "yewtu.be/watch" -e ".mp3" >/dev/null; then
-#   echo $URL | xclip -sel clip -i
-#   open_clip_mpv
-if echo $URL | fgrep "twitter.com" >/dev/null; then
-  echo "$1" | sed 's|twitter.com|nitter.exonip.de|' | xargs -r $BROWSER
+if echo $URL | grep -e "youtube.com" >/dev/null; then
+  echo "$1" | sed 's|youtube.com|yewtu.be|' | xargs -r $BROWSER >/dev/null 2>&1 &
+if echo $URL | grep -F "twitter.com" >/dev/null; then
+  echo "$1" | sed 's|twitter.com|nitter.exonip.de|' | xargs -r $BROWSER >/dev/null 2>&1 &
 else
-  echo "$1" | sed "s/+//g" | xargs -r $BROWSER
+  echo "$1" | sed "s/+//g" | xargs -r $BROWSER >/dev/null 2>&1 &
 fi
-

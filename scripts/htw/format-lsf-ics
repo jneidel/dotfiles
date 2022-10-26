@@ -23,11 +23,11 @@ fi
 FILE="$1"
 
 # cleanup summary
-cat "$FILE" | fgrep "SUMMARY" | while read LINE; do {
+cat "$FILE" | grep -F "SUMMARY" | while read LINE; do {
   TITLE="$(echo $LINE | cut -d: -f2 | cut -d- -f1 | sed 's|[[:space:]]$||')";
 
   UEBUNG="";
-  if echo $LINE | fgrep "(Ü)" >/dev/null; then
+  if echo $LINE | grep -F "(Ü)" >/dev/null; then
     UEBUNG="(Ü) ";
   fi;
 

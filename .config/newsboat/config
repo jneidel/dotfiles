@@ -1,15 +1,14 @@
 # newsboat config
-# https://github.com/gotbletu/dotfiles/blob/master/newsbeuter/.newsbeuter/config
 
 # config
 ## basic config
 download-path "~/ct/podcasts/%n"
 max-downloads 6
-browser "brave"
+browser "~/scripts/open-in-browser-without-pluses"
 # podboat player
 player "mpv --no-audio-display"
-# reload feeds on open
-auto-reload yes
+# don't reload feeds, just use the last cron pull
+auto-reload no
 # reload-time 20
 
 ## formatting
@@ -18,15 +17,23 @@ feedlist-format " %n  %t"
 articlelist-format " %f %D %?T?|%-20T| ?%t"
 datetime-format "%b %d"
 
-## ignore pattern
-ignore-mode "display"
-ignore-article "https://www.theregister.co.uk/software/headlines.atom" "title =~ \"Microsoft\""
-ignore-article "https://www.theregister.co.uk/software/headlines.atom" "title =~ \"Windows\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCAG1ABZP-c7wuNt0fziHtsA" "title =~ \"Song\""
-# ignore-article "http://feed.syntax.fm/rss" "title =~ \"^Potluck\""
+## ignore patterns
+ignore-mode "download" # use 'display' for testing to not have to remove cache
+# docs:    https://newsboat.org/releases/2.10.2/docs/newsboat.html#_filter_language
+ignore-article "https://audiobookbay.fi/feed/atom/" "title !~ \"Impact Winter\""
+ignore-article "https://manga4life.com/rss/Onepunch-Man.xml" "title =~ \"\\.\""
+ignore-article "https://quillette.com/feed" "title =~ \"PODCAST\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?user=iDubbbzTV" "title !~ \"complains\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCi5N_uAqApEUIlg32QzkPlg" "title =~ \"Questions Answered\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCm13xHVNFVwzHzK3QHSaZ3Q" "title !~ \"Evergreen\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCXup1ITuwbY5r_Gn2K2_TXA" "title =~ \"TikTok\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCXup1ITuwbY5r_Gn2K2_TXA" "title =~ \"reagiert\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCqQcg5I5-cF8YcWfc5RJFXQ" "title !~ \"DOKUSONNTAG\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCSyAFJ6cmgYabA0RfPCNuzA" "title !~ \"7 vs. Wild\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCIsbLox_y9dCIMLd8tdC6qg" "title !~ \"Same Interview\""
 
 ## misc
-user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
+user-agent "newsboat/2.20.1 Linux"
 max-items 0
 
 # keybindings
@@ -56,6 +63,11 @@ unbind-key C
 
 bind-key b toggle-article-read
 
+bind-key J next-feed
+bind-key K prev-feed
+
+# unbind-key R # disable manual refresh
+
 ## rebind podboat to mutt hotkeys
 unbind-key P
 bind-key $ pb-purge
@@ -80,10 +92,14 @@ color article           color252 color234
 # macros
 # default macro key: ,
 ## Play youtube video in mpv
-macro y set browser "mpv --profile=overlay %u &"; open-in-browser ; set browser "$BROWSER %u"
+macro y set browser "~/scripts/newsboat/queue-yt %u" ; open-in-browser ; set browser "$BROWSER %u"
 ## Download video using youtube-dl
-macro d set browser "~/scripts/newsboat/yt-dl %u"; open-in-browser ; set browser "$BROWSER %u"
+macro d set browser "~/scripts/newsboat/yt-dl %u" ; open-in-browser ; set browser "$BROWSER %u"
 ## Open in terminal browser
-macro w set browser "~/scripts/newsboat/web-reader %u"; open-in-browser ; set browser "$BROWSER %u"
+macro 3 set browser "~/scripts/newsboat/yt-mp3 %u" ; open-in-browser ; set browser "$BROWSER %u"
 ## Open in terminal browser
-macro m set browser "mpv --no-audio-display %u"; open-in-browser ; set browser "$BROWSER %u"
+macro w set browser "~/scripts/newsboat/web-reader %u" ; open-in-browser ; set browser "$BROWSER %u"
+## Open in terminal browser
+macro m set browser "mpv --no-audio-display '%u'" ; open-in-browser ; set browser "$BROWSER %u"
+## Open in terminal browser
+macro p set browser "~/scripts/newsboat/newsboat-mpv-enqueued-podcast" ; open-in-browser ; set browser "$BROWSER %u"

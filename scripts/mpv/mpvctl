@@ -31,7 +31,7 @@ fi
 send_cmd() {
   # see man at: list of input commands
   res=$(echo "{\"command\": $1}" | socat - $SOCKET)
-  if echo $res | fgrep '"error":"success"' >/dev/null; then
+  if echo $res | grep -F '"error":"success"' >/dev/null; then
     echo $res | jq .data
   else
     if [ -n "$res" ]; then

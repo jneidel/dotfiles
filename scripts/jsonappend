@@ -24,7 +24,7 @@ FILE="$1"
 
 DATA=""
 for keyvalue in "$@"; do
-  if printf $keyvalue | fgrep ":" >/dev/null; then
+  if printf $keyvalue | grep -F : >/dev/null; then
     KEY=`printf "$keyvalue" | cut -d: -f1`
     VALUE=`printf "$keyvalue" | cut -d: -f2`
 

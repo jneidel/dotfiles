@@ -11,7 +11,7 @@ EOF
 fi
 
 ipa() {
-  ip a | fgrep "inet " | \
+  ip a | grep -F "inet " | \
     grep -ve " tun" -e " lo" | head -n1 | \
     awk '{ print $2 }' | cut -d"/" -f1
 }

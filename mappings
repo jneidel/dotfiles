@@ -134,8 +134,8 @@ create .config/beets
 
 ### rss
 [newsboat]
-create .newsboat
-.newsboat/config
+create .config/newsboat
+.config/newsboat/config
 
 ### torrents
 [transmission]

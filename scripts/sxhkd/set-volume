@@ -25,7 +25,7 @@ command -v pulsemixer >/dev/null || { echo "pulsemixer is not installed"; exit 1
 COMMAND="$1"
 
 get_active_sink() {
-  if RUNNING_SINKS="$(pactl list sinks short | fgrep 'RUNNING' -m1)"; then
+  if RUNNING_SINKS="$(pactl list sinks short | grep -F 'RUNNING' -m1)"; then
     echo $RUNNING_SINKS | tail -n1 | awk '{ print $1 }'
   else
     case "$(hostname)" in
@@ -36,9 +36,9 @@ get_active_sink() {
   fi
 }
 notification() {
-  PROPS="$(pactl list sinks | fgrep "Sink #$SINK" -A 32)"
+  PROPS="$(pactl list sinks | grep -F "Sink #$SINK" -A 32)"
 
-  MUTE=$(echo $PROPS | fgrep "Mute: no" >/dev/null && echo 0 || echo 1)
+  MUTE=$(echo $PROPS | grep -F "Mute: no" >/dev/null && echo 0 || echo 1)
 
   VOL="$(echo $PROPS | grep -Po '\d+%' )"
   VOL="$(echo $VOL | awk -F % '{print $1}' )"

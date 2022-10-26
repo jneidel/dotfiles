@@ -13,7 +13,7 @@ fi
 command -v journalctl >/dev/null || { echo "journalctl is not installed"; exit 1; }
 command -v setup-keys >/dev/null || { echo "setup-keys script is not in PATH"; exit 1; }
 
-journalctl -fo cat -k --since=now | fgrep "input: Apple Inc." --line-buffered | while read -r line; do
+journalctl -fo cat -k --since=now | grep -F "input: Apple Inc." --line-buffered | while read -r line; do
   # only exec every 2nd time, as the same line comes 2 times
   INPUT_DEV_NUM="$(echo $line | grep -Po '\d+$')"
   if [ `expr "$INPUT_DEV_NUM" % 2` -eq 0 ]; then

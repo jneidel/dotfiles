@@ -43,7 +43,7 @@ cat "$UPDATES" | while read LINE; do
   #     .schema comic
   #     .schema comic_info
 
-  if echo "$READ" | fgrep "read BOOLEAN DEFAULT" > /dev/null; then
+  if echo "$READ" | grep -F "read BOOLEAN DEFAULT" > /dev/null; then
     exit # otherwise -gt 0 goes haywire
   fi
 

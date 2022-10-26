@@ -1,0 +1,4 @@
+#! /bin/sh
+# connect to my turquoise JBL Charge 3 speaker
+
+btconnect FC:A8:9A:E0:3E:1E

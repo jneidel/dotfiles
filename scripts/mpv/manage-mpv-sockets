@@ -52,7 +52,7 @@ send_command_to_socket() {
   # reponses:
   #   is playing : {"data":false,"request_id":0,"error":"success"}
   #   not playing: {"data":true,"request_id":0,"error":"success"}
-  echo "{\"command\": $cmd}" | socat - $socket | fgrep '"data":false' >/dev/null 2>/dev/null
+  echo "{\"command\": $cmd}" | socat - $socket | grep -F '"data":false' >/dev/null 2>/dev/null
 }
 
 test_if_socket_playing() {

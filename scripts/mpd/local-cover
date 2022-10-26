@@ -26,7 +26,7 @@ killInactiveConky() {
 }
 
 cleanup() {
-  ps | fgrep "local-cover" | awk '{ print $1 }' | xargs -r kill # kill all instances, pgrep does not catch all
+  ps | grep -F "local-cover" | awk '{ print $1 }' | xargs -r kill # kill all instances, pgrep does not catch all
   exit
 }
 

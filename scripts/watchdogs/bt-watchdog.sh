@@ -17,7 +17,7 @@ cb() {
   line="$1"
   echo "cb on $line"
 
-  if echo $line | fgrep " ready" >/dev/null; then
+  if echo $line | grep -F " ready" >/dev/null; then
     DEV="$(btdevice)"
     notify "Bluetooth Connected" "$DEV" -i bluetooth
   fi

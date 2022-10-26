@@ -34,7 +34,7 @@ fi
 
 ## Paths
 export PATH=$HOME/.local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl
-export PATH="$(du $HOME/scripts/ | cut -f2 | fgrep -v -e .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
+export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 
 ## Applications
