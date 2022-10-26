@@ -12,7 +12,7 @@ ml https://manga4life.com/search/?sort=s&desc=false&name=%s
 mi http://www.mangainn.net/advanced-search?term=%s
 gc https://getcomics.info/?s=%s
 fp https://filepursuit.com/pursuit?q=%s
-abb http://audiobookbay.nl/?s=%s
+abb http://audiobookbay.se/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ek https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3491r5
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3491r5
@@ -39,7 +39,7 @@ ic https://imagecomics.com/search/results?s=%s
 ck https://www.chefkoch.de/rs/s0/%s/Rezepte.html
 u https://www.urbandictionary.com/define.php?term=%s
 ns https://www.namecheap.com/domains/registration/results/?domain=%s
-sh https://sci-hub.scihubtw.tw/%s
+sh https://www.sci-hub.ru/%s
 man https://man.archlinux.org/search?q=%s
 fi https://www.flaticon.com/search?word=%s&search-type=icons&license=selection&order_by=4&grid=big
 wa https://www.wolframalpha.com/input/?i=%s
@@ -72,3 +72,5 @@ ru https://rutracker.org/forum/tracker.php?nm=%s
 gh https://github.com/jneidel/%s
 e https://dees.dict.cc/?s=%s
 es https://enes.dict.cc/?s=%s
+ab https://101audiobooks.net/?s=%s
+au https://www.audible.com/search?keywords=%s

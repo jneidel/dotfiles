@@ -15,6 +15,12 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
+printf "Really overwrite local files? (y/N): "
+read ans
+if [ "$ans" != "y" ] && [ "$ans" != "Y" ]; then
+  exit 0
+fi
+
 CATEGORY=""
 function install-files {
   IFS=$'\n'
