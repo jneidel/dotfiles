@@ -83,6 +83,8 @@ map <leader><space> :nohls<Enter>
 " number of lines visable while scrolling (in the scroll direction)
 set scrolloff=6
 
+set mouse=
+
 " external formatting program
 set formatprg=par\ -w80
 "   on arch: aur/par

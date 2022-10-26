@@ -1,10 +1,7 @@
 #! /bin/bash
 
 DIR="$(dirname $0)"
-
-ONEPLUS=$DIR/oneplus-ip
-S6=$DIR/s6-ip
-PORT=2121
+source $DIR/ftp-base
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ ftpp
@@ -14,31 +11,4 @@ fi
 
 command -v sftp >/dev/null || { echo "sftp is not installed"; exit 1; }
 
-NET_NAME=`wifiname`
-if [ "$NET_NAME" = "Not connected" ]; then
-  echo "Not connected to any network"
-  exit 1
-  # test with ethernet connection
-fi
-NET_NAME=`echo $NET_NAME | sed 's| |_|g'`
-
-IP_FILE=$ONEPLUS
-[ "$1" = "s6" ] && IP_FILE=$S6
-
-IP=`grep $NET_NAME <$IP_FILE | cut -d\  -f2`
-
-if [ -z "$IP" ]; then
-  echo "$NET_NAME is not configured in $IP_FILE"
-  printf "edit file? (Y/n)"
-  read ans
-  if [ "$ans" != "n" ]; then
-    echo "$NET_NAME 192.168.<++>.<++>" >>$IP_FILE
-    nvim $IP_FILE
-    IP=`grep $NET_NAME <$IP_FILE | cut -d\  -f2`
-  else
-    exit 1
-  fi
-fi
-
-# sftp -P $PORT -i $HOME/.ssh/private $IP
-sftp -P $PORT -i $HOME/.ssh/private -oHostKeyAlgorithms=+ssh-rsa $IP
+sshpass -p $SSHPASS -- sftp -P $PORT -i $HOME/.ssh/private -oHostKeyAlgorithms=+ssh-rsa $IP
