@@ -25,7 +25,6 @@ reload clean
 reload manga
 reload pod
 reload misc
-reload yt
 
 reload_ent() {
   TMP=$(mktemp)

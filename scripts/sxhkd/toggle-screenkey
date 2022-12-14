@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ toggle-screenkey
+Toggle screenkey on and off
+EOF
+  exit
+fi
+
+command -v screenkey >/dev/null || { echo "screenkey is not installed" 1>&2; exit 127; }
+command -v fkill >/dev/null || { echo "fkill is not installed" 1>&2; exit 127; }
+
+fkill screenkey -fs >/dev/null 2>&1 || screenkey &

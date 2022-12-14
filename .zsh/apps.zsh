@@ -225,19 +225,26 @@ alias to="rem 2>/dev/null | grep -v Reminders"
 ## nvim
 alias luamake=/home/jneidel/.local/share/nvim/lua-language-server/3rd/luamake/luamake
 
-## pubs
-alias pba="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
-alias pbad="pba doc open"
-alias pbadoc="pbad"
-alias pban="pba note"
-alias pbanote="pban"
-pbao() {
+## pubs, bib ba
+alias bb="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
+bbd() {
+  bb doc open "$1" >/dev/null 2>/dev/null
+}
+alias bbdoc="bbd"
+alias bbn="bb note"
+alias bbnote="bbn"
+bbo() {
   local citekey="$1"
   if [ -z "$citekey" ]; then
     echo "Pass a citekey"
     return 1
   fi
-  pbad "$citekey"
-  pban "$citekey"
+  bbd "$citekey"
+  bbn "$citekey"
 }
-alias pbaopen="pbao"
+alias bbopen="bbo"
+alias bbl="bb list"
+
+## make
+alias m="make"
+alias mw="make watch"

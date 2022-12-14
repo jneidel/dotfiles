@@ -1,0 +1,25 @@
+#! /bin/bash
+
+DIR="$(dirname $0)"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ ftpod FILE
+Add a file to my phones podcast directory
+
+Parameters:
+  \$1: file
+EOF
+  exit
+fi
+
+command -v sftp >/dev/null || { echo "sftp is not installed"; exit 1; }
+command -v sshpass >/dev/null || { echo "sshpass is not installed" 1>&2; exit 127; }
+
+FILE="$1"
+source $DIR/ftp-base
+
+sshpass -p $SSHPASS sftp -P $PORT -oHostKeyAlgorithms=+ssh-rsa -oBatchMode=no -b - $IP << !
+   cd podcasts
+   put -R "$FILE"
+!

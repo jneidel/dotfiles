@@ -88,6 +88,5 @@ alias ignore="git update-index --assume-unchanged"
 
 ## open repo in browser
 gho() {
-  local dir="$(git rev-parse --show-toplevel)"
-  grep "github.com" "$dir/.git/config" | cut -d@ -f2 | cut -d. -f1-2 | sed 's|:|/|' | awk '{print "https://"$1}' | xargs -r $B >/dev/null 2>&1
+  git remote get-url origin | cut -d@ -f2 | cut -d. -f1-2 | sed 's|:|/|' | awk '{print "https://"$1}' | xargs -r $B >/dev/null 2>&1
 }

@@ -73,6 +73,10 @@ au filetype java imap ,t @Test<Enter>public void () {<Enter><++><Enter>}<Esc>02k
 "### LaTeX
 au filetype tex imap ,o {}<Esc>i
 au filetype tex imap ,be \begin{}<Enter><++><Enter>\end{<++>}<Esc>02kf{a
+au filetype tex imap ,to % TODO:<Space>
+
+"#### sections
+au filetype tex imap ,ch \chapter{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex imap ,s \section{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex imap ,ss \subsection{}<Enter><Enter><++><Esc>02kf{a
 au filetype tex imap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
@@ -80,9 +84,28 @@ au filetype tex imap ,sss \subsubsection{}<Enter><Enter><++><Esc>02kf{a
 "#### text style
 au filetype tex imap ,b \textbf{} <++><Esc>2ba
 au filetype tex imap ,it \textit{} <++><Esc>2ba
-au filetype tex imap ,c \begin{center}<Enter><Enter>\end{center}<Esc>0kA
-au filetype tex imap ,r \begin{flushright}<Enter><Enter>\end{flushright}<Esc>0kA
-au filetype tex imap ,sk <Enter>\medskip<Enter>
+au filetype tex imap ,ce \begin{center}<Enter><Enter>\end{center}<Esc>0kA
+au filetype tex imap ,ra \begin{flushright}<Enter><Enter>\end{flushright}<Esc>0kA
+
+"#### whitespace
+au filetype tex imap ,ms <Enter>\medskip<Enter>
+au filetype tex imap ,sk <Enter>\smallskip<Enter>
+au filetype tex imap ,bs <Enter>\bigskip<Enter>
+au filetype tex imap ,np <Enter>\newpage<Enter>
+
+"#### cite
+au filetype tex imap ,c \cite{}<++><Esc>F{a
+au filetype tex imap ,pc \parencite{}<++><Esc>F{a
+au filetype tex imap ,cn % TODO: citation needed<Enter>
+
+"#### images
+au filetype tex imap ,f \begin{figure}<Enter>\centering<Enter>\includegraphics[scale=0.5]{.png}<Enter>\caption{<++>}<Enter>\label{fig:<++>}<Enter>\end{figure}<Esc>3k0f{a
+au filetype tex imap ,im \includegraphics[scale=0.5]{}<Enter><Esc>kf{a
+
+"#### labels and references
+au filetype tex imap ,l \label{chap:}<Enter><Enter><++><Esc>2k0f:a
+au filetype tex imap ,rf Abbildung \ref{fig:} <++><Esc>F:a
+au filetype tex imap ,rc Kapitel \ref{chap:} <++><Esc>F:a
 
 "#### lists
 au filetype tex imap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
@@ -99,15 +122,12 @@ au filetype tex imap ,^ ^{}<++><Esc>bla
 au filetype tex imap ,aa \begin{align*}<Enter><Enter>\end{align*}<Esc>kA
 au filetype tex imap ,ae \begin{eqnarray*}<Enter><Enter>\end{eqnarray*}<Esc>kA
 au filetype tex imap ,d \cdot<Space>
+au filetype tex imap ,< \textless
+au filetype tex imap ,> \textgreater
 
 "#### beamer
 au filetype tex imap ,fr \begin{frame}\end{frame}<Enter><Enter><++><Esc><<2k0f}a<Enter><Esc>O
 au filetype tex imap ,ft \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter>\end{frame}<Enter><Enter><++><Esc>5kf{a
-
-"#### misc
-au filetype tex imap ,< \textless
-au filetype tex imap ,> \textgreater
-au filetype tex imap ,im \includegraphics[scale=0.5]{}<Enter><Esc>kf{a
 
 "### vim borked
 au filetype vim imap ,o {\<Enter>}<Esc>i

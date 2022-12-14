@@ -103,14 +103,14 @@ super + c
   dunstctl close
 super + C
   dunstctl close-all
-super + i
+super + h
   dunstctl history-pop
 
 ## misc
 super + n
   wlan
 super + y
-  ~/scripts/yt
+  ~/scripts/schedule-yt
 super + v
   ~/scripts/sxhkd/open_clip_mpv
 super + o
@@ -123,6 +123,10 @@ super + z
   open-latest-doc
 super + b
   bangs
+super + i
+  insert-bookmark
+super + S
+  toggle-screenkey
 
 # which key is this?
 XF86Tools

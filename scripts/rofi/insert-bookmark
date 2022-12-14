@@ -1,0 +1,22 @@
+#! /bin/sh
+
+BOOKMARK_FILE=$HOME/scripts/personal/bookmarks
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ insert-bookmark
+Insert an entry from bookmark file
+EOF
+  exit
+fi
+
+command -v rofi >/dev/null || { echo "rofi is not installed" 1>&2; exit 127; }
+command -v xdotool >/dev/null || { echo "xdotool is not installed" 1>&2; exit 127; }
+
+if [ ! -f "$BOOKMARK_FILE" ]; then
+  echo "Bookmark file '$BOOKMARK_FILE' does not exist"
+  exit 1
+fi
+
+SELECTION=`cat $BOOKMARK_FILE | rofi -dmenu -i -lines 15 -eh 1 -p insert 2>/dev/null | rev | cut -d\  -f1 | rev`
+xdotool type $SELECTION

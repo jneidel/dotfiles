@@ -13,6 +13,8 @@ EOF
   exit
 fi
 
+~/scripts/cron/waitforinternet
+
 if ! tmux has-session -t $MAIN 2>/dev/null; then
   exit 1
 fi

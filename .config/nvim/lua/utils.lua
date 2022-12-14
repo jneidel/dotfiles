@@ -62,7 +62,7 @@ M.custom_on_attach = function(client)
   map('n', '<leader>wl', ':lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', options)
   map('n', '<leader>wi', ':LspInfo<CR>', options)
 
-  if (client.resolved_capabilities.document_highlight) then
+  if (client.server_capabilities.document_highlight) then
     define_augroup({
       lsp = {
         { 'CursorHold,CursorHoldI', '<buffer>', ':lua vim.lsp.buf.document_highlight()' },
@@ -95,7 +95,7 @@ M.lsp_setup = function()
     vim.api.nvim_command('autocmd CursorHold,CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()')
     vim.api.nvim_command('autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()')
   end
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   local root_dir = vim.loop.cwd
 
   return custom_attach, capabilities, root_dir

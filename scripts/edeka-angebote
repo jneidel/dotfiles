@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/zsh
 
 Kottmeierstr=10003134
 Center=8001126
@@ -24,7 +24,5 @@ fetch() {
     sed "s|}|},|" | head -n-1 >>$FILE
   echo "}]" >>$FILE
 }
-
-[ ! -f "$FILE" ] && fetch
-
+fetch
 cat $FILE | jq

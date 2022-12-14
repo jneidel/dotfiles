@@ -235,7 +235,7 @@ The essential hotkey daemon.
 
 Lightweight window manager.
 
-- [config](.i3/config)
+- [config](.config/i3/config)
 
 ### lock screen
 

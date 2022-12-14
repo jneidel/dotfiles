@@ -202,6 +202,7 @@ map gr cd ~/code/notes/research
 map gs cd ~/projects/spanish
 map gl cd ~/projects/latin
 map ge cd ~/projects/morning_routine/meditation
+map ga cd ~/code/ba
 
 map o jump-out
 map i jump-in

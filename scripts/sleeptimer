@@ -20,7 +20,7 @@ command -v mpvctl >/dev/null || { echo "mpvctl is not in PATH"; exit 127; }
 command -v control-mpd >/dev/null || { echo "control-mpd is not installed"; exit 127; }
 
 pause() {
-  if mpvctl get name >/dev/null 2&>1; then
+  if mpvctl get name >/dev/null; then
     mpvctl key Q # quit, save state
   else
     control-mpd pause

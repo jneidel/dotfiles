@@ -33,7 +33,7 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 ## Paths
-export PATH=$HOME/.local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl
+export PATH=$HOME/.local/bin:/usr/local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl
 export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 
@@ -86,18 +86,12 @@ export HISTFILE="$XDG_DATA_HOME/history"
 ## User specific
 export KEYID=B29E6A7A7DFD16FA # GPG keyid
 
+# kitty shell integration
+if test -e "/usr/lib/kitty/shell-integration/kitty.zsh"; then source "/usr/lib/kitty/shell-integration/kitty.zsh"; fi
+
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc
 if [ "$(tty)" = "/dev/tty1" ]; then
   pgrep -x Xorg >/dev/null || startx
 fi
 
-
-
-
-alias luamake=/home/jneidel/.local/share/nvim/lua-language-server/3rd/luamake/luamake
-
-
-# BEGIN_KITTY_SHELL_INTEGRATION
-if test -e "/usr/lib/kitty/shell-integration/kitty.zsh"; then source "/usr/lib/kitty/shell-integration/kitty.zsh"; fi
-# END_KITTY_SHELL_INTEGRATION

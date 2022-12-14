@@ -2,7 +2,7 @@
 
 alias h="cd && clear"
 
-alias m="cd ~/code/misc"
+alias mi="cd ~/code/misc"
 alias d="cd ~/Downloads"
 alias dl="cd ~/Downloads; ls"
 alias rv="cd ~/ct/review"

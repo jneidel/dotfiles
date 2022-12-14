@@ -63,7 +63,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # toggle sticky
-bindsym $mod+Shift+s sticky toggle
+# bindsym $mod+Shift+s sticky toggle
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -143,10 +143,12 @@ for_window [class="gui.Main"] floating enable
 
 # Dont focus on these windows on open
 no_focus [class="mupdf"]
+no_focus [class="Zathura"]
+assign [class="Zathura"] output DP-2
 
 # Open monitors on specific workspaces
-workspace 5 output DP2
-workspace 5 output DP-5
+workspace $ws1 output primary
+workspace $ws5 output DP-2
 mouse_warping none
 no_focus [class="monitor"]
 assign [class="monitor"] $ws5

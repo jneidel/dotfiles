@@ -37,7 +37,7 @@ esac
 # first connected monitor (apart from MAIN) it can find
 MONITOR=$(xrandr | grep " connected" | grep -v "$MAIN" | head -n1 | cut -d\  -f1)
 MONITOR_RESOLUTION=1920x1080
-[ -z "$MONITOR_RESOLUTION" ] && MONITOR_RESOLUTION=$(xrandr | grep $MONITOR | cut -d\  -f3 | awk -F+ '{ print $1 }')
+# [ -z "$MONITOR_RESOLUTION" ] && MONITOR_RESOLUTION=$(xrandr | grep $MONITOR | cut -d\  -f3 | awk -F+ '{ print $1 }') # broken
 
 printf "Using:
   Main    : $MAIN - $MAIN_RESOLUTION

@@ -2,8 +2,9 @@
 
 DIR="$(dirname $0)"
 
-ONEPLUS=$DIR/oneplus-ip
+OP=$DIR/oneplus-ip
 S6=$DIR/s6-ip
+S21=$DIR/s21-ip
 PORT=2121
 SSHPASS=1234
 
@@ -15,8 +16,10 @@ if [ "$NET_NAME" = "Not connected" ]; then
 fi
 NET_NAME=`echo $NET_NAME | sed 's| |_|g'`
 
-IP_FILE=$ONEPLUS
+IP_FILE=$S21
 [ "$1" = "s6" ] && IP_FILE=$S6
+[ "$1" = "op" ] && IP_FILE=$OP
+touch $IP_FILE
 
 IP=`grep $NET_NAME <$IP_FILE | cut -d\  -f2`
 

@@ -1,0 +1,34 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ waitforinternet
+Test and retest until internet connection exists
+EOF
+  exit
+fi
+
+command -v nc >/dev/null || { echo "nc is not installed" 1>&2; exit 127; }
+
+check() {
+  nc -zw1 duck.com 443 2>/dev/null
+}
+
+count=1
+current_interval=1
+calc_retry_interval() {
+  current_interval=$(node -e "console.log(Number(Math.log(Math.pow($count, Math.pow($count, 2)/25))+.8).toFixed(2))")
+  count=$count+1
+}
+
+while true; do
+  if check; then
+    exit 0
+  fi
+
+  calc_retry_interval
+  if [ "$current_interval" = "Infinity" ]; then
+    exit 1
+  fi
+  sleep "${current_interval}s"
+done

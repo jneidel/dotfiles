@@ -7,11 +7,8 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-DEV=$(echo -e "quit" | bluetoothctl | grep -F quit | grep -Po "\[0;94m\[\K.*" | cut -d\] -f1)
-
-if [ "$?" -eq 0 ] && [ "$DEV" != "bluetooth" ]; then
-  echo $DEV
+if bluetoothctl info >/dev/null 2>&1; then
+  bluetoothctl info | grep Name | cut -d\  -f2-
 else
   exit 1
 fi
-
