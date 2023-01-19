@@ -1,16 +1,16 @@
 " old-hope colorscheme
 
-let s:yellow = [ '#e5cd52' , 221 ]
-let s:blue = [ '#4fb4d8' , 39 ]
+let s:yellow = [ '#ffd75f' , 221 ]
+let s:blue = [ '#00afff' , 39 ]
 let s:darkBlue = [ '#005fd7' , 26 ]
-let s:red = [ '#eb3d54' , 160 ]
-let s:green = [ '#78bd65' , 41 ]
-let s:orange = [ '#ef7c2a' , 202 ]
+let s:red = [ '#d70000' , 160 ]
+let s:green = [ '#00ff5f' , 47 ]
+let s:orange = [ '#ff5f00' , 202 ]
 let s:white = [ '#ffffff' , 15 ]
-let s:lightGray = [ '#848794' , 245 ]
-let s:gray = [ '#686b78' , 242 ]
-let s:darkGray = [ '#45474f' , 235 ]
-let s:veryDarkGray = [ '#1c1d21' , 234 ]
+let s:lightGray = [ '#8a8a8a' , 245 ]
+let s:gray = [ '#6c6c6c' , 242 ]
+let s:darkGray = [ '#262626' , 235 ]
+let s:veryDarkGray = [ '#1c1c1c' , 234 ]
 
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 

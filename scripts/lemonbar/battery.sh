@@ -4,6 +4,7 @@ POWER=/sys/class/power_supply
 
 if [ -f $POWER/BAT1/energy_now ]; then
   BAT=$POWER/BAT1 # x240
+  BAT_INTERNAL=$POWER/BAT0 # x240
 else
   BAT=$POWER/BAT0 # e495
 fi
@@ -48,4 +49,11 @@ PERCENT_ICON=$(
 IS_CHARGING=$(cat $AC)
 CHARGING_ICON=$([ "$IS_CHARGING" -eq 1 ] && echo "")
 
-echo "${CHARGING_ICON}${PERCENT_ICON}${PERCENT}%"
+if [ -n "$BAT_INTERNAL" ] && [ $PERCENT -lt 8 ]; then
+  CHARGE_INTERNAL=$BAT_INTERNAL/energy_now
+  CAPACITY_INTERNAL=$BAT_INTERNAL/energy_full
+  PERCENT_INTERNAL=$(($(cat $CHARGE_INTERNAL)*100/$(cat $CAPACITY_INTERNAL)))
+  [ $PERCENT_INTERNAL -gt 0 ] && INTERNAL_PRINT="+$PERCENT_INTERNAL%"
+fi
+
+echo "${CHARGING_ICON}${PERCENT_ICON}${PERCENT}%${INTERNAL_PRINT}"

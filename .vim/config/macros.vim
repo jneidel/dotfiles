@@ -35,9 +35,9 @@ au filetype md,markdown imap ,i - [ ]<Space>
 
 "### JavaScript/Typescript
 au filetype js,ts,javascript,typescript,pug imap ,o {<Enter>}<Esc>O
-au filetype js,ts,javascript,typescript imap ,f function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
-au filetype js,ts,javascript,typescript imap ,s async function (<++>) {<Enter><++><Enter>}<Esc>2kf<2ha
-au filetype js,ts,javascript,typescript imap ,a [  ]<Esc>hi
+au filetype js,ts,javascript,typescript imap ,f function (<++>) {<Enter><++><Esc>kf<2ha
+au filetype js,ts,javascript,typescript imap ,a async function (<++>) {<Enter><++><Esc>kf<2ha
+" au filetype js,ts,javascript,typescript imap ,a [  ]<Esc>hi
 au filetype js,ts,javascript,typescript imap ,i import  from "<++>";<Esc>Ffhi
 au filetype js,ts,javascript,typescript imap ,l console.log(  )<Esc>hi
 au filetype js,ts,javascript,typescript imap ,t test( "", () => {<Enter>const <Enter>const answer <Enter><Enter>const result <Enter>expect( result ).toBe( answer );<Enter>} );<Esc>02k2ela= <++><Esc>02k2ela= <++><Esc>0kela<++><Esc>0kf"a
@@ -73,7 +73,8 @@ au filetype java imap ,t @Test<Enter>public void () {<Enter><++><Enter>}<Esc>02k
 "### LaTeX
 au filetype tex imap ,o {}<Esc>i
 au filetype tex imap ,be \begin{}<Enter><++><Enter>\end{<++>}<Esc>02kf{a
-au filetype tex imap ,to % TODO:<Space>
+au filetype tex imap ,t % TODO:<Space>
+au filetype tex imap ,l \begin{code}<Enter>\begin{shellcode}<Enter><Enter>\end{shellcode}<Enter>\captionof{listing}{<++>}<Enter>\medskip<Enter>\end{code}<Enter><Enter><++><Esc>06ki<Tab>
 
 "#### sections
 au filetype tex imap ,ch \chapter{}<Enter><Enter><++><Esc>02kf{a
@@ -103,7 +104,7 @@ au filetype tex imap ,f \begin{figure}<Enter>\centering<Enter>\includegraphics[s
 au filetype tex imap ,im \includegraphics[scale=0.5]{}<Enter><Esc>kf{a
 
 "#### labels and references
-au filetype tex imap ,l \label{chap:}<Enter><Enter><++><Esc>2k0f:a
+au filetype tex imap ,la \label{chap:}<Enter><Enter><++><Esc>2k0f:a
 au filetype tex imap ,rf Abbildung \ref{fig:} <++><Esc>F:a
 au filetype tex imap ,rc Kapitel \ref{chap:} <++><Esc>F:a
 
@@ -111,7 +112,7 @@ au filetype tex imap ,rc Kapitel \ref{chap:} <++><Esc>F:a
 au filetype tex imap ,ul \begin{itemize}<Enter>\item <Enter>\end{itemize}<Enter><++><Esc>2kA
 au filetype tex imap ,ol \begin{enumerate}<Enter>\item <Enter>\end{enumerate}<Enter><++><Esc>2kA
 au filetype tex imap ,i \item<Space>
-au filetype tex imap ,t \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
+au filetype tex imap ,ta \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
 
 "#### math
 au filetype tex imap ,m \[  \]<Enter><Enter><++><Esc>02kf[la

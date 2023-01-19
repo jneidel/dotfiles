@@ -204,3 +204,7 @@ create .config/cnsm
 
 [sxiv]
 .Xresources
+
+[gpg]
+create .gnupg
+.gnupg/gpg-agent.conf

@@ -61,6 +61,7 @@ wget Download util
 curl Download util
 shellcheck Script debugging
 octave Math language
+xdotool Automate things in X
 
 [conky]
 conky Desktop widgets
@@ -381,8 +382,7 @@ wine-mono wine dependency
 texlive-core Core stuff
 biber Bibliography adon
 texlive-bibtexextra Biber latex file
-vim-live-latex-preview Vim plugin
-mupdf Pdf viewer for vim-live-latex-preview
+texlive-latexextra More packages
 
 [networks]
 bind-tools Network debugging

@@ -55,7 +55,11 @@ alias pushup="git push --set-upstream origin"
 alias pull="git pull origin"
 alias master="git pull origin master; git push origin master"
 alias gpu="git push uber master"
-alias clone="git clone"
+clone() {
+  local repo="$1"
+  git clone $repo
+  cd $(echo $repo | rev | cut -d/ -f1 | cut -d. -f2- | rev)
+}
 alias stash="git stash"
 
 ## checkout

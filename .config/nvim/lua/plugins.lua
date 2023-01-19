@@ -16,16 +16,24 @@ require("paq") {
 
   "nvim-treesitter/nvim-treesitter", -- dynamic syntax highlighting independant of lang
 
-  "windwp/nvim-autopairs",
-  "numToStr/Comment.nvim", -- comments
-  -- "TheBlob42/drex.nvim", -- file explorer
-  "justinmk/vim-dirvish",
-  "lambdalisue/fern.vim",
+  -- fern
+  "lambdalisue/fern.vim", -- file explorer
   "lambdalisue/nerdfont.vim",
   "lambdalisue/fern-renderer-nerdfont.vim",
   "lambdalisue/fern-git-status.vim",
   "lambdalisue/fern-hijack.vim",
   "yuki-yano/fern-preview.vim",
-
   -- try using fzf LumaKernel/fern-mapping-fzf.vim
+
+  -- fuzzy finder
+  { "nvim-telescope/telescope.nvim", branch = '0.1.x' },
+  "nvim-lua/plenary.nvim",
+  { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' },
+
+  -- other
+  "windwp/nvim-autopairs",
+  "numToStr/Comment.nvim", -- comments
+  "justinmk/vim-dirvish",
+  "brenoprata10/nvim-highlight-colors", -- visualize hex color codes
+  { 'neoclide/coc.nvim', branch= 'release' },
 }

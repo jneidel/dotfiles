@@ -89,7 +89,7 @@ au filetype js,javascript,vue nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-
 au filetype ts,typescript nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc-ts --resolve-plugins-relative-to /usr/lib/node_modules --parser '@typescript-eslint/parser' <CR>`F
 
 "## coc
-let g:coc_global_extensions = "coc-tsserver coc-json coc-html coc-css coc-highlight coc-yank"
+let g:coc_global_extensions = [ "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-highlight", "coc-yank", "coc-texlab" ]
 
 " only use coc for specific filetypes
 " au Filetype * silent CocDisable
@@ -220,14 +220,14 @@ au Filetype fern nmap <buffer> <BS> <Plug>(fern-action-leave)
 
 au Filetype fern nmap <buffer> u <Plug>(fern-action-hidden:toggle)
 au Filetype fern nmap <buffer> rm <Plug>(fern-action-remove)
-" au Filetype fern nmap <buffer> t <Plug>(fern-action-new-file)
-" au Filetype fern nmap <buffer> d <Plug>(fern-action-new-dir)
+au Filetype fern nmap <buffer> T <Plug>(fern-action-new-file)
+au Filetype fern nmap <buffer> d <Plug>(fern-action-new-dir)
 
 " tips: https://github.com/lambdalisue/fern.vim/wiki/Tips
 
 au Filetype fern nmap <buffer> t <Plug>(fern-action-open:tabedit)
-au Filetype fern nmap <buffer> s <Plug>(fern-action-open:side) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
-au Filetype fern nmap <buffer> v <Plug>(fern-action-open:below) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
+au Filetype fern nmap <buffer> v <Plug>(fern-action-open:side) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
+au Filetype fern nmap <buffer> s <Plug>(fern-action-open:below) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>
 " au Filetype fern nmap <buffer>
 " <Plug>(fern-action-open:select)
 " <Plug>(fern-action-open:system)

@@ -13,7 +13,6 @@ if exists("syntax_on")
 endif
 " }}}
 
-
 " Variables {{{
 let g:colors_name="old-hope"
 " * Determine t_Co support
@@ -22,19 +21,20 @@ let s:tCol = oldhope#GetTCo()
 
 " Colors {{{
 " * GUI
-let s:gWhite           = "#FFFFFF"
-let s:gBlack           = "#000000"
+let s:gWhite         = "#ffffff"
+let s:gBlack         = "#000000"
 
-let s:gVeryLightGrey   = "#CBCDD2"
-let s:gLightGrey       = "#848794"
-let s:gGrey            = "#686B78"
-let s:gDarkGrey        = "#45474F"
-let s:gVeryDarkGrey    = "#1C1D21"
-let s:gRed             = "#EB3D54"
-let s:gOrange          = "#EF7C2A"
-let s:gYellow          = "#E5CD52"
-let s:gGreen           = "#78BD65"
-let s:gBlue            = "#4FB4D8"
+let s:gVeryLightGrey = "#d0d0d0"
+let s:gLightGrey     = "#8a8a8a"
+let s:gGrey          = "#6c6c6c"
+let s:gDarkGrey      = "#262626"
+let s:gVeryDarkGrey  = "#1c1c1c"
+let s:gRed           = "#d70000"
+let s:gOrange        = "#ff5f00"
+let s:gYellow        = "#ffd75f"
+let s:gGreen         = "#00ff5f"
+let s:gBlue          = "#00afff"
+
 " * t_Co 256 (cterm)
 let s:tWhite         = 15
 let s:tBlack         = 0

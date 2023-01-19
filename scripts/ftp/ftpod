@@ -23,3 +23,4 @@ sshpass -p $SSHPASS sftp -P $PORT -oHostKeyAlgorithms=+ssh-rsa -oBatchMode=no -b
    cd podcasts
    put -R "$FILE"
 !
+printf "Delete file? (Y/n)"; read ans; if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then rm "$FILE"; fi

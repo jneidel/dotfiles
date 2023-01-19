@@ -95,3 +95,4 @@ if [ "$(tty)" = "/dev/tty1" ]; then
   pgrep -x Xorg >/dev/null || startx
 fi
 
+ORACLETT_AC_ZSH_SETUP_PATH=/home/jneidel/.cache/oraclett/autocomplete/zsh_setup && test -f $ORACLETT_AC_ZSH_SETUP_PATH && source $ORACLETT_AC_ZSH_SETUP_PATH; # oraclett autocomplete setup

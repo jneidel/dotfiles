@@ -3,6 +3,8 @@
 " with simpler setup, because this one will break if not setup correctly.
 " For basic setup see: https://gist.github.com/simonista/8703722
 
+let g:coc_global_extensions = []
+
 " not vi compatible
 set nocompatible
 
@@ -18,7 +20,7 @@ set t_Co=256
 " set colorscheme
 colorscheme old-hope
 "   file in ~/.vim/colors/old-hope.vim
-"   see: https://github.com/j-tom/vim-old-hope.git
+"   source: https://github.com/j-tom/vim-old-hope.git
 
 " linenumbers, in normal mode numbers will be relative to the current line
 set number relativenumber
@@ -200,9 +202,6 @@ nnoremap <C-s> :%s//g<Left><Left>
 
 " sort a block of text
 nnoremap <leader>S {jv}k$:!sort<CR>
-
-" open fzf
-nnoremap <A-f> :F<CR>
 
 " open buffer menu
 nnoremap <A-b> :b<Space>

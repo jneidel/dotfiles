@@ -257,7 +257,7 @@
     "capitalized-comments": 0,
     "curly": [
       2,
-      "multi-or-nest",
+      "multi",
       "consistent"
     ],
     "handle-callback-err": 0,

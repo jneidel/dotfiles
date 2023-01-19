@@ -17,6 +17,7 @@ nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ek https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3491r5
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3491r5
 ytt https://www.youtube.com/results?search_query=%s
+yt https://watch.thekitty.zone/search?q=%s
 yt https://yewtu.be/search?q=%s
 yt https://ytb.trom.tf/search?q=%s
 ytp https://invidious.namazso.eu/search?q=%s%20content_type:playlist&page=1
@@ -46,6 +47,7 @@ wa https://www.wolframalpha.com/input/?i=%s
 ede https://www.ebay.de/sch/i.html?_nkw=%s
 dm https://www.dm.de/search?query=%s&searchType=product
 rc https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-Bibliothek
+re https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-Bibliothek
 reclam https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-Bibliothek
 ama https://smile.amazon.de/s?k=%s
 dhl https://www.dhl.com/cgi-bin/tracking.pl?AWB=%s

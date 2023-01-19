@@ -17,7 +17,7 @@ fi
 URL="$1"
 
 if echo $URL | grep -e "youtube.com" >/dev/null; then
-  echo "$1" | sed 's|www.youtube.com|invidio.xamh.de|' | xargs -r $BROWSER >/dev/null 2>&1 &
+  echo "$1" | sed 's|www.youtube.com|watch.thekitty.zone|' | xargs -r $BROWSER >/dev/null 2>&1 &
 elif echo $URL | grep -F "twitter.com" >/dev/null; then
   echo "$1" | sed 's|twitter.com|nitter.exonip.de|' | xargs -r $BROWSER >/dev/null 2>&1 &
 else

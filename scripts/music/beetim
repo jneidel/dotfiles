@@ -28,6 +28,7 @@ disable-mullvad-for beet import -I "$@" && {
     echo "Removing $@"
     rm -r "$@"
   fi
-  findex $MUSIC_DIR -name "cover.png" -o -name "cover.jpg" 'echo "removing cover: $1"; rm "$1"' # remove covers
+  findex $MUSIC_DIR/_imported -name "cover.jpg" 'echo "removing cover: $1"; rm "$1"' # remove covers
+  findex $MUSIC_DIR/_imported -name "cover.png" 'echo "removing cover: $1"; rm "$1"' # remove covers
   findex $MUSIC_DIR/_imported -name "*.mp3" 'fix-mp3-dates "$1"'
 }

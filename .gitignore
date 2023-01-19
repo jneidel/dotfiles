@@ -20,3 +20,4 @@ scripts/*/data
 scripts/ftp/*-ip
 
 .config/nvim/jaspers-neovim
+.config/mpv/scripts/sponsorblock_shared/sponsorblock.txt

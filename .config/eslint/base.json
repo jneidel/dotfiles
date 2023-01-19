@@ -160,7 +160,7 @@
     "arrow-parens": 0,
     "max-statements-per-line": [1, { "max": 2 }],
     "capitalized-comments": 0,
-    "curly": [2, "multi-or-nest", "consistent"],
+    "curly": [2, "multi", "consistent"],
     "handle-callback-err": 0,
     "no-irregular-whitespace": 0,
     "no-implicit-coercion": 0,
