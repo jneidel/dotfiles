@@ -43,8 +43,8 @@ nice -n 5 dunst &
 
 ## gui application autostart
 nice -n -7 kitty ~/scripts/tmux/t main vim &
-nice -n 7 brave &
-nice -n 7 signal-desktop &
+nice -n 19 brave &
+nice -n 19 signal-desktop &
 
 # don't work if started directly
 # {

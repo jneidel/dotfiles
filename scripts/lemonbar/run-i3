@@ -1,0 +1,11 @@
+#! /bin/bash
+# custom i3 lemobar
+# adapted from: https://github.com/electro7/dot_debian/tree/master/.i3/lemonbar
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+. "$DIR/config"
+
+## events
+# i3 workspaces, "WSP"
+"$DIR/i3-workspaces.pl" >"${panel_fifo}" 2>/dev/null &

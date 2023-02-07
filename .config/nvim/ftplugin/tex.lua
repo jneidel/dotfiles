@@ -30,3 +30,4 @@ require('lspconfig').texlab.setup {
 }
 
 vim.api.nvim_cmd({ cmd = 'LspStart' }, {})
+vim.cmd("let b:coc_enabled = 0")

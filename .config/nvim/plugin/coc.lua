@@ -1,4 +1,3 @@
+-- coc.preferences.extensionUpdateCheck = "never";
 
--- vim.g.coc_global_extensions = {}
-
--- coc.preferences.extensionUpdateCheck = "never"
+vim.api.nvim_command( "source ~/.config/nvim/vimscript/coc.vim" )

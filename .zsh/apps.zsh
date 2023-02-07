@@ -96,6 +96,7 @@ gh() {
 alias wcurl="curl -OJ" # better wget
 alias bud="libreoffice ~/ct/reference/budget.ods &"
 alias mr="~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
+alias ms="mullvad status"
 
 ### newsboat
 wait_for_newsboat() {
@@ -111,7 +112,6 @@ alias new="wait_for_newsboat clean"
 alias pod="wait_for_newsboat pod"
 alias misc="wait_for_newsboat misc"
 alias ma="wait_for_newsboat manga"
-alias yt="wait_for_newsboat yt"
 nomoreent() {
   # echo "No youtube and gaming entertainment for now"
   # return 1

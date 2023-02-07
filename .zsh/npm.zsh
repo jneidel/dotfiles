@@ -1,15 +1,18 @@
 # npm
 
 ## install
-alias ni="npm install"
-alias nid="npm install --save-dev"
-alias nig="sudo npm install -g -s" # remove sudo if locally installed
+alias _npm="disable-mullvad-for npm"
+alias _sudonpm="disable-mullvad-for sudo npm"
+
+alias ni="_npm install"
+alias nid="ni --save-dev"
+alias nig="_sudonpm install -g -s" # remove sudo if locally installed
 function nit {
-  npm install --save-dev "@types/$1";
+  nid "@types/$1";
 }
 function nitt { # pkg + types
-  npm install "$1";
-  npm install --save-dev "@types/$1";
+  ni "$1";
+  nit "$1";
 }
 
 ## uninstall

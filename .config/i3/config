@@ -143,7 +143,7 @@ for_window [class="gui.Main"] floating enable
 
 # Dont focus on these windows on open
 no_focus [class="mupdf"]
-# no_focus [class="Zathura"]
+no_focus [class="Zathura"]
 assign [class="Zathura"] output DP-2
 
 # Open monitors on specific workspaces

@@ -15,7 +15,7 @@ super + Return
   kitty
 
 super + F1
-  nice brave
+  nice -n 19 brave
 
 super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
@@ -103,14 +103,16 @@ super + c
   dunstctl close
 super + C
   dunstctl close-all
-super + h
-  dunstctl history-pop
+# super + h
+#   dunstctl history-pop
 
 ## misc
 super + n
   wlan
 super + y
   ~/scripts/schedule-yt
+super + Y
+  ~/scripts/rofi/yt
 super + v
   ~/scripts/sxhkd/open_clip_mpv
 super + o

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 DIR="$(dirname $0)"
 
@@ -16,11 +16,15 @@ fi
 command -v sftp >/dev/null || { echo "sftp is not installed"; exit 1; }
 command -v sshpass >/dev/null || { echo "sshpass is not installed" 1>&2; exit 127; }
 
-FILE="$1"
-source $DIR/ftp-base
+. $DIR/ftp-base
 
-sshpass -p $SSHPASS sftp -P $PORT -oHostKeyAlgorithms=+ssh-rsa -oBatchMode=no -b - $IP << !
-   cd podcasts
-   put -R "$FILE"
-!
-printf "Delete file? (Y/n)"; read ans; if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then rm "$FILE"; fi
+FTP_COMMAND="cd podcasts"
+for file in "$@"; do
+  FTP_COMMAND="$FTP_COMMAND\nput -R \"$file\""
+done
+
+FTP_COMMAND_FILE=$(mktemp)
+echo $FTP_COMMAND >$FTP_COMMAND_FILE
+
+sshpass -p $SSHPASS sftp -P $PORT -oHostKeyAlgorithms=+ssh-rsa -oBatchMode=no -b - $IP <$FTP_COMMAND_FILE
+printf "Delete files? (Y/n)"; read ans; if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then rm "$@"; fi

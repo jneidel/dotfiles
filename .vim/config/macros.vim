@@ -29,7 +29,7 @@ au filetype md,markdown imap ,c ```<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown imap ,j ```json<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown imap ,s ```sh<Enter>```<Enter><++><Esc>kO
 au filetype md,markdown imap ,l - [] <++><Esc>F[a
-au filetype md,markdown nmap ,d :r !date +"\#\#\# \%a \%d.\%m.\%y"<Enter>A<Enter>
+au Filetype md,markdown map  ,d <Esc>:r !date +"\%a \%b\%d \%y"<Enter>o
 au filetype md,markdown nmap ,j :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
 au filetype md,markdown imap ,i - [ ]<Space>
 
@@ -89,7 +89,7 @@ au filetype tex imap ,ce \begin{center}<Enter><Enter>\end{center}<Esc>0kA
 au filetype tex imap ,ra \begin{flushright}<Enter><Enter>\end{flushright}<Esc>0kA
 
 "#### whitespace
-au filetype tex imap ,ms <Enter>\medskip<Enter>
+au filetype tex imap ,m <Enter>\medskip<Enter>
 au filetype tex imap ,sk <Enter>\smallskip<Enter>
 au filetype tex imap ,bs <Enter>\bigskip<Enter>
 au filetype tex imap ,np <Enter>\newpage<Enter>
@@ -115,7 +115,7 @@ au filetype tex imap ,i \item<Space>
 au filetype tex imap ,ta \begin{table}[h!]<Enter>\begin{center}<Enter>\caption{<++>}<Enter>\label{tab:table1}<Enter>\begin{tabular}{<++>}<Enter><Enter>\hline<Enter><++>\\<Enter><++><Enter>\end{tabular}<Enter>\end{center}<Enter>\end{table}<Esc>06kA
 
 "#### math
-au filetype tex imap ,m \[  \]<Enter><Enter><++><Esc>02kf[la
+" au filetype tex imap ,m \[  \]<Enter><Enter><++><Esc>02kf[la
 au filetype tex imap ,mm \[<Enter><Enter>\]<Esc>0ka
 au filetype tex imap ,br \frac{}{<++>} <++><Esc>2ba
 au filetype tex imap ,_ _{}<++><Esc>ba
