@@ -10,7 +10,7 @@ fi
 
 command -v mullvad >/dev/null || { echo "mullvad is not installed"; exit 127; }
 
-if [ "$(mullvad always-require-vpn get)" = "Network traffic will be blocked when the VPN is disconnected" ]; then
+if [ "$(mullvad lockdown-mode get)" = "Network traffic will be blocked when the VPN is disconnected" ]; then
   exit 0
 else
   exit 1

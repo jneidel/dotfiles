@@ -33,7 +33,7 @@ xrdb .Xresources &
 
 ## daemons
 mkfifo /tmp/xobpipe
-tail -f /tmp/xobpipe | xob &
+sleep 2; tail -f /tmp/xobpipe | xob &
 # hotkeys
 sxhkd &
 # notification

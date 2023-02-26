@@ -100,7 +100,7 @@ au filetype tex imap ,pc \parencite{}<++><Esc>F{a
 au filetype tex imap ,cn % TODO: citation needed<Enter>
 
 "#### images
-au filetype tex imap ,f \begin{figure}<Enter>\centering<Enter>\includegraphics[scale=0.5]{.png}<Enter>\caption{<++>}<Enter>\label{fig:<++>}<Enter>\end{figure}<Esc>3k0f{a
+au filetype tex imap ,f \begin{figure}[H]<Enter>\centering<Enter>\includegraphics[scale=0.5]{.png}<Enter>\caption{<++>}<Enter>\label{fig:<++>}<Enter>\end{figure}<Esc>3k0f{a
 au filetype tex imap ,im \includegraphics[scale=0.5]{}<Enter><Esc>kf{a
 
 "#### labels and references
