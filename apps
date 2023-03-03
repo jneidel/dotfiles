@@ -15,9 +15,10 @@
 # See: apps-install for installing packages
 # See: mappings for related configuration files
 #
+# To list user-installed apps:
+#   comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
+#
 # TODO: i3lock
-# TODO: ib-tws
-# To update: comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
 
 [dunst]
 dunst Notification daemon
@@ -289,6 +290,7 @@ ttf-roboto Roboto
 ## util
 [bluez]
 bluez-utils bluetoothctl utility
+systemd:bluetooth
 
 ## power management
 # See: https://wiki.archlinux.org/index.php/TLP
@@ -526,3 +528,6 @@ masterpdfeditor-free PDF Editor
 
 [screenkey]
 screenkey Show pressed keys on the screen
+
+[tws]
+ib-tws Stock trading application
