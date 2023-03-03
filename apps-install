@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $DIR/copy-configs
+FAILED_INSTALLS=/tmp/failed-install
+printf "" >$FAILED_INSTALLS
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -19,6 +21,12 @@ EOF
   exit
 fi
 
+# TODO: test logging failed install
+# TODO: output failed installs at the end
+# TODO: configure yay to automatically remove build depends, or at the end? to save on shared deps: yay -Qtdq | yay -Rsn -
+# TODO: install info line in green
+# TODO: highlight failings in red
+
 if [ -n "$1" ]; then
   echo "$@" | tr " " "\n" >$IN_USE_TMP
 fi
@@ -28,7 +36,7 @@ sudo pacman -Syu --noconfirm
 
 install_pacman() {
   echo "yay: Install $1 [$2]: $3"
-  printf "yes\nyes\nyes" | yay -S --confirm "$1"
+  printf "yes\nyes\nyes\nyes\nyes\nyes\nyes" | yay -S --confirm --answerclean None --answerdiff None "$1"
 }
 install_npm() {
   echo "npm: Install $1 [$2]: $3"
@@ -50,6 +58,10 @@ install_PKGBUILD() {
 run_shell() {
   echo "shell: running shell script [$2]"
   echo "$1" | cut -d: -f2- | sh -s
+}
+logged_failed() {
+  # test that all install return proper error code
+  echo "$1" >$FAILED_INSTALLS
 }
 
 command -v yay >/dev/null || { install_PKGBUILD yay-git required "AUR helper"; }
@@ -78,20 +90,20 @@ function install-apps {
       PKG=$(echo $PKG | cut -d: -f2)
       case $PREFIX in
         npm)
-          install_npm "$PKG" "$CATEGORY" "$DESC";;
+          install_npm "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
         systemd)
-          enable_systemd "$PKG" "$CATEGORY" "$DESC";;
+          enable_systemd "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
         pip)
-          install_pip "$PKG" "$CATEGORY" "$DESC";;
+          install_pip "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
         PKGBUILD)
-          install_PKGBUILD "$PKG" "$CATEGORY" "$DESC";;
+          install_PKGBUILD "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
         shell)
-          run_shell "$LINE" "$CATEGORY";;
+          run_shell "$LINE" "$CATEGORY" || logged_failed "$LINE";;
         *)
-          echo "invalid prefix: $LINE"
+          echo "invalid prefix: $LINE" && logged_failed "$LINE"
       esac
     else
-      install_pacman "$PKG" "$CATEGORY" "$DESC"
+      install_pacman "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE"
     fi
   done
 }
