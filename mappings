@@ -208,3 +208,7 @@ create .config/cnsm
 [gpg]
 create .gnupg
 .gnupg/gpg-agent.conf
+
+[pipewire]
+create .config/pipewire
+# .config/pipewire/x240.qpwgraph

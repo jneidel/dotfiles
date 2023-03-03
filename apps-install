@@ -1,30 +1,66 @@
 #! /bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
 source $DIR/copy-configs
 APPS="$DIR/apps"
 TMP_INSTALL_FILE=$(mktemp)
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ app-install"
-  echo "Install the apps from $APPS"
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ apps-install [CATEGORIES..]
+Install apps listed in 'apps'.
+But only for those where the category is 'used-apps'.
+
+Parameters:
+  [\$@]: only install those categories listed
+
+Example:
+  $ apps-install pipewire
+  $ apps-install postgres mongodb
+EOF
   exit
 fi
 
-yay -v 2> /dev/null || {
-  echo "yay (aur helper) does not exist."
-  echo "Please install it first using my compile script."
-  exit 1
-}
+if [ -n "$1" ]; then
+  echo "$@" | tr " " "\n" >$IN_USE_TMP
+fi
+
+# echo "Making sure the system is up to date first"
+# sudo pacman -Syu --noconfirm
 
 PACMAN_INSTALL=""
 NPM_INSTALL=""
 PIP_INSTALL=""
 POST_INSTALL=""
 
+install_pacman() {
+  echo "yay: Install $1 [$2]: $3"
+  yay -S --noconfirm "$1"
+}
+install_npm() {
+  echo "npm: Install $1 [$2]: $3"
+  sudo npm i -g "$1"
+}
+install_pip() {
+  echo "pip: Install $1 [$2]: $3"
+  sudo pip install "$1"
+}
+install_systemd() {
+  echo "systemd: Enabling $1 [$2]"
+  sudo systemctl enable "$1"
+}
+install_PKGBUILD() {
+  echo "PKGBUILD: Install $1 [$2]: $3"
+  cd $DIR/PKGBUILD # makepkg need to PKGBUILD to be in cwd
+  ./install $1 --noconfirm
+}
+
+command -v yay >/dev/null || { install_PKGBUILD yay-git required "AUR helper"; }
+command -v npm >/dev/null || { install_pacman nodejs required "node package manager"; }
+command -v systemctl >/dev/null || { echo "systemd is available" 1>&2; exit 127; }
+
 CATEGORY=""
-function get-files {
+function install-apps {
   IFS=$'\n'
   for IN in $(cat /dev/stdin); do
     # categories
@@ -45,46 +81,20 @@ function get-files {
       PKG=$(echo $PKG | cut -d: -f2)
       case $PREFIX in
         npm)
-          NPM_INSTALL="$NPM_INSTALL $PKG";;
+          install_npm "$PKG" "$CATEGORY" "$DESC";;
         systemd)
-          POST_INSTALL="$POST_INSTALL sudo systemctl enable $PKG; echo systemd: Enabled $PKG;";;
-        pip3)
-          POST_INSTALL="$PIP_INSTALL $PKG";;
+          install_systemd "$PKG" "$CATEGORY" "$DESC";;
+        pip)
+          install_pip "$PKG" "$CATEGORY" "$DESC";;
+        PKGBUILD)
+          install_PKGBUILD "$PKG" "$CATEGORY" "$DESC";;
         *)
-          echo "skipped: $IN"
+          echo "invalid prefix: $IN"
       esac
     else
-      PACMAN_INSTALL="$PACMAN_INSTALL $PKG"
+      install_pacman "$PKG" "$CATEGORY" "$DESC"
     fi
   done
-
-  ### Not needed now as not consumed directly
-  ## turn install variables into arrays for consumption
-  ## otherwise it will the variable will be used as one arg.
-  ## see: https://stackoverflow.com/a/5257398
-  # IFS=':'
-  # PACMAN_INSTALL_ARR=($PACMAN_INSTALL)
-  # NPM_INSTALL_ARR=($NPM_INSTALL)
-  # unset IFS
-
-  printf "yay -S $PACMAN_INSTALL
-
-sudo npm i -g $NPM_INSTALL
-
-$([ -n "$PIP_INSTALL" ] && echo "sudo pip3 install $PIP_INSTALL")
-
-$POST_INSTALL
-" > $TMP_INSTALL_FILE
 }
 
-cat $APPS |
-  grep -v "^#" |
-  grep -v "^\s*$" |
-  get-files
-
-# yay throws if executed within get-files, probably because it
-# requires user input
-echo Install file at: $TMP_INSTALL_FILE
-sh $TMP_INSTALL_FILE
-
-true
+cat $APPS | grep -v "^#" | grep -v "^\s*$" | install-apps

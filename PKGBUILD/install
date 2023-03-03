@@ -4,14 +4,16 @@ DIR=`dirname $0`
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
-$ install PKGBUILD_FILE
+$ install PKGBUILD_FILE [MAKEPKG_FLAGS]
 Install a package from PKGBUILD file
 
 Parameters:
   \$1: PKGBUILD file in the scripts directory
+  \$2: flags to be passed to makepkg
 
 Example:
   $ install lemonbar-xft-git
+  $ install lemonbar-xft-git --noconfirm
 EOF
   exit
 fi
@@ -25,4 +27,4 @@ if [ ! -f "$FILE" ]; then
   exit
 fi
 
-makepkg --install --syncdeps --rmdeps --force -p "$FILE"
+makepkg --install --syncdeps --rmdeps --force -p "$FILE" $2

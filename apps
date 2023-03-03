@@ -1,16 +1,21 @@
 # List of packages, grouped by categories
 #   Format: [PREFIX:]PKG_NAME DESCRIPTION...
 #
-# Prefixes and which commands they translate to:
-#   no prefix - yay -S
-#   npm       - npm install -g
+# The prefix specifies the install method:
+#   no prefix - with yay
+#   npm       - with npm
+#   pip       - with pip
 #   systemd   - systemctl enable
-#   pip3      - sudo pip3 install
+#   PKGBUILD  - build from local PKGBUILD file
 #
 # See used-apps for the list of active categories
 #
-# Todo: prefix to run random script (e.g. at epr)
-# Todo: replace non-existant pkgs: ungoogled-chromium-bin taskell-bin
+# TODO: prefix to run random commands (e.g. fixing image view with epr)
+#
+# TODO: i3lock
+# TODO: ib-tws
+#
+# To update: comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
 
 [dunst]
 dunst Notification daemon
@@ -19,6 +24,7 @@ arc-icon-theme Icon theme
 [nm]
 networkmanager NetworkManger
 systemd:NetworkManager
+networkmanager-dmenu-git Control NetworkManager through rofi
 
 [dash]
 dash Fast shell
@@ -29,9 +35,8 @@ sxhkd Hotkey assignment
 bc Calculator
 
 [lemonbar]
-lemonbar-xft-git Customizable bar
+PKGBUILD:lemonbar-xft-git Customizable bar
 perl-anyevent-i3 i3 eventlistener library
-pod2man Make dependency
 
 [i3]
 i3-wm Window manager
@@ -47,21 +52,20 @@ beets Automatic music tagger
 python-beautifulsoup4 beets lyrics plugin dependency
 python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
-rdcli real-debrid download util
 python-eyed3 Mp3 tagging
 id3v2 Mp3 tagging
+mp3cut Cutting
 
 [scripts]
 jq JSON processor
 rofi Prompt (dmenu alternative)
-networkmanager-dmenu-git Control NetworkManager through rofi
 conky Desktop widgets
-xclip X clipboard interface
 wget Download util
 curl Download util
 shellcheck Script debugging
 octave Math language
-xdotool Automate things in X
+reflector Update arch mirrorlist
+sshpass Automatic password login for ftp
 
 [conky]
 conky Desktop widgets
@@ -75,6 +79,7 @@ kitty-git Terminal emulator
 [tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
 # tmate Share tmux sessions
+tmuxinator Session management
 
 [gimp]
 gimp Photo editing
@@ -106,7 +111,7 @@ gwenview Extensive image viewer
 
 [newsboat]
 newsboat RSS feed reader
-w3m Terminal browser
+# w3m Terminal browser
 
 [yacreader]
 # yacreader-nopdf Comicbook reader # shit version, compile manually from https://jneidel.com/yacreader9.tar.xz
@@ -130,8 +135,9 @@ chromium Chromium for tradingview
 polybar Status bar
 
 ## misc
-[bleachbit]
+[cleanup]
 bleachbit System cleaner
+diskonaut Show large directories
 
 [colorpicking]
 gcolor2 Color picker
@@ -142,11 +148,11 @@ colorpicker Better colorpicker
 htop Process manager
 
 [mosh]
-mosh Better ssh
+mosh Mobile ssh
 
 [transmission]
 transmission-cli Torrent daemon
-tremc Transmission TUI
+tremc-git Transmission TUI
 
 [rclone]
 rclone Sync local and remote directories
@@ -155,9 +161,8 @@ rclone Sync local and remote directories
 rsync Sync local and remote directories
 
 [youtube-dl]
-youtube-dl Youtube downloader
+yt-dlp-git Audio and video downloader
 bandcamp-dl-git Bandcamp downloader
-yt-dlp-git Better yt-dl
 
 # cli
 ## text
@@ -178,29 +183,31 @@ scrot Screenshot utility
 [zsh]
 zsh-syntax-highlighting Highlight whever the typed command exists
 entr Run command if something changes
-exa Better ls
+exa-git Better ls
 bat Better cat
-npm:fx JSON explorer
 renameutils qmv mass rename util
 
 [vim]
 vim The text editor
-neovim The newer text editor
-fzf Fuzzy finder
 par Text wrapper, 80 chars
+fzf Fuzzy finder
 
-npm:vscode-langservers-extracted Language servers
-npm:typescript-language-server Lua language server
+[neovim]
+neovim-git The newer text editor
+
+npm:vscode-langservers-extracted Neovim LSP
+npm:typescript-language-server Neovim JS LSP
+phpactor Neovim PHP LSP
 
 ## service clients
 [ffsend]
-ffsend-bin Firefox send client
+ffsend-bin Upload files
 
 [mega]
 megacmd-bin MEGA.nz client
 
 [mullvad]
-mullvad-vpn Mullvad client
+mullvad-vpn-bin Mullvad client
 systemd:mullvad-daemon Enable the mullvad daemon
 
 # system
@@ -208,6 +215,7 @@ systemd:mullvad-daemon Enable the mullvad daemon
 [xinit]
 xorg-server X server
 xorg-xinit X init system
+unclutter Hide the mouse cursor after timeout
 
 [x-set]
 xorg-xset Set keyboard repeat for X
@@ -215,10 +223,13 @@ xorg-xmodmap Modify keyboard mappings
 xorg-setxkbmap Modify keyboard mappings
 xclip X clipboard interface
 
-[x-dev]
+[x-script]
 xorg-xprop Print properties of X windows
 xorg-xev Print X events
 xorg-xinput Configure X input devices
+numlockx Configure numlock under X
+xdotool Automate things in X
+xclip X clipboard interface
 
 [x-display]
 xorg-xrandr Control display outputs
@@ -226,7 +237,7 @@ arandr Control display outputs (GUI)
 
 [x-lock]
 xautolock X display lock system
-i3lock screen locker
+# i3lock screen locker
 
 [xflux]
 xflux Flux bluelight filter for X
@@ -263,6 +274,7 @@ gdb
 ## themes
 [themes]
 arc-gtk-theme GTK theme
+arc-icon-theme Icons
 kvantum-qt5 QT themes
 
 ## fonts
@@ -287,7 +299,7 @@ ethtool Disable wake on lan
 [extract]
 zip Zip files
 unzip Unzip files
-rar Rar and unrar files
+unrar Unrar files
 
 # development
 ## docker
@@ -297,10 +309,21 @@ docker-compose Docker simplification
 
 ## files
 [mongodb]
-mongodb MongoDB database
+mongodb-bin MongoDB database
+
+[postgres]
+postgresql SQL db
 
 [ngrok]
 ngrok Open localhost to the outside
+
+[pipewire]
+pipewire Modern audio server
+wireplumber Pipewire sesssion manager
+pipewire-audio Audio server component
+pipewire-alsa Alsa compatibility
+pipewire-pulse Pulseaudio compatibility
+qpwgraph Patchbay
 
 [pulseaudio]
 alsa-utils Alsa utilities
@@ -309,6 +332,7 @@ pulseaudio-alsa Alsa integration
 pulseaudio-bluetooth Bluetooth integration
 pulsemixer Pulseaudio mixer
 ncpamixer Pulseaudio mixer
+pavucontrol Pulseaudio mixer
 
 # npm
 [node]
@@ -327,27 +351,20 @@ npm:dict-cc-cli Offline dict.cc
 [fkill]
 fkill Process killer
 
-[js-dev]
-python-grip Reader markdown file with github styles
-
-npm:np npm release helper
-
+[js]
+python-grip-git Reader markdown file with github styles
 typescript Typescript compiler
-
-npm:webpack Javscript build tool
+nodejs-webpack Javscript build tool
 npm:webpack-cli Webpack interface
-
 npm:concurrently Run scripts in parallel
 npm:nodemon Restart node command on changes
-npm:browser-sync Reload browser on changes
+npm:updates npm update manager
+npm:jest Test runner
+npm:@captainsafia/legit Create license files
+npm:oclif oclif project helper
 
 npm:markdown-toc Create a md toc
-
-npm:updates npm update manager
-
-npm:jest Test runner
-
-npm:@captainsafia/legit Create license files
+npm:doctoc Create a md toc
 
 [eslint]
 npm:eslint Javascript linter
@@ -356,18 +373,17 @@ npm:prettier Code formatter (for vim)
 
 npm:eslint-plugin-node Eslint node ruleset
 npm:eslint-plugin-unicorn Eslint unicorn ruleset
+npm:eslint-config-xo Eslint ruleset to extend
+npm:eslint-config-xo-typescript Eslint ts ruleset to extend
 
 npm:@typescript-eslint/parser Typescript eslint parser
 npm:@typescript-eslint/eslint-plugin Typescript eslint rules
 npm:typescript Typescript compiler
 
-# npm:eslint-config-xo Eslint ruleset to extend
-# npm:eslint-config-xo-typescript Eslint ts ruleset to extend
-
 ## music
 [kid3]
 kid3 Visual (mp3) tag editor
-nemo File manager for dragging images over
+# nemo File manager for dragging images over
 
 [mutagen]
 # unavailable
@@ -379,10 +395,13 @@ wine Run windows applications
 wine-mono wine dependency
 
 [latex]
-texlive-core Core stuff
-biber Bibliography adon
+texlive-core Typography
 texlive-bibtexextra Biber latex file
 texlive-latexextra More packages
+minted Code highlighting
+biber Latex Bibliography management
+pubs Bibliography management
+tllocalmgr Latex extension manager
 
 [networks]
 bind-tools Network debugging
@@ -393,7 +412,7 @@ traceroute Trace router hops
 jdk-openjdk Java environment
 
 [signal]
-signal-desktop-bin Desktop version
+signal-desktop Messenger
 # signal-cli CLI version
 
 [cron]
@@ -421,24 +440,22 @@ android-tools
 simple-mtpfs mount mtpfs
 
 [lf]
-lf File manager
+lf-git File manager
 glow Markdown preview
 xml2 Epub preview
 python-pdftotext Pdf preview
+broot Fuzzy selector
 
 [brave]
-brave-bin Brave Browser
+brave-bin Main Browser
 
 [mpd]
 mpd Music player daemon
-mpc mpd client
-
-[ncmpcpp]
-mpd Music player daemon
-ncmpcpp mpd client
+mpc mpd scripting client
+ncmpcpp-git mpd client
 
 [anki]
-anki-official-binary-bundle SRS and flashcards
+anki-bin SRS and flashcards
 
 [webtorrent]
 webtorrent-cli Torrent streaming
@@ -456,7 +473,7 @@ tk GUI
 tcllib tk dependency
 
 [office]
-libreoffice-still Excel
+libreoffice-still Word, Excel, Powerpoint
 
 [octave]
 octave Math language
@@ -480,3 +497,29 @@ lxappearance
 
 [ausweis]
 ausweisapp2 Use german Personalausweis
+
+[tree]
+npm:@aweary/alder Tree listing
+
+[ansible]
+ansible Ansible
+npm:@ansible/ansible-language-server Neovim ansible LSP
+
+[beekeeper-studio]
+beekeeper-studio-bin Interactive SQL frontend
+
+[php]
+composer Package manager
+
+[printer]
+cups Util
+
+[json]
+gron Make JSON grepable
+npm:fx JSON explorer
+
+[masterpdfeditor]
+masterpdfeditor-free PDF Editor
+
+[screenkey]
+screenkey Show pressed keys on the screen
