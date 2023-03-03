@@ -42,7 +42,7 @@ nice -n 5 dunst &
 mpd &
 
 ## gui application autostart
-nice -n -7 kitty ~/scripts/tmux/t main vim &
+nice -n -7 kitty ~/scripts/tmux/tp main &
 nice -n 19 brave &
 nice -n 19 signal-desktop &
 

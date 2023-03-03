@@ -5,13 +5,14 @@ DIR=`dirname $0`
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
-$ tp PROJECT_NAME
-Start a tmux (tmuxinator) project in $PROJECT_DIR
+$ tp PROJECT
+Start a tmux(inator) project.
 
 Parameters:
   \$1: name of the project to be started
 
 Examples:
+  tp main
   tp pots
 EOF
   exit
