@@ -289,6 +289,7 @@ ttf-roboto Roboto
 
 ## util
 [bluez]
+bluez Bluetooth
 bluez-utils bluetoothctl utility
 systemd:bluetooth
 
@@ -328,6 +329,7 @@ wireplumber Pipewire sesssion manager
 pipewire-audio Audio server component
 pipewire-alsa Alsa compatibility
 pipewire-pulse Pulseaudio compatibility
+pipewire-jack Jack compatibility
 qpwgraph Patchbay
 
 [pulseaudio]
@@ -435,7 +437,6 @@ khal Calendar cli
 vdirsyncer CalDAV sync
 
 [fs]
-btrfs-progs btrfs
 exfat-utils exfat
 ntfs-3g ntfs
 simple-mtpfs mount mtpfs (android)
@@ -531,3 +532,7 @@ screenkey Show pressed keys on the screen
 
 [tws]
 ib-tws Stock trading application
+
+[antidot]
+antidot-bin Cleanup the home directory
+shell:antidot update

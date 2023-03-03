@@ -160,7 +160,7 @@ create .config/dunst
 .config/dunst/dunstrc
 
 [fonts]
-.fonts
+.local/share/fonts
 create .config/fontconfig
 .config/fontconfig/fonts.conf
 
@@ -206,9 +206,10 @@ create .config/cnsm
 .Xresources
 
 [gpg]
-create .gnupg
-.gnupg/gpg-agent.conf
+create .local/share/gnupg
+.local/share/gnupg/gpg-agent.conf
 
 [pipewire]
 create .config/pipewire
 # .config/pipewire/x240.qpwgraph
+

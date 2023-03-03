@@ -70,31 +70,31 @@ export LESS_TERMCAP_ue=$'\e[0m'
 ### Application options
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
 
+## User specific
+export KEYID=B29E6A7A7DFD16FA # GPG keyid
+
+test -f "$HOME/.config/broot/launcher/bash/br" && source $HOME/.config/broot/launcher/bash/br
+
 ### Config dirs
 # reduce number of files in the home dir
 # see: https://wiki.archlinux.org/index.php/XDG_Base_Directory
 # see: https://github.com/LukeSmithxyz/voidrice/blob/master/.profile
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+test -f "$HOME/.local/share/antidot/env.sh" && source "$HOME/.local/share/antidot/env.sh"
+test -f "$HOME/.local/share/antidot/alias.sh" && source "$HOME/.local/share/antidot/alias.sh"
 export LESSHISTFILE="-"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export HISTFILE="$XDG_DATA_HOME/history"
 
-## User specific
-export KEYID=B29E6A7A7DFD16FA # GPG keyid
-
 # kitty shell integration
-if test -e "/usr/lib/kitty/shell-integration/kitty.zsh"; then source "/usr/lib/kitty/shell-integration/kitty.zsh"; fi
+test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
 
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc
 if [ "$(tty)" = "/dev/tty1" ]; then
   pgrep -x Xorg >/dev/null || startx
 fi
-
-ORACLETT_AC_ZSH_SETUP_PATH=/home/jneidel/.cache/oraclett/autocomplete/zsh_setup && test -f $ORACLETT_AC_ZSH_SETUP_PATH && source $ORACLETT_AC_ZSH_SETUP_PATH; # oraclett autocomplete setup
-
-source /home/jneidel/.config/broot/launcher/bash/br
