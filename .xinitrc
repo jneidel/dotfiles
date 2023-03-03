@@ -39,7 +39,7 @@ sxhkd &
 # notification
 nice -n 5 dunst &
 # pulseaudio and mpd
-/bin/start-pulseaudio-x11 && mpd &
+mpd &
 
 ## gui application autostart
 nice -n -7 kitty ~/scripts/tmux/t main vim &

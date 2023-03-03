@@ -1,0 +1,13 @@
+#! /bin/sh
+
+MUSIC_DIR=$HOME/ct/music/unheard
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ music-fifo
+Print unheard albums in order added
+EOF
+  exit
+fi
+
+stat -c '%W %n' $MUSIC_DIR/*/* | sort -n | cut -d\  -f2- | rev | cut -d/ -f1-2 | rev

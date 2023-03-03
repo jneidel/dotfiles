@@ -33,7 +33,7 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 ## Paths
-export PATH=$HOME/.local/bin:/usr/local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl
+export PATH=$HOME/.local/bin:/usr/local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl:$HOME/.cargo/bin
 export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 
@@ -96,3 +96,5 @@ if [ "$(tty)" = "/dev/tty1" ]; then
 fi
 
 ORACLETT_AC_ZSH_SETUP_PATH=/home/jneidel/.cache/oraclett/autocomplete/zsh_setup && test -f $ORACLETT_AC_ZSH_SETUP_PATH && source $ORACLETT_AC_ZSH_SETUP_PATH; # oraclett autocomplete setup
+
+source /home/jneidel/.config/broot/launcher/bash/br

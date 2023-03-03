@@ -1,0 +1,28 @@
+#! /bin/sh
+
+PROJECT_DIR=$HOME/Downloads/fs/project
+DIR=`dirname $0`
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ tp PROJECT_NAME
+Start a tmux (tmuxinator) project in $PROJECT_DIR
+
+Parameters:
+  \$1: name of the project to be started
+
+Examples:
+  tp pots
+EOF
+  exit
+fi
+
+command -v tmuxinator >/dev/null || { echo "tmuxinator is not installed" 1>&2; exit 127; }
+
+PROJECT=$1
+
+case $PROJECT in
+  main) tmuxinator start main -p $DIR/tmuxinator.yml;;
+  *) tmuxinator start $PROJECT -p $PROJECT_DIR/$PROJECT/tmux.yml;;
+esac
+

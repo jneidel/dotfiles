@@ -21,7 +21,7 @@ Defaults (can be changed in script file and overwritten through arguments below)
 Album Artist: $ALBUM_AR
 Album: $ALBUM
 Track: none
-Cover: if cover.jpg|png or filename.jpg available
+Cover: if cover.jpg|png or FILENAME.jpg available
 
 Filenames will be left intact.
 
@@ -142,7 +142,7 @@ for f in "$@"; do
   tag "$f"
 done
 
-rm cover.jpg 2>/dev/null # remove shared cover
+rm cover.jpg cover.png 2>/dev/null # remove shared cover
 
 if [ "$ALBUM" != "$BASE_ALBUM" ] && [ "$ALBUM_AR" != "Singles" ]; then
   printf "Add tracknumbers to album? (Y/n): "
