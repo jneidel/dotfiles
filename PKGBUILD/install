@@ -1,0 +1,28 @@
+#! /bin/sh
+
+DIR=`dirname $0`
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ install PKGBUILD_FILE
+Install a package from PKGBUILD file
+
+Parameters:
+  \$1: PKGBUILD file in the scripts directory
+
+Example:
+  $ install lemonbar-xft-git
+EOF
+  exit
+fi
+
+command -v makepkg >/dev/null || { echo "makepkg is not installed" 1>&2; exit 127; }
+
+FILE="$DIR/$1"
+
+if [ ! -f "$FILE" ]; then
+  echo "Specified PKGBUILD file does not exist"
+  exit
+fi
+
+makepkg --install --syncdeps --rmdeps --force -p "$FILE"
