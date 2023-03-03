@@ -1,20 +1,22 @@
-# List of packages, grouped by categories
-#   Format: [PREFIX:]PKG_NAME DESCRIPTION...
+# A categorized list of apps.
+#
+# Format:
+# [CATEGORY]
+# [PREFIX:]PACKAGE_NAME DESCRIPTION...
 #
 # The prefix specifies the install method:
-#   no prefix - with yay
+#   no prefix - with yay (pacman)
 #   npm       - with npm
 #   pip       - with pip
 #   systemd   - systemctl enable
 #   PKGBUILD  - build from local PKGBUILD file
 #
-# See used-apps for the list of active categories
-#
-# TODO: prefix to run random commands (e.g. fixing image view with epr)
+# Categories can be enabled by placing them in used-apps.
+# See: apps-install for installing packages
+# See: mappings for related configuration files
 #
 # TODO: i3lock
 # TODO: ib-tws
-#
 # To update: comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
 
 [dunst]
@@ -97,7 +99,7 @@ fbreader GUI epub reader
 
 [epr]
 epr-git CLI epub reader
-# sudo sed -i "s|feh|nsxiv|" $(which -a epr)
+shell:sudo sed -i "s|feh|nsxiv|" $(which -a epr)
 
 [zathura]
 zathura Reader
@@ -105,6 +107,7 @@ zathura-pdf-poppler Pdf plugin
 
 [sxiv]
 nsxiv Minimal image viewer
+shell:ln -s /bin/nsxiv ~/.local/bin/sxiv
 
 [gwenview]
 gwenview Extensive image viewer

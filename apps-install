@@ -2,14 +2,12 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $DIR/copy-configs
-APPS="$DIR/apps"
-TMP_INSTALL_FILE=$(mktemp)
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ apps-install [CATEGORIES..]
-Install apps listed in 'apps'.
-But only for those where the category is 'used-apps'.
+$ apps-install [CATEGORY..]
+Install the packages listed in 'apps',
+for those where the category is listed in 'used-apps'.
 
 Parameters:
   [\$@]: only install those categories listed
@@ -25,17 +23,12 @@ if [ -n "$1" ]; then
   echo "$@" | tr " " "\n" >$IN_USE_TMP
 fi
 
-# echo "Making sure the system is up to date first"
-# sudo pacman -Syu --noconfirm
-
-PACMAN_INSTALL=""
-NPM_INSTALL=""
-PIP_INSTALL=""
-POST_INSTALL=""
+echo "Making sure the system is up to date first"
+sudo pacman -Syu --noconfirm
 
 install_pacman() {
   echo "yay: Install $1 [$2]: $3"
-  yay -S --noconfirm "$1"
+  printf "yes\nyes\nyes" | yay -S --confirm "$1"
 }
 install_npm() {
   echo "npm: Install $1 [$2]: $3"
@@ -45,7 +38,7 @@ install_pip() {
   echo "pip: Install $1 [$2]: $3"
   sudo pip install "$1"
 }
-install_systemd() {
+enable_systemd() {
   echo "systemd: Enabling $1 [$2]"
   sudo systemctl enable "$1"
 }
@@ -53,6 +46,10 @@ install_PKGBUILD() {
   echo "PKGBUILD: Install $1 [$2]: $3"
   cd $DIR/PKGBUILD # makepkg need to PKGBUILD to be in cwd
   ./install $1 --noconfirm
+}
+run_shell() {
+  echo "shell: running shell script [$2]"
+  echo "$1" | cut -d: -f2- | sh -s
 }
 
 command -v yay >/dev/null || { install_PKGBUILD yay-git required "AUR helper"; }
@@ -62,19 +59,19 @@ command -v systemctl >/dev/null || { echo "systemd is available" 1>&2; exit 127;
 CATEGORY=""
 function install-apps {
   IFS=$'\n'
-  for IN in $(cat /dev/stdin); do
+  for LINE in $(cat /dev/stdin); do
     # categories
-    [ ${IN:0:1} = "[" ] && {
-      IN=${IN:1:-1} # strip []
-      CATEGORY=$IN
+    [ ${LINE:0:1} = "[" ] && {
+      LINE=${LINE:1:-1} # strip []
+      CATEGORY=$LINE
       continue
     }
 
     # category not in use
     [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
 
-    PKG=$(echo $IN | cut -d\  -f1)
-    DESC=$(echo $IN | cut -d\  -f2-)
+    PKG=$(echo $LINE | cut -d\  -f1)
+    DESC=$(echo $LINE | cut -d\  -f2-)
     PREFIX=$(echo $PKG | cut -d: -f1)
 
     if [ $PKG != $PREFIX ]; then # has prefix
@@ -83,13 +80,15 @@ function install-apps {
         npm)
           install_npm "$PKG" "$CATEGORY" "$DESC";;
         systemd)
-          install_systemd "$PKG" "$CATEGORY" "$DESC";;
+          enable_systemd "$PKG" "$CATEGORY" "$DESC";;
         pip)
           install_pip "$PKG" "$CATEGORY" "$DESC";;
         PKGBUILD)
           install_PKGBUILD "$PKG" "$CATEGORY" "$DESC";;
+        shell)
+          run_shell "$LINE" "$CATEGORY";;
         *)
-          echo "invalid prefix: $IN"
+          echo "invalid prefix: $LINE"
       esac
     else
       install_pacman "$PKG" "$CATEGORY" "$DESC"
@@ -97,4 +96,4 @@ function install-apps {
   done
 }
 
-cat $APPS | grep -v "^#" | grep -v "^\s*$" | install-apps
+cat $APP_LIST | grep -v "^#" | grep -v "^\s*$" | install-apps
