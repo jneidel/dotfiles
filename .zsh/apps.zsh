@@ -63,6 +63,7 @@ yay() {
 alias mv="/bin/mv -v"
 alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
 alias ffmpeg="/bin/ffmpeg -hide_banner"
+alias lf="/bin/lfrun"
 
 ### shorter script names
 alias rc="rename-comic"

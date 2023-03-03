@@ -1,0 +1,49 @@
+#! /bin/bash
+
+CACHE_DIR="$HOME/.cache/lf"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ comicthumb COMIC
+Extract first page of a comic book file
+
+Parameters:
+  \$1: comic book file: .cbr or .cbz
+
+Example:
+  $ comicthumb "Undiscovered Country v01.cbr"
+EOF
+  exit
+fi
+
+command -v unrar >/dev/null || { echo "unrar is not installed" 1>&2; exit 127; }
+command -v unzip >/dev/null || { echo "unzip is not installed" 1>&2; exit 127; }
+
+COMIC="$1"
+OUTPUT="$CACHE_DIR/thumbnail-$(echo $1 | md5sum | cut -d\  -f1)"
+
+extract_cbr() {
+  IMG="$(unrar l "$COMIC" | grep -P '\.(je?pg)|(png)$' | cut -d: -f2 | cut -d\  -f3- | sort | head -n1)"
+  EXT="${IMG##*.}"
+  OUTPUT="$OUTPUT.$EXT"
+
+  if [ ! -f "$OUTPUT" ]; then
+    unrar p "$COMIC" "$IMG" >"$OUTPUT"
+  fi
+}
+extract_cbz() {
+  IMG="$(unzip -l "$COMIC" | grep -P '\.(je?pg)|(png)$' | cut -d: -f2 | cut -d\  -f4- | sort | head -n1)"
+  EXT="${IMG##*.}"
+  OUTPUT="$OUTPUT.$EXT"
+
+  if [ ! -f "$OUTPUT" ]; then
+    unzip -p "$COMIC" "$IMG" >"$OUTPUT"
+  fi
+}
+
+case ${1##*.} in
+  cbr) extract_cbr "$1";;
+  cbz) extract_cbz "$1";;
+    *) echo "only cbr and cbz files are supported"; exit 1;
+esac
+echo "$OUTPUT"

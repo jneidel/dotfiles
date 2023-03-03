@@ -177,7 +177,11 @@ create .config/khal
 
 [lf]
 create .config/lf
+create .local/bin
 .config/lf/lfrc
+.config/lf/cleaner
+.config/lf/preview
+.local/bin/lfrun
 
 [yay]
 create .config/yay

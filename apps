@@ -448,9 +448,11 @@ simple-mtpfs mount mtpfs
 [lf]
 lf-git File manager
 glow Markdown preview
-xml2 Epub preview
 python-pdftotext Pdf preview
 broot Fuzzy selector
+epub-thumbnailer-git Epub preview
+ffmpegthumbnailer Video preview
+ueberzug Dependency
 
 [brave]
 brave-bin Main Browser
