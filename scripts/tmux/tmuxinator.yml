@@ -4,6 +4,7 @@ windows:
   - nvim: vim
   - ~:
   - lf: lf
+  - n: ncmpcpp
       # layout: 278d,151x33,0,0[151x12,0,0,35,151x20,0,13,36]
       #   # setup test session and show with: tmux list-windows
       # panes:

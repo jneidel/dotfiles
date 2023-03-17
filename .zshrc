@@ -89,6 +89,14 @@ export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export HISTFILE="$XDG_DATA_HOME/history"
+export VOLTA_HOME="$XDG_DATA_HOME/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+export GOTRACEBACK=crash # catch lf slippin
+
+# source /usr/share/nvm/nvm.sh
+# source /usr/share/nvm/bash_completion
+# source /usr/share/nvm/install-nvm-exec
 
 # kitty shell integration
 test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"

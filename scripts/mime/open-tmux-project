@@ -1,0 +1,22 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ open-tmux-project CONFIG
+Open the first project specified in passed CONFIG
+
+Parameters:
+  \$1: tmuxinator config file
+
+Example:
+  $ open-tmux-project ./tmux.yml
+EOF
+  exit
+fi
+
+command -v tmuxinator >/dev/null || { echo "tmuxinator is not installed" 1>&2; exit 127; }
+
+CONFIG="$1"
+project_name=$(cat "$CONFIG" | grep name -m1 | cut -d\  -f2)
+
+tmuxinator start $project_name -p $CONFIG

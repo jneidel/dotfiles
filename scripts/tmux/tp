@@ -3,7 +3,7 @@
 PROJECT_DIR=$HOME/Downloads/fs/project
 DIR=`dirname $0`
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ tp PROJECT
 Start a tmux(inator) project.
@@ -21,6 +21,7 @@ fi
 command -v tmuxinator >/dev/null || { echo "tmuxinator is not installed" 1>&2; exit 127; }
 
 PROJECT=$1
+[ -z "$1" ] && PROJECT=main
 
 case $PROJECT in
   main) tmuxinator start main -p $DIR/tmuxinator.yml;;

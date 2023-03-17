@@ -24,6 +24,7 @@ alias nr="npm run --silent"
 alias nt="nr test"
 alias ns="nr start"
 alias start="nr start"
+alias nl="nr lint"
 alias nrl="nr lint"
 alias nlk="nr link"
 
@@ -41,6 +42,14 @@ alias nwts="nr watch-ts"
 alias nww="nr watch-webpack"
 alias nwu="nr watch-unit"
 alias ntw="nr watch-test"
+
+## volta
+alias vr="volta run npm run --silent"
+alias vt="vr test"
+alias vs="vr start"
+alias vl="vr lint"
+alias vb="vr build"
+alias vw="vr watch"
 
 ## misc
 alias npmls="npm list -g --depth=0" # list npm -g pkgs

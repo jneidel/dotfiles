@@ -21,6 +21,16 @@ FILE="$(readlink -f "$1")"
 
 classify_file() {
   basename="$1"
+
+  case $(basename "$basename") in
+    tabs)
+      echo browser-tabs
+      exit 0;;
+    tmux.yml)
+      echo tmux-project
+      exit 0;;
+  esac
+
   fileext=
   while [[ "$basename" = ?*.@(bz2|gz|gpg|part) ]]; do
     fileext=${basename##*.}.$fileext
@@ -33,7 +43,7 @@ classify_file() {
   fileext=${fileext%.}
 
   if [ -z "$fileext" ] || echo "$fileext" | grep " " >/dev/null; then
-    FILE_OUTPUT="$( file -b "$1" | cut -d, -f1)"
+    FILE_OUTPUT="$(file -b "$1" | cut -d, -f1)"
     if grep -F "cannot open" <<< $FILE_OUTPUT >/dev/null; then
       echo "[ERR] file does not exist: $FILE"
       exit 2

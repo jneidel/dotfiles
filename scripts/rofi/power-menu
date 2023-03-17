@@ -12,6 +12,6 @@ case "$(printf "suspend\nreboot/restart\nshutdown/power off\nlock" | dmenu -line
   "reboot/restart") reboot;;
   suspend) systemctl suspend;;
   "shutdown/power off") poweroff;;
-  lock) ~/scripts/i3/lock/lock;;
+  lock) ~/scripts/i3/lock/lock && suspend;;
 esac
 

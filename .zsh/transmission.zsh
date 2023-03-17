@@ -44,10 +44,11 @@ alias tsmdaemon="transmission-daemon -c ~/Downloads" # start daemon
 
 tsmget() {
   tsr -t $1 # add -G, -g depending on whenever or not to get
+  # example: -G0-126,159-331
 }
 alias tsmg="tsmget"
 
-alias tsmi="tremc 2>/dev/null"
+alias tsmi="stig"
 
 tsmin() {
   cd $HOME/.local/share/transmission-daemon/incomplete

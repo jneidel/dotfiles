@@ -1,0 +1,19 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ open-tabs LINKS_FILE
+Open a file full of links in $BROWSER
+
+Parameters:
+  \$1: file representing the tabs to be opened
+
+Example:
+  $ open-tabs ./tabs
+EOF
+  exit
+fi
+
+command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed" 1>&2; exit 127; }
+
+xargs -ra "$1" $BROWSER >/dev/null 2>&1 &

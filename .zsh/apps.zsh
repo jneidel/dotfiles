@@ -63,7 +63,7 @@ yay() {
 alias mv="/bin/mv -v"
 alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
 alias ffmpeg="/bin/ffmpeg -hide_banner"
-alias lf="/bin/lfrun"
+alias lf="lfrun"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -195,8 +195,7 @@ alias vnstatq="vnstat --query wlp3s0"
 
 ## webtorrent
 alias wt="webtorrent -o /tmp --mpv --quiet"
-alias wtm="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv --quiet " # wtm[ovie]
-alias wtc="wtm" # wtc[lipboard]
+alias wtc="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv --quiet " # wtc[lipboard]
 wts() {
   TORRENT="$1"
   SELECT="$2"
@@ -204,12 +203,8 @@ wts() {
     webtorrent "$TORRENT" -o /tmp --quiet -s
   else
     webtorrent "$TORRENT" -o /tmp --mpv --quiet -s "$SELECT" 2>/dev/null
+    # --not-on-top
   fi
-}
-wtsn() {
-  TORRENT="$1"
-  SELECT="$2"
-  webtorrent "$TORRENT" -o /tmp --not-on-top --no-quit -s "$SELECT"
 }
 
 ## remind

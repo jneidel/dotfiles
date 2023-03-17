@@ -11,7 +11,7 @@ fi
 command -v transmission-remote >/dev/null || { echo "transmission-remote is not installed"; exit 127; }
 command -v transmission-startup >/dev/null || { echo "transmission-startup script is not in PATH"; exit 127; }
 
-if transmission-remote -l 2>&1 | grep "Couldn't connect to server" >/dev/null; then
+if ! transmission-remote -l >/dev/null 2>&1; then
   transmission-startup
   sleep 7
 fi

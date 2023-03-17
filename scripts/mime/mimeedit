@@ -23,6 +23,7 @@ EXT="$1"
 # exit 1 means the handler does not like to be run in the background (&)
 case $EXT in
   ods|odt|docx|xlsx|xltx) echo libreoffice;;
+  png|jpg|jpeg) echo gimp;;
   pdf) echo masterpdfeditor4;;
   sc) echo sc-im; exit 1;;
   *) echo $EDITOR; exit 1;;
