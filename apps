@@ -156,7 +156,6 @@ mosh Mobile ssh
 
 [transmission]
 transmission-cli Torrent daemon
-tremc-git Transmission TUI
 
 [rclone]
 rclone Sync local and remote directories
@@ -197,7 +196,9 @@ par Text wrapper, 80 chars
 fzf Fuzzy finder
 
 [neovim]
-neovim-git The newer text editor
+neovim-git Vim upgraded
+nvim-packer-git Package manager
+# nvim -c "CocInstall|q"
 
 npm:vscode-langservers-extracted Neovim LSP
 npm:typescript-language-server Neovim JS LSP
@@ -369,9 +370,9 @@ npm:updates npm update manager
 npm:jest Test runner
 npm:@captainsafia/legit Create license files
 npm:oclif oclif project helper
-
 npm:markdown-toc Create a md toc
 npm:doctoc Create a md toc
+volta-bin Node version manager
 
 [eslint]
 npm:eslint Javascript linter

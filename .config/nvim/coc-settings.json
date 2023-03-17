@@ -4,5 +4,8 @@
       "silentAutoupdate": true,
       "extensionUpdateCheck": "never"
     }
+  },
+  "suggest": {
+    "autoTrigger": "none"
   }
 }

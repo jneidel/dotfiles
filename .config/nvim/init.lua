@@ -10,3 +10,5 @@ require( "mappings" )
 vim.api.nvim_command( "set runtimepath^=~/.vim runtimepath+=~/.vim/after" )
 vim.api.nvim_command( "let &packpath = &runtimepath" )
 vim.api.nvim_command( "source ~/.vimrc" )
+vim.api.nvim_command( "colorscheme old-hope" ) -- has to be after vimrc
+

@@ -101,4 +101,60 @@ M.lsp_setup = function()
   return custom_attach, capabilities, root_dir
 end
 
+local function merge( a, b ) -- Object.assign in js
+  -- Source: https://stackoverflow.com/a/1283399
+  if (b == nil) then
+    return a
+  end
+
+  for k,v in pairs(b) do
+    a[k] = v
+  end
+
+  return a
+end
+
+local function map( mode, binding, functionality, passed_options )
+  local default_options = { noremap = true, silent = true }
+  local options
+  if (passed_options == nil) then
+    options = default_options
+  else
+    options = merge(default_options, passed_options)
+  end
+
+  return vim.api.nvim_set_keymap( mode, binding, functionality, options )
+end
+M.map = map
+
+local function bufmap( mode, binding, functionality, passed_options )
+  local default_options = { noremap = true, silent = true }
+  local options
+  if (passed_options == nil) then
+    options = default_options
+  else
+    options = merge(default_options, passed_options)
+  end
+
+  return vim.api.nvim_buf_set_keymap( 0, mode, binding, functionality, options )
+end
+M.bufmap = bufmap
+
+M.nmap = function( binding, functionality, opts )
+  local defaults = { noremap = false, silent = true }
+  local options = merge( defaults, opts )
+  return map( "n", binding, functionality, options )
+end
+M.nnoremap = function( binding, functionality, opts )
+  local defaults = { noremap = true, silent = true }
+  local options = merge( defaults, opts )
+  return map( "n", binding, functionality, options )
+end
+
+M.bufnmap = function( binding, functionality, opts )
+  local defaults = { noremap = false, silent = true }
+  local options = merge( defaults, opts )
+  return bufmap( "n", binding, functionality, options )
+end
+
 return M

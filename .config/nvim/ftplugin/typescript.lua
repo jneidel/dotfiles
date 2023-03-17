@@ -10,5 +10,3 @@ require('lspconfig').tsserver.setup {
   root_dir = root_dir,
   on_attach = custom_on_attach,
 }
-
--- vim.api.nvim_cmd({ cmd = 'LspStart' }, {})

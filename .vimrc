@@ -3,8 +3,6 @@
 " with simpler setup, because this one will break if not setup correctly.
 " For basic setup see: https://gist.github.com/simonista/8703722
 
-let g:coc_global_extensions = []
-
 " not vi compatible
 set nocompatible
 
@@ -16,11 +14,6 @@ syntax on
 
 " activate 256 colors
 set t_Co=256
-
-" set colorscheme
-colorscheme old-hope
-"   file in ~/.vim/colors/old-hope.vim
-"   source: https://github.com/j-tom/vim-old-hope.git
 
 " linenumbers, in normal mode numbers will be relative to the current line
 set number relativenumber

@@ -1,8 +1,10 @@
--- highlight colors
+local hasmodule, highlightcolors = pcall( require, "nvim-highlight-colors" )
 
-vim.api.nvim_command( "set termguicolors" ) -- uses the gui version of the colorscheme
+if hasmodule then
+  vim.api.nvim_command( "set termguicolors" ) -- uses the gui version of the colorscheme
 
-require('nvim-highlight-colors').setup {
-  render = 'background',
-  enable_named_colors = true,
-}
+  highlightcolors.setup {
+    render = 'background',
+    enable_named_colors = true,
+  }
+end
