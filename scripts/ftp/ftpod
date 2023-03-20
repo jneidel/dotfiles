@@ -27,4 +27,4 @@ FTP_COMMAND_FILE=$(mktemp)
 echo $FTP_COMMAND >$FTP_COMMAND_FILE
 
 sshpass -p $SSHPASS sftp -P $PORT -oHostKeyAlgorithms=+ssh-rsa -oBatchMode=no -b - $IP <$FTP_COMMAND_FILE && \
-  printf "Delete files? (Y/n)"; read ans; if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then rm "$@"; fi
+  printf "Delete files? (Y/n)"; read ans; if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then rm -r "$@"; fi

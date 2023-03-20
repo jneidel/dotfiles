@@ -10,7 +10,7 @@
 - [Terminal apps](#terminal-apps)
   * [zsh (shell)](#zsh-shell)
   * [tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
-  * [vim (terminal editor)](#vim-terminal-editor)
+  * [neovim (terminal editor)](#neovim-terminal-editor)
   * [git (version control)](#git-version-control)
   * [mpd + ncmpcpp (music player)](#mpd--ncmpcpp-music-player)
 - [GUI apps](#gui-apps)
@@ -27,7 +27,6 @@
 - [Browser Extensions](#browser-extensions)
 - [Android apps](#android-apps)
 - [OSX](#osx)
-- [Related](#related)
 
 <!-- tocstop -->
 
@@ -101,15 +100,13 @@ Multiple shells within the same terminal, screen splitting and [much more](https
 
 ![](images/tmux.png)
 
-### vim (terminal editor)
+### neovim (terminal editor)
 
 Neovim with custom macros, hooks and a few plugins.
 
-- [main config](.vimrc)
-- [secondary configs](.vim/config)
-- [plugins](install-scripts/vim-plugins.sh), [writeup](docs/vim.md)
+- [config entrypoint](.config/nvim)
+- [old vim entrypoint](.vimrc)
 - [colorscheme](.vim/colors/old-hope.vim)
-- [nvim entry](.config/nvim/init.vim)
 
 ![](images/vim.png)
 
@@ -247,56 +244,9 @@ i3lock with a custom screenshot script.
 
 ## CLIs
 
-Out of date. For a current overview please refer to the [used-apps](used-apps)
-list in conjunction with the corresponding [apps](apps) package list (see ["How
-this repos app install works"](#dotfiles) for an explaination).
-
-<details>
-<summary><strong>Outdated, incomplete list:</strong></summary>
-
-**npm:**
-
-| name | description | links |
-|--|--|--|
-| fkill | Interactive process killer | [npm](https://www.npmjs.com/package/fkill-cli) [git](https://github.com/sindresorhus/fkill-cli) |
-| dict-cc | Dict.cc lookup from the command line | [npm](https://www.npmjs.com/package/dict-cc-cli) [git](https://github.com/derhuerst/dict-cc-cli) |
-| tslide | Terminal slide deck using markdown | [npm](https://www.npmjs.com/package/tslide) [git](https://github.com/tslide/tslide) |
-| alder | Print current directory as ascii tree | [npm](https://www.npmjs.com/package/@aweary/alder) [git](https://github.com/aweary/alder) |
-
-**npm development:**
-
-| name | description | links |
-|--|--|--|
-| markdown-toc | Generate markdown toc | [npm](https://www.npmjs.com/package/markdown-toc) [git](https://github.com/jonschlinkert/markdown-toc) |
-| np | Better version of 'npm publish' | [npm](https://www.npmjs.com/package/np) [git](https://github.com/sindresorhus/np) |
-| npm-name | Check module name availability | [npm](https://www.npmjs.com/package/npm-name-cli) [git](https://github.com/sindresorhus/npm-name-cli) |
-| yo | Run yeoman generators to create boilerplates | [npm](https://www.npmjs.com/package/yo) [git](https://github.com/yeoman/yo) |
-| generator-jneidel | Collection of boilerplates, for installation with yeoman | [npm](https://www.npmjs.com/package/generator-jneidel) [git](https://github.com/jneidel/generator-jneidel) |
-
-**General:**
-
-| name | description | links |
-|--|--|--|
-| tmux | Terminal multiplexer | [pacman](https://aur.archlinux.org/packages/tmux-git/) [homebrew](http://brewformulas.org/tmux) [git](https://github.com/tmux/tmux) |
-| youtube-dl | Configurable youtube downloader | [pacman](https://aur.archlinux.org/packages/youtube-dl-git/) [git](https://github.com/rg3/youtube-dl) |
-
-**General development:**
-
-| name | description | links |
-|--|--|--|
-| grip | Render readme with github styles for local testing | [pacman](https://aur.archlinux.org/packages/python-grip/) [homebrew](http://brewformulas.org/grip) [git](https://github.com/joeyespo/grip) |
-| jq | JSON processor | [pacman](https://aur.archlinux.org/packages/jq-git/) [git](https://github.com/stedolan/jq) |
-
-<!--**Pacman (Manjaro Linux):**
-
-| asciinema | Terminal recorder | [git](https://github.com/asciinema/asciinema) [pip3](https://pypi.python.org/pypi/asciinema) |
-
-| name | description | links |
-|--|--|--|
-|  |  |  |
--->
-
-</details>
+For a current overview please refer to the [used-apps](used-apps) list in
+conjunction with the corresponding [apps](apps) package list (see ["How this
+repos app install works"](#dotfiles) for an explaination).
 
 ## Browser Extensions
 
@@ -318,8 +268,6 @@ Browser extensions, sorted by category.
 <details>
 <summary><strong>More Privacy:</strong></summary>
 
-Firefox (nightly) is my main browser. I have it setup to delete cookies and history on exit. You can find these options under "Privacy & Security".
-
 | name | description | links |
 |--|--|--|
 | Decentraleyes | Stop tracking through CDNs | [firefox](https://addons.mozilla.org/en-US/firefox/addon/decentraleyes) [chrome](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj) [git](https://git.synz.io/Synzvato/decentraleyes) |
@@ -328,8 +276,6 @@ Firefox (nightly) is my main browser. I have it setup to delete cookies and hist
 | Chameleon | Easily spoof user-agents & more | [firefox](https://addons.mozilla.org/en-US/firefox/addon/chameleon-ext/) [git](https://github.com/sereneblue/chameleon) |
 
 For an more infos on why these plugins are important view [privacytools.io](https://www.privacytools.io/#addons).
-
-[See my exported settings](.firefox-extension-data/readme.md) for some of the addons.
 
 </details>
 
@@ -343,7 +289,6 @@ For an more infos on why these plugins are important view [privacytools.io](http
 | Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [git](https://github.com/zce/chrome-markdown) |
 | JSON Formatter | Easy to read JSON formatting | [chrome](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [git](https://github.com/callumlocke/json-formatter) |
 | Modify Header Value | Set HTTP headers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/modify-header-value) [chrome](https://chrome.google.com/webstore/detail/modify-header-value-http/cbdibdfhahmknbkkojljfncpnhmacdek) [homepage](https://mybrowseraddon.com/modify-header-value.html) |
-| (OpenGenus quark) | Offline algorithm search engine | [chrome](https://chrome.google.com/webstore/detail/opengenus-offline-search/lfoloadpfjildomeafpdopahkdaoofbn) [git](https://github.com/OpenGenus/quark) |
 
 <details>
 <summary><strong>GitHub related plugins</strong></summary>
@@ -365,8 +310,6 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | github-autocomplete | Github search autocomplete | [chrome](https://chrome.google.com/webstore/detail/awesome-autocomplete-for/djkfdjpoelphhdclfjhnffmnlnoknfnd) [git](https://github.com/algolia/github-awesome-autocomplete) |
 | github-plus | Display repo size, download links | [chrome](https://chrome.google.com/webstore/detail/github-plus/anlikcnbgdeidpacdbdljnabclhahhmd) [git](https://github.com/softvar/github-plus) |
 
-<!-- |  |  | [chrome]() [git]() | -->
-
 </details><br/>
 </details>
 
@@ -377,6 +320,7 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | Easy to RSS | List rss feeds of the current site | [firefox](https://addons.mozilla.org/en-GB/firefox/addon/easy-to-rss/) [chrome](https://chrome.google.com/webstore/detail/easy-to-rss/hbcmpkcpbnecinpngdnfbnknfkdpdfli) [git](https://github.com/idealclover/Easy-to-RSS) |
 | Buster | Captcha Solver | [firefox](https://addons.mozilla.org/en-US/firefox/addon/buster-captcha-solver/) [chrome](https://chrome.google.com/webstore/detail/mpbjkejclgfgadiemmefgebjfooflfhl) [git](https://github.com/dessant/buster) |
 | Autofill | Automatically fill forms with configured data | [chrome](https://chrome.google.com/webstore/detail/autofill/nlmmgnhgdeffjkdckmikfpnddkbbfkkk) |
+| Block Site | Block domains in the browser | [chrome](https://chrome.google.com/webstore/detail/block-site/nkedbnokglppcmiencngilkkhhnpcfjb) |
 
 <details>
 <summary><strong>Maybes (not in current use)</strong></summary>
@@ -384,11 +328,9 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 | name | description | links |
 |--|--|--|
 | Dict.cc Translation | Quick translations | [firefox](https://addons.mozilla.org/firefox/addon/dictcc-translation/) [git](https://github.com/Lusito/dict.cc-translation) |
-| IMDb Ratings on Netflix | Show ratings on overview pages | [firefox](https://addons.mozilla.org/en-US/firefox/addon/imdb-ratings-on-netflix) [chrome](https://chrome.google.com/webstore/detail/imdb-ratings-on-netflix/ohonjgnjobblbhfeamidafpnbkppbljh) [git](https://github.com/pawanmaurya/imdb-ratings-on-netflix) |
 | StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
 | Toby | Better bookmark manager | [chrome](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
 | Hover Zoom+ | Large overlay on image and link to image hover | [chrome](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [git](https://github.com/extesy/hoverzoom/) |
-| Block Site | Block domains in the browser | [chrome](https://chrome.google.com/webstore/detail/block-site/nkedbnokglppcmiencngilkkhhnpcfjb) |
 
 </details><br/>
 
@@ -400,9 +342,14 @@ I use **Arc Dark** as I based my terminal colorscheme on it.
 
 ## Android apps
 
-F-Droid is a software repository hosting free and (mostly) open source apps. If available always try to use F-Droid over the google play store. Read more on [F-Droid](https://f-droid.org/). Most fdroid apps are also on gplay, even if I did not include them here.
+F-Droid is a software repository hosting free and (mostly) open source apps. If
+available always try to use F-Droid over the google play store. Read more on
+[F-Droid](https://f-droid.org/). Most fdroid apps are also on gplay, even if I
+did not include them here.
 
-If you need the google play store you can use [Aurora](https://auroraoss.com/) instead. It's an alternative play store interface, allowing for private downloads and a better UI.
+If you need the google play store you can use [Aurora](https://auroraoss.com/)
+instead. It's an alternative play store interface, allowing for private
+downloads and a better UI.
 
 Ordered by importance.
 
@@ -468,8 +415,4 @@ Ordered by importance.
 ## OSX
 
 My osx install is no longer maintained, but you can still [explore the files here](https://github.com/jneidel/dotfiles/tree/bd758ada365a9fc2e7d4dc0b456684cfe88dc2bd/osx).
-
-## Related
-
-[generator-jneidel](https://github.com/jneidel/generator-jneidel) - My personal collection of boilerplates, for installation with yeoman
 

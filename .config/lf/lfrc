@@ -98,6 +98,14 @@ cmd vl ${{
   printf "#!/bin/sh\ntsp mpv --fs '$url'" >"$name"
 }}
 
+cmd split ${{
+  tmux split-window -v -p 50 -c "$PWD"
+}}
+
+# cmd on-cd ${{
+#   cd $PWD # does not change cwd for tmux
+# }}
+
 ## bindings
 ### remove defaults
 map m
@@ -125,6 +133,7 @@ map T touchTex
 map R reload
 map I gimp # [I]mage
 map v vl
+map - split
 
 ### jump - cd to dirs
 map gd cd ~/Downloads

@@ -7,5 +7,10 @@
   },
   "suggest": {
     "autoTrigger": "none"
+  },
+  "phpstan": {
+    "download": {
+      "checkOnStartup": false
+    }
   }
 }
