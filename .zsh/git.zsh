@@ -77,7 +77,13 @@ alias gra="git rebase --abort"
 alias gb="git branch"
 
 ## reset
-alias re="git reset -q; s"
+re() {
+  if [ -z "$1" ]; then
+    git reset -q; s
+  else
+    git restore $@; s
+  fi
+}
 alias reh="git reset --hard"
 
 ## log

@@ -17,5 +17,3 @@ require('lspconfig').cssls.setup {
     debounce_text_changes = 150,
   },
 }
-
-vim.api.nvim_cmd({ cmd = 'LspStart' }, {})

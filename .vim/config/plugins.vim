@@ -1,12 +1,5 @@
 "# vim plugins
 
-"## pathogen
-execute pathogen#infect()
-call pathogen#helptags()
-filetype plugin indent on
-" pathogen plugins live in their directories
-" under ~/.vim/bundle/<plugin-name>
-
 "## numbers
 nnoremap <F3> :NumbersToggle<CR>
 
@@ -57,82 +50,6 @@ let g:prettier#config#config_precedence = 'cli-override'
 " using eslint_d (npm i -g eslint_d)
 au filetype js,javascript,vue nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc --resolve-plugins-relative-to /usr/lib/node_modules<CR>`F
 au filetype ts,typescript nnoremap <Leader>e mF:%!eslint_d --stdin --fix-to-stdout -c ~/.config/eslint/eslintrc-ts --resolve-plugins-relative-to /usr/lib/node_modules --parser '@typescript-eslint/parser' <CR>`F
-
-"### gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" show type, function definition, etc.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-"## lightline
-
-" activate the bar
-set laststatus=2
-
-" hide -- INSERT -- in line below statusline
-set noshowmode
-
-" import colorscheme palette
-source ~/.vim/colors/OldHope-lightline.vim
-
-" remove file type if it's empty (instead of no-ft)
-function! LightlineFiletype()
-  return (&filetype !=# '' ? &filetype : '')
-endfunction
-
-" remove RO label on help files (and other plugin buffers)
-function! LightlineReadonly()
-  return &readonly && &filetype !=# '\v(help|vimfiler)' ? 'RO' : ''
-endfunction
-
-" remove | between the modified + and the filename
-" and change the filename to be relative path instead of just the name
-function! LightlineFilename()
-  let filename = expand('%:f') !=# '' ? expand('%:f') : '[No Name]'
-  let modified = &modified ? ' +' : ''
-  return filename . modified
-endfunction
-
-"### lightline json config
-" component_function: process the value before displaying it
-" active/inactive: the contents of the statusbar of active/inactive windows
-let g:lightline = {
-\   "colorscheme": "OldHope",
-\   "component_function": {
-\     "filetype": "LightlineFiletype",
-\     "readonly": "LightlineReadonly",
-\     "filename": "LightlineFilename",
-\   },
-\   "active": {
-\     "right": [ [ "filetype" ] ],
-\     "left":  [ [ "staticGlyph", "mode", "paste" ], [ "readonly", "filename" ] ],
-\   },
-\   "inactive": {
-\     "right": [],
-\     "left":  [ [ "filename" ] ],
-\   },
-\   "tabline": { "right": [] },
-\   "tab": {
-\     "active": [ "filename" ],
-\     "inactive": [ "filename" ],
-\   },
-\   "tabline_separator": { "left": "", "right": "" },
-\   "subseparator": { "left": "", "right": "" },
-\ }
 
 " # sneak
 let g:sneak#s_next = 1

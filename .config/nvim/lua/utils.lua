@@ -123,7 +123,11 @@ local function map( mode, binding, functionality, passed_options )
     options = merge(default_options, passed_options)
   end
 
-  return vim.api.nvim_set_keymap( mode, binding, functionality, options )
+  if (type(functionality) == "string") then
+    return vim.api.nvim_set_keymap( mode, binding, functionality, options )
+  else
+    return vim.keymap.set( mode, binding, functionality, options )
+  end
 end
 M.map = map
 

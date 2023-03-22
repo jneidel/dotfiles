@@ -1,12 +1,12 @@
 -- Intall packages with ':PackerSync'
 
-return require('packer').startup(function(use)
+return require("packer").startup(function(use)
   -- basics
   use "wbthomason/packer.nvim" -- package manager itself
   use "christoomey/vim-tmux-navigator" -- move between tmux and vim
   use "chrisbra/improvedft" -- better f and t
 
-  -- theme
+  -- status bar theme
   use "itchyny/lightline.vim"
 
   -- lsp
@@ -36,7 +36,7 @@ return require('packer').startup(function(use)
   use "lambdalisue/fern-hijack.vim"
   use {
     "lambdalisue/fern.vim",
-    cmd = { "Fern"},  -- lazy load
+    cmd = { "Fern" },  -- lazy load
     requires = {
       "lambdalisue/nerdfont.vim",
       "lambdalisue/fern-renderer-nerdfont.vim",
@@ -46,7 +46,7 @@ return require('packer').startup(function(use)
   }
 
   -- file finder
-  use { "nvim-telescope/telescope.nvim", branch = '0.1.x', requires = {"nvim-lua/plenary.nvim"} }
+  use { "nvim-telescope/telescope.nvim", branch = '0.1.x', requires = { "nvim-lua/plenary.nvim" } }
   use { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
 
   -- other
@@ -54,7 +54,14 @@ return require('packer').startup(function(use)
   use "numToStr/Comment.nvim" -- comments
   -- "justinmk/vim-dirvish",
   -- "brenoprata10/nvim-highlight-colors", -- visualize hex color codes
-end)
+  use { "andrewferrier/debugprint.nvim", -- create uniform & unique print statements
+    config = function()
+      require("debugprint").setup({ create_keymaps = false })
+    end }
+end )
+
+-- plugin manager
+--  https://github.com/folke/lazy.nvim
 
 -- snippets:
 --  https://github.com/neoclide/coc-snippets

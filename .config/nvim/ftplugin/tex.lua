@@ -29,6 +29,5 @@ require('lspconfig').texlab.setup {
   on_attach = custom_on_attach,
 }
 
--- vim.api.nvim_cmd({ cmd = 'LspStart' }, {})
 vim.cmd("let b:coc_enabled = 0")
 vim.cmd("setlocal spell spelllang=en_us,de")

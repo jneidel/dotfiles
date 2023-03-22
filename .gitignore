@@ -11,6 +11,7 @@ personal.zsh
 .vim/view/*
 .vim/.netrwhist
 .vim/spell/*.add.spl
+.config/nvim/plugin/packer_compiled.lua
 
 scripts/personal
 scripts/mpd/current-mpd-ip

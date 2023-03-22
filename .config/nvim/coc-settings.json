@@ -6,11 +6,8 @@
     }
   },
   "suggest": {
-    "autoTrigger": "none"
+    "autoTrigger": "none",
   },
-  "phpstan": {
-    "download": {
-      "checkOnStartup": false
-    }
-  }
+  "phpstan.download.checkOnStartup": false,
+  "php-cs-fixer.downloadCheckOnStartup": false
 }

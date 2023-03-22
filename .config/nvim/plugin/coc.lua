@@ -1,3 +1,7 @@
+local utils = require("utils")
+local nmap = utils.nmap
+local nnoremap = utils.nnoremap
+
 -- to disable autocomplete suggestions:
 --   suggest.autoTrigger: "none" in :CocConfig
 
@@ -23,6 +27,21 @@ vim.g.coc_global_extensions  = {
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 300 -- default is 4000, which is quite slow
 
--- vim.api.nvim_command( "source ~/.config/nvim/vimscript/coc.vim" )
+nmap( "gd", "<Plug>(coc-definition)" )
+nmap( "gr", "<Plug>(coc-references)" )
+nmap( "<leader>r", "<Plug>(coc-rename)" ) -- rename under cursor
 
--- :CocCommand php-cs-fixer.fix
+nnoremap( "K", ":call <CMD>lua _G.show_docs()<CR>" ) -- show docs for under cursor
+function _G.show_docs()
+    local cw = vim.fn.expand('<cword>')
+    if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
+        vim.api.nvim_command('h ' .. cw)
+    elseif vim.api.nvim_eval('coc#rpc#ready()') then
+        vim.fn.CocActionAsync('doHover')
+    else
+        vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+    end
+end
+
+-- nmap( "gy", "<Plug>(coc-type-definition" )
+-- nmap( "gi", "<Plug>(coc-implementation)" )
