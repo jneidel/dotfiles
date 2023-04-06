@@ -98,28 +98,25 @@ cmd vl ${{
   printf "#!/bin/sh\ntsp mpv --fs '$url'" >"$name"
 }}
 
-cmd split ${{
-  tmux split-window -v -p 50 -c "$PWD"
+cmd paste_and_forget ${{
+  lf -remote 'send paste'
+  lf -remote 'send clear'
 }}
-
-# cmd on-cd ${{
-#   cd $PWD # does not change cwd for tmux
-# }}
 
 ## bindings
 ### remove defaults
 map m
 map d
-map c
 map e
 map r
+map p
 
 ### own bindings
 map e edit
 map rm remove $f
 map rp rm_pi
 map x cut
-map c copy
+map p paste_and_forget
 map <esc> clear
 map m massmove
 map d mkdir

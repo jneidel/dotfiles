@@ -1,6 +1,7 @@
-#! /bin/sh
+#! /bin/bash
 
 MUSIC_DIR="$(grep '^music_directory' $HOME/.config/mpd/mpd.conf | awk -F\" '{ print $2 }')"
+MUSIC_DIR="${MUSIC_DIR/#\~/$HOME}"
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mpd-cover"

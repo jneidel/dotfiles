@@ -181,7 +181,7 @@ create .local/bin
 .config/lf/lfrc
 .config/lf/cleaner
 .config/lf/preview
-.local/bin/lfrun
+.config/lf/lfuberzug
 
 [yay]
 create .config/yay

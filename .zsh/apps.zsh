@@ -63,7 +63,6 @@ yay() {
 alias mv="/bin/mv -v"
 alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
 alias ffmpeg="/bin/ffmpeg -hide_banner"
-alias lf="lfrun"
 
 ### shorter script names
 alias rc="rename-comic"
@@ -246,3 +245,19 @@ alias bbl="bb list"
 ## make
 alias m="make"
 alias mw="make watch"
+
+lfcd() {
+  # source: https://github.com/gokcehan/lf/wiki/Tutorial#working-directory
+  tmp="$(mktemp)"
+  $HOME/.config/lf/lfuberzug -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ]; then
+      if [ "$dir" != "$(pwd)" ]; then
+        cd "$dir"
+      fi
+    fi
+  fi
+}
+alias lf="lfcd"

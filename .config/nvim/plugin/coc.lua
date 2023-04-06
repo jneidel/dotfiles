@@ -11,7 +11,8 @@ vim.g.coc_global_extensions  = {
   "coc-highlight", -- show colors behind colorcodes
   "coc-texlab", -- latex completions
   "@yaegassy/coc-phpstan", -- php static analyser
-  "coc-php-cs-fixer" -- php linter
+  "coc-php-cs-fixer", -- php linter
+  "coc-phpactor" -- php lsp
 }
 -- See extensions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions
 -- Look into:
@@ -20,6 +21,7 @@ vim.g.coc_global_extensions  = {
 --  coc-html - completion
 --  coc-css - go to defintion
 --  coc-spell-checker - integrated spell checking (how different from existing )
+--  upgrade phpactor: https://phpactor.readthedocs.io/en/master/lsp/code-actions.html
 --
 --  https://github.com/yaegassy/coc-phpstan - linting
 --  https://github.com/yaegassy/coc-php-cs-fixer - formatting

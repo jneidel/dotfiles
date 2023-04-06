@@ -9,5 +9,6 @@
     "autoTrigger": "none",
   },
   "phpstan.download.checkOnStartup": false,
-  "php-cs-fixer.downloadCheckOnStartup": false
+  "php-cs-fixer.downloadCheckOnStartup": false,
+  "phpactor.enable": true
 }
