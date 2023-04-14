@@ -1,6 +1,6 @@
 # Maintainer: Tucker Boniface <tucker@boniface.tech>
 # Maintainer: Jguer <pkgbuilds at jguer.space>
-pkgname="yay-git"
+pkgname="yay-git-local"
 _pkgname="yay"
 pkgver=11.3.1.r92.gc40e949
 pkgrel=1

@@ -1,6 +1,6 @@
 # Maintainer: Simon Kronberg <Simon.Kronberg at gmail dot com>
 
-pkgname=lemonbar-xft-git
+pkgname=lemonbar-xft-git-local
 _pkgname=bar
 pkgver=r279.8a89702
 pkgrel=1
