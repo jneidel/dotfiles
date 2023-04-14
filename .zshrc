@@ -82,21 +82,32 @@ test -f "$HOME/.config/broot/launcher/bash/br" && source $HOME/.config/broot/lau
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
 test -f "$HOME/.local/share/antidot/env.sh" && source "$HOME/.local/share/antidot/env.sh"
 test -f "$HOME/.local/share/antidot/alias.sh" && source "$HOME/.local/share/antidot/alias.sh"
 export LESSHISTFILE="-"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export npm_config_cache="${XDG_CACHE_HOME}/npm"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export HISTFILE="$XDG_DATA_HOME/history"
 export VOLTA_HOME="$XDG_DATA_HOME/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-
-export GOTRACEBACK=crash # catch lf slippin
-
-# source /usr/share/nvm/nvm.sh
-# source /usr/share/nvm/bash_completion
-# source /usr/share/nvm/install-nvm-exec
+export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java"
+export MPLAYER_HOME="${XDG_CONFIG_HOME}/mplayer"
+export MYSQL_HISTFILE="${XDG_DATA_HOME}/mysql_history"
+export PSQL_HISTORY="${XDG_CACHE_HOME}/psql_history"
+export REDISCLI_HISTFILE="${XDG_DATA_HOME}/redis/rediscli_history"
+export TERMINFO="${XDG_DATA_HOME}/terminfo"
+export TERMINFO_DIRS="${XDG_DATA_HOME}/terminfo:/usr/share/terminfo"
+export ANDROID_HOME="$XDG_DATA_HOME"/android
+export GRIPHOME="$XDG_CONFIG_HOME/grip"
+export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
+export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
+compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 # kitty shell integration
 test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"

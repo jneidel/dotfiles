@@ -27,3 +27,6 @@ PKGBUILD/*
 !PKGBUILD/install
 !PKGBUILD/lemonbar-xft-git
 !PKGBUILD/yay-git
+
+.local/share/icons/*
+!.local/share/icons/*.png

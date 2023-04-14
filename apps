@@ -537,5 +537,6 @@ screenkey Show pressed keys on the screen
 ib-tws Stock trading application
 
 [antidot]
-antidot-bin Cleanup the home directory
+antidot-bin Cleanup the $HOME directory
 shell:antidot update
+xdg-ninja Show $HOME cleanup instructions

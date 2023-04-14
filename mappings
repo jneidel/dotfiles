@@ -23,7 +23,8 @@ create .vim/view
 .config/nvim
 
 [tmux]
-.tmux.conf
+create .config/tmux
+.config/tmux/tmux.conf
 
 [scripts]
 clean scripts
@@ -64,7 +65,8 @@ create .config/polybar
 .Xmodmap
 
 [xresources]
-.Xresources
+create .config/X11
+.config/X11/Xresources
 
 [sxhkd]
 create .config/sxhkd
@@ -76,7 +78,8 @@ create .config/pulse
 .config/pulse/default.pa
 create .config/ncpamixer
 .config/ncpamixer/ncpamixer.conf
-.asoundrc
+create .config/alsa
+.config/alsa/asoundrc
 
 [alsa]
 .asoundrc
@@ -149,7 +152,7 @@ run /home/jneidel/.config/transmission-daemon/set-rpc-password.sh
 [themes]
 create .config/Kvantum
 .config/Kvantum/kvantum.kvconfig
-.icons
+.local/share/icons
 create .config/gtk-2.0
 create .config/gtk-3.0
 .config/gtk-2.0/gtkfilechooser.ini

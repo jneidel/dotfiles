@@ -10,9 +10,8 @@ fi
 rm ~/.python_history ~/.sqlite_history ~/.bash_history
 
 # dirs
-rmdir ~/Desktop
-rm ~/1
-rm -r ~/.w3m
-rm ~/.newsboat
+rm ~/1 ~/.octave_hist
+rmdir ~/Desktop ~/.newsboat
+rm -r ~/.w3m ~/.m2 ~/.mono ~/.pki ~/.gnome
 
 # ~/scripts/cron/cron-notify-send "Cleaned up fs"
