@@ -10,7 +10,7 @@ hex() {
 
 ## Open links
 get_latest_imgweek() {
-  curl -Ss "https://getcomics.info/tag/image-week/" | grep -Po "href=\"\Khttps://getcomics.info/other-comics/.*?weekly-pack/\">" | grep -ve "comments" | head -n1 | cut -d\" -f1
+  curl -SsL "https://getcomics.info/tag/image-week/" | grep -Po "href=\"\Khttps://getcomics.[^/]+/other-comics/.*?weekly-pack/\">" | grep -ve "comments" | head -n1 | cut -d\" -f1
 }
 alias imgweek="get_latest_imgweek | xargs $B >/dev/null 2>&1 &; disown"
 # alias imgweek="$B https://getcomics.info/tag/image-week >/dev/null 2>&1 &; disown"

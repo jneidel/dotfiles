@@ -53,7 +53,7 @@ return require("packer").startup(function(use)
   use "windwp/nvim-autopairs"
   use "numToStr/Comment.nvim" -- comments
   -- "justinmk/vim-dirvish",
-  -- "brenoprata10/nvim-highlight-colors", -- visualize hex color codes
+  use "brenoprata10/nvim-highlight-colors" -- visualize hex color codes
   use { "andrewferrier/debugprint.nvim", -- create uniform & unique print statements
     config = function()
       require("debugprint").setup({ create_keymaps = false })
