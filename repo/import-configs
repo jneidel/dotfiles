@@ -34,7 +34,7 @@ function get-files {
     # category not in use
     [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
 
-    REPO="$DIR/$IN"
+    REPO="$BASE/$IN"
     LOCAL="$HOME/$IN"
 
     # directories
@@ -54,9 +54,9 @@ function get-files {
     REST=$(echo "$IN" | cut -d" " -f2-)
     case $CMD in
       create)
-        create-dir "$DIR/$REST";;
+        create-dir "$BASE/$REST";;
       clean)
-        clean-copy-dir "$HOME/$REST" "$DIR/$REST";;
+        clean-copy-dir "$HOME/$REST" "$BASE/$REST";;
       run)
         run-command $IN;;
       *)

@@ -43,7 +43,7 @@ function install-files {
     [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
 
     LOCAL="$HOME/$IN"
-    REPO="$DIR/$IN"
+    REPO="$BASE/$IN"
 
     # directories
     [ -d "$REPO" ] && {
@@ -64,7 +64,7 @@ function install-files {
       create)
         create-dir "$HOME/$REST";;
       clean)
-        copy-dir "$DIR/$REST" "$HOME/$REST";; # don't clean local
+        copy-dir "$BASE/$REST" "$HOME/$REST";; # don't clean local
       run)
         run-command $IN;;
       *)

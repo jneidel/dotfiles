@@ -11,6 +11,8 @@ sed -r "s/^(.*)$/^\1$/" $IN_USE >$IN_USE_TMP
 
 [ ! -z $DRY ] && echo DRYRUN
 
+BASE=$DIR/..
+
 function copy-dir {
   [ -z $DRY ] && mkdir -p $2
   [ -z $DRY ] && cp -r $1/* $2

@@ -5,7 +5,7 @@
 alias py="python"
 alias color="gcolor2"
 alias readme="grip -b 7777" # render readme.md with github styles
-[ -n "$GH_ACCESS_TOKEN" ] && alias readme="grip --browser --user $USER --pass $GH_ACCESS_TOKEN" # remove rate limit
+# [ -n "$GH_ACCESS_TOKEN" ] && alias readme="grip --browser --user $USER --pass $GH_ACCESS_TOKEN" # remove rate limit
 md() {
   FILE="$1"
  if [ -n "$GH_ACCESS_TOKEN" ]; then
