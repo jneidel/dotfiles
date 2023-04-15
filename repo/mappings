@@ -1,6 +1,17 @@
-# config mappings
-# todo: handle git clone
-# todo: handle /etc
+# A grouped list of configuration mappings.
+#
+# Format:
+# \[GROUP\]
+# FILE_OR_DIRECTORY
+# create DIRECTORY
+#
+# Groups can be enabled by listing them in 'used-groups' file.
+#
+# To install your configs: 'make install-configs'
+# See: 'app-groups' for managing apps
+
+# TODO: handle git clone
+# TODO: handle /etc
 
 ## necessities
 [zsh]
@@ -210,7 +221,8 @@ create .config/cnsm
 .config/xmrig.json
 
 [sxiv]
-.Xresources
+create .config/X11
+.config/X11/Xresources
 
 [gpg]
 create .local/share/gnupg
@@ -219,4 +231,3 @@ create .local/share/gnupg
 [pipewire]
 create .config/pipewire
 # .config/pipewire/x240.qpwgraph
-

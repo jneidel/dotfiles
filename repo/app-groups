@@ -1,7 +1,7 @@
-# A categorized list of apps.
+# A grouped list of apps.
 #
 # Format:
-# [CATEGORY]
+# \[GROUP\]
 # [PREFIX:]PACKAGE_NAME DESCRIPTION...
 #
 # The prefix specifies the install method:
@@ -11,13 +11,13 @@
 #   systemd   - systemctl enable
 #   PKGBUILD  - build from local PKGBUILD file
 #
-# Categories can be enabled by placing them in used-apps.
-# See: apps-install for installing packages
-# See: mappings for related configuration files
+# Groups can be enabled by listing them in 'used-groups' file.
 #
+# To install your apps: 'make install-apps'
+# See: 'mappings' for managing configuration
+
 # To list user-installed apps:
 #   comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
-#
 # TODO: i3lock
 
 [dunst]

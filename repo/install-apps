@@ -1,21 +1,23 @@
 #! /bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source $DIR/copy-configs
+source $DIR/lib.sh
 FAILED_INSTALLS=/tmp/failed-install
 printf "" >$FAILED_INSTALLS
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ apps-install [CATEGORY..]
-Install the packages listed in 'apps',
-for those where the category is listed in 'used-apps'.
+$ apps-install [GROUP..]
+
+Install a group of packages listed in 'apps'.
+With non arguments all groups in 'used-apps' will be installed.
 
 Parameters:
   [\$@]: only install those categories listed
 
 Example:
-  $ apps-install pipewire
+  $ apps-install # install categories from 'used-apps'
+  $ apps-install pipewire # install pipewire category
   $ apps-install postgres mongodb
 EOF
   exit

@@ -1,15 +1,13 @@
 #! /bin/sh
 # shared environment and functions
-# for import-configs/install-configs
 
-# Todo:
-# work with /etc files
+# TODO: make /etc files work
 
 MAPPINGS="$DIR/mappings"
-APP_LIST="$DIR/apps"
-IN_USE="$DIR/used-apps"
+APP_LIST="$DIR/app-groups"
+IN_USE="$DIR/used-groups"
 IN_USE_TMP=/tmp/used-apps
-sed -r "s/^(.*)$/^\1$/" $IN_USE > $IN_USE_TMP
+sed -r "s/^(.*)$/^\1$/" $IN_USE >$IN_USE_TMP
 
 [ ! -z $DRY ] && echo DRYRUN
 

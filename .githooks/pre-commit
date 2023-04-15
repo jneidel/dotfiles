@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# if README has changes staged
+if git status --porcelain | grep ^M | grep "README.md" >/dev/null && command -v doctoc >/dev/null; then
+  doctoc README.md
+  git add README.md
+fi

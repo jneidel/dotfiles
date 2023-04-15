@@ -23,10 +23,10 @@ scripts/ftp/*-ip
 .config/nvim/jaspers-neovim
 .config/mpv/scripts/sponsorblock_shared/sponsorblock.txt
 
-PKGBUILD/*
-!PKGBUILD/install
-!PKGBUILD/lemonbar-xft-git
-!PKGBUILD/yay-git
+repo/PKGBUILD/*
+!repo/PKGBUILD/install
+!repo/PKGBUILD/lemonbar-xft-git
+!repo/PKGBUILD/yay-git
 
 .local/share/icons/*
 !.local/share/icons/*.png

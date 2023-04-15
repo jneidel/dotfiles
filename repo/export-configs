@@ -1,22 +1,34 @@
 #! /bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
-# blank to run normally, anything to dryrun
 DRY=
 [ "$1" = "-d" ] && DRY=true
+source $DIR/lib.sh
 
-source $DIR/copy-configs
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ export-configs
+Export the dotfiles onto the local machine.
 
-if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ import-configs"
-  echo "Copy the local dotfiles to this repo."
-  echo "Uses the mapping/commands from $MAPPINGS"
+Which files will be exported is specified in 'mappings'.
+Only groups in 'used-groups' will be applied though.
+
+Flags:
+  -d: to dry-run without exporting anything
+EOF
   exit
 fi
 
+if [ -z "$DRY" ]; then
+  printf "Really overwrite local files? (y/N): "
+  read ans
+  if [ "$ans" != "y" ] && [ "$ans" != "Y" ]; then
+    exit 0
+  fi
+fi
+
 CATEGORY=""
-function get-files {
+function install-files {
   IFS=$'\n'
   for IN in $(cat /dev/stdin); do
     # categories
@@ -30,18 +42,18 @@ function get-files {
     # category not in use
     [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
 
-    REPO="$DIR/$IN"
     LOCAL="$HOME/$IN"
+    REPO="$DIR/$IN"
 
     # directories
-    [ -d "$LOCAL" ] && {
-      copy-dir $LOCAL $REPO
+    [ -d "$REPO" ] && {
+      copy-dir $REPO $LOCAL
       continue
     }
 
     # files
-    [ -f "$LOCAL" ] && {
-      copy-file $LOCAL $REPO
+    [ -f "$REPO" ] && {
+      copy-file $REPO $LOCAL
       continue
     }
 
@@ -50,9 +62,9 @@ function get-files {
     REST=$(echo "$IN" | cut -d" " -f2-)
     case $CMD in
       create)
-        create-dir "$DIR/$REST";;
+        create-dir "$HOME/$REST";;
       clean)
-        clean-copy-dir "$HOME/$REST" "$DIR/$REST";;
+        copy-dir "$DIR/$REST" "$HOME/$REST";; # don't clean local
       run)
         run-command $IN;;
       *)
@@ -64,7 +76,4 @@ function get-files {
 cat $MAPPINGS |
   grep -v "^#" |
   grep -v "^\s*$" |
-  get-files
-
-exit 0
-
+  install-files
