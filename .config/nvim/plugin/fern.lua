@@ -7,4 +7,4 @@ vim.api.nvim_command( "let g:fern_git_status#disable_submodules = 1" )
 vim.api.nvim_command( "let g:fern_git_status#disable_directories = 1" )
 vim.api.nvim_command( "let g:fern#disable_default_mappings = 1" )
 
-nnoremap( "<leader>f", ":Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>" )
+nnoremap( "#f", ":Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>" )

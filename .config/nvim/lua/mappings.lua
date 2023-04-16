@@ -4,12 +4,6 @@ local map = require("utils").map
 vim.g.mapleader = '#'
 map('n', '<Space>', '')
 
--- better window navigation
-map('n', '<C-h>', '<C-w>h')
-map('n', '<C-j>', '<C-w>j')
-map('n', '<C-k>', '<C-w>k')
-map('n', '<C-l>', '<C-w>l')
-
 -- better window resizing
 map('n', '<C-S-l>', ':lua require("utils").resize(true, 3)<CR>')
 map('n', '<C-S-h>', ':lua require("utils").resize(true, -3)<CR>')

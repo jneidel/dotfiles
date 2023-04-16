@@ -82,9 +82,9 @@ if hasmodule then
       },
     },
     sources = {
-      { name = 'buffer' },
       { name = 'path' },
       { name = 'nvim_lsp' },
+      { name = 'buffer' },
       { name = 'spell' },
       { name = 'luasnip' },
     },

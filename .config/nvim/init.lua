@@ -7,7 +7,7 @@ require( "options" )
 require( "plugins" )
 require( "mappings" )
 
-vim.api.nvim_command( "set runtimepath^=~/.vim runtimepath+=~/.vim/after" )
-vim.api.nvim_command( "let &packpath = &runtimepath" )
-vim.api.nvim_command( "source ~/.vimrc" )
-vim.api.nvim_command( "colorscheme old-hope" ) -- has to be after vimrc
+vim.cmd( "set runtimepath^=~/.vim runtimepath+=~/.vim/after" )
+vim.cmd( "let &packpath = &runtimepath" )
+vim.cmd( "source ~/.vimrc" )
+vim.cmd( "colorscheme old-hope" ) -- has to be after vimrc
