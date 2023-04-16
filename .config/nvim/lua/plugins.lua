@@ -1,22 +1,38 @@
--- Intall packages with ':PackerSync'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-return require("packer").startup(function(use)
+require("lazy").setup( {
   -- basics
-  use "wbthomason/packer.nvim" -- package manager itself
-  use "christoomey/vim-tmux-navigator" -- move between tmux and vim
-  use "chrisbra/improvedft" -- better f and t
+  {
+    "alexghergh/nvim-tmux-navigation",
+    lazy = true
+  },
+  "chrisbra/improvedft", -- better f and t
 
   -- status bar theme
-  use "itchyny/lightline.vim"
+  "itchyny/lightline.vim",
 
   -- lsp
-  use "neovim/nvim-lspconfig" -- lsp
+  "neovim/nvim-lspconfig", -- lsp
   -- "glepnir/lspsaga.nvim", -- nicer lsp UI
-  use { "neoclide/coc.nvim", branch="release" }
+  {
+    "neoclide/coc.nvim",
+    branch="release"
+  },
 
   -- autocomplete
-  use { "hrsh7th/nvim-cmp", -- completion engine
-    requires = {
+  { "hrsh7th/nvim-cmp", -- completion engine
+    dependencies = {
       "hrsh7th/cmp-nvim-lsp", -- sources
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
@@ -24,44 +40,78 @@ return require("packer").startup(function(use)
       "L3MON4D3/LuaSnip", -- snippet engine
       "saadparwaiz1/cmp_luasnip"
     }
-  }
+  },
 
   -- syntax highlighting
-  use "nvim-treesitter/nvim-treesitter" -- dynamic syntax highlighting independant of lang
+  "nvim-treesitter/nvim-treesitter", -- dynamic syntax highlighting independant of lang
 
   -- language specific
-  use "preservim/vim-markdown"
+  {
+    "preservim/vim-markdown",
+    event = "BufEnter *.md", -- lazy load
+  },
+  {
+    "brenoprata10/nvim-highlight-colors", -- visualize hex color codes
+    event = {
+      "BufEnter *.css",
+      "BufEnter *.scss",
+      "BufEnter *.sass",
+      "BufEnter *.html",
+    }
+  },
 
   -- file explorer
-  use "lambdalisue/fern-hijack.vim"
-  use {
+  "lambdalisue/fern-hijack.vim",
+  {
     "lambdalisue/fern.vim",
-    cmd = { "Fern" },  -- lazy load
-    requires = {
+    dependencies = {
       "lambdalisue/nerdfont.vim",
       "lambdalisue/fern-renderer-nerdfont.vim",
       "lambdalisue/fern-git-status.vim",
       "yuki-yano/fern-preview.vim" -- preview
-    }
-  }
+    },
+    cmd = "Fern",
+  },
 
   -- file finder
-  use { "nvim-telescope/telescope.nvim", branch = '0.1.x', requires = { "nvim-lua/plenary.nvim" } }
-  use { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = '0.1.x',
+    dependencies = {
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = 'make'
+      },
+      "nvim-lua/plenary.nvim"
+    },
+    lazy = true,
+    cmd = "Telescope"
+  },
+  {
+    'junegunn/fzf.vim',
+    dependencies = {
+      'junegunn/fzf',
+    },
+  },
 
   -- other
-  use "windwp/nvim-autopairs"
-  use "numToStr/Comment.nvim" -- comments
-  -- "justinmk/vim-dirvish",
-  use "brenoprata10/nvim-highlight-colors" -- visualize hex color codes
-  use { "andrewferrier/debugprint.nvim", -- create uniform & unique print statements
+  "windwp/nvim-autopairs", -- create closing pairs
+  "numToStr/Comment.nvim", -- comments
+  {
+    "andrewferrier/debugprint.nvim", -- create uniform & unique print statements
+    lazy = true,
     config = function()
       require("debugprint").setup({ create_keymaps = false })
-    end }
-end )
-
--- plugin manager
---  https://github.com/folke/lazy.nvim
+    end
+  },
+  {
+    "nvim-neorg/neorg", -- org mode
+    build = ":Neorg sync-parsers",
+    dependencies = "nvim-lua/plenary.nvim",
+    event = "BufEnter *.norg",
+    cmd = "Neorg",
+  },
+} )
 
 -- snippets:
 --  https://github.com/neoclide/coc-snippets
@@ -73,3 +123,9 @@ end )
 --    https://github.com/iamcco/coc-diagnostic https://github.com/iamcco/diagnostic-languageserver
 --  https://github.com/fannheyward/coc-rome
 --  https://github.com/neoclide/coc-prettier https://github.com/prettier/prettier-vscode
+
+-- dir/file management
+--  https://github.com/stevearc/oil.nvim
+
+-- AI helper
+--  https://github.com/Exafunction/codeium.vim
