@@ -2,7 +2,7 @@
 
 image() {
 	if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
-		printf '{"action": "add", "identifier": "PREVIEW", "x": "%s", "y": "%s", "width": "%s", "height": "%s", "scaler": "contain", "path": "%s"}\n' "$4" "$5" "$(($2-1))" "$(($3-1))" "$1" > "$FIFO_UEBERZUG"
+		printf '{"action": "add", "identifier": "PREVIEW", "x": "%s", "y": "%s", "width": "%s", "height": "%s", "scaler": "contain", "path": "%s"}\n' "$4" "$5" "$(($2-1))" "$(($3-1))" "$1"> "$FIFO_UEBERZUG"
 		exit 1
 	else
 		chafa "$1" -s "$4x"
@@ -12,8 +12,7 @@ image() {
 batorcat() {
 	file="$1"
 	shift
-	if command -v bat > /dev/null 2>&1
-	then
+	if command -v bat > /dev/null 2>&1; then
 		bat --color=always --style=plain --pager=never "$file" "$@"
 	else
 		cat "$file"
@@ -23,8 +22,7 @@ batorcat() {
 glowormdcat() {
 	file="$1"
 	shift
-	if command -v glow > /dev/null 2>&1
-	then
+	if command -v glow > /dev/null 2>&1; then
 		glow "$file"
 	else
 		mdcat "$file"
