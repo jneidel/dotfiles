@@ -28,3 +28,5 @@ if [ ! -f "$FILE" ]; then
 fi
 
 makepkg --install --syncdeps --rmdeps --force -p "$FILE" $2
+
+rm -r $DIR/src $DIR/pkg

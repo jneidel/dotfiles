@@ -194,6 +194,7 @@ renameutils qmv mass rename util
 vim The text editor
 par Text wrapper, 80 chars
 fzf Fuzzy finder
+ripgrep Grep alternative for nvim-telescope
 
 [neovim]
 neovim-git Vim upgraded
@@ -540,3 +541,6 @@ ib-tws Stock trading application
 antidot-bin Cleanup the $HOME directory
 shell:antidot update
 xdg-ninja Show $HOME cleanup instructions
+
+[blugon]
+blugon Blue light filter
