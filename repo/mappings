@@ -231,3 +231,7 @@ create .local/share/gnupg
 [pipewire]
 create .config/pipewire
 # .config/pipewire/x240.qpwgraph
+
+[blugon]
+create .config/blugon
+.config/blugon/gamma
