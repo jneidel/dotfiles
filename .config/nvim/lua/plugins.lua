@@ -48,16 +48,20 @@ require("lazy").setup( {
   -- language specific
   {
     "preservim/vim-markdown",
-    event = "BufEnter *.md", -- lazy load
+    ft = "markdown",
   },
   {
     "brenoprata10/nvim-highlight-colors", -- visualize hex color codes
-    event = {
-      "BufEnter *.css",
-      "BufEnter *.scss",
-      "BufEnter *.sass",
-      "BufEnter *.html",
-    }
+    ft = { "css", "scss", "sass", "html", },
+    config = function()
+      vim.opt.termguicolors = true -- is required for color highlighting, but breaks italics
+      -- TODO: find a way to turn this off outside of these ft
+
+      require("nvim-highlight-colors").setup({
+        render = 'background',
+        enable_named_colors = true,
+      })
+    end
   },
 
   -- file explorer

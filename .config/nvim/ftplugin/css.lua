@@ -17,5 +17,3 @@ require('lspconfig').cssls.setup {
     debounce_text_changes = 150,
   },
 }
-
-vim.opt.termguicolors = true -- enable background hightlight-colors, disable italics

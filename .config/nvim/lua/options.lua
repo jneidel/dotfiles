@@ -72,6 +72,9 @@ o.swapfile = false
 o.showmode = false
 o.shortmess = 'c'
 
+-- needed for italics, turned on by color highlight plugin
+o.termguicolors = false
+
 -- autocommands
 define_augroup({
   utils = {

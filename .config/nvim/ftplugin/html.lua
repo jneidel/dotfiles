@@ -20,5 +20,3 @@ require('lspconfig').html.setup {
   root_dir = root_dir,
   on_attach = custom_on_attach,
 }
-
-vim.opt.termguicolors = true -- enable background hightlight-colors, disable italics
