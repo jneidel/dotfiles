@@ -198,7 +198,6 @@ ripgrep Grep alternative for nvim-telescope
 
 [neovim]
 neovim-git Vim upgraded
-nvim-packer-git Package manager
 # nvim -c "CocInstall|q"
 
 npm:vscode-langservers-extracted Neovim LSP
@@ -250,7 +249,6 @@ xflux Flux bluelight filter for X
 
 [sxhkd]
 sxhkd Set hotkey mappings
-clipit Clipboard interface
 
 ## xorg drivers
 [x-drivers]
@@ -286,8 +284,6 @@ kvantum-qt5 QT themes
 ## fonts
 [fonts]
 ttf-dejavu Default
-ttf-joypixels Emojis
-ttf-roboto Roboto
 
 ## util
 [bluez]
@@ -300,7 +296,6 @@ systemd:bluetooth
 [tlp]
 tlp Power management
 systemd:tlp Enable power management
-systemd:tlp-sleep Enable sleep power management
 ethtool Disable wake on lan
 
 ## compression
@@ -343,11 +338,11 @@ pulsemixer Pulseaudio mixer
 ncpamixer Pulseaudio mixer
 pavucontrol Pulseaudio mixer
 
-# npm
 [node]
-nodejs Javascript runtime
-npm Node.js package manager
-yarn npm alternative
+volta-bin Node version manager for: node, npm, yarn
+# volta install node
+# volta install npm
+# volta install yarn
 
 [dictcc]
 npm:dict-cc-cli Offline dict.cc
@@ -373,7 +368,6 @@ npm:@captainsafia/legit Create license files
 npm:oclif oclif project helper
 npm:markdown-toc Create a md toc
 npm:doctoc Create a md toc
-volta-bin Node version manager
 
 [eslint]
 npm:eslint Javascript linter
@@ -405,10 +399,12 @@ wine-mono wine dependency
 
 [latex]
 texlive-core Typography
-texlive-bibtexextra Biber latex file
+
+[latex-sci]
 texlive-latexextra More packages
-minted Code highlighting
+texlive-bibtexextra Biber latex file
 biber Latex Bibliography management
+minted Code highlighting
 pubs Bibliography management
 tllocalmgr Latex extension manager
 
