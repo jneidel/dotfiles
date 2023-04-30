@@ -40,18 +40,6 @@ alias ccat="/bin/cat"
 alias scrot="~/scripts/sxhkd/screenshot"
 alias scrott="~/scripts/sxhkd/screenshot -s 5"
 alias man="colored-man"
-vim() {
-  if [ "$(pwd)" = "$HOME" ]; then
-    if tmux list-sessions | grep attached | grep main >/dev/null && \
-      tmux list-windows | grep active | grep ^1 >/dev/null; then
-      /bin/nvim
-    else
-      echo "Don't open vim from the home directory!"
-    fi
-  else
-    /bin/nvim $@ 2>/dev/null
-  fi
-}
 alias v="vim"
 alias nvim="vim"
 alias vvim="/bin/vim"

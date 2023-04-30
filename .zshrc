@@ -38,7 +38,7 @@ export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e l
 export CDPATH=.:~:~/code:~/Downloads:~/projects:~/ct:~/projects/uni:~/code/notes:~/scripts:~/ct/music
 
 ## Applications
-export EDITOR=nvim
+export EDITOR=vim
 export PAGER=less
 export LESS="-R"
 export BROWSER=brave
