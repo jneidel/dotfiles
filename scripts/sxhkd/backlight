@@ -5,8 +5,11 @@ XOB=/tmp/xobpipe
 
 case "$(cat /etc/hostname)" in
   jneidel-x240) ARCH=intel_backlight ;;
+  jneidel-x270) ARCH=intel_backlight ;;
   jneidel-e495) ARCH=amdgpu_bl0 ;;
-  *) echo "Hostname not configured"; exit 1 ;;
+  *) ARCH=intel_backlight
+    echo "Hostname not configured; assuming $ARCH"
+    exit 1 ;;
 esac
 
 

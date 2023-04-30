@@ -5,12 +5,15 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 font="FuraCode Nerd Font Mono-11.5"
 
 case "$(cat /etc/hostname)" in
+  "jneidel-x270")
+    width=1920 ;;
   "jneidel-x240")
     width=1366 ;;
   "jneidel-e495")
     width=1920 ;;
   *)
-    echo "Please add a width for your hostname to the lemonbar config"
+    width=1920
+    echo "Unknown hostname; assuming width of $width"
     exit ;;
 esac
 geometry="${width}x19"
