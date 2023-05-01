@@ -51,7 +51,6 @@ alias cal="/bin/cal -m"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
 alias eslint="/bin/eslint --config '$HOME/.config/eslint/eslintrc'"
 alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 off --shell_version off --package_managers off --uptime_shorthand tiny --gpu_brand off"
-alias npm="/bin/npm -s"
 alias ani-cli="/bin/ani-cli -q 720"
 yay() {
   if [ -z "$1" ]; then

@@ -1,9 +1,11 @@
 #! /bin/bash
 
-if [[ $1 = "--help" ]] || [[ $1 = "help" ]]; then
-  echo "$ sudo hostsup"
-  echo "Update /etc/hosts & /etc/hosts.deny files from"
-  echo "  https://github.com/mitchellkrogza/Ultimate.Hosts.Blacklist"
+if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ update-hosts
+Update /etc/hosts & /etc/hosts.deny files from:
+https://github.com/mitchellkrogza/Ultimate.Hosts.Blacklist
+EOF
   exit
 fi
 
@@ -13,12 +15,11 @@ OG_HOSTS=/home/jneidel/code/dotfiles/etc/hosts
 TMP_HOSTS=/tmp/hosts
 
 echo "Setting $HOSTS"
-sudo rm $HOSTS $TMP_HOSTS 2> /dev/null
+sudo rm $HOSTS $TMP_HOSTS 2>/dev/null
 cp $OG_HOSTS $TMP_HOSTS
-curl -L -# https://hosts.ubuntu101.co.za/hosts | sed "1,55d; /0.0.0.0 soundcloud.com/d; /0.0.0.0 imagecomics.com/d; /0.0.0.0 meetup.com/d; /0.0.0.0 musicbrainz.org/d; /0.0.0.0 xkcd.com/d; /0.0.0.0 www.namecheap.com/d; /0.0.0.0 1337x.to/d; /0.0.0.0 larrysanger.org/d; /0.0.0.0 www.theguardian.com/d; /0.0.0.0 www.heise.de/d; /0.0.0.0 heise.de/d; /0.0.0.0 turbobit.net/d; /0.0.0.0 azlyrics.com/d; /0.0.0.0 youtu.be/d; /0.0.0.0 fonts.gstatic.com/d; /0.0.0.0 redirector.googlevideo.com/d; /0.0.0.0 fonts.googleapis.com/d; /0.0.0.0 fonts.gstatic.com/d; /0.0.0.0 youtu.be/d; /0.0.0.0  ?www.youtube-nocookie.com/d; /0.0.0.0 storage.googleapis.com/d; /0.0.0.0 scholar.google.com/d;" >> $TMP_HOSTS
+curl -L -# https://hosts.ubuntu101.co.za/hosts | sed "1,55d; /0.0.0.0 soundcloud.com/d; /0.0.0.0 imagecomics.com/d; /0.0.0.0 meetup.com/d; /0.0.0.0 musicbrainz.org/d; /0.0.0.0 xkcd.com/d; /0.0.0.0 www.namecheap.com/d; /0.0.0.0 1337x.to/d; /0.0.0.0 larrysanger.org/d; /0.0.0.0 www.theguardian.com/d; /0.0.0.0 www.heise.de/d; /0.0.0.0 heise.de/d; /0.0.0.0 turbobit.net/d; /0.0.0.0 azlyrics.com/d; /0.0.0.0 youtu.be/d; /0.0.0.0 fonts.gstatic.com/d; /0.0.0.0 redirector.googlevideo.com/d; /0.0.0.0 fonts.googleapis.com/d; /0.0.0.0 fonts.gstatic.com/d; /0.0.0.0 youtu.be/d; /0.0.0.0  ?www.youtube-nocookie.com/d; /0.0.0.0 storage.googleapis.com/d; /0.0.0.0 scholar.google.com/d;" >>$TMP_HOSTS
 sudo mv $TMP_HOSTS $HOSTS
 
 echo "Setting $HOSTS_DENY"
-sudo rm $HOSTS_DENY > /dev/null
-sudo wget -q https://hosts.ubuntu101.co.za/superhosts.deny -O $HOSTS_DENY
-
+sudo rm $HOSTS_DENY 2>/dev/null
+sudo wget https://hosts.ubuntu101.co.za/superhosts.deny -O $HOSTS_DENY

@@ -14,6 +14,8 @@ EOF
   exit
 fi
 
-command -v chromium >/dev/null || { echo "chromium is not installed" 1>&2; exit 127; }
-
-chromium "https://www.earningswhispers.com/stocks/$1" >/dev/null 2>&1 &
+if command -v chromium >/dev/null; then
+  chromium "https://www.earningswhispers.com/stocks/$1" >/dev/null 2>&1 &
+else
+  $BROWSER "https://www.earningswhispers.com/stocks/$1" >/dev/null 2>&1 &
+fi
