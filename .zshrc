@@ -106,6 +106,9 @@ export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
 export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+export GOPATH="${XDG_DATA_HOME}/go"
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
 compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 

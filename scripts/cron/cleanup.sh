@@ -2,16 +2,25 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ cleanup-fs
-Removes various irrelevant files/dirs
+Removes irrelevant files/dirs polluting the home directory
 "; exit
 fi
 
-# histories
-rm ~/.python_history ~/.sqlite_history ~/.bash_history
+# files
+rm ~/.python_history \
+  ~/.sqlite_history \
+  ~/.bash_history \
+  ~/1 \
+  ~/.octave_hist \
+  ~/.Xauthority 2>/dev/null
 
 # dirs
-rm ~/1 ~/.octave_hist
-rmdir ~/Desktop ~/.newsboat
-rm -r ~/.w3m ~/.m2 ~/.mono ~/.pki ~/.gnome
+rmdir ~/Desktop \
+  ~/.newsboat 2>/dev/null
+rm -r ~/.w3m \
+  ~/.m2 \
+  ~/.mono \
+  ~/.pki \
+  ~/.gnome 2>/dev/null
 
-# ~/scripts/cron/cron-notify-send "Cleaned up fs"
+~/scripts/cron/cron-notify-send "Cleaned up fs"
