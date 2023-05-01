@@ -235,3 +235,6 @@ create .config/pipewire
 [blugon]
 create .config/blugon
 .config/blugon/gamma
+
+[fcron]
+# run ... command to import/export fcrontab -l 2>/dev/null

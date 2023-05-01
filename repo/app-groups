@@ -340,9 +340,9 @@ pavucontrol Pulseaudio mixer
 
 [node]
 volta-bin Node version manager for: node, npm, yarn
-# volta install node
-# volta install npm
-# volta install yarn
+shell:volta install node
+shell:volta install npm
+shell:volta install yarn
 
 [dictcc]
 npm:dict-cc-cli Offline dict.cc
@@ -420,7 +420,7 @@ jdk-openjdk Java environment
 signal-desktop Messenger
 # signal-cli CLI version
 
-[cron]
+[fcron]
 fcron Cron implementation
 systemd:fcron Enable cron
 

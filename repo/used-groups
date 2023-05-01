@@ -52,7 +52,7 @@ dunst
 fonts
 latex
 signal
-cron
+fcron
 epr
 pip
 rofi
@@ -84,3 +84,4 @@ json
 masterpdfeditor
 intel
 tws
+antidot

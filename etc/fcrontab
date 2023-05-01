@@ -1,0 +1,14 @@
+&bootrun  0               18  *    *    *                                    ~/scripts/cron/update-sensitive.sh
+&bootrun  0               18  *    *    *                                    ~/scripts/cron/update-notes.sh
+&bootrun  0               20  *    *    *                                    ~/scripts/cron/cleanup.sh
+&bootrun  0               4   *    *    *                                    ~/scripts/tmux/new-day
+&bootrun  0               4   *    *    *                                    ~/scripts/personal/append-unhrd-data
+&bootrun  0               22  *    *    *                                    ~/scripts/mpd/backup-main-playlist
+0         14,16,18,20,22  *   *    *    ~/scripts/cron/reload-newsboat
+*/5       *               *   *    *    ~/scripts/cron/battery-alert
+*/5       *               *   mar  *    ~/scripts/cron/price-alert
+*/10      *               *   mar  *    ~/scripts/mpd/ping-mpd-server
+*/30      *               *   *    *    ~/scripts/cron/disable-lock-at-home
+0         18              *   *    */2  ~/scripts/cron/update-todos.sh
+0         20              1   *    *    ~/scripts/cron/vacuum-sql-dbs.sh
+*/15      *               *   *    *    blugon                               -o
