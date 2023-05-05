@@ -4,6 +4,9 @@
 
 See [the repo directoy](repo/#readme) for how these dotfiles are managed.
 
+To see updates you can watch the Github releases, where I will regularly
+document the changes that I've done.
+
 <!-- big screenshots here -->
 
 ## Table of Contents
