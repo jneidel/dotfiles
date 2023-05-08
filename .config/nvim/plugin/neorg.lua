@@ -3,10 +3,14 @@ local hasmodule, neorg = pcall( require, "neorg" )
 if hasmodule then
   vim.opt.foldlevelstart = 3
 
+  -- local localLeaderKey = "-"
+  -- vim.api.nvim_set_keymap('', localLeaderKey, '<Nop>', { noremap = true, silent = true })
+  -- vim.g.maplocalleader = localLeaderKey
+
   neorg.setup {
     load = {
       ["core.defaults"] = {}, -- Loads default behaviour
-      ["core.norg.concealer"] = {
+      ["core.concealer"] = {
         config = {
           icon_preset = "diamond",
           icons = {
@@ -18,56 +22,77 @@ if hasmodule then
                 icon = "="
               },
             }
-  --      markup_preset = "dimmed",
-  --      dim_code_blocks = {
-  --        enabled = false,
-  --      },
+            --      markup_preset = "dimmed",
+            --      dim_code_blocks = {
+            --        enabled = false,
+            --      },
           }
         }
       }, -- Adds pretty icons to your documents
-      ["core.norg.dirman"] = { -- Manages Neorg workspaces
+      ["core.qol.todo_items"] = {
+        -- https://github.com/nvim-neorg/neorg/wiki/Todo-Items
+        config = {
+          order = {
+            { "undone", " " },
+            { "done", "x" },
+          }
+        }
+      },
+      ["core.dirman"] = { -- Manages Neorg workspaces
         config = {
           workspaces = {
             org = "~/org",
           },
           default_workspace = "org",
---          autodetect = true,
---          autochdir = true,
+          -- autodetect = true,
+          -- autochdir = true,
         },
       },
       ["core.keybinds"] = {
         config = {
+          neorg_leader = '<localleader>',
           hook = function(keybinds)
             local leader = keybinds.leader
-            -- ^<space> to cycle task between the states done, undone, pending
-            -- gt<id> with id as the first letter of done, undone, pending, important, hold, canceled
+
+            -- https://github.com/nvim-neorg/neorg/wiki/Todo-Items
+            keybinds.remap_event("norg", "n", "gtd", "core.qol.todo_items.todo.task_done")
+            keybinds.remap_event("norg", "n", "gtu", "core.qol.todo_items.todo.task_undone")
+            keybinds.remap_event("norg", "n", "gtp", "core.qol.todo_items.todo.task_pending")
+            keybinds.remap_event("norg", "n", "gth", "core.qol.todo_items.todo.task_on_hold")
+            keybinds.remap_event("norg", "n", "gtc", "core.qol.todo_items.todo.task_cancelled")
+            keybinds.remap_event("norg", "n", "gtr", "core.qol.todo_items.todo.task_recurring")
+            keybinds.remap_event("norg", "n", "gti", "core.qol.todo_items.todo.task_important")
+            keybinds.remap_event("norg", "n", "<C-Space>", "core.qol.todo_items.todo.task_cycle")
+            keybinds.remap_event("norg", "n", "<C-S-Space>", "core.qol.todo_items.todo.task_cycle_reverse")
+
+            -- new neorg file
+            keybinds.remap_event("norg", "n", "NN", "core.dirman.new.note")
+
+            -- >>/<< to promote/demote heading/todos
+            -- https://github.com/nvim-neorg/neorg/wiki/Promo
 
             -- keybinds.remap_key("norg", "n", leader .. "tv", "<leader>ov")
-            -- keybinds.remap_event("norg", "n", "<leader>oc", "core.gtd.base.capture")
             -- keybinds.remap_event("norg", "n", "]]", "core.integrations.treesitter.next.heading")
             -- keybinds.remap_event("norg", "n", "[[", "core.integrations.treesitter.previous.heading")
 
             -- manoeuvre
             -- keybinds.remap_key("norg", "n", "<M-k>", "<C-M-k>")
             -- keybinds.remap_key("norg", "n", "<M-j>", "<C-M-j>")
-
-            -- new note
-            -- keybinds.remap_key("norg", "n", leader .. "nn", "NN")
           end,
         }
       },
-      ["core.norg.completion"] = {
+      ["core.completion"] = {
         config = {
           engine = "nvim-cmp",
         },
       },
---       ["core.norg.qol.toc"] = {},
+      --       ["core.qol.toc"] = {},
       -- ["core.export"] = {},
-  --       ["core.export.markdown"] = {
-  --           config = {
-  --               extensions = "all",
-  --           },
-  --       },
+      --       ["core.export.markdown"] = {
+      --           config = {
+      --               extensions = "all",
+      --           },
+      --       },
     },
   }
 
@@ -89,7 +114,7 @@ if hasmodule then
   --               },
   --           },
   --       },
-  --       ["core.norg.esupports.metagen"] = {
+  --       ["core.esupports.metagen"] = {
   --           config = {
   --               type = "<leader>om",
   --           },
