@@ -95,7 +95,7 @@ gh() {
 }
 alias wcurl="curl -OJ" # better wget
 alias bud="libreoffice ~/ct/reference/budget.ods &"
-alias mr="~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
+alias mr="disable-mullvad-for node ~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
 alias ms="mullvad status"
 
 ### newsboat

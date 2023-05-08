@@ -26,7 +26,7 @@ d https://www.dict.cc/?s=%s
 cs https://curiositystream.com/search/%s
 - https://duckduckgo.com/?q=%s
 ddg https://duckduckgo.com/?q=%s
-m https://www.merriam-webster.com/dictionary/%s
+m https://www.medimops.de/produkte-C0/?fcIsSearch=1&searchparam=%s
 mw https://www.merriam-webster.com/dictionary/%s
 dl https://duckduckgo.com/?q=%s+mp3+download
 du https://www.duden.de/rechtschreibung/%s
