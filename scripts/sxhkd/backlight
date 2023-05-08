@@ -8,26 +8,29 @@ case "$(cat /etc/hostname)" in
   jneidel-x270) ARCH=intel_backlight ;;
   jneidel-e495) ARCH=amdgpu_bl0 ;;
   *) ARCH=intel_backlight
-    echo "Hostname not configured; assuming $ARCH"
-    exit 1 ;;
+    echo "Hostname not configured; assuming $ARCH";;
 esac
 
+MAX=$(cat $DIR/$ARCH/max_brightness)
+MIN=10
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ backlight <command>
+  cat <<EOF
+$ backlight COMMAND
 Interact with the backlight.
 
 Commands:
-  set <brightness>: set brightness
   get: get current brightness
-  max: set the max brightness
-  min: set the min brightness
-  percent: set the brightness using percentages (+2, -5)
+  set BRIGHTNESS: set the brightness
+  max: set the max brightness ($MAX)
+  min: set the min brightness ($MIN)
+  percent +/-N: set the brightness using percentages (+02, -5)
 
 Example:
-  $ backlight set 250 # set brightness to max
+  $ backlight set 250
   $ backlight p +1 # increase brightness by 10%
-"
+  $ backlight p +02 # increase brightness by 2%
+EOF
   exit
 fi
 
@@ -36,17 +39,22 @@ FILE=$DIR/$ARCH/brightness
 #   sudo chown $USER
 # on the brightness file, otherwise you wont be able to write it,
 # not even with sudo
-MAX=$(cat $DIR/$ARCH/max_brightness) # 851 on x240
-MIN=10
 
 set_brightness() {
   if [ -n "$1" ] && [ "$1" -gt -1 ] && [ "$1" -lt "$(($MAX+1))" ]; then
-    echo $1 > $FILE
+    echo $1 >$FILE
+    notification
   else
     echo "Invalid number passed to set"
     echo "It needs to be between 0 and $MAX"
     exit 1
   fi
+}
+
+notification() {
+  BRIGHTNESS=$(get_brightness)
+  BRIGHTNESS_PERCENT=$(($BRIGHTNESS*100/$MAX))
+  echo $BRIGHTNESS_PERCENT >$XOB
 }
 
 get_brightness() {
@@ -90,21 +98,11 @@ percent() {
   fi
 }
 
-notification() {
-  BRIGHTNESS=$(get_brightness)
-  BRIGHTNESS_PERCENT=$(($BRIGHTNESS*100/MAX))
-  # HEAD="Brightness: $BRIGHTNESS_PERCENT ($BRIGHTNESS)"
-  # BODY="$(get-progress-string.sh 28 '▪' ' ' "$BRIGHTNESS_PERCENT")"
-
-  # notify-send -i brightness -h string:x-canonical-private-synchronous:brightness -u normal -t 1000 "$HEAD" "$BODY"
-  echo $BRIGHTNESS_PERCENT > $XOB
-}
-
 case $1 in
-  s|set) set_brightness $2; notification;;
+  s|set) set_brightness $2;;
   g|get) get_brightness;;
-  max) set_brightness $MAX; notification;;
-  min) set_brightness $MIN; notification;;
-  p|perc|percent) percent $2; notification;;
+  max) set_brightness $MAX;;
+  min) set_brightness $MIN;;
+  p|perc|percent) percent $2;;
   *) echo "Please pass a command. Pass 'help' for help.";;
 esac

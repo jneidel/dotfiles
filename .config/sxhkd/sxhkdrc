@@ -91,6 +91,10 @@ XF86MonBrightnessUp
 XF86MonBrightnessDown
   ~/scripts/sxhkd/backlight p -10 >/dev/null
 
+shift + XF86MonBrightnessUp
+  ~/scripts/sxhkd/backlight p +01 >/dev/null
+shift + XF86MonBrightnessDown
+  ~/scripts/sxhkd/backlight p -01 >/dev/null
 
 ## screenshot
 super + p
