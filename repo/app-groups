@@ -9,6 +9,7 @@
 #   npm       - with npm
 #   pip       - with pip
 #   systemd   - systemctl enable
+#   systemdu  - systemctl --user enable
 #   PKGBUILD  - build from local PKGBUILD file
 #
 # Groups can be enabled by listing them in 'used-groups' file.
@@ -457,6 +458,7 @@ brave-bin Main Browser
 
 [mpd]
 mpd Music player daemon
+systemdu:mpd Enable mpd
 mpc mpd scripting client
 ncmpcpp-git mpd client
 
