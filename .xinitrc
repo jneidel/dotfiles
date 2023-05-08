@@ -16,7 +16,7 @@ xset r rate 185 100 &
 
 # bluelight filter
 # xflux -k 5000 -l 52 -g 13 &
-blugon &
+blugon --waitforx &
 
 # desktop monitor
 ~/scripts/conky/start-conky &
