@@ -1,12 +1,14 @@
 local hasmodule, telescope = pcall( require, "telescope" )
--- :Telescope find_files
--- :Telescope git_files
--- :Telescope buffers
 
 if hasmodule then
   local actions = require("telescope.actions")
   local config = require("telescope.config")
   local builtin = require('telescope.builtin')
+
+  if vim.fn.has( "macunix" ) then
+    vim.cmd( "set rtp+=/usr/local/opt/fzf" )
+    vim.cmd( "set rtp+=/usr/local/opt/rg" )
+  end
 
   telescope.setup {
     defaults = {
@@ -80,10 +82,12 @@ if hasmodule then
 
     vim.keymap.set("n", "<A-f>", custom_find_files, {});
   end
-
   vim.keymap.set("n", "<A-F>", builtin.buffers, {});
-  vim.keymap.set("n", "<A-r>", builtin.current_buffer_fuzzy_find, {}); -- content current file
-  vim.keymap.set("n", "<A-R>", builtin.live_grep, {}); -- content all files
+
+  vim.keymap.set("n", "<A-R>", builtin.current_buffer_fuzzy_find, {}); -- content current file
+  vim.keymap.set("n", "<A-r>", builtin.live_grep, {}); -- content all files
+
+  vim.keymap.set("n", "<A-B>", builtin.git_branches, {}); -- switch branch
 
   -- vim.keymap.set("n", "<A-g>", builtin.lsp_definitions, {}); -- go to defintion/coc alternative
   -- vim.keymap.set("n", "<A-g>", builtin.lsp_implementations, {}); -- go to defintion/coc alternative
