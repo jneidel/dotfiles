@@ -15,17 +15,25 @@ if hasmodule then
           icon_preset = "diamond",
           icons = {
             todo = {
-              uncertain = {
-                icon = "?"
+              done = {
+                icon = ""
+              },
+              pending = {
+                icon = "" -- ""
+              },
+              uncertain = { -- task_ambiguous
+                icon = ""
               },
               on_hold = {
-                icon = "="
+                icon = ""
+              },
+              cancelled = {
+                icon = ""
+              },
+              important = {
+                icon = "!"
               },
             }
-            --      markup_preset = "dimmed",
-            --      dim_code_blocks = {
-            --        enabled = false,
-            --      },
           }
         }
       }, -- Adds pretty icons to your documents
@@ -39,13 +47,13 @@ if hasmodule then
         }
       },
       ["core.dirman"] = { -- Manages Neorg workspaces
+        -- https://github.com/nvim-neorg/neorg/wiki/Dirman
         config = {
           workspaces = {
             org = "~/org",
           },
           default_workspace = "org",
-          -- autodetect = true,
-          -- autochdir = true,
+          -- recommended to set Neovim autochdir
         },
       },
       ["core.keybinds"] = {
@@ -62,6 +70,7 @@ if hasmodule then
             keybinds.remap_event("norg", "n", "gtc", "core.qol.todo_items.todo.task_cancelled")
             keybinds.remap_event("norg", "n", "gtr", "core.qol.todo_items.todo.task_recurring")
             keybinds.remap_event("norg", "n", "gti", "core.qol.todo_items.todo.task_important")
+            keybinds.remap_event("norg", "n", "gta", "core.qol.todo_items.todo.task_ambiguous")
             keybinds.remap_event("norg", "n", "<C-Space>", "core.qol.todo_items.todo.task_cycle")
             keybinds.remap_event("norg", "n", "<C-S-Space>", "core.qol.todo_items.todo.task_cycle_reverse")
 
