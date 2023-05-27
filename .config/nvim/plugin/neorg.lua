@@ -77,6 +77,9 @@ if hasmodule then
             -- new neorg file
             keybinds.remap_event("norg", "n", "NN", "core.dirman.new.note")
 
+            -- open toc
+            keybinds.map("norg", "n", "TT", "<cmd>Neorg toc qflist<CR>")
+
             -- >>/<< to promote/demote heading/todos
             -- https://github.com/nvim-neorg/neorg/wiki/Promo
 
@@ -95,7 +98,12 @@ if hasmodule then
           engine = "nvim-cmp",
         },
       },
-      --       ["core.qol.toc"] = {},
+      ["core.qol.toc"] = {
+        config = {
+          close_after_use = true
+        }
+      },
+      ["core.ui.calendar"] = {},
       -- ["core.export"] = {},
       --       ["core.export.markdown"] = {
       --           config = {
