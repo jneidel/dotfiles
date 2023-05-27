@@ -10,8 +10,6 @@ EOF
   exit
 fi
 
-# command -v <++> >/dev/null && run_<++>
-
 log() {
   local category=$1
   local text="$2"
@@ -34,7 +32,21 @@ command -v volta >/dev/null && run_volta
 
 run_yay() {
   log yay "System update"
-  yay --color=always
+  if command -v disable-mullvad-for >/dev/null; then
+    disable-mullvad-for yay --color=always --noconfirm
+  else
+    yay --color=always --noconfirm
+  fi
+
+  # reapply xorg settings after upgrading
+  setxkbmap -option caps:escape
+  xset r rate 185 100
+
+  yay -S --color=always --noconfirm exa-git
+  yay -S --color=always --noconfirm lf-git
+  yay -S --color=always --noconfirm ncmpcpp-git
+
+  yay -Qtdq | yay -Rsn --noconfirm -
 }
 command -v yay >/dev/null && run_yay
 
@@ -43,3 +55,9 @@ run_hosts() {
   update-hosts
 }
 command -v update-hosts >/dev/null && run_hosts
+
+run_lazy() {
+  cd /tmp
+  /bin/nvim --headless '+Lazy! sync' +qa
+}
+command -v /bin/nvim >/dev/null && run_lazy

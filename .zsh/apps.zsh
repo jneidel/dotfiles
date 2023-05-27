@@ -192,8 +192,8 @@ export PGPASSFILE="$HOME/.config/psql/pgpass"
 alias vnstatq="vnstat --query wlp3s0"
 
 ## webtorrent
-alias wt="webtorrent -o /tmp --mpv --quiet"
-alias wtc="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv --quiet " # wtc[lipboard]
+alias wt="webtorrent -o /tmp --mpv"
+alias wtc="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv" # wtc[lipboard]
 wts() {
   TORRENT="$1"
   SELECT="$2"
