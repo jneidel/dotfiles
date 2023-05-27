@@ -1,8 +1,8 @@
 lg https://libgen.is/search.php?&res=100&req=%s&phrase=1&view=simple&column=def&sort=language&sortmode=ASC
 lgf http://gen.lib.rus.ec/fiction/?q=%s
-tpb https://thepiratebays.vip/search.php?q=%s
-tpb2 https://unlockedtpb.org/search.php?q=%s
-tpb3 https://tpbworking.net/search.php?q=%s
+tpb https://mirrorbay.org/get-data-for/%s?cat=0
+tpb2 https://piratebay.pro/get-data-for/%s
+tpb3 https://tpb.clonehub.org/get-data-for/%s
 nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
 1337x https://1337x.to/search/%s/1/
 13 https://1337x.to/search/%s/1/
