@@ -78,7 +78,7 @@ conky Desktop widgets
 keepassxc Password database
 
 [kitty]
-kitty-git Terminal emulator
+kitty Terminal emulator
 
 [tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
@@ -539,6 +539,3 @@ ib-tws Stock trading application
 antidot-bin Cleanup the $HOME directory
 shell:antidot update
 xdg-ninja Show $HOME cleanup instructions
-
-[blugon]
-blugon Blue light filter

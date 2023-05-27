@@ -1,4 +1,0 @@
-[main]
-readcurrent = False
-interval = 900
-wait_for_x = True
