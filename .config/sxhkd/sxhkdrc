@@ -58,7 +58,7 @@ XF86AudioRaiseVolume
 super + ctrl + m
   kitty pulsemixer
 super + m
-  kitty ncpamixer -c ~/.config/ncpamixer/ncpamixer.conf
+  qpwgraph
 
 ## mpd
 ### playback control, 1st for macbook, 2nd for thinkpad

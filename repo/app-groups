@@ -329,6 +329,7 @@ pipewire-alsa Alsa compatibility
 pipewire-pulse Pulseaudio compatibility
 pipewire-jack Jack compatibility
 qpwgraph Patchbay
+pulsemixer Mixer
 
 [pulseaudio]
 alsa-utils Alsa utilities

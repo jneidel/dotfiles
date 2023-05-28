@@ -19,6 +19,9 @@ Example:
 fi
 
 case `cat /etc/hostname` in
+  jneidel-x270)
+    MAIN_RESOLUTION=1920x1080
+    ;;
   jneidel-x240)
     MAIN_RESOLUTION=1366x768
     ;;
@@ -30,20 +33,17 @@ case `cat /etc/hostname` in
     echo "Device is not configured in script, using xrandr output instead.";;
 esac
 
-# [ -z "$MAIN" ] && MAIN=`xrandr --listmonitors | pcregrep -o1 "\+\*(\w+\d*)"`
 [ -z "$MAIN" ] && MAIN=$(xrandr | grep primary | cut -d\  -f1)
 [ -z "$MAIN_RESOLUTION" ] && MAIN_RESOLUTION=$(xrandr | grep primary | cut -d\  -f4 | awk -F+ '{ print $1 }')
 
 # first connected monitor (apart from MAIN) it can find
 MONITOR=$(xrandr | grep " connected" | grep -v "$MAIN" | head -n1 | cut -d\  -f1)
 MONITOR_RESOLUTION=1920x1080
-# [ -z "$MONITOR_RESOLUTION" ] && MONITOR_RESOLUTION=$(xrandr | grep $MONITOR | cut -d\  -f3 | awk -F+ '{ print $1 }') # broken
 
 printf "Using:
   Main    : $MAIN - $MAIN_RESOLUTION
   External: $MONITOR - $MONITOR_RESOLUTION
 \n"
-
 
 IS_MIRROR=0
 while getopts "m" OPTION; do

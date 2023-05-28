@@ -19,6 +19,7 @@ rmdir ~/Desktop \
   ~/.newsboat 2>/dev/null
 rm -r ~/.w3m \
   ~/.m2 \
+  ~/Jts \
   ~/.mono \
   ~/.pki \
   ~/.gnome 2>/dev/null

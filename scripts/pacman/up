@@ -10,6 +10,16 @@ EOF
   exit
 fi
 
+reapply_X_settings() {
+  # reapply xorg settings after upgrading
+  setxkbmap -option caps:escape
+  xset r rate 185 100
+}
+cleanup() {
+  reapply_X_settings
+}
+trap cleanup EXIT
+
 log() {
   local category=$1
   local text="$2"
@@ -38,9 +48,7 @@ run_yay() {
     yay --color=always --noconfirm
   fi
 
-  # reapply xorg settings after upgrading
-  setxkbmap -option caps:escape
-  xset r rate 185 100
+  reapply_X_settings
 
   yay -S --color=always --noconfirm exa-git
   yay -S --color=always --noconfirm lf-git

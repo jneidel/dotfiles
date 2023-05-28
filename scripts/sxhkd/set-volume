@@ -28,8 +28,9 @@ get_active_sink() {
   if RUNNING_SINKS="$(pactl list sinks short | grep -F 'RUNNING' -m1)"; then
     echo $RUNNING_SINKS | tail -n1 | awk '{ print $1 }'
   else
-    case "$(hostname)" in
+    case "$(cat /etc/hostname)" in
       *x240) echo 1;;
+      *x270) echo 0;;
       *e495) echo 0;;
       *) echo 0;;
     esac
