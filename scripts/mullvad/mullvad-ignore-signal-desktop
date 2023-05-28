@@ -1,0 +1,18 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ mullvad-ignore-signal-desktop
+Update mullvads PID list to ignore signal-desktop
+EOF
+  exit
+fi
+
+command -v mullvad >/dev/null || { echo "mullvad is not installed" 1>&2; exit 127; }
+
+# empty list first
+mullvad split-tunnel pid clear
+
+for pid in $(pidof signal-desktop); do
+  mullvad split-tunnel pid add $pid
+done
