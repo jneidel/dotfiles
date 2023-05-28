@@ -8,7 +8,7 @@ fi
 
 command -v dmenu >/dev/null || { echo "dmenu is not installed"; exit 1; }
 
-case "$(printf "suspend\nreboot/restart\nshutdown/power off\nlock" | dmenu -lines 4 -p power -width 20)" in
+case "$(printf "suspend\nreboot/restart\nshutdown/power off\nlock" | rofi -dmenu -l 4 -theme-str 'window {width: 300px;}' -p power)" in
   "reboot/restart") reboot;;
   suspend) systemctl suspend;;
   "shutdown/power off") poweroff;;

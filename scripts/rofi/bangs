@@ -29,7 +29,7 @@ if [ "$1" = "list" ]; then
 fi
 
 prompt() {
-  rofi -dmenu -lines 0 -width 25 -p \!
+  rofi -dmenu -l 0 -theme-str 'window {width: 300px;}' -p \!
 }
 
 urlEncode() {

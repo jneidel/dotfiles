@@ -2,4 +2,4 @@
 # Wrapper for networkmanager_dmenu
 # From the package: networkmanager-dmenu-git
 
-networkmanager_dmenu -i # -lines does not work
+networkmanager_dmenu

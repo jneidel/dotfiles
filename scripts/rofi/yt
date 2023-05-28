@@ -13,7 +13,7 @@ Example:
 fi
 
 QUERY="$(echo $@)"
-[ -z "$1" ] && QUERY="$(rofi -dmenu -lines 0 -width 35 -p yt)"
+[ -z "$1" ] && QUERY="$(rofi -dmenu -l 0 -width 35 -p yt)"
 [ -z "$QUERY" ] && exit 1
 
 if [ -e "$YT_FILTER_FILE" ]; then

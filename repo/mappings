@@ -108,7 +108,7 @@ create .config/htop
 .config/nitrogen
 
 ### network
-[networkmanager-dmenu]
+[nm]
 .config/networkmanager-dmenu
 
 ### cleanup

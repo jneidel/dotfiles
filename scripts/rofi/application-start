@@ -3,4 +3,4 @@
 ## open windows, connect ssh, run applications
 ## config file: ~/.config/rofi/config
 
-rofi -modi run -show run -lines 3 -eh 2 -auto-select
+rofi -modi run -show run -eh 1 -auto-select -theme-str 'listview {lines: 5;}'
