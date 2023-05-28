@@ -25,14 +25,12 @@ command -v $BROWSER >/dev/null || { echo "$BROWSER was not found" 1>&2; exit 127
 LATEST=$(git tag | tail -n1)
 get_version() {
   case $1 in
-    patch) echo $latest | awk -F. '{ print $1"."$2"."$3+1 }';;
-    minor) echo $latest | awk -F. '{ print $1"."$2+1".0" }';;
-    major) echo $latest | awk -F. '{ print "v"$1+1".0.0" }';;
+    patch) echo $LATEST | awk -F. '{ print $1"."$2"."$3+1 }';;
+    minor) echo $LATEST | awk -F. '{ print $1"."$2+1".0" }';;
+    major) echo $LATEST | awk -F. '{ print "v"$1+1".0.0" }';;
   esac
 }
-
 VERSION=$(get_version $1)
-
 URL="https://github.com/jneidel/dotfiles/releases/new?tag=$VERSION&title=Recent%20changes%20to%20my%20dotfiles%20($VERSION)&body=%23%23%20nvim%0A%0A%0A%0A%23%23%20system%0A%0A%0A%0A"
 
 git log $LATEST..HEAD --oneline --no-decorate | {
