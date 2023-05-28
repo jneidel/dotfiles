@@ -66,7 +66,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 		image "$CACHE" "$2" "$3" "$4" "$5"
 		;;
 	*.cbz|*.cbr)
-    FILE="$(comicthumb "$1")"
+    FILE="$(~/.config/lf/scripts/comicthumb "$1")"
 		image "$FILE" "$2" "$3" "$4" "$5"
 		;;
 	*.avi|*.mp4|*.wmv|*.dat|*.3gp|*.ogv|*.mkv|*.mpg|*.mpeg|*.vob|*.fl[icv]|*.m2v|*.mov|*.webm|*.ts|*.mts|*.m4v|*.r[am]|*.qt|*.divx)

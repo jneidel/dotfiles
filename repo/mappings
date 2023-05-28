@@ -190,12 +190,7 @@ create .config/khal
 .config/rofi
 
 [lf]
-create .config/lf
-create .local/bin
-.config/lf/lfrc
-.config/lf/cleaner
-.config/lf/preview
-.config/lf/lfuberzug
+.config/lf
 
 [yay]
 create .config/yay

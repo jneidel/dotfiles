@@ -62,6 +62,20 @@ yay() {
 alias mv="/bin/mv -v"
 alias pubs="/bin/pubs -c ~/.config/pubs/pubsrc"
 alias ffmpeg="/bin/ffmpeg -hide_banner"
+lf() {
+  cleanup() {
+    exec 3>&-
+    rm "$FIFO_UEBERZUG"
+  }
+
+  [ ! -d "$HOME/.cache/lf" ] && mkdir -p "$HOME/.cache/lf"
+	export FIFO_UEBERZUG="$HOME/.cache/lf/ueberzug-$$"
+	mkfifo "$FIFO_UEBERZUG"
+	ueberzug layer -s <"$FIFO_UEBERZUG" -p json &
+	exec 3>"$FIFO_UEBERZUG"
+	trap cleanup EXIT
+	command /bin/lf "$@" 3>&-
+}
 
 ### shorter script names
 alias rc="rename-comic"
@@ -244,19 +258,3 @@ alias bbl="bb list"
 ## make
 alias m="make"
 alias mw="make watch"
-
-lfcd() {
-  # source: https://github.com/gokcehan/lf/wiki/Tutorial#working-directory
-  tmp="$(mktemp)"
-  $HOME/.config/lf/lfuberzug -last-dir-path="$tmp" "$@"
-  if [ -f "$tmp" ]; then
-    dir="$(cat "$tmp")"
-    rm -f "$tmp"
-    if [ -d "$dir" ]; then
-      if [ "$dir" != "$(pwd)" ]; then
-        cd "$dir"
-      fi
-    fi
-  fi
-}
-alias lf="lfcd"

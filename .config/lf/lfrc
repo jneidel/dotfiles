@@ -26,10 +26,10 @@ cmd openAndSwitch ${{
   tmux next-window
 }}
 cmd diropen ${{
-  ~/scripts/lf-handle-dir "$f"
+  ~/.config/lf/scripts/handle-dir "$f"
 }}
 cmd diropenShuffle ${{
-  ~/scripts/lf-handle-dir "$f" -s
+  ~/.config/lf/scripts/handle-dir "$f" -s
 }}
 
 cmd remove ${{
@@ -44,7 +44,7 @@ cmd massmove ${{
   qmv -f do -d $fx
 
   # if spaces in name, qmv spawns annoying empty dirs
-  findex . -type d 'rmdir "$1"'
+  findex . -type d 'rmdir "$1"' >/dev/null 2>/dev/null &
 }}
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
