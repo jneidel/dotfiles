@@ -1,23 +1,36 @@
 #! /bin/bash
 
+HOSTS=/etc/hosts
+HOSTS_DENY=/etc/hosts.deny
+OG_HOSTS=/home/jneidel/code/dotfiles/etc/hosts
+TMP_HOSTS=/tmp/hosts
+UPDATE_PERIOD_IN_DAYS=20
+
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ update-hosts
 Update /etc/hosts & /etc/hosts.deny files from:
 https://github.com/mitchellkrogza/Ultimate.Hosts.Blacklist
+
+Flags
+  -f to force update
 EOF
   exit
 fi
 
-HOSTS=/etc/hosts
-HOSTS_DENY=/etc/hosts.deny
-OG_HOSTS=/home/jneidel/code/dotfiles/etc/hosts
-TMP_HOSTS=/tmp/hosts
+if [ "$1" != "-f" ]; then
+  # check if hosts are recent
+  [[ "$(cat $HOSTS | head -n1 | cut -d# -f2)" < "$(date -d "$UPDATE_PERIOD_IN_DAYS days ago" +%s)" ]] || {
+    echo "The hosts were updated recently (less then $UPDATE_PERIOD_IN_DAYS days ago)"
+    exit 0
+  }
+fi
 
 echo "Setting $HOSTS"
 sudo rm $HOSTS $TMP_HOSTS 2>/dev/null
 cp $OG_HOSTS $TMP_HOSTS
 curl -L -# https://hosts.ubuntu101.co.za/hosts | sed "1,55d; /0.0.0.0 soundcloud.com/d; /0.0.0.0 imagecomics.com/d; /0.0.0.0 meetup.com/d; /0.0.0.0 musicbrainz.org/d; /0.0.0.0 xkcd.com/d; /0.0.0.0 www.namecheap.com/d; /0.0.0.0 1337x.to/d; /0.0.0.0 larrysanger.org/d; /0.0.0.0 www.theguardian.com/d; /0.0.0.0 www.heise.de/d; /0.0.0.0 heise.de/d; /0.0.0.0 turbobit.net/d; /0.0.0.0 azlyrics.com/d; /0.0.0.0 youtu.be/d; /0.0.0.0 fonts.gstatic.com/d; /0.0.0.0 redirector.googlevideo.com/d; /0.0.0.0 fonts.googleapis.com/d; /0.0.0.0 fonts.gstatic.com/d; /0.0.0.0 youtu.be/d; /0.0.0.0  ?www.youtube-nocookie.com/d; /0.0.0.0 storage.googleapis.com/d; /0.0.0.0 scholar.google.com/d;" >>$TMP_HOSTS
+sudo sed -i "1i#$(date +%s)" $TMP_HOSTS
 sudo mv $TMP_HOSTS $HOSTS
 
 echo "Setting $HOSTS_DENY"
