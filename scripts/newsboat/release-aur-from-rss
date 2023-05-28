@@ -1,0 +1,50 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ release-aur-from-rss
+Semiautomate the release of aur pkg via rss feeds
+
+Called from a keybinding within newsboat (see config)
+EOF
+  exit
+fi
+
+command -v tmux >/dev/null || { echo "tmux is not installed" 1>&2; exit 127; }
+
+send_error() {
+  MSG="$1"
+  ~/scripts/cron/cron-notify-send -u critical -t 5000 "$MSG" "newsboat-release"
+  exit 1
+}
+
+URL="$1"
+PKG=$(echo $URL | cut -d/ -f5)
+VERSION=$(echo $URL | cut -d/ -f8 | cut -dv -f2)
+
+transform_pkgname() {
+  case "$PKG" in
+    webpack) echo nodejs-webpack;;
+    yacreader) echo yacreader-bin;;
+    phpactor) echo phpactor;;
+    portal) echo portal-bin;;
+    dzr) echo dzr;;
+    ain) echo ain-bin;;
+    # <++>) echo <++>;;
+    *) send_error "Matched non existant pkg: $PKG";;
+  esac
+}
+
+if [ -z "$PKG" ] || [ -z "$VERSION" ]; then
+  send_error "Invalid url given"
+else
+  PKG_DIR="$HOME/code/aur/$(transform_pkgname)"
+
+  if [ ! -d "$PKG_DIR" ]; then
+    send_error "PKG_DIR does not exist locally for $PKG_DIR"
+  else
+    tmux -u new-window -t main -c "$PKG_DIR" -n "aur $PKG"
+    tmux send-keys "./release $VERSION" "enter"
+  fi
+fi
+

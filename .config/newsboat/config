@@ -95,11 +95,8 @@ color article           color252 color234
 macro y set browser "~/scripts/newsboat/queue-yt %u" ; open-in-browser ; set browser "$BROWSER %u"
 ## Download video using youtube-dl
 macro d set browser "~/scripts/newsboat/yt-dl '%u'" ; open-in-browser ; set browser "$BROWSER %u"
-## Open in terminal browser
 macro 3 set browser "~/scripts/newsboat/yt-mp3 '%u'" ; open-in-browser ; set browser "$BROWSER %u"
-## Open in terminal browser
 macro w set browser "~/scripts/newsboat/web-reader %u" ; open-in-browser ; set browser "$BROWSER %u"
-## Open in terminal browser
 macro m set browser "mpv --no-audio-display '%u'" ; open-in-browser ; set browser "$BROWSER %u"
-## Open in terminal browser
 macro p set browser "~/scripts/newsboat/newsboat-mpv-enqueued-podcast" ; open-in-browser ; set browser "$BROWSER %u"
+macro r set browser "~/scripts/newsboat/release-aur-from-rss" ; open-in-browser ; set browser "$BROWSER %u"
