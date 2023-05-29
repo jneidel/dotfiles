@@ -8,9 +8,11 @@ fi
 
 command -v dmenu >/dev/null || { echo "dmenu is not installed"; exit 1; }
 
-case "$(printf "suspend\nreboot/restart\nshutdown/power off\nlock" | rofi -dmenu -l 4 -theme-str 'window {width: 300px;}' -p power)" in
+case "$(printf "suspend\nreboot/restart\nshutdown/power off\nlock\nhibernate" | rofi -dmenu -l 5 -theme-str 'window {width: 300px;}' -p power)" in
   "reboot/restart") reboot;;
   suspend) systemctl suspend;;
+  hiberate) systemctl hiberate;; # needs 'resume' kernel param to be set via grub
+  # see: https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Required_kernel_parameters
   "shutdown/power off") poweroff;;
   lock) ~/scripts/i3/lock/lock && suspend;;
 esac
