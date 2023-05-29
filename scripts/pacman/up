@@ -44,12 +44,6 @@ run_yay() {
 }
 command -v yay >/dev/null && run_yay
 
-run_antidot() {
-  log antidot "Update antidot rules"
-  antidot update
-}
-command -v antidot >/dev/null && run_antidot
-
 run_volta() {
   log volta "Update volta apps"
   volta install node
