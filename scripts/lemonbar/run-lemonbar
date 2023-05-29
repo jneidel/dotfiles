@@ -35,7 +35,6 @@ journalctl -u mullvad-daemon -u NetworkManager --no-pager -f -o cat | grep -f "$
 
 ## fifo loop
 cat "${panel_fifo}" | "$DIR/parser.sh" \
-  | lemonbar -p -f "$font" -b -g "${geometry}" -B "${col_back}" -F "${col_back}" &
+  | lemonbar -p -f "$glyphs_font" -f "$text_font" -b -g "${geometry}" -B "${col_back}" -F "${col_back}" &
 
 wait
-

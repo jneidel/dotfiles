@@ -2,7 +2,8 @@
 # i3 panel config
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-font="FuraCode Nerd Font Mono-11.5"
+glyphs_font="FuraCode Nerd Font Mono-12.5" # use with %{T-}
+text_font="ComicCodeLigatures Nerd Font-10" # use with %{T2}
 
 case "$(cat /etc/hostname)" in
   "jneidel-x270")
@@ -16,7 +17,7 @@ case "$(cat /etc/hostname)" in
     echo "Unknown hostname; assuming width of $width"
     exit ;;
 esac
-geometry="${width}x19"
+geometry="${width}x18"
 
 # color definitions
 col_main="#005fd7" # blue

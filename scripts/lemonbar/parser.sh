@@ -11,29 +11,29 @@ while read -r line ; do
       sys_arr=(${line#???})
       # date
       datetime="${sys_arr[0]} ${sys_arr[1]} ${sys_arr[2]} ${sys_arr[3]}" # dotw, date, month, time
-      datetime="%{B${col_sec}}${sep_left} ${datetime} ${sep_right}"
+      datetime="%{B${col_sec}}${sep_left} %{T2}${datetime}%{T-} ${sep_right}"
       # cpu
       cpu="${sys_arr[4]} ${sys_arr[5]}" # cpu, load
-      cpu="%{B${col_main}}${sep_left}  ${cpu} ${sep_right}"
+      cpu="%{B${col_main}}${sep_left}  %{T2}${cpu}%{T-} ${sep_right}"
       # diskspace
       diskspace="${sys_arr[6]}"
-      diskspace="%{B${col_main}}${sep_left}  ${diskspace} ${sep_right}"
+      diskspace="%{B${col_main}}${sep_left}  %{T2}${diskspace}%{T-} ${sep_right}"
 
       if [ "${sys_arr[7]}" = "G" ]; then # mysterious G dirupts the order
         # battery
-        battery="${sys_arr[8]} ${sys_arr[9]}" # icon, percentage
+        battery="${sys_arr[8]} %{T2}${sys_arr[9]}%%{T-}" # icon, percentage
         battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
         # network monitor
         downspeed="${sys_arr[10]}${sys_arr[11]}" # speed, unit
-        downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"
+        downspeed="%{B${col_main}}${sep_left} ﲐ %{T2}${downspeed}%{T-} ${sep_right}"
       else
         # battery
-        battery="${sys_arr[7]} ${sys_arr[8]}" # icon, percentage
+        battery="${sys_arr[7]} %{T2}${sys_arr[8]}%%{T-}" # icon, percentage
         battery="%{B${col_main}}${sep_left} ${battery} ${sep_right}"
         # todo: change foreground to red if battery < 5%, same for load/cpu
         # network monitor
         downspeed="${sys_arr[9]}${sys_arr[10]}" # speed, unit
-        downspeed="%{B${col_main}}${sep_left} ﲐ ${downspeed} ${sep_right}"
+        downspeed="%{B${col_main}}${sep_left} ﲐ %{T2}${downspeed}%{T-} ${sep_right}"
       fi
       ;;
     NET*) # wifi/vpn
@@ -41,15 +41,15 @@ while read -r line ; do
       net_arr=(${line#???})
       if [ "${net_arr[0]}" -eq 1 ]; then
         if [ "${net_arr[1]}" -eq 1 ]; then
-          network="%{B${col_sec}}${sep_left} 直 on ${sep_right}"
+          network="%{B${col_sec}}${sep_left} 直 %{T2}on%{T-} ${sep_right}"
         else
-          network="%{B${col_active}}${sep_left} 直 no vpn ${sep_right}"
+          network="%{B${col_active}}${sep_left} 直 %{T2}no vpn%{T-} ${sep_right}"
         fi
       else
         if [ "${net_arr[0]}" -eq 2 ]; then
-          network="%{B${col_main}}${sep_left} 直 local wifi ${sep_right}"
+          network="%{B${col_main}}${sep_left} 直 %{T2}local wifi%{T-} ${sep_right}"
         else
-          network="%{B${col_main}}${sep_left} 直 no wifi ${sep_right}"
+          network="%{B${col_main}}${sep_left} 直 %{T2}no wifi%{T-} ${sep_right}"
         fi
       fi
       network="$network%{B$col_sec}"
@@ -60,10 +60,10 @@ while read -r line ; do
       while [ $# -gt 0 ]; do
         case $1 in
          FOC*)
-           wsp="${wsp}%{B${col_active}}${sep_left_rev} $(echo ${1#???} | cut -d: -f2) ${sep_right_rev}"
+           wsp="${wsp}%{B${col_active}}${sep_left_rev} %{T2}$(echo ${1#???} | cut -d: -f2)%{T-} ${sep_right_rev}"
            ;;
          INA*|URG*|ACT*)
-           wsp="${wsp}%{B${col_main}}${sep_left_rev} $(echo ${1#???} | cut -d: -f2) ${sep_right_rev}"
+           wsp="${wsp}%{B${col_main}}${sep_left_rev} %{T2}$(echo ${1#???} | cut -d: -f2)%{T-} ${sep_right_rev}"
            ;;
         esac
         shift

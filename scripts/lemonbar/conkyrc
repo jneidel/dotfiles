@@ -9,6 +9,8 @@ conky.config = {
   background = false,
   override_utf8_locale = true,
   format_human_readable = true,
+  font = 'FuraCode Nerd Font Mono:size=8',
+  font2 = 'ComicCodeLigatures Nerd Font:size=9',
 }
 
 conky.text = [[
