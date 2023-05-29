@@ -44,15 +44,12 @@ export LESS="-R"
 export BROWSER=brave
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
-export JAVA=$(readlink -f /bin/java)
 export NODE_PATH=/usr/lib/node_module
 # for eslint, see: https://github.com/eslint/eslint/issues/11914#issuecomment-525498682
 export LUA_SERVER_PATH="$HOME/.local/share/nvim/lua-language-server"
 
 ### Themes
 export GTK_THEME=Arc
-export QT_STYLE_OVERRIDE=kvantum-dark
 export BAT_THEME=ansi
 
 #### less coloring (man pages), see colored-man script

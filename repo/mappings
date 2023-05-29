@@ -161,8 +161,6 @@ run /home/jneidel/.config/transmission-daemon/get-rpc-password.sh
 run /home/jneidel/.config/transmission-daemon/set-rpc-password.sh
 
 [themes]
-create .config/Kvantum
-.config/Kvantum/kvantum.kvconfig
 .local/share/icons
 create .config/gtk-2.0
 create .config/gtk-3.0

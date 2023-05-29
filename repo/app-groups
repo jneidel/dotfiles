@@ -280,7 +280,6 @@ gdb
 [themes]
 arc-gtk-theme GTK theme
 arc-icon-theme Icons
-kvantum-qt5 QT themes
 
 ## fonts
 [fonts]
