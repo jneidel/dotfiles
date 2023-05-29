@@ -26,7 +26,7 @@ add_logo_user() {
   convert $1 $LOGO -gravity center -geometry +0-10 -composite $1
 
   # add user@hostname above the logo
-  convert $1 -font Roboto-Mono-for-Powerline -fill grey -pointsize 16 -gravity center -draw "text 0,-110 '$USER@$(hostname)'" $1
+  convert $1 -font Comic-Code-Ligatures-Bold-Nerd-Font-Complete -fill grey -pointsize 16 -gravity center -draw "text 0,-110 '$USER@$(cat /etc/hostname)'" $1
   ## list of fonts: identify -list font
 }
 
@@ -53,5 +53,10 @@ else
   process_image $IMG
 fi
 
-i3lock -i $IMG --ignore-empty-password --24
-# uses fork: https://github.com/Lixxia/i3lock
+# colors of the circle
+NORMAL_COLOR="#ffd700"
+SUCCESS_COLOR="#00ff5f"
+FAILURE_COLOR="#d70000"
+
+i3lock -i $IMG --ignore-empty-password --24 -o "$SUCCESS_COLOR" -w "$FAILURE_COLOR" -l "$NORMAL_COLOR"
+# use fork: https://github.com/Lixxia/i3lock

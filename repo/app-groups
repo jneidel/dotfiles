@@ -20,7 +20,6 @@
 
 # To list user-installed apps:
 #   comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
-# TODO: i3lock
 
 [dunst]
 dunst Notification daemon
@@ -250,7 +249,7 @@ arandr Control display outputs (GUI)
 
 [x-lock]
 xautolock X display lock system
-# i3lock screen locker
+i3lock-lixxia-git Screen locker
 
 [xflux]
 xflux Flux bluelight filter for X
