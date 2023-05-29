@@ -32,7 +32,7 @@ if [ "$1" = "-f" ] || [ "$2" = "-f" ] || [ "$1" = "-3" ] || [ "$2" = "-3" ]; the
   WTTR_FLAGS="${WTTR_FLAGS:0:-1}" # remove 1 from WTTR_FLAGS
 fi
 
-WEATHER=$(curl -s "wttr.in/$CITY?${WTTR_FLAGS}")
+WEATHER=$(waitforinternet && curl -s "wttr.in/$CITY?${WTTR_FLAGS}")
 EXIT=$?
 
 # remove wind speed, by dynamically replacing the length of the matched str with spaces (minus color codes)

@@ -67,9 +67,10 @@ conky Desktop widgets
 wget Download util
 curl Download util
 shellcheck Script debugging
-octave Math language
-reflector Update arch mirrorlist
-sshpass Automatic password login for ftp
+octave Math language (unhrd)
+reflector Update arch mirrorlist (update-mirrorlist)
+sshpass Automatic password login for ftp (ftpp)
+gnu-netcat Net utils (waitforinternet)
 
 [conky]
 conky Desktop widgets

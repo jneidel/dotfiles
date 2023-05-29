@@ -24,5 +24,5 @@ fetch() {
     sed "s|}|},|" | head -n-1 >>$FILE
   echo "}]" >>$FILE
 }
-fetch
+waitforinternet && fetch
 cat $FILE | jq

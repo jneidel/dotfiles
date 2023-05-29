@@ -8,7 +8,7 @@ EOF
   exit
 fi
 
-command -v nc >/dev/null || { echo "nc is not installed" 1>&2; exit 127; }
+command -v nc >/dev/null || { echo "gnu-netcat (nc) is not installed" 1>&2; exit 127; }
 
 check() {
   nc -zw1 duck.com 443 2>/dev/null
