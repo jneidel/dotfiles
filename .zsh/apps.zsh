@@ -110,7 +110,10 @@ gh() {
 alias wcurl="curl -OJ" # better wget
 alias bud="libreoffice ~/ct/reference/budget.ods &"
 alias mr="disable-mullvad-for node ~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
-alias ms="mullvad status"
+ms() {
+  is-mullvad && printf "\033[1;32mlockdown-mode is on\033[0m\n" || printf "\033[1;31mlockdown-mode set off\033[0m\n"
+  mullvad status
+}
 
 ### newsboat
 wait_for_newsboat() {

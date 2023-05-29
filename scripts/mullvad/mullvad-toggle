@@ -8,14 +8,14 @@ fi
 
 if [ "$(mullvad lockdown-mode get)" = "Network traffic will be allowed when the VPN is disconnected" ]; then
   mullvad lockdown-mode set on > /dev/null
-  printf "lockdown-mode set \033[1;32mon\n"
+  printf "\033[1;32mlockdown-mode set on\n"
   mullvad connect
   echo "mullvad connect"
 else
   transmission.sh > /dev/null && transmission-kill
 
   mullvad lockdown-mode set off > /dev/null
-  printf "lockdown-mode set \033[1;31moff\n"
+  printf "\033[1;31mlockdown-mode set off\n"
   mullvad disconnect
   echo "mullvad disconnect"
 fi

@@ -11,6 +11,7 @@
 #   systemd   - systemctl enable
 #   systemdu  - systemctl --user enable
 #   PKGBUILD  - build from local PKGBUILD file
+#   shell     - run a shell command
 #
 # Groups can be enabled by listing them in 'used-groups' file.
 #
@@ -216,6 +217,10 @@ megacmd-bin MEGA.nz client
 [mullvad]
 mullvad-vpn-bin Mullvad client
 systemd:mullvad-daemon Enable the mullvad daemon
+shell:mullvad auto-connect set on
+shell:mullvad relay set location de
+shell:mullvad relay set tunnel-protocol wireguard
+shell:mullvad lan set allow
 
 # system
 ## xorg tools
