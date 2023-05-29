@@ -9,6 +9,8 @@ IN_USE="$DIR/used-groups"
 IN_USE_TMP=/tmp/used-apps
 sed -r "s/^(.*)$/^\1$/" $IN_USE >$IN_USE_TMP
 
+export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
+
 [ ! -z $DRY ] && echo DRYRUN
 
 BASE=$DIR/..
