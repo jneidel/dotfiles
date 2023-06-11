@@ -30,7 +30,7 @@ if hasmodule then
               cancelled = {
                 icon = ""
               },
-              important = {
+              urgent = { -- task_important
                 icon = "!"
               },
             }

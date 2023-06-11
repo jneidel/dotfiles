@@ -18,37 +18,6 @@ if hasmodule then
           ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
         },
       },
-      file_ignore_patterns = {
-        "node_modules/",
-        "vendor/",
-        ".git/",
-        ".mp3",
-        ".pdf",
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".mkv",
-        ".mp4",
-        ".zip",
-        ".ods",
-        ".m3u",
-        "git/",
-        ".cache",
-        'teams-for-linux/',
-        '.local/lib',
-        '.local/share/*/',
-        'BraveSoftware/',
-        'chromium',
-        'chrome/',
-        'firefox/',
-        '.vim/sessions',
-        '.vim/tmp',
-        '.vim/backup',
-        'Signal',
-        'tmp/',
-        'ct/manga',
-        'ct/comics',
-      },
     },
     extensions = {
       fzf = {
@@ -64,7 +33,7 @@ if hasmodule then
   -- general file finder
   if vim.fn.getcwd() == os.getenv("HOME") then
     -- fzf as alternative for the home directoy, as telescope is very slow there
-    vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,jpeg,pdf,mkv,mp4,zip,ods,m3u}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!.vim/sessions' --glob '!.vim/tmp' --glob '!.vim/backup' --glob '!Signal' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics'\"" )
+    vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,jpeg,pdf,mkv,mp4,zip,ods,m3u}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!.vim/sessions' --glob '!.vim/tmp' --glob '!.vim/backup' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.hwid' --glob '!.zcompcache' --glob '!.pki/' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics'\"" )
     vim.cmd( "command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, {'options': []}, <bang>0)" )
 
     vim.keymap.set("n", "<A-f>", ":Files<CR>", {});

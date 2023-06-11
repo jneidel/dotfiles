@@ -15,9 +15,16 @@ require("lazy").setup( {
   -- basics
   {
     "alexghergh/nvim-tmux-navigation",
-    lazy = true
   },
-  "chrisbra/improvedft", -- better f and t
+  {
+    "chrisbra/improvedft", -- better f and t
+    keys = {
+      { "f", mode = "n" },
+      { "t", mode = "n" },
+      { "F", mode = "n" },
+      { "T", mode = "n" },
+    }
+  },
 
   -- status bar theme
   "itchyny/lightline.vim",
@@ -86,24 +93,38 @@ require("lazy").setup( {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = 'make'
       },
-      "nvim-lua/plenary.nvim"
+      "nvim-lua/plenary.nvim",
+
     },
-    lazy = true,
-    cmd = "Telescope"
+    cmd = "Telescope",
+    keys = {
+      { "<A-f>", mode = "n" },
+      { "<A-F>", mode = "n" },
+      { "<A-R>", mode = "n" },
+      { "<A-r>", mode = "n" },
+      { "<A-B>", mode = "n" },
+    },
+    config = function()
+      require("plugin.telescope")
+    end
   },
   {
     'junegunn/fzf.vim',
     dependencies = {
       'junegunn/fzf',
     },
+    -- not possible to lazy load
   },
-
   -- other
   "windwp/nvim-autopairs", -- create closing pairs
-  "numToStr/Comment.nvim", -- comments
+  {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end
+  },
   {
     "andrewferrier/debugprint.nvim", -- create uniform & unique print statements
-    lazy = true,
     config = function()
       require("debugprint").setup({ create_keymaps = false })
     end
@@ -112,8 +133,11 @@ require("lazy").setup( {
     "nvim-neorg/neorg", -- org mode
     build = ":Neorg sync-parsers",
     dependencies = "nvim-lua/plenary.nvim",
-    event = "BufEnter *.norg",
+    ft = "norg",
     cmd = "Neorg",
+    config = function()
+      require("plugin.neorg")
+    end
   },
 } )
 
