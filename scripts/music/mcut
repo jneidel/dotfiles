@@ -49,7 +49,7 @@ fi
 if [ "$REPLACE" -gt 0 ]; then
   mp3cut -o "$OUT" -t "00:$START+000-00:$END+000" "$IN"
   echo "=== Replacing original with cut version ==="
-  copy_id3.py "$IN" "$OUT"
+  ~/scripts/music/copy_id3.py "$IN" "$OUT"
   mv "$OUT" "$IN"
   chmod -x "$IN"
 else

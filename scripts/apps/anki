@@ -10,4 +10,5 @@ fi
 
 command -v /bin/anki >/dev/null || { echo "/bin/anki is not installed"; exit 1; }
 
-QT_STYLE_OVERRIDE=Fusion /bin/anki # -style Fusion 2>/dev/null
+QT_STYLE_OVERRIDE=Fusion # -style Fusion 2>/dev/null
+/bin/anki >/dev/null 2>&1

@@ -59,7 +59,9 @@ run_hosts() {
 command -v update-hosts >/dev/null && run_hosts
 
 run_lazy() {
+  log hosts "Updating nvim plugins"
   cd /tmp
   /bin/nvim --headless '+Lazy! sync' +qa
+  /bin/nvim --headless '+TSUpdate' +qa
 }
 command -v /bin/nvim >/dev/null && run_lazy

@@ -49,7 +49,7 @@ if ! git checkout $branch_name 2>$TMP && /bin/cat $TMP | grep -F "did not match 
       fi
     else
       echo "Found match!"
-      git checkout `<$TMP`
+      git checkout `cat $TMP`
     fi
   else
     echo "No match for: $search_phrase"
