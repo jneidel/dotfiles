@@ -37,6 +37,11 @@ function get-files {
     REPO="$BASE/$IN"
     LOCAL="$HOME/$IN"
 
+    isRootFile "$IN" && {
+      REPO="$BASE/$(echo $IN | cut -c2-)"
+      LOCAL="$IN"
+    }
+
     # directories
     [ -d "$LOCAL" ] && {
       copy-dir $LOCAL $REPO

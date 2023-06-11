@@ -42,8 +42,13 @@ function install-files {
     # category not in use
     [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
 
-    LOCAL="$HOME/$IN"
     REPO="$BASE/$IN"
+    LOCAL="$HOME/$IN"
+
+    isRootFile "$IN" && {
+      REPO="$BASE/$(echo $IN | cut -c2-)"
+      LOCAL="$IN"
+    }
 
     # directories
     [ -d "$REPO" ] && {
@@ -62,7 +67,11 @@ function install-files {
     REST=$(echo "$IN" | cut -d" " -f2-)
     case $CMD in
       create)
-        create-dir "$HOME/$REST";;
+        if isRootFile "$REST"; then
+          create-dir "$REST"
+        else
+          create-dir "$HOME/$REST"
+        fi;;
       clean)
         copy-dir "$BASE/$REST" "$HOME/$REST";; # don't clean local
       run)

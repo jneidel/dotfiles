@@ -11,7 +11,6 @@
 # See: 'app-groups' for managing apps
 
 # TODO: handle git clone
-# TODO: handle /etc
 
 ## necessities
 [zsh]
@@ -107,10 +106,6 @@ create .config/htop
 [nitrogen]
 .config/nitrogen
 
-### network
-[nm]
-.config/networkmanager-dmenu
-
 ### cleanup
 [bleachbit]
 .config/bleachbit.ini
@@ -193,6 +188,7 @@ create .config/khal
 [yay]
 create .config/yay
 .config/yay/config.json
+/etc/pacman.conf
 
 [wget]
 .config/wgetrc
@@ -229,3 +225,8 @@ create .config/wireplumber/main.lua.d
 
 [fcron]
 # run ... command to import/export fcrontab -l 2>/dev/null
+
+[nm]
+.config/networkmanager-dmenu
+create /etc/NetworkManager/conf.d
+/etc/NetworkManager/conf.d/wifi_backend.conf

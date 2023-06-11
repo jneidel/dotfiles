@@ -28,7 +28,9 @@ arc-icon-theme Icon theme
 [nm]
 networkmanager NetworkManger
 systemd:NetworkManager
+iwd:NetworkManager backend
 networkmanager-dmenu-git Control NetworkManager through rofi
+shell:rfkill unblock wlan
 
 [dash]
 dash Fast shell
@@ -296,6 +298,7 @@ ttf-dejavu Default
 bluez Bluetooth
 bluez-utils bluetoothctl utility
 systemd:bluetooth
+shell:rfkill unblock bluetooth
 
 ## power management
 # See: https://wiki.archlinux.org/index.php/TLP
