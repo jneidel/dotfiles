@@ -11,17 +11,23 @@ rm ~/.python_history \
   ~/.sqlite_history \
   ~/.bash_history \
   ~/1 \
+  ~/.hwid \
   ~/.octave_hist \
   ~/.Xauthority 2>/dev/null
 
 # dirs
 rmdir ~/Desktop \
+  ~/.lyrics \
   ~/.newsboat 2>/dev/null
 rm -r ~/.w3m \
   ~/.m2 \
   ~/Jts \
   ~/.mono \
   ~/.pki \
+  ~/.mongodb \
+  ~/.java \
+  ~/.icons \
+  ~/.standard-v14-cache \
   ~/.gnome 2>/dev/null
 
 ~/scripts/cron/cron-notify-send "Cleaned up fs"

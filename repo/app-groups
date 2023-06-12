@@ -193,7 +193,7 @@ entr Run command if something changes
 exa-git Better ls
 bat Better cat
 renameutils qmv mass rename util
-shell:mkdir -p $XDG_STATE_HOME/zsh
+shell:mkdir -p $XDG_STATE_HOME/zsh $XDG_CACHE_HOME/zsh
 
 [vim]
 vim The text editor

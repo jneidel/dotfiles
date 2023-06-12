@@ -15,3 +15,6 @@ install:
 
 init:
 	git config core.hooksPath .githooks
+
+release:
+	$(DIR)/release $(filter-out $@,$(MAKECMDGOALS))
