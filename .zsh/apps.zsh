@@ -26,7 +26,7 @@ alias comic="getcomics-dl"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
-local ytdl_location=$HOME/Downloads/fs/media
+local ytdl_location=$HOME/media
 alias ytdl="yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height=720]' -o '$ytdl_location/%(title)s.%(ext)s'"
 alias ytmp3="yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ytdl_location/%(title)s.%(ext)s' --embed-thumbnail"
 alias ytraw="yt-dlp -c --retries 4 -o '$ytdl_location/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working

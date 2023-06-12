@@ -23,7 +23,7 @@ classify_file() {
   basename="$1"
 
   case $(basename "$basename") in
-    tabs)
+    tabs|links)
       echo browser-tabs
       exit 0;;
     tmux.yml)

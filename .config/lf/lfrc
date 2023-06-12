@@ -48,13 +48,14 @@ cmd massmove ${{
 }}
 
 cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
-
 cmd touch %printf "File Name: "; read ans; touch "$ans"
-
 cmd touchTex ${{
   printf "Tex Name: "
   read ans
   vtex "$ans"
+}}
+cmd gen-note ${{
+  ~/.config/lf/scripts/gen-note
 }}
 
 cmd broot_jump ${{
@@ -110,6 +111,7 @@ map d
 map e
 map r
 map p
+map N # jump to prev result
 
 ### own bindings
 map e edit
@@ -127,32 +129,33 @@ map L openAndSwitch
 map . set hidden!
 map t touch
 map T touchTex
+map NN gen-note
 map R reload
 map I gimp # [I]mage
 map v vl
 map - split
 
 ### jump - cd to dirs
-map gd cd ~/Downloads
-map gp cd ~/projects
-map gu cd ~/projects/uni
-map gG cd ~/projects/geldhochschule
-map gt cd ~/projects/geldhochschule/1_Trades
+map gd cd ~/design
+map gp cd ~/project
+map gm cd ~/media
+map gD cd ~/Downloads
+# map gu cd ~/projects/uni
+# map gG cd ~/projects/geldhochschule
+# map gt cd ~/projects/geldhochschule/1_Trades
+map gc cd ~/code
 map gc cd ~/ct
 map gC cd ~/ct/podcasts
 map gP cd ~/ct/pictures
-map gm cd ~/ct/movies
+# map gm cd ~/ct/movies
 map gM cd ~/ct/music
 map gb cd ~/ct/books
 map gB cd ~/code/notes/books
-map gz cd ~/ct/zeit
-map gv cd ~/ct/review
 map gn cd ~/code/notes
 map gr cd ~/code/notes/research
-map gs cd ~/projects/spanish
-map gl cd ~/projects/latin
-map ge cd ~/projects/morning_routine/meditation
-map ga cd ~/code/ba
+# map gs cd ~/projects/spanish
+# map gl cd ~/projects/latin
+# map ge cd ~/projects/morning_routine/meditation
 
 map o jump-prev
 map i jump-next

@@ -1,0 +1,32 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ gen-note
+Generate a new 'notes' file based on this naming pattern:
+
+notes-000.md -> increment the number for a new file
+
+Example:
+  $ gen-note # no existing note file
+  # -> notes-001.md
+  $ gen-note # notes-045.md exists
+  # -> notes-046.md
+EOF
+  exit
+fi
+
+command -v awk >/dev/null || { echo "awk is not installed" 1>&2; exit 127; }
+command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR is not set" 1>&2; exit 127; }
+
+get_new_note_name() {
+  {
+    ls notes-???.md 2>/dev/null || echo notes-000.md
+  } | tail -n1 | cut -d- -f2 | cut -d. -f1 |
+    awk '{ print $1"+"1 }' | bc | xargs printf "00%d\n" | rev | cut -c1-3 | rev |
+    awk '{ print "notes-"$1".md" }'
+}
+
+NEW_NOTE=$(get_new_note_name)
+echo "Generating $NEW_NOTE in $(pwd)"
+$EDITOR $NEW_NOTE
