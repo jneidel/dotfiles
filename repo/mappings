@@ -208,6 +208,9 @@ create .config/cnsm
 
 [xmrig]
 .config/xmrig.json
+[xmr]
+create .config/monero-project
+.config/monero-project/monero-core.conf
 
 [sxiv]
 create .config/X11

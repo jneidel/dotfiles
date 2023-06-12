@@ -1,0 +1,4 @@
+#! /bin/sh
+
+# nice monerod --prune-blockchain --sync-pruned-blocks --max-concurrency 4 >/dev/null 2>&1 &
+nice /bin/monero-wallet-gui >/dev/null 2>&1 &
