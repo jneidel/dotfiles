@@ -66,8 +66,7 @@ sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 #sudo chown jneidel /sys/class/leds/smc::kbd_backlight/brightness
 #sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
 
-# disable systemd broadcast till v252 ships
-# sudo busctl set-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager EnableWallMessages b false
+waitforinternet && mullvad connect &
 
 ## autostart gui applications
 nice -n -7 kitty ~/scripts/tmux/tp main &
