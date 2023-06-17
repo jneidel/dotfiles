@@ -1,0 +1,49 @@
+#! /bin/bash
+
+# if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ startup APP
+Measure the startup time of a given (pre-defined) APP
+
+Parameters:
+  \$1: on of the supported app: zsh
+EOF
+  exit
+fi
+
+command -v bc >/dev/null || { echo "bc is not installed" 1>&2; exit 127; }
+command -v zsh >/dev/null || { echo "zsh is not installed" 1>&2; exit 127; }
+# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+measure() {
+  local cmd="$1"
+  TIMEFORMAT=%R
+  time ( $cmd ) 2>&1 1>/dev/null
+}
+
+aggregate_multiple_measurements() {
+  local n=10
+  local cmd="$1"
+  local calc="("
+
+  for i in $(seq 1 $n); do
+    calc="${calc}$(measure "$cmd")"
+
+    if [ "$i" -lt "$n" ]; then
+      calc="${calc} + "
+    fi
+  done
+
+  calc="${calc})/$n"
+  echo $calc | bc -l | sed -Ee 's/0+$//' | awk '{ print $1" ms" }'
+}
+
+measure_zsh() {
+  aggregate_multiple_measurements "zsh -i -c exit"
+}
+
+case $1 in
+  zsh) measure_zsh;;
+  *) echo "404: Not found";
+esac
