@@ -11,34 +11,55 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local plugin = {
+  comment = require("plugin.comment"),
+  telescope = require("plugin.telescope"),
+  neorg = require("plugin.neorg"),
+  autopairs = require("plugin.autopairs"),
+  debugprint = require("plugin.debugprint"),
+  fern = require("plugin.fern"),
+  lightline = require("plugin.lightline"),
+  coc = require("plugin.coc"),
+  cmp = require("plugin.cmp"),
+  lspconfig = require("plugin.lspconfig"),
+  treesitter = require("plugin.treesitter"),
+  markdown = require("plugin.markdown"),
+  tmuxNavigation = require("plugin.tmux-navigation"),
+  improvedft = require("plugin.improvedft"),
+  -- <++> = require("plugin.<++>"),
+}
+
 require("lazy").setup( {
-  -- basics
+  -- ## basics
   {
     "alexghergh/nvim-tmux-navigation",
+    keys = plugin.tmuxNavigation.keys,
+    config = plugin.tmuxNavigation.config,
   },
+  { -- better f and t
+    "chrisbra/improvedft",
+    keys = plugin.improvedft.keys,
+  },
+  { -- status bar theme
+    "itchyny/lightline.vim",
+    config = plugin.lightline.config,
+  },
+
+  -- ## lsp
   {
-    "chrisbra/improvedft", -- better f and t
-    keys = {
-      { "f", mode = "n" },
-      { "t", mode = "n" },
-      { "F", mode = "n" },
-      { "T", mode = "n" },
-    }
+    "neovim/nvim-lspconfig",
+    config = plugin.lspconfig.config,
   },
-
-  -- status bar theme
-  "itchyny/lightline.vim",
-
-  -- lsp
-  "neovim/nvim-lspconfig", -- lsp
   -- "glepnir/lspsaga.nvim", -- nicer lsp UI
   {
     "neoclide/coc.nvim",
-    branch="release"
+    branch = "release",
+    config = plugin.coc.config,
   },
 
-  -- autocomplete
-  { "hrsh7th/nvim-cmp", -- completion engine
+  -- ## autocomplete
+  { -- completion engine
+    "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp", -- sources
       "hrsh7th/cmp-buffer",
@@ -46,33 +67,27 @@ require("lazy").setup( {
       "f3fora/cmp-spell",
       "L3MON4D3/LuaSnip", -- snippet engine
       "saadparwaiz1/cmp_luasnip"
-    }
+    },
+    config = plugin.cmp.config,
   },
 
-  -- syntax highlighting
-  "nvim-treesitter/nvim-treesitter", -- dynamic syntax highlighting independant of lang
+  -- ## syntax highlighting
+  { -- dynamic syntax highlighting independant of lang
+    "nvim-treesitter/nvim-treesitter",
+  },
 
-  -- language specific
+  -- ## language specific
   {
     "preservim/vim-markdown",
     ft = "markdown",
+    config = plugin.markdown.config,
   },
-  {
-    "brenoprata10/nvim-highlight-colors", -- visualize hex color codes
-    ft = { "css", "scss", "sass", "html", },
-    config = function()
-      vim.opt.termguicolors = true -- is required for color highlighting, but breaks italics
-      -- TODO: find a way to turn this off outside of these ft
-
-      require("nvim-highlight-colors").setup({
-        render = 'background',
-        enable_named_colors = true,
-      })
-    end
+  { -- treesitters highlighting breaks at '
+    "digitaltoad/vim-pug",
+    ft = "pug",
   },
 
-  -- file explorer
-  "lambdalisue/fern-hijack.vim",
+  -- ## file explorer
   {
     "lambdalisue/fern.vim",
     dependencies = {
@@ -82,9 +97,12 @@ require("lazy").setup( {
       "yuki-yano/fern-preview.vim" -- preview
     },
     cmd = "Fern",
+    keys = plugin.fern.keys,
+    config = plugin.fern.config,
   },
+  -- "lambdalisue/fern-hijack.vim",
 
-  -- file finder
+  -- ## file finder
   {
     "nvim-telescope/telescope.nvim",
     branch = '0.1.x',
@@ -97,16 +115,8 @@ require("lazy").setup( {
 
     },
     cmd = "Telescope",
-    keys = {
-      { "<A-f>", mode = "n" },
-      { "<A-F>", mode = "n" },
-      { "<A-R>", mode = "n" },
-      { "<A-r>", mode = "n" },
-      { "<A-B>", mode = "n" },
-    },
-    config = function()
-      require("plugin.telescope")
-    end
+    config = plugin.telescope.config,
+    keys = plugin.telescope.keys,
   },
   {
     'junegunn/fzf.vim',
@@ -115,19 +125,21 @@ require("lazy").setup( {
     },
     -- not possible to lazy load
   },
-  -- other
-  "windwp/nvim-autopairs", -- create closing pairs
-  {
-    "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end
+
+  -- ## other
+  { -- create closing pairs
+    "windwp/nvim-autopairs",
+    config = plugin.autopairs.config,
   },
   {
-    "andrewferrier/debugprint.nvim", -- create uniform & unique print statements
-    config = function()
-      require("debugprint").setup({ create_keymaps = false })
-    end
+    "numToStr/Comment.nvim",
+    keys = plugin.comment.keys,
+    config = plugin.comment.config,
+  },
+  { -- create uniform & unique print statements
+    "andrewferrier/debugprint.nvim",
+    keys = plugin.debugprint.keys,
+    config = plugin.debugprint.config,
   },
   {
     "nvim-neorg/neorg", -- org mode
@@ -135,9 +147,7 @@ require("lazy").setup( {
     dependencies = "nvim-lua/plenary.nvim",
     ft = "norg",
     cmd = "Neorg",
-    config = function()
-      require("plugin.neorg")
-    end
+    config = plugin.neorg.config,
   },
 } )
 

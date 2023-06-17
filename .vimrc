@@ -56,6 +56,9 @@ set modelines=0
 " a hidden buffer is one with unsaved changed not currently open
 set hidden
 
+" disable annoying ENTER to continue on opening a new file
+set shortmess+=F
+
 " defines <leader> key
 let mapleader = "#"
 

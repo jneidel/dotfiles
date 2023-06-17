@@ -20,7 +20,7 @@
 [vim]
 .vimrc
 create .vim
-.vim/config
+clean .vim/config
 .vim/autoload
 .vim/colors
 .vim/spell
@@ -30,7 +30,7 @@ create .vim/tmp
 create .vim/bundle
 create .vim/view
 .vim/coc-settings.json
-.config/nvim
+clean .config/nvim
 
 [tmux]
 create .config/tmux

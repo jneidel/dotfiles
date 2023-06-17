@@ -10,5 +10,6 @@
   },
   "phpstan.download.checkOnStartup": false,
   "php-cs-fixer.downloadCheckOnStartup": false,
-  "phpactor.enable": true
+  "phpactor.enable": true,
+  "Lua.diagnostics.globals": ["vim"]
 }
