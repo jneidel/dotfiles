@@ -7,7 +7,7 @@ Removes irrelevant files/dirs polluting the home directory
 fi
 
 # files
-rm ~/.python_history \
+rm -f ~/.python_history \
   ~/.sqlite_history \
   ~/.bash_history \
   ~/1 \
@@ -19,7 +19,7 @@ rm ~/.python_history \
 rmdir ~/Desktop \
   ~/.lyrics \
   ~/.newsboat 2>/dev/null
-rm -r ~/.w3m \
+rm -rf ~/.w3m \
   ~/.m2 \
   ~/Jts \
   ~/.mono \
@@ -27,6 +27,8 @@ rm -r ~/.w3m \
   ~/.mongodb \
   ~/.java \
   ~/.icons \
+  ~/.bitmonero \
+  ~/.shared-ringdb \
   ~/.standard-v14-cache \
   ~/.gnome 2>/dev/null
 
