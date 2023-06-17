@@ -26,6 +26,7 @@ local plugin = {
   markdown = require("plugin.markdown"),
   tmuxNavigation = require("plugin.tmux-navigation"),
   improvedft = require("plugin.improvedft"),
+  leap = require("plugin.leap"),
   -- <++> = require("plugin.<++>"),
 }
 
@@ -34,6 +35,17 @@ plugin.telescope.defineFzfUserCommands()
 
 require("lazy").setup( {
   -- ## basics
+  { -- create closing pairs
+    "windwp/nvim-autopairs",
+    config = plugin.autopairs.config,
+  },
+  {
+    "numToStr/Comment.nvim",
+    keys = plugin.comment.keys,
+    config = plugin.comment.config,
+  },
+
+  -- ## movement
   {
     "alexghergh/nvim-tmux-navigation",
     keys = plugin.tmuxNavigation.keys,
@@ -43,9 +55,11 @@ require("lazy").setup( {
     "chrisbra/improvedft",
     keys = plugin.improvedft.keys,
   },
-  { -- status bar theme
-    "itchyny/lightline.vim",
-    config = plugin.lightline.config,
+  { -- leap to where you want to go
+    "ggandor/leap.nvim",
+    dependencies = { "tpope/vim-repeat" },
+    keys = plugin.leap.keys,
+    config = plugin.leap.config,
   },
 
   -- ## lsp
