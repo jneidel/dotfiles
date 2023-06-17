@@ -8,10 +8,14 @@ return {
     -- vim.api.nvim_set_keymap('', localLeaderKey, '<Nop>', { noremap = true, silent = true })
     -- vim.g.maplocalleader = localLeaderKey
 
+    -- max concealing
+    vim.opt.conceallevel = 3
+
     neorg.setup {
       load = {
         ["core.defaults"] = {}, -- Loads default behaviour
         ["core.concealer"] = {
+          -- https://github.com/nvim-neorg/neorg/wiki/Concealer
           config = {
             icon_preset = "diamond",
             icons = {

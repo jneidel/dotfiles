@@ -123,26 +123,21 @@ require("lazy").setup( {
     dependencies = {
       'junegunn/fzf',
     },
-    -- not possible to lazy load
+    cmd = "Files",
   },
 
   -- ## other
-  { -- create closing pairs
-    "windwp/nvim-autopairs",
-    config = plugin.autopairs.config,
-  },
-  {
-    "numToStr/Comment.nvim",
-    keys = plugin.comment.keys,
-    config = plugin.comment.config,
+  { -- status bar theme
+    "itchyny/lightline.vim",
+    config = plugin.lightline.config,
   },
   { -- create uniform & unique print statements
     "andrewferrier/debugprint.nvim",
     keys = plugin.debugprint.keys,
     config = plugin.debugprint.config,
   },
-  {
-    "nvim-neorg/neorg", -- org mode
+  { -- org mode
+    "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",
     dependencies = "nvim-lua/plenary.nvim",
     ft = "norg",
