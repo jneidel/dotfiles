@@ -2,24 +2,6 @@
 " Heavily customized by jneidel
 
 " Functions
-" Detect used t_Co
-function! GetTCo()
-  if exists("&t_Co")
-    if (&t_Co > 255)
-      let l:tCol=256
-    elseif (&t_Co > 15 && &t_Co < 256)
-      let l:tCol=16
-    else
-      let l:tCol=8
-    endif
-  else " no t_Co specified probably using GUI
-    let l:tCol=256
-    set t_Co=l:tCol
-  endif
-
-  return l:tCol
-endfunction
-
 " Set highlighting for the given group
 function! SetHi(grp, fg, bg, opt)
   let l:gFg  = a:fg['GUI']
@@ -53,7 +35,7 @@ endif
 " Variables
 let g:colors_name="old-hope"
 " * Determine t_Co support
-let s:tCol = GetTCo()
+let s:tCol = 256
 
 " Colors
 " * GUI
@@ -114,7 +96,7 @@ let s:vBlue          = {'GUI': s:gBlue         , 'TERM': s:tBlue         }
 " Basics
 call SetHi ("Normal"        , s:vFg           , s:vBg           , s:vNone      )
 call SetHi ("Underlined"    , s:vFg           , s:vBg           , s:vUnderline )
-call SetHi ("Comment"       , s:vGrey         , s:vBg           , s:vNone      )
+call SetHi ("Comment"       , s:vGrey         , s:vBg           , s:vItalic    )
 call SetHi ("Todo"          , s:vOrange       , s:vBg           , s:vNone      )
 call SetHi ("Ignore"        , s:vGrey         , s:vBg           , s:vNone      )
 " * Variable types

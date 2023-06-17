@@ -74,6 +74,7 @@ require("lazy").setup( {
   -- ## syntax highlighting
   { -- dynamic syntax highlighting independant of lang
     "nvim-treesitter/nvim-treesitter",
+    config = plugin.treesitter.config,
   },
 
   -- ## language specific
