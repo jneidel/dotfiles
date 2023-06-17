@@ -5,6 +5,7 @@ return {
   keys = {
     { "#f", mode = "n" },
   },
+
   config = function()
     vim.g["fern#renderer"] = "nerdfont"
     vim.g["fern_git_status#disable_ignored"] = 1
@@ -30,9 +31,9 @@ return {
     bufnmap( "<BS>", "<Plug>(fern-action-leave)" )
 
     -- open in new split/tab
-    bufnmap( "v", "<Plug>(fern-action-open:side) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>" )
-    bufnmap( "s", "<Plug>(fern-action-open:below) :Fern %:p:h:h -reveal=%:p:h -drawer -toggle<CR>" )
-    bufnmap( "t", "<Plug>(fern-action-open:tabedit)" )
+    bufnmap( "v", "<Plug>(fern-action-open:side) :FernDo close -drawer<CR>" )
+    bufnmap( "s", "<Plug>(fern-action-open:below) :FernDo close -drawer<CR>" )
+    bufnmap( "t", "<Plug>(fern-action-open:tabedit) gt :FernDo close -drawer<CR> gT" )
 
     -- file management
     bufnmap( "rm", "<Plug>(fern-action-remove)" )

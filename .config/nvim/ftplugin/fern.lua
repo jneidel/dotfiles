@@ -1,3 +1,3 @@
-local fern = require("lua.plugin.fern")
+local fern = require("plugin.fern")
 
 fern.initBufferMappings()

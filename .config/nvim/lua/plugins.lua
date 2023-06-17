@@ -101,9 +101,8 @@ require("lazy").setup( {
     keys = plugin.fern.keys,
     config = plugin.fern.config,
   },
-  -- "lambdalisue/fern-hijack.vim",
 
-  -- ## file finder
+  -- ## file picker
   {
     "nvim-telescope/telescope.nvim",
     branch = '0.1.x',
