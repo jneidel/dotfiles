@@ -29,6 +29,9 @@ local plugin = {
   -- <++> = require("plugin.<++>"),
 }
 
+-- define fzf command :Files here so it can be lazy loaded
+plugin.telescope.defineFzfUserCommands()
+
 require("lazy").setup( {
   -- ## basics
   {

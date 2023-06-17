@@ -8,6 +8,15 @@ return {
     { "<A-s>", mode = "n" },
     { "<A-v>", mode = "n" },
   },
+
+  defineFzfUserCommands = function()
+    vim.api.nvim_create_user_command(
+      'Files',
+      "call fzf#vim#files(<q-args>, fzf#vim#files(<q-args>, {'options': []}, <bang>0), <bang>0)",
+      { bang = true, nargs = '?' }
+    )
+  end,
+
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
@@ -61,12 +70,12 @@ return {
     -- general file finder
     if vim.fn.getcwd() == os.getenv("HOME") then
       -- fzf as alternative for the home directoy, as telescope is very slow there
-      vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp4,png,jpg,jpeg,pdf,mkv,mp4,zip,ods,m3u}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!.vim/sessions' --glob '!.vim/tmp' --glob '!.vim/backup' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.hwid' --glob '!.zcompcache' --glob '!.pki/' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/'\"" )
-      vim.cmd( "command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, {'options': []}, <bang>0)" )
+      vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,jpeg,pdf,mkv,mp4,avi,zip,ods,m3u}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!.vim/sessions' --glob '!.vim/tmp' --glob '!.vim/backup' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.hwid' --glob '!.zcompcache' --glob '!.pki/' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/'\"" )
 
       vim.keymap.set("n", "<A-f>", ":Files<CR>", {});
       vim.keymap.set("n", "<A-s>", ":sp<CR> :Files<CR>", {});
       vim.keymap.set("n", "<A-v>", ":vsp<CR> :Files<CR>", {});
+      vim.keymap.set("n", "<A-t>", ":tabe<CR> :Files<CR>", {});
     else
       local function custom_find_files()
         vim.fn.system('git rev-parse --is-inside-work-tree')
