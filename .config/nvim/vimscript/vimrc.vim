@@ -3,78 +3,6 @@
 " with simpler setup, because this one will break if not setup correctly.
 " For basic setup see: https://gist.github.com/simonista/8703722
 
-" not vi compatible
-set nocompatible
-
-" encoding
-set encoding=utf-8
-
-" syntax highlighting
-syntax on
-
-" activate 256 colors
-set t_Co=256
-
-" linenumbers, in normal mode numbers will be relative to the current line
-set number relativenumber
-
-" blink cursor on error instead of beeping
-set visualbell
-
-" color current horizontal line
-set cursorline
-"   set as 'CursorLine' in colorscheme to style
-
-" wrap content to next line when display width is reached
-set wrap
-
-" replace tab characters with spaces
-set expandtab
-" number of spaces a <Tab> consists of
-set tabstop=2
-" number of spaces to insert when indenting with >,<
-set shiftwidth=2
-" number of spaces to remove when pressing <Backspace>
-set softtabstop=2
-" allows <Backspace> to remove linebreaks
-set backspace=2
-"   explaination of above settings: http://vimcasts.org/episodes/tabs-and-spaces
-
-" round <Tab>s to multiples of tabstop/shiftwidth
-set shiftround
-
-" activate automatic indention based on syntax files
-set autoindent
-" and based on static rules
-set smartindent
-
-" check first lines of file for vim commands to execute
-" turned off for security
-set modelines=0
-
-" allow hidden buffers without forcing them (!)
-" a hidden buffer is one with unsaved changed not currently open
-set hidden
-
-" disable annoying ENTER to continue on opening a new file
-set shortmess+=F
-
-" defines <leader> key
-let mapleader = "#"
-
-" enable autocomplete
-set wildmode=longest,list,full
-
-" highlight search matches while typing
-set incsearch
-" dont highlight search matches at startup
-set nohlsearch
-
-" ignore search case
-set ignorecase
-" enforce case if search contains uppercase
-set smartcase
-
 " remove search highlighting, deselect/hide matches
 map <leader><space> :nohls<Enter>
 
@@ -94,17 +22,6 @@ nmap <leader>g {v}:!par -w80<Enter>}
 set listchars=tab:▸\ ,eol:¬
 "   activate   :set list
 "   deactivete :set nolist
-
-" backup files
-set backup
-set writebackup
-set backupdir=~/.vim/backup
-" swap files - destroyed two important files
-" set swapfile
-" set directory=~/.vim/tmp
-" undo files
-set undofile
-set undodir=~/.vim/tmp
 
 " invert splits; the defaults are inverted, which is counter intuitive
 set splitbelow " on sp
@@ -131,46 +48,6 @@ map Q <Nop>
   hi SpellRare ctermbg=none
   hi SpellLocal ctermbg=none
   hi SpellCap ctermbg=none
-
-" TODO: cleanup descriptions below
-"## Sessions
-" Dont write vimrc option to sessionfile - vimrc changes would be overwritten by old ones
-" source: https://stackoverflow.com/a/31978241
-
-" don't store vim options (config) in session
-set ssop-=options
-
-function! MakeSession()
-  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-  if (filewritable(b:sessiondir) != 2)
-    exe 'silent !mkdir -p ' b:sessiondir
-    redraw!
-  endif
-  let b:filename = b:sessiondir . '/session.vim'
-  exe "mksession! " . b:filename
-endfunction
-
-function! LoadSession()
-  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-  let b:sessionfile = b:sessiondir . "/session.vim"
-  if (filereadable(b:sessionfile))
-    exe 'source ' b:sessionfile
-    else
-    echo "No session loaded."
-  endif
-endfunction
-
-" Load session automatically if no filename is provided
-if(argc() == 0)
-  au VimEnter * nested :call LoadSession()
-endif
-" Create session automatically on leave
-au VimLeave * :call MakeSession()
-
-" Save history/registers after :q session
-set viminfo=%,'20,<100,:20
-" this throws weird errors on every startup
-" set viminfofile=/home/jneidel/.vim/tmp/viminfo
 
 " Enable folding
 " Set foldmethod=snytax if current language has fold support
@@ -256,6 +133,3 @@ function! SaveCursorPosition()
   winrestview()
 endfunction
 " ^ not working, was supposed to mitigate eslint resetting the cursor location
-
-" source other modular configs files
-source ~/.vim/config/init.vim

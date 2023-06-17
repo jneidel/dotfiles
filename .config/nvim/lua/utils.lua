@@ -2,22 +2,6 @@
 
 local M = {}
 
--- autocommands
-M.define_augroup = function(definitions)
-  local cmd = vim.api.nvim_command
-
-  for group_name, definition in pairs(definitions) do
-    cmd('augroup ' .. group_name)
-    cmd('autocmd!')
-
-    for _, def in pairs(definition) do
-      cmd(table.concat(vim.tbl_flatten({ 'autocmd', def }), ' '))
-    end
-
-    cmd('augroup END')
-  end
-end
-
 -- expand or minimize current buffer in a more natural direction
 -- first parameter: true/false for vertical split
 -- second parameter: expand/minimize factor e.g. 3 or -3

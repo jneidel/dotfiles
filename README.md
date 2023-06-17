@@ -67,8 +67,6 @@ Multiple shells within the same terminal, screen splitting and [much more](https
 Neovim with custom macros, hooks and a few plugins.
 
 - [config entrypoint](.config/nvim)
-- [old vim entrypoint](.vimrc)
-- [colorscheme](.vim/colors/old-hope.vim)
 
 ![](images/vim.png)
 

@@ -3,6 +3,7 @@
 
 local root_dir = vim.loop.cwd
 local custom_on_attach = require('utils').custom_on_attach
+local bufnmap = require("utils").bufnmap
 
 require('lspconfig').texlab.setup {
   cmd = { 'texlab' },
@@ -31,3 +32,5 @@ require('lspconfig').texlab.setup {
 
 vim.cmd("let b:coc_enabled = 0")
 vim.cmd("setlocal spell spelllang=en_us,de")
+
+bufnmap("<Leader>s", ":setlocal spell! spelllang=en_us,de<CR>")

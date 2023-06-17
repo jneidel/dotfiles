@@ -18,19 +18,8 @@
 .zsh
 
 [vim]
-.vimrc
-create .vim
-clean .vim/config
-.vim/autoload
-.vim/colors
-.vim/spell
-create .vim/swap
-create .vim/backup
-create .vim/tmp
-create .vim/bundle
-create .vim/view
-.vim/coc-settings.json
 clean .config/nvim
+.local/share/nvim/spell
 
 [tmux]
 create .config/tmux
