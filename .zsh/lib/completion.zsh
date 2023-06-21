@@ -1,8 +1,6 @@
 # fixme - the load process here seems a bit bizarre
 zmodload -i zsh/complist
 
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
-
 WORDCHARS=''
 
 unsetopt FLOW_CONTROL

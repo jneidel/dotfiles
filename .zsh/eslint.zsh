@@ -15,4 +15,3 @@ tfix() {
 ## create markdown toc
 alias toc="markdown-toc -i readme.md"
 alias lint="fixa; toc;"
-

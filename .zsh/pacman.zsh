@@ -1,32 +1,7 @@
-# pacman
+if [ "$(uname)" = "Linux" ]; then
+  ## variables
+  export MAKEFLAGS="-j$(nproc)" # parallel compilation on make/makepkg
 
-alias yaya="yay -Quq --aur | xargs -n 1 yay -S --noconfirm" # https://github.com/Jguer/yay/issues/848
-
-# uses yay as a pacman/yaourt wrapper
-# searche, install, update for both
-# remove needs to happen separately
-
-## install
-alias pac="yay --noconfirm --noedit -S"
-
-## seach
-alias pacs="yay -Ss"
-
-function pachs() { # highlight query
-  pacs $1 $2 $3 HL $1 $2 $3 L
-}
-function pacss() { # stict search
-  pacs $1 jq | grep --color=auto "/$1" -A 1
-}
-
-## update
-alias pacu="yay -Syuu"
-
-## remove
-alias pacr="yay -Rsn"
-
-alias paco="yay -Qdt" # list orphans
-alias pacor"yay -Rsn $(pacman -Qtdq)" # rm orphans
-
-## variables
-export MAKEFLAGS="-j$(nproc)" # parallel compilation on make/makepkg
+  alias paco="yay -Qdt" # list orphans
+  alias pacor"yay -Rsn $(pacman -Qtdq)" # rm orphans
+fi

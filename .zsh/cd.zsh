@@ -23,3 +23,23 @@ alias 9='cd -9'
 alias 2..='...'
 alias 2...='....'
 alias 3..='....'
+
+mdc() { # MkDirCd
+  mkdir "$1";
+  cd "$1";
+}
+mvc() { # mv cd
+  array=( $@ )
+  len=${#array[@]}
+  args=${array[@]:0:$len-1}
+  last="${@: -1}"
+
+  mv $(echo $args) "$last"
+
+  if [ -d "$last" ]; then
+    cd "$last"
+  else
+    base="$(dirname $last)"
+    cd "$base"
+  fi
+}

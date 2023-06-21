@@ -10,23 +10,25 @@ alias gai="git add -i" # interactive
 alias gap="git add -p" # patch
 
 ## commit
-git-commit() {
+commit() {
   MSG="$1"
   DESC="$2"
+  EXTRA="$3"
   if [ -z "$MSG" ]; then
     false
   else
     if [ -z "$DESC" ]; then
-      git commit -m "$MSG"
+      git commit -m "$MSG" $EXTRA
     else
-      git commit -m "$MSG" -m "$DESC"
+      git commit -m "$MSG" -m "$DESC" $EXTRA
     fi
   fi
 }
-alias commit="git-commit"
 alias gc="commit"
-alias addcom="ga -A; git-commit"
-alias ac="addcom"
+gcn() {
+  commit "$1" "$2" -n
+}
+alias addcom="ga -A; commit"
 
 ## commit --amend
 alias amend="git commit --amend"

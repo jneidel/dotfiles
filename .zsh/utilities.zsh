@@ -3,7 +3,7 @@
 ## calculator
 calc() {
   if [ -n "$1" ]; then
-    node -e "console.log(($@).toFixed(2))"
+    node -e "console.log( ($@).toFixed(2) )"
   else
     octave -q
   fi
@@ -22,31 +22,19 @@ alias randomnum="shuf -n 1 -i" # As range: 1-100
 alias dice="W $(whence randomnum) 1-6"
 
 ## grep
-alias in="grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude-dir=vendor --exclude=package-lock.json" # short: grep -nHsr
+_in() {
+  grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude-dir=vendor --exclude=package-lock.json "$@"
+  # short: grep -nHsr
+}
+in() {
+  if [ -z "$2" ]; then
+    _in "$1" .
+  else
+    _in "$@"
+  fi
+}
 
 ## ps
 pst() {
   ps xwjf | awk '{ $1="";$3="";$4="";$5="";$6="";$7="";$8="";$9=""; print $0 }' | grep -v 'firefox-' | less
 }
-
-## cd
-mdc() { # MkDirCd
-  mkdir "$1";
-  cd "$1";
-}
-mvc() { # mv cd
-  array=( $@ )
-  len=${#array[@]}
-  args=${array[@]:0:$len-1}
-  last="${@: -1}"
-
-  mv $(echo $args) "$last"
-
-  if [ -d "$last" ]; then
-    cd "$last"
-  else
-    base="$(dirname $last)"
-    cd "$base"
-  fi
-}
-
