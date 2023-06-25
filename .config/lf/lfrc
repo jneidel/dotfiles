@@ -55,9 +55,6 @@ cmd touchTex ${{
   read ans
   vtex "$ans"
 }}
-cmd gen-note ${{
-  ~/scripts/gen-note
-}}
 cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" ~/org/0_inbox/
 
 cmd broot_jump ${{
@@ -97,6 +94,15 @@ cmd paste_and_forget ${{
   lf -remote 'send clear'
 }}
 
+## create files
+cmd create-index ${{
+  touch index.norg
+  vim index.norg
+}}
+cmd gen-note ${{
+  ~/scripts/gen-note
+}}
+
 ## bindings
 ### remove defaults
 map m
@@ -104,6 +110,7 @@ map d
 map e
 map r
 map p
+map c
 map N # jump to prev result
 
 ### own bindings
@@ -120,12 +127,15 @@ map Y diropenShuffle
 map L openAndSwitch
 # map f broot_jump
 map . set hidden!
-map t touch
-map T touchTex
-map NN gen-note
 map R reload
 map I gimp # [I]mage
 map b move-to-inbox # in[B]ox
+
+### create files
+map t touch
+map T touchTex
+map NN gen-note
+map ci create-index
 
 ### jump - cd to dirs
 
@@ -135,10 +145,10 @@ map gd  cd ~/org/1_design
 map gp  cd ~/org/2_project
 map ga  cd ~/org/3_areas
 map gr  cd ~/org/4_resources
-map gmm cd ~/org/4_resources/media
-map gb  cd ~/org/4_resources/media/books
-map gmo cd ~/org/4_resources/media/movies
-map gM  cd ~/org/4_resources/media/music
+map gmm cd ~/org/4_resources/1_media
+map gb  cd ~/org/4_resources/1_media/books
+map gmo cd ~/org/4_resources/1_media/movies
+map gM  cd ~/org/4_resources/1_media/music
 
 map gD cd ~/Downloads
 # map gu cd ~/projects/uni

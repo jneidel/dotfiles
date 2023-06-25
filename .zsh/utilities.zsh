@@ -23,8 +23,12 @@ alias dice="W $(whence randomnum) 1-6"
 
 ## grep
 _in() {
-  grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude-dir=vendor --exclude=package-lock.json "$@"
-  # short: grep -nHsr
+  if command -v rga >/dev/null; then
+    rga --hidden --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.hwid' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.cargo/' "$@" 2>/dev/null
+  else
+    grep --line-number --with-filename --no-messages --recursive --exclude-dir=node_modules --exclude-dir=coverage --exclude-dir=dist --exclude-dir=vendor --exclude=package-lock.json "$@"
+    # short: grep -nHsr
+  fi
 }
 in() {
   if [ -z "$2" ]; then

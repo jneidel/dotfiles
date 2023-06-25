@@ -70,7 +70,7 @@ return {
     -- general file finder
     if vim.fn.getcwd() == os.getenv("HOME") then
       -- fzf as alternative for the home directoy, as telescope is very slow there
-      vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,jpeg,pdf,mkv,mp4,avi,zip,ods,m3u}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!.vim/sessions' --glob '!.vim/tmp' --glob '!.vim/backup' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.hwid' --glob '!.zcompcache' --glob '!.pki/' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/'\"" )
+      vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,jpeg,pdf,mkv,mp4,avi,zip,ods,m3u}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/'\"" )
 
       vim.keymap.set("n", "<A-f>", ":Files<CR>", {});
       vim.keymap.set("n", "<A-s>", ":sp<CR> :Files<CR>", {});
