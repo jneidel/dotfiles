@@ -3,7 +3,7 @@
 ncmpcpp_directory = ~/.config/ncmpcpp
 
 ### mpd settings
-# mpd_host = localhost
+mpd_host = 0.0.0.0
 mpd_port = 5555
 mpd_connection_timeout = 5
 
