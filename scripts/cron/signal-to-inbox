@@ -1,0 +1,79 @@
+#! /bin/sh
+
+. $HOME/scripts/personal/signal_number.sh
+
+INBOX=$HOME/org/0_inbox
+XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+CACHE_DIR=$XDG_DATA_HOME/signal-cli
+ATTACHMENT_DIR="$CACHE_DIR/attachments"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ signal-to-inbox
+Receive signal messages and sort them into the inbox
+
+Prerequisite is to register the number with signal
+EOF
+  exit
+fi
+
+command -v signal-cli >/dev/null || { echo "signal-cli is not installed" 1>&2; exit 127; }
+
+CACHE_FILE="$CACHE_DIR/received-messages-$(date +%s)"
+
+receive() {
+  signal-cli -a $SIGNAL_NUMBER receive --ignore-stories --send-read-receipts >$CACHE_FILE 2>/tmp/signal-cli-errors ||
+    echo "Reciving signal messages failed!\nRun the script manually or consult /tmp/signal-cli-errors" >$INBOX/signal-cli-errors
+}
+parseMessages() {
+  if [ -z "$(cat $CACHE_FILE)" ]; then
+    rm $CACHE_FILE
+  else
+    N=0
+    BODY=""
+    attachment_count=1
+    is_multiline=0
+    multiline_body_done=0
+    while read line; do
+      if [ -n "BODY" ] && [ "$multiline_body_done" -eq 0 ]; then
+        if echo $line | grep -ve "^Expires in:" >/dev/null; then
+          BODY="${BODY}\n$line"
+          is_multiline=1
+        else
+          multiline_body_done=1
+        fi
+      fi
+
+      has_body=`echo $line | grep -Po "^Body: \K.+"`
+      if [ -n "$has_body" ]; then
+        BODY="$has_body"
+      fi
+
+      has_attachement=`echo $line | grep -Po "Id: \K.+"`
+      if [ -n "$has_attachement" ]; then
+        if [ -n "$BODY" ]; then
+          cp "$ATTACHMENT_DIR/$has_attachement" "$INBOX/$BODY-$attachment_count.${has_attachement##*.}"
+        else
+          cp "$ATTACHMENT_DIR/$has_attachement" $INBOX/
+        fi
+        attachment_count=$((${attachment_count}+1))
+      fi
+
+      if [ -z "$line" ] && ([ "$is_multiline" -eq 0 ] || [ "$multiline_body_done" -eq 1 ]); then # reset
+        if [ -n "$BODY" ] && [ "$attachment_count" -eq 1 ]; then
+          echo "$BODY" >"$INBOX/signal-$(date +%s)-$N.md"
+        fi
+
+        N=$((${N}+1))
+        BODY=""
+        attachment_count=1
+        multiline_body_done=0
+        is_multiline=0
+      fi
+    done <$CACHE_FILE
+  fi
+}
+
+~/scripts/cron/cron-notify-send "Receiving notes from signal"
+receive
+parseMessages

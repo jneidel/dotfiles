@@ -155,7 +155,7 @@ alias q="podqueue"
 alias podboat="/bin/podboat -a"
 
 ### players
-alias n="ncmpcpps"
+alias nc="ncmpcpps"
 
 #### mpv
 alias mpvo="mpv --profile=overlay"
@@ -261,3 +261,14 @@ alias bbl="bb list"
 ## make
 alias m="make"
 alias mw="make watch"
+
+n() {
+  note="$@"
+  if [ -z "$note" ]; then
+    gen-note $HOME/org/0_inbox
+  else
+    local file="$HOME/org/0_inbox/qc-$(date +%s)"
+    echo "$note" >$file
+    echo "Wrote to $file"
+  fi
+}

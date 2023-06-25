@@ -10,6 +10,7 @@ set nodirfirst
 set relativenumber
 set ratios 5:4
 set hiddenfiles ".*:*.aux:*.log:*.synctex.gz:*.bcf:*.run.xml:*.bbl:*.blg:*.toc:*.nav:*.out:*.snm:package-lock.json:node_modules:prog3" # ignore
+set cursorpreviewfmt "\033[48;5;240m"
 
 # for working with $fs/$fx
 set shell zsh
@@ -55,8 +56,9 @@ cmd touchTex ${{
   vtex "$ans"
 }}
 cmd gen-note ${{
-  ~/.config/lf/scripts/gen-note
+  ~/scripts/gen-note
 }}
+cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" ~/org/0_inbox/
 
 cmd broot_jump ${{
   f=$(mktemp)
@@ -88,15 +90,6 @@ cmd rm_pi ${{
 
   ssh pi "rm -r \"$REMOTE_FILE\""
   rm -r "$f"
-}}
-
-cmd vl ${{
-  printf "Vorlesungsname: "
-  read name
-  printf "Url: "
-  read url
-
-  printf "#!/bin/sh\ntsp mpv --fs '$url'" >"$name"
 }}
 
 cmd paste_and_forget ${{
@@ -132,27 +125,32 @@ map T touchTex
 map NN gen-note
 map R reload
 map I gimp # [I]mage
-map v vl
-map - split
+map b move-to-inbox # in[B]ox
 
 ### jump - cd to dirs
-map gd cd ~/design
-map gp cd ~/project
-map gm cd ~/media
+
+map go  cd ~/org
+map gi  cd ~/org/0_inbox
+map gd  cd ~/org/1_design
+map gp  cd ~/org/2_project
+map ga  cd ~/org/3_areas
+map gr  cd ~/org/4_resources
+map gmm cd ~/org/4_resources/media
+map gb  cd ~/org/4_resources/media/books
+map gmo cd ~/org/4_resources/media/movies
+map gM  cd ~/org/4_resources/media/music
+
 map gD cd ~/Downloads
 # map gu cd ~/projects/uni
 # map gG cd ~/projects/geldhochschule
 # map gt cd ~/projects/geldhochschule/1_Trades
 map gc cd ~/code
-map gc cd ~/ct
-map gC cd ~/ct/podcasts
-map gP cd ~/ct/pictures
-# map gm cd ~/ct/movies
-map gM cd ~/ct/music
-map gb cd ~/ct/books
+# map gc cd ~/ct
+# map gC cd ~/ct/podcasts
+# map gP cd ~/ct/pictures
 map gB cd ~/code/notes/books
 map gn cd ~/code/notes
-map gr cd ~/code/notes/research
+map gR cd ~/code/notes/research
 # map gs cd ~/projects/spanish
 # map gl cd ~/projects/latin
 # map ge cd ~/projects/morning_routine/meditation
