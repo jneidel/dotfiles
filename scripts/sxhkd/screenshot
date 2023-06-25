@@ -1,7 +1,8 @@
 #! /bin/sh
 
-PIC_DIR=~/ct/pictures
+PIC_DIR=~/org/0_inbox/screenshots
 FORMAT='screenshot_%y-%m-%d_%H:%M:%S.png'
+mkdir -p $PIC_DIR
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
@@ -29,4 +30,3 @@ if [ "$1" = "-s" ]; then
 else
   /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z
 fi
-

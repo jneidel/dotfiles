@@ -76,3 +76,4 @@ es https://enes.dict.cc/?s=%s
 ab https://101audiobooks.net/?s=%s
 au https://www.audible.com/search?keywords=%s
 ttf https://github.com/search?q=filename%3A%s.ttf&type=Code
+aur https://aur.archlinux.org/packages?K=%s
