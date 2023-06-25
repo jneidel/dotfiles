@@ -15,5 +15,7 @@
   # https://help.github.com/en/articles/managing-commit-signature-verification
 [pull]
 	rebase = true
+[push]
+  autoSetupRemote = true
 [init]
 	defaultBranch = master
