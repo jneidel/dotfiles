@@ -190,7 +190,7 @@ scrot Screenshot utility
 [zsh]
 zsh-syntax-highlighting Highlight whever the typed command exists
 entr Run command if something changes
-exa-git Better ls
+exa Better ls
 bat Better cat
 renameutils qmv mass rename util
 shell:mkdir -p $XDG_STATE_HOME/zsh $XDG_CACHE_HOME/zsh
@@ -454,7 +454,7 @@ android-tools
 simple-mtpfs mount mtpfs
 
 [lf]
-lf-git File manager
+lf File manager
 glow Markdown preview
 python-pdftotext Pdf preview
 broot Fuzzy selector
@@ -533,7 +533,7 @@ cups Util
 
 [json]
 gron Make JSON grepable
-npm:fx JSON explorer
+fx JSON explorer
 
 [masterpdfeditor]
 masterpdfeditor-free PDF Editor
@@ -548,3 +548,14 @@ ib-tws Stock trading application
 # antidot-bin Cleanup the $HOME directory
 # shell:antidot update
 xdg-ninja Show $HOME cleanup instructions
+
+[syncthing]
+syncthing Date sync client & server
+systemdu:syncthing
+
+[ripgrep-all]
+ripgrep-all Search through all types of files fast
+pandoc-bin Search through .epub, .odt, .docx
+poppler Search through .pdf
+ffmpeg Search through audio/video
+graphicsmagick Search through graphics I presume

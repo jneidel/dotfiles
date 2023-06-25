@@ -8,7 +8,7 @@
 # Groups can be enabled by listing them in 'used-groups' file.
 #
 # To install your configs: 'make install-configs'
-# See: 'app-groups' for managing apps
+# See: 'package-groups' for managing apps
 
 # TODO: handle git clone
 

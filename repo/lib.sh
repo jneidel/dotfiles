@@ -2,7 +2,7 @@
 # shared environment and functions
 
 MAPPINGS="$DIR/mappings"
-APP_LIST="$DIR/app-groups"
+APP_LIST="$DIR/package-groups"
 IN_USE="$DIR/used-groups"
 IN_USE_TMP=/tmp/used-apps
 sed -r "s/^(.*)$/^\1$/" $IN_USE >$IN_USE_TMP

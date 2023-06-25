@@ -36,9 +36,7 @@ run_yay() {
 
   reapply_X_settings
 
-  yay -S --needed --color=always --noconfirm exa-git
-  yay -S --needed --color=always --noconfirm lf-git
-  yay -S --needed --color=always --noconfirm ncmpcpp-git
+  yay -S --color=always --noconfirm ncmpcpp-git --needed
 
   yay -Qtdq | yay -Rsn --noconfirm -
 }
