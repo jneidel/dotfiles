@@ -31,11 +31,12 @@ parseMessages() {
   else
     N=0
     BODY=""
+    ATTACHMENT=""
     attachment_count=1
     is_multiline=0
     multiline_body_done=0
     while read line; do
-      if [ -n "BODY" ] && [ "$multiline_body_done" -eq 0 ]; then
+      if [ -n "$BODY" ] && [ "$multiline_body_done" -eq 0 ]; then
         if echo $line | grep -ve "^Expires in:" >/dev/null; then
           BODY="${BODY}\n$line"
           is_multiline=1
@@ -49,23 +50,42 @@ parseMessages() {
         BODY="$has_body"
       fi
 
+      has_filename=`echo $line | grep -Po "Filename: \K.+"`
+      if [ -n "$ATTACHMENT" ] && [ -n "$has_filename" ]; then
+          cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$has_filename"
+          ATTACHMENT=""
+          attachment_count=$((${attachment_count}+1))
+      fi
+
       has_attachement=`echo $line | grep -Po "Id: \K.+"`
       if [ -n "$has_attachement" ]; then
-        if [ -n "$BODY" ]; then
-          cp "$ATTACHMENT_DIR/$has_attachement" "$INBOX/$BODY-$attachment_count.${has_attachement##*.}"
-        else
-          cp "$ATTACHMENT_DIR/$has_attachement" $INBOX/
+        if [ -n "$ATTACHMENT" ]; then
+          if [ -n "$BODY" ]; then
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$BODY-$attachment_count.${ATTACHMENT##*.}"
+          else
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" $INBOX/
+          fi
+          ATTACHMENT=""
         fi
-        attachment_count=$((${attachment_count}+1))
+        ATTACHMENT="$has_attachement"
       fi
 
       if [ -z "$line" ] && ([ "$is_multiline" -eq 0 ] || [ "$multiline_body_done" -eq 1 ]); then # reset
-        if [ -n "$BODY" ] && [ "$attachment_count" -eq 1 ]; then
+        if [ -n "$BODY" ] && [ -z "$ATTACHMENT" ]; then
           echo "$BODY" >"$INBOX/signal-$(date +%s)-$N.md"
+        fi
+
+        if [ -n "$ATTACHMENT" ]; then
+          if [ -n "$BODY" ]; then
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$BODY-$attachment_count.${ATTACHMENT##*.}"
+          else
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" $INBOX/
+          fi
         fi
 
         N=$((${N}+1))
         BODY=""
+        ATTACHMENT=""
         attachment_count=1
         multiline_body_done=0
         is_multiline=0
