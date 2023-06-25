@@ -80,8 +80,7 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
-test -f "$HOME/.local/share/antidot/env.sh" && source "$HOME/.local/share/antidot/env.sh"
-test -f "$HOME/.local/share/antidot/alias.sh" && source "$HOME/.local/share/antidot/alias.sh"
+export XDG_CONFIG_RC="${XDG_DATA_HOME}"
 export LESSHISTFILE="-"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
@@ -106,6 +105,7 @@ export HISTFILE="$XDG_STATE_HOME"/zsh/history
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 export GOPATH="${XDG_DATA_HOME}/go"
+export NETRC="$XDG_DATA_HOME"
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
 compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 

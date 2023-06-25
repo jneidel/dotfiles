@@ -20,6 +20,7 @@ rmdir ~/Desktop \
   ~/.lyrics \
   ~/.newsboat 2>/dev/null
 rm -rf ~/.w3m \
+  ~/.????????.ib-tws \
   ~/.m2 \
   ~/Jts \
   ~/.mono \
