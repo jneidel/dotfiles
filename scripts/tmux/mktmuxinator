@@ -1,0 +1,30 @@
+#! /bin/sh
+
+OUT_NAME=.tmuxinator.yml
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ mktmuxinator
+Create a $OUT_NAME in a code project for use with 'tp'
+EOF
+  exit
+fi
+
+cwd=$(pwd)
+project=${cwd##*/}
+
+cat <<EOF >$OUT_NAME
+name: $project
+root: $cwd
+windows:
+  - vim: vim
+  - zsh
+      layout: 278d,151x33,0,0[151x12,0,0,35,151x20,0,13,36]
+      # tmux list-windows
+      panes:
+        - nwb
+        -
+EOF
+
+echo "Wrote $OUT_NAME"
+$EDITOR $OUT_NAME

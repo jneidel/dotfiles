@@ -2,6 +2,8 @@
 
 PROJECT_DIR=$HOME/Downloads/fs/project
 DIR=`dirname $0`
+CODE_DIR="$HOME/code"
+CODE_TMUXINATOR_FILE=".tmuxinator.yml"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -28,8 +30,18 @@ if tmux list-sessions 2>/dev/null | cut -d: -f1 | grep "^$PROJECT$" >/dev/null; 
   exit 0
 fi
 
+is_code_project() {
+  if [ -d "$CODE_DIR/$PROJECT" ] && [ -f "$CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE" ]; then
+    true
+  else
+    echo "No $CODE_TMUXINATOR_FILE file in $CODE_DIR/$PROJECT"
+    echo "You can add it with: mktmuxinator"
+    false
+  fi
+}
+
 case $PROJECT in
   main) tmuxinator start main -p $DIR/tmuxinator.yml;;
-  *) tmuxinator start $PROJECT -p $PROJECT_DIR/$PROJECT/tmux.yml;;
+  *) is_code_project && tmuxinator start $PROJECT -p $CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE;;
 esac
 
