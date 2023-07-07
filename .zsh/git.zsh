@@ -28,22 +28,20 @@ alias gc="commit"
 gcn() {
   commit "$1" "$2" -n
 }
-alias addcom="ga -A; commit"
+if [ "$(uname)" = "Darwin" ]; then
+  alias addcom="ga -A; gcn"
 
-## commit --amend
-alias amend="git commit --amend"
-alias amendd="git commit --amend --no-edit"
-alias addam="ga -A; git commit --amend --no-edit"
-amd() { # set commit date to passed date
-  # pass dayOfTheWeek, month, date, hour
-  # eg: Sun Apr 6 12
-  git commit --amend --no-edit --date="$1 $2 $3 $4:35:25 2019 +0200"
-}
-amtod() { # set commit date to today
-  # pass hour
-  DATE=`date +"%a %h %e"`;
-  git commit --amend --no-edit --date="$DATE $1:35:25 2019 +0200"
-}
+  alias amend="git commit -n --amend"
+  alias amendd="git commit -n --amend --no-edit"
+  alias addam="ga -A; git commit -n --amend --no-edit"
+else
+  alias addcom="ga -A; commit"
+
+  ## commit --amend
+  alias amend="git commit --amend"
+  alias amendd="git commit --amend --no-edit"
+  alias addam="ga -A; git commit --amend --no-edit"
+fi
 
 ## push/pull
 alias gp="git push"

@@ -20,12 +20,24 @@ function sytop() {
   fi
 }
 alias sc="sytop console"
-alias st="sytop php vendor/bin/phpunit"
 function de() { # debug
-  sytop debug:$@
+  sc debug:$@
 }
 alias stan="sytop php vendor/bin/phpstan"
 alias svar="sy var:export --multiline"
+st() {
+  if [ -z "$@" ]; then
+    local staged_files=$(git status --porcelain | grep tests | awk '/^\s?[MA]..*php$/ { print $2 }' | xargs)
+    if [ -z "$staged_files" ]; then
+      echo "No test files staged"
+      s
+      return 1
+    fi
+    sytop php vendor/bin/phpunit $(echo $staged_files)
+  else
+    sytop php vendor/bin/phpunit $@
+  fi
+}
 sref() { # refactor
   local toplevel_dir="$(git rev-parse --show-toplevel 2>/dev/null)"
   if [ -z "$toplevel_dir" ]; then

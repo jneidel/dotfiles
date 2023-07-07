@@ -36,6 +36,10 @@ alias -g N1=">/dev/null"      # no stdout
 alias -g N2="2>/dev/null"     # no stderr
 alias -g NO=">/dev/null 2>&1" # neither
 
+for i in $(seq 0 10); do
+  alias -g H$i="HEAD~$i"
+done
+
 ## misc
 alias -g PB="| nc termbin.com 9999" # terminal pastebin
 alias -g C="| wc -l | human-number" # get line number count

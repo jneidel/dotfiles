@@ -1,11 +1,14 @@
 # Zsh config
-
 # oh-my-zsh
 ZSH_DIR=~/.zsh
 source $ZSH_DIR/oh-my-zsh.sh
 source $ZSH_DIR/lib/init.zsh
 source $ZSH_DIR/cobalt2.zsh-theme
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+test -e "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &&
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &&
+  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # installed with pacman: zsh-syntax-highlighting[-git]
 
 bindkey -v # shell vim mode (default emacs)
@@ -108,6 +111,9 @@ compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 # kitty shell integration
 test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
+
+# rancher desktop
+test -e "$HOME/.rd" && export PATH="$HOME/.rd/bin:$PATH"
 
 # Import aliases
 source $ZSH_DIR/org.zsh

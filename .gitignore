@@ -13,6 +13,7 @@ personal.zsh
 .vim/spell/*.add.spl
 .config/nvim/plugin/packer_compiled.lua
 .config/nvim/lazy-lock.json
+*.swp
 
 scripts/personal
 scripts/mpd/current-mpd-ip
