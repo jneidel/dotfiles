@@ -17,8 +17,9 @@ nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r10
 klein https://www.ebay-kleinanzeigen.de/s-03238/%s/k0l7714r10
 ytt https://www.youtube.com/results?search_query=%s
+yt https://inv.tux.pizza/search?q=%s
 yt https://yewtu.be/search?q=%s
-yt https://ytb.trom.tf/search?q=%s
+yt2 https://ytb.trom.tf/search?q=%s
 ytp https://invidious.namazso.eu/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
@@ -34,7 +35,7 @@ duden https://www.duden.de/suchen/dudenonline/%s
 in https://yewtu.be/search?q=%s
 imdb https://www.imdb.com/find?s=all&q=%s
 im https://www.imdb.com/find?s=all&q=%s
-tw https://nitter.net/search?f=users&q=%s
+tw https://nitter.exonip.de/search?f=users&q=%s
 ic https://imagecomics.com/search/results?s=%s
 ck https://www.chefkoch.de/rs/s0/%s/Rezepte.html
 u https://www.urbandictionary.com/define.php?term=%s

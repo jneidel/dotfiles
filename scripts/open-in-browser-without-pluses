@@ -22,9 +22,9 @@ if command -v open >/dev/null; then
 fi
 
 if echo $URL | grep -e "youtube.com" >/dev/null; then
-  echo "$1" | sed 's|www.youtube.com|yewtu.be|' | xargs -r $BROWSER >/dev/null 2>&1 &
+  echo "$1" | sed "s|www.youtube.com|$(grep '^yt ' ~/scripts/rofi/banglist -m1 | cut -d/  -f3)|" | xargs -r $BROWSER >/dev/null 2>&1 &
 elif echo $URL | grep -F "twitter.com" >/dev/null; then
-  echo "$1" | sed 's|twitter.com|nitter.exonip.de|' | xargs -r $BROWSER >/dev/null 2>&1 &
+  echo "$1" | sed "s|twitter.com|$(grep '^tw ' ~/scripts/rofi/banglist -m1 | cut -d/  -f3)|" | xargs -r $BROWSER >/dev/null 2>&1 &
 elif echo $URL | grep -F "manga4life.com/read-online" >/dev/null; then
   echo "$1" | sed 's|-page-1||' | xargs -r $BROWSER >/dev/null 2>&1 &
 else
