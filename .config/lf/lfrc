@@ -82,19 +82,106 @@ cmd rm_pi ${{
   rm -r "$f"
 }}
 
-cmd paste_and_forget ${{
+cmd paste_and_forget %{{
   lf -remote 'send paste'
   lf -remote 'send clear'
 }}
 
+cmd clear-unselect %{{
+  lf -remote 'send clear'
+  lf -remote 'send unselect'
+}}
+
+cmd fzf_dir ${{
+  pick() {
+    FZF_DEFAULT_COMMAND="find ~/org -type d | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
+  }
+  lf -remote "send $id select '$HOME/$(pick)'"
+}}
+cmd fzf_file ${{
+  pick() {
+    FZF_DEFAULT_COMMAND="rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/' ~/org | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
+  }
+  lf -remote "send $id select '$HOME/$(pick)'"
+}}
+
 ## create files
+cmd touch %printf "File Name: "; read ans; touch "$ans"
+cmd touchTex %{{
+  printf "Tex Name: "
+  read ans
+  vtex "$ans"
+}}
 cmd create-index ${{
   touch index.norg
-  vim index.norg
+  $EDITOR index.norg
 }}
 cmd gen-note ${{
   ~/scripts/gen-note
 }}
+cmd create-norg ${{
+  printf "Name of .norg file: "
+  read ans
+  local file="${ans}.norg"
+  touch "$file"
+  $EDITOR "$file"
+}}
+cmd mkdir %{{
+  printf "Directory name: "
+  read ans
+  mkdir "$ans"
+
+  lf -remote "send select '$ans'"
+  lf -remote "send open"
+}}
+cmd create-project ${{
+  printf "Project dir name: "
+  read ans
+  local project="$ORG_PROJECTS/$ans"
+  mkdir "$project"
+  cd "$project"
+
+  lf -remote "send select '$project'"
+  lf -remote "send open"
+
+  touch "$project/index.norg"
+  $EDITOR "$project/index.norg"
+}}
+cmd create-design ${{
+  printf "Design dir name: "
+  read ans
+  local design="$ORG_DESIGN/$ans"
+  mkdir "$design"
+  cd "$design"
+
+  lf -remote "send select '$design'"
+  lf -remote "send open"
+
+  touch "$design/index.norg"
+  $EDITOR "$design/index.norg"
+}}
+cmd create-area ${{
+  printf "Area dir name: "
+  read ans
+  local area="$ORG_AREAS/$ans"
+  mkdir "$area"
+  cd "$area"
+
+  lf -remote "send select '$area'"
+  lf -remote "send open"
+
+  touch "$area/index.norg"
+  $EDITOR "$area/index.norg"
+}}
+### create files
+map t touch
+map T touchTex
+map NN gen-note
+map ci create-index
+map cn create-norg
+map cp create-project
+map cd create-design
+map ca create-area
 
 ## bindings
 ### remove defaults
@@ -104,10 +191,12 @@ map e
 map r
 map p
 map c
+map u
 map N # jump to prev result
 
 ### own bindings
 map e edit
+map u clear-unselect
 map rm remove $f
 map rp rm_pi
 map x cut
@@ -123,12 +212,8 @@ map . set hidden!
 map R reload
 map I gimp # [I]mage
 map b move-to-inbox # in[B]ox
-
-### create files
-map t touch
-map T touchTex
-map NN gen-note
-map ci create-index
+map <a-d> fzf_dir
+map <a-f> fzf_file
 
 ### jump - cd to dirs
 
