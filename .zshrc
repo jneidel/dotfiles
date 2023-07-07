@@ -21,9 +21,6 @@ zstyle ':completion:*' list-colors 'di=01;34:ln=35:so=32:pi=33:ex=01;32:bd=46;34
 setopt MULTIOS
 setopt PROMPT_SUBST
 
-# Import aliases
-source $ZSH_DIR/init.zsh
-
 ## Language
 export LANG=en_US.UTF-8
 # tmux needs to know the encoding: https://github.com/wernight/powerline-web-fonts/issues/8#issuecomment-353081869
@@ -111,6 +108,10 @@ compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 # kitty shell integration
 test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
+
+# Import aliases
+source $ZSH_DIR/org.zsh
+source $ZSH_DIR/init.zsh
 
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc

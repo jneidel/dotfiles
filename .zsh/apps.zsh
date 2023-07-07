@@ -26,12 +26,12 @@ alias comic="getcomics-dl"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
-local ytdl_location=$HOME/media
-alias ytdl="yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height=720]' -o '$ytdl_location/%(title)s.%(ext)s'"
-alias ytmp3="yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ytdl_location/%(title)s.%(ext)s' --embed-thumbnail"
-alias ytraw="yt-dlp -c --retries 4 -o '$ytdl_location/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working
-alias ythere="yt-dlp -c -i --retries 4 -f 'mp4[height=720]' -o './%(title)s.%(ext)s'"
-alias yt3="yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o './%(title)s.%(ext)s' --embed-thumbnail"
+local ytdl_location=$ORG_MEDIA
+alias ytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
+alias ytmp3="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ytdl_location/%(title)s.%(ext)s' --embed-thumbnail"
+alias ytraw="nice yt-dlp -c --retries 4 -o '$ytdl_location/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working
+alias ythere="nice yt-dlp -c -i --retries 4 -f 'mp4[height=1080]' -o './%(title)s.%(ext)s'"
+alias yt3="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o './%(title)s.%(ext)s' --embed-thumbnail"
 alias -g PE="--playlist-end"
 
 ### redefining existing commands
@@ -108,8 +108,7 @@ gh() {
     grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
 }
 alias wcurl="curl -OJ" # better wget
-alias bud="libreoffice ~/ct/reference/budget.ods &"
-alias mr="disable-mullvad-for node ~/code/mangareader-dl/dist/bin/cli.js d -o ~/ct/manga -p mangalife"
+alias mr="disable-mullvad-for node ~/code/mr/dist/bin/cli.js d -o $ORG_MEDIA/manga -p mangalife"
 ms() {
   is-mullvad && printf "\033[1;32mlockdown-mode is on\033[0m\n" || printf "\033[1;31mlockdown-mode set off\033[0m\n"
   mullvad status
@@ -270,9 +269,9 @@ alias mw="make watch"
 n() {
   note="$@"
   if [ -z "$note" ]; then
-    gen-note $HOME/org/0_inbox
+    gen-note $ORG_INBOX
   else
-    local file="$HOME/org/0_inbox/qc-$(date +%s)"
+    local file="$ORG_INBOX/qc-$(date +%s)"
     echo "$note" >$file
     echo "Wrote to $file"
   fi

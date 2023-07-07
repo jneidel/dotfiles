@@ -1,7 +1,5 @@
 #! /bin/bash
 
-MUSIC_DIR="$HOME/ct/music"
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ unhrd
@@ -14,5 +12,5 @@ EOF
   exit
 fi
 
-du -sc -B M --apparent-size $MUSIC_DIR/[^_]* | # exclude anything starting w/ _ from match
+du -sc -B M --apparent-size $HOME/org/4_resources/1_media/music/[^_]* | # exclude anything starting w/ _ from match
   tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'

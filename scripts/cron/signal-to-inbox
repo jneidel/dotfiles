@@ -94,6 +94,7 @@ parseMessages() {
   fi
 }
 
+~/scripts/cron/waitforinternet
 ~/scripts/cron/cron-notify-send "Receiving notes from signal"
 receive
 parseMessages

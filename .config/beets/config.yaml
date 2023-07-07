@@ -1,6 +1,6 @@
 # docs: https://beets.readthedocs.io/en/stable/reference/config.html
 #
-directory: ~/ct/music/_imported
+directory: ~/org/3_resources/1_media/music/_imported
 library: ~/.local/share/musiclibrary.db
 import:
   copy: yes

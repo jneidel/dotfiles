@@ -48,8 +48,9 @@ extract_annotations() {
     local selection=`jq -r ".[$i].selection" $TMP`
 
     cat <<EOF >$INBOX/webclipping-$(date +%s)-$i.md
-$uri
+{$uri}[$selection]
 
+$uri
 $selection
 
 $annotation
@@ -57,7 +58,8 @@ EOF
   done
 }
 
+~/scripts/cron/waitforinternet
 ~/scripts/cron/cron-notify-send "Fetching annotations"
-fetch
-delete_fetched
-extract_annotations
+fetch >/dev/null 2>&1
+delete_fetched >/dev/null 2>&1
+extract_annotations >/dev/null 2>&1

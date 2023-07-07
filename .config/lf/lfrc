@@ -48,14 +48,7 @@ cmd massmove ${{
   findex . -type d 'rmdir "$1"' >/dev/null 2>/dev/null &
 }}
 
-cmd mkdir %printf "Directory Name: "; read ans; mkdir "$ans"
-cmd touch %printf "File Name: "; read ans; touch "$ans"
-cmd touchTex ${{
-  printf "Tex Name: "
-  read ans
-  vtex "$ans"
-}}
-cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" ~/org/0_inbox/
+cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" $ORG_INBOX/
 
 cmd broot_jump ${{
   f=$(mktemp)
@@ -139,16 +132,17 @@ map ci create-index
 
 ### jump - cd to dirs
 
-map go  cd ~/org
-map gi  cd ~/org/0_inbox
-map gd  cd ~/org/1_design
-map gp  cd ~/org/2_project
-map ga  cd ~/org/3_areas
-map gr  cd ~/org/4_resources
-map gmm cd ~/org/4_resources/1_media
-map gb  cd ~/org/4_resources/1_media/books
-map gmo cd ~/org/4_resources/1_media/movies
-map gM  cd ~/org/4_resources/1_media/music
+map go  %lf -remote "send $id cd $ORG"
+map gi  %lf -remote "send $id cd $ORG_INBOX"
+map gd  %lf -remote "send $id cd $ORG_DESIGN"
+map gp  %lf -remote "send $id cd $ORG_PROJECTS"
+map ga  %lf -remote "send $id cd $ORG_AREAS"
+map gr  %lf -remote "send $id cd $ORG_RESOURCES"
+map gmm %lf -remote "send $id cd $ORG_MEDIA"
+map gb  %lf -remote "send $id cd $ORG_MEDIA/books"
+map gmo %lf -remote "send $id cd $ORG_MEDIA/movies"
+map gM  %lf -remote "send $id cd $ORG_MEDIA/music"
+map gA  %lf -remote "send $id cd $ORG_ARCHIVE"
 
 map gD cd ~/Downloads
 # map gu cd ~/projects/uni
