@@ -1,6 +1,6 @@
 #! /bin/sh
 
-COMIC_DIR=~/ct/comics
+COMIC_DIR=$ORG_MEDIA/comics
 YAC_DB_FILE=$COMIC_DIR/.yacreaderlibrary/library.ydb
 UPDATES=$COMIC_DIR/updates
 

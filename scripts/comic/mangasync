@@ -1,6 +1,6 @@
 #! /bin/sh
 
-MANGA_DIR=~/ct/manga
+MANGA_DIR=$ORG_MEDIA/manga
 YAC_DB_FILE=$MANGA_DIR/.yacreaderlibrary/library.ydb
 UPDATES=$MANGA_DIR/updates
 

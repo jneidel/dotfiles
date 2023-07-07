@@ -1,7 +1,7 @@
 #! /bin/sh
 
-MANGA=~/ct/manga/updates
-COMIC=~/ct/comics/updates
+MANGA=$ORG_MEDIA/manga/updates
+COMIC=$ORG_MEDIA/comics/updates
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   printf "$ show-updates manga|comic
