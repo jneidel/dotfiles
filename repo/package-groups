@@ -97,6 +97,7 @@ zeal Programming language/tool offline documentation
 [mpv]
 mpv Minimal player
 task-spooler Queue commands for linear execution
+socat Manage mpv sockets
 
 ## viewer/reader
 [fbreader]
@@ -273,7 +274,7 @@ systemd:acpid
 xf86-video-intel Video drivers for intel chips
 
 [amd]
-xf86-video-amdgpu Video drivers for intel chips
+xf86-video-amdgpu Video drivers for amd chips
 xf86-video-ati DDX driver, 2D acceleration in Xorg
 
 [pip]
@@ -559,3 +560,6 @@ pandoc-bin Search through .epub, .odt, .docx
 poppler Search through .pdf
 ffmpeg Search through audio/video
 graphicsmagick Search through graphics I presume
+
+[subtitles]
+gnome-subtitles Subtitle editor
