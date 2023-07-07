@@ -43,3 +43,5 @@ map('i', ',,', '<Esc>/<++><CR>c4l')
 -- hop
 -- map('n', 's', ':HopChar2<CR>')
 -- map('n', 'S', ':HopWord<CR>')
+
+map("n", "<Leader>c", ':%y+ | call system("xclip -selection clipboard", @+) | echom "Copied the file\'s contents to clipboard"<CR>')

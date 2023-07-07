@@ -4,4 +4,6 @@ if [ "$(uname)" = "Linux" ]; then
 
   alias paco="yay -Qdt" # list orphans
   alias pacor"yay -Rsn $(pacman -Qtdq)" # rm orphans
+
+  alias yaywhy="yay -Qii"
 fi

@@ -35,15 +35,20 @@ fi
 FILE_EXT="${MV##*.}"
 OUT="$TEMP.$FILE_EXT"
 
+cleanup() {
+  rm "$OUT"
+}
+trap cleanup EXIT
+
 run() {
   case "$FILE_EXT" in
-    mkv) ffmpeg -i "$MV" -sub_charenc 'UTF-8' -f srt -i "$SUB" -map 0 -map 1:0 -c:v copy -c:a copy -c:s srt "$OUT";
+    mkv) nice -n 19 ffmpeg -i "$MV" -sub_charenc 'UTF-8' -f srt -i "$SUB" -map 0 -map 1:0 -c:v copy -c:a copy -c:s srt "$OUT";
       return $?;;
-    mp4) ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";
+    mp4) nice -n 19 ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";
       return $?;;
     avi)
       OUT="$TEMP.mp4";
-      ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";
+      nice -n 19 ffmpeg -i "$MV" -i "$SUB" -c copy -c:s mov_text "$OUT";
       return $?;;
     *) echo Invalid format: $FILE_EXT
       exit 1;;
@@ -53,12 +58,21 @@ run() {
 # multiple sub files:
 # ffmpeg -i test.mp4 -i Love.Actually.2003.1080p.BluRay.x264.YIFY_SDH.srt -i Tatsaechlich.Liebe.2003.TL.1080p.x264_ger2.srt -map 0:v -map 0:a -map 1 -map 2 -c:v copy -c:a copy -c:s srt -metadata:s:s:0 language=eng -metadata:s:s:1 language=ger out2.mkv
 
-run # &
-RUN_PID=$!
-renice -n 19 -p $RUN_PID # broken
-fg # broken
+prompt_for_replacement() {
+  echo "Transcoded to: $OUT"
 
-# nice sh -c run && {
-#   # rm "$SUB"
-#   mv "$OUT" "$MV"
-# }
+  printf "Open transcoded file? (Y/n): "
+  read -r open
+  if [ "$open" != "n" ]; then
+    mime "$OUT"
+  fi
+
+  printf "Replace original with transcoded file? (y/N): "
+  read -r res
+  if [ "$res" = "y" ]; then
+    rm "$SUB"
+    mv "$OUT" "$MV"
+  fi
+}
+
+run && prompt_for_replacement

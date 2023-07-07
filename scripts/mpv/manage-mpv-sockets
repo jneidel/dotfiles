@@ -24,7 +24,7 @@ fi
 command -v mpv >/dev/null || { echo "mpv is not installed" 1>&2; exit 127; }
 command -v ss >/dev/null || { echo "ss is not installed" 1>&2; exit 127; }
 command -v tac >/dev/null || { echo "tac is not installed" 1>&2; exit 127; }
-# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+command -v socat >/dev/null || { echo "socat is not installed" 1>&2; exit 127; }
 
 list_open_sockets() {
   ss -l -x src "${SCHEMA}*" | grep -Po "${SCHEMA}.*?(?=\s)" | tac

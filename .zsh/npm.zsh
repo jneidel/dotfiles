@@ -42,6 +42,7 @@ alias nwts="nr watch-ts"
 alias nww="nr watch-webpack"
 alias nwu="nr watch-unit"
 alias ntw="nr watch-test"
+alias nws="nr watch-start"
 
 ## volta
 alias vr="volta run npm run --silent"

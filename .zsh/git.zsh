@@ -58,6 +58,7 @@ clone() {
   cd $(echo $repo | rev | cut -d/ -f1 | cut -d. -f2- | rev)
 }
 alias stash="git stash"
+alias stashp="stash pop"
 
 ## checkout
 # alias co="git checkout" # replace by script of the same name
@@ -89,9 +90,11 @@ alias reflog="git reflog"
 
 ## diff
 alias gd="git diff"
+alias gds="gd --staged"
 
 ## ignore
 alias ignore="git update-index --assume-unchanged"
+alias unignore="git update-index --no-assume-unchanged"
 
 ## open repo in browser
 gho() {
