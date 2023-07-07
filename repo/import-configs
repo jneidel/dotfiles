@@ -25,7 +25,8 @@ function get-files {
   for IN in $(cat /dev/stdin); do
     # categories
     [ ${IN:0:1} = "[" ] && {
-      IN=${IN:1:-1} # strip []
+      IN="${IN%]*}"
+      IN="${IN##*\[}"
       CATEGORY=$IN
       [ $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && echo "## $CATEGORY"
       continue
