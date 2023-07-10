@@ -24,6 +24,7 @@ clean .config/nvim
 [tmux]
 create .config/tmux
 .config/tmux/tmux.conf
+.config/tmux/tmux-256color.terminfo
 
 [scripts]
 clean scripts

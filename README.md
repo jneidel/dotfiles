@@ -57,10 +57,17 @@ aliases.
 
 Multiple shells within the same terminal, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
 
-- [main config](.tmux.conf)
+- [main config](.config/tmux/tmux.conf)
 - [scripts](scripts/tmux)
+- [terminfo](.config/tmux/tmux-256color.terminfo)
 
 ![](images/tmux.png)
+
+To supports italic fonts, enable the terminal capabilities with:
+
+```sh
+tic -x .config/tmux/tmux-256color.terminfo
+```
 
 ### neovim (terminal editor)
 
