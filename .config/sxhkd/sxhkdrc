@@ -61,29 +61,24 @@ super + m
   qpwgraph
 
 ## mpd
-### playback control, 1st for macbook, 2nd for thinkpad
-# Also JBL play button
 XF86AudioPlay
-  ~/scripts/sxhkd/control-mpd toggle
+  ~/scripts/sxhkd/control-mpd toggle # macbook, JBL speaker single press
 XF86Search
-  ~/scripts/sxhkd/control-mpd toggle
-XF86Bluetooth
-  ~/scripts/sxhkd/control-mpd toggle
+  ~/scripts/sxhkd/control-mpd toggle # x240
+XF86Tools
+  ~/scripts/sxhkd/control-mpd toggle # x270
 
-# Also JBL play double press
 XF86AudioNext
-  ~/scripts/sxhkd/control-mpd next
+  ~/scripts/sxhkd/control-mpd next # JBL speaker double press
 XF86LaunchA
-  ~/scripts/sxhkd/control-mpd next
-XF86Keyboard
   ~/scripts/sxhkd/control-mpd next
 XF86Favorites
   ~/scripts/sxhkd/control-mpd next
 
 XF86AudioPrev
-  ~/scripts/sxhkd/control-mpd prev
-XF86Tools
-  ~/scripts/sxhkd/control-mpd prev
+  ~/scripts/sxhkd/control-mpd prev # x240
+XF86Display
+  ~/scripts/sxhkd/control-mpd prev # x240
 
 ## brightness
 XF86MonBrightnessUp
@@ -134,7 +129,6 @@ super + i
 super + S
   toggle-screenkey
 
-# which key is this?
-XF86Tools
-  xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
+# xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
+
 # XF86 keys: http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
