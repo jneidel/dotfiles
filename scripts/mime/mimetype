@@ -40,7 +40,8 @@ classify_file() {
     fileext=${basename##*.}.$fileext
     basename=${basename%.*}
   fi
-  fileext=${fileext%.}
+  fileext=${fileext%.} # after .
+  fileext=${fileext,,} # to lowercase
 
   if [ -z "$fileext" ] || echo "$fileext" | grep " " >/dev/null; then
     FILE_OUTPUT="$(file -b "$1" | cut -d, -f1)"
