@@ -1,0 +1,30 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ yt-download-transcript VIDEO_URL
+Download the transcript of a video
+
+Parameters:
+  \$1: the videos url
+
+Example:
+  $ yt-download-transcript https://www.youtube.com/watch?v=vjDoQA4C22c
+EOF
+  exit
+fi
+
+command -v yt-dlp >/dev/null || { echo "yt-dlp is not installed" 1>&2; exit 127; }
+
+VIDEO_URL="$1"
+
+download() {
+  yt-dlp  --write-sub --convert-sub srt --skip-download "$VIDEO_URL" -o "$ORG_INBOX/%(title)s.%(ext)s"
+}
+
+format() {
+  sed -E -i '/^$/d; /^[0-9]+$/d; /^[0-9]+.+-->.+[0-9]$/d; s|\\h.*||g; s|\r||g' $ORG_INBOX/*.srt
+}
+
+download
+format

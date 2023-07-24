@@ -24,10 +24,10 @@ command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR is
 
 get_new_note_name() {
   {
-    ls note-???.md 2>/dev/null || echo note-000.md
+    ls note-???.norg 2>/dev/null || echo note-000.norg
   } | tail -n1 | cut -d- -f2 | cut -d. -f1 |
     awk '{ print $1"+"1 }' | bc | xargs printf "00%d\n" | rev | cut -c1-3 | rev |
-    awk '{ print "note-"$1".md" }'
+    awk '{ print "note-"$1".norg" }'
 }
 
 dir="$1"

@@ -5,7 +5,9 @@
 INBOX=$HOME/org/0_inbox
 XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 CACHE_DIR=$XDG_DATA_HOME/signal-cli
+ERROR_LOG=$CACHE_DIR/error.log
 ATTACHMENT_DIR="$CACHE_DIR/attachments"
+NUMBERS_WHITELIST=$HOME/scripts/personal/signal-numbers-whitelist
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -21,6 +23,15 @@ command -v signal-cli >/dev/null || { echo "signal-cli is not installed" 1>&2; e
 
 CACHE_FILE="$CACHE_DIR/received-messages-$(date +%s)"
 
+is_whitelisted() {
+  local number="$1"
+  if grep "$number" $NUMBERS_WHITELIST >/dev/null; then
+    true
+  else
+    false
+  fi
+}
+
 receive() {
   signal-cli -a $SIGNAL_NUMBER receive --ignore-stories --send-read-receipts >$CACHE_FILE 2>/tmp/signal-cli-errors ||
     echo "Reciving signal messages failed!\nRun the script manually or consult /tmp/signal-cli-errors" >$INBOX/signal-cli-errors
@@ -32,6 +43,7 @@ parseMessages() {
     N=0
     BODY=""
     ATTACHMENT=""
+    ignore_message=0
     attachment_count=1
     is_multiline=0
     multiline_body_done=0
@@ -45,25 +57,30 @@ parseMessages() {
         fi
       fi
 
+      has_envelope=`echo $line | grep -Po "^Envelope from: .+?\K\+\d+"`
+      if [ -n "$has_envelope" ] && ! is_whitelisted "$has_envelope"; then
+        ignore_message=1
+      fi
+
       has_body=`echo $line | grep -Po "^Body: \K.+"`
       if [ -n "$has_body" ]; then
         BODY="$has_body"
       fi
 
       has_filename=`echo $line | grep -Po "Filename: \K.+"`
-      if [ -n "$ATTACHMENT" ] && [ -n "$has_filename" ]; then
+      if [ -n "$ATTACHMENT" ] && [ -n "$has_filename" ] && [ "$ignore_message" -eq 0 ]; then
           cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$has_filename"
           ATTACHMENT=""
           attachment_count=$((${attachment_count}+1))
       fi
 
       has_attachement=`echo $line | grep -Po "Id: \K.+"`
-      if [ -n "$has_attachement" ]; then
+      if [ -n "$has_attachement" ] && [ "$ignore_message" -eq 0 ]; then
         if [ -n "$ATTACHMENT" ]; then
           if [ -n "$BODY" ]; then
-            cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$BODY-$attachment_count.${ATTACHMENT##*.}"
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$BODY-$attachment_count.${ATTACHMENT##*.}" 2>$ERROR_LOG
           else
-            cp "$ATTACHMENT_DIR/$ATTACHMENT" $INBOX/
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" $INBOX/ 2>$ERROR_LOG
           fi
           ATTACHMENT=""
         fi
@@ -71,15 +88,15 @@ parseMessages() {
       fi
 
       if [ -z "$line" ] && ([ "$is_multiline" -eq 0 ] || [ "$multiline_body_done" -eq 1 ]); then # reset
-        if [ -n "$BODY" ] && [ -z "$ATTACHMENT" ]; then
+        if [ -n "$BODY" ] && [ -z "$ATTACHMENT" ] && [ "$ignore_message" -eq 0 ]; then
           echo "$BODY" >"$INBOX/signal-$(date +%s)-$N.md"
         fi
 
-        if [ -n "$ATTACHMENT" ]; then
+        if [ -n "$ATTACHMENT" ] && [ "$ignore_message" -eq 0 ]; then
           if [ -n "$BODY" ]; then
-            cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$BODY-$attachment_count.${ATTACHMENT##*.}"
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" "$INBOX/$BODY-$attachment_count.${ATTACHMENT##*.}" 2>$ERROR_LOG
           else
-            cp "$ATTACHMENT_DIR/$ATTACHMENT" $INBOX/
+            cp "$ATTACHMENT_DIR/$ATTACHMENT" $INBOX/ 2>$ERROR_LOG
           fi
         fi
 
@@ -89,6 +106,7 @@ parseMessages() {
         attachment_count=1
         multiline_body_done=0
         is_multiline=0
+        ignore_message=0
       fi
     done <$CACHE_FILE
   fi

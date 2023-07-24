@@ -115,7 +115,7 @@ esac
 
 # exit 1 means the handler does not like to be run in the background (&)
 if [ "$EXIT_CODE" -eq 0 ]; then
-  sh -c "$HANDLER \"$FILE\" &"
+  sh -c "$HANDLER '$FILE' &"
 elif [ "$EXIT_CODE" -eq 1 ]; then
-  sh -c "$HANDLER \"$FILE\""
+  sh -c "$HANDLER '$FILE'"
 fi

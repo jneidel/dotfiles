@@ -45,7 +45,7 @@ case $EXT in
   html) echo "$BROWSER >/dev/null 2>&1";;
   exe) echo "wine >/dev/null 2>&1";;
   gpg|*.gpg) echo extracthere; exit 1;;
-  txt|md|java|yml|yaml|json) echo "$EDITOR"; exit 1;;
+  txt|md|java|yml|yaml|json|norg) echo "$EDITOR"; exit 1;;
   ods|xlsx|csv) echo libreoffice;;
   docx|pptx|odp|odt|xltx) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
