@@ -80,3 +80,4 @@ ttf https://github.com/search?q=filename%3A%s.ttf&type=Code
 aur https://aur.archlinux.org/packages?K=%s
 norg https://github.com/search?q=repo%3Anvim-neorg%2Fneorg+%s&type=wikis
 neorg https://github.com/search?q=repo%3Anvim-neorg%2Fneorg+%s&type=wikis
+lf https://github.com/search?q=repo%3Agokcehan%2Flf+%s&type=issues

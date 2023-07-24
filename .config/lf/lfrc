@@ -83,13 +83,13 @@ cmd rm_pi ${{
 }}
 
 cmd paste_and_forget %{{
-  lf -remote 'send $id paste'
-  lf -remote 'send $id clear'
+  lf -remote "send $id paste"
+  lf -remote "send $id clear"
 }}
 
 cmd clear-unselect %{{
-  lf -remote 'send $id clear'
-  lf -remote 'send $id unselect'
+  lf -remote "send $id clear"
+  lf -remote "send $id unselect"
 }}
 
 cmd fzf_dir ${{
