@@ -6,6 +6,13 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
 export XDG_CONFIG_RC="${XDG_DATA_HOME}"
 
+typeset -A ZI
+ZI[BIN_DIR]="${XDG_STATE_HOME}/.zi/bin"
+source "${ZI[BIN_DIR]}/zi.zsh"
+
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
+
 # oh-my-zsh
 ZSH_DIR=~/.zsh
 source $ZSH_DIR/oh-my-zsh.sh
@@ -73,6 +80,9 @@ test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/s
 
 # Import aliases
 source $ZSH_DIR/init.zsh
+
+fpath+=( $ZSH_DIR/functions )
+autoload -Uz tp
 
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc
