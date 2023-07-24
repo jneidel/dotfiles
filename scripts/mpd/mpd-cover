@@ -3,6 +3,8 @@
 MUSIC_DIR="$(grep '^music_directory' $HOME/.config/mpd/mpd.conf | awk -F\" '{ print $2 }')"
 MUSIC_DIR="${MUSIC_DIR/#\~/$HOME}"
 
+echo $MUSIC_DIR
+
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   echo "$ mpd-cover"
   echo "Open cover of current mpd track in $IMAGE_VIEWER_BIN"

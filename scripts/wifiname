@@ -19,6 +19,7 @@ IS_DEV=0
 INTERFACE="wlp*"
 case "$(cat /etc/hostname)" in
     *x240) INTERFACE=wlp3s0;;
+    *x270) INTERFACE=wlan0;;
 esac
 
 CONNECTION=`nmcli connection show --active`

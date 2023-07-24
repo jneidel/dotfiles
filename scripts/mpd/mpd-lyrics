@@ -65,4 +65,3 @@ if [ -n "$LYRICS" ]; then
 else
   echo "Song has no lyrics" 1>&2
 fi
-

@@ -118,9 +118,9 @@ wait_for_newsboat() {
   fi
 }
 alias new="wait_for_newsboat clean"
-alias pod="wait_for_newsboat pod"
-alias misc="wait_for_newsboat misc"
-alias ma="wait_for_newsboat manga"
+# alias pod="wait_for_newsboat pod"
+# alias misc="wait_for_newsboat misc"
+# alias ma="wait_for_newsboat manga"
 nomoreent() {
   # echo "No youtube and gaming entertainment for now"
   # return 1
@@ -264,3 +264,25 @@ n() {
     echo "Wrote to $file"
   fi
 }
+
+ssm() { # cd into currently playing mpd album
+  ALBUM=`dirname "$(mpc-get file)"`
+  source ~/scripts/mpd/shared-mpd-variables
+
+  if [ "$IS_SERVER" -eq 1 ]; then
+    DIR="usb/music/$ALBUM"
+    ssh pi -t "cd '$DIR'; zsh"
+
+    exit 0
+  else
+    DIR="$ORG_MEDIA/music/$ALBUM"
+    cd $DIR
+  fi
+}
+
+## pots
+alias pta="pots trans add"
+alias ptl="pots trans list"
+alias pte="pots trans edit"
+alias ptr="pots trans remove"
+alias pv="pots view"
