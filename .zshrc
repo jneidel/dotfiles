@@ -1,4 +1,11 @@
 # Zsh config
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
+export XDG_CONFIG_RC="${XDG_DATA_HOME}"
+
 # oh-my-zsh
 ZSH_DIR=~/.zsh
 source $ZSH_DIR/oh-my-zsh.sh
@@ -44,9 +51,7 @@ export LESS="-R"
 export BROWSER=brave
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
-export NODE_PATH=/usr/lib/node_module
 # for eslint, see: https://github.com/eslint/eslint/issues/11914#issuecomment-525498682
-export LUA_SERVER_PATH="$HOME/.local/share/nvim/lua-language-server"
 
 ### Themes
 export GTK_THEME=Arc
@@ -60,51 +65,13 @@ export KEYID=B29E6A7A7DFD16FA # GPG keyid
 
 test -f "$HOME/.config/broot/launcher/bash/br" && source $HOME/.config/broot/launcher/bash/br
 
-### Config dirs
-# reduce number of files in the home dir
-# see: https://wiki.archlinux.org/index.php/XDG_Base_Directory
-# see: https://github.com/LukeSmithxyz/voidrice/blob/master/.profile
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
-export XDG_CONFIG_RC="${XDG_DATA_HOME}"
-export LESSHISTFILE="-"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-export npm_config_cache="${XDG_CACHE_HOME}/npm"
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export VOLTA_HOME="$XDG_DATA_HOME/volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
-export _JAVA_OPTIONS="-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java"
-export MPLAYER_HOME="${XDG_CONFIG_HOME}/mplayer"
-export MYSQL_HISTFILE="${XDG_DATA_HOME}/mysql_history"
-export PSQL_HISTORY="${XDG_CACHE_HOME}/psql_history"
-export REDISCLI_HISTFILE="${XDG_DATA_HOME}/redis/rediscli_history"
-export TERMINFO="${XDG_DATA_HOME}/terminfo"
-export TERMINFO_DIRS="${XDG_DATA_HOME}/terminfo:/usr/share/terminfo"
-export ANDROID_HOME="$XDG_DATA_HOME"/android
-export GRIPHOME="$XDG_CONFIG_HOME/grip"
-export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
-export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
-export CARGO_HOME="${XDG_DATA_HOME}/cargo"
-export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
-export GOPATH="${XDG_DATA_HOME}/go"
-export NETRC="$XDG_DATA_HOME"
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
 compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 # kitty shell integration
 test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
 
-# rancher desktop
-test -e "$HOME/.rd" && export PATH="$HOME/.rd/bin:$PATH"
-
 # Import aliases
-source $ZSH_DIR/org.zsh
 source $ZSH_DIR/init.zsh
 
 # start xorg on first login into the tty
