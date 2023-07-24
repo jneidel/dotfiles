@@ -38,19 +38,13 @@ EOF
   exit
 fi
 
-# command -v mimetype >/dev/null || { echo "mimetype script is not in PATH"; exit 127; }
-# command -v mimeopen >/dev/null || { echo "mimeopen script is not in PATH"; exit 127; }
-# command -v mimeedit >/dev/null || { echo "mimeedit script is not in PATH"; exit 127; }
-# command -v mimepreview >/dev/null || { echo "mimepreview script is not in PATH"; exit 127; }
-
-CMD=""
+CMD="open"
 FILE=""
 ENV_=""
 
 if [ "$1" = "-e" ]; then # -e ENV [CMD] FILE
   ENV_="$2"
-  if [ -z "$4" ]; then
-    CMD="open"
+  if [ -n "$3" ] && [ -z "$4" ]; then
     FILE="$3"
   else
     CMD="$3"
@@ -58,8 +52,7 @@ if [ "$1" = "-e" ]; then # -e ENV [CMD] FILE
   fi
 elif [ "$2" = "-e" ]; then # [CMD]/FILE -e ENV [FILE]
   ENV_="$3"
-  if [ -z "$4" ]; then
-    CMD="open"
+  if [ -n "$3" ] && [ -z "$4" ]; then
     FILE="$1"
   else
     CMD="$1"
@@ -70,8 +63,7 @@ elif [ "$3" = "-e" ]; then # CMD FILE -e ENV
   CMD="$1"
   FILE="$2"
 else # [CMD] FILE
-  if [ -z "$2" ]; then
-    CMD="open"
+  if [ -n "$1" ] && [ -z "$2" ]; then
     FILE="$1"
   else
     CMD="$1"
