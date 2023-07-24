@@ -14,7 +14,7 @@ set cursorpreviewfmt "\033[48;5;240m"
 
 # for working with $fs/$fx
 set shell zsh
-set shellopts '-eu:--shwordsplit'
+set shellopts '-euy'
 set ifs "\n"
 set filesep "\n"
 
@@ -105,6 +105,36 @@ cmd fzf_file ${{
   lf -remote "send $id select '~/$(pick)'"
   lf -remote "send $id open"
 }}
+
+# TODO: fix <enter> mapping fucking with mkdir not being able to press enter
+# filter and select entry in cwd
+# src: https://github.com/gokcehan/lf/wiki/Tips#using-incfilter-to-select-and-open-files
+# set incfilter
+# map f :filter; set user_filter true
+# cmap <enter> &{{ # select and open file
+#   if [ "$lf_user_filter" = true ]; then
+#     lf -remote "send $id :cmd-enter; set user_filter false; setfilter; open"
+#   else
+#     lf -remote "send $id cmd-escape"
+#   fi
+# }}
+# cmap <esc> &{{ # exit filter mode
+#   if [ "$lf_user_filter" = true ]; then
+#     lf -remote "send $id :cmd-escape; set user_filter false"
+#   else
+#     lf -remote "send $id cmd-escape"
+#   fi
+# }}
+# cmap <a-j> &{{ # go to next file
+#   if [ "$lf_user_filter" = true ]; then
+#     lf -remote "send $id down"
+#   fi
+# }}
+# cmap <a-k> &{{ # go to previous file
+#   if [ "$lf_user_filter" = true ]; then
+#     lf -remote "send $id up"
+#   fi
+# }}
 
 ## create files
 cmd touch %printf "File Name: "; read ans; touch "$ans"
