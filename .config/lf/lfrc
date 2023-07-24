@@ -83,26 +83,27 @@ cmd rm_pi ${{
 }}
 
 cmd paste_and_forget %{{
-  lf -remote 'send paste'
-  lf -remote 'send clear'
+  lf -remote 'send $id paste'
+  lf -remote 'send $id clear'
 }}
 
 cmd clear-unselect %{{
-  lf -remote 'send clear'
-  lf -remote 'send unselect'
+  lf -remote 'send $id clear'
+  lf -remote 'send $id unselect'
 }}
 
 cmd fzf_dir ${{
   pick() {
     FZF_DEFAULT_COMMAND="find ~/org -type d | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
   }
-  lf -remote "send $id select '$HOME/$(pick)'"
+  lf -remote "send $id cd '~/$(pick)'"
 }}
 cmd fzf_file ${{
   pick() {
     FZF_DEFAULT_COMMAND="rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/' ~/org | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
   }
-  lf -remote "send $id select '$HOME/$(pick)'"
+  lf -remote "send $id select '~/$(pick)'"
+  lf -remote "send $id open"
 }}
 
 ## create files
@@ -131,8 +132,9 @@ cmd mkdir %{{
   read ans
   mkdir "$ans"
 
-  lf -remote "send select '$ans'"
-  lf -remote "send open"
+  # TODO: debugs select
+  # lf -remote "send $id select '$ans'"
+  # lf -remote "send $id open"
 }}
 cmd create-project ${{
   printf "Project dir name: "
@@ -141,11 +143,13 @@ cmd create-project ${{
   mkdir "$project"
   cd "$project"
 
-  lf -remote "send select '$project'"
-  lf -remote "send open"
+  lf -remote "send $id select '$project'"
+  lf -remote "send $id open"
 
   touch "$project/index.norg"
   $EDITOR "$project/index.norg"
+
+  lf -remote "send $id reload"
 }}
 cmd create-design ${{
   printf "Design dir name: "
@@ -154,11 +158,13 @@ cmd create-design ${{
   mkdir "$design"
   cd "$design"
 
-  lf -remote "send select '$design'"
-  lf -remote "send open"
+  lf -remote "send $id select '$design'"
+  lf -remote "send $id open"
 
   touch "$design/index.norg"
   $EDITOR "$design/index.norg"
+
+  lf -remote "send $id reload"
 }}
 cmd create-area ${{
   printf "Area dir name: "
@@ -167,11 +173,13 @@ cmd create-area ${{
   mkdir "$area"
   cd "$area"
 
-  lf -remote "send select '$area'"
-  lf -remote "send open"
+  lf -remote "send $id select '$area'"
+  lf -remote "send $id open"
 
   touch "$area/index.norg"
   $EDITOR "$area/index.norg"
+
+  lf -remote "send $id reload"
 }}
 ### create files
 map t touch
