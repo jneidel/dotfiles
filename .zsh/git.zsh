@@ -98,3 +98,8 @@ alias unignore="git update-index --no-assume-unchanged"
 gho() {
   git remote get-url origin | cut -d@ -f2 | cut -d. -f1-2 | sed 's|:|/|' | awk '{print "https://"$1}' | xargs -r $B >/dev/null 2>&1
 }
+
+## cherry-pick
+alias gcp="git cherry-pick"
+alias gcpc="git cherry-pick --continue"
+alias gcpa="git cherry-pick --abort"
