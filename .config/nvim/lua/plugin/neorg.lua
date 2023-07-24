@@ -18,6 +18,7 @@ return {
           -- https://github.com/nvim-neorg/neorg/wiki/Concealer
           config = {
             icon_preset = "diamond",
+            folds = true,
             icons = {
               todo = {
                 done = {
