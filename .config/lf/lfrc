@@ -45,7 +45,7 @@ cmd massmove ${{
   echo "$fx" | xargs -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
 
   # if spaces in name, qmv spawns annoying empty dirs
-  findex . -type d 'rmdir "$1"' >/dev/null 2>/dev/null &
+  findex . -type d -not -path '.' 'rmdir "$1"' >/dev/null 2>/dev/null &
 }}
 
 cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" $ORG_INBOX/
@@ -130,7 +130,8 @@ cmd create-norg ${{
 cmd mkdir %{{
   printf "Directory name: "
   read ans
-  mkdir "$ans"
+  mkdir -p "$ans"
+  findex "$ans" -type d -not -path "$ans" 'rmdir "$1"' 2>/dev/null
 
   # TODO: debugs select
   # lf -remote "send $id select '$ans'"
@@ -140,8 +141,9 @@ cmd create-project ${{
   printf "Project dir name: "
   read ans
   local project="$ORG_PROJECTS/$ans"
-  mkdir "$project"
+  mkdir -p "$project"
   cd "$project"
+  findex . -type d -not -path '.' 'rmdir "$1"' 2>/dev/null
 
   lf -remote "send $id select '$project'"
   lf -remote "send $id open"
@@ -155,8 +157,9 @@ cmd create-design ${{
   printf "Design dir name: "
   read ans
   local design="$ORG_DESIGN/$ans"
-  mkdir "$design"
+  mkdir -p "$design"
   cd "$design"
+  findex . -type d -not -path '.' 'rmdir "$1"' 2>/dev/null
 
   lf -remote "send $id select '$design'"
   lf -remote "send $id open"
@@ -170,8 +173,9 @@ cmd create-area ${{
   printf "Area dir name: "
   read ans
   local area="$ORG_AREAS/$ans"
-  mkdir "$area"
+  mkdir -p "$area"
   cd "$area"
+  findex . -type d -not -path '.' 'rmdir "$1"' 2>/dev/null
 
   lf -remote "send $id select '$area'"
   lf -remote "send $id open"
