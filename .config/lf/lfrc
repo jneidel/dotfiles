@@ -42,7 +42,7 @@ cmd edit ${{
 }}
 
 cmd massmove ${{
-  qmv -f do -d $fx
+  echo "$fx" | xargs -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
 
   # if spaces in name, qmv spawns annoying empty dirs
   findex . -type d 'rmdir "$1"' >/dev/null 2>/dev/null &

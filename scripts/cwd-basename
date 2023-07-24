@@ -1,0 +1,34 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ cwd-basename FILE
+Acts like basename if the FILE is in the current working directory (cwd).
+Otherwise just print the FILE.
+
+Parameters:
+  \$1: file to be evaluated
+
+Example:
+  # cwd = /etc
+  $ cwd-basename /etc/passwd
+  #=> passwd
+  $ cwd-basename /etc/pacman.d/mirrorlist
+  #=> /etc/pacman.d/mirrorlist
+  $ cwd-basename /home
+  #=> /home
+EOF
+  exit
+fi
+
+command -v basename >/dev/null || { echo "basename is not installed" 1>&2; exit 127; }
+command -v dirname >/dev/null || { echo "dirname is not installed" 1>&2; exit 127; }
+command -v pwd >/dev/null || { echo "pwd is not installed" 1>&2; exit 127; }
+
+FILE="$1"
+
+if [ `dirname "$FILE"` = `pwd` ]; then
+  basename "$FILE"
+else
+  echo "$FILE"
+fi
