@@ -1,0 +1,23 @@
+#! /bin/sh
+
+. $HOME/scripts/personal/signal_number.sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ send-challenge-review-notification
+Send the weekly challenge review notifications via signal
+EOF
+  exit
+fi
+
+command -v signal-cli >/dev/null || { echo "signal-cli is not installed" 1>&2; exit 127; }
+
+send() {
+  local group="$1"
+  signal-cli -a $SIGNAL_NUMBER send -g "$group" -m 'Challenge review time!' --text-style "0:23:ITALIC" >/dev/null 2>&1
+}
+
+~/scripts/cron/waitforinternet
+~/scripts/cron/cron-notify-send "Sending challenge review notifications"
+send "UIXSwit7KF/RqKfH9jqySnLTgqVCimGcEK25Dbf+yDw=" # weekly challenges
+send "97DrVHpStw2VOPfGzOtdnWsUJV3W4HB7QEKg155mhMg=" # 66 day challenge
