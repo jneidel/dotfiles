@@ -52,18 +52,6 @@ export LUA_SERVER_PATH="$HOME/.local/share/nvim/lua-language-server"
 export GTK_THEME=Arc
 export BAT_THEME=ansi
 
-#### less coloring (man pages), see colored-man script
-export LESS_TERMCAP_mb=$'\e[1;34m'
-# headlines, hyperlinks - yellow
-export LESS_TERMCAP_md=$(tput bold; tput setaf 3)
-export LESS_TERMCAP_me=$'\e[0m'
-# less status/search matches - blue
-export LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4)
-export LESS_TERMCAP_se=$'\e[0m'
-# commands - red, underlined
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1)
-export LESS_TERMCAP_ue=$'\e[0m'
-
 ### Application options
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
 

@@ -1,25 +1,13 @@
 #! /bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ colored-man
-man colored with less termcap
+Colored man pages
 "; exit
 fi
 
-# taken from ~/.zshrc
-# colors: https://jeffkreeftmeijer.com/vim-16-color/
-# reference: https://www.youtube.com/watch?v=OkbHyS15rY8
-# reference: https://github.com/BrodieRobertson/dotfiles/blob/feccb5edfb341bb369e0ab473c55a2de5a2cc83a/.zshenv
-
-export LESS_TERMCAP_mb=$'\e[1;34m'
-# headlines, hyperlinks - yellow
-export LESS_TERMCAP_md=$(tput bold; tput setaf 3)
-export LESS_TERMCAP_me=$'\e[0m'
-# less status/search matches - blue
-export LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4)
-export LESS_TERMCAP_se=$'\e[0m'
-# commands - red, underlined
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1)
-export LESS_TERMCAP_ue=$'\e[0m'
+. $DIR/colored-man.env
 
 man $1
