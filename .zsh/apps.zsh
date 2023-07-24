@@ -44,8 +44,8 @@ alias v="vim"
 alias nvim="vim"
 alias vvim="/bin/vim"
 alias ex="extract"
-alias grep="/bin/grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
-alias mkdir="/usr/bin/mkdir -p"
+alias grep="$(where grep | tail -n1) --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
+alias mkdir="$(where mkdir | tail -n1) -p"
 alias glow="/bin/glow -s dark"
 alias cal="/bin/cal -m"
 alias vdirsyncer="vdirsyncer -c ~/.config/vdirsyncer/config"
@@ -74,7 +74,7 @@ lf() {
 	ueberzug layer -s <"$FIFO_UEBERZUG" -p json &
 	exec 3>"$FIFO_UEBERZUG"
 	trap cleanup EXIT
-	command /bin/lf "$@" 3>&-
+	command $(where lf | tail -n1) "$@" 3>&-
 }
 
 ### shorter script names
