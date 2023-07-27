@@ -163,9 +163,7 @@ cmd mkdir %{{
   mkdir -p "$ans"
   findex "$ans" -type d -not -path "$ans" 'rmdir "$1"' 2>/dev/null
 
-  # TODO: debugs select
-  # lf -remote "send $id select '$ans'"
-  # lf -remote "send $id open"
+  lf -remote "send $id cd '$ans'" # curiously only works if no spaces in name
 }}
 cmd create-project ${{
   printf "Project dir name: "
@@ -175,8 +173,7 @@ cmd create-project ${{
   cd "$project"
   findex . -type d -not -path '.' 'rmdir "$1"' 2>/dev/null
 
-  lf -remote "send $id select '$project'"
-  lf -remote "send $id open"
+  lf -remote "send $id cd '$project'"
 
   touch "$project/index.norg"
   $EDITOR "$project/index.norg"
@@ -191,8 +188,7 @@ cmd create-design ${{
   cd "$design"
   findex . -type d -not -path '.' 'rmdir "$1"' 2>/dev/null
 
-  lf -remote "send $id select '$design'"
-  lf -remote "send $id open"
+  lf -remote "send $id cd '$design'"
 
   touch "$design/index.norg"
   $EDITOR "$design/index.norg"
@@ -207,8 +203,7 @@ cmd create-area ${{
   cd "$area"
   findex . -type d -not -path '.' 'rmdir "$1"' 2>/dev/null
 
-  lf -remote "send $id select '$area'"
-  lf -remote "send $id open"
+  lf -remote "send $id cd '$area'"
 
   touch "$area/index.norg"
   $EDITOR "$area/index.norg"
