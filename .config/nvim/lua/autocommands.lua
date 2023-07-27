@@ -27,7 +27,7 @@ local function onWrite( pattern, command )
 end
 
 -- update TOC
-onWrite({HOME .. "/code/dotfiles/README.md"}, "!markdown-toc -i ~/code/dotfiles/README.md")
+onWrite({HOME .. "/code/dotfiles/README.md"}, "!doctoc README.md")
 
 -- restart application after writing config
 onWrite({HOME .. "/.Xresources", HOME .. "/.Xdefaults" }, "!xrdb %")
