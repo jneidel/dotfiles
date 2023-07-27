@@ -13,13 +13,13 @@ document the changes that I've done.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Terminal apps](#terminal-apps)
   - [zsh (shell)](#zsh-shell)
   - [tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
   - [neovim (terminal editor)](#neovim-terminal-editor)
   - [git (version control)](#git-version-control)
   - [mpd + ncmpcpp (music player)](#mpd--ncmpcpp-music-player)
+  - [remind (calendar)](#remind-calendar)
 - [GUI apps](#gui-apps)
   - [kitty (terminal)](#kitty-terminal)
   - [mpv (video/audio player)](#mpv-videoaudio-player)
@@ -121,6 +121,42 @@ Music player daemon and its client.
 - [ncmpcpp configs](.config/ncmpcpp)
 
 ![](images/ncmpcpp.png)
+
+### remind (calendar)
+
+`remind` is not a classical calendar application. I've tried [calcurse](https://calcurse.org/) and
+[khal](https://github.com/pimutils/khal#khal) but they were trying to emulate
+normal GUI calendars too much and were imo just loosing in comparison.
+`remind` does it's own thing. It's a powerful DSL (domain specific language)
+where you define all of your entries in a text file. With this approach you can model
+some very sophisticated recurring entries like you've never seen before.
+
+```remind
+# simple stuff:
+Oct 01 MSG Change car tires
+REM [TRIGGER(easter)] MSG Change car tires
+
+# with colors for birthdays
+REM Feb 7 SPECIAL COLOR 205 0 255 BD Francis
+
+# appointments with start and end time (via DURATION in min)
+Thu AT 17:30 DURATION 90 SPECIAL COLOR 215 0 0 Rendezvous mit meinem Geld
+
+# more complex stuff:
+# taking out the trash every 14 days
+# but only show me 3 days in advance
+# and hide the entry if it's in the past
+REM 2021-05-17 *14 AFTER SATISFY [trigdate() < realtoday()+3 && trigdate() >= realtoday()] SPECIAL COLOR 140 100 40 Plastikmüll rausstellen
+REM 2021-05-18 *14 AFTER SATISFY [trigdate() < realtoday()+3 && trigdate() >= realtoday()] SPECIAL COLOR 140 100 40 Restmüll rausstellen
+# these will take into account any holidays you have configured
+OMIT Oct 3 SPECIAL COLOR 175 175 25 Tag der Deutschen Einheit
+# and push back garbage day to the day AFTER
+```
+
+- [Offical website](https://dianne.skoll.ca/projects/remind)
+- [aliases](.zsh/apps/remind.zsh)
+
+![remind calendar view](images/remind.png)
 
 ## GUI apps
 ### kitty (terminal)

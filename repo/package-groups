@@ -486,7 +486,7 @@ npm:raw-stopwatch Basic stopwatch
 
 [remind]
 remind Calendar programm
-wyrd-git TUI
+wyrd TUI
 tk GUI
 tcllib tk dependency
 

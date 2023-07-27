@@ -223,3 +223,7 @@ create .config/wireplumber/main.lua.d
 .config/networkmanager-dmenu
 create /etc/NetworkManager/conf.d
 /etc/NetworkManager/conf.d/wifi_backend.conf
+
+[remind]
+create .zsh/apps
+.zsh/apps/remind.zsh
