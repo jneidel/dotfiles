@@ -31,9 +31,10 @@ document the changes that I've done.
   - [i3 (window manager)](#i3-window-manager)
   - [lock screen](#lock-screen)
 - [Browser Extensions](#browser-extensions)
-  - [Essentials](#essentials)
+  - [Required](#required)
+  - [Useful](#useful)
   - [Privacy](#privacy)
-  - [Misc](#misc)
+  - [Maybe](#maybe)
 - [Android apps](#android-apps)
 - [MacOS](#macos)
 
@@ -252,7 +253,7 @@ I use **Arc Dark** as I based my terminal colorscheme on it.
 [firefox](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme-we/)
 [chrome](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
 
-### Essentials
+### Required
 
 | name | description | links |
 |--|--|--|
@@ -260,27 +261,33 @@ I use **Arc Dark** as I based my terminal colorscheme on it.
 | Surfing Keys | Navigate browser with vim shortcuts | [firefox](https://addons.mozilla.org/en-US/firefox/addon/surfingkeys_ff/) [chrome](https://chrome.google.com/webstore/detail/surfingkeys/gfbliohnnapiefjpjlpjnehglfpaknnc) [git](https://github.com/brookhong/Surfingkeys) [simpler-alternative](https://github.com/philc/vimium) |
 | Dark Reader | Dark mode for all websites | [firefox](https://addons.mozilla.org/en-US/firefox/addon/darkreader) [chrome](https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh) [git](https://github.com/darkreader/darkreader) |
 | KeePassXC-Browser | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk) [git](https://github.com/keepassxreboot/keepassxc-browser) [setup on iridium](https://github.com/keepassxreboot/keepassxc/issues/1559#issuecomment-369732493) |
+
+### Useful
+
+| name | description | links |
+|--|--|--|
 | SponsorBlock for YouTube | Skip sponsor/recap/like comment subscribe segments in videos | [firefox](https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/) [chrome](https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone) [my options](images/sponsor-block-options.png) |
-| I still don't care about cookies | Ignore cookie banners | [firefox](https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/) [chrome](https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm) [git](https://github.com/OhMyGuus/I-Still-Dont-Care-About-Cookies) |
 | FastForward | Skip link shorteners | [firefox](https://github.com/FastForwardTeam/FastForward/blob/main/INSTALLING.md#firefox-based-browsers-firefox-waterfox-pale-moon-librewolf-etc) [chrome](https://github.com/FastForwardTeam/FastForward/blob/main/INSTALLING.md#chromium-based-browsers-chrome-kiwi-opera-opera-gx-vivaldi-brave-etc) [git](https://github.com/FastForwardTeam/FastForward) |
+| I still don't care about cookies | Ignore cookie banners | [firefox](https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/) [chrome](https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm) [git](https://github.com/OhMyGuus/I-Still-Dont-Care-About-Cookies) |
+| Libredirect | Redirect to libre version of popular website | [firefox](https://addons.mozilla.org/firefox/addon/libredirect/) [chrome](https://libredirect.github.io/download_chromium.html) [git](https://github.com/libredirect/libredirect) |
+| Bypass Paywalls | Ignore e.g. NYTs free articles limiter | [git](https://gitlab.com/magnolia1234/bypass-paywalls-chrome-clean) |
+| Easy to RSS | List the rss feeds of the current site | [firefox](https://addons.mozilla.org/en-GB/firefox/addon/easy-to-rss/) [chrome](https://chrome.google.com/webstore/detail/easy-to-rss/hbcmpkcpbnecinpngdnfbnknfkdpdfli) [git](https://github.com/idealclover/Easy-to-RSS) |
+| Autofill | Automatically fill forms with configured data | [chrome](https://chrome.google.com/webstore/detail/autofill/nlmmgnhgdeffjkdckmikfpnddkbbfkkk) |
 
 ### Privacy
 
 | name | description | links |
 |--|--|--|
 | Privacy Badger | Stop suspicious trackers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/) [chrome](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp) [git](https://github.com/EFForg/privacybadger) |
-| Libredirect | Redirect to libre version of popular website | [firefox](https://addons.mozilla.org/firefox/addon/libredirect/) [chrome](https://libredirect.github.io/download_chromium.html) [git](https://github.com/libredirect/libredirect) |
 | ClearURLs | Remove tracking elements from urls | [firefox](https://addons.mozilla.org/firefox/addon/clearurls/) [chrome](https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk) [git](https://gitlab.com/KevinRoebert/ClearUrls) |
 | LocalCDN | Stop tracking through CDNs by redirecting to local resources | [chrome](https://chrome.google.com/webstore/detail/localcdn/njdfdhgcmkocbgbhcioffdbicglldapd) |
 | Decentraleyes | Stop tracking through CDNs | [firefox](https://addons.mozilla.org/en-US/firefox/addon/decentraleyes) [chrome](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj) [git](https://git.synz.io/Synzvato/decentraleyes) |
 
-### Misc
+### Maybe
 
 | name | description | links |
 |--|--|--|
-| Easy to RSS | List the rss feeds of the current site | [firefox](https://addons.mozilla.org/en-GB/firefox/addon/easy-to-rss/) [chrome](https://chrome.google.com/webstore/detail/easy-to-rss/hbcmpkcpbnecinpngdnfbnknfkdpdfli) [git](https://github.com/idealclover/Easy-to-RSS) |
 | Buster | Captcha Solver | [firefox](https://addons.mozilla.org/en-US/firefox/addon/buster-captcha-solver/) [chrome](https://chrome.google.com/webstore/detail/mpbjkejclgfgadiemmefgebjfooflfhl) [git](https://github.com/dessant/buster) |
-| Autofill | Automatically fill forms with configured data | [chrome](https://chrome.google.com/webstore/detail/autofill/nlmmgnhgdeffjkdckmikfpnddkbbfkkk) |
 | Hover Zoom+ | Large overlay on image and link to image hover | [chrome](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [git](https://github.com/extesy/hoverzoom/) |
 | Stylus | Customize website style | [firefox](https://addons.mozilla.org/firefox/addon/styl-us/) [chrome](https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne) [git](https://github.com/openstyles/stylus) |
 
@@ -318,19 +325,13 @@ A comprehensive list of GitHub chrome extensions can be found [here](https://git
 </details><br/>
 </details>
 
-<details>
-<summary><strong>Maybes (not in current use)</strong></summary>
-
-| name | description | links |
-|--|--|--|
-| Block Site | Block domains in the browser | [chrome](https://chrome.google.com/webstore/detail/block-site/nkedbnokglppcmiencngilkkhhnpcfjb) |
-| Disable WebRTC | Stop IP leakage while using a VPN | [firefox](https://addons.mozilla.org/en-US/firefox/addon/happy-bonobo-disable-webrtc/) |
-| Chameleon | Easily spoof user-agents & more | [firefox](https://addons.mozilla.org/en-US/firefox/addon/chameleon-ext/) [git](https://github.com/sereneblue/chameleon) |
-| Dict.cc Translation | Quick translations | [firefox](https://addons.mozilla.org/firefox/addon/dictcc-translation/) [git](https://github.com/Lusito/dict.cc-translation) |
-| StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) |
-| Toby | Better bookmark manager | [chrome](https://chrome.google.com/webstore/detail/toby-for-chrome/hddnkoipeenegfoeaoibdmnaalmgkpip) |
-
-</details>
+<!-- | name | description | links | -->
+<!-- |--|--|--| -->
+<!-- | Disable WebRTC | Stop IP leakage while using a VPN | [firefox](https://addons.mozilla.org/en-US/firefox/addon/happy-bonobo-disable-webrtc/) | -->
+<!-- | Chameleon | Easily spoof user-agents & more | [firefox](https://addons.mozilla.org/en-US/firefox/addon/chameleon-ext/) [git](https://github.com/sereneblue/chameleon) | -->
+<!-- | Dict.cc Translation | Quick translations | [firefox](https://addons.mozilla.org/firefox/addon/dictcc-translation/) [git](https://github.com/Lusito/dict.cc-translation) | -->
+<!-- | Block Site | Block domains in the browser | [chrome](https://chrome.google.com/webstore/detail/block-site/nkedbnokglppcmiencngilkkhhnpcfjb) | -->
+<!-- | StayFocusd | Site blocker, limit black list to given time | [chrome](https://chrome.google.com/webstore/detail/stayfocusd/laankejkbhbdhmipfmgcngdelahlfoji) | -->
 
 ## Android apps
 
