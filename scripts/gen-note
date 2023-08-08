@@ -2,19 +2,11 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ gen-note
-Generate a new 'note' file based on this naming pattern:
+$ gen-note DIR
+Easily allow for adding a new norg note in a directory
 
-note-000.md -> increment the number for a new file
-
-Args:
-  \$1: directory to insert the into
-
-Example:
-  $ gen-note # no existing note file
-  # -> note-001.md
-  $ gen-note # note-045.md exists
-  # -> note-046.md
+Takes title into account.
+Ignores empty files.
 EOF
   exit
 fi
@@ -22,20 +14,38 @@ fi
 command -v awk >/dev/null || { echo "awk is not installed" 1>&2; exit 127; }
 command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR is not set" 1>&2; exit 127; }
 
-get_new_note_name() {
-  {
-    ls note-???.norg 2>/dev/null || echo note-000.norg
-  } | tail -n1 | cut -d- -f2 | cut -d. -f1 |
-    awk '{ print $1"+"1 }' | bc | xargs printf "00%d\n" | rev | cut -c1-3 | rev |
-    awk '{ print "note-"$1".norg" }'
+dir="$1"
+[ ! -z "$dir" ] && cd $dir
+tmp=$(mktemp --suffix=.norg)
+
+# generate and fix norg metadata
+$EDITOR $tmp -c ":wq"
+tmpNoDir=$(basename $tmp)
+title=${tmpNoDir%.*}
+sed -i "s|$title|<++>|" $tmp
+
+# let the user add content
+$EDITOR $tmp
+
+file_contents_without_metadata() {
+  grep "@end" -m1 -n $tmp | cut -d: -f1 | xargs -I@ sed '1,@d; /^$/d' $tmp
+  # if there is no metadata, it is treated as empty
+}
+if [ -z "$(file_contents_without_metadata)" ]; then
+  echo "Edited file was empty, adding nothing to inbox."
+  exit 0
+fi
+
+file_title() {
+  grep -Po "^title: \K.*" $tmp
 }
 
-dir="$1"
-cwd="$(pwd)"
-[ ! -z "$dir" ] && cd $dir
+filename=""
+if [ "$(file_title)" = "<++>" ]; then
+  filename="$dir/qc-$(date +%s).norg"
+else
+  filename="$dir/$(file_title).norg"
+fi
 
-NEW_NOTE=$(get_new_note_name)
-echo "Generating $NEW_NOTE in $(pwd)"
-$EDITOR $NEW_NOTE
-
-[ ! -z "$dir" ] && cd $cwd
+cp $tmp "$filename"
+echo "Wrote to: $filename"
