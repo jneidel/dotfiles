@@ -73,7 +73,7 @@ fi
 
 EXT=`$DIR/mimetype "$FILE"`
 EXIT_CODE="$?"
-[ "$EXIT_CODE" -gt 0 ] && { echo $EXT ; exit "$EXIT_CODE" ; }
+[ "$EXIT_CODE" -gt 0 ] && { echo "$EXT"; exit $EXIT_CODE ; }
 
 # environment specific extensions
 if [ "$ENV_" = "lf" ]; then

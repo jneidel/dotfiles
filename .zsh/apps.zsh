@@ -54,7 +54,7 @@ alias neofetch="/bin/neofetch --os_arch off --cpu_brand off --gtk2 off --gtk3 of
 alias ani-cli="/bin/ani-cli -q 720"
 yay() {
   if [ -z "$1" ]; then
-    nice /bin/yay --overwrite /usr/lib/node_modules/\* -Syu
+    nice up
   else
     nice /bin/yay $@
   fi

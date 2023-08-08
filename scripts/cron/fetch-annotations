@@ -54,7 +54,8 @@ extract_annotations() {
 $uri
 $selection
 
-Notes: $annotation
+Notes:
+$annotation
 EOF
   done
 }

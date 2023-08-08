@@ -81,8 +81,8 @@ test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/s
 # Import aliases
 source $ZSH_DIR/init.zsh
 
-fpath+=( $ZSH_DIR/functions )
-autoload -Uz tp
+# fpath+=( $ZSH_DIR/functions )
+# autoload -Uz tp
 
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc

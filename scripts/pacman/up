@@ -28,15 +28,18 @@ log() {
 
 run_yay() {
   log yay "System update"
+
+  sudo pacman -Syu
+  reapply_X_settings
+
   if command -v disable-mullvad-for >/dev/null; then
     disable-mullvad-for yay --color=always --noconfirm
   else
     yay --color=always --noconfirm
   fi
-
   reapply_X_settings
 
-  yay -S --color=always --noconfirm ncmpcpp-git --needed
+  # yay -S --color=always --noconfirm ncmpcpp-git --needed
 
   yay -Qtdq | yay -Rsn --noconfirm -
 }
@@ -63,3 +66,5 @@ run_lazy() {
   /bin/nvim --headless '+TSUpdate' +qa
 }
 command -v /bin/nvim >/dev/null && run_lazy
+
+cleanup-fs

@@ -21,6 +21,7 @@ rmdir ~/Desktop \
   ~/.newsboat 2>/dev/null
 rm -rf ~/.w3m \
   ~/.????????.ib-tws \
+  ~/.gradle/
   ~/.m2 \
   ~/Jts \
   ~/.mono \

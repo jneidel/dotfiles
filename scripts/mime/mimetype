@@ -53,9 +53,10 @@ classify_file() {
     case "$FILE_OUTPUT" in
       "POSIX shell script") echo sh;;
       "Bourne-Again shell script") echo bash;;
-      "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data") echo txt;;
+      "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data") echo txt;;
       "empty") echo txt;;
       *) echo [ERR] mimetype not configured: $FILE_OUTPUT
+        echo "unconfigured mimetype: $FILE_OUTPUT" >$ORG_INBOX/mimetype-$(date +%s)
         exit 1;;
     esac
   else
