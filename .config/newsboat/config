@@ -9,7 +9,7 @@ browser "~/scripts/open-in-browser-without-pluses"
 player "mpv --no-audio-display"
 # don't reload feeds, just use the last cron pull
 auto-reload no
-# reload-time 20
+reload-threads 100
 
 ## formatting
 download-filename-format "%t.%e"
