@@ -114,10 +114,17 @@ return {
             type = "auto",
             template = {
               -- src: https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/esupports/metagen/module.lua
-              { "title", function() return vim.fn.expand("%:p:t:r") end },
+              { "title", function()
+                local name = vim.fn.expand("%:p:t:r")
+                if name == "index" then
+                  return "<++>"
+                else
+                  return name
+                end
+              end },
               { "description", "<++>" },
               { "categories", "<++>"},
-              { "authors", function() return require("neorg.external.helpers").get_username() end },
+              { "authors", function() return require("neorg.core.utils").get_username() end },
               { "created", function() return os.date("%Y-%m-%d") end },
               { "updated", function() return os.date("%Y-%m-%d") end },
             }
