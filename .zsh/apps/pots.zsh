@@ -1,0 +1,5 @@
+alias pta="pots trans add"
+alias ptl="pots trans list"
+alias pte="pots trans edit"
+alias ptr="pots trans remove"
+alias pv="pots view"

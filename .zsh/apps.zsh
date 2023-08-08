@@ -294,9 +294,12 @@ ssm() { # cd into currently playing mpd album
   fi
 }
 
-## pots
-alias pta="pots trans add"
-alias ptl="pots trans list"
-alias pte="pots trans edit"
-alias ptr="pots trans remove"
-alias pv="pots view"
+tere() {
+  local result=$(command tere --filter-search "$@")
+  [ -n "$result" ] && cd -- "$result"
+}
+
+reflux() {
+  fkill xflux
+  xflux -k 2000 -l 52 -g 13
+}
