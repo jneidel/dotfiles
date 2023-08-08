@@ -41,6 +41,10 @@ cmd edit ${{
   ~/scripts/mime/mime -e lf edit "$f"
 }}
 
+cmd combine ${{
+  ~/.config/lf/scripts/combine $fx
+}}
+
 cmd massmove ${{
   echo "$fx" | xargs -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
 
@@ -232,6 +236,7 @@ map u
 map N # jump to prev result
 
 ### own bindings
+map cb combine
 map e edit
 map u clear-unselect
 map rm remove $f

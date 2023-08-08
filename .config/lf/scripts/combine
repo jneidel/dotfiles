@@ -1,0 +1,36 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat <<EOF
+$ combine FILES..
+Combine multiple text files into one.
+Naming scheme: combined-NUMBER
+
+Parameters:
+  \$1: multiple files
+
+Example:
+  $ combine file1 file2 file3
+EOF
+  exit
+fi
+
+command -v mimetype >/dev/null || { echo "mimetype script is not installed" 1>&2; exit 127; }
+# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+# validate that only text files are being combined
+for file in "$@"; do
+  filetype=`mimetype "$file"`
+  case "$filetype" in
+    txt|md|norg) continue;;
+    *)
+      echo "combine is not meant for non-text files.\nFiletype in question: '$filetype'.\nMaybe combine just does not have this valid type on its allow list?"
+      exit 1;;
+  esac
+
+  # playing it safe while testing
+  cp "$file" /tmp/
+done
+
+cat "$@" >combined-$(date +%s)
+rm "$@"
