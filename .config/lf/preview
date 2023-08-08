@@ -25,7 +25,7 @@ glowormdcat() {
 	if command -v glow > /dev/null 2>&1; then
 		glow "$file"
 	else
-		mdcat "$file"
+		cat "$file"
 	fi
 }
 
