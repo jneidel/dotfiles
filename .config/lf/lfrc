@@ -106,8 +106,10 @@ cmd fzf_file ${{
   pick() {
     FZF_DEFAULT_COMMAND="rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/' ~/org | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
   }
-  lf -remote "send $id select '~/$(pick)'"
-  lf -remote "send $id open"
+  local picked="$HOME/$(pick)"
+  lf -remote "send $id select '$picked'" &
+
+  ( cd "$(dirname "$picked")" && ~/scripts/mime/mime -e lf open "$picked" )
 }}
 
 # TODO: fix <enter> mapping fucking with mkdir not being able to press enter
