@@ -46,7 +46,9 @@ cmd combine ${{
 }}
 
 cmd massmove ${{
-  echo "$fx" | xargs -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
+  echo "$fx" | xargs -0 -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
+
+  lf -remote "send $id reload"
 
   # if spaces in name, qmv spawns annoying empty dirs
   findex . -type d -not -path '.' 'rmdir "$1"' >/dev/null 2>/dev/null &
@@ -87,13 +89,11 @@ cmd rm_pi ${{
 }}
 
 cmd paste_and_forget %{{
-  lf -remote "send $id paste"
-  lf -remote "send $id clear"
+  lf -remote "send $id :paste; clear"
 }}
 
 cmd clear-unselect %{{
-  lf -remote "send $id clear"
-  lf -remote "send $id unselect"
+  lf -remote "send $id :clear; unselect"
 }}
 
 cmd fzf_dir ${{
@@ -111,10 +111,11 @@ cmd fzf_file ${{
 }}
 
 # TODO: fix <enter> mapping fucking with mkdir not being able to press enter
+# TODO: replace with variant that works more like tere
 # filter and select entry in cwd
 # src: https://github.com/gokcehan/lf/wiki/Tips#using-incfilter-to-select-and-open-files
 # set incfilter
-# map f :filter; set user_filter true
+map f :filter; set user_filter true
 # cmap <enter> &{{ # select and open file
 #   if [ "$lf_user_filter" = true ]; then
 #     lf -remote "send $id :cmd-enter; set user_filter false; setfilter; open"
@@ -122,23 +123,23 @@ cmd fzf_file ${{
 #     lf -remote "send $id cmd-escape"
 #   fi
 # }}
-# cmap <esc> &{{ # exit filter mode
-#   if [ "$lf_user_filter" = true ]; then
-#     lf -remote "send $id :cmd-escape; set user_filter false"
-#   else
-#     lf -remote "send $id cmd-escape"
-#   fi
-# }}
-# cmap <a-j> &{{ # go to next file
-#   if [ "$lf_user_filter" = true ]; then
-#     lf -remote "send $id down"
-#   fi
-# }}
-# cmap <a-k> &{{ # go to previous file
-#   if [ "$lf_user_filter" = true ]; then
-#     lf -remote "send $id up"
-#   fi
-# }}
+cmap <esc> &{{ # exit filter mode
+  if [ "$lf_user_filter" = true ]; then
+    lf -remote "send $id :cmd-escape; set user_filter false"
+  else
+    lf -remote "send $id cmd-escape"
+  fi
+}}
+cmap <a-j> &{{ # go to next file
+  if [ "$lf_user_filter" = true ]; then
+    lf -remote "send $id down"
+  fi
+}}
+cmap <a-k> &{{ # go to previous file
+  if [ "$lf_user_filter" = true ]; then
+    lf -remote "send $id up"
+  fi
+}}
 
 ## create files
 cmd touch %printf "File Name: "; read ans; touch "$ans"
@@ -214,16 +215,6 @@ cmd create-area ${{
 
   lf -remote "send $id reload"
 }}
-### create files
-map t touch
-map T touchTex
-map NN gen-note
-map ci create-index
-map cn create-norg
-map cp create-project
-map cd create-design
-map ca create-area
-
 ## bindings
 ### remove defaults
 map m
@@ -234,6 +225,16 @@ map p
 map c
 map u
 map N # jump to prev result
+
+### create files
+map t touch
+map T touchTex
+map NN gen-note
+map ci create-index
+map cn create-norg
+map cp create-project
+map cd create-design
+map ca create-area
 
 ### own bindings
 map cb combine
