@@ -132,12 +132,12 @@ return {
         },
         ["core.summary"] = {}, -- https://github.com/nvim-neorg/neorg/wiki/Summary
         ["core.ui.calendar"] = {},
-        -- ["core.export"] = {},
-        --       ["core.export.markdown"] = {
-        --           config = {
-        --               extensions = "all",
-        --           },
-        --       },
+        ["core.export"] = {},
+        ["core.export.markdown"] = {
+          config = {
+            extensions = "all",
+          },
+        },
       },
     }
 
