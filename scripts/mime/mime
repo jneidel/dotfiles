@@ -105,6 +105,10 @@ case "$CMD" in
 esac
 [ "$EXIT_CODE" -ge 10 ] && { echo $HANDLER ; exit "$EXIT_CODE" ; }
 
+if [ "$(uname)" = "Darwin" ] && [ "$CMD" = "open" ] && [ "$HANDLER" != "$EDITOR" ]; then
+  HANDLER=open
+fi
+
 # exit 1 means the handler does not like to be run in the background (&)
 if [ "$EXIT_CODE" -eq 0 ]; then
   sh -c "$HANDLER '$FILE' &"
