@@ -1,26 +1,36 @@
 "## Sessions
+
 " Dont write vimrc option to sessionfile - vimrc changes would be overwritten by old ones
 " source: https://stackoverflow.com/a/31978241
+set sessionoptions-=options
 
-" don't store vim options (config) in session
-set ssop-=options
+function! GetSessionFileName(mkdirEnclosing)
+  let b:sessiondirSpaces = $XDG_STATE_HOME . "/nvim/session" . getcwd()
+  let b:sessiondir = substitute(b:sessiondirSpaces, " ", "²", "g")
+  " replace spaces with ² because mksession goes crazy if it receives an
+  " argument with spaces
+  let b:sessionfile = b:sessiondir . "/session.vim"
 
-function! MakeSession()
-  let b:sessiondir = $XDG_STATE_HOME . "/nvim/session" . getcwd()
-  if (filewritable(b:sessiondir) != 2)
-    exe 'silent !mkdir -p ' b:sessiondir
+  if (a:mkdirEnclosing && filewritable(b:sessiondir) != 2)
+    exe 'silent !mkdir -p ' . b:sessiondir
     redraw!
   endif
-  let b:filename = b:sessiondir . '/session.vim'
-  exe "mksession! " . b:filename
+
+  return b:sessionfile
+endfunction
+
+function! MakeSession()
+  let b:sessionfile = GetSessionFileName(1)
+
+  exe 'mksession! ' . b:sessionfile
 endfunction
 
 function! LoadSession()
-  let b:sessiondir = $XDG_STATE_HOME . "/nvim/session" . getcwd()
-  let b:sessionfile = b:sessiondir . "/session.vim"
+  let b:sessionfile = GetSessionFileName(0)
+
   if (filereadable(b:sessionfile))
     exe 'source ' b:sessionfile
-    else
+  else
     echo "No session loaded."
   endif
 endfunction
