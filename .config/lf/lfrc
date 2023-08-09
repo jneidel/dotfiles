@@ -55,6 +55,7 @@ cmd massmove ${{
 }}
 
 cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" $ORG_INBOX/
+cmd move-to-archive %printf "Moved '${f##*/}' to archive"; mv "$f" $ORG_ARCHIVE/
 
 cmd broot_jump ${{
   f=$(mktemp)
@@ -257,6 +258,7 @@ map . set hidden!
 map R reload
 map I gimp # [I]mage
 map b move-to-inbox # in[B]ox
+map a move-to-archive # [a]rchive
 map <a-d> fzf_dir
 map <a-f> fzf_file
 
