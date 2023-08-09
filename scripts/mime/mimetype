@@ -32,16 +32,23 @@ classify_file() {
   esac
 
   fileext=
-  while [[ "$basename" = ?*.@(bz2|gz|gpg|part) ]]; do
-    fileext=${basename##*.}.$fileext
+
+  arrayOfSupportedExtendedExtensions=(bz2 gz gpg part) # like tar.bz2; tar.gz; mkv.gpg; pdf.part
+  if printf '%s\0' "${arrayOfSupportedSecondExtensions[@]}" | grep -F -x -z -- "${basename##*.}" >/dev/null; then
+    # contains, source: https://stackoverflow.com/a/47541882
+
+    # get first extension
+    fileext="${basename##*.}"
     basename=${basename%.*}
-  done
-  if [[ "$basename" = ?*.* ]]; then
-    fileext=${basename##*.}.$fileext
+
+    # get second extension
+    fileext="${basename##*.}.$fileext"
+    basename=${basename%.*}
+  else
+    fileext=${basename##*.}
     basename=${basename%.*}
   fi
-  fileext=${fileext%.} # after .
-  fileext=${fileext,,} # to lowercase
+  fileext="$(echo $fileext | tr '[:upper:]' '[:lower:]')" # to lowercase
 
   if [ -z "$fileext" ] || echo "$fileext" | grep " " >/dev/null; then
     FILE_OUTPUT="$(file -b "$1" | cut -d, -f1)"
