@@ -15,7 +15,8 @@
 ## necessities
 [zsh]
 .zshrc
-.zsh
+clean .zsh
+# make above not copy sub dirs to split up the apps/* to their packages
 
 [vim]
 clean .config/nvim

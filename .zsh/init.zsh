@@ -11,3 +11,5 @@ test -e "~/scripts/colored-man.env" && source ~/scripts/colored-man.env
 for alias_file in $(find $ZSH_DIR -type f -name '*.zsh' -not -path "$ZSH_DIR/lib/*" -not -path "$ZSH_DIR/init.zsh"); do
   source $alias_file
 done
+
+test -e "$HOME/.config/sensitive/personal.zsh" && source "$HOME/.config/sensitive/personal.zsh"
