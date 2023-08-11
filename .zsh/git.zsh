@@ -25,7 +25,8 @@ commit() {
   fi
 }
 alias gc="commit"
-gcn() {
+alias gcf="git commit --fixup" # HASH to fixup, tutorial: https://www.mikulskibartosz.name/git-fixup-explained
+gcn() { # --no-verify, ignore hooks
   commit "$1" "$2" -n
 }
 if [ "$(uname)" = "Darwin" ]; then
