@@ -10,13 +10,23 @@ image() {
 }
 
 batorcat() {
-	file="$1"
-	shift
-	if command -v bat > /dev/null 2>&1; then
-		bat --color=always --style=plain --pager=never "$file" "$@"
-	else
-		cat "$file"
-	fi
+  file="$1"
+  shift
+
+  if [ "${file##*.}" = "norg" ]; then
+    local metadata_end_on_line=$(grep -F '@document.meta' -m1 -A30 "$file" | grep -Fm1 '@end' -n  | cut -d: -f1)
+    if [ -n "$metadata_end_on_line" ]; then
+      metadata_end_on_line=$(($metadata_end_on_line+2))
+      <"$file" tail -n+$metadata_end_on_line
+      return
+    fi
+  fi
+
+  if command -v bat >/dev/null 2>&1; then
+    bat --color=always --style=plain --pager=never "$file" "$@"
+  else
+    cat "$file"
+  fi
 }
 
 glowormdcat() {
