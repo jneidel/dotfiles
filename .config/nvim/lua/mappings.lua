@@ -45,3 +45,10 @@ map('i', ',,', '<Esc>/<++><CR>c4l')
 -- map('n', 'S', ':HopWord<CR>')
 
 map("n", "<Leader>c", ':%y+ | call system("xclip -selection clipboard", @+) | echom "Copied the file\'s contents to clipboard"<CR>')
+
+-- disable touchpad mouse scrolling
+-- see: https://stackoverflow.com/a/76845374
+map("", "<up>", "<nop>", { noremap = true })
+map("", "<down>", "<nop>", { noremap = true })
+map("i", "<up>", "<nop>", { noremap = true })
+map("i", "<down>", "<nop>", { noremap = true })
