@@ -273,9 +273,15 @@ n() {
   if [ -z "$note" ]; then
     gen-note $ORG_INBOX
   else
-    local file="$ORG_INBOX/qc-$(date +%s)"
-    echo "$note" >$file
-    echo "Wrote to $file"
+    printf "Provide a name for this note: "
+    read ans
+    local filename="$ORG_INBOX/qc-$(date +%s)"
+    if [ -n "$ans" ]; then
+      filename="$ORG_INBOX/$ans"
+    fi
+
+    echo "$note" >$filename
+    echo "Wrote to $filename"
   fi
 }
 
