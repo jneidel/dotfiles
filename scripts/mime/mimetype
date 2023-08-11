@@ -32,7 +32,6 @@ classify_file() {
   esac
 
   fileext=
-
   arrayOfSupportedExtendedExtensions=(bz2 gz gpg part) # like tar.bz2; tar.gz; mkv.gpg; pdf.part
   if printf '%s\0' "${arrayOfSupportedSecondExtensions[@]}" | grep -F -x -z -- "${basename##*.}" >/dev/null; then
     # contains, source: https://stackoverflow.com/a/47541882
@@ -44,7 +43,7 @@ classify_file() {
     # get second extension
     fileext="${basename##*.}.$fileext"
     basename=${basename%.*}
-  else
+  elif echo "$basename" | grep -F . >/dev/null; then
     fileext=${basename##*.}
     basename=${basename%.*}
   fi
