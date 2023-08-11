@@ -69,8 +69,24 @@ cmd combine ${{
   lf -remote "send $id :select '$(cat $tmp)'; toggle; massmove"
 }}
 
-cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" $ORG_INBOX/
-cmd move-to-archive %printf "Moved '${f##*/}' to archive"; mv "$f" $ORG_ARCHIVE/
+cmd move-to-inbox %{{
+  local filename="${f##*/}"
+  printf "Moved '${f##*/}' to inbox"
+  if [ -e "$ORG_INBOX/$filename" ]; then
+    mv "$f" "$ORG_INBOX/$filename-$(date +%s)"
+  else
+    mv "$f" $ORG_INBOX/
+  fi
+}}
+cmd move-to-archive %{{
+  local filename="${f##*/}"
+  printf "Moved '${f##*/}' to archive"
+  if [ -e "$ORG_ARCHIVE/$filename" ]; then
+    mv "$f" "$ORG_ARCHIVE/$filename-$(date +%s)"
+  else
+    mv "$f" $ORG_ARCHIVE/
+  fi
+}}
 
 cmd broot_jump ${{
   f=$(mktemp)
