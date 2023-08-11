@@ -309,3 +309,8 @@ reflux() {
   fkill xflux
   xflux -k 2000 -l 52 -g 13
 }
+
+dot() {
+  cd dotfiles
+  make import
+}
