@@ -32,5 +32,8 @@ for file in "$@"; do
   cp "$file" /tmp/
 done
 
-cat "$@" >combined-$(date +%s)
+combined_file=combined-$(date +%s)
+echo $combined_file # to select for renaming
+
+cat "$@" >$combined_file
 rm "$@"

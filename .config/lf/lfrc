@@ -41,10 +41,6 @@ cmd edit ${{
   ~/scripts/mime/mime -e lf edit "$f"
 }}
 
-cmd combine ${{
-  ~/.config/lf/scripts/combine $fx
-}}
-
 cmd massmove ${{
   local pre_move=/tmp/qmv-pre-move
   local post_move=/tmp/qmv-post-move
@@ -64,6 +60,13 @@ cmd massmove ${{
   else
     lf -remote "send $id reload"
   fi
+}}
+
+cmd combine ${{
+  local tmp=$(mktemp)
+  ~/.config/lf/scripts/combine $fx | tee tmp
+
+  lf -remote "send $id :select '$(cat $tmp)'; toggle; massmove"
 }}
 
 cmd move-to-inbox %printf "Moved '${f##*/}' to inbox"; mv "$f" $ORG_INBOX/
