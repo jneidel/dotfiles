@@ -16,7 +16,6 @@ EOF
 fi
 
 command -v mimetype >/dev/null || { echo "mimetype script is not installed" 1>&2; exit 127; }
-# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
 
 # validate that only text files are being combined
 for file in "$@"; do
