@@ -130,7 +130,7 @@ cmd clear-unselect %{{
 
 cmd fzf_dir ${{
   pick() {
-    FZF_DEFAULT_COMMAND="rg --null --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/' ~/org | xargs -0 dirname | sort | uniq | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
+    FZF_DEFAULT_COMMAND="rg --null --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/' ~/org | xargs -0 dirname | sort | uniq | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
   }
   local picked="$HOME/$(pick)"
   if [ "$picked" != "$HOME/" ]; then
@@ -139,7 +139,7 @@ cmd fzf_dir ${{
 }}
 cmd fzf_file ${{
   pick() {
-    FZF_DEFAULT_COMMAND="rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/' ~/org | sort | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
+    FZF_DEFAULT_COMMAND="rg --ignore --hidden --files --sort path --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/' ~/org | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
   }
   local picked="$HOME/$(pick)"
   if [ "$picked" != "$HOME/" ]; then
