@@ -1,0 +1,146 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ weekly-review
+Guide me through the Weekly Review
+EOF
+  exit
+fi
+
+# helper
+start_time=$(date +%s)
+calc_total_time() {
+  end_time=$(date +%s)
+  secs_passed=$(($end_time-$start_time))
+  mins_passed=$(($secs_passed/60))
+  mins_passed_leftover_sec=$(($secs_passed%60))
+
+  echo "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s"
+}
+
+step=0
+next_step() {
+  step=$(($step+1))
+}
+next_step
+
+prompt_continue() {
+  printf "Continue? "
+  read ans
+  next_step
+  printf "\n"
+}
+
+split_below() {
+  local step_name="$1"
+  local cmd="$2"
+
+  tmux split-window -v -p 70
+  tmux send-keys "clear && figlet $step_name" "Enter" "$cmd" "Enter"
+}
+
+# steps
+email() {
+  cat <<EOF
+$step. Clear out your email!
+
+outcome: inbox empty for: Endava, kudu
+EOF
+  kitty --class mosh --name kudu mosh k >/dev/null 2>&1 &
+  prompt_continue
+}
+
+calendar() {
+  cat <<EOF
+$step. Check your calendar!
+
+outcome: past events are in archive.rem
+EOF
+  lf -remote "send cd '$ORG_RESOURCES/calendar/main'" &
+
+  split_below "Calendar" "rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
+
+  printf "\nShow event calendar next; "
+  prompt_continue
+
+  split_below "Events" "events; rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
+
+  prompt_continue
+}
+
+github() {
+  cat <<EOF
+$step. Clear your GitHub notifications
+
+outcome: no notifications, up-to-date on GitHub newsfeed
+EOF
+  $BROWSER https://github.com >/dev/null 2>&1 &
+  $BROWSER https://github.com/notifications?query=is%3Aunread >/dev/null 2>&1 &
+
+  prompt_continue
+}
+
+pre_newsboat() {
+  reload-newsboat &
+}
+newsboat() {
+  cat <<EOF
+$step. Clear your newsboat entries
+
+outcome: empty new command
+EOF
+  split_below "Newsboat" "new"
+
+  prompt_continue
+}
+
+files() {
+  cat <<EOF
+$step. Clear Downloads directories
+
+outcome: directories empty: Mac Downloads & Desktop; x270 Downloads & home
+EOF
+  lf -remote "send cd '$HOME/Downloads'" &
+
+  prompt_continue
+}
+
+pre_org_inbox() {
+  fetch-annotations &
+  signal-to-inbox &
+}
+org_inbox() {
+  cat <<EOF
+$step. Clear your org inbox
+
+outcome: org inbox is empty
+EOF
+  lf -remote "send cd '$ORG_INBOX'" &
+
+  prompt_continue
+}
+
+task_manager() {
+  cat <<EOF
+$step. Choose your tasks for the week
+
+outcome: taskwarrior has next weeks tasks scheduled and inbox is emtpy
+EOF
+  split_below "Tasks" "task list +inbox"
+
+  prompt_continue
+}
+
+email
+calendar
+pre_newsboat
+github
+newsboat
+pre_org_inbox
+files
+org_inbox
+task_manager
+
+echo "Congrats! You're done"
+calc_total_time
