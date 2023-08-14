@@ -1,0 +1,27 @@
+# Taskwarrior program configuration file.
+# For more documentation, see https://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+# Use the command 'task show' to see all defaults and overrides
+# You can refence environment variables: variable=$HOME/task variable=$VALUE
+
+# Files
+data.location=/home/jneidel/.task
+data.location=~/.local/share/task
+hooks.location=~/.config/task/hooks
+
+news.version=2.6.0
+
+include dark-256.theme
+
+verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
+# removed from verbose: filter, header
+
+# swap low and empty priority (H > M > empty > L)
+uda.priority.values = H,M,,L
+urgency.uda.priority.L.coefficient = 0
+urgency.uda.priority..coefficient = 1.8
+
+# adjust urgency coefficients
+urgency.user.tag.cooking.coefficient=-3.0
+
+#dateformat=a bD

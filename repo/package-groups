@@ -563,3 +563,6 @@ graphicsmagick Search through graphics I presume
 
 [subtitles]
 gnome-subtitles Subtitle editor
+
+[task]
+task Taskwarrior task manager

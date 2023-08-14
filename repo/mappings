@@ -225,6 +225,11 @@ create .config/wireplumber/main.lua.d
 create /etc/NetworkManager/conf.d
 /etc/NetworkManager/conf.d/wifi_backend.conf
 
+[task]
+.config/task
+.zsh/apps/task.env
+.zsh/apps/task.zsh
+
 [remind]
 create .zsh/apps
 .zsh/apps/remind.zsh
