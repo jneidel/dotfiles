@@ -228,3 +228,7 @@ create /etc/NetworkManager/conf.d
 [remind]
 create .zsh/apps
 .zsh/apps/remind.zsh
+
+[composer]
+create .config/composer
+.config/composer/config.json
