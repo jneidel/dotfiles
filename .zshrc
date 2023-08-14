@@ -81,6 +81,16 @@ compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 # kitty shell integration
 test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
 
+# macos
+if [ "$(uname)" = "Darwin" ]; then
+  # overwrite bsd utils with gnu ones, so I don't have to fix my scripts on every change
+  # $ brew install coreutils gnu-sed findutils
+  gnu_overwrite_paths="$(find /usr/local/opt/*/libexec/gnubin -type d | tr '\n' ':')"
+  if [ -n "$gnu_overwrite_paths" ]; then
+    export PATH="${gnu_overwrite_paths}${PATH}"
+  fi
+fi
+
 # Import aliases
 source $ZSH_DIR/init.zsh
 
