@@ -20,4 +20,4 @@ send() {
 ~/scripts/cron/waitforinternet
 ~/scripts/cron/cron-notify-send "Sending challenge review notifications"
 send "UIXSwit7KF/RqKfH9jqySnLTgqVCimGcEK25Dbf+yDw=" # weekly challenges
-send "97DrVHpStw2VOPfGzOtdnWsUJV3W4HB7QEKg155mhMg=" # 66 day challenge
+# send "97DrVHpStw2VOPfGzOtdnWsUJV3W4HB7QEKg155mhMg=" # 66 day challenge
