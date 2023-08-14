@@ -6,10 +6,13 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
 export XDG_CONFIG_RC="${XDG_DATA_HOME}"
 
+export ZI_HOME=${XDG_STATE_HOME}/.zi
+if [ ! -d "$ZI_HOME/bin" ]; then
+  mkdir -p "$ZI_HOME"
+  git clone https://github.com/z-shell/zi.git $ZI_HOME/bin
+fi
 typeset -A ZI
-ZI[BIN_DIR]="${XDG_STATE_HOME}/.zi/bin"
-source "${ZI[BIN_DIR]}/zi.zsh"
-
+source "$ZI_HOME/bin/zi.zsh"
 autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
 
