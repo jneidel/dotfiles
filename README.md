@@ -78,36 +78,6 @@ Neovim with custom macros, hooks and a few plugins.
 
 ![](images/vim.png)
 
-<!--### Eslint (js linter)
-
-[View eslint config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc) - `~/.eslintrc`
-[View eslint typescript config](https://raw.githubusercontent.com/jneidel/dotfiles/master/.eslintrc-ts) - `~/.eslintrc-ts`
-
-Once globally installed, run anywhere:
-
-```zsh
-# for js
-eslint --fix .
-
-# for ts
-eslint -c ~/.eslintrc-ts --fix .
-```
-
-See [eslint aliases](https://github.com/jneidel/dotfiles/blob/master/manjaro/.zsh/eslint.zsh) for shortcuts.
-
-Requires eslint, as well as a few plugins to be installed globally:
-
-```zsh
-# for js
-npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo
-
-# for js & ts
-npm i -g eslint eslint-plugin-node eslint-plugin-unicorn eslint-plugin-json eslint-plugin-xo eslint-config-xo eslint-config-xo-typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
-```
-
-For an easy start into eslint try [eslint-nibble](https://github.com/IanVS/eslint-nibble).
--->
-
 ### git (version control)
 
 - [global config](.config/git/config)
@@ -219,11 +189,8 @@ Notifications use [dunst](#dunst) (notification daemon).
 Runs on my server under a different phone number to send (cron scheduled)
 messages to myself.
 
-Example use case: cut down todays meal plan into one simple image and send it to
-myself just before lunch time (only on days when I'm in school of course)
-[see](scripts/htw/send-mensa-plan).
-
-- [scripts](scripts/signal)
+- [signal-to-inbox](scripts/cron/signal-to-inbox): put messages into my inbox
+directory
 
 ## System apps
 ### sxhkd (hotkey daemon)
