@@ -44,7 +44,11 @@ filename=""
 if [ "$(file_title)" = "<++>" ]; then
   filename="$dir/qc-$(date +%s).norg"
 else
-  filename="$dir/$(file_title).norg"
+  fileTitle="$(file_title)"
+  if echo $fileTitle | grep -F / >/dev/null; then
+    fileTitle="$(echo $fileTitle | tr '/' '_')"
+  fi
+  filename="$dir/$fileTitle.norg"
 fi
 
 cp $tmp "$filename"
