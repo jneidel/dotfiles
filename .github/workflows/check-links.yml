@@ -1,0 +1,33 @@
+name: Check for dead links
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  check_links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install deadlink
+      - run: |
+          grep -Po "\[.+\]\(\K[^\)]+" README.md | grep -v "^#" | awk '
+          /^http/{
+            print $1
+            next
+          }
+          {
+            print "https://github.com/jneidel/dotfiles/tree/master/"$1
+          }
+          ' >links.txt
+      - run: deadlink check links.txt >findings.txt || true
+      - run: |
+          if grep -E -ve200 -e301 -e403 -e':$' -e'^$' -e'^ *[a-z]+' -eOK -eChecking -eFound findings.txt; then
+            false
+          else
+            true
+          fi
