@@ -96,7 +96,6 @@ alias rc="rename-comic"
 alias shasum="sha256sum"
 alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
-alias sc="shellcheck"
 alias to="todays-events"
 alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 alias sw="date +'%a %b %d'; raw-stopwatch"
