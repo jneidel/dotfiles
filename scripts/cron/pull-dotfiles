@@ -2,4 +2,3 @@
 
 git -C ~/code/dotfiles pull
 git -C ~/.sensitive pull
-

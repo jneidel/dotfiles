@@ -69,6 +69,29 @@ EOF
   prompt_continue
 }
 
+messenger() {
+  cat <<EOF
+$step. Clear out messengers
+
+outcome: no unread messages in
+  - signal
+  - whatsapp
+  - teams
+  - slack
+  - save no messages saved for later
+EOF
+  prompt_continue
+}
+
+browser_tabs() {
+  cat <<EOF
+$step. Close browser tabs
+
+outcome: only default page one open in my browsers
+EOF
+  prompt_continue
+}
+
 github() {
   cat <<EOF
 $step. Clear your GitHub notifications
@@ -81,9 +104,6 @@ EOF
   prompt_continue
 }
 
-pre_newsboat() {
-  reload-newsboat &
-}
 newsboat() {
   cat <<EOF
 $step. Clear your newsboat entries
@@ -134,10 +154,11 @@ EOF
 
 email
 calendar
-pre_newsboat
+messenger
 github
 newsboat
 pre_org_inbox
+browser_tabs
 files
 org_inbox
 task_manager
