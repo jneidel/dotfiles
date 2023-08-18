@@ -566,3 +566,6 @@ gnome-subtitles Subtitle editor
 
 [task]
 task Taskwarrior task manager
+
+[ledger]
+hledger-bin Plain text accounting

@@ -14,7 +14,6 @@ setFt({HOME .. "/.config/conky", "*conkyrc*"}, "conkyrc")
 setFt({HOME .. "/.config/newsboat/urls-*" }, "conf")
 setFt({"*.eslintrc*"}, "json" )
 setFt({"*/pubs/notes/*.txt"}, "markdown" )
-setFt({"*journal*" }, "markdown")
 
 -- { 'FileType', 'help,lspinfo,qf', 'nnoremap <buffer> <silent> q :q<CR>' },
 

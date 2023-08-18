@@ -237,3 +237,8 @@ create .zsh/apps
 [composer]
 create .config/composer
 .config/composer/config.json
+
+[ledger]
+create .zsh/apps
+.zsh/apps/ledger.zsh
+.zsh/apps/ledger.env

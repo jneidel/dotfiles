@@ -161,6 +161,9 @@ require("lazy").setup( {
     cmd = "Neorg",
     config = plugin.neorg.config,
   },
+  {
+    "ledger/vim-ledger",
+  },
 } )
 
 -- snippets:
