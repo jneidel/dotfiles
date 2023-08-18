@@ -306,7 +306,7 @@ tere() {
 
 reflux() {
   fkill xflux
-  xflux -k 2000 -l 52 -g 13
+  xflux -k 3000 -l 52 -g 13
 }
 
 dot() {

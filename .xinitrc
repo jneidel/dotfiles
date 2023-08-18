@@ -32,7 +32,7 @@ sxhkd &
 nice -n 5 dunst &
 
 # bluelight filter
-xflux -k 2000 -l 52 -g 13 &
+xflux -k 3000 -l 52 -g 13 &
 
 # music player daemon
 mpd &
