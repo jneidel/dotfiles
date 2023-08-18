@@ -1,0 +1,16 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ dir-jump
+Quickly just between directories
+EOF
+  exit
+fi
+
+command -v tere >/dev/null || { echo "tere is not installed" 1>&2; exit 127; }
+
+lfid=$1
+
+result=$(command tere --filter-search "$@")
+[ -n "$result" ] && lf -remote "send $lfid cd '$result'"

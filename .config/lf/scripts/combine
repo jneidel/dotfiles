@@ -4,10 +4,10 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; t
   cat <<EOF
 $ combine FILES..
 Combine multiple text files into one.
-Naming scheme: combined-NUMBER
+And open a rename prompt afterwards.
 
 Parameters:
-  \$1: multiple files
+  \$@: multiple files to combine
 
 Example:
   $ combine file1 file2 file3
@@ -17,6 +17,12 @@ fi
 
 command -v mimetype >/dev/null || { echo "mimetype script is not installed" 1>&2; exit 127; }
 
+if [ -z "$@" ]; then
+  exit
+fi
+
+combined_file=combined-$(date +%s)
+
 # validate that only text files are being combined
 for file in "$@"; do
   filetype=`mimetype "$file"`
@@ -24,6 +30,7 @@ for file in "$@"; do
     txt|md|norg) continue;;
     *)
       echo "combine is not meant for non-text files.\nFiletype in question: '$filetype'.\nMaybe combine just does not have this valid type on its allow list?"
+      lf -remote "send :clear; unselect"
       exit 1;;
   esac
 
@@ -31,8 +38,7 @@ for file in "$@"; do
   cp "$file" /tmp/
 done
 
-combined_file=combined-$(date +%s)
-echo $combined_file # to select for renaming
-
 cat "$@" >$combined_file
 rm "$@"
+
+~/.config/lf/scripts/rename "$combined_file"

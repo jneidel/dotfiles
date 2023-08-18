@@ -1,0 +1,42 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ rename FILES
+Rename multiple files in your \$EDITOR
+
+Parameters:
+  \$1: files to rename
+
+Example:
+  $ rename "vim is" the best
+EOF
+  exit
+fi
+
+command -v qmv >/dev/null || { echo "qmv is not installed" 1>&2; exit 127; }
+command -v lf >/dev/null || { echo "lf is not installed" 1>&2; exit 127; }
+
+if [ -z "$@" ]; then
+  echo "rename: Nothing selected"
+  exit
+fi
+
+pre_move=/tmp/qmv-pre-move
+post_move=/tmp/qmv-post-move
+log_dir_content() {
+  find . -maxdepth 1 | sort | cut -d/ -f2
+}
+move_diff() {
+  comm -13 $pre_move $post_move
+}
+
+log_dir_content >$pre_move
+echo "$@" | xargs -0 -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
+log_dir_content >$post_move
+
+if [ -n "$(move_diff)" ]; then
+  lf -remote "send $id :reload; select '$(move_diff | head -n1)'; clear; unselect"
+else
+  lf -remote "send $id reload"
+fi

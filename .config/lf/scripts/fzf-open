@@ -1,0 +1,50 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ fzf-open TYPE
+<++>
+
+Parameters:
+  \$1: what type: file|dir
+
+Example:
+  $ fzf-open file
+  $ fzf-open dir
+EOF
+  exit
+fi
+
+command -v fzf >/dev/null || { echo "fzf is not installed" 1>&2; exit 127; }
+command -v lf >/dev/null || { echo "lf is not installed" 1>&2; exit 127; }
+command -v rg >/dev/null || { echo "ripgrep is not installed" 1>&2; exit 127; }
+
+openType=$1
+
+sharedFlags="--ignore --hidden --files --sort path --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/'"
+
+fzf_cmd() {
+  fzf --bind TAB:up,Shift-TAB:down --height=0
+}
+
+if [ "$openType" = "file" ]; then
+  pick() {
+    FZF_DEFAULT_COMMAND="rg $sharedFlags ~/org | cut -d/ -f4-" fzf_cmd
+  }
+  picked="$HOME/$(pick)"
+  if [ "$picked" != "$HOME/" ]; then
+    lf -remote "send $id select '$picked'" &
+    ( cd "$(dirname "$picked")" && ~/scripts/mime/mime -e lf open "$picked" )
+  fi
+elif [ "$openType" = "dir" ]; then
+  pick() {
+    FZF_DEFAULT_COMMAND="rg $sharedFlags --null ~/org | xargs -0 dirname | sort -r | uniq | cut -d/ -f4-" fzf_cmd
+  }
+  picked="$HOME/$(pick)"
+  if [ "$picked" != "$HOME/" ]; then
+    lf -remote "send $id cd '$picked'"
+  fi
+else
+  echo "Wrong type passed, needs one off: file|dir"
+  exit 1
+fi

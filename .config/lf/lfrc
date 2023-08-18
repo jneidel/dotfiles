@@ -9,7 +9,8 @@ set cleaner ~/.config/lf/cleaner
 set nodirfirst
 set relativenumber
 set ratios 5:4
-set hiddenfiles ".*:*.aux:*.log:*.synctex.gz:*.bcf:*.run.xml:*.bbl:*.blg:*.toc:*.nav:*.out:*.snm:package-lock.json:node_modules:prog3" # ignore
+# ignore
+set hiddenfiles ".*:*.aux:*.log:*.synctex.gz:*.bcf:*.run.xml:*.bbl:*.blg:*.toc:*.nav:*.out:*.snm:package-lock.json:node_modules"
 set cursorpreviewfmt "\033[48;5;240m"
 
 # for working with $fs/$fx
@@ -18,56 +19,26 @@ set shellopts '-euy'
 set ifs "\n"
 set filesep "\n"
 
-## custom functions
-cmd open ${{
-  ~/scripts/mime/mime -e lf open "$f"
-}}
-cmd openAndSwitch ${{
-  ~/scripts/mime/mime -e lf open "$f"
-  tmux next-window
-}}
-cmd diropen ${{
-  ~/.config/lf/scripts/handle-dir "$f"
-}}
-cmd diropenShuffle ${{
-  ~/.config/lf/scripts/handle-dir "$f" -s
-}}
+# Different commands:
+# $ -> shell
+# % -> shell-pipe: input from the ui and output to the ui
+# ! -> shell-wait: wait for input after running
+# & -> shell-async: run in the background
 
-cmd remove ${{
-  rm -rf $fx
-}}
+cmd source-config %lf -remote "send $id source ~/.config/lf/lfrc"
 
-cmd edit ${{
-  ~/scripts/mime/mime -e lf edit "$f"
-}}
+cmd open $~/scripts/mime/mime -e lf open "$f"
+cmd edit $~/scripts/mime/mime -e lf edit "$f"
+cmd remove $rm -rf "$fx"
 
-cmd massmove ${{
-  local pre_move=/tmp/qmv-pre-move
-  local post_move=/tmp/qmv-post-move
-  log_dir_content() {
-    find . -maxdepth 1 | sort | cut -d/ -f2
-  }
-  move_diff() {
-    comm -13 $pre_move $post_move
-  }
+cmd diropen $~/.config/lf/scripts/handle-dir "$f"
+cmd diropenShuffle $~/.config/lf/scripts/handle-dir "$f" -s
 
-  log_dir_content >$pre_move
-  echo "$fx" | xargs -0 -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
-  log_dir_content >$post_move
+cmd massmove $~/.config/lf/scripts/rename "$fx"
+cmd combine $~/.config/lf/scripts/combine "$fx"
 
-  if [ -n "$(move_diff)" ]; then
-    lf -remote "send $id :reload; select '$(move_diff | head -n1)'"
-  else
-    lf -remote "send $id reload"
-  fi
-}}
-
-cmd combine ${{
-  local tmp=$(mktemp)
-  ~/.config/lf/scripts/combine $fx | tee tmp
-
-  lf -remote "send $id :select '$(cat $tmp)'; toggle; massmove"
-}}
+cmd paste_and_forget &lf -remote "send $id :paste; clear"
+cmd clear-unselect &lf -remote "send $id :clear; unselect"
 
 cmd move-to-inbox %{{
   local filename="${f##*/}"
@@ -88,98 +59,14 @@ cmd move-to-archive %{{
   fi
 }}
 
-cmd broot_jump ${{
-  f=$(mktemp)
-  res="$(broot -f --outcmd $f && cat $f | sed 's/cd //')"
-  rm -f "$f"
-  /bin/lf -remote "send $id cd '$res'"
-}}
+cmd gimp &gimp "$f" >/dev/null 2>&1
 
-cmd gimp ${{
-  gimp "$f" >/dev/null 2>&1 &
-}}
-
-cmd rm_pi ${{
-  # remove a file from the local music lib and the pi's
-  REMOTE_FILE=""
-  if realpath $f | grep 'unheard'; then
-    FILE="$(realpath $f | grep -Po '/unheard/\K.*$')"
-    REMOTE_FILE="\$HOME/usb/unheard/$FILE"
-  else
-    FILE="$(realpath $f | grep -Po '/music/\K.*$')"
-    REMOTE_FILE="\$HOME/usb/music/$FILE"
-  fi
-
-  echo "Removing file: '$FILE' at\n  '$REMOTE_FILE'\nContinue (y/N): "
-  read ans
-  if [ "$ans" != "y" ]; then
-    exit 0
-  fi
-
-  ssh pi "rm -r \"$REMOTE_FILE\""
-  rm -r "$f"
-}}
-
-cmd paste_and_forget %{{
-  lf -remote "send $id :paste; clear"
-}}
-
-cmd clear-unselect %{{
-  lf -remote "send $id :clear; unselect"
-}}
-
-cmd fzf_dir ${{
-  pick() {
-    FZF_DEFAULT_COMMAND="rg --null --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/' ~/org | xargs -0 dirname | sort | uniq | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
-  }
-  local picked="$HOME/$(pick)"
-  if [ "$picked" != "$HOME/" ]; then
-    lf -remote "send $id cd '$picked'"
-  fi
-}}
-cmd fzf_file ${{
-  pick() {
-    FZF_DEFAULT_COMMAND="rg --ignore --hidden --files --sort path --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/' ~/org | cut -d/ -f4-" fzf --bind TAB:up,Shift-TAB:down --height=0
-  }
-  local picked="$HOME/$(pick)"
-  if [ "$picked" != "$HOME/" ]; then
-    lf -remote "send $id select '$picked'" &
-    ( cd "$(dirname "$picked")" && ~/scripts/mime/mime -e lf open "$picked" )
-  fi
-}}
-
-# TODO: fix <enter> mapping fucking with mkdir not being able to press enter
-# TODO: replace with variant that works more like tere
-# filter and select entry in cwd
-# src: https://github.com/gokcehan/lf/wiki/Tips#using-incfilter-to-select-and-open-files
-# set incfilter
-map f :filter; set user_filter true
-# cmap <enter> &{{ # select and open file
-#   if [ "$lf_user_filter" = true ]; then
-#     lf -remote "send $id :cmd-enter; set user_filter false; setfilter; open"
-#   else
-#     lf -remote "send $id cmd-escape"
-#   fi
-# }}
-cmap <esc> &{{ # exit filter mode
-  if [ "$lf_user_filter" = true ]; then
-    lf -remote "send $id :cmd-escape; set user_filter false"
-  else
-    lf -remote "send $id cmd-escape"
-  fi
-}}
-cmap <a-j> &{{ # go to next file
-  if [ "$lf_user_filter" = true ]; then
-    lf -remote "send $id down"
-  fi
-}}
-cmap <a-k> &{{ # go to previous file
-  if [ "$lf_user_filter" = true ]; then
-    lf -remote "send $id up"
-  fi
-}}
+cmd dir-jump $~/.config/lf/scripts/dir-jump
+cmd fzf_dir $~/.config/lf/scripts/fzf-open dir
+cmd fzf_file $~/.config/lf/scripts/fzf-open file
 
 ## create files
+cmd gen-note $~/scripts/gen-note
 cmd touch %printf "File Name: "; read ans; touch "$ans"
 cmd touchTex %{{
   printf "Tex Name: "
@@ -189,9 +76,6 @@ cmd touchTex %{{
 cmd create-index ${{
   touch index.norg
   $EDITOR index.norg
-}}
-cmd gen-note ${{
-  ~/scripts/gen-note
 }}
 cmd create-norg ${{
   printf "Name of .norg file: "
@@ -237,6 +121,7 @@ cmd create-resource ${{
   mkdir -p "$resource"
   lf -remote "send $id cd '$resource'"
 }}
+
 ## bindings
 ### remove defaults
 map m
@@ -271,9 +156,9 @@ map <esc> clear
 map m massmove
 map d mkdir
 map D diropen
+map S source-config
 map Y diropenShuffle
-map L openAndSwitch
-# map f broot_jump
+map f dir-jump
 map . set hidden!
 map R reload
 map I gimp # [I]mage
@@ -283,12 +168,12 @@ map <a-d> fzf_dir
 map <a-f> fzf_file
 
 ### jump - cd to dirs
-
 map go  %lf -remote "send $id cd $ORG"
 map gi  %lf -remote "send $id cd $ORG_INBOX"
 map gd  %lf -remote "send $id cd $ORG_DESIGN"
 map gp  %lf -remote "send $id cd $ORG_PROJECTS"
 map ga  %lf -remote "send $id cd $ORG_AREAS"
+map gf  %lf -remote "send $id cd $ORG_AREAS/Freunde"
 map gr  %lf -remote "send $id cd $ORG_RESOURCES"
 map gmm %lf -remote "send $id cd $ORG_MEDIA"
 map gb  %lf -remote "send $id cd $ORG_MEDIA/books"
