@@ -52,3 +52,5 @@ map("", "<up>", "<nop>", { noremap = true })
 map("", "<down>", "<nop>", { noremap = true })
 map("i", "<up>", "<nop>", { noremap = true })
 map("i", "<down>", "<nop>", { noremap = true })
+
+map("n", "<Leader>z", ":Goyo 90<CR>:Limelight<CR>:HardPencil<CR>:lua require('cmp').setup.buffer { enabled = false }<CR>")

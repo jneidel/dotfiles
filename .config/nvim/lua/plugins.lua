@@ -143,6 +143,20 @@ require("lazy").setup( {
     cmd = "Files",
   },
 
+  -- ## writing
+  {
+    "junegunn/goyo.vim",
+    cmd = "Goyo",
+  },
+  {
+    "junegunn/limelight.vim",
+    cmd = "Limelight",
+  },
+  {
+    "preservim/vim-pencil",
+    cmd = "HardPencil",
+  },
+
   -- ## other
   { -- status bar theme
     "itchyny/lightline.vim",

@@ -38,6 +38,4 @@ onWrite({"/tmp/fcr-*"}, "silent %!column -t")
 
 -- regenerate SRCINFO on PKGBUILD write
 onWrite({"PKGBUILD"}, "!makepkg --printsrcinfo >.SRCINFO")
-
-
 -- onWrite({HOME .. "
