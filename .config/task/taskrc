@@ -25,3 +25,8 @@ urgency.uda.priority..coefficient = 1.8
 urgency.user.tag.cooking.coefficient=-3.0
 
 #dateformat=a bD
+
+context.dava.read=+dava
+context.dava.write=+dava
+context.org.read=-dava
+context=org
