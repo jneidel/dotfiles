@@ -1,0 +1,21 @@
+#! /bin/sh
+
+DIR=$(dirname $0)
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ generate-changelog
+Generate a markdown changelog, sorted by scopes.
+Depends on the conventional commit style.
+Commit range is since the last tag.
+EOF
+  exit
+fi
+
+command -v git >/dev/null || { echo "git is not installed" 1>&2; exit 127; }
+command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
+command -v awk >/dev/null || { echo "awk is not installed" 1>&2; exit 127; }
+
+git log --oneline --no-decorate $(git tag | tail -n1)..HEAD |
+  awk {'first=$1; $1=""; print ""$0"\\n"first""'} | sed 's/^ //' |
+  $DIR/parse-commits.js
