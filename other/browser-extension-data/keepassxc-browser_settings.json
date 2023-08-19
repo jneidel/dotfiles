@@ -1,0 +1,114 @@
+{
+    "afterFillSorting": "sortByMatchingCredentials",
+    "afterFillSortingTotp": "sortByRelevantEntry",
+    "autoCompleteUsernames": true,
+    "autoFillAndSend": true,
+    "autoFillSingleEntry": true,
+    "autoReconnect": false,
+    "autoRetrieveCredentials": true,
+    "autoSubmit": false,
+    "checkUpdateKeePassXC": 0,
+    "clearCredentialsTimeout": 10,
+    "colorTheme": "system",
+    "credentialSorting": "sortByGroupAndTitle",
+    "debugLogging": false,
+    "defaultGroup": "",
+    "defaultGroupAlwaysAsk": false,
+    "defined-custom-fields": {
+        "https://account.mongodb.com": {
+            "fields": [
+
+            ],
+            "password": [
+                "/html/body/div/div/div/form/fieldset[2]/label/div/div/input",
+                "INPUT password password "
+            ],
+            "totp": [
+                "/html/body/div/div/div/div/div[2]/div[2]/input",
+                "INPUT text input-0 "
+            ],
+            "username": [
+                "/html/body/div/div/div/form/fieldset/label/div/div/input",
+                "INPUT text username "
+            ]
+        },
+        "https://accounts.login.idm.telekom.com": {
+            "fields": [
+
+            ],
+            "password": [
+                "/html/body/div[3]/div/div[2]/div/div[3]/form/div/div/input",
+                "INPUT password pw_pwd "
+            ],
+            "username": [
+                "/html/body/div[3]/div/div[2]/div/form/div/div/input",
+                "INPUT email pw_usr "
+            ]
+        },
+        "https://signin.ebay.com": {
+            "fields": [
+
+            ],
+            "password": [
+                "/html/body/div[4]/main/div/form/div[2]/div[2]/div/div/input",
+                "INPUT password pass "
+            ],
+            "username": [
+                "/html/body/div[4]/main/div/form/div/div/div/div/input",
+                "INPUT text userid "
+            ]
+        },
+        "https://verify.salesforce.com": {
+            "fields": [
+
+            ],
+            "totp": [
+                "/html/body/div/vaasdist-verify/div/vaas-verify/div/vaas-verify-totp/vaas-container/div/div/slot/div/form/vaas-text-input/div/div/input",
+                "INPUT text slds-input slds-p-vertical_x-small "
+            ]
+        },
+        "https://www.notion.so": {
+            "fields": [
+                [
+                    "/html/body/div/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div[2]/div/div/input",
+                    "kpxc text 002052046"
+                ]
+            ]
+        }
+    },
+    "downloadFaviconAfterSave": false,
+    "redirectAllowance": 3,
+    "saveDomainOnly": true,
+    "showGettingStartedGuideAlert": true,
+    "showGroupNameInAutocomplete": true,
+    "showLoginFormIcon": true,
+    "showLoginNotifications": true,
+    "showNotifications": true,
+    "showOTPIcon": true,
+    "showTroubleshootingGuideAlert": true,
+    "sitePreferences": [
+        {
+            "ignore": "ignoreNormal",
+            "url": "https://ap.www.namecheap.com/Domains/DomainControlPanel/*",
+            "usernameOnly": false
+        },
+        {
+            "ignore": "ignoreNormal",
+            "url": "https://hypothes.is/*",
+            "usernameOnly": false
+        },
+        {
+            "ignore": "ignoreNothing",
+            "url": "https://www.patreon.com/*",
+            "usernameOnly": true
+        },
+        {
+            "ignore": "ignoreNothing",
+            "url": "https://www.notion.so/*",
+            "usernameOnly": true
+        }
+    ],
+    "useObserver": true,
+    "usePasswordGeneratorIcons": false,
+    "usePredefinedSites": true
+}
