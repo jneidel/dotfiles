@@ -1,5 +1,8 @@
 # apps
 
+alias h="cd; clear"
+alias dl="cd ~/Downloads; ls"
+
 ## clis
 ### programming
 alias py="python"

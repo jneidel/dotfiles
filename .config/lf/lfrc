@@ -29,7 +29,7 @@ cmd source-config %lf -remote "send $id source ~/.config/lf/lfrc"
 
 cmd open $~/scripts/mime/mime -e lf open "$f"
 cmd edit $~/scripts/mime/mime -e lf edit "$f"
-cmd remove $rm -rf "$fx"
+cmd remove $rm -rf $fx
 
 cmd diropen $~/.config/lf/scripts/handle-dir "$f"
 cmd diropenShuffle $~/.config/lf/scripts/handle-dir "$f" -s
@@ -174,27 +174,15 @@ map gd  %lf -remote "send $id cd $ORG_DESIGN"
 map gp  %lf -remote "send $id cd $ORG_PROJECTS"
 map ga  %lf -remote "send $id cd $ORG_AREAS"
 map gf  %lf -remote "send $id cd $ORG_AREAS/Freunde"
+map gG  %lf -remote "send $id cd $ORG_AREAS/geld"
 map gr  %lf -remote "send $id cd $ORG_RESOURCES"
 map gmm %lf -remote "send $id cd $ORG_MEDIA"
 map gb  %lf -remote "send $id cd $ORG_MEDIA/books"
 map gmo %lf -remote "send $id cd $ORG_MEDIA/movies"
 map gM  %lf -remote "send $id cd $ORG_MEDIA/music"
 map gA  %lf -remote "send $id cd $ORG_ARCHIVE"
-
 map gD cd ~/Downloads
-# map gu cd ~/projects/uni
-# map gG cd ~/projects/geldhochschule
-# map gt cd ~/projects/geldhochschule/1_Trades
 map gc cd ~/code
-# map gc cd ~/ct
-# map gC cd ~/ct/podcasts
-# map gP cd ~/ct/pictures
-map gB cd ~/code/notes/books
-map gn cd ~/code/notes
-map gR cd ~/code/notes/research
-# map gs cd ~/projects/spanish
-# map gl cd ~/projects/latin
-# map ge cd ~/projects/morning_routine/meditation
 
 map o jump-prev
 map i jump-next

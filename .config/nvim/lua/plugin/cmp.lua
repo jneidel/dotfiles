@@ -84,8 +84,8 @@ return {
       sources = {
         { name = 'path' },
         { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'spell' },
+        -- { name = 'buffer' },
+        -- { name = 'spell' },
         { name = 'luasnip' },
       },
     }
