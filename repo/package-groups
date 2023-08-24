@@ -251,8 +251,8 @@ xorg-xrandr Control display outputs
 arandr Control display outputs (GUI)
 
 [x-lock]
-xautolock X display lock system
 i3lock-lixxia-git Screen locker
+xss-lock Lock on sleep
 
 [xflux]
 xflux Flux bluelight filter for X

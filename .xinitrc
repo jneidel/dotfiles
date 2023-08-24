@@ -37,15 +37,15 @@ xflux -k 3000 -l 52 -g 13 &
 # music player daemon
 mpd &
 
-# lock screen
-# ~/scripts/i3/lock/autostart-lock
-
 # bar for volume & brightness
 mkfifo /tmp/xobpipe
 sleep 2; tail -f /tmp/xobpipe | xob &
 
 # desktop monitor
 ~/scripts/conky/start-conky &
+
+# lock the screen on suspend/hibernate
+xss-lock ~/scripts/i3/lock/lock &
 
 # status bar
 nice -n -10 ~/scripts/lemonbar/run-lemonbar &
