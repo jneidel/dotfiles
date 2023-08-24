@@ -14,7 +14,9 @@ alias tre="task ready"
 
 # crud
 alias td="task done"
+alias  d="task done"
 alias ts="task start"
+alias tm="task mod"
 
 # org
 alias ti="task add tag:inbox"
