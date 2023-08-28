@@ -50,7 +50,7 @@ if [ "$TERM" = "tmux-256color" ]; then
 fi
 
 ## Paths
-export PATH=$HOME/.local/bin:/usr/local/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl:$HOME/.cargo/bin
+export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/.rd/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/bin/site_perl:$HOME/.cargo/bin
 export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/3_areas:~/org/4_resources:~/org/4_resources/media:~/scripts:~/.config:~/code/notes
 
