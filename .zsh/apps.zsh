@@ -29,7 +29,7 @@ alias comic="getcomics-dl"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
-local ytdl_location=$ORG_MEDIA
+local ytdl_location=$ORG_INBOX
 alias ytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
 alias ytmp3="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ytdl_location/%(title)s.%(ext)s' --embed-thumbnail"
 alias ytraw="nice yt-dlp -c --retries 4 -o '$ytdl_location/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working
@@ -99,7 +99,6 @@ alias rc="rename-comic"
 alias shasum="sha256sum"
 alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
-alias to="todays-events"
 alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 alias sw="date +'%a %b %d'; raw-stopwatch"
 alias license="legit put gpl-3.0"
@@ -266,10 +265,6 @@ bbo() {
 }
 alias bbopen="bbo"
 alias bbl="bb list"
-
-## make
-alias m="make"
-alias mw="make watch"
 
 n() {
   note="$@"

@@ -1,7 +1,7 @@
 # Taskwarrior program configuration file.
 # For more documentation, see https://taskwarrior.org or try 'man task', 'man task-color',
 # 'man task-sync' or 'man taskrc'
-# Use the command 'task show' to see all defaults and overrides
+# Use the command 'task show x' to see all defaults and overrides
 # You can refence environment variables: variable=$HOME/task variable=$VALUE
 
 # Files
@@ -11,7 +11,20 @@ hooks.location=~/.config/task/hooks
 
 news.version=2.6.0
 
+nag= # disable 'You have more urgent tasks' message
+
+# colors
 include dark-256.theme
+rule.precedence.color = deleted,completed,active,keyword.,tag.,project.,overdue,due.today,due,scheduled,blocked,blocking,recurring,tagged,uda
+color.scheduled = on color26
+color.due = color234 on color160
+color.blocking = color220
+color.blocked = on color8
+color.overdue = white on color197
+color.due.today = color234 on color197
+color.active = color234 on color47
+# see different colored properties: t color legend
+# play around interactively: t rc.color.x="y"
 
 verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
 # removed from verbose: filter, header
@@ -22,11 +35,41 @@ urgency.uda.priority.L.coefficient = 0
 urgency.uda.priority..coefficient = 1.8
 
 # adjust urgency coefficients
-urgency.user.tag.cooking.coefficient=-3.0
+urgency.blocking.coefficient = 2.5 # [8] these crowd out everything else, task is not much more important because there are other steps in the system
+urgency.active.coefficient = 20 # [4] put this to the top of the list
+urgency.uda.priority.H.coefficient = 8 # [6] boost importance
+urgency.user.tag.basement.coefficient=-1.0
 
-#dateformat=a bD
+# tasksh review
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
+# custom reports
+report.main.labels=ID,Active,Age,D,P,Project,T,Tags, ,Due,Until,Description,Urg
+report.main.columns=id,start.age,entry.age,depends.indicator,priority,project,type,tags,scheduled.countdown,due.countdown,until.remaining,description.count,urgency
+report.main.description=Most urgent actionable tasks (an adjusted copy of ready)
+report.main.filter=+READY
+report.main.sort=start-,urgency-
+
+# type of activity uda
+uda.type.type=string
+uda.type.label=Type
+uda.type.values=P,M,X,p,m,x # physical, mental, mixed in high and low intensity
+
+# custom relative recur functionality based on hook
+uda.recurDue.type=duration
+uda.recurDue.label=Rel. Rec. Due
+uda.recurWait.type=duration
+uda.recurWait.label=Rel. Rec. Wait
+
+# contexts
 context.dava.read=+dava
 context.dava.write=+dava
-context.org.read=-dava
+context.jd.read=+jd
+context.jd.write=+jd
+context.org.read=-dava -jd
 context=org
