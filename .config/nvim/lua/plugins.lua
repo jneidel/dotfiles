@@ -178,6 +178,9 @@ require("lazy").setup( {
   {
     "ledger/vim-ledger",
   },
+  { -- proper syntax highlighting
+    "linuxcaffe/tw-syntax.vim",
+  },
 } )
 
 -- snippets:
