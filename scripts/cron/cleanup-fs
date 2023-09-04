@@ -33,5 +33,3 @@ rm -rf ~/.w3m \
   ~/.shared-ringdb \
   ~/.standard-v14-cache \
   ~/.gnome 2>/dev/null
-
-~/scripts/cron/cron-notify-send "Cleaned up fs"

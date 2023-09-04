@@ -1,8 +1,7 @@
-#! /bin/zsh
+#!/bin/zsh
 
-Kottmeierstr=10003134
-Center=8001126
-MARKET_ID=$Kottmeierstr
+Doki=3841366
+MARKET_ID=$Doki
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
