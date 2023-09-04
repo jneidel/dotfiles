@@ -68,7 +68,7 @@ rofi Prompt (dmenu alternative)
 conky Desktop widgets
 wget Download util
 curl Download util
-shellcheck Script debugging
+shellcheck-bin Script debugging
 octave Math language (unhrd)
 reflector Update arch mirrorlist (update-mirrorlist)
 sshpass Automatic password login for ftp (ftpp)
