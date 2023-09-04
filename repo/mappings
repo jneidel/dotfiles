@@ -242,3 +242,7 @@ create .config/composer
 create .zsh/apps
 .zsh/apps/ledger.zsh
 .zsh/apps/ledger.env
+
+[x-lock]
+create /etc/X11/xorg.conf.d
+/etc/X11/xorg.conf.d/30-dpms.conf

@@ -54,7 +54,7 @@ else
 fi
 
 # colors of the circle
-NORMAL_COLOR="#ffd700"
+NORMAL_COLOR="#005fd7"
 SUCCESS_COLOR="#00ff5f"
 FAILURE_COLOR="#d70000"
 

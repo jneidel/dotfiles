@@ -46,6 +46,10 @@ sleep 2; tail -f /tmp/xobpipe | xob &
 
 # lock the screen on suspend/hibernate
 xss-lock ~/scripts/i3/lock/lock &
+# lock screen after 5h of inactivity
+xset dpms 0 0 18000
+# https://wiki.archlinux.org/title/Session_lock
+# https://unix.stackexchange.com/a/639552
 
 # status bar
 nice -n -10 ~/scripts/lemonbar/run-lemonbar &
