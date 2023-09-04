@@ -1,14 +1,27 @@
 #! /bin/sh
 
+DURATIONS_FILE="$ORG_AREAS/org/weekly review/durations.txt"
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ weekly-review
 Guide me through the Weekly Review
+
+Manipulate the timer with the words:
+- pause
+- resume
 EOF
-  exit
+exit
 fi
 
-# helper
+# helpers
+print_header() {
+  printf "\033[1;32m$1\033[0m\n"
+}
+print_control() {
+  printf "\033[1;34m$1\033[0m"
+}
+
 start_time=$(date +%s)
 calc_total_time() {
   end_time=$(date +%s)
@@ -16,7 +29,30 @@ calc_total_time() {
   mins_passed=$(($secs_passed/60))
   mins_passed_leftover_sec=$(($secs_passed%60))
 
-  echo "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s"
+  print_control "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s\n"
+  echo "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s" >>"$DURATIONS_FILE"
+}
+is_paused=0
+passed_before_pause=0
+pause_timer() {
+  if [ "$is_paused" -eq 1 ]; then
+    print_control "Timer is already paused\n"
+  else
+    is_paused=1
+    pause_time=$(date +%s)
+    passed_before_pause=$(($pause_time-$start_time))
+    print_control "[Timer paused]\nContinue the review process with 'resume'\n"
+  fi
+}
+resume_timer() {
+  if [ "$is_paused" -eq 0 ]; then
+    print_control "Timer is not paused\n"
+  else
+    is_paused=0
+    resume_time=$(date +%s)
+    start_time=$(($resume_time-$passed_before_pause))
+    print_control "[Timer resumed]\n"
+  fi
 }
 
 step=0
@@ -26,10 +62,25 @@ next_step() {
 next_step
 
 prompt_continue() {
-  printf "Continue? "
+  print_control "Continue? "
   read ans
-  next_step
-  printf "\n"
+  case $ans in
+    pause)
+      pause_timer
+      prompt_continue;;
+    resume)
+      resume_timer
+      prompt_continue;;
+    *)
+      if [ "$is_paused" -eq 1 ]; then
+        print_control "\nCan't continue with the timer paused\n"
+        prompt_continue
+      else
+        next_step
+        printf "\n"
+      fi
+      ;;
+  esac
 }
 
 split_below() {
@@ -40,28 +91,40 @@ split_below() {
   tmux send-keys "clear && figlet $step_name" "Enter" "$cmd" "Enter"
 }
 
-# steps
+# parts of the review
 email() {
+  print_header "$step. Clear out your email"
   cat <<EOF
-$step. Clear out your email!
+outcome:
+  - empty kudu inbox
 
-outcome: inbox empty for: Endava, kudu
 EOF
   kitty --class mosh --name kudu mosh k >/dev/null 2>&1 &
   prompt_continue
 }
 
-calendar() {
+desk() {
+  print_header "$step. Clear out your desk!"
   cat <<EOF
-$step. Check your calendar!
+outcome:
+  - no paper notes or other TODO items on the desk
 
-outcome: past events are in archive.rem
+EOF
+  prompt_continue
+}
+
+calendar() {
+  print_header "$step. Check your calendar\n"
+  cat <<EOF
+outcome:
+  - past events are in archive.rem
+
 EOF
   lf -remote "send cd '$ORG_RESOURCES/calendar/main'" &
 
   split_below "Calendar" "rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
 
-  printf "\nShow event calendar next; "
+  printf "\nShow event calendar next\n"
   prompt_continue
 
   split_below "Events" "events; rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
@@ -70,33 +133,33 @@ EOF
 }
 
 messenger() {
+  print_header "$step. Clear out messengers"
   cat <<EOF
-$step. Clear out messengers
+outcome:
+  - empty signal
+  - empty whatsapp
 
-outcome: no unread messages in
-  - signal
-  - whatsapp
-  - teams
-  - slack
-  - save no messages saved for later
 EOF
   prompt_continue
 }
 
 browser_tabs() {
+  print_header "$step. Close all browser tabs"
   cat <<EOF
-$step. Close browser tabs
+outcome:
+  - only start page open
 
-outcome: only default page one open in my browsers
 EOF
   prompt_continue
 }
 
 github() {
+  print_header "$step. Clear your GitHub notifications"
   cat <<EOF
-$step. Clear your GitHub notifications
+outcome:
+  - no notifications
+  - up-to-date on GitHub newsfeed
 
-outcome: no notifications, up-to-date on GitHub newsfeed
 EOF
   $BROWSER https://github.com >/dev/null 2>&1 &
   $BROWSER https://github.com/notifications?query=is%3Aunread >/dev/null 2>&1 &
@@ -105,25 +168,28 @@ EOF
 }
 
 newsboat() {
+  print_header "$step. Clear out newsboat"
   cat <<EOF
-$step. Clear your newsboat entries
+outcome:
+  - no unread feeds
+  - no new patreon posts
 
-outcome: empty new command
 EOF
-  split_below "Newsboat" "new"
+split_below "Newsboat" "new"
 
-  prompt_continue
+prompt_continue
 }
 
 files() {
+  print_header "$step. Clear temp directories"
   cat <<EOF
-$step. Clear Downloads directories
+outcome:
+  - empty ~, Downloads
 
-outcome: directories empty: Mac Downloads & Desktop; x270 Downloads & home
 EOF
-  lf -remote "send cd '$HOME/Downloads'" &
+lf -remote "send cd '$HOME/Downloads'" &
 
-  prompt_continue
+prompt_continue
 }
 
 pre_org_inbox() {
@@ -131,37 +197,44 @@ pre_org_inbox() {
   signal-to-inbox &
 }
 org_inbox() {
+  print_header "$step. Clear your org inbox"
   cat <<EOF
-$step. Clear your org inbox
+outcome:
+  - $ORG_INBOX is empty
 
-outcome: org inbox is empty
 EOF
-  lf -remote "send cd '$ORG_INBOX'" &
+  echo "$(date +%b%d): <++>m, $(ls $ORG_INBOX/* | wc -l) items" >>"$DURATIONS_FILE"
 
+  lf -remote "send cd '$ORG_INBOX'" &
   prompt_continue
 }
 
 task_manager() {
+  # excluded because this is seperate for me
+  # tasks need their own review process and
+  # I need to think about what I want to do over the next week,
+  # which I'm not capable off if the weekly review is as long as it currently is
+  print_header "$step. Choose your tasks for the week"
   cat <<EOF
-$step. Choose your tasks for the week
+outcome:
+  - taskwarrior has next weeks tasks scheduled and inbox is emtpy
 
-outcome: taskwarrior has next weeks tasks scheduled and inbox is emtpy
 EOF
-  split_below "Tasks" "task list +inbox"
+split_below "Tasks" "task list"
 
-  prompt_continue
+prompt_continue
 }
 
 email
 calendar
 messenger
 github
+desk
 newsboat
 pre_org_inbox
 browser_tabs
 files
 org_inbox
-task_manager
 
 echo "Congrats! You're done"
 calc_total_time
