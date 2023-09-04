@@ -35,7 +35,7 @@ cmd diropen $~/.config/lf/scripts/handle-dir "$f"
 cmd diropenShuffle $~/.config/lf/scripts/handle-dir "$f" -s
 
 cmd massmove $~/.config/lf/scripts/rename "$fx"
-cmd combine $~/.config/lf/scripts/combine "$fx"
+cmd combine $~/.config/lf/scripts/combine $fx
 
 cmd paste_and_forget &lf -remote "send $id :paste; clear"
 cmd clear-unselect &lf -remote "send $id :clear; unselect"
@@ -175,6 +175,7 @@ map gp  %lf -remote "send $id cd $ORG_PROJECTS"
 map ga  %lf -remote "send $id cd $ORG_AREAS"
 map gf  %lf -remote "send $id cd $ORG_AREAS/Freunde"
 map gG  %lf -remote "send $id cd $ORG_AREAS/geld"
+map gR  %lf -remote "send $id cd $ORG_AREAS/routine"
 map gr  %lf -remote "send $id cd $ORG_RESOURCES"
 map gmm %lf -remote "send $id cd $ORG_MEDIA"
 map gb  %lf -remote "send $id cd $ORG_MEDIA/books"
