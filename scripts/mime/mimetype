@@ -50,19 +50,24 @@ classify_file() {
   fileext="$(echo $fileext | tr '[:upper:]' '[:lower:]')" # to lowercase
 
   if [ -z "$fileext" ] || echo "$fileext" | grep " " >/dev/null; then
-    FILE_OUTPUT="$(file -b "$1" | cut -d, -f1)"
-    if grep -F "cannot open" <<< $FILE_OUTPUT >/dev/null; then
+    DETERMINED_FILE_TYPE=
+    if file -b "$1" | grep "Unicode text" >/dev/null; then
+      DETERMINED_FILE_TYPE="Unicode text"
+    else
+      DETERMINED_FILE_TYPE="$(file -b "$1" | cut -d, -f1)"
+    fi
+    if grep -F "cannot open" <<< $DETERMINED_FILE_TYPE >/dev/null; then
       echo "[ERR] file does not exist: $FILE"
       exit 2
     fi
 
-    case "$FILE_OUTPUT" in
+    case "$DETERMINED_FILE_TYPE" in
       "POSIX shell script") echo sh;;
       "Bourne-Again shell script") echo bash;;
       "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data") echo txt;;
       "empty") echo txt;;
-      *) echo [ERR] mimetype not configured: $FILE_OUTPUT
-        echo "unconfigured mimetype: $FILE_OUTPUT" >$ORG_INBOX/mimetype-$(date +%s)
+      *) echo [ERR] mimetype not configured: $DETERMINED_FILE_TYPE
+        echo "unconfigured mimetype: $DETERMINED_FILE_TYPE" >$ORG_INBOX/mimetype-$(date +%s)
         exit 1;;
     esac
   else
