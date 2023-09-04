@@ -130,6 +130,7 @@ ms() {
   is-mullvad && printf "\033[1;32mlockdown-mode is on\033[0m\n" || printf "\033[1;31mlockdown-mode set off\033[0m\n"
   mullvad status
 }
+alias mre="mullvad disconnect && mullvad connect"
 sentix() {
   curl -Ss "https://www.sentix.de/index.php/sentix-News/" |
     grep -Po '\K/index.php\?option=com_rokdownloads&amp;view=file.+?(?=")' -m1 |

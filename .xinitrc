@@ -64,13 +64,9 @@ nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 
 # fix backlight permissions
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
-# fix permissions for backlight file
-# does not work with sudo
-# reassign file to root after reboot
-#sudo chown jneidel /sys/class/leds/smc::kbd_backlight/brightness
-#sudo chown jneidel /sys/class/backlight/intel_backlight/brightness
 
-waitforinternet && mullvad connect &
+# disable mullvad lockdown-mode if active
+mullvad lockdown-mode set off &
 
 ## autostart gui applications
 nice -n -7 kitty ~/scripts/tmux/tp main &
