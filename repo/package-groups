@@ -169,7 +169,7 @@ rclone Sync local and remote directories
 rsync Sync local and remote directories
 
 [youtube-dl]
-yt-dlp-git Audio and video downloader
+yt-dlp General audio and video downloader
 bandcamp-dl-git Bandcamp downloader
 
 # cli
