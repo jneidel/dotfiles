@@ -191,7 +191,7 @@ scrot Screenshot utility
 [zsh]
 zsh-syntax-highlighting Highlight whever the typed command exists
 entr Run command if something changes
-exa Better ls
+eza Better ls
 bat Better cat
 renameutils qmv mass rename util
 shell:mkdir -p $XDG_STATE_HOME/zsh $XDG_CACHE_HOME/zsh
