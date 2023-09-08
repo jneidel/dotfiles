@@ -17,7 +17,12 @@ EOF
   exit
 fi
 
-FILE="$(readlink -f "$1")"
+raw_file="$1"
+if echo $raw_file | grep "^~" >/dev/null; then
+  raw_file="$(echo $raw_file | sed "s|~|$HOME|")"
+fi
+
+FILE="$(readlink -f "$raw_file")"
 
 classify_file() {
   basename="$1"
@@ -64,7 +69,7 @@ classify_file() {
     case "$DETERMINED_FILE_TYPE" in
       "POSIX shell script") echo sh;;
       "Bourne-Again shell script") echo bash;;
-      "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data") echo txt;;
+      "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data"|data) echo txt;;
       "empty") echo txt;;
       *) echo [ERR] mimetype not configured: $DETERMINED_FILE_TYPE
         echo "unconfigured mimetype: $DETERMINED_FILE_TYPE" >$ORG_INBOX/mimetype-$(date +%s)

@@ -20,13 +20,13 @@ fi
 
 command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed or \$BROWSER is not set" 1>&2; exit 127; }
 
-URI="$1"
+URI="$@"
 
 handle_uri() {
   case `echo $URI | cut -d: -f1` in
     http|https) $BROWSER "$URI";;
     file) $DIR/mime open `echo $URI | cut -d/ -f3- `;;
-    *) false;;
+    *) $DIR/mime open "$URI";;
   esac
 }
 
