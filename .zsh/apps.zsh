@@ -273,7 +273,7 @@ n() {
   else
     printf "Provide a name for this note: "
     read ans
-    local filename="$ORG_INBOX/qc-$(date +%s)"
+    local filename="$ORG_INBOX/$(echo $note | sed 's|/| |g' | cut -c-30)….norg"
     if [ -n "$ans" ]; then
       filename="$ORG_INBOX/$ans"
     fi
@@ -311,4 +311,8 @@ reflux() {
 dot() {
   cd dotfiles
   make import
+}
+
+cputemp() {
+  cat /sys/class/thermal/thermal_zone*/temp | tr '\n' + | sed 's|+$||' | xargs -I@ node -e "console.log( ((@)/4/1000).toFixed(1) + '°C' )"
 }
