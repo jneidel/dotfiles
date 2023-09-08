@@ -45,7 +45,7 @@ sleep 2; tail -f /tmp/xobpipe | xob &
 ~/scripts/conky/start-conky &
 
 # lock the screen on suspend/hibernate
-xss-lock ~/scripts/i3/lock/lock &
+xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &
 # lock screen after 5h of inactivity
 xset dpms 0 0 18000
 # https://wiki.archlinux.org/title/Session_lock

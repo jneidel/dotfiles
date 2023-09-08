@@ -246,3 +246,9 @@ create .zsh/apps
 [x-lock]
 create /etc/X11/xorg.conf.d
 /etc/X11/xorg.conf.d/30-dpms.conf
+
+[fprint-validity]
+create /etc/systemd/system
+/etc/systemd/system/python3-validity-wakeup.service
+create /etc/pam.d
+/etc/pam.d/system-local-login

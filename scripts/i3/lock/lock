@@ -6,10 +6,17 @@ PARTS=/tmp/lock_parts_
 PART1=${PARTS}0.jpg
 PART2=${PARTS}1.jpg
 
+# colors of the circle
+NORMAL_COLOR="#005fd7"
+SUCCESS_COLOR="#00ff5f"
+FAILURE_COLOR="#d70000"
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ lock
 Lock screen
+
+Using an i3lock fork: https://github.com/Lixxia/i3lock
 EOF
   exit
 fi
@@ -53,10 +60,31 @@ else
   process_image $IMG
 fi
 
-# colors of the circle
-NORMAL_COLOR="#005fd7"
-SUCCESS_COLOR="#00ff5f"
-FAILURE_COLOR="#d70000"
+wait_fingerprint() {
+  while pidof i3lock > /dev/null; do
+    if (timeout 5 fprintd-verify | grep -q verify-match); then
+      pkill i3lock
+    fi
+  done
+}
 
-i3lock -i $IMG --ignore-empty-password --24 -o "$SUCCESS_COLOR" -w "$FAILURE_COLOR" -l "$NORMAL_COLOR"
-# use fork: https://github.com/Lixxia/i3lock
+# copied from the conversation here: https://github.com/i3/i3lock/issues/210#issuecomment-1047552957
+if [[ -e /dev/fd/${XSS_SLEEP_LOCK_FD:--1} ]]; then
+  kill_i3lock() {
+    pkill -xu $EUID "$@" i3lock
+  }
+
+  trap kill_i3lock TERM INT
+
+  # we have to make sure the locker does not inherit a copy of the lock fd
+  i3lock -i $IMG --ignore-empty-password --24 -o "$SUCCESS_COLOR" -w "$FAILURE_COLOR" -l "$NORMAL_COLOR" {XSS_SLEEP_LOCK_FD}<&-
+
+  # now close our fd (only remaining copy) to indicate we're ready to sleep
+  exec {XSS_SLEEP_LOCK_FD}<&-
+
+  wait_fingerprint
+else
+  trap 'kill %%' TERM INT
+  i3lock -ni $IMG --ignore-empty-password --24 -o "$SUCCESS_COLOR" -w "$FAILURE_COLOR" -l "$NORMAL_COLOR" &
+  wait_fingerprint
+fi

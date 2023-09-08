@@ -569,3 +569,8 @@ task Taskwarrior task manager
 
 [ledger]
 hledger-bin Plain text accounting
+
+[fprint-validity]
+python-validity fprintd with alternative daemon
+PKGBUILD:pam-fprint-grosshack Allow for password and fingerprint auth at the same time
+systemd:python3-validity-wakeup
