@@ -122,6 +122,15 @@ cmd create-resource ${{
   lf -remote "send $id cd '$resource'"
 }}
 
+cmd on-cd &{{
+  case "$PWD" in
+    $ORG_PROJECTS/*) lf -remote "send $id :set sortby time; set reverse" ;;
+    $ORG_AREAS/*) lf -remote "send $id :set sortby time; set reverse";;
+    *) lf -remote "send $id :set sortby natural; set noreverse";;
+    esac
+}}
+on-cd # run on startup
+
 ## bindings
 ### remove defaults
 map m
