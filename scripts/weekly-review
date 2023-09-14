@@ -120,7 +120,7 @@ outcome:
   - past events are in archive.rem
 
 EOF
-  lf -remote "send cd '$ORG_RESOURCES/calendar/main'" &
+  lf -remote "send cd '$ORG_CALENDAR/main'" &
 
   split_below "Calendar" "rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
 

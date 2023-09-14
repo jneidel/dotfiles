@@ -1,4 +1,4 @@
-export DOTREMINDERS=$ORG_RESOURCES/calendar/main
+export DOTREMINDERS=$ORG_CALENDAR/main
 
 alias mc="clear && rem -b1 -cu+2 -m -@2,0 2>/dev/null"
 alias mcm="clear && rem -b1 -cu+4 -m -@2,0 2>/dev/null"
@@ -12,5 +12,5 @@ alias mc16="clear && rem -b1 -cu+16 -m -@2,0 2>/dev/null"
 alias mce='rem -b1 -cu+2 -m -@2,0 2>&1 | grep -ve "│" -e "trigger" -e "┬" -e "┼" -e "┴"'
 
 events() {
-  export DOTREMINDERS=$ORG_RESOURCES/calendar/events
+  export DOTREMINDERS=$ORG_CALENDAR/events
 }
