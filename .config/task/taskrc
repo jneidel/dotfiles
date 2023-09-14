@@ -70,9 +70,15 @@ uda.recurWait.type=duration
 uda.recurWait.label=Rel. Rec. Wait
 
 # contexts
+## main
+context.org.read=-dava -jd
+## dava
 context.dava.read=+dava
 context.dava.write=+dava
+context.dava.rc.data.location=$ORG/.task_dava
+## jd
 context.jd.read=+jd
 context.jd.write=+jd
-context.org.read=-dava -jd
+context.jd.rc.data.location=$ORG/.task_jd
+
 context=org
