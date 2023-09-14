@@ -24,7 +24,7 @@ openType=$1
 sharedFlags="--ignore --hidden --files --sort path --type-add='exclude:*.{mp3,JPG,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/'"
 
 fzf_cmd() {
-  fzf --bind TAB:up,Shift-TAB:down --height=0
+  fzf --bind TAB:up,Shift-TAB:down --height=0 --margin=40%,12%
 }
 
 if [ "$openType" = "file" ]; then
