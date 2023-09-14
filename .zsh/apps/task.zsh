@@ -6,9 +6,19 @@ alias tt="task $MAIN_REPORT"
 alias te="task $MAIN_REPORT $MAIN_REPORT_OPTIONS" # t[ask]e[xtend]
 t() {
   if [ -n "$1" ]; then
-    task "$@"
+    if task-project check; then
+      task-project "$@"
+    else
+      task "$@"
+    fi
   else
-    te
+    if task-project check; then
+      task-project
+    elif task +tackle >/dev/null 2>&1; then
+      t +tackle
+    else
+      te
+    fi
   fi
 }
 

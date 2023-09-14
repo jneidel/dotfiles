@@ -1,0 +1,77 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ task-project ANY_TASK_COMMANDS
+Filter task commands by the project you're in.
+
+commands:
+  check: test if cwd is inside a project directory
+
+Example:
+  $ cd \$ORG_PROJECTS/example
+  $ task-project add Create new example here
+  #=> adds task with the project:example
+  $ task-project
+  #=> lists all tasks of the project:example
+EOF
+  exit
+fi
+
+is_check=0
+[ "$1" = "check" ] && is_check=1
+
+command -v task >/dev/null || { echo "task is not installed" 1>&2; exit 127; }
+
+original_context=
+switched_context=0
+switch_context() {
+  context=$1
+  original_context=`task context show | head -n1 | cut -d"'" -f2`
+  switched_context=1
+  task context $context >/dev/null 2>&1
+}
+prefix_switch_context() {
+  title=$1
+  leading_slashes=$((`echo $ORG_PROJECTS | tr "/" "\n" | wc -l`+1))
+  prefix=`echo $title | cut -d/ -f${leading_slashes}- | cut -d:  -f1`
+  if [ -n "$prefix" ] && task context list | grep "^$prefix" >/dev/null 2>&1; then
+    switch_context $prefix
+  fi
+}
+project_dir_switch_context() {
+  project_dir=$1
+  leading_slashes=`echo $ORG_PROJECTS | tr "/" "\n" | wc -l`
+  postfix=`echo $project_dir | cut -d/ -f${leading_slashes} | rev | cut -d_  -f1 | rev`
+  if [ -n "$postfix" ] && [ "$postfix" != "project" ] && task context list | grep "^$postfix" >/dev/null 2>&1; then
+    switch_context $postfix
+  fi
+}
+setup_context() {
+  prefix_switch_context `pwd`
+  project_dir_switch_context `pwd`
+}
+teardown_context() {
+  if [ "$switched_context" -eq 1 ]; then
+    task context $original_context >/dev/null 2>&1
+  fi
+}
+get_project_name() {
+  leading_slashes=$((`echo $ORG_PROJECTS | tr "/" "\n" | wc -l`+1))
+  pwd | cut -d/ -f${leading_slashes}- | tr " " _
+}
+
+cwd=`pwd`
+case "$cwd" in "$ORG_PROJECTS"*/*)
+  if [ "$is_check" -eq 1 ]; then
+    return 0
+  fi
+  setup_context
+
+  project_name=`get_project_name`
+  task project:$project_name "$@"
+
+  teardown_context
+  ;;
+*) return 1;;
+esac
