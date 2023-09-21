@@ -6,6 +6,7 @@ function ci() { # composer install
     composer require $@
   fi
 }
+alias cul="composer validate --strict || composer update --lock"
 
 alias sy="symfony"
 function sytop() {
@@ -22,6 +23,11 @@ function sytop() {
 alias sc="sytop console"
 function de() { # debug
   sc debug:$@
+}
+cs() {
+  symfony composer install --no-interaction --no-progress
+  symfony php vendor/bin/phpcbf -p
+  symfony php vendor/bin/rector process
 }
 alias stan="sytop php vendor/bin/phpstan"
 alias svar="sy var:export --multiline"
