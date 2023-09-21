@@ -60,7 +60,11 @@ teardown_context() {
 }
 get_project_name() {
   leading_slashes=$((`echo $ORG_PROJECTS | tr "/" "\n" | wc -l`+1))
-  pwd | cut -d/ -f${leading_slashes}- | tr " " _
+  pwd | cut -d/ -f${leading_slashes} | tr " " _
+}
+get_area_name() {
+  leading_slashes=$((`echo $ORG_AREAS | tr "/" "\n" | wc -l`+1))
+  pwd | cut -d/ -f${leading_slashes} | tr " " _
 }
 
 cwd=`pwd`
@@ -79,5 +83,17 @@ case "$cwd" in "$ORG_PROJECTS"*/*)
 
   teardown_context
   ;;
-*) return 1;;
+"$ORG_AREAS"*/*)
+  if [ "$is_check" -eq 1 ]; then
+    exit 0
+  fi
+
+  area_name=`get_area_name`
+  if echo $@ | grep "^$" >/dev/null; then
+    task +$area_name $MAIN_TASK_REPORT
+  else
+    task +$area_name "$@"
+  fi
+  ;;
+*) exit 1;;
 esac
