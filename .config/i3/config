@@ -134,6 +134,9 @@ assign [class="Zeal"] $ws3
 assign [title="Anki"] $ws3
 assign [class="sun-awt-X11-XFramePeer"] $ws3
 assign [title="Interactive Brokers"] $ws3
+assign [title="OptionTrader"] $ws3
+assign [title="jclient-LoginFrame"] $ws3
+assign [title="sun-awt-X11-XFramePeer"] $ws3
 assign [class="monero-wallet-gui"] $ws3
 
 # Open specific applications in floating mode
