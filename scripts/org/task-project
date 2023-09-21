@@ -28,8 +28,10 @@ switched_context=0
 switch_context() {
   context=$1
   original_context=`task context show | head -n1 | cut -d"'" -f2`
-  switched_context=1
-  task context $context >/dev/null 2>&1
+  if [ "$context" != "$original_context" ]; then
+    switched_context=1
+    task context $context >/dev/null 2>&1
+  fi
 }
 prefix_switch_context() {
   title=$1
@@ -64,12 +66,16 @@ get_project_name() {
 cwd=`pwd`
 case "$cwd" in "$ORG_PROJECTS"*/*)
   if [ "$is_check" -eq 1 ]; then
-    return 0
+    exit 0
   fi
   setup_context
 
   project_name=`get_project_name`
-  task project:$project_name "$@"
+  if echo $@ | grep "^$" >/dev/null; then
+    task-hide-column $MAIN_TASK_REPORT 6 project:$project_name
+  else
+    task project:$project_name "$@"
+  fi
 
   teardown_context
   ;;

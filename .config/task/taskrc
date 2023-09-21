@@ -57,6 +57,7 @@ report.main.columns=id,start.age,entry.age,depends.indicator,priority,project,ty
 report.main.description=Most urgent actionable tasks (an adjusted copy of ready)
 report.main.filter=+READY
 report.main.sort=start-,urgency-
+## when adjusting: check for usages of task-hide-column
 
 # type of activity uda
 uda.type.type=string

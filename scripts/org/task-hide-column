@@ -1,0 +1,41 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat <<EOF
+$ task-hide-column REPORT COLUMN_INDEX [TASK_OPTIONS..]
+Hide the column at a given index from the results
+
+Parameters:
+  \$1: name of the report
+  \$2: index of the column to hide
+  [\$3]: any options to pass along to task
+
+Example:
+  $ task-hide-column main 5
+  $ task-hide-column main 6 limit:3 +task
+EOF
+  exit
+fi
+
+command -v task >/dev/null || { echo "task is not installed" 1>&2; exit 127; }
+
+REPORT="$1"
+COLUMN_INDEX="$2"
+shift; shift
+TASK_OPTIONS="$@"
+
+if [ "$COLUMN_INDEX" -lt 2 ]; then
+  echo "Script can't handle indices less than 2"
+  exit 1
+fi
+
+TMP=$(mktemp)
+INDEX_minus1=$(($COLUMN_INDEX-1))
+INDEX_plus1=$(($COLUMN_INDEX+1))
+task show $REPORT | grep -Fe ".labels" -e ".columns" | sed -E 's/ +/=/' >$TMP
+( head -n1 $TMP | cut -d, -f-${INDEX_minus1} &&
+  head -n1 $TMP | cut -d, -f${INDEX_plus1}- &&
+  tail -n1 $TMP | cut -d, -f-${INDEX_minus1} &&
+  tail -n1 $TMP | cut -d, -f${INDEX_plus1}-) | tr "\n" , |
+  sed "s/,report./ rc.report./; s/report./rc.report./; s/,$/'/; s/labels=/labels='/" |
+  xargs task $REPORT $TASK_OPTIONS
