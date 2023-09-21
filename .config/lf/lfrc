@@ -87,6 +87,7 @@ cmd create-norg ${{
 cmd mkdir %{{
   printf "Directory name: "
   read ans
+
   mkdir -p "$ans"
   lf -remote "send $id cd '$ans'" # curiously only works if no spaces in name
 }}
@@ -94,32 +95,36 @@ cmd create-project ${{
   printf "Project dir name: "
   read ans
   local project="$ORG_PROJECTS/$ans"
+
   mkdir -p "$project"
-  touch "$project/index.norg"
-  lf -remote "send $id :cd '$project'; reload"
+  lf -remote "send $id :cd '$project'; reload" &
+  plan "$project/index.norg"
 }}
 cmd create-design ${{
   printf "Design dir name: "
   read ans
   local design="$ORG_DESIGN/$ans"
+
   mkdir -p "$design"
-  touch "$design/index.norg"
-  lf -remote "send $id :cd '$design'; reload"
+  lf -remote "send $id :cd '$design'; reload" &
+  plan "$project/index.norg"
 }}
 cmd create-area ${{
   printf "Area dir name: "
   read ans
   local area="$ORG_AREAS/$ans"
+
   mkdir -p "$area"
   touch "$area/index.norg"
-  lf -remote "send $id :cd '$area'; reload"
+  lf -remote "send $id :cd '$area'; reload" &
 }}
 cmd create-resource ${{
   printf "Resource name: "
   read ans
   local resource="$ORG_RESOURCES/$ans"
+
   mkdir -p "$resource"
-  lf -remote "send $id cd '$resource'"
+  lf -remote "send $id cd '$resource'" &
 }}
 
 cmd on-cd &{{
