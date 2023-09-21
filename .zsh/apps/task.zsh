@@ -30,7 +30,13 @@ most_urgent_task() {
 alias tm="task mod"
 alias  m="task mod"
 alias trm="task rm"
-alias to="taskopen"
+to() {
+  if [ -n "$1" ]; then
+    taskopen rc.gc=off "$@"
+  else
+    taskopen rc.gc=off $(most_urgent_task)
+  fi
+}
 ti() {
   if [ -n "$1" ]; then
     id="$1"
@@ -46,23 +52,24 @@ ti() {
 }
 
 # manage active task
-alias ts="task start"
-tsu() {
-  task start $(most_urgent_task)
+ts() {
+  if [ -n "$1" ]; then
+    task start "$@"
+  else
+    task start $(most_urgent_task)
+  fi
 }
-alias td="task done"
-alias  d="task done"
-tdu() {
-  task done $(most_urgent_task) && t
+td() {
+  if [ -n "$1" ]; then
+    task done "$@"
+  else
+    task done $(most_urgent_task) && t
+  fi
 }
+alias d="td"
 
 # manage latest task
-latest_task() {
-  task +LATEST ids
-}
-tml() {
-  tm $(latest_task)
-}
+alias tml="task +LATEST mod"
 alias ml="tml"
 
 # reports
