@@ -1,9 +1,9 @@
 # main report by default
-export MAIN_REPORT=main
-export MAIN_REPORT_OPTIONS="-francis limit:3"
+export MAIN_TASK_REPORT=main
+export MAIN_TASK_REPORT_OPTIONS="-francis limit:3"
 
-alias tt="task $MAIN_REPORT"
-alias te="task $MAIN_REPORT $MAIN_REPORT_OPTIONS" # t[ask]e[xtend]
+alias tt="task $MAIN_TASK_REPORT"
+alias te="task $MAIN_TASK_REPORT $MAIN_TASK_REPORT_OPTIONS" # t[ask]e[xtend]
 t() {
   if [ -n "$1" ]; then
     if task-project check; then
@@ -15,7 +15,7 @@ t() {
     if task-project check; then
       task-project
     elif task +tackle >/dev/null 2>&1; then
-      t +tackle
+      t $MAIN_TASK_REPORT +tackle
     else
       te
     fi
@@ -23,7 +23,7 @@ t() {
 }
 
 most_urgent_task() {
-  task $MAIN_REPORT $MAIN_REPORT_OPTIONS limit:1 | grep -v "^$" | head -n3 | tail -n1 | cut -d\  -f1
+  t $MAIN_TASK_REPORT $MAIN_TASK_REPORT_OPTIONS limit:1 rc.verbose=nothing rc.gc=off | grep -Po "^\s*\K\d+"
 }
 
 # crud
@@ -72,5 +72,6 @@ alias ta="task all '(status:waiting or status:pending)'"
 alias tre="task ready"
 
 # other
-alias tui="taskwarrior-tui -r $MAIN_REPORT"
+alias tui="taskwarrior-tui -r $MAIN_TASK_REPORT"
 alias tc="task context"
+alias tackle="tm +tackle"
