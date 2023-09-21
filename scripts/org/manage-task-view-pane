@@ -1,0 +1,27 @@
+#! /bin/sh
+
+task_cmd="t"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ manage-task-view-pane DIR
+Update the task-view pane for the relevant directory, if the pane exists
+
+Parameters:
+  \$1: relevant directory
+EOF
+  exit
+fi
+
+cwd="$1"
+
+command -v tmux >/dev/null || { echo "tmux is not installed" 1>&2; exit 127; }
+
+get_task_view_id_if_exists() {
+  tmux list-panes -F "#{pane_id} #{pane_title}" | grep -F 'task-view' | cut -d\  -f1
+}
+
+TASK_VIEW_ID=$(get_task_view_id_if_exists)
+if [ -n "$TASK_VIEW_ID" ]; then
+  tmux send-keys -t $TASK_VIEW_ID "cd '$cwd'" "Enter" "clear && $task_cmd" "Enter"
+fi

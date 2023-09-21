@@ -124,12 +124,20 @@ cmd create-resource ${{
 
 cmd on-cd &{{
   case "$PWD" in
-    $ORG_PROJECTS/*) lf -remote "send $id :set sortby time; set reverse" ;;
-    $ORG_AREAS/*) lf -remote "send $id :set sortby time; set reverse";;
+    $ORG_PROJECTS/*)
+      lf -remote "send $id :set sortby time; set reverse"
+      manage-task-view-pane "$PWD" &
+      ;;
+    $ORG_AREAS/*)
+      lf -remote "send $id :set sortby time; set reverse"
+      manage-task-view-pane "$PWD" &
+      ;;
     *) lf -remote "send $id :set sortby natural; set noreverse";;
     esac
 }}
 on-cd # run on startup
+
+cmd show-tasks %tmux split-window -v -p 30; tmux select-pane -T 'task-view'; tmux send-keys "clear && t" "Enter"
 
 ## bindings
 ### remove defaults
@@ -175,6 +183,7 @@ map b move-to-inbox # in[B]ox
 map a move-to-archive # [a]rchive
 map <a-d> fzf_dir
 map <a-f> fzf_file
+map L show-tasks
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
