@@ -9,6 +9,7 @@ data.location=$ORG/.task
 hooks.location=~/.config/task/hooks
 
 news.version=2.6.0
+seach.case.sensitive=no
 
 nag= # disable 'You have more urgent tasks' message
 
@@ -38,7 +39,7 @@ urgency.blocking.coefficient = 2.5 # [8] these crowd out everything else, task i
 urgency.active.coefficient = 20 # [4] put this to the top of the list
 urgency.uda.priority.H.coefficient = 8 # [6] boost importance
 urgency.user.tag.basement.coefficient=-1.0
-urgency.user.tag.tackle.coefficient=10
+urgency.user.tag.tackle.coefficient=50
 urgency.user.tag.down.coefficient=-4
 urgency.user.tag.downp.coefficient=-7
 urgency.user.tag.downpp.coefficient=-10

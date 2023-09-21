@@ -35,7 +35,7 @@ return {
             ["<esc>"] = actions.close,
 
             -- open differently
-            ["<c-s>"] = actions.select_horizontal,
+            ["<c-s>"] = actions.select_horizontal, -- doesnt work
             ["<c-v>"] = actions.select_vertical,
             ["<c-t>"] = actions.select_tab,
 

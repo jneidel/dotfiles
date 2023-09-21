@@ -149,7 +149,7 @@ wait_for_newsboat() {
 alias new="wait_for_newsboat clean"
 # alias pod="wait_for_newsboat pod"
 # alias misc="wait_for_newsboat misc"
-# alias ma="wait_for_newsboat manga"
+alias ma="wait_for_newsboat manga"
 nomoreent() {
   # echo "No youtube and gaming entertainment for now"
   # return 1

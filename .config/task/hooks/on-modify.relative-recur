@@ -8,6 +8,12 @@
 #  This is provided by this hook.
 # source: https://github.com/JensErat/task-relative-recur
 # relevant issue: https://github.com/GothenburgBitFactory/taskwarrior/issues/203
+#
+# Example for 1:
+# task add Reflect on weekly challenge recur:weekly due:"2023-09-17T10:00" wait:due-30min
+#
+# Example for 2:
+# task add 'Mow the Lawn' recurWait:1weeks recurDue:2weeks
 
 from __future__ import print_function
 from builtins import str

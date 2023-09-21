@@ -27,5 +27,5 @@ find $ORG_PROJECTS -maxdepth 2 -name 'index.norg' | while read -r index_file; do
     continue
   fi
 
-  echo "$deadline SPECIAL COLOR 255 0 0 Deadline: $project_name" >>$CALENDAR_FILE
+  echo "$deadline SPECIAL COLOR 255 0 0 ۹ $project_name" >>$CALENDAR_FILE
 done

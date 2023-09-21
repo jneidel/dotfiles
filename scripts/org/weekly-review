@@ -161,7 +161,7 @@ outcome:
   - up-to-date on GitHub newsfeed
 
 EOF
-  $BROWSER https://github.com >/dev/null 2>&1 &
+  $BROWSER https://github.com/dashboard-feed >/dev/null 2>&1 &
   $BROWSER https://github.com/notifications?query=is%3Aunread >/dev/null 2>&1 &
 
   prompt_continue
@@ -175,9 +175,10 @@ outcome:
   - no new patreon posts
 
 EOF
-split_below "Newsboat" "new"
+  split_below "Newsboat" "new"
+  $BROWSER https://patreon.com/ >/dev/null 2>&1
 
-prompt_continue
+  prompt_continue
 }
 
 files() {
