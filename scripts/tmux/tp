@@ -41,7 +41,8 @@ is_code_project() {
 }
 
 case $PROJECT in
-  main) tmuxinator start main -p $DIR/tmuxinator.yml;;
+  main) tmuxinator start main -p $DIR/tmuxinator/main.yml;;
+  orf) tmuxinator start orf -p $DIR/tmuxinator/orf.yml;;
   *) is_code_project && tmuxinator start $PROJECT -p $CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE;;
 esac
 

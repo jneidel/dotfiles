@@ -1,0 +1,7 @@
+name: orf
+root: ~/code/orf
+windows:
+  - nvim: vim
+  - zsh:
+  - org: lf
+  - ssh:
