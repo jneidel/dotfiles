@@ -1,0 +1,3 @@
+#! /bin/sh
+
+find $ORG_PROJECTS -maxdepth 2 -name 'index.norg' | entr -n add-project-deadlines-to-calendar

@@ -1,5 +1,6 @@
 #! /bin/sh
 
+. ~/.zsh/org.env
 CALENDAR_FILE=$ORG_CALENDAR/main/project-deadlines.rem
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
