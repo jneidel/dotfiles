@@ -64,7 +64,7 @@ get_project_name() {
 }
 get_area_name() {
   leading_slashes=$((`echo $ORG_AREAS | tr "/" "\n" | wc -l`+1))
-  pwd | cut -d/ -f${leading_slashes} | tr " " _
+  pwd | cut -d/ -f${leading_slashes} | tr " " _ | tr - _
 }
 
 cwd=`pwd`

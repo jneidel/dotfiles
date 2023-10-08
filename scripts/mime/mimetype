@@ -71,6 +71,7 @@ classify_file() {
       "Bourne-Again shell script") echo bash;;
       "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data"|data) echo txt;;
       "empty") echo txt;;
+      "directory") exit 1;; # constantly produces logs without any real errors
       *) echo [ERR] mimetype not configured: $DETERMINED_FILE_TYPE
         echo "unconfigured mimetype: $DETERMINED_FILE_TYPE" >$ORG_INBOX/mimetype-$(date +%s)
         exit 1;;

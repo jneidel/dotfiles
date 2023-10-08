@@ -53,17 +53,12 @@ report._reviewed.sort=reviewed+,modified+
 report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
 # custom reports
-report.main.labels=ID,Active,Age,D,P,Project,T,Tags, ,Due,Until,Description,Urg
-report.main.columns=id,start.age,entry.age,depends.indicator,priority,project,type,tags,scheduled.countdown,due.countdown,until.remaining,description.count,urgency
+report.main.labels=ID,Active,Age,D,P,Project,Tags, ,Due,Until,Description,Urg
+report.main.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,scheduled.countdown,due.countdown,until.remaining,description.count,urgency
 report.main.description=Most urgent actionable tasks (an adjusted copy of ready)
 report.main.filter=+READY
 report.main.sort=start-,urgency-
 ## when adjusting: check for usages of task-hide-column
-
-# type of activity uda
-uda.type.type=string
-uda.type.label=Type
-uda.type.values=P,M,X,p,m,x # physical, mental, mixed in high and low intensity
 
 # custom relative recur functionality based on hook
 uda.recurDue.type=duration

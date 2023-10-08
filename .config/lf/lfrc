@@ -37,7 +37,7 @@ cmd diropenShuffle $~/.config/lf/scripts/handle-dir "$f" -s
 cmd massmove $~/.config/lf/scripts/rename "$fx"
 cmd combine $~/.config/lf/scripts/combine $fx
 
-cmd paste_and_forget &lf -remote "send $id :paste; clear"
+cmd paste_and_forget &lf -remote "send $id :paste; clear; refresh"
 cmd clear-unselect &lf -remote "send $id :clear; unselect"
 
 cmd move-to-inbox %{{
@@ -67,7 +67,7 @@ cmd fzf_file $~/.config/lf/scripts/fzf-open file
 
 ## create files
 cmd gen-note $~/scripts/gen-note
-cmd touch %printf "File Name: "; read ans; touch "$ans"
+cmd touch %printf "File Name: "; read ans; touch "$ans"; lf -remote "send $id select '$ans'"
 cmd touchTex %{{
   printf "Tex Name: "
   read ans

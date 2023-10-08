@@ -148,7 +148,7 @@ wait_for_newsboat() {
 }
 alias new="wait_for_newsboat clean"
 # alias pod="wait_for_newsboat pod"
-# alias misc="wait_for_newsboat misc"
+alias misc="wait_for_newsboat misc"
 alias ma="wait_for_newsboat manga"
 nomoreent() {
   # echo "No youtube and gaming entertainment for now"
@@ -189,7 +189,6 @@ alias mpyt="mpv --profile=yt"
 ### mpd
 alias mpdco="mpd-cover"
 alias mpdly="mpd-lyrics | $PAGER"
-alias ml="mpd-toggle-local"
 alias lt="mpd-toggle-local"
 alias rt="mpd-toggle-local"
 
