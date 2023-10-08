@@ -1,0 +1,53 @@
+#! /bin/sh
+
+DIR=/sys/devices/system/cpu/cpufreq
+MAX_FREQUENCY=`cat $DIR/policy0/cpuinfo_max_freq`
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ cpufreq <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ cpufreq <++>
+EOF
+  exit
+fi
+
+command -v bc >/dev/null || { echo "bc is not installed" 1>&2; exit 127; }
+
+base_frequency_calc() {
+  cat $DIR/*/scaling_cur_freq | tr "\n" +
+}
+
+percentage() {
+  base_frequency_calc | sed "s|^|(|; s|+$|)/4/$MAX_FREQUENCY*100\n|" | bc -l | cut -d. -f1
+}
+
+absolute() {
+  base_frequency_calc | sed "s|^|(|; s|+$|)/4\n|" | bc -l | cut -d. -f1
+}
+
+GHz() {
+  base_frequency_calc | sed "s|^|(|; s|+$|)/4/1000000\n|" | bc -l | cut -c-4 | awk '{ print $1" GHz" }'
+}
+MHz() {
+  base_frequency_calc | sed "s|^|(|; s|+$|)/4/1000\n|" | bc -l | cut -c-4  | awk '{ print $1" MHz" }'
+}
+
+case $1 in
+  abs) absolute;;
+  percent)
+    p=$(percentage)
+    if [ "$p" -gt 100 ]; then
+      echo 100
+    else
+      echo $p
+    fi;;
+  ghz) GHz;;
+  mhz) MHz;;
+esac
