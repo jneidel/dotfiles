@@ -1,0 +1,66 @@
+#! /bin/sh
+
+DEFAULT_FILENAME=post-mortem.norg
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ postmortem [FILENAME]
+Create a new template for a post-mortem
+and open it in $EDITOR.
+
+Parameters:
+  [\$1]: filename for the template to fill, default: $DEFAULT_FILENAME
+
+Example:
+  $ postmortem
+EOF
+  exit
+fi
+
+command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR var not set" 1>&2; exit 127; }
+
+FILE="$1"
+[ -z "$FILE" ] && FILE=$DEFAULT_FILENAME
+
+template() {
+  cat <<EOF
+@document.meta
+title: Post-Mortem
+description: Reflect on the project outcome
+categories: [
+  project-review
+]
+authors: $(whoami)
+created: $(date +%Y-%m-%d)
+updated: $(date +%Y-%m-%d)
+@end
+
+* Post-Mortem
+** Steps
+   ~ Reflect using the questions below
+   ~ Extract intermediate packets to other projects
+
+** Reflection
+*** Did the goal I had for this project pan out?
+    <++>
+
+*** What did I learn?
+    <++>
+
+*** What did I do well?
+    <++>
+
+*** How can I replicate those success factors?
+    <++>
+
+*** What happened for this to not go how I planned?
+    <++>
+
+*** What can I learn or change for doing better next time?
+    <++>
+
+EOF
+}
+
+template >>"$FILE"
+$EDITOR "$FILE"

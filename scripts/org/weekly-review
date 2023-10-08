@@ -113,6 +113,16 @@ EOF
   prompt_continue
 }
 
+camscanner() {
+  print_header "$step. Process CamScanner"
+  cat <<EOF
+outcome:
+  - all images in "to process" folder have had their text extracted
+
+EOF
+  prompt_continue
+}
+
 calendar() {
   print_header "$step. Check your calendar\n"
   cat <<EOF
@@ -172,11 +182,9 @@ newsboat() {
   cat <<EOF
 outcome:
   - no unread feeds
-  - no new patreon posts
 
 EOF
   split_below "Newsboat" "new"
-  $BROWSER https://patreon.com/ >/dev/null 2>&1
 
   prompt_continue
 }
@@ -231,6 +239,7 @@ calendar
 messenger
 github
 desk
+camscanner
 newsboat
 pre_org_inbox
 browser_tabs

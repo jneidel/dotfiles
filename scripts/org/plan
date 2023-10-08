@@ -1,13 +1,15 @@
 #! /bin/sh
 
-if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+DEFAULT_FILENAME=index.norg
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ plan [FILENAME]
 Create a new project plan at the given file,
-with all the boilerplate and open it in vim.
+with all the boilerplate and open it in $EDITOR.
 
 Parameters:
-  [\$1]: filename of the project plan, default: index.norg
+  [\$1]: filename of the project plan, default: $DEFAULT_FILENAME
 
 Example:
   $ plan
@@ -15,6 +17,11 @@ Example:
 EOF
   exit
 fi
+
+command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR var not set" 1>&2; exit 127; }
+
+FILE="$1"
+[ -z "$FILE" ] && FILE=$DEFAULT_FILENAME
 
 template() {
   cat <<EOF
@@ -33,48 +40,43 @@ deadline: $(date +%Y)-<++>
 
 * Project definition
 ** Ist-Zustand
-    > Wo stehst Du aktuell?
+   > Wo stehst Du aktuell?
 
-    <++>
+   <++>
 
 ** Soll-Zustand
-    > Wo willst du hin, wenn Du es Dir bei der guten Fee wünschen dürftest?
+   > Wo willst du hin, wenn Du es Dir bei der guten Fee wünschen dürftest?
 
-    <++>
+   <++>
 
 ** Ziele (Goals)
-    > Wo willst du durch diese Gesamtaktion hin? Orientierungsziele
+   > Wo willst du durch diese Gesamtaktion hin? Orientierungsziele
 
-    - <++>
+   - <++>
 
 ** Zwecke (Purposes)
-    > Warum willst du das? Genaue Erklärung der Goals, Unterziele
+   > Warum willst du das? Genaue Erklärung der Goals, Unterziele
 
 *** <++>
 
 ** Richtlinien
-    > Wie soll das von statten gehen? Grundlegende Spielregeln und wichtige Pfeiler
+   > Wie soll das von statten gehen? Grundlegende Spielregeln und wichtige Pfeiler
 
-    - <++>
+   - <++>
 
 ** Pläne
-    > Wie kann man den Ist-Zustand in Richtung Idealzustand bringen? Allgemein formulierte, schlaue Ideen
+   > Wie kann man den Ist-Zustand in Richtung Idealzustand bringen? Allgemein formulierte, schlaue Ideen
 
 *** Dinge, die da sein müssen, um überhaupt arbeiten zu können
-    - <++>
+   - <++>
 
 *** <++>
 
 ** Programme
-    > Todos per Plan
+   > Todos per Plan
 
 EOF
 }
-
-command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR var not set" 1>&2; exit 127; }
-
-FILE="$1"
-[ -z "$FILE" ] && FILE="index.norg"
 
 template >>"$FILE"
 $EDITOR "$FILE"
