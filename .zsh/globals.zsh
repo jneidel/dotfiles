@@ -43,7 +43,13 @@ done
 ## misc
 alias -g PB="| nc termbin.com 9999" # terminal pastebin
 alias -g C="| wc -l | human-number" # get line number count
-alias -g CP="| xclip -f -sel clip" # copy to clipboard
 alias -g LCP="| history | tail -n1 | cut -d\  -f2- | sed -e 's/^[[:space:]]*//' | xclip -f -sel clip" # copy last command to clip
 alias -g R="| entr -c" # R[UN]; rerun cmd on file changes; example: ls *.ts R tsc
 alias W="watch -t -d -n 1"
+
+# copy to clipboard
+if [ "$(uname)" = "Darwin" ]; then
+  alias -g CP="| pbcopy"
+else
+  alias -g CP="| xclip -f -sel clip"
+fi
