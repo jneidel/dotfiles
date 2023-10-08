@@ -566,6 +566,7 @@ gnome-subtitles Subtitle editor
 
 [task]
 task Taskwarrior task manager
+python-tasklib Hooks lib
 
 [ledger]
 hledger-bin Plain text accounting

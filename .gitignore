@@ -3,6 +3,7 @@ node_modules/
 package-lock.json
 personal.zsh
 *.prog.md
+__pycache__
 
 .vim/swap/*
 .vim/backup/*

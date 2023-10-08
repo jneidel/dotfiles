@@ -90,9 +90,9 @@ case "$cwd" in "$ORG_PROJECTS"*/*)
 
   area_name=`get_area_name`
   if echo $@ | grep "^$" >/dev/null; then
-    task +$area_name $MAIN_TASK_REPORT
+    task +"$area_name" $MAIN_TASK_REPORT
   else
-    task +$area_name "$@"
+    task +"$area_name" "$@"
   fi
   ;;
 *) exit 1;;

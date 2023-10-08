@@ -71,14 +71,13 @@ alias d="td"
 # manage latest task
 alias tml="task +LATEST mod"
 alias ml="tml"
+alias tann="task +LATEST annotate"
 
 # reports
-alias tn="task next"
 alias tl="task list"
 alias ta="task all '(status:waiting or status:pending)'"
 alias tre="task ready"
 
 # other
-alias tui="taskwarrior-tui -r $MAIN_TASK_REPORT"
 alias tc="task context"
 alias tackle="tm +tackle"
