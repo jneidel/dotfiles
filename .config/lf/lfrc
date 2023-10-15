@@ -129,15 +129,16 @@ cmd create-resource ${{
 
 cmd on-cd &{{
   case "$PWD" in
-    $ORG_PROJECTS/*)
+    $ORG_PROJECTS/* | $ORG_AREAS/*)
       lf -remote "send $id :set sortby time; set reverse"
       manage-task-view-pane "$PWD" &
       ;;
-    $ORG_AREAS/*)
+    $ORG_RESOURCES/* | $ORG_INBOX)
       lf -remote "send $id :set sortby time; set reverse"
-      manage-task-view-pane "$PWD" &
       ;;
-    *) lf -remote "send $id :set sortby natural; set noreverse";;
+    * | "$ORG_AREAS/mental models")
+      lf -remote "send $id :set sortby natural; set noreverse"
+      ;;
     esac
 }}
 on-cd # run on startup
