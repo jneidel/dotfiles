@@ -10,6 +10,12 @@ Should be run via keyboard shortcut.
 
 Commands:
   list: list all available bangs
+  BANG QUERY: open the given query for the given bang
+
+Examples:
+  $ bangs
+  $ bangs list
+  $ bangs yt 'rofi showcase'
 "; exit
 fi
 
@@ -36,12 +42,16 @@ urlEncode() {
   node -e "console.log( encodeURIComponent( process.argv[1] ) )" "$1"
 }
 
-res="$(prompt)"
-[ -z "$res" ] && exit 1
-
-bang="${res%% *}"
-query="${res#* }"
-[ "$query" = "$bang" ] && bang=$DEFAULT_BANG
+if [ -z "$2" ]; then
+  res="$(prompt)"
+  [ -z "$res" ] && exit 1
+  bang="${res%% *}"
+  query="${res#* }"
+  [ "$query" = "$bang" ] && bang=$DEFAULT_BANG
+else
+  bang=$1
+  query="$2"
+fi
 
 case "$bang" in
   y)
@@ -51,20 +61,20 @@ case "$bang" in
     ~/scripts/yts $query
     exit;;
   # yt)
-  #   if [ -f "$HOME/scripts/personal/youtube.html" ]; then
-  #     {
-  #       sleep 1 && $BROWSER $HOME/scripts/personal/youtube.html >/dev/null 2>&1
-  #     } &
-  #   fi;;
+    #   if [ -f "$HOME/scripts/personal/youtube.html" ]; then
+    #     {
+    #       sleep 1 && $BROWSER $HOME/scripts/personal/youtube.html >/dev/null 2>&1
+    #     } &
+    #   fi;;
   dot)
-    $BROWSER "https://jneidel.com/dot/$query"
+    $BROWSER "https://jneidel.com/dot/$query" >dev/null 2>&1 &
     exit;;
 esac
 
 query=`urlEncode "$query"`
 
 if bangList | grep -m 1 "^$bang " >/dev/null; then
-  bangList | grep -m 1 "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $BROWSER
+  bangList | grep -m 1 "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $BROWSER >/dev/null 2>&1 &
 else
-  $BROWSER "https://duckduckgo.com/?q=!$bang%20$query"
+  $BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
 fi
