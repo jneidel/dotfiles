@@ -18,7 +18,7 @@ name: $project
 root: $cwd
 windows:
   - vim: vim
-  - zsh
+  - zsh:
       layout: 278d,151x33,0,0[151x12,0,0,35,151x20,0,13,36]
       # tmux list-windows
       panes:
