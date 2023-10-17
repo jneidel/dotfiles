@@ -2,6 +2,6 @@ name: orf
 root: ~/code/orf
 windows:
   - nvim: vim
-  - zsh:
+  - zsh: make up; clear
   - org: lf
   - ssh:
