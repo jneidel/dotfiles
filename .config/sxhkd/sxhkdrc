@@ -114,8 +114,6 @@ super + Y
   ~/scripts/rofi/yt
 super + v
   ~/scripts/sxhkd/open_clip_mpv
-super + o
-  ~/scripts/open-clip-in-browser
 super + a
   cnsm-add
 super + t
@@ -126,6 +124,8 @@ super + b
   bangs
 super + i
   insert-bookmark
+super + o
+  open-bookmark
 super + S
   toggle-screenkey
 
