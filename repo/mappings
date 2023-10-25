@@ -263,3 +263,6 @@ create /etc/pam.d
 [kmonad]
 .config/kmonad
 .config/kmonad/caps_as_ctrl_esc.kbd
+
+[emacs]
+clean .config/emacs

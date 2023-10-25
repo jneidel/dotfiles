@@ -34,3 +34,9 @@ repo/PKGBUILD/*
 
 .local/share/icons/*
 !.local/share/icons/*.png
+
+.config/emacs/*
+!.config/emacs/init.el
+!.config/emacs/lisp
+.config/emacs/lisp/disabled
+!.config/emacs/an-old-hope-theme.el
