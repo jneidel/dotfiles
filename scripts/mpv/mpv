@@ -7,6 +7,10 @@ Preconfigured mpv launch:
 - using ICP socket (remote control)
 - delay if connected to bluetooth speaker
 - adjust speed hearing uni lectures
+
+Example:
+  $ mpv --socket-name music http://192.168.178.69:9111
+  #=> open on a socket named music
 EOF
   exit
 fi
@@ -14,7 +18,27 @@ fi
 command -v /bin/mpv >/dev/null || { echo "mpv is not installed"; exit 1; }
 command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not in PATH"; exit 127; }
 
-SOCKET=$(manage-mpv-sockets open)
+SOCKET=
+if echo "$@" | grep '\--socket-name' >/dev/null; then
+  socket_name="$2"
+  SOCKET=$(manage-mpv-sockets open $socket_name)
+  if [ "$?" -eq 8 ]; then
+    echo "Named port already open, started playback there instead"
+    mpvctl --socket $SOCKET play
+
+    if [ "$socket_name" = "music" ]; then
+      mpvctl --socket $SOCKET seek_to_end
+    fi
+    exit 8
+  fi
+  shift
+  shift
+fi
+
+if [ -z "$SOCKET" ]; then
+  SOCKET=$(manage-mpv-sockets open)
+fi
+
 ICP_SOCK="--input-ipc-server=$SOCKET"
 YTDL_OPTIONS="--ytdl-raw-options=sponsorblock-remove=\"sponsor,selfpromo,outro,preview,interaction,music_offtopic\",sponsorblock-mark=\"intro,filler\""
 

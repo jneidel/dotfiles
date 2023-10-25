@@ -1,6 +1,8 @@
 #! /bin/sh
 
-SCHEMA=/tmp/mpv_socket_
+SCHEMA_BASE=/tmp/mpv
+SCHEMA_NUMBERED=${SCHEMA_BASE}_socket_
+SCHEMA_NAMED=${SCHEMA_BASE}_named_
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
@@ -10,13 +12,16 @@ Routing to relevant mpv sockets
 Arguments:
   list       : list open sockets
   open       : open a new socket, returns address
+  open NAME  : open a new named socket, returns address, exit 8 if exists
   get_playing: get the first socket playing audio, exit code 10 if none
 
 Example:
   $ manage-mpv-sockets open
-  #=> ${SCHEMA}7
+  #=> ${SCHEMA_NUMBERED}7
+  $ manage-mpv-sockets open music
+  #=> ${SCHEMA_NAMED}music
   $ manage-mpv-sockets get_playing
-  #=> ${SCHEMA}1
+  #=> ${SCHEMA_NUMBERED}1
 EOF
   exit
 fi
@@ -26,23 +31,36 @@ command -v ss >/dev/null || { echo "ss is not installed" 1>&2; exit 127; }
 command -v tac >/dev/null || { echo "tac is not installed" 1>&2; exit 127; }
 command -v socat >/dev/null || { echo "socat is not installed" 1>&2; exit 127; }
 
+list_open_numbered_sockets() {
+  ss -l -x src "${SCHEMA_NUMBERED}*" | grep -Po "${SCHEMA_NUMBERED}.*?(?=\s)" | tac
+}
 list_open_sockets() {
-  ss -l -x src "${SCHEMA}*" | grep -Po "${SCHEMA}.*?(?=\s)" | tac
+  ss -l -x src "${SCHEMA_BASE}*" | grep -Po "${SCHEMA_BASE}.*?(?=\s)" | tac
 }
 
-get_latest_open_socket() {
-  latest_open_socket="$(list_open_sockets | head -n1)"
-  if [ -z "$latest_open_socket" ]; then
-    echo "${SCHEMA}0"
+get_latest_open_numbered_socket() {
+  latest_open_numbered_socket="$(list_open_numbered_sockets | head -n1)"
+  if [ -z "$latest_open_numbered_socket" ]; then
+    echo "${SCHEMA_NUMBERED}0"
   else
-    echo "$latest_open_socket"
+    echo "$latest_open_numbered_socket"
   fi
 }
 
 create_new_socket() {
-  nOfLatestOpenSocket=$(get_latest_open_socket | grep -Po "${SCHEMA}\K\d+")
+  nOfLatestOpenSocket=$(get_latest_open_numbered_socket | grep -Po "${SCHEMA_NUMBERED}\K\d+")
   nPlus1=$((nOfLatestOpenSocket+1))
-  echo "${SCHEMA}${nPlus1}"
+  echo "${SCHEMA_NUMBERED}${nPlus1}"
+}
+
+create_named_socket() {
+  name="$1"
+  named_socket="${SCHEMA_NAMED}${name}"
+
+  echo $named_socket
+  if list_open_sockets | grep "$named_socket" >/dev/null; then
+    exit 8
+  fi
 }
 
 send_command_to_socket() {
@@ -71,7 +89,13 @@ get_first_playing_socket() {
 }
 
 case "$1" in
-  open) create_new_socket;;
+  open)
+    name="$2"
+    if [ -n "$name" ]; then
+      create_named_socket "$name"
+    else
+      create_new_socket
+    fi;;
   list) list_open_sockets;;
   get_playing) get_first_playing_socket;;
 esac

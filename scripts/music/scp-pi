@@ -36,4 +36,3 @@ for d in `ls -d "$DIR/"*`; do
   echo "Moving: $d"
   scp "$d/"* "$IP:\"$REMOTE/\""
 done
-

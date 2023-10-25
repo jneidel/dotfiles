@@ -2,17 +2,18 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
-$ mpvctl CMD
+$ mpvctl [--socket SOCKET] CMD
 Control mpv through the IPC socket at $SOCKET
 
 Commands:
   play|toggle|pause: toggle playback
-  seek:              seek by specified amount
   get:               get info by property name
   keypress:          send a keypress
+  seek_to_end:       seek to the end of the buffer
 
 Example:
   $ mpvctl toggle
+  $ mpvctl --socket /tmp/mpv_named_music play
 EOF
   exit
 fi
@@ -21,11 +22,23 @@ command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
 command -v socat >/dev/null || { echo "socat is not installed"; exit 127; }
 command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not in PATH"; exit 127; }
 
-if SOCKET=$(manage-mpv-sockets get_playing); then
-  continue
-else
-  echo "mpv not playing on any socket"
-  exit 10
+SOCKET=
+if echo "$@" | grep '\--socket' >/dev/null; then
+  SOCKET="$2"
+  shift
+  shift
+fi
+
+if [ -z "$SOCKET" ]; then
+  if SOCKET=$(manage-mpv-sockets get_playing); then
+    continue
+  else
+    SOCKET=$(manage-mpv-sockets list | tail -n1)
+    if [ -z "$SOCKET" ]; then
+      echo "mpv not playing on any socket"
+      exit 10
+    fi
+  fi
 fi
 
 send_cmd() {
@@ -51,12 +64,18 @@ send_get() {
   #  https://github.com/mpv-player/mpv/issues/7562
 }
 
+seek_to_end() {
+  send_cmd "[\"seek\", \"99\", \"absolute-percent\"]"
+}
+
 notify() {
   notify-send -i $1 -u normal -t 4000 "$2" "$(send_get media-title | cut -d\" -f2)"
 }
 next() {
   if [ "$(send_get chapters)" -gt 0 ]; then # has chapters
     send_cmd "[\"add\", \"chapter\", \"1\"]"
+  elif [ "$SOCKET" = "/tmp/mpv_named_music" ]; then
+    seek_to_end
   elif [ "$(send_get playlist-count)" -gt 0 ]; then # has playlist
     send_cmd "[\"playlist-next\", \"force\" ]"
   else # just regular file
@@ -74,14 +93,16 @@ prev() {
 }
 
 case "$1" in
-  play|toggle|pause)
-    send_keypress space >/dev/null
+  toggle)
+    send_keypress space >/dev/null # or send_cmd cycle pause
 
     if [ `send_get pause 2>/dev/null` = "false" ]; then
       notify player_play "Play"
     else
       notify player_pause "Pause"
     fi;;
+  play) send_cmd "[\"set_property\", \"pause\", false]";;
+  pause) send_cmd "[\"set_property\", \"pause\", true]";;
   next)
     next
     notify player_end "Next";;
@@ -90,4 +111,5 @@ case "$1" in
     notify player_start "Previous";;
   get) send_get "$2";;
   key|keypress) send_keypress "$2";;
+  seek_to_end) seek_to_end;;
 esac

@@ -64,42 +64,51 @@ run_cmd() {
   [ -n "$HEAD" ] && notify-send -i $ICON -h string:x-canonical-private-synchronous:controlMpd -u normal -t 7000 "$HEAD" "$TRACK"
 }
 
-IS_MPV=0
-MPV_PAUSE="$(mpvctl get pause 2>/dev/null)"
-if [ "$?" -eq 0 ] && [ "$MPV_PAUSE" = "false" ]; then
-  IS_MPV=1
+if ~/scripts/mpd/is-mpd-server; then
+  case $1 in
+    toggle) mpvctl --socket /tmp/mpv_named_music toggle;;
+    next) mpvctl --socket /tmp/mpv_named_music next;;
+    pause) mpvctl --socket /tmp/mpv_named_music pause;;
+    play) mpvctl --socket /tmp/mpv_named_music play;;
+    *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
+  esac
 else
-  if mpvctl get path 2>/dev/null | grep -ie "youtube.com" -e "podcasts" >/dev/null; then
+  IS_MPV=0
+  MPV_PAUSE="$(mpvctl get pause 2>/dev/null)"
+  if [ "$?" -eq 0 ] && [ "$MPV_PAUSE" = "false" ]; then
     IS_MPV=1
+  else
+    if mpvctl get path 2>/dev/null | grep -ie "youtube.com" -e "podcasts" >/dev/null; then
+      IS_MPV=1
+    fi
   fi
+
+  case $1 in
+    toggle)
+      if [ "$IS_MPV" -eq 1 ]; then
+        mpvctl toggle
+            else
+        run_cmd toggle
+      fi;;
+    next)
+      if [ "$IS_MPV" -eq 1 ]; then
+        mpvctl next
+      else
+        run_cmd next
+      fi;;
+    prev)
+      if [ "$IS_MPV" -eq 1 ]; then
+        mpvctl prev
+      else
+        run_cmd prev
+      fi;;
+    pause)
+      if [ "$IS_MPV" -eq 1 ]; then
+        mpvctl toggle
+      else
+        run_cmd pause
+      fi;;
+    play) run_cmd play;;
+    *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
+  esac
 fi
-
-case $1 in
-  toggle)
-    if [ "$IS_MPV" -eq 1 ]; then
-      mpvctl toggle
-          else
-      run_cmd toggle
-    fi;;
-  next)
-    if [ "$IS_MPV" -eq 1 ]; then
-      mpvctl next
-    else
-      run_cmd next
-    fi;;
-  prev)
-    if [ "$IS_MPV" -eq 1 ]; then
-      mpvctl prev
-    else
-      run_cmd prev
-    fi;;
-  pause)
-    if [ "$IS_MPV" -eq 1 ]; then
-      mpvctl toggle
-    else
-      run_cmd pause
-    fi;;
-  play) run_cmd play;;
-  *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
-esac
-
