@@ -1,0 +1,12 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ start-bluelight
+EOF
+  exit
+fi
+
+command -v xflux >/dev/null || { echo "xflux is not installed" 1>&2; exit 127; }
+
+xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1 &
