@@ -1,0 +1,18 @@
+;; remap capslock as mod-tap with tap for esc and hold for control
+(defcfg
+  ;; For Linux
+  input  (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+  output (uinput-sink "kmonad-output")
+
+  ;; This option tells KMonad to let non-configured keys act normal
+  fallthrough true
+)
+(defsrc
+  caps
+)
+(defalias
+  caps_ctrl_esc (tap-hold-next-release 200 esc lctl)
+)
+(deflayer remap_caps
+  @caps_ctrl_esc
+)

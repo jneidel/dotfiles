@@ -4,10 +4,12 @@
 
 ## X settings
 # remap caps lock to escape
-setxkbmap -option caps:escape &
+# setxkbmap -option caps:escape &
+# remap caps lock to mod-tap with esc as tap and ctrl as hold
+sudo kmonad ~/.config/kmonad/caps_as_ctrl_esc.kbd &
 
-# set higher keyboard repeat
-xset r rate 185 100 &
+# set higher keyboard repeat after kmonad
+sleep 1s && xset r rate 185 100 &
 
 # disable annoying system beep
 xset -b &

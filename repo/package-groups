@@ -581,3 +581,6 @@ cpupower Control cpu throttling
 
 [sioyek]
 sioyek Advance pdf reader
+
+[kmonad]
+kmonad-bin Flexible keyboard rebinding
