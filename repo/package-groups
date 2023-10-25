@@ -578,3 +578,6 @@ systemd:python3-validity-wakeup
 
 [cpupower]
 cpupower Control cpu throttling
+
+[sioyek]
+sioyek Advance pdf reader

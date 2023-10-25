@@ -255,3 +255,7 @@ create /etc/pam.d
 
 [cpupower]
 /etc/default/cpupower
+
+[sioyek]
+.config/sioyek
+.config/sioyek/keys_user.config
