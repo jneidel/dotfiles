@@ -1,39 +1,45 @@
+if [ "$(uname)" = "Linux" ]; then
+  alias dockerr="sudo docker"
+else
+  alias dockerr="docker"
+fi
+
 # use images
-alias db="docker build"
-alias dr="docker run --rm"
-alias dri="docker run -it"
+alias db="dockerr build"
+alias dr="dockerr run --rm"
+alias dri="dockerr run -it"
 
 # list
-alias di="docker images | grep -Fv 'rancher/'"
-alias dps="docker ps -a | grep -Fve 'rancher/' -e 'k8s_'"
+alias di="dockerr images | grep -Fv 'rancher/'"
+alias dps="dockerr ps -a | grep -Fve 'rancher/' -e 'k8s_'"
 
 # rm
-alias rmc="docker rm"
-alias rmca='docker rm $(docker ps -q -a) >/dev/null 2>&1; true'
-alias rmi="rmca; docker rmi"
+alias rmc="dockerr rm"
+alias rmca='dockerr rm $(dockerr ps -q -a) >/dev/null 2>&1; true'
+alias rmi="rmca; dockerr rmi"
 function rmia() {
   rmca
-  docker images | grep -F '<none>' | awk '{ print $3 }' | tr '\n' ' ' | xargs docker rmi -f
+  dockerr images | grep -F '<none>' | awk '{ print $3 }' | tr '\n' ' ' | xargs dockerr rmi -f
 }
 alias rma="rmia" # rm all
-alias dk="docker kill"
+alias dk="dockerr kill"
 dex() {
-  docker exec -it $1 bash
+  dockerr exec -it $1 bash
   # -u 0 for root access
 }
 dep() {
   local CONTAINER_ID=$1; shift
-  docker exec -it $CONTAINER_ID psql $@
+  dockerr exec -it $CONTAINER_ID psql $@
 }
 
 # docker-compose
 function dc() {
-  docker compose --ansi always $@ | grep -v rabbitmq-1
+  dockerr compose --ansi always $@ | grep -v rabbitmq-1
 }
-alias dcb="docker compose build"
-alias dcup="docker compose up"
-alias dcdown="docker compose down"
-alias dcre="docker compose restart"
+alias dcb="dockerr compose build"
+alias dcup="dockerr compose up"
+alias dcdown="dockerr compose down"
+alias dcre="dockerr compose restart"
 alias dcs="yq '.services | keys' docker-compose.yml"
 
 alias k="kubectl"
