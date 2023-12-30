@@ -12,5 +12,5 @@ EOF
   exit
 fi
 
-du -sc -B M --apparent-size $ORG_MEDIA/music/[^_]* | # exclude anything starting w/ _ from match
+du -sc -B M --apparent-size -L $ORG_MEDIA/music/[^_]* | # exclude anything starting w/ _ from match
   tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'

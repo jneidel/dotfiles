@@ -1,6 +1,6 @@
 #! /bin/sh
 
-DATA=$ORG_ARCHIVE/_random/data/unhrd-data.txt
+DATA=$ORG_ARCHIVE/…random/data/unhrd-data.txt
 
 # epoch to date
 # $ date -d @EPOCH
