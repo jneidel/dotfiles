@@ -1,0 +1,57 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat <<EOF
+$ groceries TITLE AMOUNT DATE
+Add groceries to ledger file
+Paid in cash
+
+Parameters:
+  \$1: title of the transaction
+  \$2: amount for the whole
+  \$3: date
+
+Example:
+  $ groceries "Edeka" "18.5+5.6"
+EOF
+  exit
+fi
+
+command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
+
+get_input() {
+  echo "$1"
+  read ans
+  echo $ans
+}
+
+TITLE="$1"
+
+amount_input="$2"
+AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(2) )")
+AMOUNT_SHARED=$(node -e "console.log( ($AMOUNT_TOTAL/2).toFixed(2) )")
+
+date_input="$3"
+DATE=$(date +%Y-%m-%d)
+if echo "$date_input" | grep -Fe '-' >/dev/null; then
+  DATE="$(date +%Y-)${date_input}"
+elif [ -n "$date_input" ]; then
+  DATE="$(date +%Y-%m-)${date_input}"
+fi
+
+print() {
+  cat <<EOF
+$DATE $TITLE
+  ex:food:groceries        $AMOUNT_SHARED
+  [pot:leben]             -$AMOUNT_SHARED
+  person:francis           $AMOUNT_SHARED
+  [person:francis]        -$AMOUNT_SHARED
+  [owed]                   $AMOUNT_SHARED
+  [reserve]               -$AMOUNT_SHARED
+  wallet                  -$AMOUNT_TOTAL
+  [wallet]                 $AMOUNT_TOTAL
+
+EOF
+}
+
+print >>$LEDGER_FILE
