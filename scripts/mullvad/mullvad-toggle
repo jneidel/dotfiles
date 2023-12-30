@@ -6,7 +6,7 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   exit
 fi
 
-if [ "$(mullvad lockdown-mode get)" = "Network traffic will be allowed when the VPN is disconnected" ]; then
+if mullvad lockdown-mode get | grep ": off" >/dev/null; then
   mullvad lockdown-mode set on > /dev/null
   printf "\033[1;32mlockdown-mode set on\n"
   mullvad connect
