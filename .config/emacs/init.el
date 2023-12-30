@@ -75,7 +75,7 @@
  ;; If there is more than one, they won't work right.
  '(line-number ((t (:background "#1c1c1c" :foreground "dim gray"))))
  '(line-number-current-line ((t (:inherit line-number :background "#ea3d54" :foreground "#1c1c1c"))))
- '(outline-1 ((t (:inherit font-lock-function-name-face :foreground "red"))))
+ '(outline-1 ((t (:inherit font-lock-function-name-face :foreground "#EA3D54"))))
  '(outline-4 ((t (:inherit font-lock-comment-face :foreground "orange"))))
  '(outline-6 ((t (:inherit font-lock-constant-face :foreground "green" :weight normal))))
  '(outline-8 ((t (:inherit font-lock-string-face :foreground "purple"))))
@@ -83,6 +83,9 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp/disabled" user-emacs-directory))
+
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -116,6 +119,16 @@
   :config
   (editorconfig-mode 1))
 
+;; does this work?
+;; don't wanna toggle it since, but be explicit about turning it on
+;; wrap text after 80 chars
+(add-hook 'org-mode-hook '(auto-fill-mode t))
+;; recalc formulas
+;; TODO: enhance by checking if output is "Not a table" and running the command
+;; of C-c C-c (recalc if on TBLFM)
+(with-eval-after-load "org"
+    (define-key org-mode-map (kbd "C-c C-+") 'org-table-iterate))
+
 (require 'move-border)
 
 (defvar jneidel-keys-mode-map
@@ -140,6 +153,24 @@
 (jneidel-keys-mode 1)
 ;; src: https://emacs.stackexchange.com/a/27943
 
+;; TODO: disable automatic line breaking to get this all into one big line so it works
+(setenv "_DEFAULT_COMMAND" "rg --ignore --hidden --files
+--type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}'
+--type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob
+'!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib'
+--glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob
+'!chrome/' --glob '!firefox/' --glob '!Signal' -g='!.ib-tws/' -g='!.java/'
+-g='!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics'
+--glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/' -g='!elpa'")
+
+;; pkg: https://github.com/bling/fzf.el
+(use-package fzf
+  :config
+  (setq
+   fzf/args "--bind TAB:up,Shift-TAB:down -x --color dark --print-query --margin=1,0 --no-hscroll"
+   fzf/position-bottom t
+   fzf/window-height 10
+   ))
 
 ;; ;; Allow users to provide an optional "init-preload-local.el"
 ;; ;; (require 'init-preload-local nil t)
