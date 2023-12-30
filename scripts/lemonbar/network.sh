@@ -7,8 +7,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # initial state
 WIFI=$("$DIR/wifi-status")
-VPN=$("$DIR/vpn-status")
-echo "NET$WIFI $VPN"
+VPN=0
+HOMENET=0
+echo "NET$WIFI $VPN $HOMENET"
 
 while read -r line; do
   case "$line" in
@@ -22,7 +23,10 @@ while read -r line; do
       WIFI=0 ;;
     "NetworkManager state is now CONNECTED_LOCAL"|"NetworkManager state is now CONNECTING")
       WIFI=2 ;; # connected local
+    "device (rückersdorf_wg): state change: "*" -> disconnected")
+      HOMENET=0 ;;
+    "device (rückersdorf_wg): Activation: successful, device activated.")
+      HOMENET=1 ;;
   esac
-  echo "NET$WIFI $VPN"
+  echo "NET$WIFI $VPN $HOMENET"
 done
-

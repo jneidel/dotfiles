@@ -1,4 +1,0 @@
-#! /bin/sh
-
-[ -n "$(timeout 0.15 mullvad status | grep "Tunnel status: Connected")" ] && echo 1 || echo 0
-

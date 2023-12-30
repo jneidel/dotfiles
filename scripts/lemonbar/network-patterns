@@ -15,3 +15,5 @@ NetworkManager state is now CONNECTED_SITE
 NetworkManager state is now CONNECTING
 Error: Failed to set DNS
 dhcp4 (.*): request timed out
+device (rückersdorf_wg): Activation: successful, device activated.
+device (rückersdorf_wg): state change: .* disconnected
