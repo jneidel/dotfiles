@@ -1,0 +1,35 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ earn TICKER
+Print the next earnings date for a stock
+
+Parameters:
+  \$1: ticker symbol
+
+Example:
+  $ earn AAPL
+EOF
+  exit
+fi
+
+TICKER=$(echo $1 | tr a-z A-Z)
+
+fetch() {
+  curl "https://alpha.earningswhispers.com/api/getstocksdata/$TICKER" -H "referer: https://alpha.earningswhispers.com/stocks/$TICKER" -Ss
+}
+
+print_date() {
+  JSON=/tmp/earn.json
+  fetch >$JSON
+
+  if [ "$(jq .ticker -r $JSON)" != "$TICKER" ]; then
+    echo Invalid response wrong ticker symbol >&2
+    echo See contents of /tmp/earn.json >&2
+    exit 1
+  fi
+
+  echo "$(date +%b%d --date $(jq .nextEPSDate -r $JSON))"
+}
+print_date

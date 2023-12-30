@@ -1,0 +1,26 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ divd TICKER
+Print the next dividend date for a stock
+
+Parameters:
+  \$1: ticker symbol
+
+Example:
+  $ divd AAPL
+EOF
+  exit
+fi
+
+TICKER=$(echo $1 | tr A-Z a-z)
+
+fetch() {
+  curl "https://stockanalysis.com/stocks/$TICKER/dividend/" -Ss | grep "Ex-Dividend Date" -A1 | tail -n1 | grep -Po "[^>]+$(date +%Y)"
+}
+
+print_date() {
+  echo "$(date +%b%d --date "$(fetch)")"
+}
+print_date
