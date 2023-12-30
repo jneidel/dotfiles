@@ -64,8 +64,10 @@
  '(delete-selection-mode t)
  '(display-line-numbers-type 'relative)
  '(global-display-line-numbers-mode t)
+ '(ledger-binary-path "hledger")
  '(package-selected-packages
-   '(flycheck-ledger ledger-mode gnu-elpa-keyring-update fullframe seq)))
+   '(flycheck-hledger hledger-mode gnu-elpa-keyring-update fullframe seq flycheck-ledger ledger-mode))
+ '(tab-width 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
