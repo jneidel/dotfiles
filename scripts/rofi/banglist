@@ -1,5 +1,5 @@
 lg https://libgen.is/search.php?&res=100&req=%s&phrase=1&view=simple&column=def&sort=language&sortmode=ASC
-lgf http://gen.lib.rus.ec/fiction/?q=%s
+lgf http://libgen.is/fiction/?q=%s
 tpb https://mirrorbay.org/get-data-for/%s?cat=0
 tpb2 https://piratebay.pro/get-data-for/%s
 tpb3 https://tpb.clonehub.org/get-data-for/%s
@@ -12,13 +12,13 @@ ml https://manga4life.com/search/?sort=s&desc=false&name=%s
 mi http://www.mangainn.net/advanced-search?term=%s
 gc https://getcomics.info/?s=%s
 fp https://filepursuit.com/pursuit?q=%s
-abb http://audiobookbay.se/?s=%s
+abb https://audiobookbay.is/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r10
 klein https://www.ebay-kleinanzeigen.de/s-03238/%s/k0l7714r10
 ytt https://www.youtube.com/results?search_query=%s
-yt https://inv.tux.pizza/search?q=%s
 yt https://yewtu.be/search?q=%s
+yt https://inv.tux.pizza/search?q=%s
 yt2 https://ytb.trom.tf/search?q=%s
 ytp https://invidious.namazso.eu/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
@@ -43,8 +43,9 @@ ns https://www.namecheap.com/domains/registration/results/?domain=%s
 sh https://www.sci-hub.ru/%s
 man https://man.archlinux.org/search?q=%s
 fi https://www.flaticon.com/search?word=%s&search-type=icons&license=selection&order_by=4&grid=big
+flat https://www.flaticon.com/search?word=%s&search-type=icons&license=selection&order_by=4&grid=big
 wa https://www.wolframalpha.com/input/?i=%s
-ede https://www.ebay.de/sch/i.html?_nkw=%s
+ede https://www.ebay.de/sch/i.html?_nkw=%s&rt=nc&LH_PrefLoc=3
 dm https://www.dm.de/search?query=%s&searchType=product
 rc https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-Bibliothek
 re https://www.reclam.shop/search?query=%s&facet-product_type%5B0%5D=Universal-Bibliothek
@@ -84,3 +85,14 @@ lf https://github.com/search?q=repo%3Agokcehan%2Flf+%s&type=issues
 t https://duckduckgo.com/?q=taskwarrior+%s
 hl https://hledger.org/scripts.html?search=%s
 ledger https://hledger.org/scripts.html?search=%s
+tg https://torrentgalaxy.to/torrents.php?search=%s
+bl https://www.booklooker.de/B%C3%BCcher/Angebote/infotext=%s?sortOrder=preis_total
+image https://imagecomics.com/search/results?s=%s
+s https://jellyseerr.neidel.xyz/search?query=%s
+seerr https://jellyseerr.neidel.xyz/search?query=%s
+aw https://wiki.archlinux.org/index.php?search=%s
+18 https://1337x.to/search/1080p %s/1/
+rar https://rargb.to/search/?search=%s
+tg https://torrentgalaxy.to/torrents.php?search=%s#results
+ot https://oldtoons.world/torrents.php?incldead=0&spstate=1&search=%s&sort=5&type=asc
+ali https://de.aliexpress.com/w/wholesale-%s.html
