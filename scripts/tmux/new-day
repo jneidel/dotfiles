@@ -24,9 +24,4 @@ tmux send-keys "mc" "enter" # calendar
 tmux split-window -v -l 16
 tmux send-keys "clear" "enter" "wttr" "enter" # weather
 
-if [ "$(date +%a)" = "Mon" ]; then
-  tmux -u new-window -t $MAIN
-  tmux send-keys "edeka-angebote" "enter"
-fi
-
 # ~/scripts/apps/anki >/dev/null 2>&1 & # vocab

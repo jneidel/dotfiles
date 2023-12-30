@@ -38,7 +38,7 @@ sudo pacman -Syu --noconfirm
 
 install_pacman() {
   echo "yay: Install $1 [$2]: $3"
-  printf "yes\nyes\nyes\nyes\nyes\nyes\nyes" | yay -S --confirm --answerclean None --answerdiff None "$1"
+  yes | yay -S --confirm --answerclean None --answerdiff None "$1"
 }
 install_npm() {
   echo "npm: Install $1 [$2]: $3"

@@ -122,16 +122,13 @@ return {
                   return name
                 end
               end },
-              { "description", "<++>" },
-              { "categories", "<++>"},
-              { "authors", function() return require("neorg.core.utils").get_username() end },
               { "created", function() return os.date("%Y-%m-%d") end },
               { "updated", function() return os.date("%Y-%m-%d") end },
             }
           }
         },
         ["core.summary"] = {}, -- https://github.com/nvim-neorg/neorg/wiki/Summary
-        ["core.ui.calendar"] = {},
+        -- ["core.ui.calendar"] = {},
         ["core.export"] = {},
         ["core.export.markdown"] = {
           config = {

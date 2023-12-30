@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ killlf
+Kill all lf related programs
+EOF
+  exit
+fi
+
+kill $(pidof lf) 2>/dev/null
+ps -aux | grep -e "lf/preview" -e "lf/cleaner" | awk '{ print $2 }' | xargs kill 2>/dev/null
+
+true

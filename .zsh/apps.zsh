@@ -103,12 +103,13 @@ alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 alias sw="date +'%a %b %d'; raw-stopwatch"
 alias license="legit put gpl-3.0"
 alias fcrontabe="fcrontab -e"
+alias sig="signal-to-inbox"
 
 ### misc
 function dict {
   dict-cc $1 | less
 }
-alias tree="alder --depth 3" # print filetree, nig @aweary/alder
+# alias tree="alder --depth 3" # print filetree, nig @aweary/alder
 alias flux="xflux -l 52 -g 13" # bluelight filter
 alias speed="npx speedo-cli"
 alias webcam='vlc v4l:// :v4l-vdev="/dev/video0"' # webcam has to be configured
@@ -147,31 +148,11 @@ wait_for_newsboat() {
   fi
 }
 alias new="wait_for_newsboat clean"
-# alias pod="wait_for_newsboat pod"
+alias pod="isfaturday && wait_for_newsboat pod"
 alias misc="wait_for_newsboat misc"
+# alias misc="isfaturday && wait_for_newsboat misc"
+# alias ma="isfaturday && wait_for_newsboat manga"
 alias ma="wait_for_newsboat manga"
-nomoreent() {
-  # echo "No youtube and gaming entertainment for now"
-  # return 1
-
-  local WEEKDAY=`date +%a`
-  local HOUR=`date +%H`
-  # if [ "$WEEKDAY" != "Sun" ] && [ "$WEEKDAY" != "Sat" ]; then
-  #   if [ "$HOUR" -lt 18 ] && [ "$HOUR" -gt 4 ]; then
-  #     echo "It's not the right time."
-  #     return
-  #   fi
-  # fi
-  local NAME="ent"
-  out=$(mktemp)
-  if ! newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet; then
-    echo 'didnt you want to finish dune first?'; return
-    newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db >$out
-    # newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db -C ~/.config/newsboat/config-ent >$out
-    echo "Waiting for reload-newsboat to finish"
-    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet && clear
-  fi
-}
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 
@@ -312,6 +293,7 @@ dot() {
   make import
 }
 
+alias jira="fjira -p JD"
 alias mpr="mpd-toggle-local"
 alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
 

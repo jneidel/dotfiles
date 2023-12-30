@@ -1,5 +1,6 @@
 # my bluetooth devices, not useful for anybody else
-alias c3="btconnect B8:D5:0B:AD:AA:26" # red JBL Charge 3
+alias cr="btconnect B8:D5:0B:AD:AA:26" # red JBL Charge 3
+alias c3="cr"
 alias ct="btconnect FC:A8:9A:E0:3E:1E" # turquoise Charge
 alias cb="btconnect 98:52:3D:A7:45:A9" # 1st black Charge, in DD
 alias b2="btconnect F8:DF:15:A9:B7:D7" # 2nd black Charge, in OSW

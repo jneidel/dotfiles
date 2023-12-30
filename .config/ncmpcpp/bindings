@@ -154,13 +154,15 @@ def_key "B"
   select_album
 def_key "V"
   remove_selection
-# Z shuffe selection
+# Z shuffe/randomize selection
 def_key "K"
   select_item
   scroll_up
 def_key "J"
   select_item
   scroll_down
+
+# ` add random items
 
 def_key "alt-K"
   move_selected_items_up

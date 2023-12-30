@@ -409,7 +409,7 @@ wine Run windows applications
 wine-mono wine dependency
 
 [latex]
-texlive-core Typography
+texlive-full Latex
 
 [latex-sci]
 texlive-latexextra More packages

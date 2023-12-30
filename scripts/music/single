@@ -4,7 +4,7 @@ ALBUM_AR=Singles
 ALBUM=Mixed
 BASE_ALBUM=$ALBUM
 
-MUSIC_DIR="$HOME/ct/music"
+MUSIC_DIR="$ORG_MEDIA/music"
 SINGLES_DIR="$MUSIC_DIR/_tomove-data/Singles"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then

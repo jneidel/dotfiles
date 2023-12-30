@@ -13,7 +13,7 @@ command -v is-mullvad >/dev/null || { echo "is-mullvad script is not in PATH"; e
 
 echo "Starting transmission-daemon"
 if is-mullvad; then
-  transmission-daemon -c ~/Downloads --encryption-preferred
+  nice transmission-daemon -c ~/Downloads --encryption-preferred
 else
-  transmission-daemon -c ~/Downloads --encryption-preferred --paused
+  nice transmission-daemon -c ~/Downloads --encryption-preferred --paused
 fi

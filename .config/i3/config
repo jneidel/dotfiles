@@ -147,9 +147,8 @@ for_window [class="conky"] floating enable
 for_window [class="gui.Main"] floating enable
 
 # Dont focus on these windows on open
-no_focus [class="mupdf"]
 # no_focus [class="Zathura"]
-assign [class="Zathura"] output DP-2
+# assign [class="Zathura"] output nonprimary
 
 # Open monitors on specific workspaces
 workspace $ws1 output primary
