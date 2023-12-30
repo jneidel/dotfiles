@@ -10,12 +10,14 @@
 # - get the group_id via an authenticated GET /groups
 # - set API_TOKEN and GROUP_ID
 
+. $HOME/.zsh/org.env
+INBOX=$ORG_INBOX
+
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-INBOX=$HOME/org/0_inbox
 CACHE_DIR=$XDG_DATA_HOME/hypothesis
 mkdir -p $CACHE_DIR
-TMP=/tmp/hypothesis-cache
 LOG=$CACHE_DIR/delete.log
+TMP=/tmp/hypothesis-cache
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -33,7 +35,7 @@ CACHE_FILE=$CACHE_DIR/cached-annotations-$(date +%s).json
 
 # api docs: https://h.readthedocs.io/en/latest/api-reference
 fetch() {
-  curl -Ss -H "Authorization: Bearer $API_TOKEN" "https://hypothes.is/api/search?group=$GROUP_ID" | jq .rows >$CACHE_FILE
+  curl -Ss -H "Authorization: Bearer $API_TOKEN" "https://hypothes.is/api/search?group=$GROUP_ID&limit=200" | jq .rows >$CACHE_FILE
 }
 delete_fetched() {
   for id in $(jq 'map(.id)' $CACHE_FILE | gron | tail -n +2 | cut -d\" -f2); do
@@ -42,26 +44,29 @@ delete_fetched() {
   done
 }
 extract_annotations() {
-  jq 'map({ uri: .uri, annotation: .text, selection: .target[0].selector[2].exact })' $CACHE_FILE >$TMP
+  jq 'map({ uri: .uri, annotation: .text, title: .document.title[0], selection: .target[0].selector[2].exact })' $CACHE_FILE >$TMP
   for i in `seq 0 $(jq length-1 $TMP)`; do
     local uri=`jq -r ".[$i].uri" $TMP`
     local annotation=`jq -r ".[$i].annotation" $TMP`
     local selection=`jq -r ".[$i].selection" $TMP`
+    local website_title=`jq -r ".[$i].title" $TMP`
+    local filename=`echo $selection | tr "\n" " " | cut -c-50`
 
-    cat <<EOF >$INBOX/webclipping-$(date +%s)-$i.md
-{$uri}[$selection]
-
-$uri
-$selection
+    cat <<EOF >$INBOX/$filename.norg
+> $selection
 
 Notes:
 $annotation
+
+{$uri}[$website_title]
 EOF
   done
+  echo Fetched $i annotations
 }
 
 ~/scripts/cron/waitforinternet
 ~/scripts/cron/cron-notify-send "Fetching annotations"
-fetch >/dev/null 2>&1
-delete_fetched >/dev/null 2>&1
-extract_annotations >/dev/null 2>&1
+
+fetch
+delete_fetched
+extract_annotations
