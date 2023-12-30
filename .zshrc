@@ -100,5 +100,5 @@ source $ZSH_DIR/init.zsh
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc
 if [ "$(tty)" = "/dev/tty1" ]; then
-  pgrep -x Xorg >/dev/null || startx
+  pgrep -x Xorg >/dev/null || startx -- -dpi 120
 fi

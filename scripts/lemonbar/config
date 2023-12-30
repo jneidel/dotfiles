@@ -1,9 +1,9 @@
-#!\bin\sh
+#!/bin/sh
 # i3 panel config
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-glyphs_font="FuraCode Nerd Font Mono-12.5" # use with %{T-}
-text_font="ComicCodeLigatures Nerd Font-10" # use with %{T2}
+glyphs_font="FuraCode Nerd Font Mono-10.5" # use with %{T-}
+text_font="ComicCodeLigatures Nerd Font-8" # use with %{T2}
 
 case "$(cat /etc/hostname)" in
   "jneidel-x270")

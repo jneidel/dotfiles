@@ -2,3 +2,5 @@ Nsxiv.window.background: #141818
 Nsxiv.window.foreground: #ffd700
 Nsxiv.bar.background: #141818
 Nsxiv.bar.foreground: #ffd700
+
+Xft.dpi: 120
