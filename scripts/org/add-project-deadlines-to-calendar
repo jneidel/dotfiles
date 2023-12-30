@@ -14,7 +14,7 @@ fi
 add_a_task_for_missing_deadlines() {
   task_title="Add missing deadline for: $project_name"
   if ! task "$task_title" >/dev/null 2>&1; then
-    task add "$task_title" prio:M type:m >/dev/null
+    task add "$task_title" prio:M >/dev/null
   fi
 }
 

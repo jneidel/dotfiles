@@ -14,6 +14,8 @@ EOF
 exit
 fi
 
+items_in_inbox=
+
 # helpers
 print_header() {
   printf "\033[1;32m$1\033[0m\n"
@@ -30,7 +32,8 @@ calc_total_time() {
   mins_passed_leftover_sec=$(($secs_passed%60))
 
   print_control "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s\n"
-  echo "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s" >>"$DURATIONS_FILE"
+
+  echo "$(date +%b%d): ${mins_passed}m, $items_in_inbox items" >>"$DURATIONS_FILE"
 }
 is_paused=0
 passed_before_pause=0
@@ -117,9 +120,11 @@ camscanner() {
   print_header "$step. Process CamScanner"
   cat <<EOF
 outcome:
+  - scanned all clipping in the drawer
   - all images in "to process" folder have had their text extracted
 
 EOF
+  $BROWSER https://www.camscanner.com/file/recent >/dev/null 2>&1 &
   prompt_continue
 }
 
@@ -148,6 +153,16 @@ messenger() {
 outcome:
   - empty signal
   - empty whatsapp
+
+EOF
+  prompt_continue
+}
+
+otter() {
+  print_header "$step. Clear out otter"
+  cat <<EOF
+outcome:
+  - no unprocessed transcripts
 
 EOF
   prompt_continue
@@ -189,6 +204,17 @@ EOF
   prompt_continue
 }
 
+bulletjournal() {
+  print_header "$step. Copy notes from Bullet Journal"
+  cat <<EOF
+outcome:
+  - exported everything useful
+
+EOF
+
+  prompt_continue
+}
+
 files() {
   print_header "$step. Clear temp directories"
   cat <<EOF
@@ -212,7 +238,7 @@ outcome:
   - $ORG_INBOX is empty
 
 EOF
-  echo "$(date +%b%d): <++>m, $(ls $ORG_INBOX/* | wc -l) items" >>"$DURATIONS_FILE"
+  items_in_inbox="$(ls $ORG_INBOX/* | wc -l)"
 
   lf -remote "send cd '$ORG_INBOX'" &
   prompt_continue
@@ -235,14 +261,16 @@ prompt_continue
 }
 
 email
-calendar
-messenger
 github
+messenger
+otter
 desk
 camscanner
 newsboat
 pre_org_inbox
 browser_tabs
+bulletjournal
+calendar
 files
 org_inbox
 

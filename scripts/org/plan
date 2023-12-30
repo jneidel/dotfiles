@@ -27,12 +27,6 @@ template() {
   cat <<EOF
 @document.meta
 title: <++>
-description: <++>
-categories: [
-  project
-  <++>
-]
-authors: $(whoami)
 created: $(date +%Y-%m-%d)
 updated: $(date +%Y-%m-%d)
 deadline: $(date +%Y)-<++>
@@ -49,12 +43,8 @@ deadline: $(date +%Y)-<++>
 
    <++>
 
-** Ziele (Goals)
+** Ziele (Goals) & Zwecke (Purposes)
    > Wo willst du durch diese Gesamtaktion hin? Orientierungsziele
-
-   - <++>
-
-** Zwecke (Purposes)
    > Warum willst du das? Genaue Erklärung der Goals, Unterziele
 
 *** <++>
@@ -71,10 +61,6 @@ deadline: $(date +%Y)-<++>
    - <++>
 
 *** <++>
-
-** Programme
-   > Todos per Plan
-
 EOF
 }
 
