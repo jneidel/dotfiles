@@ -20,6 +20,6 @@ ${cpu}% \
 ${loadavg 1} \
 ${fs_free /home} \
 ${execi 15 ~/scripts/lemonbar/battery.sh} \
-${downspeed wlp3s0}
+${downspeed wlan0}
 ]]
 
