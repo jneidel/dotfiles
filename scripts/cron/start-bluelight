@@ -9,4 +9,11 @@ fi
 
 command -v xflux >/dev/null || { echo "xflux is not installed" 1>&2; exit 127; }
 
-xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1 &
+export DISPLAY=:0
+XAUTHORITY=/run/user/1000/Xauthority
+xauth add $(xauth -f $XAUTHORITY list|tail -1)
+
+xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
+
+# optimize:
+# https://askubuntu.com/questions/873717/using-terminal-to-have-xflux-at-a-certain-temperature-at-all-times
