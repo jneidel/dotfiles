@@ -1,6 +1,7 @@
 #! /bin/sh
 
 BOOKMARK_FILE=$HOME/scripts/personal/webpages
+FATURDAY_EXCLUDE_FILE=$HOME/scripts/personal/webpages-faturday-exclude
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -18,5 +19,13 @@ if [ ! -f "$BOOKMARK_FILE" ]; then
   exit 1
 fi
 
-SELECTION=`cat $BOOKMARK_FILE | rofi -dmenu -i -lines 15 -eh 1 -p insert -auto-select 2>/dev/null | rev | cut -d\  -f1 | rev`
+bookmarks() {
+  if command -v isfaturday >/dev/null && ! isfaturday; then
+    grep -vf $FATURDAY_EXCLUDE_FILE <$BOOKMARK_FILE
+  else
+    cat $BOOKMARK_FILE
+  fi
+}
+
+SELECTION=`bookmarks | rofi -dmenu -i -lines 15 -eh 1 -p open -auto-select 2>/dev/null | rev | cut -d\  -f1 | rev`
 [ -n "$SELECTION" ] && $BROWSER $SELECTION >/dev/null 2>&1
