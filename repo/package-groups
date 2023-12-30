@@ -587,3 +587,6 @@ kmonad-bin Flexible keyboard rebinding
 
 [emacs]
 emacs Editor and ecosystem
+
+[wg]
+wireguard-tools Wireguard
