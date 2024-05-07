@@ -51,7 +51,7 @@ return {
           },
         },
         file_ignore_patterns = {
-          "node_modules/", "vendor/", ".git/", ".mp3", ".pdf", ".png", ".jpg", ".jpeg",
+          "node_modules/", "vendor/", ".git/", ".mp3", ".flac", ".pdf", ".png", ".jpg", ".jpeg",
           ".mkv", ".avi", ".flac", ".mp4", ".zip", ".ods", ".m3u", ".url", "git/", ".cache",
           '.local/lib', '.local/share/*/', 'BraveSoftware/', 'chromium', 'chrome/', 'firefox/',
           '.vim/sessions', '.vim/tmp', '.vim/backup', 'Signal', 'tmp/', 'ct/manga', 'ct/comics',

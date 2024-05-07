@@ -22,8 +22,6 @@ super + F9
 
 super + F3
   kitty --class mosh --name kudu mosh k
-super + F4
-  kitty --class mosh --name uber mosh -p 44940 u
 
 ### websites
 alt + F1
@@ -114,10 +112,10 @@ super + Y
   ~/scripts/rofi/yt
 super + v
   ~/scripts/sxhkd/open_clip_mpv
-super + a
-  cnsm-add
-super + t
-  transmission-add
+# super + a
+#   cnsm-add
+# super + t
+#   transmission-add
 super + z
   open-latest-doc
 super + b

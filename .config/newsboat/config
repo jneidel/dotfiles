@@ -2,7 +2,7 @@
 
 # config
 ## basic config
-download-path "~/ct/podcasts/%n"
+download-path "~/Downloads/media/phone/podcasts/%n"
 max-downloads 6
 browser "~/scripts/open-in-browser-without-pluses"
 # podboat player
@@ -20,17 +20,12 @@ datetime-format "%b %d"
 ## ignore patterns
 ignore-mode "download" # use 'display' for testing to not have to remove cache
 # docs:    https://newsboat.org/releases/2.10.2/docs/newsboat.html#_filter_language
-ignore-article "https://audiobookbay.fi/feed/atom/" "title !~ \"Impact Winter\""
 ignore-article "https://manga4life.com/rss/Onepunch-Man.xml" "title =~ \"\\.\""
-ignore-article "https://quillette.com/feed" "title =~ \"PODCAST\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?user=iDubbbzTV" "title !~ \"complains\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCi5N_uAqApEUIlg32QzkPlg" "title =~ \"Questions Answered\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCm13xHVNFVwzHzK3QHSaZ3Q" "title !~ \"Evergreen\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCXup1ITuwbY5r_Gn2K2_TXA" "title =~ \"TikTok\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCXup1ITuwbY5r_Gn2K2_TXA" "title =~ \"reagiert\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCqQcg5I5-cF8YcWfc5RJFXQ" "title !~ \"DOKUSONNTAG\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCSyAFJ6cmgYabA0RfPCNuzA" "title !~ \"7 vs. Wild\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCIsbLox_y9dCIMLd8tdC6qg" "title !~ \"Same Interview\""
+ignore-article "https://04r1h.mrd.ninja/rss/b0d41e4c" "title =~ \"Error\""
+ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Error\""
+ignore-article "https://04r1h.mrd.ninja/rss/bd82f3dd" "title =~ \"Error\""
+ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Small Presses\""
+ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Analog Science Fiction\""
 
 ## misc
 user-agent "newsboat/2.20.1 Linux"

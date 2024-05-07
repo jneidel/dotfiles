@@ -6,15 +6,16 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_DATA_HOME:-$HOME/.local/state}"
 export XDG_CONFIG_RC="${XDG_DATA_HOME}"
 
-export ZI_HOME=${XDG_STATE_HOME}/.zi
-if [ ! -d "$ZI_HOME/bin" ]; then
-  mkdir -p "$ZI_HOME"
-  git clone https://github.com/z-shell/zi.git $ZI_HOME/bin
-fi
-typeset -A ZI
-source "$ZI_HOME/bin/zi.zsh"
-autoload -Uz _zi
-(( ${+_comps} )) && _comps[zi]=_zi
+# export XDG_ZI_HOME=${XDG_DATA_HOME}/zi
+# export ${ZI[HOME_DIR]}=$XDG_ZI_HOME
+# if [ ! -d "$XDG_ZI_HOME/bin" ]; then
+#   mkdir -p "$XDG_ZI_HOME"
+#   git clone https://github.com/z-shell/zi.git $XDG_ZI_HOME/bin
+# fi
+# typeset -A ZI
+# source "$XDG_ZI_HOME/bin/zi.zsh"
+# autoload -Uz _zi
+# (( ${+_comps} )) && _comps[zi]=_zi
 
 # oh-my-zsh
 ZSH_DIR=~/.zsh
@@ -52,7 +53,7 @@ fi
 ## Paths
 export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/.rd/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/sbin:/usr/bin/site_perl:$HOME/.cargo/bin
 export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
-export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/3_areas:~/org/4_resources:~/org/4_resources/media:~/scripts:~/.config:~/code/notes
+export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/3_areas:~/org/4_resources:~/org/4_resources/media:~/scripts:~/.config
 
 ## Applications
 export EDITOR=vim

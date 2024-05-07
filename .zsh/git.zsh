@@ -104,3 +104,6 @@ gho() {
 alias gcp="git cherry-pick"
 alias gcpc="git cherry-pick --continue"
 alias gcpa="git cherry-pick --abort"
+
+## show
+alias gs="git show"

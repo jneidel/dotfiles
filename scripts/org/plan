@@ -29,7 +29,7 @@ template() {
 title: <++>
 created: $(date +%Y-%m-%d)
 updated: $(date +%Y-%m-%d)
-deadline: $(date +%Y)-<++>
+_deadline: $(date +%Y)-<++>
 @end
 
 * Project definition

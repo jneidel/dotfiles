@@ -25,12 +25,11 @@ alias manga="mangareader-dl --debug"
 alias mangaup="manga-update &"
 alias mangala="manga update check"
 alias mangan="mangala | grep ' - ' && mangaup"
-alias comic="getcomics-dl"
 alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
 
 #### youtube-dl
 local ytdl_location=$ORG_INBOX
-alias ytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
+alias ytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height<=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
 alias ytmp3="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ytdl_location/%(title)s.%(ext)s' --embed-thumbnail"
 alias ytraw="nice yt-dlp -c --retries 4 -o '$ytdl_location/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working
 alias ythere="nice yt-dlp -c -i --retries 4 -f 'mp4[height=1080]' -o './%(title)s.%(ext)s'"
@@ -104,6 +103,8 @@ alias sw="date +'%a %b %d'; raw-stopwatch"
 alias license="legit put gpl-3.0"
 alias fcrontabe="fcrontab -e"
 alias sig="signal-to-inbox"
+alias mi="mediainfo"
+alias bs="bluelight stop"
 
 ### misc
 function dict {
@@ -148,10 +149,8 @@ wait_for_newsboat() {
   fi
 }
 alias new="wait_for_newsboat clean"
-alias pod="isfaturday && wait_for_newsboat pod"
+alias pod="wait_for_newsboat pod"
 alias misc="wait_for_newsboat misc"
-# alias misc="isfaturday && wait_for_newsboat misc"
-# alias ma="isfaturday && wait_for_newsboat manga"
 alias ma="wait_for_newsboat manga"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
@@ -296,6 +295,7 @@ dot() {
 alias jira="fjira -p JD"
 alias mpr="mpd-toggle-local"
 alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
+alias ho="ssh home"
 
 cputemp() {
   cat /sys/class/thermal/thermal_zone*/temp | tr '\n' + | sed 's|+$||' | xargs -I@ node -e "console.log( ((@)/4/1000).toFixed(1) + '°C' )"

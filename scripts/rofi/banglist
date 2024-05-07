@@ -1,5 +1,8 @@
+- https://duckduckgo.com/?q=%s
 lg https://libgen.is/search.php?&res=100&req=%s&phrase=1&view=simple&column=def&sort=language&sortmode=ASC
 lgf http://libgen.is/fiction/?q=%s
+anna https://annas-archive.gs/search?q=%s
+zl https://zlibrary-global.se/s/%s
 tpb https://mirrorbay.org/get-data-for/%s?cat=0
 tpb2 https://piratebay.pro/get-data-for/%s
 tpb3 https://tpb.clonehub.org/get-data-for/%s
@@ -20,12 +23,11 @@ ytt https://www.youtube.com/results?search_query=%s
 yt https://yewtu.be/search?q=%s
 yt https://inv.tux.pizza/search?q=%s
 yt2 https://ytb.trom.tf/search?q=%s
-ytp https://invidious.namazso.eu/search?q=%s%20content_type:playlist&page=1
+ytp https://inv.tux.pizza/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
 d https://www.dict.cc/?s=%s
 cs https://curiositystream.com/search/%s
-- https://duckduckgo.com/?q=%s
 ddg https://duckduckgo.com/?q=%s
 m https://www.medimops.de/produkte-C0/?fcIsSearch=1&searchparam=%s
 mw https://www.merriam-webster.com/dictionary/%s
@@ -85,14 +87,17 @@ lf https://github.com/search?q=repo%3Agokcehan%2Flf+%s&type=issues
 t https://duckduckgo.com/?q=taskwarrior+%s
 hl https://hledger.org/scripts.html?search=%s
 ledger https://hledger.org/scripts.html?search=%s
-tg https://torrentgalaxy.to/torrents.php?search=%s
 bl https://www.booklooker.de/B%C3%BCcher/Angebote/infotext=%s?sortOrder=preis_total
 image https://imagecomics.com/search/results?s=%s
 s https://jellyseerr.neidel.xyz/search?query=%s
 seerr https://jellyseerr.neidel.xyz/search?query=%s
 aw https://wiki.archlinux.org/index.php?search=%s
 18 https://1337x.to/search/1080p %s/1/
-rar https://rargb.to/search/?search=%s
-tg https://torrentgalaxy.to/torrents.php?search=%s#results
-ot https://oldtoons.world/torrents.php?incldead=0&spstate=1&search=%s&sort=5&type=asc
+tg https://torrentgalaxy.mx/torrents.php?search=%s#results
+ot https://oldtoons.world/torrents?perPage=25&name=%s
 ali https://de.aliexpress.com/w/wholesale-%s.html
+lime https://www.limetorrents.lol/search/all/%s/
+hd https://hd-source.to/?s=%s
+mam https://www.myanonamouse.net/tor/browse.php?tor%5Btext%5D=%s
+yy https://yts.mx/browse-movies/%s/all/all/0/latest/0/all
+dock https://hub.docker.com/search?q=%s

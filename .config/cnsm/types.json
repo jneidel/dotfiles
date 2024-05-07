@@ -4,7 +4,7 @@
     "back": "blue",
     "open": "https://1337x.to/search/1080p%20%s/1/",
     "open_name": "1337x",
-    "alt": "https://jellyseerr.jneidel.duckdns.org/search?query=%s",
+    "alt": "https://jellyseerr.neidel.xyz/search?query=%s",
     "alt_name": "Jellyseerr",
     "_alt": "https://www.imdb.com/find?s=all&q=%s",
     "_alt_name": "imdb"

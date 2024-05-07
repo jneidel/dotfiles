@@ -61,7 +61,7 @@ else
 fi
 
 wait_fingerprint() {
-  while pidof i3lock > /dev/null; do
+  while pidof i3lock >/dev/null; do
     if (timeout 5 fprintd-verify | grep -q verify-match); then
       pkill i3lock
     fi

@@ -465,6 +465,7 @@ ueberzug Dependency
 
 [brave]
 brave-bin Main Browser
+noto-fonts-emoji Emojis
 
 [mpd]
 mpd Music player daemon

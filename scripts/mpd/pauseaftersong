@@ -5,7 +5,16 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ pauseaftersong [COUNT]
 Pause mpd after the next player interaction (next, pause/play)
 
-See: mpd player event
+Args:
+  COUNT: amount of soungs to still play, default: 1
+
+References:
+  - if you want to stop pause after a given time has passed use: sleeptimer
+  - see mpd player events to see what counts as interactions
+
+Examples:
+  pauseaftersong 3
+  #=> pause after finishing current song and the two ones after
 EOF
   exit
 fi
@@ -18,7 +27,7 @@ run() {
 }
 runTimes() {
   cmd="mpcc idle player"
-  for n in $(seq $1); do # invalid seq, exec once
+  for n in $(seq $1); do # if invalid count given, exec once (default)
     [ "$n" -gt 1 ] &&
       cmd="$cmd; mpcc idle player"
   done
@@ -31,4 +40,4 @@ if [ -n "$1" ]; then
 else
   run >/dev/null &
 fi
-clear # I always did this manually
+clear

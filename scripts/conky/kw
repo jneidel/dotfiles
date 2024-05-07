@@ -8,5 +8,4 @@ EOF
   exit
 fi
 
-# echo $((`date +%U` +1))
-date +%U
+date +%V

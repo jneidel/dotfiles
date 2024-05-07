@@ -23,7 +23,7 @@ command -v rofi >/dev/null || { echo "rofi is not installed"; exit 1; }
 command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed"; exit 1; }
 command -v node >/dev/null || { echo "node is not installed"; exit 1; }
 
-DEFAULT_BANG="e" # spanish
+DEFAULT_BANG="-" # ddg
 
 bangList() {
   cat $(dirname $0)/banglist
@@ -67,7 +67,7 @@ case "$bang" in
     #     } &
     #   fi;;
   dot)
-    $BROWSER "https://jneidel.com/dot/$query" >dev/null 2>&1 &
+    brave "https://jneidel.com/dot/$query"
     exit;;
 esac
 

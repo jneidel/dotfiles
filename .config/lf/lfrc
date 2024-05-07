@@ -61,7 +61,6 @@ cmd move-to-archive %{{
 
 cmd gimp &gimp "$f" >/dev/null 2>&1
 
-cmd dir-jump $~/.config/lf/scripts/dir-jump
 cmd fzf_dir $~/.config/lf/scripts/fzf-open dir
 cmd fzf_file $~/.config/lf/scripts/fzf-open file
 
@@ -87,7 +86,6 @@ cmd create-norg ${{
 cmd mkdir %{{
   printf "Directory name: "
   read ans
-
   mkdir -p "$ans"
   lf -remote "send $id cd '$ans'" # curiously only works if no spaces in name
 }}
@@ -129,17 +127,18 @@ cmd create-resource ${{
 
 cmd on-cd &{{
   case "$PWD" in
+    "$ORG_AREAS/mental models"|"$ORG_AREAS/blog/posts"|"$ORG_RESOURCES/power dynamics/"*)
+      lf -remote "send $id :set sortby natural; set noreverse";;
+    $ORG_RESOURCES/* | $ORG_INBOX)
+      lf -remote "send $id :set sortby time; set reverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)
       lf -remote "send $id :set sortby time; set reverse"
       manage-task-view-pane "$PWD" &
       ;;
-    $ORG_RESOURCES/* | $ORG_INBOX)
-      lf -remote "send $id :set sortby time; set reverse"
-      ;;
-    * | "$ORG_AREAS/mental models")
-      lf -remote "send $id :set sortby natural; set noreverse"
-      ;;
-    esac
+    *)
+      lf -remote "send $id :set sortby natural; set noreverse";;
+  esac
+  # recreatable minus the globs with: https://github.com/gokcehan/lf/pull/1381
 }}
 on-cd # run on startup
 
@@ -200,16 +199,20 @@ map ga  %lf -remote "send $id cd $ORG_AREAS"
 map gf  %lf -remote "send $id cd $ORG_AREAS/Freunde"
 map ge  %lf -remote "send $id cd $ORG_AREAS/geld"
 map gR  %lf -remote "send $id cd $ORG_AREAS/routine"
-map gI  %lf -remote "send $id cd $ORG_AREAS/Investieren"
-map gt  %lf -remote "send $id cd $ORG_AREAS/Trading"
-map gB  %lf -remote "send $id cd $ORG_AREAS/Börse"
+map gs  %lf -remote "send $id cd $ORG_AREAS/assets"
+map gI  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Investieren"
+map gt  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Trading"
+map gG  %lf -remote "send $id cd $ORG_AREAS/personal\ development/gamechanger"
+map gP  %lf -remote "send $id cd $ORG_AREAS/blog/posts"
+map gl  %lf -remote "send $id cd $ORG_GOALS"
 map gr  %lf -remote "send $id cd $ORG_RESOURCES"
 map gb  %lf -remote "send $id cd $ORG_RESOURCES/media/books"
 map gmm %lf -remote "send $id cd $ORG_MEDIA"
 map gM  %lf -remote "send $id cd $ORG_MEDIA/music"
 map gA  %lf -remote "send $id cd $ORG_ARCHIVE"
-map gD cd ~/Downloads
-map gc cd ~/code
+map gD                        cd ~/Downloads
+map gc                        cd ~/code
+map gv                        cd .archive
 
 map o jump-prev
 map i jump-next

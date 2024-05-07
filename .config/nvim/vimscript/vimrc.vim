@@ -53,6 +53,7 @@ map Q <Nop>
 " Set foldmethod=snytax if current language has fold support
 set foldmarker={{{,}}}
 set foldmethod=marker
+set foldlevel=2
 
 " copy to and from clipboard
 " src: https://vim.fandom.com/wiki/GNU/Linux_clipboard_copy/paste_with_xclip

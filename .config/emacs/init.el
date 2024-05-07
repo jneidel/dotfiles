@@ -64,9 +64,10 @@
  '(delete-selection-mode t)
  '(display-line-numbers-type 'relative)
  '(global-display-line-numbers-mode t)
+ '(helm-minibuffer-history-key "M-p")
  '(ledger-binary-path "hledger")
  '(package-selected-packages
-   '(flycheck-hledger hledger-mode gnu-elpa-keyring-update fullframe seq flycheck-ledger ledger-mode))
+   '(flycheck-hledger hledger-mode gnu-elpa-keyring-update fullframe seq rainbow-delimiters dumb-jump fzf editorconfig flycheck evil-commentary evil-collection evil flycheck-ledger ledger-mode))
  '(tab-width 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -127,7 +128,9 @@
 ;; TODO: enhance by checking if output is "Not a table" and running the command
 ;; of C-c C-c (recalc if on TBLFM)
 (with-eval-after-load "org"
-    (define-key org-mode-map (kbd "C-c C-+") 'org-table-iterate))
+    (define-key org-mode-map (kbd "C-c C-+") 'org-table-iterate)
+    (evil-define-key "normal" org-mode-map (kbd "g i") 'org-toggle-inline-images)
+    )
 
 (require 'move-border)
 
