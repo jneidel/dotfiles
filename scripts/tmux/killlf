@@ -11,4 +11,6 @@ fi
 kill $(pidof lf) 2>/dev/null
 ps -aux | grep -e "lf/preview" -e "lf/cleaner" | awk '{ print $2 }' | xargs kill 2>/dev/null
 
+tmux list-windows -F "#{window_id} #{window_name}" | grep "lf$" | cut -d\  -f1 | xargs -I@ tmux kill-window -t @
+
 true
