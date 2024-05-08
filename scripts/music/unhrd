@@ -2,8 +2,11 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ unhrd
+$ unhrd [-m]
 Print your amount of unheard music
+
+Flags:
+  -m: use main instead
 
 Example:
   $ unhrd
@@ -12,5 +15,11 @@ EOF
   exit
 fi
 
-du -sc -B M --apparent-size -L $ORG_MEDIA/music/[^_]* | # exclude anything starting w/ _ from match
+if [ "$1" = "-m" ]; then
+  du -sc -B M --apparent-size -L $ORG_MEDIA/music/[_m]* | # inverted match from below
+    tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'
+  exit 0
+fi
+
+du -sc -B M --apparent-size -L $ORG_MEDIA/music/[^_m]* | # exclude anything starting w/ _ or m from match
   tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'
