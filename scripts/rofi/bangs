@@ -76,5 +76,9 @@ query=`urlEncode "$query"`
 if bangList | grep -m 1 "^$bang " >/dev/null; then
   bangList | grep -m 1 "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $BROWSER >/dev/null 2>&1 &
 else
-  $BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
+  if [ "$bang" = "$DEFAULT_BANG" ] && [ "$DEFAULT_BANG" = "-" ]; then
+    $BROWSER "https://duckduckgo.com/?q=$query" >/dev/null 2>&1 &
+  else
+    $BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
+  fi
 fi
