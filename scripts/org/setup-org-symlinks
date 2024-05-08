@@ -1,0 +1,18 @@
+#! /bin/sh
+
+CD_DIR=~/.local/org
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ setup-org-symlinks
+Sets up org symlinks for easy cding.
+EOF
+  exit
+fi
+
+mkdir -p $CD_DIR
+ln -s $ORG_INBOX $CD_DIR/inbox
+ln -s $ORG_PROJECTS $CD_DIR/project
+ln -s $ORG_AREAS $CD_DIR/areas
+ln -s $ORG_RESOURCES $CD_DIR/resources
+ln -s $ORG_ARCHIVE $CD_DIR/archive
