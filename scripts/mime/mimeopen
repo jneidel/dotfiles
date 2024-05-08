@@ -26,7 +26,7 @@ e404() {
 # exit 1 means the handler does not like to be run in the background (&)
 case $EXT in
   txt|md|java|yml|yaml|json|norg|rem|js|ts) echo "$EDITOR"; exit 1;;
-  png|jpg|jpeg|gif|webp) echo nsxiv -b;;
+  png|jpg|jpeg|gif|webp|svg) echo nsxiv -b;;
   pdf) echo zathura;;
   sh) echo sh; exit 1;;
   bash) echo bash; exit 1;;
@@ -39,20 +39,27 @@ case $EXT in
     else
       e404 'epr or FBReader'
     fi;;
-  mp3|flac|ogg|wma|m4b|m4a|wav|aac) echo "mpv --profile=music"; exit 1;;
+  sc)
+    if command -v sc-im >/dev/null; then
+      echo sc-im; exit 1
+    else
+      e404 'sc-im'
+    fi;;
+  mp3|flac|ogg|wma|m4b|m4a|wav|aac|opus) echo "mpv --profile=music"; exit 1;;
   cbz|cbr) echo "YACReader >/dev/null 2>&1";;
   tgz|zip|rar|xz|gz|tar.gz|deb) echo extract; exit 1;;
   tgz.gpg) echo untargpg; exit 1;;
   html) echo "$BROWSER >/dev/null 2>&1";;
   exe) echo "wine >/dev/null 2>&1";;
+  aup3) echo audacity;;
   gpg|*.gpg) echo extracthere; exit 1;;
   ods|xlsx|csv) echo libreoffice;;
   docx|pptx|odp|odt|xltx) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
-  sc) echo sc-im; exit 1;;
   py) echo python3; exit 1;;
   browser-tabs) echo open-tabs;;
   tmux-project) echo open-tmux-project; exit 1;;
+  org) echo emacsclient -t; exit 1;;
   *) printf "ERR: no handler setup for: $EXT\n"
     exit 10;;
 esac

@@ -70,7 +70,9 @@ classify_file() {
       "POSIX shell script"|"POSIX shell script text executable") echo sh;;
       "Bourne-Again shell script"|"Bourne-Again shell script text executable") echo bash;;
       "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data"|data) echo txt;;
-      "empty") echo txt;;
+      "RAR archive data") echo rar;;
+      "HTML document") echo html;;
+      "empty"|"makefile script") echo txt;;
       "directory") exit 1;; # constantly produces logs without any real errors
       *) echo [ERR] mimetype not configured: $DETERMINED_FILE_TYPE
         echo "unconfigured mimetype: $DETERMINED_FILE_TYPE" >$ORG_INBOX/mimetype-$(date +%s)

@@ -24,8 +24,10 @@ EXT="$1"
 case $EXT in
   ods|odt|docx|xlsx|xltx) echo libreoffice;;
   png|jpg|jpeg) echo gimp;;
+  aup3|flac|mp3|wav) echo audacity;;
   pdf) echo masterpdfeditor4;;
   sc) echo sc-im; exit 1;;
+  org) echo emacsclient -t; exit 1;;
   *) echo $EDITOR; exit 1;;
 esac
 exit 0 # explicit 0 exit for handlers fine to run in the background
