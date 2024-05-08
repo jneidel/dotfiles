@@ -45,12 +45,12 @@ while read -r line ; do
 
       if [ "$wifi_state" -eq 1 ]; then
         if [ "$vpn_state" -eq 1 ]; then
-          network="%{B${col_sec}}${sep_left} 直 %{T2}mullvad%{T-} ${sep_right}"
+          network="%{B${col_active}}${sep_left} 直 %{T2}vpn%{T-} ${sep_right}"
         else
           if [ "$homenet_state" -eq 1 ]; then
-            network="%{B${col_active}}${sep_left} 直 %{T2}home%{T-} ${sep_right}"
+            network="%{B${col_sec}}${sep_left} 直 %{T2}home%{T-} ${sep_right}"
           else
-            network="%{B${col_active}}${sep_left} 直 %{T2}no vpn%{T-} ${sep_right}"
+            network="%{B${col_sec}}${sep_left} 直 %{T2}no vpn%{T-} ${sep_right}"
           fi
         fi
       else
