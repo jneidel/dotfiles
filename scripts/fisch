@@ -1,0 +1,120 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ fisch
+Show opening hours of my fisch market
+
+Generic implementation, just swap out the timetable for your own use
+
+Commands:
+  list: print timetable instead
+EOF
+  exit
+fi
+
+# debugging
+debugging_dotw=
+debugging_hour=
+if [ -n "$debugging_dotw" ] || [ -n "$debugging_hour" ]; then
+  printf "Debugging with these values: DOTW %s, Hour: %s\n" "$debugging_dotw" "$debugging_hour" >&2
+fi
+
+# command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
+
+timetable() {
+  cat <<EOF
+Tue 9:00-14:00
+Wed 9:00-14:00
+Thu 8:00-13:00 At Edeka in Kirchhain
+Thu 15:00-18:30
+Fri 9:00-18:00
+EOF
+}
+
+if [ "$1" = "list" ]; then
+  timetable
+  exit 0
+fi
+
+match_dotw() {
+  if [ -n "$debugging_dotw" ]; then
+    timetable | grep "^$debugging_dotw" | cut -d\  -f2-
+  else
+    timetable | grep "^$(date +%a)" | cut -d\  -f2-
+  fi
+}
+
+print_closed() {
+  closing_time=$1
+  is_last_opening_hour=$2
+
+  if [ "$is_last_opening_hour" -eq 1 ]; then
+    echo "Closed at $closing_time"
+  fi
+}
+print_will_open() {
+  opening_time=$1
+  has_earlier_opeing_hour=$2
+
+  if [ "$has_earlier_opeing_hour" -eq 0 ]; then
+    echo "Opens today at $opening_time"
+  else
+    echo "Reopens at: $opening_time"
+  fi
+}
+
+match_times() {
+  times=$1
+  n=$2
+  total=$3
+
+  is_last_opening_hour=0
+  [ "$n" -eq "$total" ] && is_last_opening_hour=1
+  has_earlier_opeing_hour=0
+  [ "$total" -gt 1 ] && [ "$n" -gt 1 ] && has_earlier_opeing_hour=1
+
+  start_h=$(echo $times | cut -d: -f1)
+  start_m=$(echo $times | cut -d: -f2 | cut -d- -f1)
+  end_h=$(echo $times | cut -d: -f2 | cut -d- -f2)
+  end_m=$(echo $times | cut -d: -f3)
+
+  now_h=$(date +%H)
+  now_m=$(date +%M)
+  [ -n "$debugging_hour" ] && now_h=$debugging_hour
+
+  if [ "$now_h" -lt "$start_h" ]; then
+    print_will_open "$start_h:$start_m" $has_earlier_opeing_hour
+  elif [ "$now_h" -eq "$start_h" ] && [ "$now_m" -lt "$start_m" ]; then
+    print_will_open "$start_h:$start_m" $has_earlier_opeing_hour
+  elif [ "$now_h" -gt "$end_h" ]; then
+    print_closed "$end_h:$end_m" $is_last_opening_hour
+  elif [ "$now_h" -eq "$end_h" ] && [ "$now_m" -gt "$end_m" ]; then
+    print_closed "$end_h:$end_m" $is_last_opening_hour
+  else
+    echo "Open now!"
+
+    if [ "$now_h" -eq "$(($end_h-1))" ]; then
+      echo "Closes soon: $end_h:$end_m" # alert 1h-1:59h ahead of closing
+    else
+      echo "Closes at: $end_h:$end_m"
+    fi
+  fi
+}
+
+times="$(match_dotw | cut -d\  -f1)"
+note="$(match_dotw | cut -d\  -f2- | head -n1)"
+if [ -z "$times" ]; then
+  echo "Closed on $(date +%a)"
+else
+  total=$(echo "$times" | wc -l)
+  n=1
+  for time in $times; do
+    match_times $time $n $total
+    n=$((n+1))
+  done
+
+  if [ "$note" != "$(echo $times | head -n1)" ]; then
+    echo "Note: $note"
+  fi
+fi
