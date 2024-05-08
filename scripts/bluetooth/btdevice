@@ -8,7 +8,11 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 if bluetoothctl info >/dev/null 2>&1; then
-  bluetoothctl info | grep Name | cut -d\  -f2-
+  dev="$(bluetoothctl info | grep Name | cut -d\  -f2-)"
+  case "$dev" in
+    "soundcore Motion 300") echo jneidel-hang;;
+    *) echo $dev
+  esac
 else
   exit 1
 fi

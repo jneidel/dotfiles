@@ -8,5 +8,6 @@ fi
 
 DEVICE="$(~/scripts/bluetooth/btdevice)"
 
-[ -n "$DEVICE" ] && echo "$DEVICE" | cut -d "-" -f 2- | awk '{ print "  "$0" " }'
-
+if [ -n "$DEVICE" ]; then
+  echo "$DEVICE" | sed 's/jneidel-//; s/charge-//' | awk '{ print "  "$0" " }'
+fi
