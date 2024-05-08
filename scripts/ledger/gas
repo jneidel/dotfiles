@@ -1,0 +1,54 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ gas AMOUNT DATE
+Add gas transaction to ledger file
+Paid from shared account
+
+Parameters:
+  \$1: amount for the whole
+  \$2: day of the month
+
+Example:
+  $ gas 40.59
+  $ gas 40 03
+EOF
+  exit
+fi
+
+command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
+
+get_input() {
+  echo "$1"
+  read ans
+  echo $ans
+}
+
+amount_input="$1"
+AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(2) )")
+AMOUNT_SHARED=$(node -e "console.log( ($AMOUNT_TOTAL/2).toFixed(2) )")
+
+date_input="$2"
+DATE=$(date +%Y-%m-%d)
+if echo "$date_input" | grep -Fe '-' >/dev/null; then
+  DATE="$(date +%Y-)${date_input}"
+elif [ -n "$date_input" ]; then
+  DATE="$(date +%Y-%m-)${date_input}"
+fi
+
+print() {
+  cat <<EOF
+
+$DATE Tanken
+  ex:car:gas               $AMOUNT_SHARED
+  [pot:leben]             -$AMOUNT_SHARED
+  shared                  -$AMOUNT_TOTAL
+  [shared]                 $AMOUNT_TOTAL
+  bal                      $AMOUNT_SHARED
+  [bal]                   -$AMOUNT_SHARED
+
+EOF
+}
+
+print >>$LEDGER_FILE
