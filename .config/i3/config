@@ -112,6 +112,10 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 
+# Move workspace to external monitor
+bindsym $mod+adiaeresis move workspace to output right
+bindsym $mod+odiaeresis move workspace to output left
+
 # Open applications on specific workspaces
 ## Find out class names using xprop
 ## 'class' matches the 'WM_CLASS': xprop | grep WM_CLASS
@@ -146,13 +150,13 @@ for_window [class="mpv"] floating enable
 for_window [class="conky"] floating enable
 for_window [class="gui.Main"] floating enable
 
-# Dont focus on these windows on open
-# no_focus [class="Zathura"]
-# assign [class="Zathura"] output nonprimary
+# Open in the background on a second screen
+no_focus [class="MuPDF"]
+assign [class="MuPDF"] output nonprimary
 
 # Open monitors on specific workspaces
 workspace $ws1 output primary
-workspace $ws5 output DP-2
+workspace $ws4 output nonprimary
 mouse_warping none
 no_focus [class="monitor"]
 assign [class="monitor"] $ws5
