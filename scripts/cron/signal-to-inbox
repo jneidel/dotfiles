@@ -42,7 +42,7 @@ const backupDataDir = path.join(process.env.XDG_CACHE_HOME ? process.env.XDG_CAC
 if (backupMessages) fs.mkdir( backupDataDir, { recursive: true } );
 
 function logError(msg) {
-  return fs.appendFile(errorFile, String(msg));
+  return fs.appendFile(errorFile, String(msg)+"\n\n");
 }
 
 function writeToFile(filename, data) {
@@ -60,13 +60,16 @@ function fetchApi(endpoint, options = {}) {
 }
 
 function writeNote(msg) {
-  let filename = msg.replace(/\n/, " ").replaceAll("/", "");
-
-  const cutoff = 60;
-  if (msg.match(/:/) && ! msg.match(/^http/)) {
-    filename = msg.match(/(.*):/)[1];
-  } else if (msg.length > cutoff)
-    filename = msg.slice(0, cutoff) + "…";
+  const filenameCutoff = 60;
+  let filename = msg.replaceAll("/", "");
+  const firstLineOfFilename = filename.split("\n")[0];
+  if (firstLineOfFilename.match(/:/) && ! filename.match(/^http/)) {
+    filename = firstLineOfFilename.match(/(.*):/)[1];
+  } else {
+    filename = filename.replaceAll("\n", " ");
+    if (filename.length > filenameCutoff)
+      filename = filename.slice(0, filenameCutoff) + "…";
+  }
 
   if (msg.match(/^http/))
     msg = `{${msg}}`;
@@ -88,7 +91,7 @@ function returnFileExtForContentType(ct) {
 
 function isAttachmentALongMessage(name) {
   // If a message is really long signal will truncate the message and attach the whole thing as an attachment
-  return name.match(/^long-message-.*\.txt/);
+  return String(name).match(/^long-message-.*\.txt/);
 }
 
 async function writeAttachment({id, contentType, name}, title, n) {
