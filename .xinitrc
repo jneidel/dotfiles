@@ -79,8 +79,8 @@ mullvad lockdown-mode set off &
 nice -n -7 kitty ~/scripts/tmux/tp main &
 nice -n 19 brave &
 nice -n 19 signal-desktop &
-
 nice -n 19 watch-for-deadline-changes &
+emacs &
 
 # start window manager
 exec i3
