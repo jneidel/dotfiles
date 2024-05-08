@@ -36,3 +36,14 @@ feargreed() {
   curl -Ss https://money.cnn.com/data/fear-and-greed/ | grep -Po "https://markets.money.cnn.com/Marketsdata/.+?.png" | xargs curl -Ss -H 'Referer: ' --compressed --output $FILE
   sxiv $FILE
 }
+
+addwireguard() {
+  connectionconf=$1
+  connection=${connectionconf%%.*}
+  nmcli connection import type wireguard file $connectionconf
+  nmcli device set $connection autoconnect no
+  nmcli connection modify $connection autoconnect no
+  nmcli connection up $connection
+  sleep 3s
+  curl -Ss https://ipinfo.io
+}
