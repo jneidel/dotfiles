@@ -7,7 +7,7 @@ command -v $BROWSER >/dev/null || { echo "$BROWSER was not found" 1>&2; exit 127
 
 git push origin master
 
-VERSION=$(git tag | tail -n1 | awk -F. '{ print $1"."$2+1".0" }')
+VERSION=$(git tag | sort -V | tail -n1 | awk -F. '{ print $1"."$2+1".0" }')
 
 URL="https://github.com/jneidel/dotfiles/releases/new?tag=$VERSION&title=Recent%20changes%20to%20my%20dotfiles%20($VERSION)&body="
 $BROWSER "$URL$($DIR/changelog/generate-changelog)" >/dev/null 2>&1 &

@@ -16,6 +16,6 @@ command -v git >/dev/null || { echo "git is not installed" 1>&2; exit 127; }
 command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
 command -v awk >/dev/null || { echo "awk is not installed" 1>&2; exit 127; }
 
-git log --oneline --no-decorate $(git tag | tail -n1)..HEAD |
+git log --oneline --no-decorate $(git tag | sort -V | tail -n1)..HEAD |
   awk {'first=$1; $1=""; print ""$0"\\n"first""'} | sed 's/^ //' |
   $DIR/parse-commits.js
