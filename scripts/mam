@@ -1,0 +1,71 @@
+#! /bin/sh
+
+OPERATING_DIR=$HOME/Downloads
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ mam DATA
+Go through the workflow for uploading a torrent to MAM
+
+Parameters:
+  \$1: data file or directory
+
+Example:
+  $ upload-torrent my.epub
+EOF
+  exit
+fi
+
+command -v mktorrent >/dev/null || { echo "mktorrent is not installed" 1>&2; exit 127; }
+command -v mediainfo >/dev/null || { echo "mediainfo is not installed" 1>&2; exit 127; }
+
+torrent="$1"
+base="$(basename "$torrent")"
+
+size_to_pieces() {
+  mbsize=$(du -sm "$torrent" | awk '{ print $1 }')
+
+  if [ "$mbsize" -lt 130 ]; then
+    echo 16
+  elif [ "$mbsize" -lt 270 ]; then
+    echo 17
+  elif [ "$mbsize" -lt 540 ]; then
+    echo 18
+  elif [ "$mbsize" -lt 1050 ]; then
+    echo 19
+  elif [ "$mbsize" -lt 2150 ]; then
+    echo 20
+  elif [ "$mbsize" -lt 4050 ]; then
+    echo 21
+  else
+    echo 22
+  fi
+}
+
+delete() {
+  printf "Delete torrent and source files? (y/N): "
+  read ans
+  if [ "$ans" = "y" ] || [ "$ans" = "Y" ]; then
+    rm "$OPERATING_DIR/$base.torrent"
+    rm -r "$torrent"
+    rm "$OPERATING_DIR/cover.jpg" "$OPERATING_DIR/folder.jpg" 2>/dev/null
+  fi
+  true
+}
+
+mktorrent -p -a https://t.myanonamouse.net/tracker.php/nsoNwH4bCbXTgl4orqTJi3x-M1JsWzuE/announce "$torrent" -l $(size_to_pieces)
+mv "$torrent.torrent" $OPERATING_DIR/ 2>/dev/null
+cp "$torrent/cover.jpg" "$torrent/folder.jpg" $OPERATING_DIR/ 2>/dev/null
+
+$BROWSER https://www.myanonamouse.net/tor/upload.php >/dev/null 2>&1 &
+
+if [ "$(find "$torrent" -name '*.mp3' -or -name '*.m4b' | wc -l)" -gt 0 ]; then
+  $BROWSER "https://www.amazon.de/s?k=hörbuch $torrent" >/dev/null 2>&1 &
+else
+  $BROWSER "https://www.amazon.de/s?k=$torrent" >/dev/null 2>&1 &
+fi
+
+sscp "$torrent" home:media/torrents/seeding/
+mediainfo "$torrent"/* | less
+mp3len "$torrent"/*
+delete
