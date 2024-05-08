@@ -1,0 +1,40 @@
+#! /bin/sh
+
+# optimize:
+# https://askubuntu.com/questions/873717/using-terminal-to-have-xflux-at-a-certain-temperature-at-all-times
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ bluelight start|stop
+Start or stop the bluelight filter
+
+Runable via cron
+EOF
+  exit
+fi
+
+command -v xflux >/dev/null || { echo "xflux is not installed" 1>&2; exit 127; }
+
+start() {
+  xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
+
+  ~/scripts/sxhkd/backlight percent 60 >/dev/null
+}
+
+stop() {
+  # start xflux before killing to reset screen temperature
+  xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
+  sleep 1s
+  kill -9 $(pidof xflux) 2>/dev/null
+
+  ~/scripts/sxhkd/backlight max >/dev/null
+}
+
+export DISPLAY=:0
+XAUTHORITY=/run/user/1000/Xauthority
+xauth add $(xauth -f $XAUTHORITY list|tail -1)
+
+case $1 in
+  start) start;;
+  stop) stop;;
+esac
