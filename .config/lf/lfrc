@@ -43,21 +43,36 @@ cmd clear-unselect &lf -remote "send $id :clear; unselect"
 
 cmd move-to-inbox %{{
   local filename="${f##*/}"
-  printf "Moved '${f##*/}' to inbox"
   if [ -e "$ORG_INBOX/$filename" ]; then
-    mv "$f" "$ORG_INBOX/$filename-$(date +%s)"
+    mv "$f" "$ORG_INBOX/$(date +%s)-$filename"
   else
     mv "$f" $ORG_INBOX/
   fi
+  printf "Moved '${f##*/}' to inbox"
 }}
 cmd move-to-archive %{{
   local filename="${f##*/}"
-  printf "Moved '${f##*/}' to archive"
   if [ -e "$ORG_ARCHIVE/$filename" ]; then
-    mv "$f" "$ORG_ARCHIVE/$filename-$(date +%s)"
+    mv "$f" "$ORG_ARCHIVE/$(date +%s)-$filename"
   else
     mv "$f" $ORG_ARCHIVE/
   fi
+  printf "Moved '${f##*/}' to archive"
+}}
+cmd move-to-local-archive %{{
+  local filename="${f##*/}"
+  mkdir -p .archive
+  if [ -e ".archive/$filename" ]; then
+    mv "$f" ".archive/$(date +%s)-$filename"
+  else
+    mv "$f" .archive/
+  fi
+  printf "Moved '${f##*/}' to archive"
+}}
+cmd move-to-paperless %{{
+  local filename="${f##*/}"
+  mv "$f" $ORG/.paperless_import/
+  printf "Moved '${f##*/}' to paperless"
 }}
 
 cmd gimp &gimp "$f" >/dev/null 2>&1
@@ -176,20 +191,24 @@ map rp rm_pi
 map x cut
 map p paste_and_forget
 map <esc> clear
-map m massmove
 map d mkdir
 map D diropen
-map S source-config
 map Y diropenShuffle
-map f dir-jump
+map S source-config
 map . set hidden!
 map R reload
 map I gimp # [I]mage
-map b move-to-inbox # in[B]ox
-map a move-to-archive # [a]rchive
+map L show-tasks
+### fzf open
 map <a-d> fzf_dir
 map <a-f> fzf_file
-map L show-tasks
+### move files
+map mm massmove
+map mi move-to-inbox
+map mA move-to-archive
+map ma move-to-local-archive
+map ml move-to-local-archive
+map mp move-to-paperless
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
