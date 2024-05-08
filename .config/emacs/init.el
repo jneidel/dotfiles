@@ -175,6 +175,11 @@
    fzf/window-height 10
    ))
 
+(defun save-all ()
+  (interactive)
+  (save-some-buffers t))
+(add-hook 'focus-out-hook 'save-all)
+
 ;; ;; Allow users to provide an optional "init-preload-local.el"
 ;; ;; (require 'init-preload-local nil t)
 ;;
