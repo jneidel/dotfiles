@@ -167,7 +167,7 @@ cmd on-cd &{{
 }}
 on-cd # run on startup
 
-cmd show-tasks %tmux split-window -v -p 30; tmux select-pane -T 'task-view'; tmux send-keys "clear && t" "Enter"
+cmd show-tasks %tmux split-window -v -l 30%; tmux select-pane -T 'task-view'; tmux send-keys "clear && t" "Enter"
 
 ## bindings
 ### remove defaults

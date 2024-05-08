@@ -175,11 +175,11 @@ def_key "alt-L"
 def_key "C" # open cover
   run_external_command "mpd-cover"
 def_key "Y" # print lyrics
-  run_external_command "tmux split-window -p 45 'mpd-lyrics | less --quit-at-eof'"
+  run_external_command "tmux split-window -l 45% 'mpd-lyrics | less --quit-at-eof'"
 def_key "M" # enter album directory
-  run_external_command "tmux split-window -p 18 \; send-keys 'clear && ssm' 'Enter'"
+  run_external_command "tmux split-window -l 18% \; send-keys 'clear && ssm' 'Enter'"
 def_key "L" # print album length
-  run_external_command "tmux split-window -p 18 \; send-keys \"ssm && mp3len *.mp3 | less --quit-at-eof; tmux rename-window -t $(tmux list-windows | grep '(active)' | cut -c1) ncmpcpp; exit 0\" 'Enter'"
+  run_external_command "tmux split-window -l 18% \; send-keys \"ssm && mp3len *.mp3 | less --quit-at-eof; tmux rename-window -t $(tmux list-windows | grep '(active)' | cut -c1) ncmpcpp; exit 0\" 'Enter'"
 # open current track on genius
 def_key "O"
   run_external_command "open-on-genius >>/tmp/o"
