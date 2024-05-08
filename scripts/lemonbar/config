@@ -2,7 +2,8 @@
 # i3 panel config
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-glyphs_font="FuraCode Nerd Font Mono-10.5" # use with %{T-}
+glyphs_font="DejaVu Sans Mono for Powerline-11" # use with %{T-}
+# glyphs_font="FuraCode Nerd Font Mono-10.5" # has more artifacts than DejaVu Sans
 text_font="ComicCodeLigatures Nerd Font-8" # use with %{T2}
 
 case "$(cat /etc/hostname)" in
