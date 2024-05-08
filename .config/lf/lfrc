@@ -12,6 +12,7 @@ set ratios 5:4
 # ignore
 set hiddenfiles ".*:*.aux:*.log:*.synctex.gz:*.bcf:*.run.xml:*.bbl:*.blg:*.toc:*.nav:*.out:*.snm:package-lock.json:node_modules"
 set cursorpreviewfmt "\033[48;5;240m"
+set statfmt "\033[36m%p\033[0m| (%s)| %t| -> %l" # size in GB (not GiB)
 
 # for working with $fs/$fx
 set shell zsh

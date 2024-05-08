@@ -21,7 +21,7 @@ alias cmf="chmod 644" # default file
 alias own="sudo chown $USER" # change owner
 
 ## dir/disk info
-alias ds="du -sh" # d[ir]s[ize]
+alias ds="du -sh" # d[ir]s[ize] in GiB (gibibytes)
 alias dirsize="ds"
 alias disksize="df -h"
 
