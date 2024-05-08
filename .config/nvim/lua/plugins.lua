@@ -157,6 +157,16 @@ require("lazy").setup( {
     cmd = "HardPencil",
   },
 
+  -- ## org mode
+  {
+    "nvim-neorg/neorg",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    tag = "v7.0.0",
+    ft = "norg",
+    cmd = "Neorg",
+    config = plugin.neorg.config,
+  },
+
   -- ## other
   { -- status bar theme
     "itchyny/lightline.vim",
@@ -166,14 +176,6 @@ require("lazy").setup( {
     "andrewferrier/debugprint.nvim",
     keys = plugin.debugprint.keys,
     config = plugin.debugprint.config,
-  },
-  { -- org mode
-    "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    ft = "norg",
-    cmd = "Neorg",
-    config = plugin.neorg.config,
   },
   {
     "ledger/vim-ledger",

@@ -138,6 +138,12 @@ return {
       },
     }
 
+    -- inject metadata if it doesn't exist
+    local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+    if first_line and not string.find(first_line, "@document.meta") then
+      vim.api.nvim_command(":Neorg inject-metadata")
+    end
+
     --       ["core.highlights"] = {
     --           config = {
     --               highlights = {

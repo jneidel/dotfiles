@@ -19,7 +19,7 @@ dir="$1"
 tmp=$(mktemp --suffix=.norg)
 
 # generate and fix norg metadata
-$EDITOR $tmp -c ":wq"
+$EDITOR $tmp -c ":Neorg inject-metadata" -c ":wq"
 tmpNoDir=$(basename $tmp)
 title=${tmpNoDir%.*}
 sed -i "s|$title|<++>|" $tmp
