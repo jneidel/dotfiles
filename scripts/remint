@@ -1,0 +1,863 @@
+#!/usr/bin/env bash
+# remint is a simple wrapper script to add interactions and navigation to
+# the terminal outputs of D. Skoll's Remind scripting calendar program.
+# Usage: ./remint.sh /path/to/a/reminders/file. remint.sh will try to find
+# a file in a default location if none is supplied as argument.
+#
+# MIT License
+# 
+# Copyright © [2022] Mathieu Laparie <mlaparie [at] disr [dot] it>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Configuration
+# Variables below can be toggled from the TUI, those are the default values
+# They can be altered here directly, or placed into a 'remint.conf' file
+# alongside 'remint.sh' or in your Remind data directory (~/.reminders,
+# ~/.config/remind, or one set in DOTREMINDERS) to persist after updates.
+DEFAULTFILE="100-remint.rem" # Default file to edit and add new events to if
+			     # data path is a directory
+COLOR="-@2"         # COLOR="" to disable, COLOR="-@1" for 256 colors only.
+FORMAT="1"          # FORMAT="1" means 24h format, FORMAT="0" means am/pm.
+VIEW="calendar"     # VIEW="list" to display the agenda by default.
+COLORINVERTED="no"  # COLORINVERTED="yes" to toggle light/dark default mode.
+SHOWDOYWOY="yes"    # SHOWDOYWOY="no" to hide day of year and week number.
+WEEKSPAN="4"        # Number of weeks to show by default in week view.
+MONTHSPAN="1"       # Number of months to show by default in month view.
+PREFIX="+"          # If PREFIX="+", then the default view shows weeks,
+                    # else if PREFIX="", then the default view shows months.
+SPACING=""          # SPACING="" for fixed cell spacing (see `f` toggle),
+		    # else SPACING=",n,m" where n and m are numbers.
+MONDAYFIRST="m"     # MONDAYFIRST="" to start weeks on Sundays.
+REMPAGER="less -Ri" # Or REMPAGER="$PAGER" to use your usual PAGER. Useful to
+		    # search patterns or scroll long outputs. Beware that not
+		    # all pagers can handle Remind's color and escape colors
+                    # correctly; "less -Ri" can.
+INFODURATION="1"    # Duration (in s) of displayed messages; the UI will be
+                    # be unresponsive until info messages disappear.
+AUTOSYNC="no"       # "yes" to automatically synchronize from and to git
+                    # at startup (git pull) and when quitting (git push), else
+                    #"no"; "yes" requires a reminders file in a git repository.
+CUSTOM=""           # Add any extra Remind arguments you may need here.
+
+# Initialization
+sleep 0.05 # Give the terminal some time to spawn if not already opened
+REF=$(date "+%Y-%m-%d")
+WSPAN=$WEEKSPAN
+MSPAN=$MONTHSPAN
+
+# Functions
+statichelp() {
+    clear
+    tput cup $((LINES/2)), $((COLS/2))
+    printf "
+$indent                                             88                ,d
+$indent                                             °°                88     
+$indent 8b,dPPYba,   ,adPPYba,  88,dPYba,,adPYba,   88  8b,dPPYba,  MM88MMM
+$indent 88P°   °Y8  a8P_____88  88P°   °88°    °8a  88  88P°   '°8a   88
+$indent 88          8PP°°°°°°°  88      88      88  88  88       88   88
+$indent 88          °8b,   ,aa  88      88      88  88  88       88   88,    
+$indent 88           '°Ybbd8°°  88      88      88  88  88       88   °Y888
+
+$indent A simple terminal UI wrapper for D. Skoll's Remind calendar program
+
+$indent NAVIGATION
+$indent   \033[7m , p \033[0m  Prev page     \033[7m     g \033[0m  Go to (yyyy, yyyymmdd, yyyy-mm-dd)
+$indent   \033[7m . n \033[0m  Next page     \033[7m     t \033[0m  Go to Today
+$indent   \033[7m h/l \033[0m  -1/+1 day     \033[7m     o \033[0m  Navigate from year overview
+$indent   \033[7m k/j \033[0m  -1/+1 week    \033[7m     q \033[0m  Quit
+$indent   \033[7m M/m \033[0m  -1/+1 month   \033[7m other \033[0m  Quit with prompt
+$indent   \033[7m Y/y \033[0m  -1/+1 year    \033[7m     ? \033[0m  Show this help
+
+$indent VIEW
+$indent   \033[7m   v \033[0m  Toggle calendar/list views
+$indent   \033[7m w s \033[0m  Toggle week/month span modes
+$indent   \033[7m [/] \033[0m  Span -1/+1 week or month per page of current mode
+$indent   \033[7m r 0 \033[0m  Reset default page span of current mode
+$indent   \033[7m   z \033[0m  Toggle Monday/Sunday as first day of the week
+$indent   \033[7m : x \033[0m  Toggle 24h format
+$indent   \033[7m   d \033[0m  Toggle day of the year and week number
+$indent   \033[7m   / \033[0m  Pipe to pager (e.g. to search pattern, press h for help)
+$indent   \033[7m   f \033[0m  Toggle fixed/collapsed cell spacing
+$indent   \033[7m   i \033[0m  Invert terminal background and foreground colors
+$indent   \033[7m   c \033[0m  Toggle Remind colors
+$indent   \033[7m 0-9 \033[0m  Adjust duration (in s) of temporary messages (e.g. git, back up)
+$indent   \033[7m   ; \033[0m  Show last info message again
+
+$indent DATA
+$indent   \033[7m   a \033[0m  Add event at selected day 
+$indent   \033[7m   e \033[0m  Edit data file
+$indent   \033[7m   b \033[0m  Back up data
+$indent   \033[7m >/< \033[0m  Push/pull *.rem file(s) to/from git repository
+
+$indent © 2023 Mathieu Laparie, <mlaparie@disr.it>, MIT license
+"
+}
+
+showhelp() {
+    while :; do
+        output=$(clear; statichelp)
+        printf "$output"
+        read -rsn1
+            case $REPLY in
+                "I" | "i")
+                    invertcolors
+                    continue ;;
+                *)
+                    return ;;
+            esac
+    done
+}
+
+page() {
+    checkgeom
+    tput civis
+    unset REPLY
+    if [[ "$COLORINVERTED" = "yes" ]]; then
+        printf '\e[?5h'
+    fi
+
+    if [[ "${REF:0:4}" -lt "1990" ]]; then
+        tput cup $((LINES-2)) 28
+        info=$(printf "\033[7m !! \033[0m Error: years before 1990 are not supported by Remind.") && printf "%s" "$info"
+        REF="1990-01-01"
+        read -rsn1
+    elif  [[ "${REF:0:4}" -gt "5990" ]]; then
+        tput cup $((LINES-2)) 28
+        info=$(printf "\033[7m !! \033[0m Error: years after 5990 are not supported by Remind. I know that frustration.") && printf "%s" "$info"
+        REF="5990-12-31"
+        read -rsn1
+    fi
+    
+    clear
+    if [[ "$VIEW" = "calendar" ]] && [[ "$PREFIX" = "+" ]]; then
+        remind ${COLOR} -${MONDAYFIRST}cu${PREFIX}${WSPAN} -b${FORMAT} \
+            -w${COLS}${SPACING} ${CUSTOM} ${INPUT} ${REF} 2>/dev/null
+    elif [[ "$VIEW" = "calendar" ]] && [[ "$PREFIX" = "" ]]; then
+        remind ${COLOR} -${MONDAYFIRST}cu${PREFIX}${MSPAN} -b${FORMAT} \
+            -w${COLS}${SPACING} ${CUSTOM} ${INPUT} ${REF} 2>/dev/null
+    elif [[ "$VIEW" = "list" ]] && [[ "$PREFIX" = "+" ]]; then
+        if [[ "$WSPAN" -gt "1" ]]; then
+            printf "\033[7m Weeks $(date -d $REF '+%W') \
+to $(date -d $REF+$((WSPAN-1))weeks '+%W (%Y)') \033[0m\n\n"
+        else
+            printf "\033[7m Week $(date -d $REF '+%W (%Y)') \033[0m\n\n"
+        fi
+        remind ${COLOR} -${MONDAYFIRST}s${PREFIX}${WSPAN} -b${FORMAT} \
+            ${CUSTOM} ${INPUT} ${REF} 2>/dev/null
+        printf "\n"
+    elif [[ "$VIEW" = "list" ]] && [[ "$PREFIX" = "" ]]; then
+        if [[ "$MSPAN" -gt "1" ]]; then
+            printf "\033[7m $(date -d $REF '+%B %Y') \
+to $(date -d $REF+$((MSPAN-1))months '+%B %Y') \033[0m\n\n"
+        else
+            printf "\033[7m $(date -d $REF '+%B %Y') \033[0m\n\n"
+        fi
+        remind ${COLOR} -${MONDAYFIRST}s${PREFIX}${MSPAN} -b${FORMAT} \
+            ${CUSTOM} ${INPUT} ${REF} 2>/dev/null
+        printf "\n"
+    fi
+    
+        tput cup $((LINES-2))
+        if [[ "$SHOWDOYWOY" = "yes" ]]; then
+            DOY="($(date -d "$REF" "+D%j, W%U"))"
+            printf "\033[7m > \033[0m %s $DOY \n ?  Help" "$REF"
+        else
+            printf "\033[7m > \033[0m %s \n ?  Help" "$REF"
+        fi
+}
+
+ui() {
+    while :; do
+        output=$(clear; page)
+        printf "$output"
+        read -rsn1
+        case $REPLY in
+            "P" | "p" | ",")
+                if [[ "$PREFIX" = "+" ]]; then
+                    REF=$(date -d "$REF-$WSPAN weeks" "+%Y-%m-%d")
+                else
+                    REF=$(date -d "$REF-$MSPAN months" "+%Y-%m-%d")
+                fi
+                continue ;;
+                   
+            "N" | "n" | ".")
+                if [[ "$PREFIX" = "+" ]]; then
+                    REF=$(date -d "$REF+$WSPAN weeks" "+%Y-%m-%d")
+                else
+                    REF=$(date -d "$REF+$MSPAN months" "+%Y-%m-%d")
+                fi
+                continue ;;
+            
+            "Y")
+                REF=$(date -d "$REF-1 year" "+%Y-%m-%d") && continue ;;
+            
+            "y")
+                REF=$(date -d "$REF+1 year" "+%Y-%m-%d") && continue ;;
+            
+            "M")
+                REF=$(date -d "$REF-1 month" "+%Y-%m-%d") && continue ;;
+            
+            "m")
+                REF=$(date -d "$REF+1 month" "+%Y-%m-%d") && continue ;;
+            
+            "K"| "k")
+                REF=$(date -d "$REF-1 week" "+%Y-%m-%d") && continue ;;
+            
+            "J" | "j")
+                REF=$(date -d "$REF+1 week" "+%Y-%m-%d") && continue ;;
+            
+            "h"| "H")
+                REF=$(date -d "$REF-1 day" "+%Y-%m-%d") && continue ;;
+            
+            "L" | "l")
+                REF=$(date -d "$REF+1 day" "+%Y-%m-%d") && continue ;;
+            
+            "T" | "t")
+                REF=$(date "+%Y-%m-%d") && continue ;;
+            
+            "V" | "v")
+                if [[ "$VIEW" = "calendar" ]]; then
+                    VIEW="list"
+                else
+                    VIEW="calendar"
+                fi
+                continue ;;
+            
+            "X" | "x" | ":")
+                if [[ "$FORMAT" -eq "1" ]]; then
+                    FORMAT=0
+                else
+                    FORMAT=1
+                fi
+                continue ;;
+            
+            "Z" | "z")
+                if [[ "$MONDAYFIRST" = "m" ]]; then
+                    MONDAYFIRST=""
+                else
+                    MONDAYFIRST="m"
+                fi
+                continue ;;
+            
+            "D" | "d")
+                if [[ "$SHOWDOYWOY" = "yes" ]]; then
+                    SHOWDOYWOY="no"
+                else
+                    SHOWDOYWOY="yes"
+                fi
+                continue ;;
+            
+            "C" | "c")
+                if [[ "$COLOR" = "-@2" ]]; then
+                    COLOR=""
+                else
+                    COLOR="-@2"
+                fi
+                continue ;;
+            
+            "W" | "w" | "S" | "s")
+                if [[ "$PREFIX" = "+" ]]; then 
+                    PREFIX=""
+                    SPACING=",0,0"
+                else
+                    PREFIX="+"
+                    SPACING=""
+                fi
+                continue ;;
+            
+            "-" | "[")
+                if [[ "$PREFIX" = "+" ]]; then
+                    ((WSPAN--))
+                    if [[ "$WSPAN" -lt "1" ]]; then
+                        WSPAN=1
+                    fi
+                elif [[ "$PREFIX" = "" ]]; then
+                    ((MSPAN--))
+                    if [[ "$MSPAN" -lt "1" ]]; then
+                        MSPAN=1
+                    fi
+                fi
+                continue ;;
+
+            "+" | "=" | "]")
+                if [[ "$PREFIX" = "+" ]]; then
+                    ((WSPAN++))
+                    if [[ "$WSPAN" -gt "52" ]]; then
+                        WSPAN=52
+                    fi
+                elif [[ "$PREFIX" = "" ]]; then
+                    ((MSPAN++))
+                    if [[ "$MSPAN" -gt "12" ]]; then
+                        MSPAN=12
+                    fi
+                fi
+                continue ;;
+
+            "R" | "r")
+                if [[ "$PREFIX" = "+" ]]; then
+                    WSPAN=$WEEKSPAN
+                elif [[ "$PREFIX" = "" ]]; then
+                    MSPAN=$MONTHSPAN
+                fi
+                continue ;;
+           
+            "F" | "f")
+                if [[ "$SPACING" = ",0,0" ]]; then
+                    SPACING=""
+                else
+                    SPACING=",0,0"
+                fi
+                continue ;;
+
+            "A" | "a")
+                if [[ "$COLORINVERTED" = "yes" ]]; then
+                    invertcolors
+                    COLORINVERTED="yes"
+                fi
+                if [[ -n "$EDITOR" ]]; then
+                    case "$EDITOR" in
+                        "kak"*)
+                            kak "$FILE" -e "execute-keys oREM<space>$REF<space>"
+                            ;;
+                        "emacs"*)
+			    emacsclient -nw -c +2 "$FILE" -a 'emacs -nw +2 "$FILE"' # How to insert $REF programmatically?
+			    # emacsref=$(mktemp)
+			    # echo ${REF} > /tmp/emacsref.tmp
+			    # EMACSFILE=${FILE} emacsclient -nw -c -e '(with-current-buffer (find-file-noselect (getenv "EMACSFILE"))
+                            #                         (goto-line 2)
+                            #                         (insert (concat (shell-command-to-string "cat /tmp/emacsref.tmp") " "))
+                            #                         (goto-line 2)
+                            #                         (goto-char (end-of-line))
+                            #                         (switch-to-buffer (current-buffer)))' \
+			    # 				-a "emacs -nw \"/tmp/toto.txt\" -e '(progn (goto-line 2) (newline)
+                            #                                                                  (goto-line 2)
+                            #                                                                  (insert (getenv \"REF\") \" \"))'"
+                            ;;
+                        "vim"*)
+                            vim +2 -c "put ='$REF '" -c "startinsert!" "$FILE"
+                            ;;
+                        "vi"*)
+                            vi +2 "$FILE" # How to insert $REF programmatically?
+                            ;;
+                        "nano"*)
+                            nano +2 "$FILE" # How to insert $REF programmatically?
+                            ;;
+                        *)
+                            $EDITOR "$FILE"
+                            ;;
+                    esac
+                elif type kak &> /dev/null; then
+                    kak "$FILE" -e "execute-keys oREM<space>$REF<space>"
+                elif
+                    type emacs &> /dev/null; then
+		    emacsclient -nw -c +2 "$FILE" -a 'emacs -nw +2 "$FILE"' # How to insert $REF programmatically?
+			    # emacsclient -nw -c -e '(with-current-buffer (find-file-noselect "/tmp/toto.txt")
+                            #                         (goto-line 2)
+                            #                         (newline)
+                            #                         (goto-line 2)
+                            #                         (insert (concat (getenv "REF") " "))
+                            #                         (switch-to-buffer (current-buffer)))' \
+			    # 				-a "emacs -nw \"/tmp/toto.txt\" -e '(progn (goto-line 2) (newline)
+                            #                                                                  (goto-line 2)
+                            #                                                                  (insert (getenv \"REF\") \" \"))'"
+                elif
+                    type vim &> /dev/null; then
+                    vim +2 -c "put ='$REF '" -c "startinsert!" "$FILE"
+                elif
+                    type vi &> /dev/null; then
+                    vi +2 "$FILE" # How to insert $REF programmatically?
+                else
+                    type nano &> /dev/null
+                    nano +2 "$FILE" # How to insert $REF programmatically?
+                fi
+                if [[ "$COLORINVERTED" = "yes" ]]; then
+                    invertcolors
+                    COLORINVERTED="yes"
+                fi
+                continue ;;
+            
+            "E" | "e")
+                if [[ "$COLORINVERTED" = "yes" ]]; then
+                    invertcolors
+                    COLORINVERTED="yes"
+                fi
+                if [[ -n "$EDITOR" ]]; then
+                    case "$EDITOR" in
+                        "emacs"*)
+			    emacsclient -nw -c "$FILE" -a 'emacs -nw "$FILE"' # How to insert $REF programmatically?
+                            ;;
+                        *)
+                            $EDITOR "$FILE"
+                            ;;
+                    esac
+                elif type kak &> /dev/null; then
+                        kak "$FILE"
+                elif
+                    type emacs &> /dev/null; then
+		    emacsclient -nw -c "$FILE" -a 'emacs -nw "$FILE"' # How to insert $REF programmatically?
+                elif
+                    type vim &> /dev/null; then
+                    vim "$FILE"
+                elif
+                    type vi &> /dev/null; then
+                    vi "$FILE"
+                else
+                    type nano &> /dev/null
+                    nano "$FILE"
+                fi
+                if [[ "$COLORINVERTED" = "yes" ]]; then
+                    invertcolors
+                    COLORINVERTED="yes"
+                fi
+                continue ;;
+            
+            "B" | "b")
+                cp "$FILE" "$FILE"_backup_"$(date +'%Y%m%d_%H%M')" || err=1
+                tput cup $((LINES-2)) 28
+                if [[ "$err" -eq "1" ]]; then
+                    info=$(printf "\033[7m >_ \033[0m Failed to back up data.") && printf "%s" "$info"
+                else
+                    info=$(printf "\033[7m >_ \033[0m Data successfully backed up.") && printf "%s" "$info"
+                fi
+                sleep $INFODURATION
+		ui ;;
+            
+            "G" | "g")
+                goto
+                continue ;;
+
+            "/")
+                page | ${REMPAGER:-less -Ri} ;;
+
+            "O" | "o")
+                overview ;;
+            
+            "I" | "i")
+                invertcolors
+                continue ;;
+    	    
+            ">")
+		gitsync "push"
+                sleep $INFODURATION
+		ui ;;
+	    
+            "<")
+		gitsync "pull"
+                sleep $INFODURATION
+		ui ;;
+
+            "0")
+                INFODURATION="0"
+		ui ;;
+
+            ";")
+		tput cup $((LINES-2)) 28
+                printf "%s" "$info"
+		sleep $INFODURATION
+                continue ;;
+    	    
+            "1")
+                INFODURATION="1"
+		ui ;;
+
+            "2")
+                INFODURATION="2"
+		ui ;;
+
+            "3")
+                INFODURATION="3"
+		ui ;;
+
+            "4")
+                INFODURATION="4"
+		ui ;;
+
+            "5")
+                INFODURATION="5"
+		ui ;;
+
+            "6")
+                INFODURATION="6"
+		ui ;;
+
+            "7")
+                INFODURATION="7"
+		ui ;;
+
+            "8")
+                INFODURATION="8"
+		ui ;;
+
+            "9")
+                INFODURATION="9"
+		ui ;;
+
+            "?")
+                checkgeom
+                showhelp ;;
+
+            "Q" | "q")
+		if [[ "$AUTOSYNC" = "yes" ]]; then
+		    output=$(clear)
+		    gitsync "push"
+		    sleep $INFODURATION
+		fi
+                if [[ "$COLORINVERTED" = "yes" ]]; then
+                    invertcolors
+                fi
+                tput cnorm && exit 0 ;;
+
+            *)
+                tput cup $((LINES-2)) 28
+                printf "\033[7m >_ \033[0m Quit? [Y/n]"
+                read -rsn1
+                case $REPLY in
+                    "Y" | "y" | "")
+			if [[ "$AUTOSYNC" = "yes" ]]; then
+			    output=$(clear)
+			    gitsync "push"
+			    sleep $INFODURATION
+			fi
+                        if [[ "$COLORINVERTED" = "yes" ]]; then
+                            invertcolors
+                        fi
+                        tput cnorm && exit 0
+                        ;;
+
+                    *)
+                        continue ;;
+    		    
+                esac
+                ;;
+
+        esac
+    done
+}
+
+overview() {
+    if ! type cal >/dev/null 2>&1 || ! cal -V | grep -q 'util-linux'; then
+	tput cup $((LINES-2)) 28
+        info=$(printf "\033[7m !! \033[0m The overview mode requires 'cal' from package 'util-linux'.") && printf "%s" "$info"
+	sleep $INFODURATION
+	ui
+    fi
+    remintcal=$(mktemp)
+    while :; do
+        checkgeom
+        mainoutput=$(clear; script -q -c \
+            "(tput cup $((((LINES/2))-17)); cal -${MONDAYFIRST:-s}wy ${REF})" \
+            ${remintcal} \
+            | less -R | sed "s/${REF:0:4}//g" \
+            | TAB=$(tput cr; tput cuf $((((COLS/2))-37))) \
+            awk '{print ENVIRON["TAB"] $0}')
+        bottomoutput=$(printf "\n\n${REF}" \
+            | TAB=$(tput cr; tput cuf $((((COLS/2))-3))) \
+            awk '{print ENVIRON["TAB"] $0}')
+        printf "$mainoutput"
+        printf "$bottomoutput"
+        read -rsn1
+        case $REPLY in
+            "," | "Y" | "P" | "p")
+                REF=$(date -d "$REF-1 year" "+%Y-%m-%d") && continue ;;
+            "." | "y" | "N" | "n")
+                REF=$(date -d "$REF+1 year" "+%Y-%m-%d") && continue ;;
+            "M")
+                REF=$(date -d "$REF-1 month" "+%Y-%m-%d") && continue ;;
+            "m")
+                REF=$(date -d "$REF+1 month" "+%Y-%m-%d") && continue ;;
+            "K"| "k")
+                REF=$(date -d "$REF-1 week" "+%Y-%m-%d") && continue ;;
+            "J" | "j")
+                REF=$(date -d "$REF+1 week" "+%Y-%m-%d") && continue ;;
+            "h"| "H")
+                REF=$(date -d "$REF-1 day" "+%Y-%m-%d") && continue ;;
+            "L" | "l")
+                REF=$(date -d "$REF+1 day" "+%Y-%m-%d") && continue ;;
+            "T" | "t")
+                REF=$(date "+%Y-%m-%d") && continue ;;
+            "G" | "g")
+                goto
+                continue ;;
+            "I" | "i")
+                invertcolors
+                continue ;;
+            "Z" | "z")
+                if [[ "$MONDAYFIRST" = "m" ]]; then
+                    MONDAYFIRST=""
+                else
+                    MONDAYFIRST="m"
+                fi
+                continue ;;
+            *)
+                rm "$remintcal"
+                return ;;
+        esac
+    done
+}
+
+goto() {
+    tput cup $((LINES-2)) 28
+    printf "\033[7m >_ \033[0m Go to year or date: "
+    read -r
+    tput cup $((LINES-2)) 28
+    if [[ "$REPLY" = "" ]]; then
+        REF=$(date "+%Y-%m-%d")
+    elif ! [[ "${REPLY:0:4}" =~ ^-?[0-9]+$ ]]; then
+        info=$(printf "\033[7m !! \033[0m Go to year or date: invalid format.") && printf "%s" "$info"
+        read -rsn1
+    elif [[ "${#REPLY}" -eq "4" && "${REPLY}" -ge "1990" && \
+        "${REPLY}" -le "5990" ]]
+    then
+        TMP="${REF:6:10}"
+        REF=$(date -d "$(date "+$REPLY-$TMP")" "+%Y-%m-%d")
+    elif [[ "${REPLY:0:4}" -lt "1990" || "${REPLY:0:4}" -gt "5990" ]]; then
+        info=$(printf "\033[7m !! \033[0m Go to year or date: Remind only supports years within [1990-5990]. We have 4000 years to make history.") && printf "%s" "$info"
+        read -rsn1
+    elif ! date -d "$REPLY" > /dev/null 2>&1; then
+        info=$(printf "\033[7m !! \033[0m Go to year or date: invalid date.") && printf "%s" "$info"
+        read -rsn1
+    elif [[ $(date -d "$REPLY" "+%Y") -lt "1990" ]]; then
+        info=$(printf "\033[7m !! \033[0m Go to year or date: invalid date.") && printf "%s" "$info"
+        read -rsn1
+    else
+        REF=$(date -d "$REPLY" "+%Y-%m-%d")
+    fi
+}
+
+gitsync() {
+    tput cup $((LINES-2)) 28
+    if [[ "$1" = "push" ]]; then
+	if [[ "$INPUT" = "$FILE" ]]; then
+	    info=$(printf "\033[7m !! \033[0m The 'git push' feature requires using a data folder ('~/.reminders/', '~/.config/remind/' or 'DOTREMINDERS').") && printf "%s" "$info"
+	elif [[ "$INPUT" = "$HOME/.config/remind/reminders" ]]; then
+	    up="/.."
+	elif ! [[ "$INPUT" = "$HOME/.config/remind/reminders" ]]; then
+	    up=""
+	fi
+        if [[ -d "$INPUT" ]] && ! [[ -d "$INPUT""$up""/.git" ]]; then
+	    info=$(printf "\033[7m !! \033[0m Your Remind data is not in a git folder, you must 'git init' first.") && printf "%s" "$info"
+	elif [[ -d "$INPUT""$up""/.git" ]]; then
+	    cd ${INPUT}${up}
+	    git add *.rem reminders/*.rem
+	    if [[ "$(git status --untracked-files=no | grep 'ahead' | wc -l)" -eq "1" ]] || \
+	       [[ "$(git status --untracked-files=no | grep 'Changes to be committed' | wc -l)" -eq "1" ]]; then
+		clear
+		git commit -m "Updated from Remint, $USER@$(hostname)"
+		git push || err=1
+		cd - > /dev/null 2>&1
+		printf "$output"
+		tput cup $((LINES-2)) 28
+		if [[ "$err" -eq "1" ]]; then
+		    info=$(printf "\033[7m !! \033[0m Failed to push to git repository; try git manually to troubleshoot.") && printf "%s" "$info"
+		else
+		    info=$(printf "\033[7m >_ \033[0m Data successfully pushed to git repository.") && printf "%s" "$info"
+		fi
+	    elif [[ "$(git status --untracked-files=no | grep 'Changes not staged' | wc -l)" -eq "1" ]]; then
+		tput cup $((LINES-2)) 28
+		info=$(printf "\033[7m !! \033[0m Nothing new in .rem files to push to git repository, but you have unstaged changes in other files.") && printf "%s" "$info"		
+	    else
+		tput cup $((LINES-2)) 28
+		info=$(printf "\033[7m !! \033[0m Nothing new to push to git repository.") && printf "%s" "$info"
+	    fi
+	fi
+    elif [[ "$1" = "pull" ]]; then
+	if [[ -f "$INPUT" ]]; then
+	    info=$(printf "\033[7m !! \033[0m The 'git pull' feature requires using a data folder ('~/.reminders/', '~/.config/remind/' or 'DOTREMINDERS').") && printf "%s" "$info"
+	elif [[ "$INPUT" = "$HOME/.config/remind/reminders" ]]; then
+	    up="/.."
+	elif ! [[ "$INPUT" = "$HOME/.config/remind/reminders" ]]; then
+	    up=""
+	fi
+        if [[ -d "$INPUT" ]] && ! [[ -d "$INPUT""$up""/.git" ]]; then
+	    info=$(printf "\033[7m !! \033[0m Your Remind data is not in a git folder, you must 'git init' first.") && printf "%s" "$info"
+	elif [[ -d "$INPUT""$up""/.git" ]]; then
+	    cd ${INPUT}${up}
+	    info=$(printf "\033[7m >_ \033[0m Fetching…") && printf "%s" "$info"
+	    tput cup $((LINES-2)) 28
+	    if [[ "$(git remote update > /dev/null 2>&1 && git status | grep 'behind' | wc -l)" -eq "1" ]]; then
+		git pull --quiet || err=1
+		cd - > /dev/null 2>&1
+		output=$(clear; page)
+		printf "$output"
+		if [[ "$err" -eq "1" ]]; then
+		    info=$(printf "\033[7m !! \033[0m Fetching… Failed to pull from git repository; try git manually to troubleshoot.") && printf "%s" "$info"
+		else
+		    info=$(printf "\033[7m >_ \033[0m Fetching… Data successfully pulled from git repository.") && printf "%s" "$info"
+		fi
+	    elif [[ "$(git remote update > /dev/null 2>&1 && git status | grep 'Changes not staged' | wc -l)" -eq "1" ]]; then
+		info=$(printf "\033[7m !! \033[0m Fetching… Failed: you have unstaged changes in your local files.") && printf "%s" "$info"
+	    elif [[ "$(git remote update > /dev/null 2>&1 && git status | grep 'up to date' | wc -l)" -eq "1" ]] && \
+		 [[ "$(git remote update > /dev/null 2>&1 && git status | grep 'Changes not staged' | wc -l)" -eq "0" ]]; then
+		info=$(printf "\033[7m !! \033[0m Fetching… Nothing new to pull from git repository.") && printf "%s" "$info"
+	    elif [[ "$(git remote update > /dev/null 2>&1 && git status | grep 'ahead' | wc -l)" -eq "1" ]]; then
+		info=$(printf "\033[7m !! \033[0m Fetching… Failed: your local files are ahead of the remote git repository.") && printf "%s" "$info"
+	    elif [[ "$(git remote update > /dev/null 2>&1 && git status | grep 'diverged' | wc -l)" -eq "1" ]]; then
+		info=$(printf "\033[7m !! \033[0m Fetching… Failed: your local reminders and the remote git repository have diverged.") && printf "%s" "$info"
+	    fi
+	fi
+    fi
+}
+
+source_config() {
+    if [[ -f "$(dirname "$(realpath -s "$0")")/remint.conf" ]]; then
+	config="\033[1mConfiguration:\033[0m $(dirname "$(realpath -s "$0")")/remint.conf."
+	source $(dirname "$(realpath -s "$0")")/remint.conf
+    elif [[ -d "$INPUT" ]] && [[ "$INPUT" = "$HOME/.config/remind/reminders" ]] && [[ -f "$INPUT/../remint.conf" ]]; then
+	config="\033[1mConfiguration:\033[0m $HOME/.config/remind/remint.conf."
+	source ${INPUT}/../remint.conf
+    elif [[ -d "$INPUT" ]] && ! [[ "$INPUT" = "$HOME/.config/remind/reminders" ]] && [[ -f "$INPUT/remint.conf" ]]; then
+	config="\033[1mConfiguration:\033[0m $INPUT/remint.conf."
+	source ${INPUT}/remint.conf
+    else
+	config="No remint.conf found, using defaults from the script."
+    fi
+    config=${config/$HOME/'~'}
+    WSPAN=$WEEKSPAN
+    MSPAN=$MONTHSPAN
+}
+
+invertcolors() {
+    clear
+    if [[ "$COLORINVERTED" = "yes" ]]; then
+        printf '\e[?5l'
+	COLORINVERTED="no"
+    else
+        printf '\e[?5h'
+	COLORINVERTED="yes"
+    fi
+}
+
+center() {
+  while IFS= read -r LINES
+  do
+    printf "%$(((COLUMNS+${#LINES})/2))s\n" "$LINES"
+  done
+}
+
+checkgeom() {
+    COLS=$(tput cols)
+    LINES=$(tput lines)
+    indent=$(printf '%*s' "$((((COLS/2))-36))")
+}
+
+# Execution
+if ! type remind >/dev/null 2>&1; then
+    printf "\033[1mError:\033[0m 'remind' not found; this is a mandatory dependency."
+    exit
+fi
+case "$1" in
+    "")
+	if [[ -n "$DOTREMINDERS" ]] && [[ -e "$DOTREMINDERS" ]]; then
+            INPUT="$DOTREMINDERS"
+        elif [[ -e "$HOME/.config/remind/reminders" ]]; then
+            INPUT="$HOME/.config/remind/reminders"
+        elif [[ -e "$HOME/.reminders" ]]; then
+            INPUT="$HOME/.reminders"
+        else
+            printf "Error: no data file found. Provide one as argument or \
+create one at '$HOME/.config/remind/reminders', '$HOME/.reminders' or any \
+path set in environment variable DOTREMINDERS. Those paths can also be \
+directories containing multiple data files, in which case remint will add \
+new events to ./%s by default. Press any key to quit." "$DEFAULTFILE"
+            read -rsn1 && exit 1
+        fi
+	if [[ -d "$INPUT" && ! -f "$INPUT/100-remint.rem" ]]; then
+            FILE="$INPUT/$DEFAULTFILE"
+            printf ";; Events\n\n" > "$FILE"
+#            for f in "$INPUT"/*; do
+#            	[[ "$f" != "$FILE" && "$f" != *"_backup_"* && \
+#            		"$f" != *".rem" && "$f" != *".purged" ]] && \
+#                	printf ";; INCLUDE $f\n" >> $FILE
+#            done
+	    source_config
+            output=$(clear; page)
+            printf "$output"
+	    tput cup $((LINES-2)) 28
+            info=$(printf "\033[7m >_ \033[0m \033[1mNew data file created:\033[0m %s. ${config}" "${FILE/#$HOME/'~'}") && printf "%s" "$info"
+            sleep $INFODURATION
+	elif [[ -d "$INPUT" && -f "$INPUT/100-remint.rem" ]]; then
+            FILE="$INPUT/$DEFAULTFILE"
+	    source_config
+            output=$(clear; page)
+            printf "$output"
+	    tput cup $((LINES-2)) 28
+            info=$(printf "\033[7m >_ \033[0m \033[1mData:\033[0m %s. ${config}" "${FILE/#$HOME/'~'}") && printf "%s" "$info"
+            sleep $INFODURATION
+	elif [[ -f "$INPUT" ]]; then
+            FILE="$INPUT"
+	    source_config
+            output=$(clear; page)
+            printf "$output"
+	    tput cup $((LINES-2)) 28
+            info=$(printf "\033[7m >_ \033[0m \033[1mData:\033[0m %s. ${config}" "${FILE/#$HOME/'~'}") && printf "%s" "$info"
+            sleep $INFODURATION
+	fi
+	if [[ "$AUTOSYNC" = "yes" ]]; then
+	    sleep $INFODURATION
+            printf "$output"
+	    gitsync "pull"
+	    sleep $INFODURATION
+	fi
+        ui ;;
+    
+    "h" | "help" | "-h" | "--h" | "-help" | "--help")
+        statichelp
+        exit 0 ;;
+
+    *)
+        if [[ -f "$1" ]]; then
+            INPUT="$1"
+            FILE="$INPUT"
+	elif [[ -d "$1" && ! -f "$1/100-remint.rem" ]]; then
+            INPUT="$1"
+            FILE="$INPUT/$DEFAULTFILE"
+            printf ";; Events\n\n" > "$FILE"
+#            for f in "$INPUT"/*; do
+#            	[[ "$f" != "$FILE" && "$f" != *"_backup_"* && \
+#            		"$f" != *".rem" && "$f" != *".purged" ]] && \
+#                	printf ";; INCLUDE $f\n" >> $FILE
+#            done
+	    source_config
+            output=$(clear; page)
+            printf "$output"
+	    tput cup $((LINES-2)) 28
+            info=$(printf "\033[7m >_ \033[0m \033[1mNew data file created:\033[0m %s. ${config}" "${FILE/#$HOME/'~'}") && printf "%s" "$info"
+            sleep $INFODURATION
+	elif [[ -d "$1" && -f "$1/100-remint.rem" ]]; then
+                INPUT="$1"
+                FILE="$INPUT/$DEFAULTFILE"
+		source_config
+		output==$(clear; page)
+		printf "$output"
+		tput cup $((LINES-2)) 28
+		info=$(printf "\033[7m >_ \033[0m \033[1mData:\033[0m %s. ${config}" "${FILE/#$HOME/'~'}") && printf "%s" "$info"
+		sleep $INFODURATION
+        else
+            printf "\033[1mError:\033[0m invalid data file. Press any key to quit."
+            read -rsn1 && exit 1
+        fi
+	if [[ "$AUTOSYNC" = "yes" ]]; then
+	    sleep $INFODURATION
+	    printf "$output"
+	    gitsync "pull"
+	    sleep $INFODURATION
+	fi
+	ui ;;
+esac

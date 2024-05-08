@@ -9,6 +9,7 @@ mc() {
 }
 alias mcm="clear && rem -b1 -cu+4 -m -@2,0 2>/dev/null"
 alias mcmm="clear && rem -b1 -cu+6 -m -@2,0 2>/dev/null"
+alias mca="remint"
 
 for i in {1..16}; do
   alias mc$i="clear && rem -b1 -cu+$i -m -@2,0 2>/dev/null"
