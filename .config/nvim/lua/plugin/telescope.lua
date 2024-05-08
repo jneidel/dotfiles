@@ -92,7 +92,7 @@ return {
       end
 
       local opts = {
-        find_command = { "rg", "--files", "--hidden", "--ignore" },
+        find_command = { "rg", "--files", "--hidden", "--ignore", "--glob", "!themes/congo/*" },
         prompt_title = "Find in git",
       }
       -- if is_git_repo() then
