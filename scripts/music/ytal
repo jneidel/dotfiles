@@ -36,6 +36,9 @@ run() {
   elif echo $link | grep -F soundcloud >/dev/null; then
     playlist_name="$(get_sc_name "$link")"
 
+    mkdir -p "$playlist_name"
+    wget -O "$playlist_name/cover.jpg" "https://i1.sndcdn.com/artworks-$(curl -Ss "$link" | grep -Po 'artwork_url":"https://.*?/artworks-\K.*?(?=large.jpg)' | head -n1)t500x500.jpg" &
+
     artist="$(echo $playlist_name | cut -d^ -f2-)"
     album="$(echo $playlist_name | cut -d^ -f1)"
   else

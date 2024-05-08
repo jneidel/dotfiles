@@ -1,0 +1,24 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ scall
+Import all soundcloud albums
+
+Matches: find ~/Downloads -type d -name "* ^ *"
+EOF
+  exit
+fi
+
+command -v single >/dev/null || { echo "single script is not installed" 1>&2; exit 127; }
+
+FILES=$(mktemp)
+find ~/Downloads -type d -name "* ^ *" >$FILES
+while read -r dir <&10; do
+  cd "$dir"
+  ARTIST="$(echo $dir | cut -d^ -f2 | sed -e 's/^[[:space:]]*//')"
+  ALBUM="$(echo $dir | rev | cut -d/ -f1 | rev | cut -d^ -f1 | sed -e 's/[[:space:]]*$//')"
+
+  single -AA "$ARTIST" "$ALBUM" *.mp3
+  rmdir "$dir"
+done 10<$FILES
