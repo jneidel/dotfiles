@@ -34,6 +34,7 @@ calc_total_time() {
   print_control "Time passed: ${mins_passed}m ${mins_passed_leftover_sec}s\n"
 
   echo "$(date +%b%d): ${mins_passed}m, $items_in_inbox items" >>"$DURATIONS_FILE"
+  echo "Stats were added to: $DURATIONS_FILE"
 }
 is_paused=0
 passed_before_pause=0
@@ -90,7 +91,7 @@ split_below() {
   local step_name="$1"
   local cmd="$2"
 
-  tmux split-window -v -p 70
+  tmux split-window -v -l 70%
   tmux send-keys "clear && figlet $step_name" "Enter" "$cmd" "Enter"
 }
 
@@ -121,6 +122,7 @@ camscanner() {
   cat <<EOF
 outcome:
   - scanned all clipping in the drawer
+  - Daily planner pages
   - all images in "to process" folder have had their text extracted
 
 EOF
@@ -137,12 +139,12 @@ outcome:
 EOF
   lf -remote "send cd '$ORG_CALENDAR/main'" &
 
-  split_below "Calendar" "rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
+  split_below "Calendar" "remint"
 
   printf "\nShow event calendar next\n"
   prompt_continue
 
-  split_below "Events" "events; rem -b1 -cu+5 -m -@2,0 $(date -d '2 weeks ago' +'%d %b %Y') 2>/dev/null"
+  split_below "Events" "events; remint"
 
   prompt_continue
 }
@@ -260,10 +262,31 @@ split_below "Tasks" "task list"
 prompt_continue
 }
 
+copy_accountability() {
+  print_header "$step. Copy accountability logs from signal"
+  cat <<EOF
+outcome:
+  - Accountability tasks for all budies copied into org
+
+EOF
+  prompt_continue
+}
+
+gallery() {
+  print_header "$step. Extract any notes from your image gallery"
+  cat <<EOF
+outcome:
+  - Note/todo photos or screenshots are deleted
+
+EOF
+  prompt_continue
+}
+
 email
 github
 messenger
 otter
+gallery
 desk
 camscanner
 newsboat
@@ -271,6 +294,7 @@ pre_org_inbox
 browser_tabs
 bulletjournal
 calendar
+copy_accountability
 files
 org_inbox
 
