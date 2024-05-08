@@ -1,0 +1,35 @@
+#! /bin/sh
+
+SESSION=main
+WINDOW=9
+SOCKET_NAME=silent
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ silent
+Play my silent sublinal affirmation in new tmux window.
+Restart everything if window exists.
+
+Commands:
+  kill: kill existing silents session without starting a new one
+EOF
+  exit
+fi
+
+command -v tmux >/dev/null || { echo "tmux is not installed" 1>&2; exit 127; }
+command -v /bin/mpv >/dev/null || { echo "mpv is not installed" 1>&2; exit 127; }
+
+if ! tmux has-session -t $SESSION 2>/dev/null; then
+  exit 1
+fi
+
+tmux list-windows -F "#{window_id} #{window_name}" | grep "silent$" | cut -d\  -f1 | xargs -I@ tmux kill-window -t @
+[ "$1" = "kill" ] && exit 0
+
+# TODO: symlink hearable version, play it twice to adjust volume
+
+tmux -u new-window -d -c $ORG_AREAS/affirmations -n silent -t $SESSION:$WINDOW && {
+  tmux send-keys -t $SESSION:$WINDOW "clear" "enter" "/bin/mpv current --input-ipc-server=$(manage-mpv-sockets open $SOCKET_NAME) --loop=inf" "enter"
+  tmux split-window -v -l 15 -t $SESSION:$WINDOW
+  tmux send-keys -t $SESSION:$WINDOW "clear" "enter" "sw" "enter" # stopwatch
+}

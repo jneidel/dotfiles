@@ -1,0 +1,18 @@
+#! /bin/sh
+
+SOCKET_NAME=silent
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ is-silent-playing
+Display a note if the silent is playing
+EOF
+  exit
+fi
+
+command -v mpvctl >/dev/null || { echo "mpvctl script is not installed" 1>&2; exit 127; }
+command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not installed" 1>&2; exit 127; }
+
+if [ "$(mpvctl --socket $(manage-mpv-sockets open $SOCKET_NAME) get pause)" = "false" ]; then
+  echo "" | awk '{ print " "$0" " }'
+fi

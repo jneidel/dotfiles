@@ -35,7 +35,7 @@ list_open_numbered_sockets() {
   ss -l -x src "${SCHEMA_NUMBERED}*" | grep -Po "${SCHEMA_NUMBERED}.*?(?=\s)" | tac
 }
 list_open_sockets() {
-  ss -l -x src "${SCHEMA_BASE}*" | grep -Po "${SCHEMA_BASE}.*?(?=\s)" | tac
+  ss -l -x src "${SCHEMA_BASE}*" | grep -Po "${SCHEMA_BASE}.*?(?=\s)" | tac | grep -v "silent$"
 }
 
 get_latest_open_numbered_socket() {
