@@ -11,7 +11,7 @@
   caps
 )
 (defalias
-  caps_ctrl_esc (tap-hold-next-release 200 esc lctl)
+  caps_ctrl_esc (tap-hold-next 200 esc lctl)
 )
 (deflayer remap_caps
   @caps_ctrl_esc
