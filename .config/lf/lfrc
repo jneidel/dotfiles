@@ -82,7 +82,16 @@ cmd fzf_file $~/.config/lf/scripts/fzf-open file
 
 ## create files
 cmd gen-note $~/scripts/gen-note
-cmd touch %printf "File Name: "; read ans; touch "$ans"; lf -remote "send $id select '$ans'"
+cmd touch %{{
+  printf "File Name: "
+  read ans
+  if echo $ans | grep -Fv . >/dev/null; then
+    ans="$ans.norg"
+  fi
+  touch "$ans"
+  lf -remote "send $id select '$ans'"
+  lf -remote "send $id edit"
+}}
 cmd touchTex %{{
   printf "Tex Name: "
   read ans
@@ -177,6 +186,7 @@ map T touchTex
 map NN gen-note
 map ci create-index
 map cn create-norg
+map ct create-norg
 map cp create-project
 map cd create-design
 map ca create-area
