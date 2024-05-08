@@ -1,37 +1,52 @@
 #! /bin/sh
 
+. $HOME/.zsh/org.env
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ cleanup-fs
+rm -rf printf "$ cleanup-fs
 Removes irrelevant files/dirs polluting the home directory
 "; exit
 fi
 
 # files
-rm -f ~/.python_history \
-  ~/.sqlite_history \
-  ~/.bash_history \
-  ~/1 \
-  ~/.hwid \
-  ~/.octave_hist \
-  ~/.Xauthority 2>/dev/null
+rm -f ~/.python_history 2>/dev/null
+rm -f ~/.sqlite_history 2>/dev/null
+rm -f ~/.bash_history 2>/dev/null
+rm -f ~/.hwid 2>/dev/null
+rm -f ~/.octave_hist 2>/dev/null
+rm -f ~/.Xauthority 2>/dev/null
+rm -f ~/.password-store/heroku.gpg 2>/dev/null
+rm -f ~/1 2>/dev/null
+rm -f ~/.netrc 2>/dev/null
 
 # dirs
-rmdir ~/Desktop \
-  ~/.lyrics \
-  ~/.newsboat 2>/dev/null
-rm -rf ~/.w3m \
-  ~/.????????.ib-tws \
-  ~/.gradle/
-  ~/.m2 \
-  ~/Jts \
-  ~/.mono \
-  ~/.pki \
-  ~/.mongodb \
-  ~/.java \
-  ~/.icons \
-  ~/.bitmonero \
-  ~/.shared-ringdb \
-  ~/.standard-v14-cache \
-  ~/.gnome 2>/dev/null
+rmdir ~/Desktop 2>/dev/null
+rmdir ~/.lyrics 2>/dev/null
+rmdir ~/.newsboat 2>/dev/null
+rmdir ~/.password-store 2>/dev/null
+
+# dirs with contents
+rm -rf ~/.w3m 2>/dev/null
+rm -rf ~/.????????.ib-tws 2>/dev/null
+rm -rf ~/.gradle/
+rm -rf ~/.m2 2>/dev/null
+rm -rf ~/Jts 2>/dev/null
+rm -rf ~/.mono 2>/dev/null
+rm -rf ~/.pki 2>/dev/null
+rm -rf ~/.mongodb 2>/dev/null
+rm -rf ~/.java 2>/dev/null
+rm -rf ~/.icons 2>/dev/null
+rm -rf ~/.bitmonero 2>/dev/null
+rm -rf ~/.shared-ringdb 2>/dev/null
+rm -rf ~/.standard-v14-cache 2>/dev/null
+rm -rf ~/.gnome 2>/dev/null
+rm -rf ~/.zi 2>/dev/null
+rm -rf ~/.designer 2>/dev/null
+
+# move files into the right place
+sentixDir="$ORG_AREAS/assets/Aktien/Der Markt/Sentix - Markt Sentiment"
+mkdir -p "$sentixDir"
+sh -c "find $ORG_INBOX -name 'Analyse20*_ergebnisse.pdf' -exec sh -c 'mv \$1 \"$sentixDir/\"' sh {} ';'"
+sh -c "find $HOME/Downloads -name 'Analyse20*_ergebnisse.pdf' -exec sh -c 'mv \$1 \"$sentixDir/\"' sh {} ';'"
 
 true
