@@ -68,3 +68,6 @@ run_lazy() {
 command -v /bin/nvim >/dev/null && run_lazy
 
 cleanup-fs
+
+echo "Does ncmpcpp need to be rebuild?"
+yay -S ncmpcpp-git --cleanmenu --answerdiff None
