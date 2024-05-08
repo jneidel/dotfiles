@@ -1,0 +1,16 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ reload-newsboat
+Reload all newsboat instances
+EOF
+  exit
+fi
+
+command -v newsboat >/dev/null || { echo "newsboat is not installed" 1>&2; exit 127; }
+
+find ~/.config/newsboat -name "urls-*" | while read -r urlFile; do
+  id=$(echo $urlFile | rev | cut -d- -f1 | rev)
+  newsboat -u $urlFile -c ~/.config/newsboat/cache-$id.db --quiet -x reload &
+done
