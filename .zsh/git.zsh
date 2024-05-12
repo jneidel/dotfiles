@@ -34,6 +34,11 @@ commit() {
 }
 alias gc="commit"
 alias gcf="git commit --fixup" # HASH to fixup, tutorial: https://www.mikulskibartosz.name/git-fixup-explained
+gcff() { # fast fixup
+  hash=$1
+  git commit --fixup $hash
+  GIT_SEQUENCE_EDITOR=: gri $hash+
+}
 gcn() { # --no-verify, ignore hooks
   commit "$1" "$2" -n
 }
@@ -74,7 +79,16 @@ alias cob="git checkout -b"
 
 ## rebase
 alias gr="git rebase"
-alias gri="git rebase -i"
+gri() {
+  hash=$1
+  if [[ "$hash" =~ "\+$" ]]; then
+    prevHash=$(git log --oneline --no-abbrev-commit | grep "^$(echo $hash | cut -d+ -f1)" -A1 | tail -n1 | cut -d\  -f1)
+    echo "Using the commit hash prior to the one given: $prevHash"
+    git rebase -i $prevHash
+  else
+    git rebase -i "$@"
+  fi
+}
 alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 
