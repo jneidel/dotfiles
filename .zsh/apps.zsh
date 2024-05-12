@@ -102,7 +102,7 @@ alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 alias sw="date +'%a %b %d'; raw-stopwatch"
 alias license="legit put gpl-3.0"
 alias fcrontabe="fcrontab -e"
-alias sig="signal-to-inbox"
+alias sig="signal-name-resolution-failure inbox"
 alias mi="mediainfo"
 alias bs="bluelight stop"
 

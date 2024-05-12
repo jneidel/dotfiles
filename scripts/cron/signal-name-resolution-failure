@@ -1,0 +1,27 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ signal-name-resolution-failure
+Wrapper around signal-inbox that handles homeserver name resolution failure
+EOF
+  exit
+fi
+
+SCRIPT=
+case "$1" in
+  "inbox") SCRIPT=~/scripts/cron/signal-to-inbox;;
+  "challenge-review") SCRIPT=~/scripts/cron/send-challenge-review-notification;;
+  *) exit 1;;
+esac
+
+command -v $SCRIPT >/dev/null || { echo "$SCRIPT script file is not installed" 1>&2; exit 127; }
+
+$SCRIPT
+
+if find $ORG_INBOX -name "signal-api-errors*" | tail -n1 | xargs cat | grep "Temporary failure in name resolution" >/dev/null; then
+  [ -n "$DISPLAY" ] && echo "restarting…"
+  ssh home "docker restart signal-cli" >/dev/null
+  sleep 2s
+  $SCRIPT
+fi

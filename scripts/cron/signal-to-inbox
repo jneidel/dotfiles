@@ -9,7 +9,7 @@ const signalNumber = "+4935325161703"
 const orgEnv = String(fsSync.readFileSync("/home/jneidel/.zsh/org.env"));
 const inboxDir = `/home/jneidel/${orgEnv.match(/ ORG=\$HOME\/(.*)/)[1]}/${orgEnv.match(/ ORG_INBOX=\$ORG\/(.*)/)[1]}`;
 
-const apiHost = "http://192.168.178.23:8080";
+const apiHost = "http://192.168.178.28:8080";
 
 // Default message file extension
 const messageFileExtension = "norg";
