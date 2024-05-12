@@ -32,6 +32,8 @@ au filetype md,markdown imap ,l - [] <++><Esc>F[a
 au Filetype md,markdown map  ,d <Esc>:r !date +"\%a \%b\%d \%y"<Enter>o
 au filetype md,markdown nmap ,j :r !date +"\%d.\%m.\%y"<Enter>A<Enter>
 au filetype md,markdown imap ,i - [ ]<Space>
+au filetype md,markdown imap ,f {{<figure src="" class="w-<++>/12" alt="<++>">}}<Esc>5F"i
+au filetype md,markdown imap ,fc {{<figure src="" class="w-<++>/12" alt="<++>" caption="<++>">}}<Esc>7F"i
 
 "### JavaScript/Typescript
 au filetype js,ts,javascript,typescript,pug imap ,o {<Enter>}<Esc>O
