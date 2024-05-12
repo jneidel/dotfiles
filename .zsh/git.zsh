@@ -128,4 +128,23 @@ alias gcpc="git cherry-pick --continue"
 alias gcpa="git cherry-pick --abort"
 
 ## show
-alias gs="git show"
+gs() {
+  if [ -n "$1" ]; then
+    git show "$1"
+  else
+    clipBoardContents=
+    if [ "$(uname)" = "Darwin" ]; then
+      clipBoardContents="$(pbpaste)"
+    else
+      clipBoardContents="$(xclip -o -sel clip)"
+    fi
+    if [[ "$clipBoardContents" =~ ^[a-zA-Z0-9]{1,7}$ ]]; then
+      echo "Using hash from clipboard: $clipBoardContents"
+      git show "$clipBoardContents"
+    elif ! git diff --cached --exit-code >/dev/null; then
+      gd --staged # show staged changes
+    else
+      git show # show last commit
+    fi
+  fi
+}
