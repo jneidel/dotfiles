@@ -282,17 +282,43 @@ EOF
   prompt_continue
 }
 
+dotfiles() {
+  # justification: effort grows exponentially with the number of changes, uncommitted changes at risk of being lost
+  print_header "$step. Commit all changes in the dotfiles"
+  cat <<EOF
+outcome:
+  - green git status
+
+EOF
+  split_below "dotfiles" "dot"
+  prompt_continue
+}
+
+backups() {
+  # justification: needs to be done regularly to avoid loss of data
+  print_header "$step. Backup the homeserver"
+  cat <<EOF
+outcome:
+  - sync started
+
+EOF
+  split_below "Backups" "ho"
+  prompt_continue
+}
+
 email
 github
+backups
+dotfiles
 messenger
 otter
 gallery
 desk
+bulletjournal
 camscanner
 newsboat
 pre_org_inbox
 browser_tabs
-bulletjournal
 calendar
 copy_accountability
 files

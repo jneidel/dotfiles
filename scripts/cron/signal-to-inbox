@@ -140,7 +140,8 @@ ${messages.error}`).then(() => process.exit(1))
     if (Array.isArray(messages)) {
       if (backupMessages && messages) fs.writeFile( path.join(backupDataDir, `messages-${unixTime}`), JSON.stringify(messages, null, 2) )
       messages.map( m => {
-        const { message, attachments: attachArr } = m.envelope.dataMessage;
+        const message = m.envelope.dataMessage?.message;
+        const attachArr = m.envelope.dataMessage?.attachments;
         let attachments = (attachArr ? attachArr : []).map( ({id, contentType, filename}) => ({id, contentType, name: filename}) );
 
         if (!message && !attachments.length) {
