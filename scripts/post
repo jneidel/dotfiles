@@ -1,0 +1,43 @@
+#! /bin/sh
+
+BLOG=$HOME/code/blog
+cd $BLOG || exit 1
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ post [CATEGORY] POST_NAME
+Create a new blog post in hugo.
+
+Parameters:
+  [\$1]: the category for the post go in
+  \$2: the name of the post (no spaces)
+
+Examples:
+  $ post misc a-new-post
+  #=> creates: content/misc/a-new-post/index.md
+  #          & content/misc/a-new-post/index.de.md
+
+  $ post post-in-root
+  #=> creates: content/post-in-root/index.md
+  #          & content/post-in-root/index.de.md
+
+  $ post misc/nested going-deep
+  #=> creates: content/misc/nested/going-deep/index.md
+  #          & content/misc/nested/going-deep/index.de.md
+EOF
+  exit
+fi
+
+command -v hugo >/dev/null || { echo "hugo is not installed" 1>&2; exit 127; }
+
+category=
+post_name=
+if [ -n "$2" ]; then
+  category=$1/
+  post_name=$2
+else
+  post_name=$1
+fi
+
+hugo new "content/${category}${post_name}/index.md"
+hugo new "content/${category}${post_name}/index.de.md"
