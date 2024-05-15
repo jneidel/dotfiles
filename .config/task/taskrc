@@ -6,7 +6,7 @@
 
 # Files
 data.location=$ORG/.task
-hooks.location=~/.config/task/hooks
+#hooks.location=~/.config/task/hooks
 
 news.version=2.6.0
 seach.case.sensitive=no
