@@ -24,6 +24,7 @@ ignore-article "https://manga4life.com/rss/Onepunch-Man.xml" "title =~ \"\\.\""
 ignore-article "https://04r1h.mrd.ninja/rss/b0d41e4c" "title =~ \"Error\""
 ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Error\""
 ignore-article "https://04r1h.mrd.ninja/rss/bd82f3dd" "title =~ \"Error\""
+ignore-article "https://04r1h.mrd.ninja/rss/f1710958" "title =~ \"Error\""
 ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Small Presses\""
 ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Analog Science Fiction\""
 

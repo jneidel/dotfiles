@@ -67,9 +67,6 @@ nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 # fix backlight permissions
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
-# disable mullvad lockdown-mode if active
-mullvad lockdown-mode set off &
-
 # fix cpu frequency
 (
   echo passive | sudo tee /sys/devices/system/cpu/intel_pstate/status ; sudo cpupower frequency-set -g userspace

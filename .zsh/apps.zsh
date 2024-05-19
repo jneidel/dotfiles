@@ -254,7 +254,7 @@ n() {
   else
     printf "Provide a name for this note: "
     read ans
-    local filename="$ORG_INBOX/$(echo $note | sed 's|/| |g' | cut -c-30)….norg"
+    local filename="$ORG_INBOX/$(echo $note | sed 's|/| |g' | cut -c-60)….norg"
     if [ -n "$ans" ]; then
       filename="$ORG_INBOX/$ans"
     fi

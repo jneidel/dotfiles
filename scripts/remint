@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
+# source: https://sr.ht/~mlaparie/remint
 # remint is a simple wrapper script to add interactions and navigation to
 # the terminal outputs of D. Skoll's Remind scripting calendar program.
 # Usage: ./remint.sh /path/to/a/reminders/file. remint.sh will try to find
 # a file in a default location if none is supplied as argument.
 #
 # MIT License
-# 
+#
 # Copyright © [2022] Mathieu Laparie <mlaparie [at] disr [dot] it>
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -68,11 +69,11 @@ statichelp() {
     tput cup $((LINES/2)), $((COLS/2))
     printf "
 $indent                                             88                ,d
-$indent                                             °°                88     
+$indent                                             °°                88
 $indent 8b,dPPYba,   ,adPPYba,  88,dPYba,,adPYba,   88  8b,dPPYba,  MM88MMM
 $indent 88P°   °Y8  a8P_____88  88P°   °88°    °8a  88  88P°   '°8a   88
 $indent 88          8PP°°°°°°°  88      88      88  88  88       88   88
-$indent 88          °8b,   ,aa  88      88      88  88  88       88   88,    
+$indent 88          °8b,   ,aa  88      88      88  88  88       88   88,
 $indent 88           '°Ybbd8°°  88      88      88  88  88       88   °Y888
 
 $indent A simple terminal UI wrapper for D. Skoll's Remind calendar program
@@ -101,7 +102,7 @@ $indent   \033[7m 0-9 \033[0m  Adjust duration (in s) of temporary messages (e.g
 $indent   \033[7m   ; \033[0m  Show last info message again
 
 $indent DATA
-$indent   \033[7m   a \033[0m  Add event at selected day 
+$indent   \033[7m   a \033[0m  Add event at selected day
 $indent   \033[7m   e \033[0m  Edit data file
 $indent   \033[7m   b \033[0m  Back up data
 $indent   \033[7m >/< \033[0m  Push/pull *.rem file(s) to/from git repository
@@ -144,7 +145,7 @@ page() {
         REF="5990-12-31"
         read -rsn1
     fi
-    
+
     clear
     if [[ "$VIEW" = "calendar" ]] && [[ "$PREFIX" = "+" ]]; then
         remind ${COLOR} -${MONDAYFIRST}cu${PREFIX}${WSPAN} -b${FORMAT} \
@@ -173,7 +174,7 @@ to $(date -d $REF+$((MSPAN-1))months '+%B %Y') \033[0m\n\n"
             ${CUSTOM} ${INPUT} ${REF} 2>/dev/null
         printf "\n"
     fi
-    
+
         tput cup $((LINES-2))
         if [[ "$SHOWDOYWOY" = "yes" ]]; then
             DOY="($(date -d "$REF" "+D%j, W%U"))"
@@ -196,7 +197,7 @@ ui() {
                     REF=$(date -d "$REF-$MSPAN months" "+%Y-%m-%d")
                 fi
                 continue ;;
-                   
+
             "N" | "n" | ".")
                 if [[ "$PREFIX" = "+" ]]; then
                     REF=$(date -d "$REF+$WSPAN weeks" "+%Y-%m-%d")
@@ -204,34 +205,34 @@ ui() {
                     REF=$(date -d "$REF+$MSPAN months" "+%Y-%m-%d")
                 fi
                 continue ;;
-            
+
             "Y")
                 REF=$(date -d "$REF-1 year" "+%Y-%m-%d") && continue ;;
-            
+
             "y")
                 REF=$(date -d "$REF+1 year" "+%Y-%m-%d") && continue ;;
-            
+
             "M")
                 REF=$(date -d "$REF-1 month" "+%Y-%m-%d") && continue ;;
-            
+
             "m")
                 REF=$(date -d "$REF+1 month" "+%Y-%m-%d") && continue ;;
-            
+
             "K"| "k")
                 REF=$(date -d "$REF-1 week" "+%Y-%m-%d") && continue ;;
-            
+
             "J" | "j")
                 REF=$(date -d "$REF+1 week" "+%Y-%m-%d") && continue ;;
-            
+
             "h"| "H")
                 REF=$(date -d "$REF-1 day" "+%Y-%m-%d") && continue ;;
-            
+
             "L" | "l")
                 REF=$(date -d "$REF+1 day" "+%Y-%m-%d") && continue ;;
-            
+
             "T" | "t")
                 REF=$(date "+%Y-%m-%d") && continue ;;
-            
+
             "V" | "v")
                 if [[ "$VIEW" = "calendar" ]]; then
                     VIEW="list"
@@ -239,7 +240,7 @@ ui() {
                     VIEW="calendar"
                 fi
                 continue ;;
-            
+
             "X" | "x" | ":")
                 if [[ "$FORMAT" -eq "1" ]]; then
                     FORMAT=0
@@ -247,7 +248,7 @@ ui() {
                     FORMAT=1
                 fi
                 continue ;;
-            
+
             "Z" | "z")
                 if [[ "$MONDAYFIRST" = "m" ]]; then
                     MONDAYFIRST=""
@@ -255,7 +256,7 @@ ui() {
                     MONDAYFIRST="m"
                 fi
                 continue ;;
-            
+
             "D" | "d")
                 if [[ "$SHOWDOYWOY" = "yes" ]]; then
                     SHOWDOYWOY="no"
@@ -263,7 +264,7 @@ ui() {
                     SHOWDOYWOY="yes"
                 fi
                 continue ;;
-            
+
             "C" | "c")
                 if [[ "$COLOR" = "-@2" ]]; then
                     COLOR=""
@@ -271,9 +272,9 @@ ui() {
                     COLOR="-@2"
                 fi
                 continue ;;
-            
+
             "W" | "w" | "S" | "s")
-                if [[ "$PREFIX" = "+" ]]; then 
+                if [[ "$PREFIX" = "+" ]]; then
                     PREFIX=""
                     SPACING=",0,0"
                 else
@@ -281,7 +282,7 @@ ui() {
                     SPACING=""
                 fi
                 continue ;;
-            
+
             "-" | "[")
                 if [[ "$PREFIX" = "+" ]]; then
                     ((WSPAN--))
@@ -317,7 +318,7 @@ ui() {
                     MSPAN=$MONTHSPAN
                 fi
                 continue ;;
-           
+
             "F" | "f")
                 if [[ "$SPACING" = ",0,0" ]]; then
                     SPACING=""
@@ -392,7 +393,7 @@ ui() {
                     COLORINVERTED="yes"
                 fi
                 continue ;;
-            
+
             "E" | "e")
                 if [[ "$COLORINVERTED" = "yes" ]]; then
                     invertcolors
@@ -427,7 +428,7 @@ ui() {
                     COLORINVERTED="yes"
                 fi
                 continue ;;
-            
+
             "B" | "b")
                 cp "$FILE" "$FILE"_backup_"$(date +'%Y%m%d_%H%M')" || err=1
                 tput cup $((LINES-2)) 28
@@ -438,7 +439,7 @@ ui() {
                 fi
                 sleep $INFODURATION
 		ui ;;
-            
+
             "G" | "g")
                 goto
                 continue ;;
@@ -448,16 +449,16 @@ ui() {
 
             "O" | "o")
                 overview ;;
-            
+
             "I" | "i")
                 invertcolors
                 continue ;;
-    	    
+
             ">")
 		gitsync "push"
                 sleep $INFODURATION
 		ui ;;
-	    
+
             "<")
 		gitsync "pull"
                 sleep $INFODURATION
@@ -472,7 +473,7 @@ ui() {
                 printf "%s" "$info"
 		sleep $INFODURATION
                 continue ;;
-    	    
+
             "1")
                 INFODURATION="1"
 		ui ;;
@@ -543,7 +544,7 @@ ui() {
 
                     *)
                         continue ;;
-    		    
+
                 esac
                 ;;
 
@@ -671,7 +672,7 @@ gitsync() {
 		fi
 	    elif [[ "$(git status --untracked-files=no | grep 'Changes not staged' | wc -l)" -eq "1" ]]; then
 		tput cup $((LINES-2)) 28
-		info=$(printf "\033[7m !! \033[0m Nothing new in .rem files to push to git repository, but you have unstaged changes in other files.") && printf "%s" "$info"		
+		info=$(printf "\033[7m !! \033[0m Nothing new in .rem files to push to git repository, but you have unstaged changes in other files.") && printf "%s" "$info"
 	    else
 		tput cup $((LINES-2)) 28
 		info=$(printf "\033[7m !! \033[0m Nothing new to push to git repository.") && printf "%s" "$info"
@@ -816,7 +817,7 @@ new events to ./%s by default. Press any key to quit." "$DEFAULTFILE"
 	    sleep $INFODURATION
 	fi
         ui ;;
-    
+
     "h" | "help" | "-h" | "--h" | "-help" | "--help")
         statichelp
         exit 0 ;;

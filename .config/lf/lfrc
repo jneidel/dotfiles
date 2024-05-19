@@ -76,7 +76,7 @@ cmd move-to-paperless %{{
 }}
 cmd move-to-blog-post-ideas %{{
   local filename="${f##*/}"
-  mv "$f" "$ORG_AREAS/blog/posts/0 rough ideas/"
+  mv "$f" "$ORG_AREAS/blog/posts/0 ideas/"
   printf "Moved '${f##*/}' to blog post ideas"
 }}
 
