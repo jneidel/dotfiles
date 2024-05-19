@@ -123,7 +123,7 @@ bindsym $mod+Shift+odiaeresis move left
 ## 'class' matches the 'WM_CLASS': xprop | grep WM_CLASS
 ## 'title' matches the 'WM_NAME': xprop | grep WM_NAME
 ## docs: https://i3wm.org/docs/userguide.html#command_criteria
-assign [class="Firefox"] $ws2
+assign [class="Mozilla Firefox"] $ws2
 assign [class="Nightly"] $ws2
 assign [class="Firefox Developer Edition"] $ws2
 assign [class="firefoxdeveloperedition"] $ws2
