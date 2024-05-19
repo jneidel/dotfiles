@@ -12,7 +12,7 @@ POWER=/sys/class/power_supply
 IS_CHARGING=$(cat $POWER/AC/online)
 
 case `cat /etc/hostname` in
-  *x240)
+  *x240|*x270)
     BAT=$POWER/BAT1
     ;;
   *e495|*)
@@ -32,7 +32,7 @@ alert_at() {
   UPPER=`echo "($ALERT_PERCENT+0.5)*$CAPACITY/100" | bc`
   LOWER=`echo "($ALERT_PERCENT-0.5)*$CAPACITY/100" | bc`
 
-  echo $UPPER $LOWER $CHARGE $ALERT_PERCENT
+  # echo $UPPER $LOWER $CHARGE $ALERT_PERCENT
 
   if [ "$CHARGE" -le "$UPPER" ] && [ "$CHARGE" -ge "$LOWER" ]; then
     ~/scripts/cron/cron-notify-send "Battery at: $ALERT_PERCENT" -t 10000 -u critical
