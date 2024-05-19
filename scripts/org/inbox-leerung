@@ -108,9 +108,10 @@ EOF
 }
 
 desk() {
-  print_header "$step. Clear out your desk!"
+  print_header "$step. Clear out the desk and drawer"
   cat <<EOF
 outcome:
+  - drawer has been emptied
   - no paper notes or other TODO items on the desk
 
 EOF
@@ -121,7 +122,6 @@ camscanner() {
   print_header "$step. Process CamScanner"
   cat <<EOF
 outcome:
-  - scanned all clipping in the drawer
   - Daily planner pages
   - all images in "to process" folder have had their text extracted
 
@@ -167,6 +167,7 @@ outcome:
   - no unprocessed transcripts
 
 EOF
+  $BROWSER "https://otter.ai/my-notes" >/dev/null 2>&1 &
   prompt_continue
 }
 
@@ -201,7 +202,7 @@ outcome:
   - no unread feeds
 
 EOF
-  split_below "Newsboat" "new"
+  split_below "Newsboat" "new; misc"
 
   prompt_continue
 }
@@ -273,7 +274,7 @@ EOF
 }
 
 gallery() {
-  print_header "$step. Extract any notes from your image gallery"
+  print_header "$step. Extract notes from image gallery"
   cat <<EOF
 outcome:
   - Note/todo photos or screenshots are deleted
@@ -306,20 +307,32 @@ EOF
   prompt_continue
 }
 
+neomutt() {
+  print_header "$step. Empty local neomutt"
+  cat <<EOF
+outcome:
+  - no emails
+
+EOF
+  split_below "Neomutt" "neomutt"
+  prompt_continue
+}
+
 email
 github
 backups
 dotfiles
 messenger
-otter
 gallery
 desk
 bulletjournal
 camscanner
+otter
 newsboat
 pre_org_inbox
 browser_tabs
 calendar
+neomutt
 copy_accountability
 files
 org_inbox
