@@ -115,6 +115,8 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 # Move workspace to external monitor
 bindsym $mod+adiaeresis move workspace to output right
 bindsym $mod+odiaeresis move workspace to output left
+bindsym $mod+Shift+adiaeresis move right
+bindsym $mod+Shift+odiaeresis move left
 
 # Open applications on specific workspaces
 ## Find out class names using xprop

@@ -74,6 +74,11 @@ cmd move-to-paperless %{{
   mv "$f" $ORG/.paperless_import/
   printf "Moved '${f##*/}' to paperless"
 }}
+cmd move-to-blog-post-ideas %{{
+  local filename="${f##*/}"
+  mv "$f" "$ORG_AREAS/blog/posts/0 rough ideas/"
+  printf "Moved '${f##*/}' to blog post ideas"
+}}
 
 cmd gimp &gimp "$f" >/dev/null 2>&1
 
@@ -219,6 +224,7 @@ map mA move-to-archive
 map ma move-to-local-archive
 map ml move-to-local-archive
 map mp move-to-paperless
+map mb move-to-blog-post-ideas
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
