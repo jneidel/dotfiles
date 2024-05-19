@@ -126,6 +126,8 @@ super + o
   open-bookmark
 super + S
   toggle-screenkey
+super + u
+  gpt
 
 # xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
 

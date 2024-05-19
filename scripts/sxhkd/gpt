@@ -1,0 +1,11 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ gpt
+Open AI helper in my browser
+EOF
+  exit
+fi
+
+$BROWSER "https://claude.ai/chats" >/dev/null 2>&1
