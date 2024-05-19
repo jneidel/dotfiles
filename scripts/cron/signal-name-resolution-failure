@@ -19,7 +19,7 @@ command -v $SCRIPT >/dev/null || { echo "$SCRIPT script file is not installed" 1
 
 $SCRIPT
 
-if find $ORG_INBOX -name "signal-api-errors*" | tail -n1 | xargs cat | grep "Temporary failure in name resolution" >/dev/null; then
+if find $ORG_INBOX -name "signal-api-errors*" 2>/dev/null | tail -n1 | xargs cat | grep "Temporary failure in name resolution" >/dev/null; then
   [ -n "$DISPLAY" ] && echo "restarting…"
   ssh home "docker restart signal-cli" >/dev/null
   sleep 2s

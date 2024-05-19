@@ -1,3 +1,3 @@
 #! /bin/sh
 
-~/.config/sensitive/update
+~/.config/sensitive/update >/dev/null

@@ -16,8 +16,7 @@ send() {
   local group="$1"
   # signal-cli -a $SIGNAL_NUMBER send -g "$group" -m 'Challenge review time!' --text-style "0:23:ITALIC" >/dev/null 2>&1
 
-  ssh home "docker restart signal-cli" >/dev/null
-  curlj POST $SIGNAL_API_SERVER/v2/send "{number: '$SIGNAL_NUMBER', message: '*Challenge review time\!*', text_mode: 'styled', recipients: ['$group']}" >/dev/null
+  ~/scripts/curlj POST $SIGNAL_API_SERVER/v2/send "{number: '$SIGNAL_NUMBER', message: '*Challenge review time\!*', text_mode: 'styled', recipients: ['$group']}" >/dev/null
 }
 
 ~/scripts/cron/waitforinternet
