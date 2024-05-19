@@ -219,6 +219,8 @@ create .config/wireplumber/main.lua.d
 
 [fcron]
 # run ... command to import/export fcrontab -l 2>/dev/null
+create .config/neomutt
+.config/neomutt/neomuttrc
 
 [nm]
 .config/networkmanager-dmenu
