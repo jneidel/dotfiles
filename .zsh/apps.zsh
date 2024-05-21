@@ -107,6 +107,7 @@ alias fcrontabe="fcrontab -e"
 alias sig="signal-name-resolution-failure inbox"
 alias mi="mediainfo"
 alias bs="bluelight stop"
+alias c="remint" # calendar
 
 ### misc
 function dict {

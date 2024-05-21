@@ -177,7 +177,7 @@ to $(date -d $REF+$((MSPAN-1))months '+%B %Y') \033[0m\n\n"
 
         tput cup $((LINES-2))
         if [[ "$SHOWDOYWOY" = "yes" ]]; then
-            DOY="($(date -d "$REF" "+D%j, W%U"))"
+            DOY="($(date -d "$REF" "+W%V"))"
             printf "\033[7m > \033[0m %s $DOY \n ?  Help" "$REF"
         else
             printf "\033[7m > \033[0m %s \n ?  Help" "$REF"

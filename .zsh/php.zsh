@@ -1,4 +1,3 @@
-alias c="composer"
 function ci() { # composer install
   if [ $# = 0 ]; then
     composer install
