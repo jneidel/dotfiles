@@ -161,6 +161,8 @@ cmd on-cd &{{
       lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_RESOURCES/* | $ORG_INBOX)
       lf -remote "send $id :set sortby time; set reverse";;
+    $ORG_PROJECTS)
+      lf -remote "send $id :set sortby natural; set reverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)
       lf -remote "send $id :set sortby time; set reverse"
       manage-task-view-pane "$PWD" &
@@ -173,6 +175,59 @@ cmd on-cd &{{
 on-cd # run on startup
 
 cmd show-tasks %tmux split-window -v -l 30%; tmux select-pane -T 'task-view'; tmux send-keys "clear && t" "Enter"
+
+# project status
+cmd set-status-active %{{
+  local filename="${f##*/}"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+    filenameWithoutEmojiPrefix="$filename"
+  fi
+
+  mv "$filename" "🟢 $filenameWithoutEmojiPrefix" 2>/dev/null
+}}
+cmd set-status-inactive %{{
+  local filename="${f##*/}"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+    filenameWithoutEmojiPrefix="$filename"
+  fi
+
+  mv "$filename" "🟡 $filenameWithoutEmojiPrefix" 2>/dev/null
+}}
+cmd set-status-blocked %{{
+  local filename="${f##*/}"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+    filenameWithoutEmojiPrefix="$filename"
+  fi
+
+  mv "$filename" "🔴 $filenameWithoutEmojiPrefix" 2>/dev/null
+}}
+cmd set-status-none %{{
+  local filename="${f##*/}"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+    filenameWithoutEmojiPrefix="$filename"
+  fi
+
+  mv "$filename" "$filenameWithoutEmojiPrefix" 2>/dev/null
+}}
+cmd set-status-important %{{
+  local filename="${f##*/}"
+  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+    printf "Only use with project that already have a status"
+    exit 0
+  fi
+
+  local statusEmoji="$(echo $filename | cut -c1-4)" # the circles are 4 chars long, adjust if other emojis are introduced
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  if echo $filename | grep -e❗ >/dev/null; then
+    mv "$filename" "$statusEmoji $filenameWithoutEmojiPrefix"
+  else
+    mv "$filename" "${statusEmoji}❗ $filenameWithoutEmojiPrefix"
+  fi
+}}
 
 ## bindings
 ### remove defaults
@@ -214,6 +269,7 @@ map . set hidden!
 map R reload
 map I gimp # [I]mage
 map L show-tasks
+map sr set reverse!
 ### fzf open
 map <a-d> fzf_dir
 map <a-f> fzf_file
@@ -240,7 +296,6 @@ map gI  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Investieren"
 map gt  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Trading"
 map gG  %lf -remote "send $id cd $ORG_AREAS/personal\ development/gamechanger"
 map gP  %lf -remote "send $id cd $ORG_AREAS/blog/posts"
-map gl  %lf -remote "send $id cd $ORG_GOALS"
 map gr  %lf -remote "send $id cd $ORG_RESOURCES"
 map gb  %lf -remote "send $id cd $ORG_RESOURCES/media/books"
 map gmm %lf -remote "send $id cd $ORG_MEDIA"
@@ -248,7 +303,14 @@ map gM  %lf -remote "send $id cd $ORG_MEDIA/music"
 map gA  %lf -remote "send $id cd $ORG_ARCHIVE"
 map gD                        cd ~/Downloads
 map gc                        cd ~/code
-map gv                        cd .archive
+map gl                        cd .archive # local archive
+
+map öa set-status-active
+map öi set-status-inactive
+map öu set-status-inactive
+map öb set-status-blocked
+map ön set-status-none
+map ö! set-status-important
 
 map o jump-prev
 map i jump-next
