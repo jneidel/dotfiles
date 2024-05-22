@@ -32,7 +32,7 @@ move_diff() {
 }
 
 log_dir_content >$pre_move
-echo "$@" | xargs -0 -I@ cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
+echo "$@" | xargs -0 -I@ ~/.config/lf/scripts/cwd-basename "@" | sed 's/^/"/; s/$/"/' | tr "\n" " " | xargs qmv -f do -d
 log_dir_content >$post_move
 
 if [ -n "$(move_diff)" ]; then

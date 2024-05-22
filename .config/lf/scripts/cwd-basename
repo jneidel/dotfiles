@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
@@ -27,8 +27,36 @@ command -v pwd >/dev/null || { echo "pwd is not installed" 1>&2; exit 127; }
 
 FILE="$1"
 
-if [ `dirname "$FILE"` = `pwd` ]; then
-  basename "$FILE"
-else
+cwd="$(pwd)"
+
+all_files_share_same_dir() {
+  last_dirname=
+  echo "$FILE" | while read -r file; do
+    if [ -n "$file" ]; then
+      current_dirname="$(dirname "$file")"
+      if [ -n "$last_dirname" ]; then
+        [ "$last_dirname" != "$current_dirname" ] && echo no
+      fi
+      last_dirname="$current_dirname"
+    fi
+  done
+}
+
+shared_dirname() {
+  any_file="$(echo "$FILE" | head -n1)"
+  dirname "$any_file"
+}
+print_absolute_paths() {
   echo "$FILE"
+}
+print_paths_realative_to_cwd() {
+  echo "$FILE" | while read -r file; do
+    basename "$file"
+  done
+}
+
+if [ -z `all_files_share_same_dir` ] && [ "$(shared_dirname)" = "$(pwd)" ]; then
+  print_paths_realative_to_cwd
+else
+  print_absolute_paths
 fi
