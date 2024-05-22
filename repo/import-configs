@@ -1,9 +1,11 @@
 #! /bin/bash
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 DRY=
 [ "$1" = "-d" ] && DRY=true
+DISABLE_LOGGING=1
 source $DIR/lib.sh
+
+BASE_DIR=/tmp/dot
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -19,58 +21,74 @@ EOF
   exit
 fi
 
+parse_group() {
+  group=$1
+  instructions_file=$BASE_DIR/$group
+  [ "$DISABLE_LOGGING" -eq 0 ] && echo "Parsing $group"
+  while read -r instruction; do
+    parse_instruction "$instruction"
+  done <$instructions_file
+}
+parse_instruction() {
+  instruction="$1"
+
+  REPO="$BASE/$instruction"
+  LOCAL="$HOME/$instruction"
+
+  isRootFile "$instruction" && {
+  REPO="$BASE/$(echo $instruction | cut -c2-)"
+    LOCAL="$instruction"
+  }
+
+  # directories
+  [ -d "$LOCAL" ] && {
+    copy-dir $LOCAL $REPO
+        return
+      }
+
+  # files
+  [ -f "$LOCAL" ] && {
+    copy-file $LOCAL $REPO
+        return
+      }
+
+  # commands
+  CMD=$(echo "$instruction" | cut -d " " -f1)
+  REST=$(echo "$instruction" | cut -d" " -f2-)
+  case $CMD in
+    create)
+      create-dir "$BASE/$REST";;
+    clean)
+      clean-copy-dir "$HOME/$REST" "$BASE/$REST";;
+    run)
+      run-command $instruction;;
+    *)
+      [ "$DISABLE_LOGGING" -eq 0 ] && echo "skipped:      $instruction"
+  esac
+}
+
 CATEGORY=""
 function get-files {
-  IFS=$'\n'
-  for IN in $(cat /dev/stdin); do
-    # categories
-    [ ${IN:0:1} = "[" ] && {
-      IN="${IN%]*}"
-      IN="${IN##*\[}"
-      CATEGORY=$IN
-      [ $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && echo "## $CATEGORY"
-      continue
-    }
+IFS=$'\n'
+for IN in $(cat /dev/stdin); do
+  # categories
+  [ ${IN:0:1} = "[" ] && {
+    IN="${IN%]*}"
+        IN="${IN##*\[}"
+        CATEGORY=$IN
+        [ $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && printf "" >$BASE_DIR/$CATEGORY
+        continue
+      }
 
     # category not in use
     [ ! $(grep -f $IN_USE_TMP <<< $CATEGORY ) ] && continue
 
-    REPO="$BASE/$IN"
-    LOCAL="$HOME/$IN"
-
-    isRootFile "$IN" && {
-      REPO="$BASE/$(echo $IN | cut -c2-)"
-      LOCAL="$IN"
-    }
-
-    # directories
-    [ -d "$LOCAL" ] && {
-      copy-dir $LOCAL $REPO
-      continue
-    }
-
-    # files
-    [ -f "$LOCAL" ] && {
-      copy-file $LOCAL $REPO
-      continue
-    }
-
-    # commands
-    CMD=$(echo "$IN" | cut -d " " -f1)
-    REST=$(echo "$IN" | cut -d" " -f2-)
-    case $CMD in
-      create)
-        create-dir "$BASE/$REST";;
-      clean)
-        clean-copy-dir "$HOME/$REST" "$BASE/$REST";;
-      run)
-        run-command $IN;;
-      *)
-        echo "skipped:      $IN"
-    esac
+    echo "$IN" >>/tmp/dot/$CATEGORY
+    parse_group $CATEGORY &
   done
 }
 
+mkdir -p $BASE_DIR
 cat $MAPPINGS |
   grep -v "^#" |
   grep -v "^\s*$" |

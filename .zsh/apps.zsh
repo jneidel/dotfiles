@@ -293,6 +293,8 @@ reflux() {
 dot() {
   cd dotfiles
   make import
+  clear
+  s
 }
 
 alias mpr="mpd-toggle-local"
