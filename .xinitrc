@@ -34,7 +34,9 @@ sxhkd &
 nice -n 5 dunst &
 
 # bluelight filter
-# xflux -k 3000 -l 52 -g 13 &
+if [ "$(date +%H)" -ge 18 ]; then
+  bluelight start &
+fi
 
 # music player daemon
 mpd &

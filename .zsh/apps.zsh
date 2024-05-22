@@ -295,11 +295,21 @@ dot() {
   make import
 }
 
-alias jira="fjira -p JD"
 alias mpr="mpd-toggle-local"
 alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
 alias ho="ssh home"
 
+format() {
+  # what is this format?
+  curl "https://format.wtf/?q=$1" -H Accept:text/x-ansi
+}
+
 cputemp() {
   cat /sys/class/thermal/thermal_zone*/temp | tr '\n' + | sed 's|+$||' | xargs -I@ node -e "console.log( ((@)/4/1000).toFixed(1) + '°C' )"
 }
+
+_complete_gamechanger() {
+  local files=($(gamechanger print_completions))
+  compadd -a files
+}
+compdef _complete_gamechanger gamechanger

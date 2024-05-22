@@ -44,9 +44,9 @@ rm -rf ~/.zi 2>/dev/null
 rm -rf ~/.designer 2>/dev/null
 
 # move files into the right place
-sentixDir="$ORG_AREAS/assets/Aktien/Der Markt/Sentix - Markt Sentiment"
-mkdir -p "$sentixDir"
-sh -c "find $ORG_INBOX -name 'Analyse20*_ergebnisse.pdf' -exec sh -c 'mv \$1 \"$sentixDir/\"' sh {} ';'"
-sh -c "find $HOME/Downloads -name 'Analyse20*_ergebnisse.pdf' -exec sh -c 'mv \$1 \"$sentixDir/\"' sh {} ';'"
+# sentixDir="$ORG_AREAS/assets/Aktien/Der Markt/Sentix - Markt Sentiment"
+# mkdir -p "$sentixDir"
+# sh -c "find $ORG_INBOX -name 'Analyse20*_ergebnisse.pdf' -exec sh -c 'mv \$1 \"$sentixDir/\"' sh {} ';'"
+# sh -c "find $HOME/Downloads -name 'Analyse20*_ergebnisse.pdf' -exec sh -c 'mv \$1 \"$sentixDir/\"' sh {} ';'"
 
 true

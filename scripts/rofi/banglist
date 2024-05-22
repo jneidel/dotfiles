@@ -102,3 +102,4 @@ mam https://www.myanonamouse.net/tor/browse.php?tor%5Btext%5D=%s
 yy https://yts.mx/browse-movies/%s/all/all/0/latest/0/all
 dock https://hub.docker.com/search?q=%s
 svg https://www.svgrepo.com/vectors/%s/
+media https://mediathekviewweb.de/#query=%s
