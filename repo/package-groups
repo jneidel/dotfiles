@@ -594,3 +594,6 @@ emacs Editor and ecosystem
 
 [wg]
 wireguard-tools Wireguard
+
+[github]
+hub Github cli
