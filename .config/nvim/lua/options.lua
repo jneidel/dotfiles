@@ -15,7 +15,7 @@ o.relativenumber = true
 
 -- enable cursorline and show the signcolumn
 o.cursorline = true
-o.signcolumn = 'yes'
+o.signcolumn = 'auto'
 
 -- highlight search matches while typing and highlight every matching pattern
 o.incsearch = true

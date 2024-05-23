@@ -4,9 +4,6 @@ local bufnmap = utils.bufnmap
 -- toggle spell check
 bufnmap("<Leader>s", ":setlocal spell! spelllang=en_us,de<CR>")
 
--- wrap text at 80 chars
-vim.cmd("setlocal textwidth=80")
+vim.cmd("setlocal signcolumn=auto")
+vim.cmd("setlocal textwidth=76") -- wrap text
 vim.cmd("setlocal formatoptions+=t")
-
--- vim.cmd("setlocal formatprg=par -qw80")
-
