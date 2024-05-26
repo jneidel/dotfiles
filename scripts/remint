@@ -732,6 +732,10 @@ source_config() {
     config=${config/$HOME/'~'}
     WSPAN=$WEEKSPAN
     MSPAN=$MONTHSPAN
+
+    if [ -n "$OVERRIDE_WEEKSPAN" ]; then
+      WSPAN=$OVERRIDE_WEEKSPAN
+    fi
 }
 
 invertcolors() {

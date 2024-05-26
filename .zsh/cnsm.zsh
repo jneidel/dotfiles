@@ -1,6 +1,6 @@
 # cnsm aliases
 
-alias c="cnsm"
+# alias c="cnsm"
 
 ## filters
 alias ca="cnsm -f at"
