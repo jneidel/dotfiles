@@ -1,6 +1,5 @@
 #! /bin/sh
 
-PROJECT_DIR=$HOME/Downloads/fs/project
 DIR=`dirname $0`
 CODE_DIR="$HOME/code"
 CODE_TMUXINATOR_FILE=".tmuxinator.yml"
@@ -10,12 +9,18 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ tp PROJECT
 Start a tmux(inator) project.
 
+Add a new one with: mktmuxinator
+
 Parameters:
   \$1: name of the project to be started
 
+Commands:
+  print_completions: print list of available projects
+
 Examples:
-  tp main
-  tp pots
+  $ tp
+  $ tp main
+  $ tp print_completions
 EOF
   exit
 fi
@@ -25,24 +30,51 @@ command -v tmuxinator >/dev/null || { echo "tmuxinator is not installed" 1>&2; e
 PROJECT=$1
 [ -z "$1" ] && PROJECT=main
 
+print_completions() {
+  cat <<EOF
+$(fd -t f -e yml --glob "*.yml" $DIR/tmuxinator | rev | cut -d. -f2 | cut -d/ -f1 | rev)
+$(fd -H -t f -e yml "$CODE_TMUXINATOR_FILE" $CODE_DIR | rev | cut -d/ -f2 | rev)
+EOF
+}
+if [ "$PROJECT" = "print_completions" ]; then
+  print_completions
+  exit 0
+fi
+if ! print_completions | grep "$PROJECT" >/dev/null; then
+  echo "Invalid project chosen. Must be one of:\n"
+  print_completions
+  exit 1
+fi
+
+is_inside_tmux() {
+  if [ "$TMUX_PANE" = "%0" ]; then
+    false
+  else
+    true
+  fi
+}
 if tmux list-sessions 2>/dev/null | cut -d: -f1 | grep "^$PROJECT$" >/dev/null; then
-  tmux -u attach -t "$PROJECT"
+  if is_inside_tmux; then
+    tmux switch-client -t "$PROJECT"
+  else
+    tmux -u attach -t "$PROJECT"
+  fi
   exit 0
 fi
 
-is_code_project() {
-  if [ -d "$CODE_DIR/$PROJECT" ] && [ -f "$CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE" ]; then
+is_config() {
+  if [ -f "$DIR/tmuxinator/$PROJECT.yml" ]; then
     true
   else
-    echo "No $CODE_TMUXINATOR_FILE file in $CODE_DIR/$PROJECT"
-    echo "You can add it with: mktmuxinator"
     false
   fi
 }
+run_config() {
+  tmuxinator start $PROJECT -p $DIR/tmuxinator/$PROJECT.yml
+}
+run_code_project() {
+  tmuxinator start $PROJECT -p "$CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE"
+}
 
-case $PROJECT in
-  main) tmuxinator start main -p $DIR/tmuxinator/main.yml;;
-  orf) tmuxinator start orf -p $DIR/tmuxinator/orf.yml;;
-  *) is_code_project && tmuxinator start $PROJECT -p $CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE;;
-esac
-
+is_config && run_config
+run_code_project
