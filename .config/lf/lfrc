@@ -157,20 +157,29 @@ cmd create-resource ${{
 
 cmd on-cd &{{
   case "$PWD" in
-    "$ORG_AREAS/mental models"|"$ORG_AREAS/blog/posts"|"$ORG_RESOURCES/power dynamics/"*)
-      lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_RESOURCES/* | $ORG_INBOX)
+      # sort: most recent at the top
       lf -remote "send $id :set sortby time; set reverse";;
     $ORG_PROJECTS)
+      # filter out dava project on non-work days
+      if [ "$(uname)" != "Darwin" ] && ! rem 2>/dev/null | grep ^Dava; then
+        lf -remote "send $id :setfilter \!dava:"
+      fi
+      # sort: by status emoji (green > yellow > red)
       lf -remote "send $id :set sortby natural; set reverse";;
+    "$ORG_AREAS/mental models"|"$ORG_AREAS/blog/posts"|"$ORG_RESOURCES/power dynamics/"*)
+      # sort: alphabetical (reset project/area sort below)
+      lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)
+      # sort: most recent at the top
       lf -remote "send $id :set sortby time; set reverse"
       manage-task-view-pane "$PWD" &
       ;;
     *)
+      # sort: alphabetical
       lf -remote "send $id :set sortby natural; set noreverse";;
   esac
-  # recreatable minus the globs with: https://github.com/gokcehan/lf/pull/1381
+  # can be paritally recreated with setlocal: https://github.com/gokcehan/lf/pull/1381
 }}
 on-cd # run on startup
 
