@@ -7,6 +7,9 @@ super + d
 super + 0
   ~/scripts/rofi/power-menu
 
+super + E
+  ~/scripts/rofi/emoji-picker
+
 super + ssharp
   ~/scripts/i3/lock/lock
 
