@@ -9,14 +9,6 @@ alias add="ga -A; s" # -A all, even removed
 alias gai="git add -i" # interactive
 alias gap="git add -p" # patch
 
-_complete_unstaged_changed_files() {
-  local files=($(git status --porcelain | grep "^ M" | sed 's/^ M//'))
-  compadd -a files
-}
-compdef _complete_unstaged_changed_files ga
-compdef _complete_unstaged_changed_files gai
-compdef _complete_unstaged_changed_files gap
-
 ## commit
 commit() {
   MSG="$1"
@@ -148,3 +140,17 @@ gs() {
     fi
   fi
 }
+
+## completions
+_complete_unstaged_changed_deleted_new_files() {
+  local files=($(git status --porcelain | cut -c3-))
+  compadd -a files
+}
+_complete_unstaged_changed_deleted_files() {
+  local files=($(git status --porcelain | grep -e"^ M" -e"^ D" | cut -c3-))
+  compadd -a files
+}
+compdef _complete_unstaged_changed_deleted_new_files ga
+compdef _complete_unstaged_changed_deleted_new_files gai
+compdef _complete_unstaged_changed_deleted_new_files gap
+compdef _complete_unstaged_changed_deleted_files re
