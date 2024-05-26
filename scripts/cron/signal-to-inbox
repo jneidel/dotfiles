@@ -144,7 +144,7 @@ ${messages.error}`).then(() => process.exit(1))
         const attachArr = m.envelope.dataMessage?.attachments;
         let attachments = (attachArr ? attachArr : []).map( ({id, contentType, filename}) => ({id, contentType, name: filename}) );
 
-        if (!message && !attachments.length) {
+        if (!message && !attachments.length && debugging ) {
           logError( `Message and attachements are empty for:
 ${JSON.stringify(m, null, 2)}` )
         }
