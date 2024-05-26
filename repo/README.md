@@ -18,10 +18,14 @@ make install
 
 ## How it works
 
-`mappings` is a grouped list of configuration files. They are usually grouped by
-a program (e.g. vims config files). In `used-groups` you have a list of the
-active groups. Only the configuration for those active ones will be
-imported/exported using `make import` or `make export`.
+[`mappings`](./mappings) is a list of configuration files to be managed.
+They are grouped by a program (i.e. `[vim]`).
+Because we want to not always include all configured program groups we have
+a [`used-groups`](./used-groups) file.
+Only the groups specified in this file will be acted on during
+import/export (`make import`/`make export`.)
 
-The same thing applied to `package-groups`. App packages names are grouped and only
-installed on `make install` if that group is in the `used-groups`.
+The same princle applies to [`package-groups`](./package-groups).
+These are the names of the packages (pacman, npm, etc.) that belong to a
+program group.
+With `make install` you can install all programs for active groups.
