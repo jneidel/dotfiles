@@ -167,7 +167,7 @@ cmd on-cd &{{
       fi
       # sort: by status emoji (green > yellow > red)
       lf -remote "send $id :set sortby natural; set reverse";;
-    "$ORG_AREAS/mental models"|"$ORG_AREAS/blog/posts"|"$ORG_RESOURCES/power dynamics/"*)
+    $ORG_DESIGN|"$ORG_AREAS/mental models"|"$ORG_AREAS/blog/posts"|"$ORG_RESOURCES/power dynamics/"*)
       # sort: alphabetical (reset project/area sort below)
       lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)
@@ -305,8 +305,10 @@ map gI  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Investieren"
 map gt  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Trading"
 map gG  %lf -remote "send $id cd $ORG_AREAS/personal\ development/gamechanger"
 map gP  %lf -remote "send $id cd $ORG_AREAS/blog/posts"
+map gb  %lf -remote "send $id cd $ORG_AREAS/blog"
 map gr  %lf -remote "send $id cd $ORG_RESOURCES"
-map gb  %lf -remote "send $id cd $ORG_RESOURCES/media/books"
+# map gb  %lf -remote "send $id cd $ORG_RESOURCES/media/books"
+map gn  %lf -remote "send $id cd $ORG_RESOURCES/Neurostreams/Neurostreams"
 map gmm %lf -remote "send $id cd $ORG_MEDIA"
 map gM  %lf -remote "send $id cd $ORG_MEDIA/music"
 map gA  %lf -remote "send $id cd $ORG_ARCHIVE"

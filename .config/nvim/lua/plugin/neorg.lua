@@ -117,7 +117,7 @@ return {
               { "title", function()
                 local name = vim.fn.expand("%:p:t:r")
                 if name == "index" then
-                  return "<++>"
+                  return "index" -- <++>
                 else
                   return name
                 end

@@ -134,7 +134,8 @@ calendar() {
   print_header "$step. Check your calendar\n"
   cat <<EOF
 outcome:
-  - past events are in archive.rem
+  - past events are in past.rem
+  - wrote down any tasks uncovered related to events in the next 2 weeks
 
 EOF
   lf -remote "send cd '$ORG_CALENDAR/main'" &
@@ -195,6 +196,9 @@ EOF
   prompt_continue
 }
 
+pre_newsboat() {
+  reload-newsboat
+}
 newsboat() {
   print_header "$step. Clear out newsboat"
   cat <<EOF
@@ -303,7 +307,8 @@ outcome:
   - sync started
 
 EOF
-  split_below "Backups" "ho"
+  split_below "Backups" "ho" # should be new window
+  tmux send-keys "cd config; lsblk" "Enter" "./sync-backup"
   prompt_continue
 }
 
@@ -327,12 +332,13 @@ gallery
 desk
 bulletjournal
 camscanner
+pre_newsboat
 otter
 newsboat
-pre_org_inbox
 browser_tabs
 calendar
 neomutt
+pre_org_inbox
 copy_accountability
 files
 org_inbox
