@@ -128,7 +128,7 @@ async function writeAttachment({id, contentType, name}, title, n) {
     .then( () => !keepAllAttachments ? fetchApi( `/v1/attachments/${id}`, { method: "DELETE" } ) : null );
 }
 
-fetchApi( `/v1/receive/${signalNumber}?ignore_stories=true` )
+fetchApi( `/v1/receive/${signalNumber}?ignore_stories=true&send_read_receipts=true` )
   .then( r => r.json() )
   .then( messages => {
     if (debugging) console.log( "Results from /receive:\n" + JSON.stringify(messages, null, 2) )
