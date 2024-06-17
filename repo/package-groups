@@ -597,3 +597,8 @@ wireguard-tools Wireguard
 
 [github]
 hub Github cli
+
+[yubikey]
+yubikey-manager Management cli
+yubikey-personalization-gui Management gui
+systemd:pcscd Related service
