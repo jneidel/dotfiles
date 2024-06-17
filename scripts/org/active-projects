@@ -1,0 +1,13 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ active-projects
+The number of active org projects
+EOF
+  exit
+fi
+
+command -v find >/dev/null || { echo "find is not installed" 1>&2; exit 127; }
+
+find $ORG_PROJECTS -mindepth 1 -maxdepth 1 -type d -name "[^.]*" | wc -l

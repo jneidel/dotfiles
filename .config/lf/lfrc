@@ -157,6 +157,12 @@ cmd create-resource ${{
 
 cmd on-cd &{{
   case "$PWD" in
+    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|"$ORG_RESOURCES/power dynamics/"*)
+      # sort: alphabetical (needs to come before the more general matches)
+      lf -remote "send $id :set sortby natural; set noreverse";;
+    $ORG_RESOURCES/LDR)
+      # sort: alphabetical, reverse (needs to come before the more general matches)
+      lf -remote "send $id :set sortby natural; set reverse";;
     $ORG_RESOURCES/* | $ORG_INBOX)
       # sort: most recent at the top
       lf -remote "send $id :set sortby time; set reverse";;
@@ -167,9 +173,6 @@ cmd on-cd &{{
       fi
       # sort: by status emoji (green > yellow > red)
       lf -remote "send $id :set sortby natural; set reverse";;
-    $ORG_DESIGN|"$ORG_AREAS/mental models"|"$ORG_AREAS/blog/posts"|"$ORG_RESOURCES/power dynamics/"*)
-      # sort: alphabetical (reset project/area sort below)
-      lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)
       # sort: most recent at the top
       lf -remote "send $id :set sortby time; set reverse"
