@@ -66,7 +66,7 @@ function writeNote(msg) {
   if (firstLineOfFilename.match(/:/) && ! filename.match(/^http/)) {
     filename = firstLineOfFilename.match(/(.*):/)[1];
   } else {
-    filename = filename.replaceAll("\n", " ");
+    filename = filename.replaceAll("\n", " ").trim();
     if (filename.length > filenameCutoff)
       filename = filename.slice(0, filenameCutoff) + "…";
   }

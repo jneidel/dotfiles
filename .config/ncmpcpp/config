@@ -131,7 +131,7 @@ song_status_format = $b{{{$8%t}|{$8%f}} $3by $4%a{ $3in $7%b} $3}|{$8%f}
 
 song_library_format = {%n - }{%t}|{%f}
 
-# this is active
+# actively playing song in the header
 alternative_header_first_line_format = $b$1$aqqu$/a$(yellow) {%t}|{%f} $1$atqq$/a$9$/b
 alternative_header_second_line_format = {{$(white)$b%a$/b}{ - ($(blue)%b$9)}}|{%D}
 

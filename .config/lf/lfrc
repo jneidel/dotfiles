@@ -157,7 +157,7 @@ cmd create-resource ${{
 
 cmd on-cd &{{
   case "$PWD" in
-    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|"$ORG_RESOURCES/power dynamics/"*)
+    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*)
       # sort: alphabetical (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_RESOURCES/LDR)

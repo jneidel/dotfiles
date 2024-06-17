@@ -139,6 +139,7 @@ sentix() {
     grep -Po '\K/index.php\?option=com_rokdownloads&amp;view=file.+?(?=")' -m1 |
     awk '{ print "https://www.sentix.de"$1 }' | xargs $B
 }
+alias pdfcombine="pdfunite"
 
 ### newsboat
 wait_for_newsboat() {

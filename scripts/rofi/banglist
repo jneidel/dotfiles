@@ -103,3 +103,5 @@ yy https://yts.mx/browse-movies/%s/all/all/0/latest/0/all
 dock https://hub.docker.com/search?q=%s
 svg https://www.svgrepo.com/vectors/%s/
 media https://mediathekviewweb.de/#query=%s
+j https://jellyfin.neidel.xyz/web/index.html#/search.html?query=%s
+inv https://www.marketwatch.com/investing/stock/%s/company-profile?mod=mw_quote_tab
