@@ -307,8 +307,9 @@ outcome:
   - sync started
 
 EOF
-  split_below "Backups" "ho" # should be new window
-  tmux send-keys "cd config; lsblk" "Enter" "./sync-backup"
+  tmux -u new-window -n "backups" -t main
+  tmux send-keys "clear && ho" "Enter"
+  tmux send-keys "cd config; lsblk" "Enter" "./sync-backup "
   prompt_continue
 }
 
@@ -320,6 +321,17 @@ outcome:
 
 EOF
   split_below "Neomutt" "neomutt"
+  prompt_continue
+}
+
+monica() {
+  print_header "$step. Describe social activities in monica"
+  cat <<EOF
+outcome:
+  - all social activities are logged
+  - noted conversation details
+
+EOF
   prompt_continue
 }
 
@@ -339,6 +351,7 @@ browser_tabs
 calendar
 monica
 neomutt
+monica
 pre_org_inbox
 copy_accountability
 files

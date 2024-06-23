@@ -306,6 +306,11 @@ format() {
   curl "https://format.wtf/?q=$1" -H Accept:text/x-ansi
 }
 
+inbox-leerung() {
+  tmux -u new-window -n "inbox" -t main
+  tmux send-keys -t main "clear && ~/scripts/org/inbox-leerung" "Enter"
+}
+
 cputemp() {
   cat /sys/class/thermal/thermal_zone*/temp | tr '\n' + | sed 's|+$||' | xargs -I@ node -e "console.log( ((@)/4/1000).toFixed(1) + '°C' )"
 }
