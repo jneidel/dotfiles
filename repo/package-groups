@@ -232,6 +232,7 @@ shell:mullvad lan set allow
 xorg-server X server
 xorg-xinit X init system
 unclutter Hide the mouse cursor after timeout
+xcompmgr Minimal X compositor
 
 [x-set]
 xorg-xset Set keyboard repeat for X
