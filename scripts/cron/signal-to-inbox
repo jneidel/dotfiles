@@ -101,16 +101,17 @@ async function writeAttachment({id, contentType, name}, title, n) {
 
   let filename = name ? name : id;
   let fileExt = filename.match(/\..*$/);
+
   if (!fileExt) {
     fileExt = returnFileExtForContentType(contentType);
-    filename = `${filename}${fileExt}`;
+    filename = `${filename.slice(0, 60)}${fileExt}`;
   } else {
     fileExt = fileExt[0];
   }
 
   if (title) {
     if (n) fileExt = `-${n}${fileExt}`;
-    filename = `${title}${fileExt}`;
+    filename = `${title.replaceAll("\n", " ").slice(0, 60).trim()}${fileExt}`;
   }
 
   const attachmentData = await fetchApi( `/v1/attachments/${id}` )
