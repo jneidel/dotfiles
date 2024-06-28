@@ -191,30 +191,30 @@ cmd show-tasks %tmux split-window -v -l 30%; tmux select-pane -T 'task-view'; tm
 # project status
 cmd set-status-active %{{
   local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
   if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
-    filenameWithoutEmojiPrefix="$filename"
+    filenameWithoutEmojiPrefix=" $filename"
   fi
 
-  mv "$filename" "🟢 $filenameWithoutEmojiPrefix" 2>/dev/null
+  mv "$filename" "🟢$filenameWithoutEmojiPrefix" 2>/dev/null
 }}
 cmd set-status-inactive %{{
   local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
   if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
-    filenameWithoutEmojiPrefix="$filename"
+    filenameWithoutEmojiPrefix=" $filename"
   fi
 
-  mv "$filename" "🟡 $filenameWithoutEmojiPrefix" 2>/dev/null
+  mv "$filename" "🟡$filenameWithoutEmojiPrefix" 2>/dev/null
 }}
 cmd set-status-blocked %{{
   local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
+  local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
   if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
-    filenameWithoutEmojiPrefix="$filename"
+    filenameWithoutEmojiPrefix=" $filename"
   fi
 
-  mv "$filename" "🔴 $filenameWithoutEmojiPrefix" 2>/dev/null
+  mv "$filename" "🔴$filenameWithoutEmojiPrefix" 2>/dev/null
 }}
 cmd set-status-none %{{
   local filename="${f##*/}"
