@@ -1,0 +1,56 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat <<EOF
+$ shared TITLE AMOUNT DATE
+Add a shared transaction to the ledger file
+Paid from the shared account
+
+Parameters:
+  \$1: title of the transaction
+  \$2: amount for the whole
+  \$3: date
+
+Example:
+  $ groceries "Baumark" "18.5+5.6"
+EOF
+  exit
+fi
+
+command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
+
+get_input() {
+  echo "$1"
+  read ans
+  echo $ans
+}
+
+TITLE="$1"
+
+amount_input="$2"
+AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(2) )")
+AMOUNT_FRANCIS=$(node -e "console.log( ($AMOUNT_TOTAL*.4).toFixed(2) )")
+AMOUNT_ME=$(node -e "     console.log( ($AMOUNT_TOTAL*.6).toFixed(2) )")
+
+date_input="$3"
+DATE=$(date +%Y-%m-%d)
+if echo "$date_input" | grep -Fe '-' >/dev/null; then
+  DATE="$(date +%Y-)${date_input}"
+elif [ -n "$date_input" ]; then
+  DATE="$(date +%Y-%m-)${date_input}"
+fi
+
+print() {
+  cat <<EOF
+$DATE $TITLE
+  ex:                      $AMOUNT_ME
+  [pot:leben]             -$AMOUNT_ME
+  bal                      $AMOUNT_FRANCIS
+  [bal]                   -$AMOUNT_FRANCIS
+  shared                  -$AMOUNT_TOTAL
+  [shared]                 $AMOUNT_TOTAL
+
+EOF
+}
+
+print >>$LEDGER_FILE
