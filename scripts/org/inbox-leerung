@@ -112,9 +112,12 @@ desk() {
   cat <<EOF
 outcome:
   - drawer has been emptied
+  - receipts have been entered into ledger
   - no paper notes or other TODO items on the desk
 
 EOF
+  tmux split-window -v -l 70%
+  tmux send-keys 'groceries "Edeka, Aldi" "'
   prompt_continue
 }
 
