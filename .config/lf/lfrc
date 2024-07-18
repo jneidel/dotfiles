@@ -61,6 +61,13 @@ cmd move-to-archive %{{
 }}
 cmd move-to-local-archive %{{
   local filename="${f##*/}"
+
+  if echo $filename | grep -e🟡 -e🟢 -e🔴 >/dev/null; then
+    lf -remote "send $id set-status-active '$f'"
+    printf "Project has a status. Status was changed to active. To archive instead, remove status."
+    return
+  fi
+
   mkdir -p .archive
   if [ -e ".archive/$filename" ]; then
     mv "$f" ".archive/$(date +%s)-$filename"
