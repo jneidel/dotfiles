@@ -47,11 +47,7 @@ if ! print_completions | grep "$PROJECT" >/dev/null; then
 fi
 
 is_inside_tmux() {
-  if [ "$TMUX_PANE" = "%0" ]; then
-    false
-  else
-    true
-  fi
+  [ "$TMUX_PANE" = "%0" ]
 }
 if tmux list-sessions 2>/dev/null | cut -d: -f1 | grep "^$PROJECT$" >/dev/null; then
   if is_inside_tmux; then
