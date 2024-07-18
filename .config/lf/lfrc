@@ -174,10 +174,18 @@ cmd on-cd &{{
       # sort: most recent at the top
       lf -remote "send $id :set sortby time; set reverse";;
     $ORG_PROJECTS)
-      # filter out dava project on non-work days
-      if [ "$(uname)" != "Darwin" ] && ! rem 2>/dev/null | grep ^Dava; then
-        lf -remote "send $id :setfilter \!dava:"
+      # filter out dava projects outside of workhours
+      # filter out jd projects outside of jd tmux session
+      if ! is-workday-workhours && [ "$(tmux display-message -p '#S')" != "jobdirecto" ]; then
+        lf -remote "send $id :setfilter \!dava: \!jd:"
+      else
+        if [ "$(tmux display-message -p '#S')" = "jobdirecto" ]; then
+          lf -remote "send $id :setfilter jd:"
+        else
+          lf -remote "send $id :setfilter \!jd:"
+        fi
       fi
+
       # sort: by status emoji (green > yellow > red)
       lf -remote "send $id :set sortby natural; set reverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)

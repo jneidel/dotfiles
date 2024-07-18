@@ -1,0 +1,27 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ is-workday-workhours
+Output a zero exit code if it is a workday and it is during work hours.
+Non-zero exit otherwise.
+EOF
+  exit
+fi
+
+command -v rem >/dev/null || { echo "rem (remind) is not installed" 1>&2; exit 127; }
+
+is_mac() {
+  # on my work machine it's always work hours
+  [ "$(uname)" = "Darwin" ]
+}
+
+is_workday() {
+  rem 2>/dev/null | grep ^Dava >/dev/null
+}
+
+is_within_work_hours() { # plus/minus a little
+  [ "$(date +%H)" -ge 8 ] && [ "$(date +%H)" -le 18 ]
+}
+
+is_mac || (is_workday && is_within_work_hours)
