@@ -212,6 +212,7 @@ cmd set-status-active %{{
   fi
 
   mv "$filename" "🟢$filenameWithoutEmojiPrefix" 2>/dev/null
+  lf -remote "send $id select '🟢$filenameWithoutEmojiPrefix'"
 }}
 cmd set-status-inactive %{{
   local filename="${f##*/}"
@@ -221,6 +222,7 @@ cmd set-status-inactive %{{
   fi
 
   mv "$filename" "🟡$filenameWithoutEmojiPrefix" 2>/dev/null
+  lf -remote "send $id select '🟡$filenameWithoutEmojiPrefix'"
 }}
 cmd set-status-blocked %{{
   local filename="${f##*/}"
@@ -230,6 +232,7 @@ cmd set-status-blocked %{{
   fi
 
   mv "$filename" "🔴$filenameWithoutEmojiPrefix" 2>/dev/null
+  lf -remote "send $id select '🔴$filenameWithoutEmojiPrefix'"
 }}
 cmd set-status-none %{{
   local filename="${f##*/}"
@@ -239,6 +242,7 @@ cmd set-status-none %{{
   fi
 
   mv "$filename" "$filenameWithoutEmojiPrefix" 2>/dev/null
+  lf -remote "send $id select '$filenameWithoutEmojiPrefix'"
 }}
 cmd set-status-important %{{
   local filename="${f##*/}"
@@ -251,8 +255,10 @@ cmd set-status-important %{{
   local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
   if echo $filename | grep -e❗ >/dev/null; then
     mv "$filename" "$statusEmoji $filenameWithoutEmojiPrefix"
+    lf -remote "send $id select '$statusEmoji $filenameWithoutEmojiPrefix'"
   else
     mv "$filename" "${statusEmoji}❗ $filenameWithoutEmojiPrefix"
+    lf -remote "send $id select '${statusEmoji}❗ $filenameWithoutEmojiPrefix'"
   fi
 }}
 
