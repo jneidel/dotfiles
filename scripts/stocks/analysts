@@ -1,0 +1,29 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ analysts TICKER
+Get the number of analysts following a stock
+
+Source: Yahoo finance
+
+Parameters:
+  \$1: ticker symbol, e.g. NFLX
+
+Example:
+  $ get_analysts_num aapl
+  #=> 25
+EOF
+  exit
+fi
+
+command -v curl >/dev/null || { echo "curl is not installed" 1>&2; exit 127; }
+
+TICKER="$(echo $1 | tr a-z A-Z)"
+
+fetch() {
+  curl -Ss "https://finance.yahoo.com/quote/$TICKER/analysis/" \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36' 2>/dev/null
+}
+
+fetch | grep -Po "No\. of Analysts</td>.*?>\K.+?(?=</td>)" -m1 | head -n1

@@ -1,0 +1,136 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ newstrading
+Generate a CSV list of tickers with:
+- date of earnings
+- number of analysts
+- P/E ratio
+- P/B ratio
+
+Flags:
+  -n: generate for next weeks earnings, default: this week
+EOF
+  exit
+fi
+
+WEEK="thisWeek"
+if [ "$1" = "-n" ]; then
+  WEEK="nextWeek"
+fi
+
+command -v curl >/dev/null || { echo "curl is not installed" 1>&2; exit 127; }
+command -v analysts >/dev/null || { echo "analysts scripts is not installed" 1>&2; exit 127; }
+command -v pe-pb >/dev/null || { echo "pe-pb script is not installed" 1>&2; exit 127; }
+
+tmp=$(mktemp --suffix=.json)
+fetch_earnings_calendar() {
+  curl -Ss 'https://www.investing.com/earnings-calendar/Service/getCalendarFilteredData' \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -H 'origin: https://www.investing.com' \
+    -H 'priority: u=1, i' \
+    -H 'referer: https://www.investing.com/earnings-calendar/' \
+    -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36' \
+    -H 'x-requested-with: XMLHttpRequest' \
+    --data-raw "country%5B%5D=5&importance%5B%5D=2&importance%5B%5D=3&currentTab=$WEEK&limit_from=0" >$tmp
+}
+earnings_calendar() {
+  jq -r .data <$tmp
+}
+
+parse_ticker() {
+  echo "$1" | grep -Po "earnCalCompanyName.+\>\K.+(?=</a>)"
+}
+parse_timing() {
+  echo "$1" | grep -F marketOpen >/dev/null && echo marketOpen
+  echo "$1" | grep -F marketClosed >/dev/null && echo marketClose
+}
+parse_date() {
+  echo "$1" | grep -Po ">\K.+?(?=<)"
+}
+eval_position_open_date() {
+  announcement_date="$1"
+  announcement_time="$2"
+
+  case "$announcement_time" in
+    marketOpen)
+      if [ "$(date +%a -d "$announcement_date -1 day")" = "Sun" ]; then
+        date +%b%d -d "$announcement_date -3 day"
+      else
+        date +%b%d -d "$announcement_date -1 day"
+      fi;;
+    marketClose)
+      date +%b%d -d "$announcement_date";;
+  esac
+}
+
+trading_view_import_command=$(mktemp)
+append_tradingview_import_command() {
+  ticker=$1
+  printf "$ticker," >>$trading_view_import_command
+}
+print_trading_view_import_command() {
+  printf "\n" >>$trading_view_import_command
+  cat $trading_view_import_command
+}
+
+open_numbers() {
+  $BROWSER "https://www.marketwatch.com/investing/stock/$1/company-profile?mod=mw_quote_tab" >/dev/null 2>&1 &
+}
+
+get_analysts_and_pe_pb() {
+  ticker=$1
+  data="$(paste <(analysts $ticker) <(pe-pb $ticker) | sed -E 's/\t/;/g')" # run in parallel
+
+  if [ "$data" = ";;" ] || echo $data | grep -Ee "[0-9];;" -e "^;[0-9]" 2>/dev/null; then
+    sleep 30s # exhausted yahoo finance API, retrying in 30s
+    get_analysts_and_pe_pb $ticker
+  else
+    echo $data
+  fi
+}
+
+out_file=/tmp/tickers-$(date +%y%m%m)
+printf "" >$out_file
+
+main() {
+  IFS=$'\n'
+  ticker=
+  time=
+  announcement_date=
+  for IN in $(earnings_calendar); do
+    if echo $IN | grep -F theDay >/dev/null; then
+      announcement_date="$(parse_date "$IN")"
+      continue
+    fi
+
+    if [ -n "$ticker" ] && echo $IN | grep -F "<!-- EARNING -->" >/dev/null; then
+      if [ -n "$time" ]; then
+        printf "%s;%s;;;%s\n" $ticker $(eval_position_open_date "$announcement_date" "$time") $(get_analysts_and_pe_pb $ticker) | tee -a $out_file
+        append_tradingview_import_command $ticker
+      fi
+      ticker=
+      time=
+      continue
+    fi
+
+    if [ -z "$ticker" ] && echo $IN | grep -F earnCalCompanyName >/dev/null; then
+      ticker=$(parse_ticker "$IN")
+      continue
+    fi
+
+    if [ -n "$ticker" ] && echo $IN | grep "time.*data-tooltip" >/dev/null; then
+      time=$(parse_timing "$IN")
+      continue
+    fi
+  done
+}
+
+fetch_earnings_calendar
+main
+# print_trading_view_import_command
+
+sort -t";" -k2 $out_file -o $out_file
+printf "Wrote all tickers to %s\n" $out_file
+$EDITOR $out_file
