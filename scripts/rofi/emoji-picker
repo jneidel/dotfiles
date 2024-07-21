@@ -25,7 +25,7 @@ get_installed_emoji_version() {
 }
 
 get_latest_emoji_version() {
-  curl -Ss "https://registry.npmjs.org/emoji-datasource" | grep -Po '"version":"\K[0-9]+\.[0-9]+' | tail -n1
+  curl -s "https://registry.npmjs.org/emoji-datasource" | grep -Po '"version":"\K[0-9]+\.[0-9]+' | tail -n1
 }
 
 extract_emoji_from_json() {

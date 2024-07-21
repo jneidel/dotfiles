@@ -24,10 +24,8 @@ fi
 
 timetable() {
   cat <<EOF
-Tue 9:00-14:00
 Wed 9:00-14:00
 Thu 8:00-13:00 At Edeka in Kirchhain
-Thu 15:00-18:30
 Fri 9:00-18:00
 EOF
 }

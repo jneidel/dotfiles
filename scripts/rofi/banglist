@@ -1,6 +1,6 @@
 - https://duckduckgo.com/?q=%s
-lg https://libgen.is/search.php?&res=100&req=%s&phrase=1&view=simple&column=def&sort=language&sortmode=ASC
-lgf http://libgen.is/fiction/?q=%s
+lg https://libgen.st/search.php?&res=100&req=%s&phrase=1&view=simple&column=def&sort=language&sortmode=ASC
+lgf http://libgen.st/fiction/?q=%s
 anna https://annas-archive.gs/search?q=%s
 zl https://zlibrary-global.se/s/%s
 tpb https://mirrorbay.org/get-data-for/%s?cat=0
