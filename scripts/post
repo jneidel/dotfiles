@@ -39,5 +39,19 @@ else
   post_name=$1
 fi
 
+calc_next_nr_of_next_newsletter() {
+  last_nr="$(find $BLOG/content/newsletter -maxdepth 1 -mindepth 1 -type d | sort | tail -n1 | rev | cut -d/ -f1 | rev | cut -d- -f1)"
+  echo $(($last_nr +1))
+}
+
+apply_category_specific_rules() {
+  case "$category" in
+    newsletter/)
+      post_name="$(calc_next_nr_of_next_newsletter)-$post_name"
+      break;;
+  esac
+}
+
+apply_category_specific_rules
 hugo new "content/${category}${post_name}/index.md"
 hugo new "content/${category}${post_name}/index.de.md"
