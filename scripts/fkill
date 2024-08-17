@@ -1,0 +1,20 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ fkill APPLICATION_NAME
+fast kill an application
+
+Parameters:
+  \$1: name of the application
+
+Example:
+  $ fkill brave
+  $ fkill xss-lock
+EOF
+  exit
+fi
+
+APPLICATION_NAME=$1
+
+kill -9 $(pidof $APPLICATION_NAME)

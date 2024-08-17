@@ -365,9 +365,6 @@ npm:dict-cc-cli Offline dict.cc
 # to fix, dl from server
 # npm:mangareader-dl Manga downloader
 
-[fkill]
-fkill Process killer
-
 [js]
 python-grip-git Reader markdown file with github styles
 typescript Typescript compiler
