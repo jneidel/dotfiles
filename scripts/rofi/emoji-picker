@@ -40,21 +40,13 @@ extract_emoji_from_json() {
 }
 update_emoji_data() {
   mkdir -p "$EMOJI_DIR"
+  current="$1"
   version=$(get_latest_emoji_version)
-  wget -nc "https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji_pretty.json" -O $EMOJI_DIR/$version.json --quiet
-  extract_emoji_from_json $version >$EMOJI_DIR/$version.txt
+  if [ "$latest" != "$current" ]; then
+    wget -nc "https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji_pretty.json" -O $EMOJI_DIR/$version.json --quiet
+    extract_emoji_from_json $version >$EMOJI_DIR/$version.txt
+  fi
 }
-
-emoji_version=$(get_installed_emoji_version)
-if [ -z "$emoji_version" ]; then
-  update_emoji_data
-  emoji_version=$(get_latest_emoji_version)
-else
-  latest=$(get_latest_emoji_version)
-  [ "$latest" != "$emoji_version" ] && update_emoji_data &
-fi
-
-choice="$(tac $EMOJI_DIR/$emoji_version.txt | rofi rofi -dmenu -i -lines 15 -eh 1 -p emoji)"
 
 is_on_blog() {
   if [ `i3-msg -t get_workspaces | jq ".[] | select(.focused == true) | .num"` = "1" ] \
@@ -65,6 +57,13 @@ is_on_blog() {
   fi
 }
 
+emoji_version=$(get_installed_emoji_version)
+update_emoji_data $emoji_version &
+if [ -z "$emoji_version" ]; then
+  exit 1
+fi
+
+choice="$(tac $EMOJI_DIR/$emoji_version.txt | rofi rofi -dmenu -i -lines 15 -eh 1 -p emoji)"
 if [ -n "$choice" ]; then
   if is_on_blog; then
     echo -e $choice | cut -d\  -f2 | xargs xdotool type # :name:
