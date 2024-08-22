@@ -32,7 +32,12 @@ command -v hugo >/dev/null || { echo "hugo is not installed" 1>&2; exit 127; }
 
 category=
 post_name=
-if [ -n "$2" ]; then
+en_extra=
+de_extra=
+
+if [ "$1" = "newsletter" ]; then
+  category=$1/
+elif [ -n "$2" ]; then
   category=$1/
   post_name=$2
 else
@@ -47,11 +52,12 @@ calc_next_nr_of_next_newsletter() {
 apply_category_specific_rules() {
   case "$category" in
     newsletter/)
-      post_name="$(calc_next_nr_of_next_newsletter)-$post_name"
+      post_name="$(calc_next_nr_of_next_newsletter)" # dir name is only the number
+      de_extra="-k newsletter-de"
       break;;
   esac
 }
 
 apply_category_specific_rules
-hugo new "content/${category}${post_name}/index.md"
-hugo new "content/${category}${post_name}/index.de.md"
+hugo new $en_extra "content/${category}${post_name}/index.md"
+hugo new $de_extra "content/${category}${post_name}/index.de.md"
