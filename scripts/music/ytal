@@ -25,7 +25,7 @@ get_sc_name() {
 run() {
   link="$1"
   if echo $link | grep -Fe bandcamp -e monstercat; then
-    bandcamp-dl "$1" --base-dir=.
+    bandcamp-dl "$1" --no-slugify --base-dir=.
     return
   elif echo $link | grep -F datpiff; then
     datpiff "$1"
