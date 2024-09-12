@@ -1,12 +1,25 @@
 #! /bin/sh
 
-CONF=~/.config/kitty/light.conf
+CONF_DIR=~/.config/kitty
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ kitty-light"
-  echo "Start kitty using the $CONF config"
+  cat <<EOF
+$ kitty-light
+Start kitty using the $CONF config
+EOF
   exit
 fi
 
-kitty -c $CONF
+cd $CONF_DIR
 
+# set light mode
+ln -sf ayu_light.conf colorscheme.conf
+printf 1 >/tmp/light-mode
+
+# revert to dark mode
+( sleep 1s && ln -sf jneidel-colors.conf colorscheme.conf ) &
+
+kitty
+
+# after term has been closed or on reboot
+rm /tmp/light-mode
