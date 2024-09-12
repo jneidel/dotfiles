@@ -18,7 +18,7 @@ xset -b &
 xrdb -load "$XDG_CONFIG_HOME/X11/Xresources" &
 
 # Compositor (X shadows and such)
-xcompmgr -c &
+# xcompmgr -c &
 
 # wallpaper
 xwallpaper --zoom ~/.config/wallpaper.png &

@@ -232,7 +232,6 @@ shell:mullvad lan set allow
 xorg-server X server
 xorg-xinit X init system
 unclutter Hide the mouse cursor after timeout
-xcompmgr Minimal X compositor
 
 [x-set]
 xorg-xset Set keyboard repeat for X
@@ -255,6 +254,9 @@ arandr Control display outputs (GUI)
 [x-lock]
 i3lock-lixxia-git Screen locker
 xss-lock Lock on sleep
+
+[x-compositor]
+xcompmgr Minimal X compositor
 
 [xflux]
 xflux Flux bluelight filter for X
