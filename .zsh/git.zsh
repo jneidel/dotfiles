@@ -111,7 +111,7 @@ alias unignore="git update-index --no-assume-unchanged"
 
 ## open repo in browser
 gho() {
-  git remote get-url origin | cut -d@ -f2 | cut -d. -f1-2 | sed 's|:|/|' | awk '{print "https://"$1}' | xargs -r $B >/dev/null 2>&1
+  git remote get-url origin | cut -d@ -f2 | rev | cut -d. -f2- | rev | sed 's|:|/|' | awk '{print "https://"$1}' | xargs -r $B >/dev/null 2>&1
 }
 
 ## cherry-pick
