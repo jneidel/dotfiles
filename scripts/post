@@ -1,6 +1,6 @@
 #! /bin/sh
 
-BLOG=$HOME/code/blog
+BLOG=$HOME/code/jneidel
 cd $BLOG || exit 1
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then

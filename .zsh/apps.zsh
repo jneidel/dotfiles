@@ -320,3 +320,9 @@ _complete_gamechanger() {
   compadd -a files
 }
 compdef _complete_gamechanger gamechanger
+
+_complete_post() {
+  local categories=(newsletter review essay dev guide project)
+  compadd -a categories
+}
+compdef _complete_post post
