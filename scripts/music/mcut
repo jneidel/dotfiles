@@ -1,9 +1,10 @@
-#! /bin/sh
+#! /bin/bash
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
 $ mcut FILE START [END]
-mp3cut wrapper
+Easily cut mp3 files.
+Test until you find the right timing and then overwrite the file.
 
 Parameters:
   \$1: input file
@@ -11,24 +12,38 @@ Parameters:
   [\$3]: end time, default: end of the song
 
 Time Format:
-  00:00+000, min:sec+mili
+  00:00.000, min:sec.mili
 
 Flags:
-  -r, replace the old with the new cut version
+  -r, replace the input file with the cut version
 
 Example:
   $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39
-  $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39 -r
+  $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39 1:50.4
+  $ mcut "Beastie Boys - The Sounds of Science.mp3" 01:39 1:50.4 -r
 EOF
   exit
 fi
 
-command -v mp3cut >/dev/null || { echo "mp3cut is not installed"; exit 127; }
-command -v copy_id3.py >/dev/null || { echo "copy_id3.py script is not installed"; exit 127; }
+command -v ffmpeg >/dev/null || { echo "ffmpeg is not installed"; exit 127; }
+command -v ~/scripts/music/copy_id3.py >/dev/null || { echo "~/scripts/music/copy_id3.py is not installed"; exit 127; }
 
+mp3cut() { # mp3cut
+  local input="$1"
+  local output="$2"
+  local start_time="$3"
+  local end_time="$4"
+
+  if [ -z "$end_time" ] || [ "$end_time" = "00:00:00" ]; then
+    ffmpeg -i "$input" -ss "$start_time" -acodec copy -loglevel error "$output"
+  else
+    ffmpeg -i "$input" -ss "$start_time" -to "$end_time" -acodec copy -loglevel error "$output"
+  fi
+}
 
 IN="$1"
-OUT="$IN.new"
+EXT="${IN##*.}"
+OUT="${IN%.*}-new.$EXT"
 
 if [ -z "$2" ]; then
   mpv --profile=music "$IN"
@@ -37,22 +52,23 @@ fi
 
 START="$2"
 END="$3"
-[ -z "$3" ] && END="00:00"
 
 REPLACE=0
 if [ "$3" = "-r" ]; then
   REPLACE=1
-  END="00:00"
+  END=
 fi
 [ "$4" = "-r" ] && REPLACE=1
 
 if [ "$REPLACE" -gt 0 ]; then
-  mp3cut -o "$OUT" -t "00:$START+000-00:$END+000" "$IN"
+  mp3cut "$IN" "$OUT" "$START" "$END"
   echo "=== Replacing original with cut version ==="
   ~/scripts/music/copy_id3.py "$IN" "$OUT"
   mv "$OUT" "$IN"
   chmod -x "$IN"
 else
-  mp3cut -o - -t "00:$START+000-00:$END+000" "$IN" | mpv --profile=music -
-  # mp3cut -o "$IN.new" -t "00:$START+000-00:$END+000" "$IN"
+  temp=$(mktemp --dry-run --suffix ".$EXT")
+  mp3cut "$IN" "$temp" "$START" "$END"
+  mpv --profile=music $temp
+  rm $temp
 fi

@@ -1,4 +1,4 @@
-#!/bin/python2
+#!/bin/python3
 # no lyrics or cover
 
 """ Copy ID3 tags from one mp3 file to another. """
@@ -30,8 +30,8 @@ def copy_id3(srcname, destname, verbose=False):
         dest[k] = src[k]
     dest.save()
     if verbose:
-        print "Copied ID3 tags from %(srcname)r to %(destname)r--result:" % locals()
-        print dest.pprint()
+        print( "Copied ID3 tags from %(srcname)r to %(destname)r--result:" % locals() )
+        print( dest.pprint() )
 
 
 if __name__ == "__main__":

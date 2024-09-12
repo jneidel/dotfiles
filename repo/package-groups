@@ -60,7 +60,7 @@ python-requests beets fetchart/lyrics plugin dependency
 imagemagick beets embedArt plugin dependency
 python-eyed3 Mp3 tagging
 id3v2 Mp3 tagging
-mp3cut Cutting
+ffmpeg Mp3 tagging
 
 [scripts]
 jq JSON processor
