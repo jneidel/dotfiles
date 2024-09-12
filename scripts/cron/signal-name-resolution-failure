@@ -10,7 +10,7 @@ fi
 
 SCRIPT=
 case "$1" in
-  "inbox") SCRIPT=~/scripts/cron/signal-to-inbox;;
+  "inbox") SCRIPT=~/scripts/personal/signal-to-inbox;; # see https://github.com/jneidel/signal-cli-to-file
   "challenge-review") SCRIPT=~/scripts/cron/send-challenge-review-notification;;
   *) exit 1;;
 esac

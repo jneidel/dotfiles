@@ -1,2 +1,0 @@
-fkill -f pulseaudio
-pulseaudio --start

@@ -1,5 +1,5 @@
 - https://duckduckgo.com/?q=%s
-lg https://libgen.st/search.php?&res=100&req=%s&phrase=1&view=simple&column=def&sort=language&sortmode=ASC
+lg https://libgen.li/index.php?req=%s&topics%5B%5D=l
 lgf http://libgen.st/fiction/?q=%s
 anna https://annas-archive.gs/search?q=%s
 zl https://zlibrary-global.se/s/%s
@@ -59,7 +59,7 @@ sample https://www.whosampled.com/search/?q=%s
 l https://www.online-latin-dictionary.com/latin-english-dictionary.php?parola=%s
 la https://dela.dict.cc/?s=%s
 lat http://www.archives.nd.edu/cgi-bin/wordz.pl?keyword=%s
-dot https://jneidel.com/dot/%s
+dot https://neidel.xyz/dot/%s
 node https://duckduckgo.com/?q=site%3Ahttps%3A%2F%2Fnodejs.org%2Fapi%2F+%s
 div https://dividata.com/stock/%s
 divd https://dividata.com/stock/%s

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-BLOG=$HOME/code/jneidel
+BLOG=$HOME/code/web
 cd $BLOG || exit 1
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
@@ -55,6 +55,8 @@ apply_category_specific_rules() {
       post_name="$(calc_next_nr_of_next_newsletter)" # dir name is only the number
       de_extra="-k newsletter-de"
       break;;
+    review/)
+      de_extra="-k review-de"
   esac
 }
 

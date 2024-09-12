@@ -176,7 +176,7 @@ camscanner() {
   print_header "$step. Process CamScanner"
   cat <<EOF
 outcome:
-  - Daily planner pages
+  - all Daily planner pages scanned
   - all images in "to process" folder have had their text extracted
 
 EOF
@@ -414,7 +414,7 @@ dotfiles
 messenger
 gallery
 desk
-bulletjournal
+# bulletjournal
 camscanner
 pre_newsboat
 otter

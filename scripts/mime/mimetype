@@ -70,6 +70,7 @@ classify_file() {
       "POSIX shell script"|"POSIX shell script text executable") echo sh;;
       "Bourne-Again shell script"|"Bourne-Again shell script text executable") echo bash;;
       "UTF-8 Unicode text"|"Unicode text"|"ASCII text"|"JSON data"|"JSON text data"|data|"XML 1.0 document"|"CSV ASCII text") echo txt;;
+      "a /bin/octave script") echo octave;;
       "RAR archive data") echo rar;;
       "HTML document") echo html;;
       "empty"|"makefile script") echo txt;;

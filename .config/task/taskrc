@@ -78,4 +78,4 @@ context.jd.read=+jd
 context.jd.write=+jd
 context.jd.rc.data.location=$ORG/.task_jd
 
-context=org
+context=jd

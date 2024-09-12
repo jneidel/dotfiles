@@ -6,7 +6,7 @@ $ pauseaftersong [COUNT]
 Pause mpd after the next player interaction (next, pause/play)
 
 Args:
-  COUNT: amount of soungs to still play, default: 1
+  COUNT: amount of songs to finish playing, default: 1 (the current song)
 
 References:
   - if you want to stop pause after a given time has passed use: sleeptimer

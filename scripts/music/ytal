@@ -75,3 +75,6 @@ else
     run "$line"
   done
 fi
+
+# go into dirs and
+# idco cover.* *.mp3
