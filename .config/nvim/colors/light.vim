@@ -1,95 +1,224 @@
-# pyte light colorscheme
+" ==============================================================================
+"   Name:        One Half Light
+"   Author:      Son A. Pham <sp@sonpham.me>
+"   Url:         https://github.com/sonph/onehalf
+"   License:     The MIT License (MIT)
+"
+"   A light vim color scheme based on Atom's One. See github.com/sonph/onehalf
+"   for installation instructions, a dark color scheme, versions for other
+"   editors/terminals, and a matching theme for vim-airline.
+" ==============================================================================
 
 set background=light
+highlight clear
+syntax reset
 
-hi clear
-if exists("syntax_on")
-  syntax reset
-endif
-
-let colors_name = "pyte"
-
-if version >= 700
-  hi CursorLine guibg=#f6f6f6
-  hi CursorColumn guibg=#eaeaea
-  hi MatchParen guifg=white guibg=#80a090 gui=bold
-
-  "Tabpages
-  hi TabLine guifg=black guibg=#b0b8c0 gui=italic
-  hi TabLineFill guifg=#9098a0
-  hi TabLineSel guifg=black guibg=#f0f0f0 gui=italic,bold
-
-  "P-Menu (auto-completion)
-  hi Pmenu guifg=white guibg=#808080
-  "PmenuSel
-  "PmenuSbar
-  "PmenuThumb
-endif
-"
-" Html-Titles
-hi Title      guifg=#202020 gui=bold
-hi Underlined  guifg=#202020 gui=underline
+let g:colors_name="onehalflight"
+let colors_name="onehalflight"
 
 
-hi Cursor    guifg=black   guibg=#b0b4b8
-hi lCursor   guifg=black   guibg=white
-hi LineNr    guifg=#ffffff guibg=#c0d0e0
+let s:black       = { "gui": "#383a42", "cterm": "237" }
+let s:red         = { "gui": "#e45649", "cterm": "167" }
+let s:green       = { "gui": "#50a14f", "cterm": "71" }
+let s:yellow      = { "gui": "#c18401", "cterm": "136" }
+let s:blue        = { "gui": "#0184bc", "cterm": "31" }
+let s:purple      = { "gui": "#a626a4", "cterm": "127" }
+let s:cyan        = { "gui": "#0997b3", "cterm": "31" }
+let s:white       = { "gui": "#fafafa", "cterm": "231" }
 
-hi Normal    guifg=#404850   guibg=#f0f0f0
+let s:fg          = s:black
+let s:bg          = s:white
 
-hi StatusLine guifg=white guibg=#8090a0 gui=bold,italic
-hi StatusLineNC guifg=#506070 guibg=#a0b0c0 gui=italic
-hi VertSplit guifg=#a0b0c0 guibg=#a0b0c0 gui=NONE
+let s:comment_fg  = { "gui": "#a0a1a7", "cterm": "247" }
+let s:gutter_bg   = { "gui": "#fafafa", "cterm": "231" }
+let s:gutter_fg   = { "gui": "#d4d4d4", "cterm": "252" }
+let s:non_text    = { "gui": "#e5e5e5", "cterm": "252" }
 
-" hi Folded    guifg=#708090 guibg=#c0d0e0
-hi Folded    guifg=#a0a0a0 guibg=#e8e8e8 gui=italic
+let s:cursor_line = { "gui": "#f0f0f0", "cterm": "255" }
+let s:color_col   = { "gui": "#f0f0f0", "cterm": "255" }
 
-hi NonText   guifg=#c0c0c0 guibg=#e0e0e0
-" Kommentare
-hi Comment   guifg=#a0b0c0               gui=italic
-
-" Konstanten
-hi Constant  guifg=#a07040
-hi String    guifg=#4070a0
-hi Number    guifg=#40a070
-hi Float     guifg=#70a040
-"hi Statement guifg=#0070e0 gui=NONE
-" Python: def and so on, html: tag-names
-hi Statement  guifg=#007020 gui=bold
+let s:selection   = { "gui": "#bfceff", "cterm": "153" }
+let s:vertsplit   = { "gui": "#f0f0f0", "cterm": "255" }
 
 
-" HTML: arguments
-hi Type       guifg=#e5a00d gui=italic
-" Python: Standard exceptions, True&False
-hi Structure  guifg=#007020 gui=italic
-hi Function   guifg=#06287e gui=italic
-
-hi Identifier guifg=#5b3674 gui=italic
-
-hi Repeat      guifg=#7fbf58 gui=bold
-hi Conditional guifg=#4c8f2f gui=bold
-
-" Cheetah: #-Symbol, function-names
-hi PreProc    guifg=#1060a0 gui=NONE
-" Cheetah: def, for and so on, Python: Decorators
-hi Define      guifg=#1060a0 gui=bold
-
-hi Error      guifg=red guibg=white gui=bold,underline
-hi Todo       guifg=#a0b0c0 guibg=NONE gui=italic,bold,underline
-
-" Python: %(...)s - constructs, encoding
-hi Special    guifg=#70a0d0 gui=italic
-
-hi Operator   guifg=#408010
-
-" color of <TAB>s etc...
-"hi SpecialKey guifg=#d8a080 guibg=#e8e8e8 gui=italic
-hi SpecialKey guifg=#d0b0b0 guibg=#f0f0f0 gui=none
-
-" Diff
-hi DiffChange guifg=NONE guibg=#e0e0e0 gui=italic,bold
-hi DiffText guifg=NONE guibg=#f0c8c8 gui=italic,bold
-hi DiffAdd guifg=NONE guibg=#c0e0d0 gui=italic,bold
-hi DiffDelete guifg=NONE guibg=#f0e0b0 gui=italic,bold
+function! s:h(group, fg, bg, attr)
+  if type(a:fg) == type({})
+    exec "hi " . a:group . " guifg=" . a:fg.gui . " ctermfg=" . a:fg.cterm
+  else
+    exec "hi " . a:group . " guifg=NONE cterm=NONE"
+  endif
+  if type(a:bg) == type({})
+    exec "hi " . a:group . " guibg=" . a:bg.gui . " ctermbg=" . a:bg.cterm
+  else
+    exec "hi " . a:group . " guibg=NONE ctermbg=NONE"
+  endif
+  if a:attr != ""
+    exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
+  else
+    exec "hi " . a:group . " gui=NONE cterm=NONE"
+  endif
+endfun
 
 
+" User interface colors {
+call s:h("Normal", s:fg, s:bg, "")
+
+call s:h("Cursor", s:bg, s:blue, "")
+call s:h("CursorColumn", "", s:cursor_line, "")
+call s:h("CursorLine", "", s:cursor_line, "")
+
+call s:h("LineNr", s:gutter_fg, s:gutter_bg, "")
+call s:h("CursorLineNr", s:fg, "", "")
+
+call s:h("DiffAdd", s:green, "", "")
+call s:h("DiffChange", s:yellow, "", "")
+call s:h("DiffDelete", s:red, "", "")
+call s:h("DiffText", s:blue, "", "")
+
+call s:h("IncSearch", s:bg, s:yellow, "")
+call s:h("Search", s:bg, s:yellow, "")
+
+call s:h("ErrorMsg", s:fg, "", "")
+call s:h("ModeMsg", s:fg, "", "")
+call s:h("MoreMsg", s:fg, "", "")
+call s:h("WarningMsg", s:red, "", "")
+call s:h("Question", s:purple, "", "")
+
+call s:h("Pmenu", s:fg, s:cursor_line, "")
+call s:h("PmenuSel", s:bg, s:blue, "")
+call s:h("PmenuSbar", "", s:cursor_line, "")
+call s:h("PmenuThumb", "", s:comment_fg, "")
+
+call s:h("SpellBad", s:red, "", "")
+call s:h("SpellCap", s:yellow, "", "")
+call s:h("SpellLocal", s:yellow, "", "")
+call s:h("SpellRare", s:yellow, "", "")
+
+call s:h("StatusLine", s:blue, s:cursor_line, "")
+call s:h("StatusLineNC", s:comment_fg, s:cursor_line, "")
+call s:h("TabLine", s:comment_fg, s:cursor_line, "")
+call s:h("TabLineFill", s:comment_fg, s:cursor_line, "")
+call s:h("TabLineSel", s:fg, s:bg, "")
+
+call s:h("Visual", "", s:selection, "")
+call s:h("VisualNOS", "", s:selection, "")
+
+call s:h("ColorColumn", "", s:color_col, "")
+call s:h("Conceal", s:fg, "", "")
+call s:h("Directory", s:blue, "", "")
+call s:h("VertSplit", s:vertsplit, s:vertsplit, "")
+call s:h("Folded", s:fg, "", "")
+call s:h("FoldColumn", s:fg, "", "")
+call s:h("SignColumn", s:fg, "", "")
+
+call s:h("MatchParen", s:blue, "", "underline")
+call s:h("SpecialKey", s:fg, "", "")
+call s:h("Title", s:green, "", "")
+call s:h("WildMenu", s:fg, "", "")
+" }
+
+
+" Syntax colors {
+" Whitespace is defined in Neovim, not Vim.
+" See :help hl-Whitespace and :help hl-SpecialKey
+call s:h("Whitespace", s:non_text, "", "")
+call s:h("NonText", s:non_text, "", "")
+call s:h("Comment", s:comment_fg, "", "italic")
+call s:h("Constant", s:cyan, "", "")
+call s:h("String", s:green, "", "")
+call s:h("Character", s:green, "", "")
+call s:h("Number", s:yellow, "", "")
+call s:h("Boolean", s:yellow, "", "")
+call s:h("Float", s:yellow, "", "")
+
+call s:h("Identifier", s:red, "", "")
+call s:h("Function", s:blue, "", "")
+call s:h("Statement", s:purple, "", "")
+
+call s:h("Conditional", s:purple, "", "")
+call s:h("Repeat", s:purple, "", "")
+call s:h("Label", s:purple, "", "")
+call s:h("Operator", s:fg, "", "")
+call s:h("Keyword", s:red, "", "")
+call s:h("Exception", s:purple, "", "")
+
+call s:h("PreProc", s:yellow, "", "")
+call s:h("Include", s:purple, "", "")
+call s:h("Define", s:purple, "", "")
+call s:h("Macro", s:purple, "", "")
+call s:h("PreCondit", s:yellow, "", "")
+
+call s:h("Type", s:yellow, "", "")
+call s:h("StorageClass", s:yellow, "", "")
+call s:h("Structure", s:yellow, "", "")
+call s:h("Typedef", s:yellow, "", "")
+
+call s:h("Special", s:blue, "", "")
+call s:h("SpecialChar", s:fg, "", "")
+call s:h("Tag", s:fg, "", "")
+call s:h("Delimiter", s:fg, "", "")
+call s:h("SpecialComment", s:fg, "", "")
+call s:h("Debug", s:fg, "", "")
+call s:h("Underlined", s:fg, "", "")
+call s:h("Ignore", s:fg, "", "")
+call s:h("Error", s:red, s:gutter_bg, "")
+call s:h("Todo", s:purple, "", "")
+" }
+
+
+" Plugins {
+" GitGutter
+call s:h("GitGutterAdd", s:green, s:gutter_bg, "")
+call s:h("GitGutterDelete", s:red, s:gutter_bg, "")
+call s:h("GitGutterChange", s:yellow, s:gutter_bg, "")
+call s:h("GitGutterChangeDelete", s:red, s:gutter_bg, "")
+" Fugitive
+call s:h("diffAdded", s:green, "", "")
+call s:h("diffRemoved", s:red, "", "")
+" }
+
+
+" Git {
+call s:h("gitcommitComment", s:comment_fg, "", "")
+call s:h("gitcommitUnmerged", s:red, "", "")
+call s:h("gitcommitOnBranch", s:fg, "", "")
+call s:h("gitcommitBranch", s:purple, "", "")
+call s:h("gitcommitDiscardedType", s:red, "", "")
+call s:h("gitcommitSelectedType", s:green, "", "")
+call s:h("gitcommitHeader", s:fg, "", "")
+call s:h("gitcommitUntrackedFile", s:cyan, "", "")
+call s:h("gitcommitDiscardedFile", s:red, "", "")
+call s:h("gitcommitSelectedFile", s:green, "", "")
+call s:h("gitcommitUnmergedFile", s:yellow, "", "")
+call s:h("gitcommitFile", s:fg, "", "")
+hi link gitcommitNoBranch gitcommitBranch
+hi link gitcommitUntracked gitcommitComment
+hi link gitcommitDiscarded gitcommitComment
+hi link gitcommitSelected gitcommitComment
+hi link gitcommitDiscardedArrow gitcommitDiscardedFile
+hi link gitcommitSelectedArrow gitcommitSelectedFile
+hi link gitcommitUnmergedArrow gitcommitUnmergedFile
+" }
+
+" Fix colors in neovim terminal buffers {
+  if has('nvim')
+    let g:terminal_color_0 = s:black.gui
+    let g:terminal_color_1 = s:red.gui
+    let g:terminal_color_2 = s:green.gui
+    let g:terminal_color_3 = s:yellow.gui
+    let g:terminal_color_4 = s:blue.gui
+    let g:terminal_color_5 = s:purple.gui
+    let g:terminal_color_6 = s:cyan.gui
+    let g:terminal_color_7 = s:white.gui
+    let g:terminal_color_8 = s:black.gui
+    let g:terminal_color_9 = s:red.gui
+    let g:terminal_color_10 = s:green.gui
+    let g:terminal_color_11 = s:yellow.gui
+    let g:terminal_color_12 = s:blue.gui
+    let g:terminal_color_13 = s:purple.gui
+    let g:terminal_color_14 = s:cyan.gui
+    let g:terminal_color_15 = s:white.gui
+    let g:terminal_color_background = s:bg.gui
+    let g:terminal_color_foreground = s:fg.gui
+  endif
+" }

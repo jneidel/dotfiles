@@ -80,7 +80,13 @@ o.termguicolors = false
 
 -- syntax highlighting
 vim.cmd( "syntax on" )
-vim.cmd( "colorscheme old_hope" )
+
+local is_light_mode = vim.fn.system("cat /tmp/light-mode 2>/dev/null")
+if is_light_mode == "1" then
+  vim.cmd("colorscheme light")
+else
+  vim.cmd("colorscheme old_hope")
+end
 
 -- enable autocomplete
 o.wildmode = "longest,list,full"
