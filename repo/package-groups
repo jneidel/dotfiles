@@ -474,7 +474,7 @@ noto-fonts-emoji Emojis
 mpd Music player daemon
 systemdu:mpd Enable mpd
 mpc mpd scripting client
-ncmpcpp-git mpd client
+ncmpcpp mpd client
 
 [anki]
 anki-bin SRS and flashcards
