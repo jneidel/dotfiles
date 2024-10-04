@@ -50,7 +50,7 @@ update_emoji_data() {
 
 is_on_blog() {
   if [ `i3-msg -t get_workspaces | jq ".[] | select(.focused == true) | .num"` = "1" ] \
-    && tmux list-sessions | grep "(attached)" | grep -e blog -e jneidel >/dev/null; then
+    && tmux list-sessions | grep "(attached)" | grep -e web >/dev/null; then
       true
   else
     false
@@ -66,7 +66,9 @@ fi
 choice="$(tac $EMOJI_DIR/$emoji_version.txt | rofi rofi -dmenu -i -lines 15 -eh 1 -p emoji)"
 if [ -n "$choice" ]; then
   if is_on_blog; then
-    echo -e $choice | cut -d\  -f2 | xargs xdotool type # :name:
+    echo -e $choice | cut -d\  -f2 |
+      sed 's/y/z/g; s/:/Ö/g; s/_/?/g' | # because I use a german keyboard layout
+      xargs xdotool type --clearmodifiers # :name:
   else
     echo -e $choice | cut -d\  -f1 | xargs xdotool type # unicode symbol
   fi
