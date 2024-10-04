@@ -131,6 +131,10 @@ super + S
   toggle-screenkey
 super + u
   gpt
+super + g
+  pick-hugo-article en
+super + G
+  pick-hugo-article de
 
 # xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
 

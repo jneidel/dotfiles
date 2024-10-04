@@ -1,0 +1,53 @@
+#! /bin/sh
+
+PROJECT=$WEB_HOME
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ pick-hugo-article LANG
+Pick out and insert an articles from within a given project.
+
+Parameters:
+  \$1: language to filter articles by, e.g.: en, de
+
+Example:
+  $ pick-hugo-article en
+EOF
+  exit
+fi
+
+hash rofi xdotool || exit 127
+
+lang=$1
+
+list_files() {
+  case $lang in
+    en)
+      find $PROJECT/content -name "*.md" | grep -vE "/.*\.\w+\.md"
+      break;;
+    de|*)
+      find $PROJECT/content -name "*.$lang.md"
+      break;;
+esac
+}
+
+transform_matches() {
+   sed </dev/stdin -E "s|$WEB_HOME/content/||; s|/index.?\w*.md||"
+}
+
+exclude_matches() {
+   grep </dev/stdin -v _
+}
+
+pick() {
+  list="$1"
+  echo "$list" | rofi rofi -dmenu -i -lines 15 -eh 1 -p "$lang articles" -auto-select
+}
+
+list="$(list_files | transform_matches | exclude_matches)"
+choice="$(pick "$list")"
+
+if [ -n "$choice" ]; then
+  echo $choice | sed 's/y/z/g; s/:/Ö/g; s|-|ß|g; s/_/?/g; s|/|-|g' | # because I use a german keyboard layout
+    xargs xdotool type --clearmodifiers
+fi

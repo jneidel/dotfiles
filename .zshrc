@@ -73,6 +73,7 @@ export FZF_DEFAULT_OPTS="--height 50% --no-mouse --ansi --color=16"
 
 ## User specific
 export KEYID=B29E6A7A7DFD16FA # GPG keyid
+export WEB_HOME=$HOME/code/web
 
 test -f "$HOME/.config/broot/launcher/bash/br" && source $HOME/.config/broot/launcher/bash/br
 
