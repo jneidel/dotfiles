@@ -46,6 +46,8 @@ map('i', ',,', '<Esc>/<++><CR>c4l')
 
 map("n", "<Leader>c", ':%y+ | call system("xclip -selection clipboard", @+) | echom "Copied the file\'s contents to clipboard"<CR>')
 
+map("n", "<Leader>j", ':e $ORG_PROGRESS<CR>')
+
 -- disable touchpad mouse scrolling
 -- see: https://stackoverflow.com/a/76845374
 map("", "<up>", "<nop>", { noremap = true })
