@@ -1,0 +1,57 @@
+#! /bin/sh
+
+DIR=$ORG_RESOURCES/LDR
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ ldr TITLE
+Create a life decision record from the template
+
+Parameters:
+  \$1: title
+
+Flags:
+  -print: print the created file instead of opening it in $EDITOR
+
+Example:
+  $ ldr "Decision on xyz"
+  $ ldr "Decision on xyz" -print
+EOF
+  exit
+fi
+
+hash $EDITOR || exit 127
+
+title="$1"
+isPrint=
+[ "$2" = "-print" ] && isPrint=1
+
+latest() {
+  find "$DIR" -mindepth 1 -maxdepth 1 | sort -V | tail -n1 | rev | cut -d/ -f1 | rev | cut -d: -f1 | cut -d\  -f2
+}
+
+template() {
+  cat <<EOF
+* $title
+  Status: Accepted
+
+** Context
+   <++>
+
+** Decision
+   <++>
+
+** Consequences
+   <++>
+EOF
+}
+
+next=$(($(latest) +1))
+file="$DIR/LDR $next: $title.norg"
+template >>"$file"
+
+if [ "$isPrint" -eq 1 ]; then
+  echo "$file"
+else
+  $EDITOR "$file"
+fi

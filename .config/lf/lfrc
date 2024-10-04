@@ -166,6 +166,15 @@ cmd create-resource ${{
   mkdir -p "$resource"
   lf -remote "send $id cd '$resource'" &
 }}
+cmd ldr %{{
+  printf "LDR title: "
+  read ans
+  if [ -n "$ans" ]; then
+    file="$(ldr "$ans" -print)"
+    lf -remote "send $id select '$file'"
+    lf -remote "send $id edit"
+  fi
+}}
 
 cmd on-cd &{{
   case "$PWD" in
@@ -308,6 +317,7 @@ map R reload
 map I gimp # [I]mage
 map L show-tasks
 map sr set reverse!
+map rd ldr
 ### fzf open
 map <a-d> fzf_dir
 map <a-f> fzf_file
