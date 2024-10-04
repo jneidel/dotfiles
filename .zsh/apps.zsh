@@ -106,7 +106,7 @@ alias license="legit put gpl-3.0"
 alias fcrontabe="fcrontab -e"
 alias sig="signal-name-resolution-failure inbox"
 alias mi="mediainfo"
-alias bs="bluelight stop"
+alias bl="bluelight"
 
 ### misc
 function dict {
@@ -326,3 +326,9 @@ _complete_post() {
   compadd -a categories
 }
 compdef _complete_post post
+
+_complete_bl() {
+  local cmds=(start stop)
+  compadd -a cmds
+}
+compdef _complete_bl bl
