@@ -207,6 +207,8 @@ cmd on-cd &{{
       lf -remote "send $id :set sortby time; set reverse"
       manage-task-view-pane "$PWD" &
       ;;
+    $HOME/code/web/_/newsletter)
+      lf -remote "send $id :set sortby ctime; set reverse";;
     *)
       # sort: alphabetical
       lf -remote "send $id :set sortby natural; set noreverse";;
