@@ -181,7 +181,7 @@ cmd on-cd &{{
     $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*)
       # sort: alphabetical (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set noreverse";;
-    $ORG_RESOURCES/LDR)
+    $ORG_RESOURCES/LDR|$ORG_AREAS/steuern/past)
       # sort: alphabetical, reverse (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set reverse";;
     $ORG_RESOURCES/* | $ORG_INBOX)
