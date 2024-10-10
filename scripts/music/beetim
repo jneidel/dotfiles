@@ -17,7 +17,6 @@ fi
 
 command -v beet >/dev/null || { echo "beet is not installed"; exit 1; }
 command -v disable-mullvad-for >/dev/null || { echo "disable-mullvad-for script is not in path"; exit 1; }
-command -v mv-music >/dev/null || { echo "mv-music script is not in path"; exit 1; }
 command -v findex >/dev/null || { echo "findex script is not in path"; exit 1; }
 command -v fix-mp3-dates >/dev/null || { echo "fix-mp3-dates script is not in path"; exit 1; }
 
@@ -28,7 +27,7 @@ disable-mullvad-for beet import -I "$@" && {
     echo "Removing $@"
     rm -r "$@"
   fi
-  findex $MUSIC_DIR/_imported -name "cover.jpg" 'echo "removing cover: $1"; rm "$1"' # remove covers
-  findex $MUSIC_DIR/_imported -name "cover.png" 'echo "removing cover: $1"; rm "$1"' # remove covers
+  # findex $MUSIC_DIR/_imported -name "cover.jpg" 'echo "removing cover: $1"; rm "$1"' # remove covers
+  # findex $MUSIC_DIR/_imported -name "cover.png" 'echo "removing cover: $1"; rm "$1"' # remove covers
   findex $MUSIC_DIR/_imported -name "*.mp3" 'fix-mp3-dates "$1"'
 }

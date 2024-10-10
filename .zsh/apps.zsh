@@ -322,7 +322,7 @@ _complete_gamechanger() {
 compdef _complete_gamechanger gamechanger
 
 _complete_post() {
-  local categories=(newsletter review essay dev guide project)
+  local categories=(newsletter review essay dev guide project recipe misc)
   compadd -a categories
 }
 compdef _complete_post post

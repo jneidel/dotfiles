@@ -9,6 +9,7 @@
 ; (gtk_accel_path "<Actions>/vectors/vectors-color-tag-brown" "")
 ; (gtk_accel_path "<Actions>/tools/tools-opacity-increase-skip" "<Primary>greater")
 ; (gtk_accel_path "<Actions>/tools/tools-vector" "b")
+; (gtk_accel_path "<Actions>/windows/windows-display-0004" "")
 ; (gtk_accel_path "<Actions>/view/view-scroll-left" "")
 ; (gtk_accel_path "<Actions>/image/image-convert-u8" "")
 ; (gtk_accel_path "<Actions>/tools/tools-airbrush-rate-increase" "")
