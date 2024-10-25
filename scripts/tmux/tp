@@ -68,9 +68,16 @@ is_config() {
 run_config() {
   tmuxinator start $PROJECT -p $DIR/tmuxinator/$PROJECT.yml
 }
+
 run_code_project() {
   tmuxinator start $PROJECT -p "$CODE_DIR/$PROJECT/$CODE_TMUXINATOR_FILE"
 }
 
-is_config && run_config
-run_code_project
+# Apply non-global tmux configuration
+( sleep 4s && tmux source-file -t "$PROJECT" "$HOME/.config/tmux/tmux.conf" ) >/dev/null 2>&1 &
+
+if is_config; then
+  run_config
+else
+  run_code_project
+fi
