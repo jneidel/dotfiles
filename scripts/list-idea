@@ -1,0 +1,61 @@
+#! /bin/sh
+
+LIST_OF_LIST_IDEAS="$ORG_AREAS/idea machine/10 ideas to write idea lists about.norg"
+OUTPUT_DIR="$ORG_INBOX"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ list-idea
+Pick a list of 10 ideas to write about and create a new file for it
+
+Given an input file ($LIST_OF_LIST_IDEAS), like this:
+* My list of idea lists
+
+** Ideas
+  ~ 1
+  ~ 2
+
+** Principles
+  - There are no stupid ideas.
+
+** Past lists
+
+
+One of the "Ideas" will be picked and appended to the "Past lists" section.
+The new file will have a name of the list as a filename and contain:
+
+There are no stupid ideas.
+
+~ <++>
+EOF
+  exit
+fi
+
+hash sed grep $EDITOR || exit 127
+
+result="$1"
+resultRaw="  ~ $result"
+if [ -z "$result" ]; then
+  # pick idea list
+  START=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f1)+2))
+  END=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f2)-1))
+  resultRaw="$(head "$LIST_OF_LIST_IDEAS" -n$END | tail -n +$START | shuf -n1)"
+  result="$(echo $resultRaw | cut -d~ -f2- | sed 's/^[[:space:]]*//')"
+  echo "Picked: $result"
+
+  # move line to end of file
+  lineNr="$(grep -F "$resultRaw" "$LIST_OF_LIST_IDEAS" -n | cut -d: -f1)"
+  sed -i "${lineNr}d" "$LIST_OF_LIST_IDEAS"
+fi
+echo "$resultRaw" >>"$LIST_OF_LIST_IDEAS"
+
+# select principles
+START=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f2)+2))
+END=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f3)-1))
+principles="$(head "$LIST_OF_LIST_IDEAS" -n$END | tail -n +$START | sed -E 's/^ *- //g')"
+
+# create file for new list
+newList="$OUTPUT_DIR/$result.norg"
+echo "\n${principles}\n\n~ <++>" >>"$newList"
+cd "$OUTPUT_DIR"
+$EDITOR "$newList"

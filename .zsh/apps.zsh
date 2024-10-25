@@ -107,6 +107,7 @@ alias fcrontabe="fcrontab -e"
 alias sig="signal-name-resolution-failure inbox"
 alias mi="mediainfo"
 alias bl="bluelight"
+alias idea="list-idea"
 
 ### misc
 function dict {
