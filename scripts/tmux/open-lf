@@ -1,0 +1,20 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ open-lf
+Open lf in default location, depending on tmux session
+EOF
+  exit
+fi
+
+hash tmux lf || exit 127
+
+tmux rename-window lf # for killlf
+
+attached_session=$(tmux list-sessions | grep -F '(attached)' | cut -d: -f1)
+if [ "$attached_session" = "web" ]; then
+  lf "$WEB_HOME"
+else
+  lf "$ORG"
+fi
