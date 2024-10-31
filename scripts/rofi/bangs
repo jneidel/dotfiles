@@ -66,9 +66,6 @@ case "$bang" in
     #       sleep 1 && $BROWSER $HOME/scripts/personal/youtube.html >/dev/null 2>&1
     #     } &
     #   fi;;
-  dot)
-    brave "https://jneidel.com/dot/$query"
-    exit;;
 esac
 
 query=`urlEncode "$query"`

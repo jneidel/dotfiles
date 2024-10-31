@@ -43,7 +43,7 @@ rm -rf ~/.gnome 2>/dev/null
 rm -rf ~/.zi 2>/dev/null
 rm -rf ~/.designer 2>/dev/null
 
-findex $ORG_MEDIA/phone/music -type d 'rmdir "$1"'
+findex $ORG_MEDIA/phone/music -type d 'rmdir "$1"' 2>/dev/null
 
 # move files into the right place
 # sentixDir="$ORG_AREAS/assets/Aktien/Der Markt/Sentix - Markt Sentiment"

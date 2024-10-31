@@ -28,9 +28,9 @@ get_input() {
 TITLE="$1"
 
 amount_input="$2"
-AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(2) )")
-AMOUNT_FRANCIS=$(node -e "console.log( ($AMOUNT_TOTAL*.4).toFixed(2) )")
-AMOUNT_ME=$(node -e "     console.log( ($AMOUNT_TOTAL*.6).toFixed(2) )")
+AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(3) )")
+AMOUNT_FRANCIS=$(node -e "console.log( ($AMOUNT_TOTAL*.3).toFixed(2) )")
+AMOUNT_ME=$(node -e "     console.log( ($AMOUNT_TOTAL*.7).toFixed(2) )")
 
 date_input="$3"
 DATE=$(date +%Y-%m-%d)

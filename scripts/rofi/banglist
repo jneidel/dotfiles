@@ -106,3 +106,4 @@ svg https://www.svgrepo.com/vectors/%s/
 media https://mediathekviewweb.de/#query=%s
 j https://jellyfin.neidel.xyz/web/index.html#/search.html?query=%s
 inv https://www.marketwatch.com/investing/stock/%s/company-profile?mod=mw_quote_tab
+i https://duckduckgo.com/?q=%s&ia=images&iax=images

@@ -48,6 +48,6 @@ list="$(list_files | transform_matches | exclude_matches)"
 choice="$(pick "$list")"
 
 if [ -n "$choice" ]; then
-  echo $choice | sed 's/y/z/g; s/:/Ö/g; s|-|ß|g; s/_/?/g; s|/|-|g' | # because I use a german keyboard layout
+  echo $choice | # | sed 's/y/z/g; s/:/Ö/g; s|-|ß|g; s/_/?/g; s|/|-|g' | # because I use a german keyboard layout
     xargs xdotool type --clearmodifiers
 fi
