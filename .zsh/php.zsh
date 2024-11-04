@@ -38,7 +38,7 @@ st() {
       s
       return 1
     fi
-    sytop php vendor/bin/phpunit $(echo $staged_files)
+    sytop php vendor/bin/phpunit --group=$USER $(echo $staged_files)
   else
     sytop php vendor/bin/phpunit $@
   fi
