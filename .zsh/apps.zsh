@@ -249,22 +249,8 @@ bbo() {
 alias bbopen="bbo"
 alias bbl="bb list"
 
-n() {
-  note="$@"
-  if [ -z "$note" ]; then
-    gen-note $ORG_INBOX
-  else
-    printf "Provide a name for this note: "
-    read ans
-    local filename="$ORG_INBOX/$(echo $note | sed 's|/| |g' | cut -c-60)….norg"
-    if [ -n "$ans" ]; then
-      filename="$ORG_INBOX/$ans"
-    fi
-
-    echo "$note" >$filename
-    echo "Wrote to $filename"
-  fi
-}
+alias np="n p"
+alias na="n a"
 
 ssm() { # cd into currently playing mpd album
   ALBUM=`dirname "$(mpc-get file)"`

@@ -1,0 +1,59 @@
+#! /bin/zsh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ n [p|a|NOTE]
+Quickly add a note.
+
+Arguments:
+  - p: add inside a project, will ask you to choose a $ORG_PROJECTS
+  - a: add inside an area, will ask you to choose a $ORG_AREAS
+
+Parameters:
+  [\$1]: Contents of a note
+
+Example:
+  $ n
+  #=> opens editor to write note in, saved in $ORG_INBOX
+  $ n p
+  #=> pick project, opens editor to write note in, saved in $ORG_PROJECTS/*
+  $ n My note is abc
+  #=> asks for note title, saved in $ORG_INBOX
+EOF
+  exit
+fi
+
+hash gen-note || exit 127
+
+note="$@"
+if [ -z "$note" ]; then
+  gen-note $ORG_INBOX
+elif [ "$note" = "p" ]; then
+  declare -a project_dirs
+  while IFS= read -r dir; do
+      [[ -z "$dir" ]] && continue
+      project_dirs+=("$dir")
+  done < <(find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+
+  selected="$(gum filter ${project_dirs[*]})"
+  [ -n "$selected" ] && gen-note "$ORG_PROJECTS/$selected"
+elif [ "$note" = "a" ]; then
+  declare -a project_dirs
+  while IFS= read -r dir; do
+      [[ -z "$dir" ]] && continue
+      project_dirs+=("$dir")
+  done < <(find "$ORG_AREAS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+
+  selected="$(gum filter ${project_dirs[*]})"
+  [ -n "$selected" ] && gen-note "$ORG_AREAS/$selected"
+else
+  printf "Provide a name for this note: "
+  read ans
+  local filename="$ORG_INBOX/$(echo $note | sed 's|/| |g' | cut -c-60)….norg"
+  if [ -n "$ans" ]; then
+    filename="$ORG_INBOX/$ans"
+  fi
+
+  echo "$note" >$filename
+  echo "Wrote to $filename"
+fi

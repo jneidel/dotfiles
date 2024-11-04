@@ -74,6 +74,7 @@ reflector Update arch mirrorlist (update-mirrorlist)
 sshpass Automatic password login for ftp (ftpp)
 gnu-netcat Net utils (waitforinternet)
 mupdf Render pdfs on 2nd screen (cv)
+gum Utility lib for pretty shell scripts
 
 [conky]
 conky Desktop widgets

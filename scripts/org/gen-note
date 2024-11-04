@@ -15,7 +15,7 @@ command -v awk >/dev/null || { echo "awk is not installed" 1>&2; exit 127; }
 command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR is not set" 1>&2; exit 127; }
 
 dir="$1"
-[ ! -z "$dir" ] && cd $dir
+[ ! -z "$dir" ] && cd "$dir"
 tmp=$(mktemp --suffix=.norg)
 
 # generate and fix norg metadata
