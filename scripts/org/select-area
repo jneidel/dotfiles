@@ -1,0 +1,31 @@
+#! /bin/zsh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_AREAS" ]; then
+  cat <<EOF
+$ select-area
+Interactively select an area in $ORG_AREAS
+EOF
+  exit
+fi
+
+hash gum || exit 127
+
+declare -a areas
+while IFS= read -r dir; do
+  [[ -z "$dir" ]] && continue
+  areas+=("$dir")
+done < <(find "$ORG_AREAS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+
+area="$(gum filter ${areas[*]})"
+
+if [ -n "$area" ]; then
+  if [ -d "$ORG_AREAS/$area/.inbox" ]; then
+    echo "$area/.inbox"
+  elif [ -d "$ORG_AREAS/$area/_inbox" ]; then
+    echo "$area/_inbox"
+  elif [ -d "$ORG_AREAS/$area/inbox" ]; then
+    echo "$area/inbox"
+  else
+    echo "$area"
+  fi
+fi

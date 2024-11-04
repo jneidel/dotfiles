@@ -1,0 +1,19 @@
+#! /bin/zsh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PROJECTS" ]; then
+  cat <<EOF
+$ select-area
+Interactively select an area in $ORG_PROJECTS
+EOF
+  exit
+fi
+
+hash gum || exit 127
+
+declare -a projects
+while IFS= read -r dir; do
+  [[ -z "$dir" ]] && continue
+  projects+=("$dir")
+done < <(find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+
+gum filter ${projects[*]}
