@@ -62,7 +62,7 @@ cmd move-to-archive %{{
 cmd move-to-local-archive %{{
   local filename="${f##*/}"
 
-  if echo $filename | grep -e🟡 -e🟢 -e🔴 >/dev/null; then
+  if echo $filename | grep -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
     lf -remote "send $id set-status-active '$f'"
     printf "Project has a status. Status was changed to active. To archive instead, remove status."
     return
@@ -134,7 +134,7 @@ cmd mkdir %{{
 cmd create-project ${{
   printf "Project dir name: "
   read ans
-  local project="$ORG_PROJECTS/$ans"
+  local project="$ORG_PROJECTS/$ORG_PROJECT_STATUS_ACTIVE $ans"
 
   mkdir -p "$project"
   lf -remote "send $id :cd '$project'; reload" &
@@ -178,7 +178,7 @@ cmd ldr %{{
 
 cmd on-cd &{{
   case "$PWD" in
-    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*)
+    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*|"$ORG_AREAS/geld: Börse/Hierarchie")
       # sort: alphabetical (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_RESOURCES/LDR|$ORG_AREAS/steuern/past)
@@ -223,37 +223,37 @@ cmd show-tasks %tmux split-window -v -l 30%; tmux select-pane -T 'task-view'; tm
 cmd set-status-active %{{
   local filename="${f##*/}"
   local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
-  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
     filenameWithoutEmojiPrefix=" $filename"
   fi
 
-  mv "$filename" "🟢$filenameWithoutEmojiPrefix" 2>/dev/null
-  lf -remote "send $id select '🟢$filenameWithoutEmojiPrefix'"
+  mv "$filename" "${ORG_PROJECT_STATUS_ACTIVE}${filenameWithoutEmojiPrefix}" 2>/dev/null
+  lf -remote "send $id select '${ORG_PROJECT_STATUS_ACTIVE}${filenameWithoutEmojiPrefix}'"
 }}
 cmd set-status-inactive %{{
   local filename="${f##*/}"
   local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
-  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
     filenameWithoutEmojiPrefix=" $filename"
   fi
 
-  mv "$filename" "🟡$filenameWithoutEmojiPrefix" 2>/dev/null
-  lf -remote "send $id select '🟡$filenameWithoutEmojiPrefix'"
+  mv "$filename" "${ORG_PROJECT_STATUS_INACTIVE}${filenameWithoutEmojiPrefix}" 2>/dev/null
+  lf -remote "send $id select '${ORG_PROJECT_STATUS_INACTIVE}${filenameWithoutEmojiPrefix}'"
 }}
 cmd set-status-blocked %{{
   local filename="${f##*/}"
   local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
-  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
     filenameWithoutEmojiPrefix=" $filename"
   fi
 
-  mv "$filename" "🔴$filenameWithoutEmojiPrefix" 2>/dev/null
-  lf -remote "send $id select '🔴$filenameWithoutEmojiPrefix'"
+  mv "$filename" "${ORG_PROJECT_STATUS_BLOCKED}${filenameWithoutEmojiPrefix}" 2>/dev/null
+  lf -remote "send $id select '${ORG_PROJECT_STATUS_BLOCKED}${filenameWithoutEmojiPrefix}'"
 }}
 cmd set-status-none %{{
   local filename="${f##*/}"
   local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
-  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
     filenameWithoutEmojiPrefix="$filename"
   fi
 
@@ -262,19 +262,19 @@ cmd set-status-none %{{
 }}
 cmd set-status-important %{{
   local filename="${f##*/}"
-  if echo $filename | grep -v -e🟡 -e🟢 -e🔴 >/dev/null; then
+  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
     printf "Only use with project that already have a status"
     exit 0
   fi
 
   local statusEmoji="$(echo $filename | cut -c1-4)" # the circles are 4 chars long, adjust if other emojis are introduced
   local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
-  if echo $filename | grep -e❗ >/dev/null; then
+  if echo $filename | grep -e$ORG_PROJECT_STATUS_IMPORTANT >/dev/null; then
     mv "$filename" "$statusEmoji $filenameWithoutEmojiPrefix"
     lf -remote "send $id select '$statusEmoji $filenameWithoutEmojiPrefix'"
   else
-    mv "$filename" "${statusEmoji}❗ $filenameWithoutEmojiPrefix"
-    lf -remote "send $id select '${statusEmoji}❗ $filenameWithoutEmojiPrefix'"
+    mv "$filename" "${statusEmoji}${ORG_PROJECT_STATUS_IMPORTANT} $filenameWithoutEmojiPrefix"
+    lf -remote "send $id select '${statusEmoji}${ORG_PROJECT_STATUS_IMPORTANT} $filenameWithoutEmojiPrefix'"
   fi
 }}
 
