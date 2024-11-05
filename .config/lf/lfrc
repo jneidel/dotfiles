@@ -50,6 +50,24 @@ cmd move-to-inbox %{{
   fi
   printf "Moved '${f##*/}' to inbox"
 }}
+cmd move-to-other-inbox ${{
+  local filename="${f##*/}"
+  org=$(gum filter dava jobdirecto)
+  if [ -n "$org" ]; then
+    inbox=$ORG_INBOX
+    case "$org" in
+      dava) inbox=$DAVA_ORG/0_inbox;;
+      jobdirecto) inbox=$JD_ORG/0_inbox;;
+    esac
+
+    if [ -e "$inbox/$filename" ]; then
+      mv "$f" "$inbox/$(date +%s)-$filename"
+    else
+      mv "$f" $inbox/
+    fi
+    printf "Moved '${f##*/}' to inbox"
+  fi
+}}
 cmd move-to-archive %{{
   local filename="${f##*/}"
   if [ -e "$ORG_ARCHIVE/$filename" ]; then
@@ -90,6 +108,32 @@ cmd move-to-designs %{{
   local filename="${f##*/}"
   mv "$f" "$ORG_DESIGN/0 inbox/"
   printf "Moved '${f##*/}' to design inbox"
+}}
+cmd move-to-project ${{
+  local filename="${f##*/}"
+  project="$(select-project)"
+  dir="$ORG_PROJECTS/$project"
+  if [ -n "$project" ] && [ -d "$dir" ]; then
+    if [ -e "$dir/$filename" ]; then
+      mv "$f" "$dir/$(date +%s)-$filename"
+    else
+      mv "$f" $dir/
+    fi
+    printf "Moved '${f##*/}' to project: $project"
+  fi
+}}
+cmd move-to-area ${{
+  local filename="${f##*/}"
+  area="$(select-area)"
+  dir="$ORG_AREAS/$area"
+  if [ -n "$area" ] && [ -d "$dir" ]; then
+    if [ -e "$dir/$filename" ]; then
+      mv "$f" "$dir/$(date +%s)-$filename"
+    else
+      mv "$f" $dir/
+    fi
+    printf "Moved '${f##*/}' to area: $area"
+  fi
 }}
 
 cmd gimp &gimp "$f" >/dev/null 2>&1
@@ -314,12 +358,14 @@ map <a-f> fzf_file
 ### move files
 map mm massmove
 map mi move-to-inbox
+map mI move-to-other-inbox
 map mA move-to-archive
-map ma move-to-local-archive
 map ml move-to-local-archive
 map mp move-to-paperless
 map mb move-to-blog-post-ideas
 map md move-to-designs
+map ma move-to-area
+map mP move-to-project
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
