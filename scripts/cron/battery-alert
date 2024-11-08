@@ -19,10 +19,10 @@ case `cat /etc/hostname` in
     BAT=$POWER/BAT0
     ;;
 esac
-CHARGE=`cat $BAT/energy_now`
-CAPACITY=`cat $BAT/energy_full`
 
 alert_at() {
+  CHARGE=`cat $BAT/energy_now`
+  CAPACITY=`cat $BAT/energy_full`
   ALERT_PERCENT=$1
 
   if [ "$IS_CHARGING" -eq 1 ]; then
@@ -39,6 +39,11 @@ alert_at() {
   fi
 }
 
-alert_at 4
-alert_at 20
-alert_at 50
+# comments specifify the order in which alerts will be triggered
+BAT=$POWER/BAT1 # external
+alert_at 15 # 1st
+alert_at 4  # 4th, after internal battery is empty
+
+BAT=$POWER/BAT0 # internal
+alert_at 50 # 2nd
+alert_at 20 # 3rd
