@@ -1,5 +1,8 @@
 #! /bin/sh
 
+DIR=`dirname $0`
+. $DIR/ledger.lib.sh
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
   cat <<EOF
 $ groceries TITLE AMOUNT DATE
@@ -9,50 +12,37 @@ Paid in cash
 Parameters:
   \$1: title of the transaction
   \$2: amount for the whole
-  \$3: date
+  \$3: $(date_doc_string)
 
 Example:
   $ groceries "Edeka" "18.5+5.6"
+  $ groceries "Edeka" "18.5+5.6" 02
+  $ groceries "Edeka" "18.5+5.6" t02
 EOF
   exit
 fi
 
-command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
-
-get_input() {
-  echo "$1"
-  read ans
-  echo $ans
-}
+hash node || exit 127
 
 TITLE="$1"
-
 amount_input="$2"
-AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(3) )")
-AMOUNT_FRANCIS=$(node -e "console.log( ($AMOUNT_TOTAL*.3).toFixed(2) )")
-AMOUNT_ME=$(node -e "     console.log( ($AMOUNT_TOTAL*.7).toFixed(2) )")
-
+calculate_split_amounts $amount_input "70/30"
 date_input="$3"
-DATE=$(date +%Y-%m-%d)
-if echo "$date_input" | grep -Fe '-' >/dev/null; then
-  DATE="$(date +%Y-)${date_input}"
-elif [ -n "$date_input" ]; then
-  DATE="$(date +%Y-%m-)${date_input}"
-fi
+parse_date_input "$date_input"
 
 print() {
   cat <<EOF
 $DATE $TITLE
-  ex:food:groceries        $AMOUNT_ME
-  [pot:leben]             -$AMOUNT_ME
-  person:francis           $AMOUNT_FRANCIS
-  [person:francis]        -$AMOUNT_FRANCIS
-  [owed]                   $AMOUNT_FRANCIS
-  [reserve]               -$AMOUNT_FRANCIS
+  ex:food:groceries        $AMOUNT_SPLIT_1
+  [pot:leben]             -$AMOUNT_SPLIT_1
+  person:francis           $AMOUNT_SPLIT_2
+  [person:francis]        -$AMOUNT_SPLIT_2
+  [owed]                   $AMOUNT_SPLIT_2
+  [reserve]               -$AMOUNT_SPLIT_2
   wallet                  -$AMOUNT_TOTAL
   [wallet]                 $AMOUNT_TOTAL
 
 EOF
 }
 
-print >>$LEDGER_FILE
+print >>$LEDGER_FILE && echo "Written to $LEDGER_FILE"

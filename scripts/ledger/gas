@@ -1,5 +1,8 @@
 #! /bin/sh
 
+DIR=`dirname $0`
+. $DIR/ledger.lib.sh
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
 $ gas AMOUNT DATE
@@ -8,47 +11,34 @@ Paid from shared account
 
 Parameters:
   \$1: amount for the whole
-  \$2: day of the month
+  \$2: $(date_doc_string)
 
 Example:
   $ gas 40.59
-  $ gas 40 03
+  $ gas 40.59 21
+  $ gas 40.59 t03
 EOF
   exit
 fi
 
-command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
-
-get_input() {
-  echo "$1"
-  read ans
-  echo $ans
-}
+hash node || exit 127
 
 amount_input="$1"
-AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(2) )")
-AMOUNT_SHARED=$(node -e "console.log( ($AMOUNT_TOTAL/2).toFixed(2) )")
-
+calculate_split_amounts $amount_input
 date_input="$2"
-DATE=$(date +%Y-%m-%d)
-if echo "$date_input" | grep -Fe '-' >/dev/null; then
-  DATE="$(date +%Y-)${date_input}"
-elif [ -n "$date_input" ]; then
-  DATE="$(date +%Y-%m-)${date_input}"
-fi
+parse_date_input "$date_input"
 
 print() {
   cat <<EOF
-
 $DATE Tanken
-  ex:car:gas               $AMOUNT_SHARED
-  [pot:leben]             -$AMOUNT_SHARED
+  ex:car:gas               $AMOUNT_SPLIT_1
+  [pot:leben]             -$AMOUNT_SPLIT_1
   shared                  -$AMOUNT_TOTAL
   [shared]                 $AMOUNT_TOTAL
-  bal                      $AMOUNT_SHARED
-  [bal]                   -$AMOUNT_SHARED
+  bal                      $AMOUNT_SPLIT_2
+  [bal]                   -$AMOUNT_SPLIT_2
 
 EOF
 }
 
-print >>$LEDGER_FILE
+print >>$LEDGER_FILE && echo "Written to $LEDGER_FILE"

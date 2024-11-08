@@ -1,5 +1,8 @@
 #! /bin/sh
 
+DIR=`dirname $0`
+. $DIR/ledger.lib.sh
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
   cat <<EOF
 $ shared TITLE AMOUNT DATE
@@ -9,47 +12,35 @@ Paid from the shared account
 Parameters:
   \$1: title of the transaction
   \$2: amount for the whole
-  \$3: date
+  \$3: $(date_doc_string)
 
 Example:
-  $ shared "Baumark" "18.5+5.6"
+  $ shared "Baumarkt" "18.5+5.6"
+  $ shared "Baumarkt" "18.5+5.6" 22
+  $ shared "Baumarkt" "18.5+5.6" t22
 EOF
   exit
 fi
 
-command -v node >/dev/null || { echo "node is not installed" 1>&2; exit 127; }
-
-get_input() {
-  echo "$1"
-  read ans
-  echo $ans
-}
+hash node || exit 127
 
 TITLE="$1"
-
 amount_input="$2"
-AMOUNT_TOTAL=$(node -e "console.log( ($amount_input).toFixed(2) )")
-AMOUNT_HALF=$(node -e "console.log( ($AMOUNT_TOTAL/2).toFixed(2) )")
-
+calculate_split_amounts $amount_input
 date_input="$3"
-DATE=$(date +%Y-%m-%d)
-if echo "$date_input" | grep -Fe '-' >/dev/null; then
-  DATE="$(date +%Y-)${date_input}"
-elif [ -n "$date_input" ]; then
-  DATE="$(date +%Y-%m-)${date_input}"
-fi
+parse_date_input "$date_input"
 
 print() {
   cat <<EOF
-$DATE $TITLE
-  ex:                      $AMOUNT_HALF
-  [pot:leben]             -$AMOUNT_HALF
-  bal                      $AMOUNT_HALF
-  [bal]                   -$AMOUNT_HALF
+$DATE ! $TITLE
+  ex                       $AMOUNT_SPLIT_1
+  [pot:leben]             -$AMOUNT_SPLIT_1
+  bal                      $AMOUNT_SPLIT_2
+  [bal]                   -$AMOUNT_SPLIT_2
   shared                  -$AMOUNT_TOTAL
   [shared]                 $AMOUNT_TOTAL
 
 EOF
 }
 
-print >>$LEDGER_FILE
+print >>$LEDGER_FILE && echo "Written to $LEDGER_FILE"
