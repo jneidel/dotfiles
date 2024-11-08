@@ -16,11 +16,10 @@ Example:
 fi
 
 command -v beet >/dev/null || { echo "beet is not installed"; exit 1; }
-command -v disable-mullvad-for >/dev/null || { echo "disable-mullvad-for script is not in path"; exit 1; }
 command -v findex >/dev/null || { echo "findex script is not in path"; exit 1; }
 command -v fix-mp3-dates >/dev/null || { echo "fix-mp3-dates script is not in path"; exit 1; }
 
-disable-mullvad-for beet import -I "$@" && {
+beet import -I "$@" && {
   printf "Remove imported files? (y/N): "
   read -r res
   if [ "$res" = "y" ]; then

@@ -32,11 +32,7 @@ run_yay() {
   sudo pacman -Syu
   reapply_X_settings
 
-  if command -v disable-mullvad-for >/dev/null; then
-    disable-mullvad-for yay --color=always --noconfirm
-  else
-    yay --color=always --noconfirm
-  fi
+  yay --color=always --noconfirm
   reapply_X_settings
 
   yay -Qtdq | yay -Rsn --noconfirm -

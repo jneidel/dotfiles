@@ -214,6 +214,7 @@ outcome:
   - empty whatsapp
 
 EOF
+  $BROWSER "https://web.whatsapp.com/" >/dev/null 2>&1 &
   prompt_continue
 }
 

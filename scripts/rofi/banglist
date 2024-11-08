@@ -107,3 +107,5 @@ media https://mediathekviewweb.de/#query=%s
 j https://jellyfin.neidel.xyz/web/index.html#/search.html?query=%s
 inv https://www.marketwatch.com/investing/stock/%s/company-profile?mod=mw_quote_tab
 i https://duckduckgo.com/?q=%s&ia=images&iax=images
+wb https://www.worldofbooks.com/de-de/search?q=%s
+o https://org-search.neidel.xyz/?query=%s
