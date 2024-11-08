@@ -1,8 +1,8 @@
 # npm
 
 ## install
-alias _npm="disable-mullvad-for npm"
-alias _sudonpm="disable-mullvad-for sudo npm"
+alias _npm="npm"
+alias _sudonpm="sudo npm"
 
 alias ni="_npm install"
 alias nid="ni --save-dev"
