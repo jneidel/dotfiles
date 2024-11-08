@@ -131,6 +131,7 @@
     (define-key org-mode-map (kbd "C-c C-+") 'org-table-iterate)
     (evil-define-key "normal" org-mode-map (kbd "g i") 'org-toggle-inline-images)
     )
+(require 'org-tempo) ;; for <q TAB and more completions
 
 (require 'move-border)
 
