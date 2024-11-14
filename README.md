@@ -459,7 +459,7 @@ Ordered by importance and pretty much complete.
 | CamScanner | Document scanner (pro) | [gplay](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
 | Vinyl | Full featured music player | [fdroid](https://f-droid.org/packages/com.poupa.vinylmusicplayer/) [gplay](https://play.google.com/store/apps/details?id=com.poupa.vinylmusicplayer) [git](https://github.com/AdrienPoupa/VinylMusicPlayer) |
 | VLC | Generic player | [fdroid](https://f-droid.org/en/packages/org.videolan.vlc/) [gplay](https://play.google.com/store/apps/details?id=org.videolan.vlc) |
-| OI Shopping List | Shopping list | [fdroid](https://f-droid.org/packages/org.openintents.shopping) [gplay](https://play.google.com/store/apps/details?id=org.openintents.shopping) |
+| OI Shopping List | Shopping list | [fdroid](https://f-droid.org/packages/org.openintents.shopping) |
 | OsmAnd | Navigation | [fdroid](https://f-droid.org/packages/net.osmand.plus/) [gplay](https://play.google.com/store/apps/details?id=net.osmand) |
 | f.lux | Bluelight filter (root) | [gplay](https://play.google.com/store/apps/details?id=com.justgetflux.flux) [website](https://justgetflux.com/) |
 | Audiobook-shelf | Audiobook player (served from home server, with offline sync) | [homepage](https://www.audiobookshelf.org/) [gplay](https://play.google.com/store/apps/details?id=com.audiobookshelf.app) |
@@ -479,9 +479,9 @@ Ordered by importance and pretty much complete.
 | Every Door | OSM Editor for shops | [fdroid](https://f-droid.org/en/packages/info.zverev.ilya.every_door/) |
 | Vespucci | Complete OSM Editor | [fdroid](https://f-droid.org/en/packages/de.blau.android) |
 | Otter | Transcribe spoken language | [gplay](https://play.google.com/store/apps/details?id=com.aisense.otter) |
-| Micopi+ | Generate profile picture for contacts | [fdroid](https://f-droid.org/en/packages/com.easytarget.micopi) |
 | KeePass DX | Mobile keepass database | [fdroid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre) [gplay](https://play.google.com/store/apps/details?id=com.kunzisoft.keepass.free) |
 | FBReader | Ebook reader | [fdroid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [gplay](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [git](https://github.com/geometer/FBReaderJ) |
+| Micopi+ | Generate profile picture for contacts | [git](https://github.com/easytarget2000/micopi_android) |
 | WhatsApp | Required messenging ||
 
 <details>
@@ -489,17 +489,17 @@ Ordered by importance and pretty much complete.
 
 | name | description | links |
 |--|--|--|
+| NewPipe | Youtube without ads | [fdroid](https://f-droid.org/en/packages/org.schabi.newpipe/) |
 | DAVx⁵ | CalDAV sync | [fdroid](https://f-droid.org/packages/at.bitfire.davdroid/) [website](https://www.davx5.com) [setup explaination](docs/caldav.md) |
 | DNS66 | Mobile hosts file | [fdroid](https://f-droid.org/en/packages/org.jak_linux.dns66) |
 | primitive ftpd | ftp server | [fdroid](https://f-droid.org/en/packages/org.primftpd/) [git](https://github.com/wolpi/prim-ftpd) |
-| NewPipe SponsorBlock | Youtube with adblock capabilities | [apk](https://github.com/polymorphicshade/NewPipe/releases) [git](https://github.com/polymorphicshade/NewPipe) |
+| M.A.L.P. | MPD client | [fdroid](https://f-droid.org/en/packages/org.gateshipone.malp) |
 | AudioAnchor | Audiobook player | [fdroid](https://f-droid.org/packages/com.prangesoftwaresolutions.audioanchor/) |
 | Simple Calendar | Calendar | [fdroid](https://f-droid.org/packages/com.simplemobiletools.calendar.pro/) [git](https://github.com/SimpleMobileTools/Simple-Calendar) |
-| M.A.L.P. | MPD client | [fdroid](https://f-droid.org/en/packages/org.gateshipone.malp) |
 | My Expenses | Expense/income tracker, with exports | [fdroid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [gplay](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [git](https://github.com/mtotschnig/MyExpenses) |
 | Productivity Challenge Timer | Optimized pomodoro clock | [gplay](https://play.google.com/store/apps/details?id=com.wlxd.pomochallenge) |
 | JuiceSSH | Mobile mosh (ssh) client | [fdroid](https://play.google.com/store/apps/details?id=com.sonelli.juicessh) |
-| MX Player | Video player (better than vlc) | [gplay](https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.pro) |
+| MX Player | Video player (better than vlc) ||
 | Anki | Flashcards | [fdroid](https://f-droid.org/en/packages/com.ichi2.anki/) [gplay](https://play.google.com/store/apps/details?id=com.ichi2.anki) [git](https://github.com/ankidroid/Anki-Android) |
 | MuPDF | PDF viewer | [fdroid](https://f-droid.org/en/packages/com.artifex.mupdf.viewer.app) |
 | Markor | Markdown editor, notes app | [fdroid](https://f-droid.org/en/packages/net.gsantner.markor/) [gplay](https://play.google.com/store/apps/details?id=net.gsantner.markor) [git](https://github.com/gsantner/markor) |
@@ -514,7 +514,6 @@ Ordered by importance and pretty much complete.
 | Tape Measure | Measure distances in an image | [fdroid](https://f-droid.org/en/packages/org.secuso.privacyfriendlytapemeasure) |
 | Voice | Audiobook player (more formats than audiopo, but inferior interface) | [fdroid](https://f-droid.org/en/packages/de.ph1b.audiobook) |
 | Scrambled Exif | Remove metadata from images before sharing them | [fdroid](https://f-droid.org/en/packages/com.jarsilio.android.scrambledeggsif) |
-| MPDroid | Alternative MPD client | [fdroid](https://f-droid.org/en/packages/com.namelessdev.mpdroid) |
 | Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [gplay](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
 
 </details>
