@@ -9,7 +9,8 @@ document the changes that I've done.
 
 <!-- big screenshots here -->
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -17,21 +18,31 @@ document the changes that I've done.
   - [zsh (shell)](#zsh-shell)
   - [tmux (terminal mutiplexer)](#tmux-terminal-mutiplexer)
   - [neovim (terminal editor)](#neovim-terminal-editor)
+  - [lf (file manager)](#lf-file-manager)
   - [git (version control)](#git-version-control)
   - [mpd + ncmpcpp (music player)](#mpd--ncmpcpp-music-player)
   - [remind (calendar)](#remind-calendar)
+  - [newsboat (RSS feed reader)](#newsboat-rss-feed-reader)
+  - [hledger (accounting)](#hledger-accounting)
+  - [& more](#-more)
 - [GUI apps](#gui-apps)
   - [kitty (terminal)](#kitty-terminal)
+  - [emacs (editor)](#emacs-editor)
   - [mpv (video/audio player)](#mpv-videoaudio-player)
   - [rofi (application launcher/dmenu)](#rofi-application-launcherdmenu)
-  - [brave (browser)](#brave-browser)
-  - [signal (messaging)](#signal-messaging)
+  - [signal (messager)](#signal-messager)
+  - [transmission (torrent daemon)](#transmission-torrent-daemon)
+  - [GIMP (photoshop)](#gimp-photoshop)
+  - [Keepass (password manager)](#keepass-password-manager)
+  - [Syncthing (dropbox)](#syncthing-dropbox)
+  - [& more](#-more-1)
 - [System apps](#system-apps)
-  - [sxhkd (hotkey daemon)](#sxhkd-hotkey-daemon)
   - [i3 (window manager)](#i3-window-manager)
+  - [sxhkd (hotkey daemon)](#sxhkd-hotkey-daemon)
   - [lock screen](#lock-screen)
-- [Browser Extensions](#browser-extensions)
-  - [Required](#required)
+  - [pipewire (audio)](#pipewire-audio)
+- [Browser & Extensions](#browser--extensions)
+  - [Essential extensions](#essential-extensions)
   - [Useful](#useful)
   - [Privacy](#privacy)
   - [Maybe](#maybe)
@@ -39,6 +50,7 @@ document the changes that I've done.
 - [MacOS](#macos)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+</details>
 
 ## Terminal apps
 
@@ -50,19 +62,21 @@ I'm using a stripped down version of
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) with a lot of custom
 aliases.
 
-- [main config](.zshrc)
-- [secondary configs, aliases](.zsh)
+- [entrypoint](.zshrc)
+- [configs, aliases](.zsh)
 - [theme](.zsh/cobalt2.zsh-theme)
 
 ### tmux (terminal mutiplexer)
 
 Multiple shells within the same terminal, screen splitting and [much more](https://github.com/tmux/tmux/wiki).
+With [tmuxinator](https://github.com/tmuxinator/tmuxinator) and my
+[tp](scripts/tmux/tp) script I start all my projects from a configured tmux session.
 
-- [main config](.config/tmux/tmux.conf)
-- [scripts](scripts/tmux)
+- [config](.config/tmux/tmux.conf)
+- [helper scripts](scripts/tmux)
 - [terminfo](.config/tmux/tmux-256color.terminfo)
 
-![](images/tmux.png)
+![tmux](images/tmux.png)
 
 To supports italic fonts, enable the terminal capabilities with:
 
@@ -72,16 +86,34 @@ tic -x .config/tmux/tmux-256color.terminfo
 
 ### neovim (terminal editor)
 
-Neovim with custom macros, hooks and a few plugins.
+[Neovim](https://neovim.io/) with custom macros, hooks and a few plugins.
+
+I am in the process of migrating to [emacs](#emacs-editor), after I hit the limits
+of neovim's extensibility.
 
 - [config entrypoint](.config/nvim)
+- [list of plugins and projects](https://github.com/stars/jneidel/lists/neo-vim)
 
-![](images/vim.png)
+![Neovim](images/neovim.png)
+
+### lf (file manager)
+
+[lf](https://github.com/gokcehan/lf) is a quick and relatively scriptable
+file manager.
+
+I got it configured with [uberzug](https://github.com/ueber-devel/ueberzug)
+for terminal image preview inside of [tmux](#tmux-terminal-mutiplexer) and many custom keybindings.
+
+- [lfrc](.config/lf/lfrc)
+- [cleaner, preview and utility scripts](.config/lf)
+
+![lf](./images/lf.png)
 
 ### git (version control)
 
 - [global config](.config/git/config)
 - [global gitignore](.config/git/ignore)
+- [aliases](.zsh/git.zsh)
 
 ### mpd + ncmpcpp (music player)
 
@@ -90,8 +122,10 @@ Music player daemon and its client.
 - [my music setup in detail](docs/music.md)
 - [mpd config](.config/mpd/mpd.conf)
 - [ncmpcpp configs](.config/ncmpcpp)
+- [control-mpd script](scripts/sxhkd/control-mpd) (called from [sxhkd](#sxhkd-hotkey-daemon))
+- [scripts](scripts/music) for managing and importing music
 
-![](images/ncmpcpp.png)
+![ncmpcpp](images/ncmpcpp.png)
 
 ### remind (calendar)
 
@@ -101,6 +135,9 @@ normal GUI calendars too much and were imo just loosing in comparison.
 `remind` does it's own thing. It's a powerful DSL (domain specific language)
 where you define all of your entries in a text file. With this approach you can model
 some very sophisticated recurring entries like you've never seen before.
+
+<details>
+<summary>Syntax demo</summary
 
 ```remind
 # simple stuff:
@@ -123,11 +160,43 @@ REM 2021-05-18 *14 AFTER SATISFY [trigdate() < realtoday()+3 && trigdate() >= re
 OMIT Oct 3 SPECIAL COLOR 175 175 25 Tag der Deutschen Einheit
 # and push back garbage day to the day AFTER
 ```
+</details>
 
 - [Offical website](https://dianne.skoll.ca/projects/remind)
 - [aliases](.zsh/apps/remind.zsh)
 
 ![remind calendar view](images/remind.png)
+
+### newsboat (RSS feed reader)
+
+[Stable RSS feed reader](https://newsboat.org/).
+
+Use for reading [newsletters](https://kill-the-newsletter.com/),
+[manga](https://manga4life.com/), receiving [album updates](https://muspy.com/) for followed artists,
+youtube, notification of github released for packages I'm maintaining and
+more.
+
+- [config](.config/newsboat/config)
+- [scripts](scripts/newsboat)
+    - [release aur pkg](scripts/newsboat/release-aur-from-rss)
+- [wait_for_newsboat alias](.zsh/apps.zsh)
+
+### hledger (accounting)
+
+[Plain text accounting](https://hledger.org/) for managing my finances.
+Allows me to do everything I need (which is not uncomplicated.)
+
+- [aliases](.zsh/apps/ledger.zsh)
+- [emacs mode](https://github.com/narendraj9/hledger-mode)
+
+![hledger](./images/hledger.png)
+
+### & more
+
+There are various other CLI apps I'm using.
+
+- see: [started projects](https://github.com/stars/jneidel/lists/cli-apps)
+- see: [awesome cli apps](https://github.com/agarrharr/awesome-cli-apps) list (that I maintain)
 
 ## GUI apps
 ### kitty (terminal)
@@ -135,8 +204,21 @@ OMIT Oct 3 SPECIAL COLOR 175 175 25 Tag der Deutschen Einheit
 Fast, easy to configure, batteries included.
 
 - [main config](.config/kitty/kitty.conf)
-- [main colorscheme](.config/kitty/jneidel-colors.conf)
-- see directory for [light setup](.config/kitty)
+- [dark colorscheme](.config/kitty/jneidel-colors.conf)
+- [script for launching light mode](scripts/apps/kitty-light)
+(see [logical integration](https://github.com/jneidel/dotfiles/commit/ebc0550) with neovim)
+
+### emacs (editor)
+
+Infinitely extensible, incredible documentation and self-help facilities and
+all the best plugins.
+
+The only logical choice after really considering the options.
+
+- [configs](.config/emacs)
+- [all the projects](https://github.com/stars/jneidel/lists/emacs) I'm using
+
+![emacs](./images/emacs.png)
 
 ### mpv (video/audio player)
 
@@ -144,25 +226,123 @@ Everything you'll ever need from a video player.
 
 - [config](.config/mpv/mpv.conf)
 - [keybindings](.config/mpv/input.conf)
-- [scripts](scripts/mpv)
+- [script](scripts/sxhkd/control-mpd) that controls both [mpd](#mpd--ncmpcpp-music-playe) and mpv together (called via [sxhkd](#sxhkd-hotkey-daemon))
+- [scripts](scripts/mpv) for socket/session management and remote control
 
-![](images/mpv.png)
+![mpv](images/mpv.png)
 
 ### rofi (application launcher/dmenu)
 
+Quickly filter a list.
+Use cases: start an application, open bookmarked page, search browser, insert a emoji/credit
+card number/IBAN/etc.
+
 - [config](.config/rofi/config.rasi)
 - [arc-dark colorscheme](.config/rofi/arc-dark.rasi)
-- [scripts](scripts/rofi)
+- [scripts dir](scripts/rofi)
+    - [bangs](scripts/rofi/bangs): search directly in many websites
+    - [emoji-picker](scripts/rofi/emoji-picker)
+    - [application-start](scripts/rofi/application-start)
+    - [networkmanager_dmenu](https://github.com/firecat53/networkmanager-dmenu): manage (wifi) networks
 
-![](images/rofi.png)
+![rofi](images/rofi.png)
 
-### brave (browser)
+### signal (messager)
 
-- [extensions](#browser-extensions)
-- [color scheme](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
+Secure messenging.
+
+I use signal both as my primary messenger (95% of volume) and as a
+entrypoint to add notes to my note-taking system.
+
+**[signal-desktop](https://github.com/signalapp/Signal-Desktop)**
+
+Desktop notifications use [dunst](#dunst) (notification daemon).
+
+- see the [keyboard shortcuts](https://support.signal.org/hc/en-us/articles/360036517511-Signal-Desktop-Keyboard-Shortcuts)
+
+**For note-taking**
+
+I have a chat with a secondary number, which is registered on my sever.
+Messages sent to myself are created as notes in my note-taking system.
+
+- [signal-cli-to-file](https://github.com/jneidel/signal-cli-to-file): script that turns messages into notes
+
+### transmission (torrent daemon)
+
+I have a dockerized torrenting setup running 24/7 on my home server.
+See all details: [my torrent setup](https://www.jneidel.com/dev/transmission-behind-wireguard/)
+
+### GIMP (photoshop)
+
+Perfectly suitable [photo editing](https://www.gimp.org/).
+
+- [configs](.config/GIMP/2.10)
+
+### Keepass (password manager)
+
+Secure [password management](https://keepassxc.org/) outside of the cloud (don't trust somebody else
+with your most sensitive data.)
+Has browser sync and entry, one time passwords and everything I ever needed.
+
+### Syncthing (dropbox)
+
+Automatic background [sync](https://syncthing.net/) of all your data.
+[Description of my setup.](https://www.jneidel.com/guide/sync-notes/)
+
+### & more
+
+More GUI apps that I'm using: [starred projects](https://github.com/stars/jneidel/lists/gui-apps)
+
+## System apps
+
+I am using as my Xorg display server and it causes me no pain, so there is
+no incentive to migrate to Wayland.
+Wayland is undoubly the future, but at this point it doesn't support
+everything I need and the migration would require a significant effort.
+
+### i3 (window manager)
+
+Lightweight window manager.
+
+- [config](.config/i3/config)
+- [Wayland alternative](https://swaywm.org/)
+
+### sxhkd (hotkey daemon)
+
+The essential hotkey daemon.
+
+- [config](.config/sxhkd/sxhkdrc)
+
+### lock screen
+
+I use a [i3lock fork](https://github.com/Lixxia/i3lock)
+with a custom screenshot script and
+[fingerprint](https://github.com/uunicorn/python-validity) unlock.
+
+- [lock script](scripts/i3/lock/lock)
+
+![Lockscreen](images/lockscreen.png)
+
+### pipewire (audio)
+
+[Pipewire](https://wiki.archlinux.org/title/Pipewire) and [wireplumber](https://wiki.archlinux.org/title/WirePlumber) are next generation linux audio.
+Migration from pulseaudio was super easy.
+
+- [script to control volume](scripts/sxhkd/set-volume) (bound via [sxhkd](#sxhkd-hotkey-daemon))
+- [pipewire configs](.config/pipewire)
+- [wireguard configs](.config/wireplumber)
+- [pulsemixer](https://archlinux.org/packages/extra/any/pulsemixer/) app for manual control
+
+## Browser & Extensions
+
+In order of importance these are the browsers I use:
+
+- [Brave](https://github.com/brave/brave-browser)
+- Firefox
+- [ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium)
 
 <details>
-<summary>Manual Config</summary>
+<summary>Brave manual config steps</summary>
 
 **Disallow sites to ask if they can send notifications**
 
@@ -172,55 +352,13 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 
 </details>
 
-### signal (messaging)
 
-Secure messaging.
 
-**signal-desktop**
-
-My preferred way to use Signal.
-
-Notifications use [dunst](#dunst) (notification daemon).
-
-- [keyboard shortcuts](https://support.signal.org/hc/en-us/articles/360036517511-Signal-Desktop-Keyboard-Shortcuts)
-
-**signal-cli**
-
-Runs on my server under a different phone number to send (cron scheduled)
-messages to myself.
-
-- [signal-to-inbox](scripts/cron/signal-to-inbox): put messages into my inbox
-directory
-
-## System apps
-### sxhkd (hotkey daemon)
-
-The essential hotkey daemon.
-
-- [config](.config/sxhkd/sxhkdrc)
-
-### i3 (window manager)
-
-Lightweight window manager.
-
-- [config](.config/i3/config)
-
-### lock screen
-
-i3lock with a custom screenshot script.
-
-- [script](scripts/i3/lock/lock)
-
-![](images/lockscreen.png)
-
-## Browser Extensions
-
-**Theme:**
-I use **Arc Dark** as I based my terminal colorscheme on it.
+**Arc Dark** is my prefered theme (I based my terminal colorscheme on it.)
 [firefox](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme-we/)
 [chrome](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
 
-### Required
+### Essential extensions
 
 | name | description | links |
 |--|--|--|
@@ -312,35 +450,48 @@ If you need the google play store you can use [Aurora](https://auroraoss.com/)
 instead. It's an alternative play store interface, allowing for private
 downloads and a better UI.
 
-Ordered by importance.
+Ordered by importance and pretty much complete.
 
 | name | description | links |
 |--|--|--|
 | Signal | Privacy friendly messaging, end to end encrypted chat | [gplay](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) [git](https://github.com/signalapp/Signal-Android) [website](https://www.signal.org/) |
-| Simple Time Tracker | Smooth time tracker with widgets | [fdroid](https://f-droid.org/en/packages/com.razeeman.util.simpletimetracker/) [gplay](https://play.google.com/store/apps/details?id=com.razeeman.util.simpletimetracker) |
-| Öffi | Public transport planning | [fdroid](https://f-droid.org/en/packages/de.schildbach.oeffi/) [gplay](https://play.google.com/store/apps/details?id=de.schildbach.oeffi) |
-| f.lux | Bluelight filter (root) | [gplay](https://play.google.com/store/apps/details?id=com.justgetflux.flux) [website](https://justgetflux.com/) |
+| Simple Time Tracker | Smooth time tracker with widgets | [fdroid](https://f-droid.org/en/packages/com.razeeman.util.simpletimetracker/) [gplay](https://play.google.com/store/apps/details?id=com.razeeman.util.simpletimetracker) [git](https://github.com/Razeeman/Android-SimpleTimeTracker) |
+| CamScanner | Document scanner (pro) | [gplay](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
 | Vinyl | Full featured music player | [fdroid](https://f-droid.org/packages/com.poupa.vinylmusicplayer/) [gplay](https://play.google.com/store/apps/details?id=com.poupa.vinylmusicplayer) [git](https://github.com/AdrienPoupa/VinylMusicPlayer) |
 | VLC | Generic player | [fdroid](https://f-droid.org/en/packages/org.videolan.vlc/) [gplay](https://play.google.com/store/apps/details?id=org.videolan.vlc) |
 | OI Shopping List | Shopping list | [fdroid](https://f-droid.org/packages/org.openintents.shopping) [gplay](https://play.google.com/store/apps/details?id=org.openintents.shopping) |
-| K-9 Mail | Mail | [fdroid](https://f-droid.org/en/packages/com.fsck.k9) [sync-setup](https://github.com/k9mail/k-9/issues/857#issuecomment-397109350) [gplay](https://play.google.com/store/apps/details?id=com.fsck.k9) |
-| dict.cc | Offline dictionary | [gplay](https://play.google.com/store/apps/details?id=cc.dict.dictcc) |
-| DuckDuckGo | Browser | [fdroid](https://f-droid.org/en/packages/com.duckduckgo.mobile.android/) [gplay](https://play.google.com/store/apps/details?id=com.duckduckgo.mobile.android) |
-| CamScanner | Document scanner | [gplay](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
-| FBReader | Ebook reader | [fdroid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [gplay](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [git](https://github.com/geometer/FBReaderJ) |
 | OsmAnd | Navigation | [fdroid](https://f-droid.org/packages/net.osmand.plus/) [gplay](https://play.google.com/store/apps/details?id=net.osmand) |
-| DAVx⁵ | CalDAV sync | [fdroid](https://f-droid.org/packages/at.bitfire.davdroid/) [website](https://www.davx5.com) [setup explaination](docs/caldav.md) |
+| f.lux | Bluelight filter (root) | [gplay](https://play.google.com/store/apps/details?id=com.justgetflux.flux) [website](https://justgetflux.com/) |
+| Audiobook-shelf | Audiobook player (served from home server, with offline sync) | [homepage](https://www.audiobookshelf.org/) [gplay](https://play.google.com/store/apps/details?id=com.audiobookshelf.app) |
+| Syncthing-Fork | File sync (music and such) | [fdroid](https://f-droid.org/en/packages/com.github.catfriend1.syncthingandroid/) |
+| K-9 Mail | Mail | [fdroid](https://f-droid.org/en/packages/com.fsck.k9) [sync-setup](https://github.com/k9mail/k-9/issues/857#issuecomment-397109350) [gplay](https://play.google.com/store/apps/details?id=com.fsck.k9) |
+| Merriam Webster | English dictionary | [gplay](https://play.google.com/store/apps/details?id=com.merriamwebster) |
+| Alle Deutschen Wörterbücher | Germany dictionaries | [gplay](https://play.google.com/store/apps/details?id=com.copyharuki.germangermandictionaries) |
+| Öffi | Public transport planning | [fdroid](https://f-droid.org/en/packages/de.schildbach.oeffi/) [gplay](https://play.google.com/store/apps/details?id=de.schildbach.oeffi) |
+| DuckDuckGo | Browser | [fdroid](https://f-droid.org/en/packages/com.duckduckgo.mobile.android/) [gplay](https://play.google.com/store/apps/details?id=com.duckduckgo.mobile.android) |
+| Aurora | Google Play Store replacement (better with root) | [fdroid](https://f-droid.org/en/packages/com.aurora.store/) [website](https://auroraoss.com/) |
+| Claude | AI chatbot | [gplay](https://play.google.com/store/apps/details?id=com.anthropic.claude) |
+| DHL | Parcels | [gplay](https://play.google.com/store/apps/details?id=de.dhl.paket) |
+| Aves Libre | Photo gallery | [fdroid](https://f-droid.org/en/packages/deckers.thibault.aves.libre/) |
+| dict.cc | Offline dictionary | [gplay](https://play.google.com/store/apps/details?id=cc.dict.dictcc) |
+| p!n | Pin notes as notifications | [fdroid](https://f-droid.org/en/packages/de.nproth.pin/) [git](https://github.com/nproth/pin) |
+| SCEE (Street Complete Expert) | Fast OSM Editor | [fdroid](https://f-droid.org/en/packages/de.westnordost.streetcomplete.expert/) |
+| Every Door | OSM Editor for shops | [fdroid](https://f-droid.org/en/packages/info.zverev.ilya.every_door/) |
+| Vespucci | Complete OSM Editor | [fdroid](https://f-droid.org/en/packages/de.blau.android) |
+| Otter | Transcribe spoken language | [gplay](https://play.google.com/store/apps/details?id=com.aisense.otter) |
 | Micopi+ | Generate profile picture for contacts | [fdroid](https://f-droid.org/en/packages/com.easytarget.micopi) |
 | KeePass DX | Mobile keepass database | [fdroid](https://f-droid.org/en/packages/com.kunzisoft.keepass.libre) [gplay](https://play.google.com/store/apps/details?id=com.kunzisoft.keepass.free) |
-| DNS66 | Mobile hosts file | [fdroid](https://f-droid.org/en/packages/org.jak_linux.dns66) |
+| FBReader | Ebook reader | [fdroid](https://f-droid.org/packages/org.geometerplus.zlibrary.ui.android/) [gplay](https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&referrer=utm_source%3Dfbreader.org%26utm_medium%3Dbadge%26utm_content%3Dandroid-page-bottom%26utm_campaign%3Dbadge) [git](https://github.com/geometer/FBReaderJ) |
+| WhatsApp | Required messenging ||
 
 <details>
 <summary><strong>Previously in use</strong></summary>
 
 | name | description | links |
 |--|--|--|
+| DAVx⁵ | CalDAV sync | [fdroid](https://f-droid.org/packages/at.bitfire.davdroid/) [website](https://www.davx5.com) [setup explaination](docs/caldav.md) |
+| DNS66 | Mobile hosts file | [fdroid](https://f-droid.org/en/packages/org.jak_linux.dns66) |
 | primitive ftpd | ftp server | [fdroid](https://f-droid.org/en/packages/org.primftpd/) [git](https://github.com/wolpi/prim-ftpd) |
-| p!n | Pin notes as notifications | [fdroid](https://f-droid.org/en/packages/de.nproth.pin/) [git](https://github.com/nproth/pin) |
 | NewPipe SponsorBlock | Youtube with adblock capabilities | [apk](https://github.com/polymorphicshade/NewPipe/releases) [git](https://github.com/polymorphicshade/NewPipe) |
 | AudioAnchor | Audiobook player | [fdroid](https://f-droid.org/packages/com.prangesoftwaresolutions.audioanchor/) |
 | Simple Calendar | Calendar | [fdroid](https://f-droid.org/packages/com.simplemobiletools.calendar.pro/) [git](https://github.com/SimpleMobileTools/Simple-Calendar) |
@@ -365,11 +516,10 @@ Ordered by importance.
 | Scrambled Exif | Remove metadata from images before sharing them | [fdroid](https://f-droid.org/en/packages/com.jarsilio.android.scrambledeggsif) |
 | MPDroid | Alternative MPD client | [fdroid](https://f-droid.org/en/packages/com.namelessdev.mpdroid) |
 | Bluelight Filter | Filters the bluelight, easier on the eyes, set filter based on time | [gplay](https://play.google.com/store/apps/details?id=jp.ne.hardyinfinity.bluelightfilter.free) |
-| Vespucci | OSM Editor | [fdroid](https://f-droid.org/en/packages/de.blau.android) |
 
 </details>
 
 ## MacOS
 
-My OSX install is no longer maintained, but you can still [explore the files here](https://github.com/jneidel/dotfiles/tree/bd758ada365a9fc2e7d4dc0b456684cfe88dc2bd/osx).
-
+I also use this setup on macOS, though there is a lot of room for
+improvement.
