@@ -3,7 +3,7 @@
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ open-lf
-Open lf in default location, depending on tmux session
+Get default location to open lf in, depending on tmux session
 EOF
   exit
 fi
@@ -14,7 +14,11 @@ tmux rename-window lf # for killlf
 
 attached_session=$(tmux list-sessions | grep -F '(attached)' | cut -d: -f1)
 if [ "$attached_session" = "web" ]; then
-  lf "$WEB_HOME"
+  echo "$WEB_HOME"
 else
-  lf "$ORG"
+  echo "$ORG"
 fi
+
+# why not open lf here directly?
+# because the shell will not cd along with lf, so if I do a tmux split, I will end up in ~
+# I want to split and be in the same dir as lf
