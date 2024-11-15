@@ -5,8 +5,14 @@ OUTPUT_DIR="$ORG_INBOX"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ list-idea
+$ list-idea IDEA
 Pick a list of 10 ideas to write about and create a new file for it
+
+Arguments
+  \$1: name of the list idea to write
+
+Flags
+  -d: dry-run, only print the name of the list
 
 Given an input file ($LIST_OF_LIST_IDEAS), like this:
 * My list of idea lists
@@ -33,21 +39,32 @@ fi
 
 hash sed grep $EDITOR || exit 127
 
+dryrun=0
+[ "$1" = "-d" ] && dryrun=1
+
 result="$1"
 resultRaw="  ~ $result"
-if [ -z "$result" ]; then
+if [ -z "$result" ] || [ "$dryrun" -eq 1 ]; then
   # pick idea list
   START=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f1)+2))
   END=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f2)-1))
   resultRaw="$(head "$LIST_OF_LIST_IDEAS" -n$END | tail -n +$START | shuf -n1)"
   result="$(echo $resultRaw | cut -d~ -f2- | sed 's/^[[:space:]]*//')"
-  echo "Picked: $result"
+  if [ "$dryrun" -eq 1 ]; then
+    echo $result
+    printf "Move into done? (Y/n): "
+    read ans
+    [ "$ans" = "n" ] && exit 0
+  else
+    echo "Picked: $result"
+  fi
 
   # move line to end of file
   lineNr="$(grep -F "$resultRaw" "$LIST_OF_LIST_IDEAS" -n | cut -d: -f1)"
   sed -i "${lineNr}d" "$LIST_OF_LIST_IDEAS"
 fi
 echo "$resultRaw" >>"$LIST_OF_LIST_IDEAS"
+[ "$dryrun" -eq "1" ] && exit 0
 
 # select principles
 START=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f2)+2))
