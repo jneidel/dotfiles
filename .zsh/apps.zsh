@@ -98,7 +98,6 @@ lf() {
 ### shorter script names
 alias rc="rename-comic"
 alias shasum="sha256sum"
-alias mt="mullvad-toggle"
 alias ht="hosts-toggle"
 alias scim="sc-im" # guide: https://www.youtube.com/watch?v=K_8_gazN7h0
 alias sw="date +'%a %b %d'; raw-stopwatch"
@@ -129,12 +128,7 @@ gh() {
     grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
 }
 alias wcurl="curl -OJ" # better wget
-alias mr="disable-mullvad-for node ~/code/mr/dist/bin/cli.js d -o $ORG_MEDIA/manga -p mangalife"
-ms() {
-  is-mullvad && printf "\033[1;32mlockdown-mode is on\033[0m\n" || printf "\033[1;31mlockdown-mode set off\033[0m\n"
-  mullvad status
-}
-alias mre="mullvad disconnect && mullvad connect"
+alias mr="node ~/code/mr/dist/bin/cli.js d -o $ORG_MEDIA/manga -p mangalife"
 sentix() {
   curl -Ss "https://www.sentix.de/index.php/sentix-News/" |
     grep -Po '\K/index.php\?option=com_rokdownloads&amp;view=file.+?(?=")' -m1 |
@@ -155,6 +149,7 @@ wait_for_newsboat() {
 alias new="wait_for_newsboat clean"
 alias pod="wait_for_newsboat pod"
 alias misc="wait_for_newsboat misc"
+alias mu="wait_for_newsboat music"
 alias ma="wait_for_newsboat manga"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"

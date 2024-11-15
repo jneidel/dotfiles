@@ -67,8 +67,8 @@ choice="$(tac $EMOJI_DIR/$emoji_version.txt | rofi rofi -dmenu -i -lines 15 -eh 
 if [ -n "$choice" ]; then
   if is_on_blog; then
     echo -e $choice | cut -d\  -f2 |
-      sed 's/y/z/g; s/:/Ö/g; s/_/?/g' | # because I use a german keyboard layout
       xargs xdotool type --clearmodifiers # :name:
+      # sed 's/y/z/g; s/:/Ö/g; s/_/?/g' | # because I use a german keyboard layout
   else
     echo -e $choice | cut -d\  -f1 | xargs xdotool type # unicode symbol
   fi

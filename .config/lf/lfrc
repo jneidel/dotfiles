@@ -381,11 +381,11 @@ map mi move-to-inbox
 map mI move-to-other-inbox
 map mA move-to-archive
 map ml move-to-local-archive
-map mp move-to-paperless
+map mP move-to-paperless
 map mb move-to-blog-post-ideas
 map md move-to-designs
 map ma move-to-area
-map mP move-to-project
+map mp move-to-project
 map mr move-to-resource
 
 ### jump - cd to dirs

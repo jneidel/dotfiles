@@ -147,6 +147,7 @@ page() {
     fi
 
     clear
+
     if [[ "$VIEW" = "calendar" ]] && [[ "$PREFIX" = "+" ]]; then
         remind ${COLOR} -${MONDAYFIRST}cu${PREFIX}${WSPAN} -b${FORMAT} \
             -w${COLS}${SPACING} ${CUSTOM} ${INPUT} ${REF} 2>/dev/null

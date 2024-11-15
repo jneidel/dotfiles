@@ -27,6 +27,8 @@ ignore-article "https://04r1h.mrd.ninja/rss/bd82f3dd" "title =~ \"Error\""
 ignore-article "https://04r1h.mrd.ninja/rss/f1710958" "title =~ \"Error\""
 ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Small Presses\""
 ignore-article "https://04r1h.mrd.ninja/rss/7b0f0fac" "title =~ \"Analog Science Fiction\""
+ignore-article "https://github.com/signalapp/Signal-Desktop/releases.atom" "title =~ \"beta\"" # filter out beta
+ignore-article "https://github.com/zellij-org/zellij/releases.atom" "title =~ \"\.[^0]$\"" # filter out patches
 
 ## misc
 user-agent "newsboat/2.20.1 Linux"

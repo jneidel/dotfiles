@@ -57,7 +57,7 @@ test_lang() {
 test_lang
 
 calc_next_nr_of_next_newsletter() {
-  last_nr="$(find $WEB_HOME/content/newsletter -maxdepth 1 -mindepth 1 -type d | sort | tail -n1 | rev | cut -d/ -f1 | rev | cut -d- -f1)"
+  last_nr="$(find $WEB_HOME/content/newsletter -maxdepth 1 -mindepth 1 -type d | grep -v 2023 | sort -V | tail -n1 | rev | cut -d/ -f1 | rev | cut -d- -f1)"
   echo $(($last_nr +1))
 }
 

@@ -199,10 +199,9 @@ EOF
 
   split_below "Calendar" "remint"
 
-  printf "\nShow event calendar next\n"
-  prompt_continue
-
-  split_below "Events" "events; remint"
+  # printf "\nShow event calendar next\n"
+  # prompt_continue
+  # split_below "Events" "events; remint"
 
   prompt_continue
 }
@@ -269,7 +268,7 @@ outcome:
   - no unread feeds
 
 EOF
-  split_below "Newsboat" "new; misc"
+  split_below "Newsboat" "new; misc; apps"
 
   prompt_continue
 }
@@ -418,11 +417,11 @@ desk
 # bulletjournal
 camscanner
 pre_newsboat
-otter
+# otter
 newsboat
 browser_tabs
 calendar
-monica
+# monica
 pre_org_inbox
 # copy_accountability
 files

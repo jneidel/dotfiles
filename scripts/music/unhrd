@@ -16,10 +16,10 @@ EOF
 fi
 
 if [ "$1" = "-m" ]; then
-  du -sc -B M --apparent-size -L $ORG_MEDIA/music/[_m]* | # inverted match from below
+  du -sc -B M --apparent-size -L $ORG_MEDIA/music/[m]* | # inverted match from below
     tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'
   exit 0
 fi
 
-du -sc -B M --apparent-size -L $ORG_MEDIA/music/[^_m]* | # exclude anything starting w/ _ or m from match
+du -sc -B M --apparent-size -L $ORG_MEDIA/music/[^m]* | # exclude anything starting w/ m from match
   tail -n1 | cut -dM -f1 | ~/scripts/human-number | awk '{print $1" MB"}'
