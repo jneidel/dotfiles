@@ -135,6 +135,19 @@ cmd move-to-area ${{
     printf "Moved '${f##*/}' to area: $area"
   fi
 }}
+cmd move-to-resource ${{
+  local filename="${f##*/}"
+  resource="$(select-resource)"
+  dir="$ORG_RESOURCES/$resource"
+  if [ -n "$resource" ] && [ -d "$dir" ]; then
+    if [ -e "$dir/$filename" ]; then
+      mv "$f" "$dir/$(date +%s)-$filename"
+    else
+      mv "$f" $dir/
+    fi
+    printf "Moved '${f##*/}' to resource: $resource"
+  fi
+}}
 
 cmd gimp &gimp "$f" >/dev/null 2>&1
 
@@ -222,7 +235,7 @@ cmd ldr %{{
 
 cmd on-cd &{{
   case "$PWD" in
-    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*|"$ORG_AREAS/geld: Börse/Hierarchie")
+    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/geld|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*|"$ORG_AREAS/geld: Börse/Hierarchie")
       # sort: alphabetical (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_RESOURCES/LDR|$ORG_AREAS/steuern/past)
@@ -353,8 +366,14 @@ map L show-tasks
 map sr set reverse!
 map rd ldr
 ### fzf open
+
+### move into dir
 map <a-d> fzf_dir
 map <a-f> fzf_file
+map <a-a> $lf -remote "send $id cd '$ORG_AREAS/$(select-area)'"
+map <a-p> $lf -remote "send $id cd '$ORG_PROJECTS/$(select-project)'"
+map <a-r> $lf -remote "send $id cd '$ORG_RESOURCES/$(select-resource)'"
+
 ### move files
 map mm massmove
 map mi move-to-inbox
@@ -366,6 +385,7 @@ map mb move-to-blog-post-ideas
 map md move-to-designs
 map ma move-to-area
 map mP move-to-project
+map mr move-to-resource
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
