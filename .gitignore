@@ -38,5 +38,5 @@ repo/PKGBUILD/*
 .config/emacs/*
 !.config/emacs/init.el
 !.config/emacs/lisp
-.config/emacs/lisp/disabled
+!.config/emacs/lib
 !.config/emacs/an-old-hope-theme.el
