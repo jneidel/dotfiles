@@ -232,10 +232,13 @@ cmd ldr %{{
     lf -remote "send $id edit"
   fi
 }}
+cmd create-plan ${{
+  plan "./index.norg"
+}}
 
 cmd on-cd &{{
   case "$PWD" in
-    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/geld|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*|"$ORG_AREAS/geld: Börse/Hierarchie")
+    $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/geld|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*|"$ORG_AREAS/börse/Hierarchie")
       # sort: alphabetical (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set noreverse";;
     $ORG_RESOURCES/LDR|$ORG_AREAS/steuern/past)
@@ -342,6 +345,7 @@ map cp create-project
 map cd create-design
 map ca create-area
 map cr create-resource
+map cP create-plan
 
 ### own bindings
 map cb combine

@@ -23,7 +23,7 @@ fi
 hash $EDITOR || exit 127
 
 title="$1"
-isPrint=
+isPrint=0
 [ "$2" = "-print" ] && isPrint=1
 
 latest() {
