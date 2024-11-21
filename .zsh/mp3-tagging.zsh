@@ -53,3 +53,16 @@ function mpdcol() { # get cover & update cover once song changes
   mpdcoloop N1 &
 }
 
+idgi() { # add intrumental as genre
+  genre="$(eyeD3 * | grep -Po "genre: \K.+(?= \()" | head -n1)"
+
+  printf "Current genre is: $genre\nContinue? (Y/n) "
+  read ans
+  [ "$ans" = "n" ] && exit 0
+
+  if [ -n "$genre" ]; then
+    eyeD3 --genre "${genre}Instrumental" *
+  else
+    eyeD3 --genre "Instrumental" *
+  fi
+}
