@@ -52,13 +52,6 @@
 (setq evil-operator-state-tag (propertize "\u200b OPRTOR \u200b" 'face 'evil-normal-state-tag-face))
 (setq evil-emacs-state-tag "EMACS")
 
-;; <leader> and <localleader>
-;;;; use as (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
-(evil-set-leader nil (kbd "C-SPC"))
-(evil-set-leader 'normal (kbd "SPC"))
-;; local leader
-(evil-set-leader 'normal "," t)
-
 ;; TODO: fix and replace evil-commentary
 ;; (use-package smart-comment
 ;;   :config
