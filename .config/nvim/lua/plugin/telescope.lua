@@ -72,8 +72,7 @@ return {
       telescope.load_extension('fzf')
 
       -- fzf as alternative for the home directoy, as telescope is very slow there
-      vim.cmd( "let $FZF_DEFAULT_COMMAND = \"rg --ignore --hidden --files --type-add='exclude:*.{mp3,png,jpg,JPG,jpeg,pdf,mkv,mp4,avi,zip,ods,xlsx,m3u,url,aac,mpc,epub,sql,ydb}' --type-not=exclude --glob='!.git/' --glob '!git/' --glob '!node_modules/' --glob '!.cache' --glob '!vendor/' --glob '!teams-for-linux/' --glob '!.local/lib' --glob '!.local/share/*/' --glob '!BraveSoftware/' --glob '!chromium' --glob '!chrome/' --glob '!firefox/' --glob '!Signal' --glob '!.ib-tws/' --glob '!.java/' --glob '!.zcompcache' --glob '!tmp/' --glob='!ct/manga' --glob='!ct/comics' --glob='!dotfiles/' -g='!coverage' -g='!dist/' -g='!build/' -g='!.gradle/'\"" )
-      vim.cmd( "let $FZF_DEFAULT_OPTS = \"--bind TAB:up,Shift-TAB:down\"" )
+      vim.cmd( "let $FZF_DEFAULT_OPTS = \"-e --bind TAB:up,Shift-TAB:down\"" )
 
       vim.keymap.set("n", "<A-f>", ":Files<CR>", {});
       vim.keymap.set("n", "<A-s>", ":sp<CR> :Files<CR>", {});
