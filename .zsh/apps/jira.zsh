@@ -4,13 +4,14 @@ if [ "$(uname)" = "Darwin" ]; then
   # v to view
   # m to change state (move)
 
-  jira(){
+  _jira(){
     if [ -n "$1" ]; then
       fjira "ORFDV001-$1"
     else
       fjira -p ORFDV001
     fi
   }
+  alias jira="_jira" # fix error: "defining function based on alias" in non-activated if clause…
 else
   alias jira="fjira -p JD"
 fi
