@@ -5,7 +5,7 @@
 ; configure segments
 (defface grey-on-grey '((t ( :foreground "dim grey" :background "#1c1c1c")))
          "Grey on default background")
-(defface white-on-grey '((t ( :foreground "white" :background "#1c1c1c")))
+(defface white-on-grey '((t ( :foreground "floral white" :background "#1c1c1c")))
          "White on default background")
 
 (
@@ -86,22 +86,18 @@
       :priority 99)
     )
   )
+;; sources
+;;; https://github.com/TheBB/spaceline
+;;; https://github.com/domtronn/all-the-icons.el/wiki/Spaceline
 
 ;; activate
 (setq-default mode-line-format '("%e" (:eval (spaceline-ml-jneidel))))
 
-; configure colors
+; stop mode line from flashing on loss of focus (rofi, volume, brightness, etc.)
 (set-face-attribute 'mode-line nil
-                    :foreground "#1c1d20" ; needed?
-                    :background "#cbccd1"
-                    :box '(
-                           :line-width (1 . 1)
-                           :color "#1c1c1c"
-                           :style none))
+                    :box '(:line-width (1 . 1) :color "#1c1c1c" :style none))
 (set-face-attribute 'mode-line-inactive nil
-                    :inherit 'mode-line)
-
-;; without these the the bar flashes on loss of focus (e.g. rofi)
+                    :box '(:line-width (1 . 1) :color "#1c1c1c" :style none) :inherit 'mode-line)
 (set-face-attribute 'powerline-active0 nil
                     :background "#1c1c1c"
                     :inherit 'mode-line)
@@ -121,7 +117,4 @@
                     :background "#1c1c1c"
                     :inherit 'mode-line-inactive)
 
-;; sources
-;; https://github.com/TheBB/spaceline
-;; https://github.com/domtronn/all-the-icons.el/wiki/Spaceline
 (provide 'init-mode-line)

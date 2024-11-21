@@ -43,6 +43,7 @@
   "L" 'windmove-right
   "K" 'windmove-up
   "J" 'windmove-down
+  "C-S-j" 'evil-join ; reassign
   ;; resize windows and frames
   "M-H" 'move-border-left
   "M-L" 'move-border-right
