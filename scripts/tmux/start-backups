@@ -1,0 +1,14 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ start-backups
+EOF
+  exit
+fi
+
+hash tmux || exit 127
+
+tmux -u new-window -n "backups" -t main
+tmux send-keys "clear && ho" "Enter"
+tmux send-keys "cd config; lsblk" "Enter" "./sync-backup "

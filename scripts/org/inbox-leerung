@@ -15,6 +15,8 @@ EOF
 exit
 fi
 
+hash start-backups tmux || exit 127
+
 items_in_inbox=
 start_time=$(date +%s)
 
@@ -378,9 +380,7 @@ outcome:
   - sync started
 
 EOF
-  tmux -u new-window -n "backups" -t main
-  tmux send-keys "clear && ho" "Enter"
-  tmux send-keys "cd config; lsblk" "Enter" "./sync-backup "
+  start-backups
   prompt_continue
 }
 
