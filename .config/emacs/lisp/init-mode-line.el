@@ -75,7 +75,7 @@
       :face 'grey-on-grey
       :priority 9
       :separator " ")
-    ((buffer-size remote-host)
+    ((remote-host)
      :face 'grey-on-grey
      :priority 98)
     (global
