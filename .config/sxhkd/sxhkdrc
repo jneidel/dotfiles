@@ -115,8 +115,8 @@ super + Y
   ~/scripts/rofi/yt
 super + v
   ~/scripts/sxhkd/open_clip_mpv
-# super + a
-#   cnsm-add
+super + a
+  screenshot-chart take
 # super + t
 #   transmission-add
 super + z

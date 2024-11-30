@@ -1,0 +1,77 @@
+#! /bin/sh
+
+ENCOMPASSING_DIR="$TRADES_DIR"
+IMG_DIR="img"
+LATEST_IMG_LOCATION="/tmp/screenshot-chart_latest-img.txt"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ screenshot-chart
+Take a screenshot of a chart for the trading journal.
+File it accordingly and make file name available for further use.
+
+Commands:
+  take: take a screenshot, prompts for ticker symbol
+  get_latest: the get path of the latest screenshot
+    fomatted like this: $IMG_DIR/NAME.png
+EOF
+  exit
+fi
+
+hash scrot bc || exit 127
+
+SCREENSHOT_TEMP="/tmp/chart-scrot.png"
+calc_filename() {
+  # produce readable file names like:
+  #   AAPL 2024-11-24.png
+  #   AAPL 2024-11-24 2.png
+  ticker="$1"
+  postfix="$2"
+  filename="$IMG_DIR/$ticker $(date +'%Y-%m-%d')${postfix}.png"
+  if [ -f "$ENCOMPASSING_DIR/$filename" ]; then
+    if [ -z "$postfix" ]; then
+      calc_filename "$ticker" " 2"
+    else
+      postfixPlusN1=" $(echo "$postfix+1" | bc)"
+      calc_filename "$ticker" "$postfixPlusN1"
+    fi
+  else
+    echo "$filename"
+  fi
+}
+
+save_screenshot() {
+  ticker=$(rofi -dmenu -l 0 -theme-str 'window {width: 250px;}' -p Ticker | tr "[a-z]" "[A-Z]")
+  filename=`calc_filename "$ticker"`
+  mv "$SCREENSHOT_TEMP" "$ENCOMPASSING_DIR/$filename"
+  set_latest_screenshot "$filename"
+}
+
+take_screenshot() {
+  DELAY="1"
+  FORMAT="screenshot_%Y-%m-%d_%H:%M:%S.png"
+  notify-send "chart screenshot in ${DELAY}s" -t 1000 -i camera
+  sleep "$DELAY"s &&
+    /bin/scrot -F "$SCREENSHOT_TEMP" -z --freeze --select &&
+    save_screenshot
+}
+
+set_latest_screenshot() {
+  location="$1"
+  printf "$location" >$LATEST_IMG_LOCATION
+}
+get_latest_screenshot() {
+  LATEST_IMG=`cat $LATEST_IMG_LOCATION 2>/dev/null`
+  if [ -n "$LATEST_IMG" ]; then
+    echo "$LATEST_IMG"
+  else
+    false
+  fi
+}
+
+cmd="$1"
+case "$1" in
+  take) take_screenshot;;
+  get_latest) get_latest_screenshot;;
+  *) echo "Invalid command passed"; exit 1;;
+esac

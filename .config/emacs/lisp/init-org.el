@@ -38,6 +38,14 @@
   (interactive)
   (org-toggle-checkbox '(16)))
 
+(defun jneidel/insert-latest-chart-screenshot ()
+  "Insert the latest chart screenshot."
+  (interactive)
+  (let ((latest_chart (string-trim (shell-command-to-string "screenshot-chart get_latest"))))
+    (if (not (string-empty-p latest_chart))
+      (insert (format "[[file:%s]]\n" latest_chart))
+      (message "Take a chart screenshot first."))))
+
 ;; recalc formulas
 ;; TODO: enhance by checking if output is "Not a table" and running the command
 ;; of C-c C-c (recalc if on TBLFM)
@@ -47,6 +55,8 @@
                       )
 (evil-define-key "normal" org-mode-map
                  (kbd "g i") #'org-toggle-inline-images
+                 (kbd "g l") #'org-insert-link
+                 (kbd "g a") #'jneidel/insert-latest-chart-screenshot
                  (kbd "TAB") #'org-cycle
                  (kbd "M-j") #'org-metadown
                  (kbd "M-k") #'org-metaup
@@ -54,10 +64,12 @@
                  (kbd "M-l") #'org-metaright
                  (kbd "RET") #'jneidel/insert-org-list-item ;; RET in cal doesn't work anyway
                  (kbd "<S-return>") #'jneidel/insert-org-list-item-or-copy-down-table
+                 (kbd "C-c a") #'org-table-recalculate
                  (kbd "g t p") #'jneidel/org-set-checkbox-in-progress
                  )
 (evil-define-key "insert" org-mode-map
                  (kbd "<S-return>") #'jneidel/insert-org-list-item-or-copy-down-table
+                 (kbd "C-c a") #'org-table-recalculate
                  (kbd "<leader> d") #'org-ctrl-c-ctrl-c ;; toggle done/undone
                  )
 ;;; evil-define-key does not need with-eval-after-load and can assign multiple at once
