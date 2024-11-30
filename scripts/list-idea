@@ -44,24 +44,38 @@ dryrun=0
 
 result="$1"
 resultRaw="  ~ $result"
-if [ -z "$result" ] || [ "$dryrun" -eq 1 ]; then
-  # pick idea list
+
+pick_idea_list() {
   START=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f1)+2))
   END=$(($(grep "^$" "$LIST_OF_LIST_IDEAS" -n | tr -d "\n" | cut -d: -f2)-1))
   resultRaw="$(head "$LIST_OF_LIST_IDEAS" -n$END | tail -n +$START | shuf -n1)"
   result="$(echo $resultRaw | cut -d~ -f2- | sed 's/^[[:space:]]*//')"
   if [ "$dryrun" -eq 1 ]; then
     echo $result
-    printf "Move into done? (Y/n): "
+    printf "Move into done? (Y/n/a): "
     read ans
-    [ "$ans" = "n" ] && exit 0
+    if [ "$ans" = "n" ]; then
+      exit 0
+    elif [ "$ans" = "a" ]; then # another
+      pick_idea_list
+    else
+      echo "Picked: $result"
+
+      # move line to end of file
+      lineNr="$(grep -F "$resultRaw" "$LIST_OF_LIST_IDEAS" -n | cut -d: -f1)"
+      sed -i "${lineNr}d" "$LIST_OF_LIST_IDEAS"
+    fi
   else
     echo "Picked: $result"
-  fi
 
-  # move line to end of file
-  lineNr="$(grep -F "$resultRaw" "$LIST_OF_LIST_IDEAS" -n | cut -d: -f1)"
-  sed -i "${lineNr}d" "$LIST_OF_LIST_IDEAS"
+    # move line to end of file
+    lineNr="$(grep -F "$resultRaw" "$LIST_OF_LIST_IDEAS" -n | cut -d: -f1)"
+    sed -i "${lineNr}d" "$LIST_OF_LIST_IDEAS"
+  fi
+}
+
+if [ -z "$result" ] || [ "$dryrun" -eq 1 ]; then
+  pick_idea_list
 fi
 echo "$resultRaw" >>"$LIST_OF_LIST_IDEAS"
 [ "$dryrun" -eq "1" ] && exit 0
