@@ -1,7 +1,6 @@
 #! /bin/sh
 
-PIC_DIR=~/org/0_inbox/screenshots
-FORMAT='screenshot_%y-%m-%d_%H:%M:%S.png'
+PIC_DIR=$ORG_INBOX/screenshots
 mkdir -p $PIC_DIR
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -16,7 +15,7 @@ EOF
   exit
 fi
 
-command -v scrot >/dev/null || { echo "scrot is not installed"; exit 1; }
+hash scrot >/dev/null || exit 127
 
 mkdir -p $PIC_DIR
 
@@ -25,8 +24,14 @@ DELAY="1"
 
 if [ "$1" = "-s" ]; then
   notify-send "screen shot in ${DELAY}s" -t 1000 -i camera
+  FORMAT="screenshot_$(date +%Y-%m-%d_%H:%M:%S).png"
   sleep "$DELAY"s && \
-  /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z --freeze --select
+  /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z --freeze --select &&
+    cat "$PIC_DIR/$FORMAT" | xclip -selection clipboard -t image/png
 else
-  /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z
+  # /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z
+  maim -i $(xdotool getactivewindow) |
+    tee "$PIC_DIR/screenshot_$(date +%Y-%m-%d_%H:%M:%S).png" |
+    xclip -selection clipboard -t image/png &&
+    notify-send "took screenshot" -t 1000 -i camera
 fi

@@ -188,6 +188,9 @@ neofetch Print system info
 [scrot]
 scrot Screenshot utility
 
+[maim]
+maim Screenshot utility
+
 #pjson Pretty print json
 
 [zsh]
