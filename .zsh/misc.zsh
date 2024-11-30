@@ -47,3 +47,7 @@ addwireguard() {
   sleep 3s
   curl -Ss https://ipinfo.io
 }
+
+## lock
+alias lockon="xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &"
+alias lockoff="fkill xss-lock"
