@@ -32,4 +32,4 @@ eval_genius() {
 QUERY=`mpc-get "[[%artist% - ]%title%]|[%file%]" | sed "s|\.mp3||"`
 QUERY=`node -e "console.log( encodeURIComponent( \"$QUERY\" ) )"`
 
-$BROWSER `eval_genius "$QUERY"` >/dev/null 2>&1 &
+is-focus-challenge -v && $BROWSER `eval_genius "$QUERY"` >/dev/null 2>&1 &

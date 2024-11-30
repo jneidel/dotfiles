@@ -147,10 +147,11 @@ wait_for_newsboat() {
   fi
 }
 alias new="wait_for_newsboat clean"
-alias pod="wait_for_newsboat pod"
-alias misc="wait_for_newsboat misc"
-alias mu="wait_for_newsboat music"
-alias ma="wait_for_newsboat manga"
+alias pod="is-focus-challenge || wait_for_newsboat pod"
+alias misc="is-focus-challenge || wait_for_newsboat misc"
+alias mu="is-focus-challenge || wait_for_newsboat music"
+alias ma="is-focus-challenge || wait_for_newsboat manga"
+alias apps="is-focus-challenge || wait_for_newsboat gh-app-updates"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
 

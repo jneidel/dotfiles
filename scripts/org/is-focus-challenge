@@ -1,0 +1,52 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ is-focus-challenge
+Determine if there is an ongoing focus challenge.
+
+If yes: zero exit code
+If no: non-zero exit code
+
+Flags:
+  -v: inverse
+EOF
+  exit
+fi
+
+hash rem || exit 127
+
+ordered_calendar_entries() {
+  LOOKBACK_TIME_SPAN=48
+  remind -t$LOOKBACK_TIME_SPAN -g $DOTREMINDERS $(date -d "$LOOKBACK_TIME_SPAN days ago" +%Y-%m-%d) 2>/dev/null
+}
+
+most_recent_entry="$(ordered_calendar_entries | grep -Fi "focus" | tail -n1)"
+
+return_active() {
+  echo "⛔ Focus challenge is active ⛔" >&2
+  exit 0
+}
+return_inactive() {
+  exit 1
+}
+
+IS_INVERSE=0
+[ "$1" = "-v" ] && IS_INVERSE=1
+
+if echo $most_recent_entry | grep -i "start" >/dev/null; then
+  if [ "$IS_INVERSE" -eq 0 ]; then
+    return_active
+  else
+    return_inactive
+  fi
+elif echo $most_recent_entry | grep -ie "end" -e "ende" >/dev/null; then
+  if [ "$IS_INVERSE" -eq 0 ]; then
+    return_inactive
+  else
+    return_active
+  fi
+else
+  echo "🤷 Focus challenge evaluation was inconclusive 🤷" >&2
+  exit 10
+fi
