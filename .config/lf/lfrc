@@ -160,9 +160,10 @@ cmd touch %{{
   printf "File Name: "
   read ans
   if echo $ans | grep -Fv . >/dev/null; then
-    ans="$ans.norg"
+    title="$ans"
+    ans="$ans.org"
+    generate-orgmode-metadata "$title" >"$ans"
   fi
-  touch "$ans"
   lf -remote "send $id select '$ans'"
   lf -remote "send $id edit"
 }}
@@ -172,15 +173,8 @@ cmd touchTex %{{
   vtex "$ans"
 }}
 cmd create-index ${{
-  touch index.norg
-  $EDITOR index.norg
-}}
-cmd create-norg ${{
-  printf "Name of .norg file: "
-  read ans
-  local file="${ans}.norg"
-  touch "$file"
-  $EDITOR "$file"
+  generate-orgmode-metadata >index.org
+  open-orgmode-file-at-title-insert index.org
 }}
 cmd mkdir %{{
   printf "Directory name: "
@@ -339,8 +333,6 @@ map t touch
 map T touchTex
 map NN gen-note
 map ci create-index
-map cn create-norg
-map ct create-norg
 map cp create-project
 map cd create-design
 map ca create-area

@@ -3,54 +3,43 @@
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ gen-note DIR
-Easily allow for adding a new norg note in a directory
+Easily add a new note to a directory.
 
-Takes title into account.
-Ignores empty files.
+Filename is determined by the supplied title.
+Empty files are ignored.
 EOF
   exit
 fi
 
-command -v awk >/dev/null || { echo "awk is not installed" 1>&2; exit 127; }
-command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR is not set" 1>&2; exit 127; }
+hash awk generate-orgmode-metadata open-orgmode-file-at-title-insert || exit 127
 
 dir="$1"
 [ ! -z "$dir" ] && cd "$dir"
-tmp=$(mktemp --suffix=.norg)
-
-# generate and fix norg metadata
-$EDITOR $tmp -c ":Neorg inject-metadata" -c ":wq"
-tmpNoDir=$(basename $tmp)
-title=${tmpNoDir%.*}
-sed -i "s|$title|<++>|" $tmp
-
-# let the user add content
-$EDITOR $tmp
+tmp=$(mktemp --suffix=.org)
 
 file_contents_without_metadata() {
-  grep "@end" -m1 -n $tmp | cut -d: -f1 | xargs -I@ sed '1,@d; /^$/d' $tmp
-  # if there is no metadata, it is treated as empty
+  grep -ve "#+" -e "^$" $tmp
 }
+
+generate-orgmode-metadata >$tmp
+
+open-orgmode-file-at-title-insert $tmp
+
 if [ -z "$(file_contents_without_metadata)" ]; then
-  echo "Edited file was empty, adding nothing to inbox."
+  echo "Discarded empty file."
   exit 0
 fi
 
-file_title() {
-  grep -Po "^title: \K.*" $tmp
-}
-
-filename=""
-if [ "$(file_title)" = "<++>" ]; then
-  filename="$dir/qc-$(date +%s).norg"
+filename=
+filetitle=`grep -Po "^#\+title: \K.*" $tmp`
+if [ -z "$filetitle" ]; then
+  filename="$dir/qc_$(date +%s).org"
 else
-  fileTitle="$(file_title)"
-  if echo $fileTitle | grep -F / >/dev/null; then
-    fileTitle="$(echo $fileTitle | tr '/' '_')"
+  if echo $filetitle | grep -F / >/dev/null; then
+    fileTitle="$(echo $filetitle | tr '/' '_')"
   fi
-  filename="$dir/$fileTitle.norg"
+  filename="$dir/$filetitle.org"
 fi
 
-# sed -r 's/[”“]/"/g; s/,([^ ])/, \1/g; s/\.([^ ")a-z])/. \1/g' -i $tmp
 cp $tmp "$filename"
 echo "Wrote to: $filename"
