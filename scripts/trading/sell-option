@@ -1,0 +1,178 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+  cat <<EOF
+$ sell-option [-t TICKER] [-e EXPIRY] [-s STRIKE] [-d DELTA] [-i IV] [-u PRICE_UNDERLYING] [-p PREMIUM] [-q QUANTITY]
+Create a trading journal entry for the sale of an option.
+An org-mode template.
+
+Any flag not passed will be prompted for.
+
+Flags:
+  -t: ticker symbol
+  -e: expiry, format: Dec20, Jan03'25
+  -s: strike and option type, format: 23C, 55P
+  -d: delta, format: .3, 0.30, 30
+  -u: price of the underyling
+  -q: quantity
+  -p: premium of the option
+  -i, -v: IV, format: .3, 0.302, 30.2
+
+Examples:
+  $ sell-option
+  $ sell-option -u 23 -s 26C
+  $ sell-option -t DAL -e Dec20 -s 112P -d .16 -i 41.4 -u 116.2 -q 2 -p .80
+EOF
+  exit
+fi
+
+hash emacs gum earn || exit 127
+
+while getopts ":t:e:s:d:i:v:p:u:q:" opt; do
+  case $opt in
+    t) TICKER="$OPTARG" ;;
+    e) expiry_input="$OPTARG" ;;
+    s) strike_and_type="$OPTARG" ;;
+    d) DELTA="$OPTARG" ;;
+    i|v) IV="$OPTARG" ;;
+    u) UNDERLYING_PRICE="$OPTARG" ;;
+    q) QUANTITY="$OPTARG" ;;
+    p) PREMIUM="$OPTARG" ;;
+    \?) echo "Invalid flag passed: -$OPTARG" >&2; exit 1 ;;
+    :) echo "Flag -$OPTARG requires an argument." >&2; exit 1 ;;
+  esac
+done
+
+if [ -z "$strike_and_type" ]; then
+  printf "Option strike and type: "
+  read strike_and_type
+  [ -z "$strike_and_type" ] && echo Empty strike and option type && exit 1
+fi
+STRIKE="$(echo $strike_and_type | rev | cut -c2- | rev)"
+OPTION_TYPE="$(echo $strike_and_type | rev | cut -c1 | tr a-z A-Z)"
+if [ "$OPTION_TYPE" != "P" ] && [ "$OPTION_TYPE" != "C" ]; then
+  echo "Unknown option type: $OPTION_TYPE\nMust be 'C' or 'P'. Specify as '58P' or '58C'."
+  exit 1
+fi
+STRATEGY_NAME=
+[ "$OPTION_TYPE" = "P" ] && STRATEGY_NAME="Short put"
+[ "$OPTION_TYPE" = "C" ] && STRATEGY_NAME="Short call"
+
+if [ -z "$TICKER" ]; then
+  printf "Ticker symbol: "
+  read TICKER
+  [ -z "$TICKER" ] && echo "Empty ticker" && exit 1
+fi
+TICKER=`echo $TICKER | tr a-z A-Z`
+
+if [ -z "$expiry_input" ]; then
+  printf "Option expiry date: "
+  read expiry_input
+  [ -z "$expiry_input" ] && echo "Empty expiry" && exit 1
+fi
+EXPIRY_DATE=$expiry_input
+EXPIRY_YEAR=$(date +%Y)
+if echo $expiry_input | grep -F \' >/dev/null; then
+  EXPIRY_DATE=$(echo $expiry_input | cut -d\' -f1)
+  EXPIRY_YEAR="20$(echo $expiry_input | cut -d\' -f2)"
+fi
+daysUntilExpiry=$(echo $(( ($(date -d "$EXPIRY_DATE $EXPIRY_YEAR" +%s) - $(date +%s)) / 86400 +1 )))
+[ "$daysUntilExpiry" -lt 0 ] && echo "Expiry date is in the past: $EXPIRY_DATE $EXPIRY_YEAR, days until expiry $daysUntilExpiry" && exit 1
+
+if [ -z "$DELTA" ]; then
+  printf "Option delta: "
+  read DELTA
+fi
+DELTA=`echo $DELTA | sed -r 's/-?0?\.?([0-9]+)/0.\1/'` # normalize to 0.30
+
+if [ -z "$QUANTITY" ]; then
+  printf "Quantity (1): "
+  read QUANTITY
+  [ -z "$QUANTITY" ] && QUANTITY=1
+fi
+
+if [ -z "$PREMIUM" ]; then
+  printf "Option premium: "
+  read PREMIUM
+  [ -z "$PREMIUM" ] && echo Empty option premium && exit 1
+fi
+
+if [ -z "$IV" ]; then
+  printf "IV: "
+  read IV
+  [ -z "$IV" ] && echo Empty IV && exit 1
+fi
+IV=`echo $IV | sed -r 's/0?\.([0-9]*)/\1/'` # normalize to 30%
+# TODO: fix iv if 30.2 passed
+
+if [ -z "$UNDERLYING_PRICE" ]; then
+  printf "Price of the underlying: "
+  read UNDERLYING_PRICE
+fi
+
+IMG="img/$TICKER $(date +%Y-%m-%d).png"
+if gum confirm "Use currently latest screenshot as the chart image? ($(screenshot-chart get_latest))"; then
+  IMG="$(screenshot-chart get_latest)"
+fi
+
+# TODO: determine if trade is bullish or bearish
+# adjust @6$2=(@1-@2) - order accordingly
+
+file_content() {
+  cat <<EOF
+
+* $TICKER $(date '+%b%d') :<++>:
+** What?
+[[https://optionstrat.com/build/short-put/$TICKER/-.${TICKER}$(date -d "$EXPIRY_DATE $EXPIRY_YEAR" +%y%m%d)${OPTION_TYPE}${STRIKE}][${expiry_input} ${STRATEGY_NAME} at ${STRIKE}${OPTION_TYPE}]]
+
+Delta: $DELTA
+| Price of underlying $ |  $UNDERLYING_PRICE |
+| Strike price        $ |  $STRIKE |
+| Option IV             |   $IV% |
+| Expiry           days |   $daysUntilExpiry |
+|-----------------------+-------|
+| 1σ                  $ |       |
+| distance from strike  |       |
+$(echo '#+TBLFM: @5$2=@1*@3*sqrt(@4/365);%.2f::@6$2=(@1-@2)/@5;%.2fσ')
+
+** Why? What is supposed to happen here?
+[[file:$IMG]]
+<++>
+
+** Was spricht dagegen?
+<++>
+
+Next earnings: $(gum spin --title "Fetching next earnings date" -- earn $TICKER)
+
+** Prices
+| Premium       | $PREMIUM |
+| Quantity      | $QUANTITY |
+| Money at risk |      |
+| Profit ca.    |      |
+|---------------+------|
+| LMT           |      |
+| STP           |      |
+$(echo '#+TBLFM: @3$2=@1*2*@2*100,0;%.0f_' `: 2 from 200% stop-loss` \
+'@4$2=@1*@2*100*.8-2_' `: .8 from 80% take profit, 2 as estimated commission` \
+'@5$2=@1*.2;%.2f$_' `: .2 from 80% take profit` \
+'@6$2=@1*3;%.2f$' | # 3 from 100% premium + 200% stop-loss
+sed 's/[^:] /::/g')
+
+| Ticker | Trade Type | Strike | Qty | Premium | Commission | Buyback |    P/L | Expiry | Price in | Price out | Entry IV | Exit IV |   1σ | Date & Time      |
+|--------+------------+--------+-----+--------+------------+---------+--------+--------+----------+-----------+----------+---------+------+------------------|
+| $TICKER   | $STRATEGY_NAME |    $STRIKE |   $QUANTITY |   <++> |     -1 |         |  |      $daysUntilExpiry |   $UNDERLYING_PRICE |           |    $IV% |         |      | $(date "+%Y-%m-%d %H:")<++> |
+$(echo '#+TBLFM: @2$8=$7<0?0:($5*$4)*100-$6-($7*$4)*100_' `: Buyback at -1 because, 0 would mean wertlos verfallen` \
+'@2$14=$10*$12*sqrt($9/365);%.2f' |
+sed 's/[^:] /::/g')
+
+** Learnings
+EOF
+# inline comment syntax
+# `: comment`
+# append extra char at the end of string "_", because it will be truncated for some reason
+}
+
+FILE="$TRADES_DIR/trades.org"
+file_content >>"$FILE"
+emacsclient -e "(progn (tab-bar-new-tab) (find-file \"$FILE\") (org-table-recalculate-buffer-tables))" >/dev/null \
+  && echo "Opened in emacs"
