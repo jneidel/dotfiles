@@ -84,7 +84,7 @@ if [ -z "$DELTA" ]; then
   printf "Option delta: "
   read DELTA
 fi
-DELTA=`echo $DELTA | sed -r 's/-?0?\.?([0-9]+)/0.\1/'` # normalize to 0.30
+DELTA=`echo $DELTA | sed -r 's/^\.?([0-9]+)$/0.\1/'` # normalize to 0.302
 
 if [ -z "$QUANTITY" ]; then
   printf "Quantity (1): "
@@ -103,8 +103,7 @@ if [ -z "$IV" ]; then
   read IV
   [ -z "$IV" ] && echo Empty IV && exit 1
 fi
-IV=`echo $IV | sed -r 's/0?\.([0-9]*)/\1/'` # normalize to 30%
-# TODO: fix iv if 30.2 passed
+IV=`echo $IV | sed -r 's/^\.([0-9]+)/0.\1/; s/^0\.([0-9]{2})/\1./; s/\.$//'` # normalize to 30.2%
 
 if [ -z "$UNDERLYING_PRICE" ]; then
   printf "Price of the underlying: "
