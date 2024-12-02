@@ -1,0 +1,82 @@
+#! /bin/sh
+
+INPUT_FILE=$TRADES_DIR/trades.org
+OUTPUT_FILE=$TRADES_DIR/metrics.org
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ collect-metrics
+Assemble trade metrics
+EOF
+  exit
+fi
+
+hash grep || exit 127
+
+table_header() {
+  echo "| Ticker | Trade Type | Qty | Prämie | Buyback | Prämie% | P/L | Expiry | IV | Price | Strike  | 1σ | Dist. | Comm. | Entry Date+Time | Exit Date+Time |\n|--+--+"
+}
+
+table_footer() {
+  echo '|--+--+\n|--+--+\n| | | | | |  | | | | | | | | | | |\n#+TBLFM: @>$7=vsum(@I..@II)::@>$2=Total(vlen(@I..@II))::@>$1=(vcount(map(<if(gt(#1,0), 1, [])>, @I$7..@II$7))/vcount(map(<if(neq(#1,0), 1, [])>, @I$7..@II$7)));hr(%.2f)\n'
+  # countif: https://stackoverflow.com/a/9190914
+}
+
+normalize_short_options() {
+  line="$1"
+  echo $line
+  # to achieve reordering:
+  # awk -F\| '{ print "|"$3"|"$2"|" }'
+  # remove and manually add whitespace:
+  # awk -F\| '{
+  #   for (i = 1; i <= NF; i++) {
+  #     gsub(/^ *| *$/, "", $i)
+  #   }
+  #   print $3" | "$2
+  # }'
+}
+
+allTrades=$(mktemp)
+shortPutTrades=$(mktemp)
+shortCallTrades=$(mktemp)
+normalize_line() {
+  # different trade type have different field in their rows
+  # normalize them to make them play well together
+  line="$1"
+  trade_type=`echo $line | cut -d\| -f3 | tr "[A-Z]" "[a-z]" | sed -r 's/^ +//; s/ +$//'`
+
+  # data for all trades table
+  case "$trade_type" in
+    "short put"|"short call") normalize_short_options "$line" >>$allTrades;;
+    *) echo "Matched unconfigured trade type: $trade_type" >&2;;
+  esac
+
+  # data for tables by type
+  case "$trade_type" in
+    "short put") normalize_short_options "$line" >>$shortPutTrades;;
+    "short call") normalize_short_options "$line" >>$shortCallTrades;;
+  esac
+}
+
+parse_trades() {
+  grep -E "Ticker *| Trade Type" -A5 "$INPUT_FILE" | grep -ve "Ticker *| Trade Type" -e "+---" -e "^[^|]" -e "^$" |
+    while read -r line; do normalize_line "$line"; done
+}
+
+create_table() {
+  sectionName="$1"
+  dataFile="$2"
+  echo "** $sectionName" >> "$OUTPUT_FILE"
+  table_header >>"$OUTPUT_FILE"
+  cat $dataFile >> "$OUTPUT_FILE"
+  table_footer >>"$OUTPUT_FILE"
+}
+
+parse_trades
+
+echo "* metrics" >"$OUTPUT_FILE"
+create_table "All trades" $allTrades
+create_table "Short Put" $shortPutTrades
+create_table "Short Call" $shortCallTrades
+
+emacsclient -e "(progn (tab-bar-new-tab) (auto-revert-mode 1) (find-file \"$OUTPUT_FILE\") (org-table-recalculate-buffer-tables) (save-buffer))" >/dev/null
