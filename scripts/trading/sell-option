@@ -43,6 +43,8 @@ while getopts ":t:e:s:d:i:v:p:u:q:" opt; do
   esac
 done
 
+OUTPUT_FILE="$TRADES_DIR/paper-trades.org"
+
 if [ -z "$strike_and_type" ]; then
   printf "Option strike and type: "
   read strike_and_type
@@ -198,9 +200,8 @@ EOF
 # append extra char at the end of string "_", because it will be truncated for some reason
 }
 
-FILE="$TRADES_DIR/trades.org"
-file_content >>"$FILE" 2>/dev/null
-emacsclient -e "(progn (tab-bar-new-tab) (find-file \"$FILE\"))" >/dev/null \
+file_content >>"$OUTPUT_FILE" 2>/dev/null
+emacsclient -e "(progn (tab-bar-new-tab) (find-file \"$OUTPUT_FILE\"))" >/dev/null \
   && echo "Opened in emacs"
 
 # (org-table-recalculate-buffer-tables) mangles P/L headlines where @2$7..@$7 is used

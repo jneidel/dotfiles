@@ -5,13 +5,27 @@ DIR=`dirname $0`
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ collect-metrics
+$ collect-metrics [live|paper]
 Assemble trade metrics
+
+Arguments:
+  \$1: mode, one of: live, paper; default: paper
 EOF
   exit
 fi
 
 hash grep || exit 127
+
+TRADING_MODE=$1
+[ -z "$TRADING_MODE" ] && TRADING_MODE=paper
+if [ "$TRADING_MODE" != "paper" ] && [ "$TRADING_MODE" != "live" ]; then
+  echo "Invalid trading mode '$TRADING_MODE', must be one of: paper, live"
+  exit 1
+fi
+
+RAW_INPUT_FILE="$TRADING_MODE-trades.org"
+INPUT_FILE="$TRADES_DIR/$RAW_INPUT_FILE"
+OUTPUT_FILE="$TRADES_DIR/$TRADING_MODE-metrics.org"
 
 table_header() {
   mode="$1"
