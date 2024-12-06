@@ -69,9 +69,14 @@ fi
 TICKER=`echo $TICKER | tr a-z A-Z`
 
 if [ -z "$expiry_input" ]; then
-  printf "Option expiry date: "
+  case `date +%a` in
+    Thu|Fri) default_expiry=`date +%b%d -d "next week friday"`;;
+    Mon|Tue|Wed) default_expiry=`date +%b%d -d "next friday"`;;
+  esac
+
+  printf "Option expiry date ($default_expiry): "
   read expiry_input
-  [ -z "$expiry_input" ] && echo "Empty expiry" && exit 1
+  [ -z "$expiry_input" ] && expiry_input=$default_expiry
 fi
 EXPIRY_DATE=$expiry_input
 EXPIRY_YEAR=$(date +%Y)
@@ -156,9 +161,11 @@ EOF
 }
 
 file_content() {
-  cat <<EOF
+  title="* $TICKER $(date '+%b%d') $STRATEGY_NAME"
+  titleLen=`echo "$title" | wc -c`
 
-* $TICKER $(date '+%b%d') :<++>:
+  cat <<EOF
+${title}$(printf "%0.s " $(seq $titleLen 68)):$([ "$IS_BULLISH" = 1 ] && echo 'bullish' || echo 'bearish'):
 ** What?
 [[https://optionstrat.com/build/short-put/$TICKER/-.${TICKER}$(date -d "$EXPIRY_DATE $EXPIRY_YEAR" +%y%m%d)${OPTION_TYPE}${STRIKE}][${expiry_input} ${STRATEGY_NAME} at ${STRIKE}${OPTION_TYPE}]]
 
