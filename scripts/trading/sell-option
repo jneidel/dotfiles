@@ -191,13 +191,15 @@ Next earnings: $(gum spin --title "Fetching next earnings date" -- earn $TICKER)
 ** Prices
 $(print_price_calculations)
 
-| Ticker | Trade Type | Qty | Prämie | Buyback | Prämie% |   P/L | Expiry | IV | Strike | Price |   1σ | Distance | Commission | Entry Date+Time | Exit Date+Time |
-|--------+------------+--------+-----+--------+------------+---------+--------+--------+----------+-----------+----------+---------+------+------------------|
-| $TICKER   | $STRATEGY_NAME | $QUANTITY |    <++> |    -1 |    |     | $daysUntilExpiry | $IV% | $STRIKE | $UNDERLYING_PRICE | | | <++> | $(date "+%Y-%m-%d %H:")<++> | <++> |
+| Ticker | Trade Type | Qty | Prämie | Buyback | Prämie% |   P/L | Expiry | IV | Strike | Price |   1σ | Distance | Comm. | bd open | P/L/day | Entry Date+Time | Exit Date+Time |
+|--------+------------+--------+-----+--------+------------+---------+--------+--------+----------+-----------+----------+------+-+---+------+------------------|
+| $TICKER   | $STRATEGY_NAME | $QUANTITY |    <++> |    -1 |    |     | $daysUntilExpiry | $IV% | $STRIKE | $UNDERLYING_PRICE | | | <++> | | | [$(date "+%Y-%m-%d %H:")<++>] | |
 $(echo '#+TBLFM: @2$6..@$6=$5<0?0:(1-($5/$4));%.2f_' `: Buyback check with <0 because 0 would mean wertlos verfallen` \
 '@2$7..@$7=$5<0?0:($3*$4*100)-$14-($3*$5*100);%.2f_' \
 '@2$12..@$12=$9*$11*sqrt($8/365);%.2f_' \
-'@2$13..@$13=('$([ "$IS_BULLISH" = 1 ] && echo '$11-$10' || echo '$11-$10')')/$12;%.2fσ' |
+'@2$13..@$13=('$([ "$IS_BULLISH" = 1 ] && echo '$11-$10' || echo '$10-$11')')/$12;%.2fσ_' \
+'@2$15..@$15=bsub($18,$17);%.2f_' `: only calculate day that stock market is open on` \
+'@2$16..@$16=$7/$15;%.2f' |
 sed 's/[^:] /::/g')
 
 ** Learnings
