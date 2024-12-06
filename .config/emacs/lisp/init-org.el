@@ -65,6 +65,7 @@
                  (kbd "RET") #'jneidel/insert-org-list-item ;; RET in cal doesn't work anyway
                  (kbd "<S-return>") #'jneidel/insert-org-list-item-or-copy-down-table
                  (kbd "C-c a") #'org-table-recalculate
+                 (kbd "g r") #'org-table-recalculate
                  (kbd "g t p") #'jneidel/org-set-checkbox-in-progress
                  )
 (evil-define-key "insert" org-mode-map

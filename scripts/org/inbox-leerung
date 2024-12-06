@@ -251,7 +251,7 @@ outcome:
   - up-to-date on GitHub newsfeed
 
 EOF
-  $BROWSER https://github.com/dashboard-feed >/dev/null 2>&1 &
+  is-focus-challenge -v && $BROWSER https://github.com/dashboard-feed >/dev/null 2>&1 &
   $BROWSER https://github.com/notifications?query=is%3Aunread >/dev/null 2>&1 &
 
   prompt_continue
@@ -311,7 +311,7 @@ outcome:
 
 EOF
   if [ -z "$items_in_inbox" ]; then
-    items_in_inbox="$(ls $ORG_INBOX/* | wc -l)"
+    items_in_inbox="$(find $ORG_INBOX -type f | wc -l)"
   fi
 
   lf -remote "send cd '$ORG_INBOX'" &
@@ -419,7 +419,7 @@ camscanner
 pre_newsboat
 # otter
 newsboat
-browser_tabs
+# browser_tabs
 calendar
 # monica
 pre_org_inbox
