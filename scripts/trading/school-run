@@ -1,0 +1,103 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+  cat <<EOF
+$ school-run [-i INDEX] [-s STAKE_SIZE] [-h SIGNAL_HIGH] [-l SIGNAL_LOW]
+Create a trading journal entry a school run.
+An org-mode template.
+
+Any flag not passed will be prompted for.
+
+Flags:
+  -i, -u: name of the index or underlying to be traded
+  -s: stake size
+  -h: high of the signal candle
+  -l: low of the signal candle
+
+Examples:
+  $ school-run
+  $ school-run -i DAX -s 1 -h 20147 -l 20083
+EOF
+  exit
+fi
+
+hash emacs gum || exit 127
+
+while getopts ":i:u:s:h:l:" opt; do
+  case $opt in
+    i|u) INDEX="$OPTARG" ;;
+    s) STAKE="$OPTARG" ;;
+    h) HIGH="$OPTARG" ;;
+    l) LOW="$OPTARG" ;;
+    \?) echo "Invalid flag passed: -$OPTARG" >&2; exit 1 ;;
+    :) echo "Flag -$OPTARG requires an argument." >&2; exit 1 ;;
+  esac
+done
+
+OUTPUT_FILE="$TRADES_DIR/paper-trades.org"
+STRATEGY_NAME="School run"
+
+if [ -z "$INDEX" ]; then
+  printf "Index or underlying symbol (DAX): "
+  read INDEX
+  [ -z "$INDEX" ] && INDEX=DAX
+fi
+INDEX=`echo $INDEX | tr a-z A-Z`
+
+if [ -z "$STAKE" ]; then
+  printf "Stake size (0.5): "
+  read STAKE
+  [ -z "$STAKE" ] && STAKE=0.5
+fi
+
+if [ -z "$HIGH" ]; then
+  printf "Signal candle high: "
+  read HIGH
+fi
+if [ -z "$LOW" ]; then
+  printf "Signal candle low: "
+  read LOW
+fi
+
+IMG="img/$INDEX $(date +%Y-%m-%d).png"
+if gum confirm "Use currently latest screenshot as the chart image? ($(screenshot-chart get_latest))"; then
+  IMG="$(screenshot-chart get_latest)"
+fi
+
+file_content() {
+  title="* $INDEX $(date '+%b%d') $STRATEGY_NAME"
+  titleLen=`echo "$title" | wc -c`
+
+  cat <<EOF
+${title}$(printf "%0.s " $(seq $titleLen 68)):<++>:
+** Signal candle setup
+[[file:$IMG]]
+<++>
+
+** Context
+<++>
+
+** Feelings
+<++>
+
+** Trade management
+<++>
+
+** Prices
+| Index | Trade Type | Stake | Open | Close | P/L | Entry Date+Time | Exit Date+Time |
+|--------+------------+---
+| $INDEX   | $STRATEGY_NAME | $STAKE | $(($HIGH+2)) |   -1 |    | [$(date "+%Y-%m-%d %H:")<++>] | [$(date "+%Y-%m-%d ")<++>] |
+| $INDEX   | $STRATEGY_NAME | $STAKE | $(($LOW-2))  |   -1 |    | [$(date "+%Y-%m-%d %H:")<++>] | [$(date "+%Y-%m-%d ")<++>] |
+$(echo '#+TBLFM: @2$6..@$6=$5<0?0:($5-$4)*$3;%.2f' |
+sed 's/[^:] /::/g')
+
+** Learnings
+EOF
+# inline comment syntax
+# `: comment`
+# append extra char at the end of string "_", because it will be truncated for some reason
+}
+
+file_content >>"$OUTPUT_FILE" 2>/dev/null
+emacsclient -e "(progn (tab-bar-new-tab) (find-file \"$OUTPUT_FILE\"))" >/dev/null \
+  && echo "Opened in emacs"

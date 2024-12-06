@@ -1,7 +1,7 @@
 #! /bin/sh
 
-INPUT_FILE=$TRADES_DIR/trades.org
-OUTPUT_FILE=$TRADES_DIR/metrics.org
+DIR=`dirname $0`
+. lib.sh
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -14,31 +14,92 @@ fi
 hash grep || exit 127
 
 table_header() {
-  echo "| Ticker | Trade Type | Qty | Prämie | Buyback | Prämie% | P/L | Expiry | IV | Price | Strike  | 1σ | Dist. | Comm. | Entry Date+Time | Exit Date+Time |\n|--+--+"
+  mode="$1"
+
+  if [ "$mode" = "truncated" ]; then
+    echo "| Id | Trade Type | P/L |\n|--+--+"
+  elif [ "$mode" = "index" ]; then
+    echo "| Index | Trade Type | Stake | Open | Close | P/L | Entry Date+Time | Exit Date+Time |\n|--+--+"
+  elif [ "$mode" = "option" ]; then
+    echo "| Ticker | Trade Type | Qty | Prämie | Buybk | Prämie% | P/L | Expiry | IV | Price | Strike | 1σ | Dist. | bd open | P/L/day | Risk P/L | Entry Date+Time | Exit Date+Time |\n|--+--+"
+  fi
 }
 
 table_footer() {
-  echo '|--+--+\n|--+--+\n| | | | | |  | | | | | | | | | | |\n#+TBLFM: @>$7=vsum(@I..@II)::@>$2=Total(vlen(@I..@II))::@>$1=(vcount(map(<if(gt(#1,0), 1, [])>, @I$7..@II$7))/vcount(map(<if(neq(#1,0), 1, [])>, @I$7..@II$7)));hr(%.2f)\n'
-  # countif: https://stackoverflow.com/a/9190914
+  mode="$1"
+
+  cat <<EOF
+|--+--+
+|--+--+
+$(table_header "$mode" | head -n1 | sed -r "s/ [^| ]+( [^| ]+)? / /g")
+EOF
+
+  if [ "$mode" = "truncated" ]; then
+    echo "#+TBLFM: $(insert_header_formulae '$3')\n"
+  elif [ "$mode" = "index" ]; then
+    echo "#+TBLFM: $(insert_header_formulae '$6')\n"
+  elif [ "$mode" = "option" ]; then
+    echo '#+TBLFM: @2$16..@$16=$15/($4*$3*100);%.2f'"$(insert_header_formulae '$7')::\$5='(hide-minus-cell @0\$0)::\$6='(hide-zero-cell @0\$0)::\$14='(hide-zero-cell @0\$0)::\$15='(hide-zero-cell @0\$0)\n"
+  fi
+}
+
+headings=$(mktemp)
+get_heading_link() {
+  ticker="$1"
+
+  # test current heading (multiple trades under same heading)
+  if ! head -n1 $headings | grep -F $ticker; then # prints match
+    # use next heading
+    sed -i "1d" $headings
+    head -n1 $headings
+  fi
 }
 
 normalize_short_options() {
   line="$1"
-  echo $line
-  # to achieve reordering:
-  # awk -F\| '{ print "|"$3"|"$2"|" }'
-  # remove and manually add whitespace:
-  # awk -F\| '{
-  #   for (i = 1; i <= NF; i++) {
-  #     gsub(/^ *| *$/, "", $i)
-  #   }
-  #   print $3" | "$2
-  # }'
+  mode="$2"
+
+  ticker="$(echo "$line" | grep -Pom1 '^| +\K[A-Z]+' | head -n1)"
+  heading="$(get_heading_link "$ticker")"
+
+  # keep: ticker, trade type, p/l, dates
+  if [ "$mode" = "truncated" ]; then
+    echo $line | awk -F\| '{
+      gsub(/^ *| *$/, "", $2)
+      print "| [[file:'$RAW_INPUT_FILE'::*'"$heading"']["$2"]] |"$3"|"$8"|"
+    }'
+  else
+    # drop commissions ($15)
+    echo $line | awk -F\| '{
+      gsub(/^ *| *$/, "", $2)
+      print "| [[file:'$RAW_INPUT_FILE'::*'"$heading"']["$2"]] |"$3"|"$4"|"$5"|"$6"|"$7"|"$8"|"$9"|"$10"|"$11"|"$12"|"$13"|"$14"|"$16"|"$17"| |"$18"|"$19"|"
+    }'
+  fi
+}
+normalize_school_run() {
+  line="$1"
+  mode="$2"
+  index="$(echo "$line" | grep -Pom1 '^| +\K[A-Z]+' | head -n1)"
+  heading="$(get_heading_link "$index")"
+
+  if [ "$mode" = "truncated" ]; then
+    echo $line | awk -F\| '{
+      gsub(/^ *| *$/, "", $2)
+      print "| [[file:'$RAW_INPUT_FILE'::*'"$heading"']["$2"]] |"$3"|"$7"|"
+    }'
+  else
+    echo $line | awk -F\| '{
+      gsub(/^ *| *$/, "", $2)
+      print "| [[file:'$RAW_INPUT_FILE'::*'"$heading"']["$2"]] |"$3"|"$4"|"$5"|"$6"|"$7"|"$8"|"$9"|"
+    }'
+  fi
 }
 
 allTrades=$(mktemp)
 shortPutTrades=$(mktemp)
 shortCallTrades=$(mktemp)
+shortOptionTrades=$(mktemp)
+schoolRunTrades=$(mktemp)
 normalize_line() {
   # different trade type have different field in their rows
   # normalize them to make them play well together
@@ -47,36 +108,61 @@ normalize_line() {
 
   # data for all trades table
   case "$trade_type" in
-    "short put"|"short call") normalize_short_options "$line" >>$allTrades;;
-    *) echo "Matched unconfigured trade type: $trade_type" >&2;;
+    "short put"|"short call") normalize_short_options "$line" "truncated" >>$allTrades;;
+    "school run") normalize_school_run "$line" "truncated" >>$allTrades;;
+    *) echo "Matched unconfigured trade type: $trade_type, line: $line" >&2;;
   esac
 
-  # data for tables by type
+  # data for tables by trade category
+  case "$trade_type" in
+    "short put"|"short call") normalize_short_options "$line" >>$shortOptionTrades;;
+  esac
+
+  # data for tables by individual trade type
   case "$trade_type" in
     "short put") normalize_short_options "$line" >>$shortPutTrades;;
     "short call") normalize_short_options "$line" >>$shortCallTrades;;
+    "school run") normalize_school_run "$line" >>$schoolRunTrades;;
   esac
 }
 
 parse_trades() {
-  grep -E "Ticker *| Trade Type" -A5 "$INPUT_FILE" | grep -ve "Ticker *| Trade Type" -e "+---" -e "^[^|]" -e "^$" |
-    while read -r line; do normalize_line "$line"; done
+  grep -Po "^\* \K.+(?= :)" "$INPUT_FILE" >$headings
+
+  grep -E "Trade Type" -A5 "$INPUT_FILE" | grep -ve "Trade Type" -e "+---" -e "^[^|]" -e "^$" |
+    while read -r line; do
+      normalize_line "$line"
+    done
 }
 
 create_table() {
   sectionName="$1"
   dataFile="$2"
   echo "** $sectionName" >> "$OUTPUT_FILE"
-  table_header >>"$OUTPUT_FILE"
-  cat $dataFile >> "$OUTPUT_FILE"
-  table_footer >>"$OUTPUT_FILE"
+
+  if [ "$sectionName" = "All trades" ]; then
+    table_header "truncated" >>"$OUTPUT_FILE"
+    cat $dataFile >>"$OUTPUT_FILE"
+    table_footer "truncated" >>"$OUTPUT_FILE"
+  elif echo "$sectionName" | grep -F "Short" >/dev/null; then
+    table_header "option" >>"$OUTPUT_FILE"
+    cat $dataFile >>"$OUTPUT_FILE"
+    table_footer "option" >>"$OUTPUT_FILE"
+  else
+    table_header "index" >>"$OUTPUT_FILE"
+    cat $dataFile >>"$OUTPUT_FILE"
+    table_footer "index" >>"$OUTPUT_FILE"
+  fi
 }
 
 parse_trades
 
 echo "* metrics" >"$OUTPUT_FILE"
 create_table "All trades" $allTrades
+create_table "School Run" $schoolRunTrades
+create_table "Short Options" $shortOptionTrades
 create_table "Short Put" $shortPutTrades
 create_table "Short Call" $shortCallTrades
 
 emacsclient -e "(progn (tab-bar-new-tab) (auto-revert-mode 1) (find-file \"$OUTPUT_FILE\") (org-table-recalculate-buffer-tables) (save-buffer))" >/dev/null
+sed -i 's|#ERROR|rP/L/d|g' "$OUTPUT_FILE"

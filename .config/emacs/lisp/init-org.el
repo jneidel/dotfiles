@@ -94,5 +94,14 @@
 
 (require 'org-tempo) ;; for <q TAB and more completions
 
+(defun hide-zero-cell(cell)
+  (if (= (string-to-number cell) 0)
+    ""
+    cell))
+(defun hide-minus-cell(cell)
+  (if (< (string-to-number cell) 0)
+    ""
+    cell))
+
 (provide 'init-org)
 ;; TODO: checkout other 'init-org
