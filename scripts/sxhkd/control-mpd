@@ -25,6 +25,11 @@ fi
 
 command -v mpcc >/dev/null || { echo "mpcc script is not in PATH"; exit 1; }
 
+is_mpd_playing() {
+  mpcc $CMD -f 'TRACK:%title% - %artist%\nFILE:%file%' >$TMP
+  grep "playing" $TMP >/dev/null
+}
+
 run_cmd() {
   CMD="$1"
 
@@ -73,37 +78,45 @@ if ~/scripts/mpd/is-mpd-server; then
     *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
   esac
 else
-  IS_MPV=0
+  IS_MPV_ACTIVE=0
+  IS_MPV_PLAYING=0
   MPV_PAUSE="$(mpvctl get pause 2>/dev/null)"
-  if [ "$?" -eq 0 ] && [ "$MPV_PAUSE" = "false" ]; then
-    IS_MPV=1
+  if [ "$?" -eq 0 ]; then
+    IS_MPV_ACTIVE=1
+    if [ "$MPV_PAUSE" = "false" ]; then
+      IS_MPV_PLAYING=1
+    fi
   else
     if mpvctl get path 2>/dev/null | grep -ie "youtube.com" -e "podcasts" >/dev/null; then
-      IS_MPV=1
+      IS_MPV_PLAYING=1
     fi
   fi
 
   case $1 in
     toggle)
-      if [ "$IS_MPV" -eq 1 ]; then
+      if is_mpd_playing; then
+        run_cmd toggle
+      elif [ "$IS_MPV_ACTIVE" -eq 1 ]; then
         mpvctl toggle
-            else
+      else
         run_cmd toggle
       fi;;
     next)
-      if [ "$IS_MPV" -eq 1 ]; then
+      if [ "$IS_MPV_PLAYING" -eq 1 ]; then
         mpvctl next
       else
         run_cmd next
       fi;;
     prev)
-      if [ "$IS_MPV" -eq 1 ]; then
+      if [ "$IS_MPV_PLAYING" -eq 1 ]; then
         mpvctl prev
       else
         run_cmd prev
       fi;;
     pause)
-      if [ "$IS_MPV" -eq 1 ]; then
+      if is_mpd_playing; then
+        run_cmd pause
+      elif [ "$IS_MPV_ACTIVE" -eq 1 ]; then
         mpvctl toggle
       else
         run_cmd pause
