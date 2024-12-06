@@ -51,9 +51,6 @@
 ;; Make dired file sizes human readable
 (setq-default dired-listing-switches "-alh")
 
-;; Don't ask `yes/no?', ask `y/n?'.
-(fset 'yes-or-no-p 'y-or-n-p)
-
 ;; audible or visible bell
 (setq visible-bell nil)
 
@@ -63,6 +60,20 @@
 ;; When middle-clicking the mouse to yank from the clipboard,
 ;; insert the text where point is, not where the mouse cursor is.
 (setq mouse-yank-at-point t)
+
+;; Yes-No prompts only ask for y/n
+(setopt use-short-answers t)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(defun jneidel-Y-or-n-p (prompt)
+    "Prompt user for (Y/n)."
+    (if (string= "n"
+                 (downcase
+                   (read-from-minibuffer
+                     (concat prompt "(Y/n) "))))
+      nil
+      t))
+(defalias 'y-or-n-p 'jneidel-Y-or-n-p)
 
 ;; includes some of https://github.com/hrs/sensible-defaults.el/tree/main
 (provide 'init-misc-fixes)
