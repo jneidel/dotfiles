@@ -15,10 +15,6 @@ for i in {1..16}; do
 done
 alias mce='rem -b1 -cu+2 -m -@2,0 2>&1 | grep -ve "│" -e "trigger" -e "┬" -e "┼" -e "┴"'
 
-events() {
-  export DOTREMINDERS=$ORG_CALENDAR/events
-}
-
 alias mca="remint"
 c() {
   if [ "$(tmux list-panes | wc -l)" -gt 1 ]; then
@@ -26,4 +22,10 @@ c() {
   else
     OVERRIDE_WEEKSPAN=3 remint
   fi
+}
+
+tcal() {
+  export DOTREMINDERS=$ORG_CALENDAR/trading
+  c
+  export DOTREMINDERS=$ORG_CALENDAR/main
 }

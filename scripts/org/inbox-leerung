@@ -199,9 +199,9 @@ EOF
 
   split_below "Calendar" "remint"
 
-  # printf "\nShow event calendar next\n"
-  # prompt_continue
-  # split_below "Events" "events; remint"
+  printf "\nShow trading calendar next\n"
+  prompt_continue
+  split_below "Trading cal" "tcal"
 
   prompt_continue
 }
