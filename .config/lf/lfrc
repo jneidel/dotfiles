@@ -163,6 +163,8 @@ cmd touch %{{
     title="$ans"
     ans="$ans.org"
     generate-orgmode-metadata "$title" >"$ans"
+  else
+    touch "$ans"
   fi
   lf -remote "send $id select '$ans'"
   lf -remote "send $id edit"
