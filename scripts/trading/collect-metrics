@@ -154,20 +154,23 @@ parse_trades() {
 create_table() {
   sectionName="$1"
   dataFile="$2"
-  echo "** $sectionName" >> "$OUTPUT_FILE"
 
-  if [ "$sectionName" = "All trades" ]; then
-    table_header "truncated" >>"$OUTPUT_FILE"
-    cat $dataFile >>"$OUTPUT_FILE"
-    table_footer "truncated" >>"$OUTPUT_FILE"
-  elif echo "$sectionName" | grep -F "Short" >/dev/null; then
-    table_header "option" >>"$OUTPUT_FILE"
-    cat $dataFile >>"$OUTPUT_FILE"
-    table_footer "option" >>"$OUTPUT_FILE"
-  else
-    table_header "index" >>"$OUTPUT_FILE"
-    cat $dataFile >>"$OUTPUT_FILE"
-    table_footer "index" >>"$OUTPUT_FILE"
+  if [ -s $dataFile ]; then
+    echo "** $sectionName" >> "$OUTPUT_FILE"
+
+    if [ "$sectionName" = "All trades" ]; then
+      table_header "truncated" >>"$OUTPUT_FILE"
+      cat $dataFile >>"$OUTPUT_FILE"
+      table_footer "truncated" >>"$OUTPUT_FILE"
+    elif echo "$sectionName" | grep -F "Short" >/dev/null; then
+      table_header "option" >>"$OUTPUT_FILE"
+      cat $dataFile >>"$OUTPUT_FILE"
+      table_footer "option" >>"$OUTPUT_FILE"
+    else
+      table_header "index" >>"$OUTPUT_FILE"
+      cat $dataFile >>"$OUTPUT_FILE"
+      table_footer "index" >>"$OUTPUT_FILE"
+    fi
   fi
 }
 
