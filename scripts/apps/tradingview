@@ -1,0 +1,5 @@
+#! /bin/sh
+
+hash chromium || exit 127
+
+chromium & >/dev/null 2>&1

@@ -311,7 +311,7 @@ _complete_post() {
 compdef _complete_post post
 
 _complete_bl() {
-  local cmds=(start stop)
+  local cmds=(start stop on off)
   compadd -a cmds
 }
 compdef _complete_bl bl

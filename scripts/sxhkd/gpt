@@ -9,4 +9,5 @@ EOF
 fi
 
 # $BROWSER "https://claude.ai/chats" >/dev/null 2>&1 # high demand downgrades are constant now
-$BROWSER "https://chatgpt.com/" >/dev/null 2>&1
+# $BROWSER "https://chatgpt.com/" >/dev/null 2>&1
+$BROWSER "https://chat.deepseek.com/" >/dev/null 2>&1

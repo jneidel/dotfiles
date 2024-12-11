@@ -175,7 +175,7 @@ outcome:
 
 EOF
   tmux split-window -v -l 70%
-  tmux send-keys 'groceries "Edeka, Aldi" "'
+  tmux send-keys 'groceries "Edeka, Aldi, Bäckerei" "'
   prompt_continue
 }
 
@@ -309,7 +309,7 @@ pre_org_inbox() {
   signal-to-inbox &
 }
 org_inbox() {
-  should_skip_based_on_state || return
+  # should_skip_based_on_state || return
   print_header "$step. Clear your org inbox"
   cat <<EOF
 outcome:
@@ -425,7 +425,7 @@ camscanner
 pre_newsboat
 # otter
 newsboat
-# browser_tabs
+browser_tabs
 calendar
 # monica
 pre_org_inbox

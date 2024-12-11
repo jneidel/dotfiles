@@ -10,8 +10,6 @@ EOF
   exit
 fi
 
-command -v signal-cli >/dev/null || { echo "signal-cli is not installed" 1>&2; exit 127; }
-
 send() {
   local group="$1"
   # signal-cli -a $SIGNAL_NUMBER send -g "$group" -m 'Challenge review time!' --text-style "0:23:ITALIC" >/dev/null 2>&1
@@ -21,4 +19,4 @@ send() {
 
 ~/scripts/cron/waitforinternet
 send "group.VUlYU3dpdDdLRi9ScUtmSDlqcXlTbkxUZ3FWQ2ltR2NFSzI1RGJmK3lEdz0=" # weekly challenges
-# send "97DrVHpStw2VOPfGzOtdnWsUJV3W4HB7QEKg155mhMg=" # 66 day challenge
+# send "group.bkRmZTFicHc5R0RBbTY4dy9pM1ZFTnM2Sldxb1R0QlltNDJEWTVvM1NoWT0=" # testing

@@ -109,6 +109,11 @@ cmd move-to-designs %{{
   mv "$f" "$ORG_DESIGN/0 inbox/"
   printf "Moved '${f##*/}' to design inbox"
 }}
+cmd move-to-projects %{{
+  local filename="${f##*/}"
+  mv "$f" "$ORG_PROJECTS/"
+  printf "Moved '${f##*/}' to projects"
+}}
 cmd move-to-project ${{
   local filename="${f##*/}"
   project="$(select-project)"
@@ -148,6 +153,15 @@ cmd move-to-resource ${{
     printf "Moved '${f##*/}' to resource: $resource"
   fi
 }}
+cmd move-to-mmusic ${{
+  dir="$ORG_MEDIA/materialistic music"
+  if echo "$f" | grep -F "/main/" >/dev/null; then
+    cp -r "$f" $dir/main/ && rm -r "$f"
+  else
+    cp -r "$f" $dir/unheard/ && rm -r "$f"
+  fi
+  printf "Moved '${f##*/}' into materialist music"
+}}
 
 cmd gimp &gimp "$f" >/dev/null 2>&1
 
@@ -163,6 +177,8 @@ cmd touch %{{
     title="$ans"
     ans="$ans.org"
     generate-orgmode-metadata "$title" >"$ans"
+  else
+    touch "$ans"
   fi
   lf -remote "send $id select '$ans'"
   lf -remote "send $id edit"
@@ -373,12 +389,14 @@ map mi move-to-inbox
 map mI move-to-other-inbox
 map mA move-to-archive
 map ml move-to-local-archive
-map mP move-to-paperless
+map ms move-to-paperless
 map mb move-to-blog-post-ideas
 map md move-to-designs
 map ma move-to-area
 map mp move-to-project
+map mP move-to-projects
 map mr move-to-resource
+map mM move-to-mmusic
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"

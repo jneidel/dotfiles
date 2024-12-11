@@ -86,8 +86,8 @@ ${title}$(printf "%0.s " $(seq $titleLen 68)):<++>:
 ** Prices
 | Index | Trade Type | Stake | Open | Close | P/L | Entry Date+Time | Exit Date+Time |
 |--------+------------+---
-| $INDEX   | $STRATEGY_NAME | $STAKE | $(($HIGH+2)) |   -1 |    | [$(date "+%Y-%m-%d %H:")<++>] | [$(date "+%Y-%m-%d ")<++>] |
-| $INDEX   | $STRATEGY_NAME | $STAKE | $(($LOW-2))  |   -1 |    | [$(date "+%Y-%m-%d %H:")<++>] | [$(date "+%Y-%m-%d ")<++>] |
+| $INDEX   | $STRATEGY_NAME |  $STAKE | $(($HIGH+2)) |   -1 |    | [$(date "+%Y-%m-%d %H:")<++>] | [$(date "+%Y-%m-%d ")<++>] |
+| $INDEX   | $STRATEGY_NAME | -$STAKE | $(($LOW-2))  |   -1 |    | [$(date "+%Y-%m-%d %H:")<++>] | [$(date "+%Y-%m-%d ")<++>] |
 $(echo '#+TBLFM: @2$6..@$6=$5<0?0:($5-$4)*$3;%.2f' |
 sed 's/[^:] /::/g')
 

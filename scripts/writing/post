@@ -69,6 +69,8 @@ apply_category_specific_rules() {
       post_name="$(calc_next_nr_of_next_newsletter)" # dir name is only the number
       de_extra="-k newsletter-de"
       lang="en"
+
+      sed -r "s|(\[latest edition of my newsletter\]: newsletter/)[0-9]+|\1${post_name}|" -i $WEB_HOME/content/now/index.md
       break;;
     review/)
       de_extra="-k review-de"

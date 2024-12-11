@@ -174,7 +174,9 @@ def_key "alt-L"
 ## run mpd scripts
 def_key "C" # open cover
   run_external_command "mpd-cover"
-def_key "Y" # print lyrics
+def_key "Y"
+ show_lyrics
+def_key "alt-Y" # print lyrics
   run_external_command "tmux split-window -l 45% 'mpd-lyrics | less --quit-at-eof'"
 def_key "M" # enter album directory
   run_external_command "tmux split-window -l 18% \; send-keys 'clear && ssm' 'Enter'"

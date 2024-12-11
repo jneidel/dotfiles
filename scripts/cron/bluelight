@@ -35,6 +35,6 @@ XAUTHORITY=/run/user/1000/Xauthority
 xauth add $(xauth -f $XAUTHORITY list|tail -1)
 
 case $1 in
-  start) start;;
-  stop) stop;;
+  start|on) start;;
+  stop|off) stop;;
 esac
