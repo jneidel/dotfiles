@@ -18,9 +18,7 @@ EOF
   exit
 fi
 
-command -v mpv >/dev/null || { echo "mpv is not installed"; exit 127; }
-command -v socat >/dev/null || { echo "socat is not installed"; exit 127; }
-command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not in PATH"; exit 127; }
+hash mpv socat manage-mpv-sockets || exit 127
 
 SOCKET=
 if echo "$@" | grep '\--socket' >/dev/null; then
@@ -69,7 +67,7 @@ seek_to_end() {
 }
 
 notify() {
-  notify-send -i $1 -u normal -t 4000 "$2" "$(send_get media-title | cut -d\" -f2)"
+  notify-send -i $1 -u normal -h string:x-canonical-private-synchronous:media-control -t 5000 "$2" "$(send_get media-title | cut -d\" -f2)"
 }
 next() {
   if [ "$(send_get chapters)" -gt 0 ]; then # has chapters
@@ -101,8 +99,14 @@ case "$1" in
     else
       notify player_pause "Pause"
     fi;;
-  play) send_cmd "[\"set_property\", \"pause\", false]";;
-  pause) send_cmd "[\"set_property\", \"pause\", true]";;
+  play)
+    send_cmd "[\"set_property\", \"pause\", false]"
+    notify player_play "Play"
+    ;;
+  pause)
+    send_cmd "[\"set_property\", \"pause\", true]"
+    notify player_pause "Pause"
+    ;;
   next)
     next
     notify player_end "Next";;

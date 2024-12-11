@@ -61,25 +61,25 @@ super + ctrl + m
 super + m
   qpwgraph
 
-## mpd
+## media playback
 XF86AudioPlay
-  ~/scripts/sxhkd/control-mpd toggle # macbook, JBL speaker single press
+  ~/scripts/sxhkd/control-media toggle # macbook, JBL speaker single press
 XF86Search
-  ~/scripts/sxhkd/control-mpd toggle # x240
+  ~/scripts/sxhkd/control-media toggle # x240
 XF86Tools
-  ~/scripts/sxhkd/control-mpd toggle # x270
+  ~/scripts/sxhkd/control-media toggle # x270
 
 XF86AudioNext
-  ~/scripts/sxhkd/control-mpd next # JBL speaker double press
+  ~/scripts/sxhkd/control-media next # JBL speaker double press
 XF86LaunchA
-  ~/scripts/sxhkd/control-mpd next
+  ~/scripts/sxhkd/control-media next
 XF86Favorites
-  ~/scripts/sxhkd/control-mpd next
+  ~/scripts/sxhkd/control-media next
 
 XF86AudioPrev
-  ~/scripts/sxhkd/control-mpd prev # x240
+  ~/scripts/sxhkd/control-media prev # x240
 XF86Display
-  ~/scripts/sxhkd/control-mpd prev # x240
+  ~/scripts/sxhkd/control-media prev # x240
 
 ## brightness
 XF86MonBrightnessUp

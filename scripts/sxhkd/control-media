@@ -1,0 +1,184 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat << EOF
+$ control-media COMMAND
+Control media playback.
+Interfaces with:
+- mpv
+- mpd
+- browser
+
+Sends a notification.
+For usage via as keyboard shortcuts.
+
+Commands:
+  toggle: pause/play music/mpv
+  pause: pause playback
+  play: start playing music
+  next: next track
+  prev: previous track
+
+Example:
+  $ control-media toggle
+EOF
+  exit
+fi
+
+hash mpcc playerctl mpvctl || exit 127
+
+MPD_STATUS=/tmp/control-mpd-tmp
+is_mpd_playing() {
+  mpcc -f 'TRACK:%title% - %artist%\nFILE:%file%' >$MPD_STATUS
+  grep "playing" $MPD_STATUS >/dev/null
+}
+
+control_mpd() {
+  CMD=$1
+  mpcc $CMD -f 'TRACK:%title% - %artist%\nFILE:%file%' >$MPD_STATUS
+
+  TRACK="$(grep -Po '^TRACK:\K.*' $MPD_STATUS)"
+  [ "$TRACK" = " - " ] && {
+    TRACK="$(basename "$(grep -Po '^FILE:\K.*' $MPD_STATUS)" | rev | cut -d. -f2 | rev)"
+  }
+
+  if [ "$CMD" = "toggle" ]; then
+    if grep "playing" $MPD_STATUS >/dev/null; then
+      notify play "$TRACK"
+    else
+      notify pause "$TRACK"
+    fi
+  else
+    notify "$CMD" "$TRACK"
+  fi
+}
+
+is_browser_active() {
+  if [ `playerctl status` = "Stopped" ]; then
+    false
+  else
+    true
+  fi
+}
+is_browser_playing() {
+  if [ `playerctl status` = "Playing" ]; then
+    true
+  else
+    false
+  fi
+}
+
+get_browser_title() {
+  TITLE="$(playerctl metadata | grep -F :title | cut -d\  -f3- | sed 's/^ *//')"
+  # ARTIST="$(playerctl metadata | grep -F :artist | cut -d\  -f3- | sed 's/^ *//')"
+  printf "$TITLE"
+}
+
+control_browser() {
+  CMD=$1
+  case "$CMD" in
+    toggle)
+      playerctl play-pause
+      if is_browser_playing; then
+        CMD=play
+      else
+        CMD=pause
+      fi
+      ;;
+    play|pause|next)
+      playerctl $CMD
+      ;;
+    prev)
+      playerctl previous
+      ;;
+  esac
+  notify "$CMD" "$(get_browser_title)"
+}
+
+notify() {
+  CMD="$1"
+  TITLE="$2"
+
+  case "$CMD" in
+    play)
+      ICON=player_play
+      HEAD=Play;;
+    pause)
+      ICON=player_pause
+      HEAD=Pause;;
+    next)
+      ICON=player_end
+      HEAD=Next;;
+    prev)
+      ICON=player_start
+      HEAD=Previous;;
+    *)
+      HEAD=""
+  esac
+
+  [ -n "$HEAD" ] && notify-send -i $ICON -h string:x-canonical-private-synchronous:media-control -u normal -t 5000 "$HEAD" "$TITLE"
+}
+
+IS_MPV_ACTIVE=0
+IS_MPV_PLAYING=0
+MPV_PAUSE="$(mpvctl get pause 2>/dev/null)"
+if [ "$?" -eq 0 ]; then
+  IS_MPV_ACTIVE=1
+  if [ "$MPV_PAUSE" = "false" ]; then
+    IS_MPV_PLAYING=1
+  fi
+else
+  if mpvctl get path 2>/dev/null | grep -ie "youtube.com" -e "podcasts" >/dev/null; then
+    IS_MPV_PLAYING=1
+  fi
+fi
+
+case $1 in
+  toggle)
+    if is_mpd_playing; then
+      control_mpd pause
+    elif [ "$IS_MPV_PLAYING" -eq 1 ]; then
+      mpvctl pause
+    elif is_browser_active; then
+      control_browser toggle
+    elif [ "$IS_MPV_ACTIVE" -eq 1 ]; then
+      mpvctl toggle
+    else
+      control_mpd toggle
+    fi
+    ;;
+  next)
+    if [ "$IS_MPV_PLAYING" -eq 1 ]; then
+      mpvctl next
+    else
+      control_mpd next
+    fi
+    ;;
+  prev)
+    if [ "$IS_MPV_PLAYING" -eq 1 ]; then
+      mpvctl prev
+    else
+      control_mpd prev
+      fi;;
+  pause)
+    if is_mpd_playing; then
+      control_mpd pause
+    elif [ "$IS_MPV_ACTIVE" -eq 1 ]; then
+      mpvctl toggle
+    else
+      control_mpd pause
+      fi;;
+    play) control_mpd play;;
+    *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
+esac
+
+# unused: remote mpd server
+# if ~/scripts/mpd/is-mpd-server; then
+#   case $1 in
+#     toggle) mpvctl --socket /tmp/mpv_named_music toggle;;
+#     next) mpvctl --socket /tmp/mpv_named_music next;;
+#     pause) mpvctl --socket /tmp/mpv_named_music pause;;
+#     play) mpvctl --socket /tmp/mpv_named_music play;;
+#     *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
+#   esac
+# else
