@@ -27,6 +27,12 @@ print_header() {
 print_control() {
   printf "\033[1;34m$1\033[0m"
 }
+print_running() {
+  printf "\033[1;31m$1\033[m"
+}
+print_paused() {
+  printf "\033[1;32m$1\033[m"
+}
 
 step=0
 actual_step=0
@@ -93,23 +99,23 @@ is_paused=0
 passed_before_pause=0
 pause_timer() {
   if [ "$is_paused" -eq 1 ]; then
-    print_control "Timer is already paused\n"
+    print_paused "Timer is already paused\n"
   else
     is_paused=1
     pause_time=$(date +%s)
     passed_before_pause=$(($pause_time-$start_time))
-    print_control "[Timer paused]\nContinue the review process with 'resume'\n"
+    print_paused "[Timer paused]\nContinue the review process with 'resume'\n"
     update_state
   fi
 }
 resume_timer() {
   if [ "$is_paused" -eq 0 ]; then
-    print_control "Timer is not paused\n"
+    print_running "Timer is not paused\n"
   else
     is_paused=0
     resume_time=$(date +%s)
     start_time=$(($resume_time-$passed_before_pause))
-    print_control "[Timer resumed]\n"
+    print_running "[Timer resumed]\n"
   fi
 }
 
