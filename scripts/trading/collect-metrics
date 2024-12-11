@@ -114,6 +114,7 @@ shortPutTrades=$(mktemp)
 shortCallTrades=$(mktemp)
 shortOptionTrades=$(mktemp)
 schoolRunTrades=$(mktemp)
+advancedSchoolRunTrades=$(mktemp)
 normalize_line() {
   # different trade type have different field in their rows
   # normalize them to make them play well together
@@ -123,7 +124,7 @@ normalize_line() {
   # data for all trades table
   case "$trade_type" in
     "short put"|"short call") normalize_short_options "$line" "truncated" >>$allTrades;;
-    "school run") normalize_school_run "$line" "truncated" >>$allTrades;;
+    "school run"|"advanced school run") normalize_school_run "$line" "truncated" >>$allTrades;;
     *) echo "Matched unconfigured trade type: $trade_type, line: $line" >&2;;
   esac
 
@@ -137,6 +138,7 @@ normalize_line() {
     "short put") normalize_short_options "$line" >>$shortPutTrades;;
     "short call") normalize_short_options "$line" >>$shortCallTrades;;
     "school run") normalize_school_run "$line" >>$schoolRunTrades;;
+    "advanced school run") normalize_school_run "$line" >>$advancedSchoolRunTrades;;
   esac
 }
 
@@ -174,6 +176,7 @@ parse_trades
 echo "* metrics" >"$OUTPUT_FILE"
 create_table "All trades" $allTrades
 create_table "School Run" $schoolRunTrades
+create_table "Advanced School Run" $advancedSchoolRunTrades
 create_table "Short Options" $shortOptionTrades
 create_table "Short Put" $shortPutTrades
 create_table "Short Call" $shortCallTrades
