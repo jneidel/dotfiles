@@ -85,7 +85,7 @@ sref() { # refactor
 # make:entity
 
 alias sdm="sc make:migration --no-interaction"
-alias sdmm="sc doctrine:migrations:migrate --no-interaction"
+alias mig="sc doctrine:migrations:migrate --no-interaction"
 function migrate() {
   sdm sdmm
 }
