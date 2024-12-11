@@ -42,6 +42,12 @@ new_newsletter() {
 
 send_newsletter() {
   fetch_latest_newsletter_nr
+
+  if grep -F '<++>' $LATEST_NEWSLETTER_DIR/index.md >/dev/null; then
+    echo "The newsletter includes placeholders (<++>)"
+    exit 1
+  fi
+
   git -C $REPO add "content/newsletter/$LATEST_NEWSLETTER_NR" "content/now/index.md"
   git -C $REPO commit -m "Publish newsletter #$LATEST_NEWSLETTER_NR"
   git -C $REPO push --force-with-lease origin

@@ -57,7 +57,7 @@ EOF
   elif [ "$mode" = "index" ]; then
     echo "#+TBLFM: $(insert_header_formulae '$6')\n"
   elif [ "$mode" = "option" ]; then
-    echo '#+TBLFM: @2$16..@$16=$15/($4*$3*100);%.2f'"$(insert_header_formulae '$7')::\$5='(hide-minus-cell @0\$0)::\$6='(hide-zero-cell @0\$0)::\$14='(hide-zero-cell @0\$0)::\$15='(hide-zero-cell @0\$0)\n"
+    echo '#+TBLFM: @2$16..@$16=$15/($4*$3*100);%.2f'"::$(insert_header_formulae '$7')::\$5='(hide-minus-cell @0\$0)::\$6='(hide-zero-cell @0\$0)::\$14='(hide-zero-cell @0\$0)::\$15='(hide-zero-cell @0\$0)\n"
   fi
 }
 

@@ -12,9 +12,9 @@
 
 (with-eval-after-load 'hledger-mode
   (setq tab-width 2)
-  (evil-define-key "normal" ledger-mode-map (kbd "RET") 'open-line)
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-copy-env "LEDGER_FILE")))
+  (evil-define-key "normal" ledger-mode-map (kbd "RET") 'open-line))
+  ;; (when (memq window-system '(mac ns)) broken on mac, needed on linux?
+  ;;   (exec-path-from-shell-copy-env "LEDGER_FILE")))
 
 (add-hook 'ledger-mode-hook 'goto-address-prog-mode)
 

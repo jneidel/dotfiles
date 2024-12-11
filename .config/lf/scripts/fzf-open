@@ -3,7 +3,7 @@
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
 $ fzf-open TYPE
-<++>
+Find a directory or file to open with fzf.
 
 Parameters:
   \$1: what type: file|dir
@@ -21,7 +21,7 @@ command -v rg >/dev/null || { echo "ripgrep is not installed" 1>&2; exit 127; }
 
 openType=$1
 
-sharedFlags="--ignore --hidden --files --sort path --type-add='exclude:*.{mp3,JPG,mkv,mp4,avi,zip,xlsx,m3u,url,aac,mpc,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/'"
+sharedFlags="-L --ignore --hidden --files --sort path --type-add='exclude:*.{mp3,JPG,mkv,mp4,avi,zip,xlsx,m3u,url,aac,mpc,sql,ydb}' --type-not=exclude -g='!.git/' -g='!git/' -g='!node_modules/' -g='!vendor/' -g='!tmp/' -g='!coverage' -g='!dist/' -g='!build/'"
 
 fzf_cmd() {
   fzf --bind TAB:up,Shift-TAB:down --height=0 --margin=40%,12%

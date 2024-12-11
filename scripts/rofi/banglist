@@ -11,7 +11,7 @@ nyaa https://nyaa.si/?f=0&s=seeders&o=desc&c=1_2&q=%s
 13 https://1337x.to/search/%s/1/
 t2 https://www.torrentz2.is/search?f=%s
 mr https://www.mangareader.net/search/?w=%s&rd=0&status=0&order=0&genre=&p=0
-ml https://manga4life.com/search/?sort=s&desc=false&name=%s
+ml https://weebcentral.com/search?text=%s
 mi http://www.mangainn.net/advanced-search?term=%s
 gc https://getcomics.info/?s=%s
 fp https://filepursuit.com/pursuit?q=%s
@@ -19,7 +19,7 @@ abb https://audiobookbay.is/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r10
 klein https://www.ebay-kleinanzeigen.de/s-03238/%s/k0l7714r10
-ytt https://www.youtube.com/results?search_query=%s
+yt https://www.youtube.com/results?search_query=%s
 yt https://yewtu.be/search?q=%s
 yt https://inv.tux.pizza/search?q=%s
 yt2 https://ytb.trom.tf/search?q=%s
@@ -95,7 +95,6 @@ seerr https://jellyseerr.neidel.xyz/search?query=%s
 aw https://wiki.archlinux.org/index.php?search=%s
 18 https://1337x.to/search/1080p %s/1/
 tg https://torrentgalaxy.mx/torrents.php?search=%s#results
-ot https://oldtoons.world/torrents?perPage=25&name=%s
 ali https://de.aliexpress.com/w/wholesale-%s.html
 lime https://www.limetorrents.lol/search/all/%s/
 hd https://hd-source.to/?s=%s
@@ -108,4 +107,7 @@ j https://jellyfin.neidel.xyz/web/index.html#/search.html?query=%s
 inv https://www.marketwatch.com/investing/stock/%s/company-profile?mod=mw_quote_tab
 i https://duckduckgo.com/?q=%s&ia=images&iax=images
 wb https://www.worldofbooks.com/de-de/search?q=%s
+wob https://www.worldofbooks.com/de-de/search?q=%s
 o https://org-search.neidel.xyz/?query=%s
+roh https://www.rohkostwiki.de/w/index.php?title=Spezial%3ASuche&search=%s&fulltext=1
+top https://www.topfruits.de/search?sSearch=%s
