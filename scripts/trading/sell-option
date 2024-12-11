@@ -160,6 +160,11 @@ EOF
   fi
 }
 
+EARNINGS_DATE=$(gum spin --title "Fetching next earnings date" -- earn $TICKER)
+# earn doesn't include year
+# IS_EXPIRY_PAST_EARNINGS=0
+# [ `date -d "$EARNINGS_DATE" +%s` < `date -d "$expiry_input" +%s` ] && IS_EXPIRY_PAST_EARNINGS=1
+
 file_content() {
   title="* $TICKER $(date '+%b%d') $STRATEGY_NAME"
   titleLen=`echo "$title" | wc -c`
@@ -186,7 +191,7 @@ $(echo '#+TBLFM: @5$2=@1*@3*sqrt(@4/365);%.2f::@6$2=('$([ "$IS_BULLISH" = 1 ] &&
 ** Was spricht dagegen?
 <++>
 
-Next earnings: $(gum spin --title "Fetching next earnings date" -- earn $TICKER)
+Next earnings: $EARNINGS_DATE $([ "$langfristig" -eq 1 ] && echo "\n If earnings date is prior to expiry ($expiry_input), then add the sell date 4 days prior to the earning to the calendar.")
 
 ** Prices
 $(print_price_calculations)
