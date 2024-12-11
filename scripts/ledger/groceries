@@ -26,7 +26,7 @@ hash node || exit 127
 
 TITLE="$1"
 amount_input="$2"
-calculate_split_amounts $amount_input "70/30"
+calculate_split_amounts $amount_input "50/50"
 date_input="$3"
 parse_date_input "$date_input"
 
