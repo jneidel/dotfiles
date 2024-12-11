@@ -21,19 +21,17 @@ EOF
   exit
 fi
 
-command -v scrot >/dev/null || { echo "scrot is not installed"; exit 1; }
-command -v convert >/dev/null || { echo "convert (imagemagick) is not installed"; exit 1; }
-command -v i3lock >/dev/null || { echo "i3lock is not installed"; exit 1; }
+hash scrot magick i3lock || exit 127
 
 # take a screenshot
 scrot -o $IMG
 
 add_logo_user() {
   # add small arch logo to screen center
-  # convert $1 $LOGO -gravity center -geometry +0-10 -composite $1
+  # magick $1 $LOGO -gravity center -geometry +0-10 -composite $1
 
   # add user@hostname above the logo
-  convert $1 -font Comic-Code-Ligatures-Bold-Nerd-Font-Complete -fill grey -pointsize 22 -gravity center -draw "text 0,-150 '$USER@$(cat /etc/hostname)'" $1
+  magick $1 -font Comic-Code-Ligatures-Bold-Nerd-Font-Complete -fill grey -pointsize 22 -gravity center -draw "text 0,-150 '$USER@$(cat /etc/hostname)'" $1
   ## list of fonts: identify -list font
 }
 
@@ -42,7 +40,7 @@ process_image() {
   add_logo_user $1
 
   # blur screenshot
-  convert $1 -blur 0x6 $1
+  magick $1 -blur 0x6 $1
   ## see for customizing blur: https://www.imagemagick.org/Usage/blur/#blur_args
 
   # clear logo over the blur
@@ -50,12 +48,12 @@ process_image() {
 }
 
 if [ "$(xrandr --listmonitors | head -n1 | awk '{ print $2 }')" -ge 2 ]; then # 2 monitors
-  convert $IMG -crop 2x1@ $PARTS%d.jpg
+  magick $IMG -crop 2x1@ $PARTS%d.jpg
 
   process_image $PART1
   process_image $PART2
 
-  convert $PARTS*.jpg +append $IMG
+  magick $PARTS*.jpg +append $IMG
 else
   process_image $IMG
 fi
