@@ -61,11 +61,10 @@ circumvent_lockscreen
 #   fast ~30%
 #   ultrafast ~20% cpu
 
-# TODO: fix audio with pipewire
-  # -f alsa -i pulse \
 ffmpeg -s $(xdpyinfo | grep dimensions | awk '{ print $2 }') \
   -use_wallclock_as_timestamps true \
   -f x11grab -i :0.0 \
+  -f pulse -i default \
   -r $FPS \
   -threads 0 \
   -vcodec libx264 \

@@ -95,7 +95,6 @@ seerr https://jellyseerr.neidel.xyz/search?query=%s
 aw https://wiki.archlinux.org/index.php?search=%s
 18 https://1337x.to/search/1080p %s/1/
 tg https://torrentgalaxy.mx/torrents.php?search=%s#results
-ot https://oldtoons.world/torrents?perPage=25&name=%s
 ali https://de.aliexpress.com/w/wholesale-%s.html
 lime https://www.limetorrents.lol/search/all/%s/
 hd https://hd-source.to/?s=%s
@@ -108,4 +107,5 @@ j https://jellyfin.neidel.xyz/web/index.html#/search.html?query=%s
 inv https://www.marketwatch.com/investing/stock/%s/company-profile?mod=mw_quote_tab
 i https://duckduckgo.com/?q=%s&ia=images&iax=images
 wb https://www.worldofbooks.com/de-de/search?q=%s
+wob https://www.worldofbooks.com/de-de/search?q=%s
 o https://org-search.neidel.xyz/?query=%s
