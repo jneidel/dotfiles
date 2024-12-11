@@ -175,7 +175,7 @@ outcome:
 
 EOF
   tmux split-window -v -l 70%
-  tmux send-keys 'groceries "Edeka, Aldi" "'
+  tmux send-keys 'groceries "Edeka, Aldi, Bäckerei" "'
   prompt_continue
 }
 
