@@ -4,6 +4,8 @@ ENCOMPASSING_DIR="$TRADES_DIR"
 IMG_DIR="img"
 LATEST_IMG_LOCATION="/tmp/screenshot-chart_latest-img.txt"
 
+mkdir -p "$ENCOMPASSING_DIR/$IMG_DIR"
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
 $ screenshot-chart
@@ -42,9 +44,12 @@ calc_filename() {
 
 save_screenshot() {
   ticker=$(rofi -dmenu -l 0 -theme-str 'window {width: 250px;}' -p Ticker | tr "[a-z]" "[A-Z]")
-  filename=`calc_filename "$ticker"`
-  mv "$SCREENSHOT_TEMP" "$ENCOMPASSING_DIR/$filename"
-  set_latest_screenshot "$filename"
+  # ticker=DAX
+  if [ -n "$ticker" ]; then
+    filename=`calc_filename "$ticker"`
+    mv "$SCREENSHOT_TEMP" "$ENCOMPASSING_DIR/$filename"
+    set_latest_screenshot "$filename"
+  fi
 }
 
 take_screenshot() {
