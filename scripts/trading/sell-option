@@ -17,6 +17,7 @@ Flags:
   -q: quantity
   -p: premium of the option
   -i, -v: IV, format: .3, 0.302, 30.2
+  -m: mode (paper|live)
 
 Examples:
   $ sell-option
@@ -28,7 +29,7 @@ fi
 
 hash emacs gum earn || exit 127
 
-while getopts ":t:e:s:d:i:v:p:u:q:" opt; do
+while getopts ":t:e:s:d:i:v:p:u:q:m:" opt; do
   case $opt in
     t) TICKER="$OPTARG" ;;
     e) expiry_input="$OPTARG" ;;
@@ -38,12 +39,24 @@ while getopts ":t:e:s:d:i:v:p:u:q:" opt; do
     u) UNDERLYING_PRICE="$OPTARG" ;;
     q) QUANTITY="$OPTARG" ;;
     p) PREMIUM="$OPTARG" ;;
+    m) MODE="$OPTARG" ;;
     \?) echo "Invalid flag passed: -$OPTARG" >&2; exit 1 ;;
     :) echo "Flag -$OPTARG requires an argument." >&2; exit 1 ;;
   esac
 done
 
-OUTPUT_FILE="$TRADES_DIR/paper-trades.org"
+if [ -z "$MODE" ]; then
+  printf "Mode [paper, live] (live): "
+  read MODE
+  [ -z "$MODE" ] && MODE=live
+fi
+if [ "$MODE" != "paper" ] && [ "$MODE" != "live" ]; then
+  echo "mode (-m) must be one of: paper, live"
+  exit 1
+fi
+TICKER=`echo $TICKER | tr a-z A-Z`
+
+OUTPUT_FILE="$TRADES_DIR/$MODE-trades.org"
 
 if [ -z "$strike_and_type" ]; then
   printf "Option strike and type: "
@@ -87,7 +100,7 @@ fi
 daysUntilExpiry=$(echo $(( ($(date -d "$EXPIRY_DATE $EXPIRY_YEAR" +%s) - $(date +%s)) / 86400 +1 )))
 [ "$daysUntilExpiry" -lt 0 ] && echo "Expiry date is in the past: $EXPIRY_DATE $EXPIRY_YEAR, days until expiry $daysUntilExpiry" && exit 1
 langfristig=0
-[ "$daysUntilExpiry" -gt 40 ] && langfristig=1
+[ "$daysUntilExpiry" -gt 30 ] && langfristig=1
 
 if [ -z "$DELTA" ]; then
   printf "Option delta: "
