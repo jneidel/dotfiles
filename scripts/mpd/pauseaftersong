@@ -19,11 +19,10 @@ EOF
   exit
 fi
 
-command -v mpcc >/dev/null || { echo "mpcc is not in PATH"; exit 127; }
-command -v control-mpd >/dev/null || { echo "control-mpd is not in PATH"; exit 127; }
+hash mpcc control-media || exit 127
 
 run() {
-  mpcc idle player && control-mpd pause
+  mpcc idle player && control-media pause
 }
 runTimes() {
   cmd="mpcc idle player"
@@ -31,7 +30,7 @@ runTimes() {
     [ "$n" -gt 1 ] &&
       cmd="$cmd; mpcc idle player"
   done
-  cmd="$cmd; control-mpd pause"
+  cmd="$cmd; control-media pause"
   sh -c "$cmd"
 }
 
