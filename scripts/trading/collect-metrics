@@ -1,5 +1,6 @@
 #! /bin/sh
 
+DATA_DIR=$TRADES_DIR
 DIR=`dirname $0`
 . lib.sh
 
@@ -9,7 +10,7 @@ $ collect-metrics [live|paper]
 Assemble trade metrics
 
 Arguments:
-  \$1: mode, one of: live, paper; default: paper
+  \$1: mode, one of: live, paper; default: where source changed
 EOF
   exit
 fi
@@ -17,15 +18,18 @@ fi
 hash grep || exit 127
 
 TRADING_MODE=$1
-[ -z "$TRADING_MODE" ] && TRADING_MODE=paper
+if [ -z "$TRADING_MODE" ]; then
+  make -C $DATA_DIR | grep -v directory
+  exit 0
+fi
 if [ "$TRADING_MODE" != "paper" ] && [ "$TRADING_MODE" != "live" ]; then
   echo "Invalid trading mode '$TRADING_MODE', must be one of: paper, live"
   exit 1
 fi
 
 RAW_INPUT_FILE="$TRADING_MODE-trades.org"
-INPUT_FILE="$TRADES_DIR/$RAW_INPUT_FILE"
-OUTPUT_FILE="$TRADES_DIR/$TRADING_MODE-metrics.org"
+INPUT_FILE="$DATA_DIR/$RAW_INPUT_FILE"
+OUTPUT_FILE="$DATA_DIR/$TRADING_MODE-metrics.org"
 
 table_header() {
   mode="$1"

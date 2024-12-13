@@ -315,3 +315,9 @@ _complete_bl() {
   compadd -a cmds
 }
 compdef _complete_bl bl
+
+_complete_collect-metrics() {
+  local cmds=(paper live)
+  compadd -a cmds
+}
+compdef _complete_collect-metrics collect-metrics
