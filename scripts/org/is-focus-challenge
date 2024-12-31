@@ -21,31 +21,42 @@ ordered_calendar_entries() {
   remind -t$LOOKBACK_TIME_SPAN -g $DOTREMINDERS $(date -d "$LOOKBACK_TIME_SPAN days ago" +%Y-%m-%d) 2>/dev/null
 }
 
-most_recent_entry="$(ordered_calendar_entries | grep -Fi "focus" | tail -n1)"
+most_recent_focus="$(ordered_calendar_entries | grep -Fi "focus" | tail -n1)"
+most_recent_no_media="$(ordered_calendar_entries | grep -Fi "no media" | tail -n1)"
 
-return_active() {
-  echo "⛔ Focus challenge is active ⛔" >&2
-  exit 0
+return_active_focus() {
+  echo "⛔👉 Focus challenge is active 👈⛔" >&2
+  if [ "$IS_INVERSE" -eq 0 ]; then
+    exit 0
+  else
+    exit 1
+  fi
+}
+return_active_no_media() {
+  echo "⛔📺 No media challenge is active 📻⛔" >&2
+  if [ "$IS_INVERSE" -eq 0 ]; then
+    exit 0
+  else
+    exit 1
+  fi
 }
 return_inactive() {
-  exit 1
+  if [ "$IS_INVERSE" -eq 0 ]; then
+    exit 1
+  else
+    exit 0
+  fi
 }
 
 IS_INVERSE=0
 [ "$1" = "-v" ] && IS_INVERSE=1
 
-if echo $most_recent_entry | grep -i "start" >/dev/null; then
-  if [ "$IS_INVERSE" -eq 0 ]; then
-    return_active
-  else
-    return_inactive
-  fi
-elif echo $most_recent_entry | grep -ie "end" -e "ende" >/dev/null; then
-  if [ "$IS_INVERSE" -eq 0 ]; then
-    return_inactive
-  else
-    return_active
-  fi
+if echo $most_recent_focus | grep -ie "start" -e "🚀" >/dev/null; then
+  return_active_focus
+elif echo $most_recent_no_media | grep -ie "start" -e "🚀" >/dev/null; then
+  return_active_no_media
+elif echo $most_recent_focus | grep -ie "end" -e "🏁" >/dev/null || echo $most_recent_no_media | grep -ie "end" -e "🏁" >/dev/null; then
+  return_inactive
 else
   echo "🤷 Focus challenge evaluation was inconclusive 🤷" >&2
   exit 10
