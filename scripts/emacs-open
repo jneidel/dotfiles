@@ -1,0 +1,31 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
+  cat <<EOF
+$ emacs-open MODE FILE
+Open a file in emacs, in a particular way.
+
+Parameters:
+  \$1: mode, one of:
+       tab
+  \$2: file to open
+
+Example:
+  $ emacs-open edit README.md
+  $ emacs-open tab "\$ORG_AREAS/Good morning, Good day journal.org"
+EOF
+  exit
+fi
+
+hash emacsclient || exit 127
+
+open_tab() {
+  emacsclient -e "(progn (tab-bar-new-tab) (find-file \"$1\"))" >/dev/null
+}
+
+FILE="$2"
+case "$1" in
+  tab) open_tab "$FILE";;
+  edit) emacsclient -t "$FILE";;
+  *) echo Unknown mode;;
+esac
