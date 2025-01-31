@@ -7,18 +7,18 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ emoji
 Pick and insert emoji from the list.
 
+Flags:
+  -e: echo result instead of inserting it with xdotool
+
 Auto-updates emoji list upon available updates.
 EOF
   exit
 fi
 
-command -v jq >/dev/null || { echo "jq is not installed" 1>&2; exit 127; }
-command -v curl >/dev/null || { echo "curl is not installed" 1>&2; exit 127; }
-command -v wget >/dev/null || { echo "wget is not installed" 1>&2; exit 127; }
-command -v rofi >/dev/null || { echo "rofi is not installed" 1>&2; exit 127; }
-command -v find >/dev/null || { echo "find is not installed" 1>&2; exit 127; }
-command -v i3-msg >/dev/null || { echo "i3-msg is not installed" 1>&2; exit 127; }
-command -v tmux >/dev/null || { echo "tmux is not installed" 1>&2; exit 127; }
+hash xdotool xargs jq curl wget rofi find i3-msg tmux || exit 127
+
+SHOULD_INSERT_RESULT=1
+[ "$1" = "-e" ] && SHOULD_INSERT_RESULT=0
 
 get_installed_emoji_version() {
   find $EMOJI_DIR -name "*.txt" 2>/dev/null | sort -V | tail -n1 | rev | cut -d/ -f1 | cut -d. -f2- | rev
@@ -65,11 +65,15 @@ fi
 
 choice="$(tac $EMOJI_DIR/$emoji_version.txt | rofi rofi -dmenu -i -lines 15 -eh 1 -p emoji)"
 if [ -n "$choice" ]; then
-  if is_on_blog; then
-    echo -e $choice | cut -d\  -f2 |
-      sed 's/y/z/g; s/:/Ö/g; s/_/?/g' | # because I use a german keyboard layout
-      xargs xdotool type --clearmodifiers # :name:
-  else
-    echo -e $choice | cut -d\  -f1 | xargs xdotool type # unicode symbol
-  fi
+ if [ "$SHOULD_INSERT_RESULT" -eq 1 ]; then
+    if is_on_blog; then
+      echo -e $choice | cut -d\  -f2 |
+        sed 's/y/z/g; s/:/Ö/g; s/_/?/g' | # because I use a german keyboard layout
+        xargs xdotool type --clearmodifiers # :name:
+    else
+      echo -e $choice | cut -d\  -f1 | xargs xdotool type # unicode symbol
+    fi
+ else
+   echo -e "$choice" | cut -d\  -f1
+ fi
 fi
