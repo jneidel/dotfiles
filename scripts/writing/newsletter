@@ -1,0 +1,81 @@
+#! /bin/sh
+
+REPO=$WEB_HOME
+PROD_BASE_URL=https://www.jneidel.com
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ newsletter new|send
+Automate everything around the creation of my newsletter.
+
+Commands:
+  new: create a new newsletter
+  send: send out finished newsletter
+EOF
+  exit
+fi
+
+hash post git xclip emoji-picker signal-name-resolution-failure || exit 127
+
+LATEST_NEWSLETTER_NR=
+LATEST_NEWSLETTER_DIR=
+fetch_latest_newsletter_nr() {
+  LATEST_NEWSLETTER_NR=`find $REPO/content/newsletter -maxdepth 1 -mindepth 1 -type d | grep -v 2023 | sort -V | tail -n1 | rev | cut -d/ -f1 | rev | cut -d- -f1`
+  LATEST_NEWSLETTER_DIR="$REPO/content/newsletter/$LATEST_NEWSLETTER_NR"
+}
+
+new_newsletter() {
+  post newsletter
+  fetch_latest_newsletter_nr
+
+  signal-name-resolution-failure inbox
+  from_newsletter_dir="$(find "$ORG_AREAS/blog/posts" -name "selfie.jpg" | grep newsletter)"
+  from_inbox="$(find "$ORG_INBOX" -name "selfie.jpg")"
+  if [ -n "$from_newsletter_dir" ]; then
+    mv "$from_newsletter_dir" "$LATEST_NEWSLETTER_DIR/"
+  elif [ -n "$from_inbox" ]; then
+    mv "$from_inbox" "$LATEST_NEWSLETTER_DIR/"
+  fi
+
+  $BROWSER "http://localhost:1313/newsletter/++/" >/dev/null 2>&1 &
+}
+
+send_newsletter() {
+  fetch_latest_newsletter_nr
+  git -C $REPO add "content/newsletter/$LATEST_NEWSLETTER_NR" "content/now/index.md"
+  git -C $REPO commit -m "Publish newsletter #$LATEST_NEWSLETTER_NR"
+  git -C $REPO push --force-with-lease origin
+
+  $BROWSER "https://app.keila.io" >/dev/null 2>&1 &
+  printf "➡ Login to Keila.\nContinue? "
+  read ans
+
+  title=`grep -Po 'title: "\K[^"]+' $LATEST_NEWSLETTER_DIR/index.md`
+  echo "$title [A Winding Path of Progress]" | xclip -f -sel clip >/dev/null
+  $BROWSER "https://app.keila.io/projects/np_pZ9aN8VJ/campaigns/nmc_83kwXD3J/clone" >/dev/null 2>&1 &
+  printf "➡ Create Keila campaign.\nContinue? "
+  read ans
+
+  emoji1=$(emoji-picker -e)
+  emoji2=$(emoji-picker -e)
+  TMP=$(mktemp)
+  echo "$emoji1 $title $emoji2" >$TMP
+  cd /tmp
+  $EDITOR $TMP
+  fancy_title=`cat $TMP`
+
+  slug=`grep -Po 'slug: "?\K[^"]+' $LATEST_NEWSLETTER_DIR/index.md`
+  prod_url="$PROD_BASE_URL/newsletter/$slug"
+
+  echo "### [$fancy_title]($prod_url)" | xclip -f -sel clip >/dev/null
+  echo "➡ Paste fancy title with link into Keila."
+
+  . $HOME/scripts/personal/signal_number.sh
+  ~/scripts/curlj POST $SIGNAL_API_SERVER/v2/send "{number: '$SIGNAL_NUMBER', message: '*$fancy_title\n$prod_url*', text_mode: 'styled', recipients: ['group.NDcwSnN6R3BNUkJ3VUE3bEsyNzN3MTRqODNBZlROLzUvWFR0QS9Jamt4Yz0=']}"
+  ~/scripts/curlj POST $SIGNAL_API_SERVER/v2/send "{number: '$SIGNAL_NUMBER', message: '*$fancy_title\n$prod_url*', text_mode: 'styled', recipients: ['group.VUlYU3dpdDdLRi9ScUtmSDlqcXlTbkxUZ3FWQ2ltR2NFSzI1RGJmK3lEdz0=']}"
+}
+
+case "$1" in
+  init|start|go|new) new_newsletter;;
+  send|finish|end|done) send_newsletter;;
+esac
