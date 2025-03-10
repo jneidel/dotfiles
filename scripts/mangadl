@@ -1,0 +1,115 @@
+#! /bin/sh
+
+BASE_DIR="$ORG_MEDIA/manga"
+USER_AGENT="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+PARALLEL_DOWNLOAD=99
+# At 99 all image requests for the chapter are fired off at the same time.
+# Given that a chapter has 30 images, at n=10 you have 3 rounds of requests, at n=15 two rounds.
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ mangadl [QUERY]
+Download manga.
+Uses weebcentral.com as the source.
+
+Parameters:
+  [\$1]: search query
+
+Example:
+  $ mangadl naruto
+  $ mangadl one punch
+EOF
+  exit
+fi
+
+hash curl wget gum node pcregrep || exit 127
+
+seriesId=
+seriesTitle=
+chapterList=$(mktemp)
+startingChapter=
+
+get_series_id_from_query() {
+  query=`node -e "console.log( encodeURIComponent( '$1' ) )"`
+  result=`curl "https://weebcentral.com/search/data?author=&text=$query&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display" -Ss -H "$USER_AGENT" \
+    | grep -Po '/series/\K[^"]+' | uniq | gum choose`
+  [ $? -gt 0 ] && exit 0
+  seriesId=$(echo $result | cut -d/ -f1)
+  seriesTitle=$(echo $result | cut -d/ -f2)
+}
+
+fetch_chapter_list() {
+  curl "https://weebcentral.com/series/$seriesId/full-chapter-list" -Ss -H "$USER_AGENT" \
+    | pcregrep -Mo1 -o2 -o3 --om-separator=, ">([#A-Za-z ]+) (\d+\.?\d*)[^\']*'([A-Z0-9]+)" >$chapterList
+}
+
+determine_starting_chapter() {
+  nMin=$(tail -n1 $chapterList | cut -d, -f2)
+  nMax=$(head -n1 $chapterList | cut -d, -f2)
+  startingChapter=`gum input --placeholder "$nMin" --prompt "Start downloading at chapter ($nMin-$nMax): "`
+  [ $? -gt 0 ] && exit 0
+  [ -z "$startingChapter" ] && startingChapter="$nMin"
+  # validate $startingChapter
+}
+
+download_chapter_images() {
+  chapterId="$1"
+  chapterNum="$2"
+  chapterType="$3"
+  dir="/tmp/$seriesTitle-$chapterNum"
+  if [ -n "$chapterType" ]; then
+    dir="/tmp/$seriesTitle-${chapterNum}$chapterType"
+  fi
+
+  mkdir -p "$dir"
+  cd "$dir"
+  echo "$dir"
+  curl "https://weebcentral.com/chapters/$chapterId/images?is_prev=False&current_page=1&reading_style=long_strip" -Ss -H "$USER_AGENT" \
+    | grep -Po "src=\"\K[^\"]+" | xargs -n 1 -P $PARALLEL_DOWNLOAD nice wget -q --header 'Referer: https://weebcentral.com/'
+
+  exitCode=$?
+  if [ "$exitCode" -gt 0 ]; then
+    echo "Download ran into an error (exit code $exitCode).\nThe image page below might have more info (e.g. if IP was blocked.)" >&2
+    curl "https://weebcentral.com/chapters/$chapterId/images?is_prev=False&current_page=1&reading_style=long_strip" -Ss -H "$USER_AGENT" \
+      | grep -Po "src=\"\K[^\"]+" | head >&2
+    exit 1
+  fi
+}
+
+download_chapters() {
+  tac $chapterList | grep ",$startingChapter," -A9999 | while read -r chap; do
+    chapterType=`echo "$chap" | cut -d, -f1`
+    chapterNum=`echo "$chap" | cut -d, -f2`
+    chapterId=`echo "$chap" | cut -d, -f3`
+    if [ "$chapterType" = "Chapter" ] || [ "$chapterType" = "#" ]; then
+      chapterType=
+    else
+      chapterType="-$chapterType"
+    fi
+
+    echo "Downloading chapter $chapterNum"
+    downloadDir=`download_chapter_images $chapterId "$chapterNum" "$chapterType"`
+    cd "$downloadDir"
+    outDir="$BASE_DIR/$seriesTitle"
+    outFile="$outDir/$seriesTitle-${chapterNum}$chapterType.cbz"
+    mkdir -p "$outDir"
+    if nice zip -r "$outFile" * >/tmp/mangadl-zip-output.txt; then
+      echo "Wrote $outFile"
+    else
+      echo "Writting the zip file ran into an error.\nOutput:"
+      cat /tmp/mangadl-zip-output.txt
+      echo "Also see contents of download directory: $downloadDir"
+      exit 1
+    fi
+  done
+}
+
+query="$@"
+if [ -z "$1" ]; then
+  query=`gum input --placeholder "" --prompt "Manga to download: "`
+fi
+
+get_series_id_from_query "$query"
+fetch_chapter_list
+determine_starting_chapter
+download_chapters
