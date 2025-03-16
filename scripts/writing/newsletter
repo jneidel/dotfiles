@@ -2,6 +2,7 @@
 
 REPO=$WEB_HOME
 PROD_BASE_URL=https://www.jneidel.com
+STAGE_BASE_URL=https://master--jneidel-stage.netlify.app
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
@@ -48,7 +49,7 @@ send_newsletter() {
     exit 1
   fi
 
-  git -C $REPO add "content/newsletter/$LATEST_NEWSLETTER_NR" "content/now/index.md"
+  git -C $REPO add "content/newsletter/$LATEST_NEWSLETTER_NR" "content/now/index.md" "archetypes/newsletter.md"
   git -C $REPO commit -m "Publish newsletter #$LATEST_NEWSLETTER_NR"
   git -C $REPO push --force-with-lease origin
 
@@ -79,6 +80,15 @@ send_newsletter() {
   . $HOME/scripts/personal/signal_number.sh
   ~/scripts/curlj POST $SIGNAL_API_SERVER/v2/send "{number: '$SIGNAL_NUMBER', message: '*$fancy_title\n$prod_url*', text_mode: 'styled', recipients: ['group.NDcwSnN6R3BNUkJ3VUE3bEsyNzN3MTRqODNBZlROLzUvWFR0QS9Jamt4Yz0=']}"
   ~/scripts/curlj POST $SIGNAL_API_SERVER/v2/send "{number: '$SIGNAL_NUMBER', message: '*$fancy_title\n$prod_url*', text_mode: 'styled', recipients: ['group.VUlYU3dpdDdLRi9ScUtmSDlqcXlTbkxUZ3FWQ2ltR2NFSzI1RGJmK3lEdz0=']}"
+
+  stage_url="$STAGE_BASE_URL/newsletter/$slug"
+  if ! curl -ISs "$stage_url" | head -n1 | grep 200 >/dev/null; then
+    echo "WARNING: Stage page is not OK"
+  fi
+  if ! curl -ISs "$prod_url" | head -n1 | grep 200 >/dev/null; then
+    echo "WARNING: Prod page is not OK"
+    false
+  fi
 }
 
 case "$1" in
