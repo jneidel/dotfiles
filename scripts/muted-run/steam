@@ -1,0 +1,13 @@
+#! /bin/sh
+
+hash muted-run || exit 127
+
+# if is-focus-challenge >/tmp/out 2>&1; then
+#   rofi -e "$(cat /tmp/out)" 2>/dev/null
+# else
+# fi
+if between 17 22; then
+    muted-run /usr/bin/steam
+else
+  rofi -e "Only after 17:00" 2>/dev/null
+fi

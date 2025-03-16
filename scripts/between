@@ -23,12 +23,14 @@ if [ -n "$BEFORE" ]; then
   if [ "$AFTER" -le "$NOW" ] && [ "$BEFORE" -gt "$NOW" ]; then
     exit 0
   else
+    echo "Only available between $AFTER:00-$BEFORE:00" >&2
     exit 1
   fi
 else
   if [ "$AFTER" -le "$NOW" ]; then
     exit 0
   else
+    echo "Only available after $AFTER:00" >&2
     exit 1
   fi
 fi
