@@ -272,3 +272,6 @@ clean .config/emacs
 [gimp]
 create .config/GIMP/2.10
 .config/GIMP/2.10/menurc
+
+[acpid]
+/etc/acpi/events/hibernate-on-lid
