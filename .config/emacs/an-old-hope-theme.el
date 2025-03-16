@@ -83,7 +83,7 @@ see an-old-hope-theme.el for why this is necessary."))
  '(link-visited ((t (:foreground "#67e4c4"))))
 
  ;;; modeline/spaceline
- '(mode-line ((t (:background "#cbccd1" :foreground "#1c1d20" :box (:line-width 1 :color "#cbccd1" :style none)))))
+ ;; '(mode-line ((t (:background "#cbccd1" :foreground "#1c1d20" :box (:line-width 1 :color "#cbccd1" :style none)))))
 
  '(spaceline-evil-normal ((t (:inherit mode-line :foreground "#1c1d20" :background "DarkGoldenrod2"))))
  '(spaceline-evil-insert ((t (:inherit mode-line :foreground "#1c1d20" :background "#5ac85a"))))

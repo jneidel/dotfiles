@@ -94,10 +94,10 @@
 (setq-default mode-line-format '("%e" (:eval (spaceline-ml-jneidel))))
 
 ; stop mode line from flashing on loss of focus (rofi, volume, brightness, etc.)
-(set-face-attribute 'mode-line nil
-                    :box '(:line-width (1 . 1) :color "#1c1c1c" :style none))
-(set-face-attribute 'mode-line-inactive nil
-                    :box '(:line-width (1 . 1) :color "#1c1c1c" :style none) :inherit 'mode-line)
+;; (set-face-attribute 'mode-line nil
+;;                     :box '(:line-width (1 . 1) :color "#1c1c1c" :style none))
+;; (set-face-attribute 'mode-line-inactive nil
+;;                     :box '(:line-width (1 . 1) :color "#1c1c1c" :style none) :inherit 'mode-line)
 (set-face-attribute 'powerline-active0 nil
                     :background "#1c1c1c"
                     :inherit 'mode-line)
