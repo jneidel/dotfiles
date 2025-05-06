@@ -108,25 +108,25 @@ return {
             close_after_use = true
           }
         },
-        ["core.esupports.metagen"] = {
-          -- https://github.com/nvim-neorg/neorg/wiki/Metagen
-          config = {
-            type = "auto",
-            template = {
-              -- src: https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/esupports/metagen/module.lua
-              { "title", function()
-                local name = vim.fn.expand("%:p:t:r")
-                if name == "index" then
-                  return "index" -- <++>
-                else
-                  return name
-                end
-              end },
-              { "created", function() return os.date("%Y-%m-%d") end },
-              { "updated", function() return os.date("%Y-%m-%d") end },
-            }
-          }
-        },
+        -- ["core.esupports.metagen"] = {
+        --   -- https://github.com/nvim-neorg/neorg/wiki/Metagen
+        --   config = {
+        --     type = "auto",
+        --     template = {
+        --       -- src: https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/esupports/metagen/module.lua
+        --       { "title", function()
+        --         local name = vim.fn.expand("%:p:t:r")
+        --         if name == "index" then
+        --           return "index" -- <++>
+        --         else
+        --           return name
+        --         end
+        --       end },
+        --       { "created", function() return os.date("%Y-%m-%d") end },
+        --       { "updated", function() return os.date("%Y-%m-%d") end },
+        --     }
+        --   }
+        -- },
         ["core.summary"] = {}, -- https://github.com/nvim-neorg/neorg/wiki/Summary
         -- ["core.ui.calendar"] = {},
         ["core.export"] = {},
