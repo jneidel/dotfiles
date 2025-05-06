@@ -12,22 +12,36 @@ $ mangadl [QUERY]
 Download manga.
 Uses weebcentral.com as the source.
 
-Parameters:
-  [\$1]: search query
+Download mode:
+  Parameters:
+    [\$1]: search query
+  Flags:
+    [-c CHAPTER]: number of the chapter to start downloading at
+
+Update mode:
+  Commands:
+    update: check for updates and download new chapters
+    update list: get a list of subscribed manga
+      (To remove an entry use 'skate list @mangadl' and 'skate delete KEY@mangadl'.)
+    update new: see which manga have been updated since you last ran this command
+    update export: see details on exporting the state
 
 Example:
   $ mangadl naruto
-  $ mangadl one punch
+  $ mangadl one punch -c 100
+  $ mangadl update
+  $ mangadl update new
 EOF
   exit
 fi
 
-hash curl wget gum node pcregrep || exit 127
+hash curl wget gum node pcregrep skate || exit 127
 
 seriesId=
 seriesTitle=
 chapterList=$(mktemp)
 startingChapter=
+query=
 
 get_series_id_from_query() {
   query=`node -e "console.log( encodeURIComponent( '$1' ) )"`
@@ -39,6 +53,7 @@ get_series_id_from_query() {
 }
 
 fetch_chapter_list() {
+  seriesId="$(echo $seriesId | tr a-z A-Z)"
   curl "https://weebcentral.com/series/$seriesId/full-chapter-list" -Ss -H "$USER_AGENT" \
     | pcregrep -Mo1 -o2 -o3 --om-separator=, ">([#A-Za-z ]+) (\d+\.?\d*)[^\']*'([A-Z0-9]+)" >$chapterList
 }
@@ -96,20 +111,103 @@ download_chapters() {
     if nice zip -r "$outFile" * >/tmp/mangadl-zip-output.txt; then
       echo "Wrote $outFile"
     else
-      echo "Writting the zip file ran into an error.\nOutput:"
-      cat /tmp/mangadl-zip-output.txt
-      echo "Also see contents of download directory: $downloadDir"
+      echo "Writting the zip file ran into an error.\nOutput:" >&2
+      cat /tmp/mangadl-zip-output.txt >&2
+      echo "Also see contents of download directory: $downloadDir" >&2
       exit 1
+    fi
+  done
+
+  if [ "$isUpdateMode" -eq 0 ]; then
+    if gum confirm "Subscribe to updates? (Check for and download updates with 'mangadl update')"; then
+      skate set "$seriesId.title@mangadl" "$(echo "$seriesTitle" | sed 's/-/ /g')"
+      chapterNum=`head -n1 $chapterList | cut -d, -f2`
+      skate set "$seriesId.chapter@mangadl" "$(echo "$chapterNum + 1" | sed -r 's/\.[^ ]+//' | bc)"
+    fi
+  fi
+}
+
+export_update_state() {
+  echo "This command will recreate the state on another machine (hide this message with 2>/dev/null):\n(Binary files of the state are also available in ~/.local/share/charm/kv/mangadl)\n" >&2
+  skate list @mangadl | awk '{
+    key = $1
+    value = "";
+    for (i = 2; i <= NF; i++) value = value $i (i < NF ? " " : "")
+    print "skate set " key "@mangadl \"" value "\""
+  }'
+}
+
+list_update_manga() {
+  skate list @mangadl -k | cut -d. -f1 | sort -u | while read id; do
+    echo "$(skate get $id.title@mangadl): $(skate get $id.chapter@mangadl)"
+  done
+}
+
+download_updates() {
+  skate list @mangadl -k | cut -d. -f1 | sort -u | while read seriesId; do
+    titleClean=$(skate get $seriesId.title@mangadl)
+    seriesTitle=$(echo $titleClean | sed 's/ /-/g')
+    startingChapter=$(skate get $seriesId.chapter@mangadl)
+
+    echo "Downloading update for '$titleClean' starting at chapter $startingChapter."
+    fetch_chapter_list
+    latestChapter=`head -n1 $chapterList | cut -d, -f2`
+    if [ -n "$(tac $chapterList | grep ",$startingChapter," -A9999)" ]; then
+      download_chapters
+
+      skate set "$seriesId.chapter@mangadl" "$(echo "$latestChapter + 1" | sed -r 's/\.[^ ]+//' | bc)"
+      echo "$titleClean" >> "${XDG_DATA_HOME:-$HOME/.local/shared}/mangadl-new"
+    else
+      echo "No updates available (latest was $latestChapter.)" >&2
     fi
   done
 }
 
-query="$@"
-if [ -z "$1" ]; then
-  query=`gum input --placeholder "" --prompt "Manga to download: "`
-fi
+list_new_updates() {
+  file="${XDG_DATA_HOME:-$HOME/.local/shared}/mangadl-new"
+  if sort -u $file 2>/dev/null; then
+    if gum confirm "Clear the list of new updates?"; then
+      rm $file
+    fi
+  else
+    echo "No new updates. Have you run 'mangadl update'?" >&2
+  fi
+}
 
-get_series_id_from_query "$query"
-fetch_chapter_list
-determine_starting_chapter
-download_chapters
+isUpdateMode=0
+if [ "$1" = "update" ]; then
+  isUpdateMode=1
+
+  if [ -z "$2" ]; then
+    download_updates
+  else
+    case "$2" in
+      list) list_update_manga;;
+      new) list_new_updates;;
+      export) export_update_state;;
+      *) echo "Invalid command '$2'. See --help." >&2;;
+    esac
+  fi
+else
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      -c)
+        shift
+        startingChapter="$1" ;;
+      *) query="$query $1" ;;
+    esac
+    shift
+  done
+  query=$(echo "$query" | sed 's/^ //')
+
+  if [ -z "$query" ]; then
+    query=`gum input --placeholder "" --prompt "Manga to download: "`
+  fi
+
+  get_series_id_from_query "$query"
+  fetch_chapter_list
+  if [ -z "$startingChapter" ]; then
+    determine_starting_chapter
+  fi
+  download_chapters
+fi

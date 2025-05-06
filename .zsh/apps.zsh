@@ -20,13 +20,6 @@ md() {
 alias great="timeout 5 grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/code/notes/great-books.md >/dev/null 2>&1 &"
 alias greata="grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/code/notes/great-books.md >/dev/null 2>&1"
 
-### download
-alias manga="mangareader-dl --debug"
-alias mangaup="manga-update &"
-alias mangala="manga update check"
-alias mangan="mangala | grep ' - ' && mangaup"
-alias down="cd ~/Downloads; wget -crt 10 -i ~/.wget" # download files in ~/.wget
-
 #### youtube-dl
 local ytdl_location=$ORG_INBOX
 alias ytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height<=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
@@ -150,10 +143,10 @@ alias new="wait_for_newsboat clean"
 alias pod="is-focus-challenge || wait_for_newsboat pod"
 alias misc="is-focus-challenge || wait_for_newsboat misc"
 alias mu="is-focus-challenge -v && between 16 22 && wait_for_newsboat music"
-alias ma="is-focus-challenge -v && between 16 22 && wait_for_newsboat manga"
 alias apps="is-focus-challenge || wait_for_newsboat gh-app-updates"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
+alias ma="mangadl update new 2>/dev/null"
 
 ### players
 alias nc="ncmpcpps"
