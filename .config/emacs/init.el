@@ -24,6 +24,7 @@
 
 ;;; apps
 (require 'init-ledger)
+(require 'init-terminal)
 
 ;; make it work as intended
 (require 'init-automatic-fs-read-write)
