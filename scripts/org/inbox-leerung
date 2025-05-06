@@ -3,10 +3,13 @@
 DURATIONS_FILE="$ORG_AREAS/org/weekly review/durations.txt"
 STATE_FILE="$ORG_AREAS/org/weekly review/.inbox-leerung-state"
 
+FLOW=org
+[ "$(uname)" = "Darwin" ] && FLOW=dava
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ weekly-review
-Guide me through the Weekly Review
+$ inbox-leerung
+Guide me through the Weekly Review aka Inbox Leerung
 
 Manipulate the timer with the words:
 - pause
@@ -175,7 +178,7 @@ outcome:
 
 EOF
   tmux split-window -v -l 70%
-  tmux send-keys 'groceries "Edeka, Aldi, Bäckerei" "'
+  tmux send-keys 'groceries "Edeka, Aldi" "'
   prompt_continue
 }
 
@@ -413,25 +416,79 @@ EOF
   prompt_continue
 }
 
-email
-github
-backups
-dotfiles
-messenger
-gallery
-desk
-# bulletjournal
-camscanner
-pre_newsboat
-# otter
-newsboat
-browser_tabs
-calendar
-# monica
-pre_org_inbox
-# copy_accountability
-files
-org_inbox
+org_flow() {
+  email
+  github
+  backups
+  dotfiles
+  messenger
+  gallery
+  desk
+  # bulletjournal
+  camscanner
+  pre_newsboat
+  # otter
+  newsboat
+  # browser_tabs
+  calendar
+  # monica
+  pre_org_inbox
+  # copy_accountability
+  files
+  org_inbox
+}
+
+email_dava() {
+  print_header "$step. Clear out your email"
+  cat <<EOF
+outcome:
+  - empty inbox
+
+EOF
+  open -a Mail
+  prompt_continue
+}
+
+calendar_dava() {
+  print_header "$step. Check your calendar\n"
+  cat <<EOF
+outcome:
+  - anything I need to prepare for an upcoming meeting?
+  - 1:1s scheduled correctly
+  - all meetings on non-working days declined
+
+EOF
+  open -a "Microsoft Teams"
+  prompt_continue
+}
+
+messenger_dava() {
+  print_header "$step. Clear out messengers"
+  cat <<EOF
+outcome:
+  - nothing unread in Teams
+  - nothing unread in Slack
+  - nothing in saved in Slack
+
+EOF
+  open -a Slack
+  open -a "Microsoft Teams"
+  prompt_continue
+}
+
+dava_flow() {
+  email_dava
+  messenger_dava
+  calendar_dava
+  browser_tabs
+  files
+  org_inbox
+}
+
+case "$FLOW" in
+  org) org_flow;;
+  dava) dava_flow;;
+esac
 
 echo "Congrats! You're done"
 calc_total_time
