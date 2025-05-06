@@ -100,6 +100,7 @@ alias sig="signal-name-resolution-failure inbox"
 alias mi="mediainfo"
 alias bl="bluelight"
 alias idea="list-idea"
+alias hib="systemctl hibernate"
 
 ### misc
 function dict {

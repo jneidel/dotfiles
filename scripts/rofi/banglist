@@ -24,6 +24,7 @@ yt https://yewtu.be/search?q=%s
 yt2 https://inv.tux.pizza/search?q=%s
 yt3 https://ytb.trom.tf/search?q=%s
 yt https://www.youtube.com/results?search_query=%s
+ytp https://inv.nadeko.net/search?q=%s%20content_type:playlist&page=1
 ytp https://inv.tux.pizza/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
 bc https://bandcamp.com/search?q=%s
@@ -112,3 +113,4 @@ wob https://www.worldofbooks.com/de-de/search?q=%s
 o https://org-search.neidel.xyz/?query=%s
 roh https://www.rohkostwiki.de/w/index.php?title=Spezial%3ASuche&search=%s&fulltext=1
 top https://www.topfruits.de/search?sSearch=%s
+vamp https://vampire.survivors.wiki/?search=%s&title=Special%3ASearch&wprov=acrw1_-1

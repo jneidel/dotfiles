@@ -1,7 +1,7 @@
 # git
 
 ## status
-alias s="git status -sb" # -s short output, -b branch info
+alias s="git status -sb 2>/dev/null" # -s short output, -b branch info
 
 ## add
 alias ga="git add"

@@ -16,6 +16,9 @@ fi
 
 hash rem || exit 127
 
+IS_INVERSE=0
+[ "$1" = "-v" ] && IS_INVERSE=1
+
 ordered_calendar_entries() {
   LOOKBACK_TIME_SPAN=48
   remind -t$LOOKBACK_TIME_SPAN -g $DOTREMINDERS $(date -d "$LOOKBACK_TIME_SPAN days ago" +%Y-%m-%d) 2>/dev/null
@@ -48,9 +51,6 @@ return_inactive() {
   fi
 }
 
-IS_INVERSE=0
-[ "$1" = "-v" ] && IS_INVERSE=1
-
 if echo $most_recent_focus | grep -ie "start" -e "🚀" >/dev/null; then
   return_active_focus
 elif echo $most_recent_no_media | grep -ie "start" -e "🚀" >/dev/null; then
@@ -58,6 +58,6 @@ elif echo $most_recent_no_media | grep -ie "start" -e "🚀" >/dev/null; then
 elif echo $most_recent_focus | grep -ie "end" -e "🏁" >/dev/null || echo $most_recent_no_media | grep -ie "end" -e "🏁" >/dev/null; then
   return_inactive
 else
-  echo "🤷 Focus challenge evaluation was inconclusive 🤷" >&2
-  exit 10
+  # echo "🤷 Focus challenge evaluation was inconclusive 🤷" >&2
+  return_inactive
 fi

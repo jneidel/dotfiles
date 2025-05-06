@@ -49,7 +49,7 @@ mkfifo /tmp/xobpipe
 sleep 2; tail -f /tmp/xobpipe | xob &
 
 # desktop monitor
-~/scripts/conky/start-conky &
+# ~/scripts/conky/start-conky &
 
 # lock the screen on suspend/hibernate
 xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &

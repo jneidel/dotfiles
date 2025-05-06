@@ -35,7 +35,7 @@ if [ -f "$archive" ] ; then
     *.tar|*.cbt|*.tar.xz) tar xvf "$archive" ;;
     *.zip|*.cbz) unzip "$archive" ;;
     *.Z) uncompress "$archive" ;;
-    *.7z) 7z x "$archive" ;;
+    *.7z) 7za x "$archive" ;;
     *.xz) unxz "$archive" ;;
     *.zst) zstd -d "$archive" ;;
     *.exe) cabextract "$archive" ;;
