@@ -28,8 +28,22 @@ set filesep "\n"
 
 cmd source-config %lf -remote "send $id source ~/.config/lf/lfrc"
 
-cmd open $~/scripts/mime/mime -e lf open "$f"
-cmd edit $~/scripts/mime/mime -e lf edit "$f"
+cmd open ${{
+  EXT=`mimetype "$f"`
+  if [ "$EXT" = "org" ] && [ -n "${INSIDE_EMACS:-}" ]; then
+      printf "\e]51;Efind-file \"%s\"\e\\" "$(echo "$fx" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')" >/dev/tty
+  else
+      ~/scripts/mime/mime -e lf open "$f"
+  fi
+}}
+cmd edit ${{
+  EXT=`mimetype "$f"`
+  if [ "$EXT" = "org" ] && [ -n "${INSIDE_EMACS:-}" ]; then
+      printf "\e]51;Efind-file \"%s\"\e\\" "$(echo "$fx" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')" >/dev/tty
+  else
+      ~/scripts/mime/mime -e lf edit "$f"
+  fi
+}}
 cmd remove $rm -rf $fx
 
 cmd diropen $~/.config/lf/scripts/handle-dir "$f"
