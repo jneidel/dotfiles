@@ -38,9 +38,9 @@ st() {
       s
       return 1
     fi
-    sytop php vendor/bin/phpunit --group=$USER $(echo $staged_files)
+    sytop php vendor/bin/phpunit $(echo $staged_files)
   else
-    sytop php vendor/bin/phpunit $@
+    sytop php vendor/bin/phpunit --group=temp $@
   fi
 }
 sref() { # refactor
@@ -85,7 +85,7 @@ sref() { # refactor
 # make:entity
 
 alias sdm="sc make:migration --no-interaction"
-alias mig="sc doctrine:migrations:migrate --no-interaction"
+alias mig="make vendor && sc doctrine:migrations:migrate --no-interaction"
 function migrate() {
   sdm sdmm
 }
@@ -107,3 +107,10 @@ function fixtures() {
 }
 
 alias gitlab="gitlab-runner exec docker"
+
+function pulldev() {
+  co develop
+  pull develop
+  make vendor
+  mig
+}
