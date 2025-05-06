@@ -8,6 +8,8 @@ alias ga="git add"
 alias add="ga -A; s" # -A all, even removed
 alias gai="git add -i" # interactive
 alias gap="git add -p" # patch
+alias unadd="git restore --staged"
+alias unstage="unadd"
 
 ## commit
 commit() {
