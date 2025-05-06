@@ -54,14 +54,16 @@ control_mpd() {
 }
 
 is_browser_active() {
-  if [ `playerctl status` = "Stopped" ]; then
+  status=`playerctl status 2>/dev/null`
+  exitCode=$?
+  if [ "$status" = "Stopped" ] || [ "$exitCode" -gt 0 ]; then
     false
   else
     true
   fi
 }
 is_browser_playing() {
-  if [ `playerctl status` = "Playing" ]; then
+  if [ `playerctl status 2>/dev/null` = "Playing" ]; then
     true
   else
     false
@@ -168,8 +170,10 @@ case $1 in
     else
       control_mpd pause
       fi;;
-    play) control_mpd play;;
-    *) echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
+  play)
+    control_mpd play;;
+  *)
+    echo "Please pass either 'toggle', 'pause', 'play', 'next' or 'prev'";;
 esac
 
 # unused: remote mpd server

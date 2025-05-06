@@ -19,5 +19,5 @@ if ! tmux has-session -t $SESSION 2>/dev/null; then
   exit 1
 fi
 
-tmux -u new-window -d -n "new day" -t $SESSION:6
+tmux -u new-window -d -n "cal" -t $SESSION:6
 tmux send-keys -t $SESSION:6 "mc" "enter" # calendar
