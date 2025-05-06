@@ -1,0 +1,30 @@
+#! /bin/zsh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_INBOX" ]; then
+  cat <<EOF
+$ select-other-inbox
+(Interactively) select an inbox.
+
+I have multiple org systems and thus multiple inbox directories.
+- 1 additional inbox: select it automatically
+- 2 or more: interactively let the user choose
+
+Returns the absolute path of the inbox.
+EOF
+  exit
+fi
+
+hash gum || exit 127
+
+# by default, regular inbox
+inbox=$ORG_INBOX
+
+if [ "$ORG" != "$DAVA_ORG" ]; then
+  # org=$(gum filter dava)
+  org=dava
+  case "$org" in
+    dava) inbox=$DAVA_ORG/0_inbox;;
+  esac
+fi
+
+echo $inbox

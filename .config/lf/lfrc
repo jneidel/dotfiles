@@ -66,21 +66,14 @@ cmd move-to-inbox %{{
 }}
 cmd move-to-other-inbox ${{
   local filename="${f##*/}"
-  org=$(gum filter dava jobdirecto)
-  if [ -n "$org" ]; then
-    inbox=$ORG_INBOX
-    case "$org" in
-      dava) inbox=$DAVA_ORG/0_inbox;;
-      jobdirecto) inbox=$JD_ORG/0_inbox;;
-    esac
+  inbox="$(select-other-inbox)"
 
-    if [ -e "$inbox/$filename" ]; then
-      mv "$f" "$inbox/$(date +%s)-$filename"
-    else
-      mv "$f" $inbox/
-    fi
-    printf "Moved '${f##*/}' to inbox"
+  if [ -e "$inbox/$filename" ]; then
+    mv "$f" "$inbox/$(date +%s)-$filename"
+  else
+    mv "$f" $inbox/
   fi
+  printf "Moved '${f##*/}' to inbox"
 }}
 cmd move-to-archive %{{
   local filename="${f##*/}"
@@ -268,7 +261,7 @@ cmd on-cd &{{
     $ORG_RESOURCES/LDR|$ORG_AREAS/steuern/past)
       # sort: alphabetical, reverse (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set reverse";;
-    $ORG_RESOURCES/* | $ORG_INBOX)
+    $ORG_RESOURCES/* | $ORG_INBOX | $DAVA_ORG/0_inbox)
       # sort: most recent at the top
       lf -remote "send $id :set sortby time; set reverse";;
     $ORG_PROJECTS/* | $ORG_AREAS/*)
@@ -415,14 +408,13 @@ map mM move-to-mmusic
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
 map gi  %lf -remote "send $id cd $ORG_INBOX"
+map gI  %lf -remote "send $id cd $(select-other-inbox)"
 map gd  %lf -remote "send $id cd $ORG_DESIGN"
 map gp  %lf -remote "send $id cd $ORG_PROJECTS"
 map ga  %lf -remote "send $id cd $ORG_AREAS"
 map gf  %lf -remote "send $id cd $ORG_AREAS/Freunde"
 map ge  %lf -remote "send $id cd $ORG_AREAS/geld"
 map gR  %lf -remote "send $id cd $ORG_AREAS/routine"
-map gI  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Investieren"
-map gt  %lf -remote "send $id cd $ORG_AREAS/assets/Aktien/Trading"
 map gG  %lf -remote "send $id cd $ORG_AREAS/geld"
 map gP  %lf -remote "send $id cd $ORG_AREAS/blog/posts"
 map gt  %lf -remote "send $id cd $ORG_AREAS/blog/posts"
