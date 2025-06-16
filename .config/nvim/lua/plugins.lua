@@ -33,7 +33,7 @@ local plugin = {
 -- define fzf command :Files here so it can be lazy loaded
 plugin.telescope.defineFzfUserCommands()
 
-require("lazy").setup( {
+local plugins = {
   -- ## basics
   { -- create closing pairs
     "windwp/nvim-autopairs",
@@ -183,7 +183,18 @@ require("lazy").setup( {
   { -- proper syntax highlighting
     "linuxcaffe/tw-syntax.vim",
   },
-} )
+  {
+    "github/copilot.vim",
+  },
+}
+
+if vim.loop.os_uname().sysname == "Darwin" then
+  table.insert(plugins, {
+    "github/copilot.vim",
+  })
+end
+
+require("lazy").setup(plugins)
 
 -- snippets:
 --  https://github.com/neoclide/coc-snippets
