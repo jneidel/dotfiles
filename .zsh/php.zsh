@@ -5,7 +5,7 @@ function ci() { # composer install
     composer require $@
   fi
 }
-alias cul="composer validate --strict || composer update --lock"
+alias cul="symfony composer validate --strict || symfony composer update --lock"
 
 alias sy="symfony"
 function sytop() {
@@ -40,7 +40,7 @@ st() {
     fi
     sytop php vendor/bin/phpunit $(echo $staged_files)
   else
-    sytop php vendor/bin/phpunit --group=temp $@
+    sytop php vendor/bin/phpunit $@ # --group=temp
   fi
 }
 sref() { # refactor
