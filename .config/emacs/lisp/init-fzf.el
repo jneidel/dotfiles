@@ -13,7 +13,7 @@
     (fzf--start (fzf--resolve-directory dir) #'fzf--action-find-file)))
 
 (general-define-key
-  "M-f" 'fzf
-  "M-F" (lambda () (interactive) (jneidel-fzf-directory "~")))
+  "M-F" 'fzf
+  "M-f" (lambda () (interactive) (jneidel-fzf-directory "~")))
 
 (provide 'init-fzf)

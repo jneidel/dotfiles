@@ -10,10 +10,11 @@
 ; enter
 (general-define-key "M-t" 'vterm)
 ; exit
+(require 'init-fzf)
 (general-define-key
  :keymaps 'vterm-mode-map
  "M-t" 'bury-buffer
- "M-F" (lambda () (interactive) (bury-buffer) (fzf)))
+ "M-F" (lambda () (interactive) (bury-buffer) (jneidel-fzf-directory "~")))
 
 ; better commands for copy and paste
 (general-define-key
