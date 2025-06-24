@@ -609,3 +609,9 @@ hub Github cli
 yubikey-manager Management cli
 yubikey-personalization-gui Management gui
 systemd:pcscd Related service
+
+[cataclysm]
+cataclysm-dda-tiles Zombie survival game
+
+[factorio]
+factorio-space-age Automation game

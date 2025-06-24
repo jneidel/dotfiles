@@ -149,6 +149,7 @@ assign [class="monero-wallet-gui"] $ws3
 assign [class="Emacs"] $ws3
 assign [class="steam"] $ws5
 assign [class="factorio"] $ws5
+assign [class="cataclysm-tiles"] $ws5
 
 # Open specific applications in floating mode
 for_window [class="mpv"] floating enable
