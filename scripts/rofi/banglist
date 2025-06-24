@@ -1,3 +1,4 @@
+  https://duckduckgo.com/?q=%s
 - https://duckduckgo.com/?q=%s
 lg https://libgen.li/index.php?req=%s&topics%5B%5D=l
 lgf http://libgen.st/fiction/?q=%s
@@ -19,11 +20,11 @@ abb https://audiobookbay.is/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
 ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r10
 klein https://www.ebay-kleinanzeigen.de/s-03238/%s/k0l7714r10
+yt https://www.youtube.com/results?search_query=%s
 yt https://inv.nadeko.net/search?q=%s
 yt https://yewtu.be/search?q=%s
 yt2 https://inv.tux.pizza/search?q=%s
 yt3 https://ytb.trom.tf/search?q=%s
-yt https://www.youtube.com/results?search_query=%s
 ytp https://inv.nadeko.net/search?q=%s%20content_type:playlist&page=1
 ytp https://inv.tux.pizza/search?q=%s%20content_type:playlist&page=1
 ytp https://www.youtube.com/results?search_query=%s&sp=EgIQAw%253D%253D
@@ -114,3 +115,7 @@ o https://org-search.neidel.xyz/?query=%s
 roh https://www.rohkostwiki.de/w/index.php?title=Spezial%3ASuche&search=%s&fulltext=1
 top https://www.topfruits.de/search?sSearch=%s
 vamp https://vampire.survivors.wiki/?search=%s&title=Special%3ASearch&wprov=acrw1_-1
+c https://duckduckgo.com/?q=Cataclysm+dark+days+ahead+%s
+cc https://github.com/search?q=repo%3ACleverRaven%2FCataclysm-DDA+%s
+fb https://fruchtbote.com/?s=%s&post_type=product
+hgg https://cdda-guide.nornagon.net/search/%s?v=0.H-RELEASE

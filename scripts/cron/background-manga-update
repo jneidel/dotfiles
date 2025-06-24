@@ -1,0 +1,7 @@
+#! /bin/sh
+
+~/scripts/cron/waitforinternet
+~/scripts/cron/cron-notify-send "Fetching new manga"
+
+tmux -u new-window -d -n "ma" -t $SESSION:20
+tmux send-keys -t $SESSION:20 "mangadl update; exit" "enter"

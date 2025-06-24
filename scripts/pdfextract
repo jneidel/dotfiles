@@ -32,4 +32,3 @@ fi
 
 echo "Extracting page $PAGE from '$INPUT'"
 qpdf --pages "$INPUT" "$PAGE" -- "$INPUT" "$OUTPUT" && echo "Wrote to $OUTPUT"
-

@@ -15,6 +15,7 @@ EOF
   exit
 fi
 
-APPLICATION_NAME=$1
+APPLICATION_NAME="$1"
 
-kill -9 $(pidof $APPLICATION_NAME)
+kill -9 $(pidof "$APPLICATION_NAME") # ||
+  # kill -9 $(pgrep -f "$APPLICATION_NAME" | grep -v $$)

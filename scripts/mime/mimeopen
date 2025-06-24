@@ -30,6 +30,7 @@ case $EXT in
   pdf) echo zathura;;
   sh) echo sh; exit 1;;
   bash) echo bash; exit 1;;
+  sent) echo sent;;
   mp4|mkv|avi|m4v|webm|mpg|mp4.part|vob) echo "tsp mpv --fs >/dev/null 2>&1";;
   tex) echo pdflatex; exit 1;;
   epub) if command -v epr >/dev/null; then

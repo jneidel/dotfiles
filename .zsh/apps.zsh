@@ -143,11 +143,13 @@ wait_for_newsboat() {
 alias new="wait_for_newsboat clean"
 alias pod="is-focus-challenge || wait_for_newsboat pod"
 alias misc="is-focus-challenge || wait_for_newsboat misc"
+alias yt="is-focus-challenge || wait_for_newsboat yt"
 alias mu="is-focus-challenge -v && between 16 22 && wait_for_newsboat music"
 alias apps="is-focus-challenge || wait_for_newsboat gh-app-updates"
 alias q="podqueue"
 alias podboat="/bin/podboat -a"
-alias ma="mangadl update new 2>/dev/null"
+alias ma="mangadl update new"
+alias mau="mangadl update"
 
 ### players
 alias nc="ncmpcpps"

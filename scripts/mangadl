@@ -149,7 +149,7 @@ download_updates() {
     seriesTitle=$(echo $titleClean | sed 's/ /-/g')
     startingChapter=$(skate get $seriesId.chapter@mangadl)
 
-    echo "Downloading update for '$titleClean' starting at chapter $startingChapter."
+    echo "Check for updates of '$titleClean', starting at chapter $startingChapter."
     fetch_chapter_list
     latestChapter=`head -n1 $chapterList | cut -d, -f2`
     if [ -n "$(tac $chapterList | grep ",$startingChapter," -A9999)" ]; then

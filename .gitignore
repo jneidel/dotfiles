@@ -41,3 +41,5 @@ repo/PKGBUILD/*
 .config/emacs/lisp/customize.el
 !.config/emacs/lib
 !.config/emacs/an-old-hope-theme.el
+
+.local/share/fonts/Comic Code/.uuid
