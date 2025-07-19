@@ -44,6 +44,7 @@ document the changes that I've done.
 - [Browser & Extensions](#browser--extensions)
   - [Essential extensions](#essential-extensions)
   - [Useful](#useful)
+    - [Specific Websites](#specific-websites)
   - [Privacy](#privacy)
   - [Maybe](#maybe)
 - [Android apps](#android-apps)
@@ -372,13 +373,20 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 | name | description | links |
 |--|--|--|
 | LeechBlock | Flexibly block sites | [firefox](https://addons.mozilla.org/en-US/firefox/addon/leechblock-ng/) [chrome](https://chrome.google.com/webstore/detail/leechblock-ng/blaaajhemilngeeffpbfkdjjoefldkok) [website](https://www.proginosko.com/leechblock/) |
-| SponsorBlock for YouTube | Skip sponsor/recap/like comment subscribe segments in videos | [firefox](https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/) [chrome](https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone) [my options](images/sponsor-block-options.png) |
 | FastForward | Skip link shorteners | [firefox](https://github.com/FastForwardTeam/FastForward/blob/main/INSTALLING.md#firefox-based-browsers-firefox-waterfox-pale-moon-librewolf-etc) [chrome](https://github.com/FastForwardTeam/FastForward/blob/main/INSTALLING.md#chromium-based-browsers-chrome-kiwi-opera-opera-gx-vivaldi-brave-etc) [git](https://github.com/FastForwardTeam/FastForward) |
 | I still don't care about cookies | Ignore cookie banners | [firefox](https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/) [chrome](https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm) [git](https://github.com/OhMyGuus/I-Still-Dont-Care-About-Cookies) |
 | Libredirect | Redirect to libre version of popular website | [firefox](https://addons.mozilla.org/firefox/addon/libredirect/) [chrome](https://libredirect.github.io/download_chromium.html) [git](https://github.com/libredirect/libredirect) |
 | Bypass Paywalls | Ignore e.g. NYTs free articles limiter | [firefox](https://gitflic.ru/project/magnolia1234/bypass-paywalls-firefox-clean) [chrome](https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean) |
 | Easy to RSS | List the rss feeds of the current site | [firefox](https://addons.mozilla.org/en-GB/firefox/addon/easy-to-rss/) [chrome](https://chrome.google.com/webstore/detail/easy-to-rss/hbcmpkcpbnecinpngdnfbnknfkdpdfli) [git](https://github.com/idealclover/Easy-to-RSS) |
 | Autofill | Automatically fill forms with configured data | [chrome](https://chrome.google.com/webstore/detail/autofill/nlmmgnhgdeffjkdckmikfpnddkbbfkkk) |
+
+#### Specific Websites
+
+| website | name | description | links |
+|--|--|--|--|
+| Youtube | SponsorBlock | Skip sponsor/recap/like comment subscribe segments in videos | [firefox](https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/) [chrome](https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone) [my options](images/sponsor-block-options.png) |
+| Youtube | UnTrap | Customize youtube aka. disable annoying functionality like shorts and recommendations | [website](https://untrap.app/) [firefox](https://addons.mozilla.org/firefox/addon/untrap-for-youtube/) [chrome](https://chromewebstore.google.com/detail/untrap-for-youtube/enboaomnljigfhfjfoalacienlhjlfil) |
+| AliExpress | Bundle deals Redirect | Transform annoying bundle search results | [chrome](https://chromewebstore.google.com/detail/aliexpress-bundle-deals-r/ibgiefiobicodfhkglfpfkfmccbpknan) |
 
 ### Privacy
 
@@ -396,6 +404,8 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 | Buster | Captcha Solver | [firefox](https://addons.mozilla.org/en-US/firefox/addon/buster-captcha-solver/) [chrome](https://chrome.google.com/webstore/detail/mpbjkejclgfgadiemmefgebjfooflfhl) [git](https://github.com/dessant/buster) |
 | Hover Zoom+ | Large overlay on image and link to image hover | [chrome](https://chrome.google.com/webstore/detail/hover-zoom%20/pccckmaobkjjboncdfnnofkonhgpceea) [git](https://github.com/extesy/hoverzoom/) |
 | Stylus | Customize website style | [firefox](https://addons.mozilla.org/firefox/addon/styl-us/) [chrome](https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne) [git](https://github.com/openstyles/stylus) |
+| MetaMask | Crypto wallet | [website](https://metamask.io/) [firefox](https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/) [chrome](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn) |
+| MyJDownloader | Collect links for remote downloading utility | [website](https://my.jdownloader.org/) [firefox](https://extensions.jdownloader.org/firefox.xpi) [chrome](https://chrome.google.com/webstore/detail/myjdownloader-browser-ext/fbcohnmimjicjdomonkcbcpbpnhggkip) |
 
 <details>
 <summary><strong>Coding:</strong></summary>
@@ -404,6 +414,7 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 
 | name | description | links |
 |--|--|--|
+| CORS Unblock | Remove CORS restricts enforced by the browser | [website](https://webextension.org/listing/access-control.html) [firefox](https://addons.mozilla.org/firefox/addon/cors-unblock/) [chrome](https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino) |
 | Chrome Markdown Preview | Elegant GFM preview on `.md` files | [chrome](https://chrome.google.com/webstore/detail/chrome-markdown-preview/ghmocdlbmpcchcbkkingnkgemjacgfdf) [git](https://github.com/zce/chrome-markdown) |
 | JSON Formatter | Easy to read JSON formatting | [chrome](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [git](https://github.com/callumlocke/json-formatter) |
 | Modify Header Value | Set HTTP headers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/modify-header-value) [chrome](https://chrome.google.com/webstore/detail/modify-header-value-http/cbdibdfhahmknbkkojljfncpnhmacdek) [homepage](https://mybrowseraddon.com/modify-header-value.html) |
