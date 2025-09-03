@@ -15,19 +15,28 @@ fi
 
 command -v xflux >/dev/null || { echo "xflux is not installed" 1>&2; exit 127; }
 
-start() {
+start_xflux() {
   xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
+}
+kill_xflux() {
+  sleep 1s
+  kill -9 $(pidof xflux) 2>/dev/null
+}
 
-  ~/scripts/sxhkd/backlight percent 60 >/dev/null
+start() {
+  start_xflux
+
+  if [ ! -f "/tmp/docked" ]; then
+    ~/scripts/sxhkd/backlight percent 60 >/dev/null
+  fi
 }
 
 stop() {
-  # start xflux before killing to reset screen temperature
-  xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
-  sleep 1s
-  kill -9 $(pidof xflux) 2>/dev/null
-
-  ~/scripts/sxhkd/backlight max >/dev/null
+  # start_xflux # start before killing to reset screen temperature
+  # kill_xflux
+  if [ ! -f "/tmp/docked" ]; then
+    ~/scripts/sxhkd/backlight max >/dev/null
+  fi
 }
 
 export DISPLAY=:0
