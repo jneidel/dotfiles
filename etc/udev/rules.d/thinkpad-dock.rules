@@ -1,0 +1,3 @@
+# ThinkPad USB-C dock — use the Ethernet function (VID:PID = 17ef:3062) as a stable match
+ACTION=="add", SUBSYSTEM=="hidraw", ENV{ID_MODEL_FROM_DATABASE}=="ThinkPad Dock", RUN+="/home/jneidel/scripts/dock connect"
+ACTION=="remove", ENV{ID_MODEL_FROM_DATABASE}=="ThinkPad Dock", RUN+="/home/jneidel/scripts/dock disconnect"

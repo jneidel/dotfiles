@@ -1,0 +1,33 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ dock [connect|disconnect]
+Trigger some actions upon connect/disconnect of the dock.
+EOF
+  exit
+fi
+
+# set env for udev to interact with Xorg
+export DISPLAY=:0
+export XAUTHORITY=/run/user/1000/Xauthority
+
+case "$1" in
+  connect)
+    /home/jneidel/scripts/monitor -m on
+    touch /tmp/docked
+    sleep 4s; /home/jneidel/scripts/sxhkd/backlight set 0
+    ;;
+  disconnect)
+    /home/jneidel/scripts/monitor off
+    rm /tmp/docked 2>/dev/null
+
+    if /home/jneidel/scripts/between 22; then
+        /home/jneidel/scripts/sxhkd/backlight percent 10
+    elif /home/jneidel/scripts/between 19; then
+        /home/jneidel/scripts/sxhkd/backlight percent 60
+    else
+        /home/jneidel/scripts/sxhkd/backlight max
+    fi
+    ;;
+esac
