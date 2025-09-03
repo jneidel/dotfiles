@@ -2,13 +2,13 @@
 # systemwide keybindings
 
 super + d
-  ~/scripts/rofi/application-start
+  application-start
 
 super + 0
-  ~/scripts/rofi/power-menu
+  power-menu
 
 super + E
-  ~/scripts/rofi/emoji-picker
+  emoji-picker
 
 super + ssharp
   ~/scripts/i3/lock/lock
@@ -24,27 +24,10 @@ super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
 
 super + F3
+  nice -n 8 emacs
+
+super + F4
   kitty --class mosh --name kudu mosh k
-
-### websites
-alt + F1
-  moodle
-alt + F2
-  lfe
-alt + F3
-  lfeback
-
-## bspwm
-# super + alt + r
-#   bspc wm -r
-
-# super + Q
-#   bspc node -c
-# super + alt + q
-#   bspc node -k
-
-# super + {_,shift + }{1-9}
-#   bspc {desktop -f,node -d} '^{1-9}'
 
 ## pulseaudio
 ### volume control
@@ -94,7 +77,7 @@ shift + XF86MonBrightnessDown
 
 ## screenshot
 super + p
-  ~/scripts/sxhkd/screenshot
+  screenshot
 super + P
   ~/scripts/sxhkd/screenshot -s
 
