@@ -263,8 +263,49 @@ cmd create-plan ${{
   plan "./index.norg"
 }}
 
+cmd on-load &{{
+  cmds=
+  case "$PWD" in
+    $ORG)
+      cmds="set sortby custom;"
+      # sort: inbox > project > areas > resources > archive > rest
+      for dir in $(find $ORG -maxdepth 1 -mindepth 1); do
+        n=
+        case "$dir" in
+          $ORG_INBOX)     n=0;;
+          $ORG_PROJECTS)  n=1;;
+          $ORG_AREAS)     n=2;;
+          $ORG_RESOURCES) n=3;;
+          $ORG_ARCHIVE)   n=4;;
+          *)              n=5;;
+        esac
+        cmds="${cmds} addcustominfo \"${dir}\" \"$n\";"
+      done
+    ;;
+  esac
+  if [ -n "$cmds" ]; then
+    lf -remote "send $id :$cmds"
+  fi
+}}
+
 cmd on-cd &{{
   case "$PWD" in
+    $ORG)
+      # sort: inbox > project > areas > resources > archive > rest
+      cmds="set sortby custom;"
+      for dir in $(find $ORG -maxdepth 1 -mindepth 1); do
+        n=
+        case "$dir" in
+          $ORG_INBOX)     n=0;;
+          $ORG_PROJECTS)  n=1;;
+          $ORG_AREAS)     n=2;;
+          $ORG_RESOURCES) n=3;;
+          $ORG_ARCHIVE)   n=4;;
+          *)              n=5;;
+        esac
+        cmds="${cmds} addcustominfo \"${dir}\" \"$n\";"
+      done
+      lf -remote "send $id :$cmds";;
     $ORG_DESIGN|"$ORG_AREAS/mental models"|$ORG_AREAS/geld|$ORG_AREAS/blog/posts|$ORG_AREAS/challenges|"$ORG_RESOURCES/power dynamics/"*|"$ORG_AREAS/börse/Hierarchie")
       # sort: alphabetical (needs to come before the more general matches)
       lf -remote "send $id :set sortby natural; set noreverse";;
