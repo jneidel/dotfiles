@@ -279,6 +279,18 @@ dot() {
 alias mpr="mpd-toggle-local"
 alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
 alias ho="ssh home"
+alias phone="mpv 'http://192.168.178.62:8080/stream.mjpeg'"
+
+## cameras
+alias webcam='mpv "/dev/video0"'
+phonecam() {
+  scrcpy --no-audio-playback -d --video-codec h265 -w --mouse disabled  --crop 1080:1430:0:450 --window-width 500 --window-x 1420 --window-y 680
+  # meta+shift+space to make unfloat
+  # https://iamfaisalmehmood.com/posts/android-webcam/
+}
+phonecontrol() {
+  scrcpy --no-audio-playback -d
+}
 
 format() {
   # what is this format?

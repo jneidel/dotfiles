@@ -615,3 +615,6 @@ cataclysm-dda-tiles Zombie survival game
 
 [factorio]
 factorio-space-age Automation game
+
+[scrcpy]
+scrcpy Control connected android device
