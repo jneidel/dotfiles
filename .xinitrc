@@ -3,13 +3,16 @@
 # run automatically after logging into tty1 through ~/.zshrc
 
 ## X settings
-# remap caps lock to escape
+# capslock mod-tap: tap = esc, hold = control
+# ö mod-tap: tap = ö, hold = hyper
 # setxkbmap -option caps:escape &
-# remap caps lock to mod-tap with esc as tap and ctrl as hold
-sudo kmonad ~/.config/kmonad/caps_as_ctrl_esc.kbd &
+sudo kmonad ~/.config/kmonad/mod-tap-mappings.kbd &
+sleep 5s && xmodmap ~/.config/Xmodmap &
+sleep 15s && xmodmap ~/.config/Xmodmap &
 
-# set higher keyboard repeat after kmonad
-sleep 1s && xset r rate 185 100 &
+# set higher keyboard repeat after kmonad/xmodmap
+sleep 7s && xset r rate 185 100 &
+sleep 17s && xset r rate 185 100 &
 
 # disable annoying system beep
 xset -b &

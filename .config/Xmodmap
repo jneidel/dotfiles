@@ -1,0 +1,14 @@
+! unmap Num_Lock
+! see mod mappings: $ xmodmap -pm
+remove mod2 = Num_Lock
+
+! map Hyper to the End key
+! see keycodes: $ xmodmap -pke
+keycode 115 = Hyper_R
+keycode 87  = Hyper_R
+! print to hyper
+keycode 107  = Hyper_R
+keycode 218  = Hyper_R
+
+! activate Hyper as a modifer key
+add    mod2 = Hyper_R
