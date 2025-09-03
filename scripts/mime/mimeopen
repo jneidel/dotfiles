@@ -60,7 +60,8 @@ case $EXT in
   py) echo python3; exit 1;;
   browser-tabs) echo open-tabs;;
   tmux-project) echo open-tmux-project; exit 1;;
-  org) echo emacsclient -t; exit 1;;
+  org) echo emacs-open terminal; exit 1;;
+  # "news or mail") echo xdg-open;;
   *) printf "ERR: no handler setup for: $EXT\n"
     exit 10;;
 esac

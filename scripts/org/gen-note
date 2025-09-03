@@ -11,7 +11,7 @@ EOF
   exit
 fi
 
-hash awk generate-orgmode-metadata open-orgmode-file-at-title-insert || exit 127
+hash awk generate-orgmode-metadata emacs-open || exit 127
 
 dir="$1"
 [ ! -z "$dir" ] && cd "$dir"
@@ -23,7 +23,7 @@ file_contents_without_metadata() {
 
 generate-orgmode-metadata >$tmp
 
-open-orgmode-file-at-title-insert $tmp
+emacs-open title-insert $tmp -t
 
 if [ -z "$(file_contents_without_metadata)" ]; then
   echo "Discarded empty file."

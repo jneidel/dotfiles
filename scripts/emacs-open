@@ -2,30 +2,60 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$2" ]; then
   cat <<EOF
-$ emacs-open MODE FILE
+$ emacs-open [main|tab|terminal|title-insert] FILE [-t]
 Open a file in emacs, in a particular way.
 
 Parameters:
   \$1: mode, one of:
-       tab
+       main: open in main emacs gui session
+       terminal: open in emacs terminal client
+       tab: open in main session in a new tab
+       title-insert: open in the main session at the location to insert the title
   \$2: file to open
 
+Flags:
+  -t: open title-insert in the terminal
+
 Example:
-  $ emacs-open edit README.md
+  $ emacs-open terminal README.md
   $ emacs-open tab "\$ORG_AREAS/Good morning, Good day journal.org"
+  $ emacs-open title-insert README.md -t
 EOF
   exit
 fi
 
-hash emacsclient || exit 127
+hash emacsclient open-i3-workspace || exit 127
+
+USE_TERMINAL=0
+[ "$3" = "-t" ] && USE_TERMINAL=1
+
+navigate_to_emacs_gui() {
+  open-i3-workspace 3
+}
 
 open_tab() {
   emacsclient -e "(progn (tab-bar-new-tab) (find-file \"$1\"))" >/dev/null
+  navigate_to_emacs_gui
+}
+
+edit_main() {
+  emacsclient --no-wait "$1"
+  navigate_to_emacs_gui
+}
+
+open_at_title_insert() {
+  emacsclient --eval --suppress-output "(progn
+    (find-file \"$1\")
+    (goto-char 10)
+    (evil-insert 1))" $([ "$USE_TERMINAL" -eq 1 ] && echo '-t')
+  [ "$USE_TERMINAL" -eq 0 ] && navigate_to_emacs_gui
 }
 
 FILE="$2"
 case "$1" in
+  terminal|edit) emacsclient -t "$FILE";;
   tab) open_tab "$FILE";;
-  edit) emacsclient -t "$FILE";;
+  main) edit_main "$FILE";;
+  title-insert) open_at_title_insert "$FILE";;
   *) echo Unknown mode;;
 esac
