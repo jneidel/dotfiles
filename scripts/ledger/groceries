@@ -14,6 +14,11 @@ Parameters:
   \$2: amount for the whole
   \$3: $(date_doc_string)
 
+Titles with special treatment:
+- "Lidl": deduct from shared
+- "DM": 60/40 split between ex:food/ex:hygine
+- "Eier und Brot": deduct 100% from me
+
 Example:
   $ groceries "Edeka" "18.5+5.6"
   $ groceries "Edeka" "18.5+5.6" 02
@@ -26,12 +31,62 @@ hash node || exit 127
 
 TITLE="$1"
 amount_input="$2"
-calculate_split_amounts $amount_input "70/30"
+calculate_split_amounts $amount_input "50/50"
 date_input="$3"
 parse_date_input "$date_input"
 
+case "$TITLE" in
+    "Lidl")
+        print() {
+            cat <<EOF
+
+$DATE $TITLE
+  ex:food:groceries        $AMOUNT_SPLIT_1
+  [pot:leben]             -$AMOUNT_SPLIT_1
+  bal                      $AMOUNT_SPLIT_2
+  [bal]                   -$AMOUNT_SPLIT_2
+  shared                  -$AMOUNT_TOTAL
+  [shared]                 $AMOUNT_TOTAL
+EOF
+};;
+    "Eier und Brot")
+        print() {
+cat <<EOF
+
+$DATE $TITLE
+  ex:food:groceries        $AMOUNT_TOTAL
+  [pot:leben]             -$AMOUNT_TOTAL
+  wallet                  -$AMOUNT_TOTAL
+  [wallet]                 $AMOUNT_TOTAL
+EOF
+};;
+    "DM")
+        # food 60%, hygine 40%. Average calculated in Aug2025.
+        food=$(node -e "console.log( ($AMOUNT_SPLIT_1*.6).toFixed(2) )")
+        hygine=$(node -e "console.log( ($AMOUNT_SPLIT_1*.4).toFixed(2) )")
+        if [ $(echo "$food + $hygine == $AMOUNT_SPLIT_1" | bc) -ne 1 ]; then
+            hygine=$("$hygine - .01" | bc)
+        fi
+
 print() {
   cat <<EOF
+
+$DATE $TITLE
+  ex:food:groceries        $food
+  ex:hygine                $hygine
+  [pot:leben]             -$AMOUNT_SPLIT_1
+  person:francis           $AMOUNT_SPLIT_2
+  [person:francis]        -$AMOUNT_SPLIT_2
+  [owed]                   $AMOUNT_SPLIT_2
+  [reserve]               -$AMOUNT_SPLIT_2
+  wallet                  -$AMOUNT_TOTAL
+  [wallet]                 $AMOUNT_TOTAL
+EOF
+};;
+    *)
+print() {
+  cat <<EOF
+
 $DATE $TITLE
   ex:food:groceries        $AMOUNT_SPLIT_1
   [pot:leben]             -$AMOUNT_SPLIT_1
@@ -41,8 +96,8 @@ $DATE $TITLE
   [reserve]               -$AMOUNT_SPLIT_2
   wallet                  -$AMOUNT_TOTAL
   [wallet]                 $AMOUNT_TOTAL
-
 EOF
-}
+};;
+esac
 
 print >>$LEDGER_FILE && echo "Written to $LEDGER_FILE"
