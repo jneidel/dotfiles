@@ -44,6 +44,16 @@ cmd edit ${{
       ~/scripts/mime/mime -e lf edit "$f"
   fi
 }}
+cmd alt-edit ${{
+  EXT=`mimetype "$f"`
+  if [ "$EXT" = "org" ] && [ -n "${INSIDE_EMACS:-}" ]; then
+      printf "\e]51;Efind-file \"%s\"\e\\" "$(echo "$fx" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')" >/dev/tty
+  elif [ "$EXT" = "org" ]; then
+    emacs-open terminal "$f"
+  else
+      ~/scripts/mime/mime -e lf edit "$f"
+  fi
+}}
 cmd remove $rm -rf $fx
 
 cmd diropen $~/.config/lf/scripts/handle-dir "$f"
@@ -365,6 +375,7 @@ map cP create-plan
 ### own bindings
 map cb combine
 map e edit
+map E alt-edit
 map u clear-unselect
 map rm remove $f
 map rp rm_pi
