@@ -26,6 +26,7 @@ handle_uri() {
   case `echo $URI | cut -d: -f1` in
     http|https) $BROWSER "$URI";;
     file) $DIR/mime open `echo $URI | cut -d/ -f3- `;;
+    mailto) /bin/xdg-open "$URI";;
     *) $DIR/mime open "$URI";;
   esac
 }

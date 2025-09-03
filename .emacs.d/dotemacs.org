@@ -1,0 +1,3542 @@
+#+TITLE: Emacs configuration
+#+AUTHOR: Jonathan Neidel
+#+EMAIL: emacs@jneidel.com
+
+- https://emacsdocs.org/docs/elisp/File-Name-Expansion -> substitute-in-file-name
+- http://xahlee.info/emacs/emacs/elisp_call_shell_command.html -> shell-command,
+shell-command-to-string, async-shell-command
+- format = printf
+
+* Why Emacs?
+Vim and zsh were my first introductions to free software and got me into the
+world of GNU/Linux.
+I greatly modified both to make them work the way I want.
+
+My first Linux distro was [[https://manjaro.org/][Manjaro]].
+It was great, but over time I ran it it's limitations.
+It wasn't so much the case I was lacking features, but that I lacked the freedom
+to have things work as I wanted them to.
+There were some minor, but persistent annoyances that I could not further debug
+because of how much the system was abstracting away from me.
+So I moved to what Manjaro is based on: [[https://archlinux.org/][Arch]].
+Devoured the [[https://wiki.archlinux.org/title/Main_page][wiki]] and built an [[https://github.com/jneidel/dotfiles][elaborate setup]] for myself.
+
+With time I felt the same way about vim as Manjaro.
+I had all the features I wanted, a great IDE.
+But, again (1) I lacked the freedom to have things work as I want them to and (2)
+I was not able to debug some problems because of how much the system was
+abstracting from me.
+With this in mind I came across [[https://www.youtube.com/watch?v=JWD1Fpdd4Pc][a talk]] that convinced me that Emacs was were I
+should head.
+
+Emacs promised the freedom to tinker with every aspect of an understandable system.
+These advantages over vim are because of it's design:
+#+begin_quote
+[…] an editor built up around the idea of LISP as a singular machine.
+Every part of Emacs can be inspected, evaluated or modified because the editor
+is approximately 95 percent elisp and 5 percent C code.
+
+[…]
+
+What makes LISP such a fantastic language is that source code and data
+structures are intrinsically one and the same: the LISP source code you read as
+a human is almost identical to how the code is manipulated as a data structure
+by LISP — the distinction between the questions “What is data?” and “What is
+code?” are nil.
+
+[…]
+
+When you write elisp you are not just writing snippets of code run in a sandbox,
+isolated from everything — you are altering a living system; an operating system
+running on an operating system.
+Every variable you alter and every function you call is carried out by the very
+same interpreter you use when you edit text.
+
+Emacs is a hacker’s dream because it is one giant, mutable state. […]
+You can re-define live functions; change variables left and right; and you can
+query the system for its state at any time — state that changes with every key
+stroke as Emacs responds to events from your keyboard to your network stack.
+Emacs is self-documenting because it is the document.
+There are no other editors that can do that.
+No editor comes close.
+
+– [[https://www.masteringemacs.org/book][Mastering Emacs]]
+#+end_quote
+
+After I started migrating my workflows to Emacs I realized that I will move
+everything into Emacs.
+The advantages are that overwhelming to me.
+
+** Keyboard driven workflows
+Vim has the downside of being all terminal (not practical to run the GUI
+version), so no different font sizes, proper inline images, etc.
+
+GUI editors (VS Code) are not an option, because they don't allow for completely
+keyboard driven workflows. (Vim binding in VS code are terrible, switching to
+terminal, tabs, etc., it just gets in your way.)
+
+** Vim extensions
+Configuring complex neovim plugins is just not fun.
+Coc is super inconsistent and brittle.
+
+* Theme
+https://www.jneidel.com/misc/colors/
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(load-theme 'an-old-hope t)
+
+;; Don't prompt to confirm theme safety
+(setq custom-safe-themes t)
+
+;; Toggle between light and dark
+(defun light-mode()
+  "Activate the light color theme."
+  (interactive)
+  (use-package modus-themes
+    :config
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme 'modus-operandi-tinted)))
+
+(defun dark-mode()
+  "Activate the dark color theme."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme 'an-old-hope))
+#+end_src
+
+Choose from the installed themes in `M-x customize-themes`.
+[[https://www.greghendershott.com/2017/02/emacs-themes.html#][Setup for easy switching.]]
+
+** Packaging
+Prevent package.el from loading packages prior to init.el.
+#+begin_src emacs-lisp :tangle "early-init.el" :results silent
+(setq package-enable-at-startup nil)
+#+end_src
+
+https://protesilaos.com/emacs/dotemacs#h:424340cc-f3d7-4083-93c9-d852d40dfd40
+https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(package-initialize)
+;; (setq package-enable-at-startup t)
+(setq package-install-upgrade-built-in t)
+
+(eval-and-compile
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t))
+;; default use-package only lazy load package if it exists, this also downloads a package if it is not installed
+
+;; Make native compilation silent and prune its cache.
+(when (native-comp-available-p)
+  (setq native-comp-async-report-warnings-errors 'silent)
+  (setq native-compile-prune-cache t))
+
+(setq package-archives
+      '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
+        ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa" . "https://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")
+        ))
+(setq package-archive-priorities
+      '(("gnu-elpa" . 3)
+        ("melpa" . 2)
+        ("nongnu" . 1)))
+
+;; refresh packages in the background upon startup
+;;(unless package-archive-contents
+;;  (package-refresh-contents t))
+
+;; use-package
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
+
+;; Install into separate package dirs for each Emacs version, to prevent bytecode incompatibility
+;; (setq package-user-dir
+;;       (expand-file-name (format "packages-%s.%s" emacs-major-version emacs-minor-version)
+;;                         "~/.local/share/emacs"))
+
+;; (setq package-enable-at-startup nil)
+;; (package-initialize)
+
+;; packages not available from repositories are in lib
+;; (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
+#+end_src
+
+[[https://protesilaos.com/codelog/2024-07-23-emacs-use-package-essentials/][`use-package` essentials]]
+use-package is very smart.
+`:hook` is not only used for lazy loading, but also activates the mode in question.
+`:mode` lazy loads when a pattern is matched and activates the mode.
+
+#+begin_example elisp
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+
+  ;; same as lazy load package on prog-mode and create this hook
+
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+#+end_example
+
+- `:defer t` will defer loading the package until something triggers it's loading.
+Well maintained packages have their functions and keybindings auto-loaded.
+So they will activate themselves.
+- `:defer` is not needed if you have :hook, :bind or :mode.
+
+
+
+Hide a minor mode from the modeline.
+https://github.com/myrjola/diminish.el
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; use-package syntax
+;; :init - run code before import
+;; :config - run code after import
+;; :diminish mode - hide mode from modeline
+(use-package diminish)
+#+end_src
+
+[[https://github.com/quelpa/quelpa][Quelpa]] allows for installation of packages from a wide range of sources.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq quelpa-checkout-melpa-p nil) ; disable melpa functionality, only use for recipe-based install
+(use-package quelpa)
+(use-package quelpa-use-package
+  :after quelpa)
+#+end_src
+Now quelpa can be used via [[https://github.com/quelpa/quelpa-use-package][`use-package`]].
+[[https://github.com/melpa/melpa/#recipe-format][See recipe format.]]
+
+** Evil
+:tangle "init.el"
+#+begin_src emacs-lisp :results silent
+(use-package evil
+  :init
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode t))
+                                        ; Vim Bindings Everywhere else
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init)
+  (diminish 'evil-collection-unimpaired-mode))
+
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode)
+  :diminish)
+
+;; evil states in the mode-line
+(defface evil-normal-state-tag-face
+  '((t (
+        :background "#005fd7" ; blue
+        :foreground "#1c1c1c"
+        :box (:line-width 2 :color "#005fd7"))))
+  "Face for the evil NORMAL state tag.")
+(defface evil-insert-state-tag-face
+  '((t (
+        :background "#00ff5f" ; green
+        :foreground "#1c1c1c"
+        :box (:line-width 2 :color "#00ff5f"))))
+  "Face for the evil INSERT state tag.")
+(defface evil-visual-state-tag-face
+  '((t (
+        :background "#ff5f00" ; orange
+        :foreground "#1c1c1c"
+        :box (:line-width 2 :color "#ff5f00"))))
+  "Face for the evil VISUAL state tag.")
+(defface evil-replace-state-tag-face
+  '((t (
+        :background "#d70000" ; orange
+        :foreground "#1c1c1c"
+        :box (:line-width 2 :color "#d70000"))))
+  "Face for the evil REPLACE state tag.")
+
+(use-package evil
+  :config
+  (setq evil-normal-state-tag (propertize "\u200b NORMAL \u200b" 'face 'evil-normal-state-tag-face))
+  (setq evil-insert-state-tag (propertize "\u200b INSERT \u200b" 'face 'evil-insert-state-tag-face))
+  (setq evil-visual-state-tag (propertize "\u200b VISUAL \u200b" 'face 'evil-visual-state-tag-face))
+  (setq evil-replace-state-tag (propertize "\u200b REPLACE \u200b" 'face 'evil-replace-state-tag-face))
+  (setq evil-motion-state-tag (propertize "\u200b MOTION \u200b" 'face 'evil-normal-state-tag-face))
+  (setq evil-operator-state-tag (propertize "\u200b OPRTOR \u200b" 'face 'evil-normal-state-tag-face))
+  (setq evil-emacs-state-tag "EMACS")
+  )
+
+;; TODO: fix and replace evil-commentary
+;; (use-package smart-comment
+;;   :config
+;;   (evil-global-set-key "normal" (kbd "gc") 'smart-comment))
+
+;; fix RET being overwritten in org-mode (and maybe others)
+;; (with-eval-after-load 'evil
+;;                       (evil-define-key 'normal org-mode-map (kbd "RET") nil)
+;;                       (dolist (map (list evil-normal-state-map
+;;                                          evil-motion-state-map))
+;;                         (define-key map (kbd "RET") nil)))
+#+end_src
+
+*** Prevent ZZ from terminating the server
+My Emacs is running as a server.
+Closing the last window on the graphical *server session* would terminate the
+server.
+
+Evil's ZZ will close the last window without qualms.
+Below I remap it to write the file, but only close the window if that will not
+result in terminating the server.
+
+Close the window under these conditions:
+1. Frame is a terminal client.
+   I found no good way to differentiate between graphical clients, since client don't have state of their own.
+   With the terminal I can be sure it's a /client/.
+2. Multiple tabs are open.
+3. Frame is split.
+
+#+begin_src emacs-lisp :results silent
+(use-package general
+  :defer 1
+  :config
+  (general-define-key
+   :states 'normal
+   "Z Z" (lambda ()
+           (interactive)
+           (if (or (not (display-graphic-p))
+                   (> (length (tab-bar-tabs)) 1)
+                   (not (one-window-p)))
+               (condition-case nil ; catch "Buffer is not associated with a file" and also close windows like scratch
+                   (evil-save-modified-and-close nil)
+                 (error (delete-window)))
+             (progn
+               (evil-save nil t)
+               (message "Prevented session from closing the server.")))))
+  )
+#+end_src
+
+** Mode line
+https://github.com/TheBB/spaceline
+https://github.com/domtronn/all-the-icons.el/wiki/Spaceline
+
+Faces to be used:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defface grey-on-grey '((t ( :foreground "dim grey" :background "#1c1c1c")))
+  "Grey on default background")
+(defface white-on-grey '((t ( :foreground "floral white" :background "#1c1c1c")))
+  "White on default background")
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package spaceline)
+(use-package spaceline-config
+  :ensure nil
+  :after spaceline
+  :config
+  (defface hudred '((t ( :foreground "#d70000" :background "#d70000"))) "Red for the hud")
+  (spaceline-define-segment red-hud
+    "A HUD that shows which part of the buffer is currently visible."
+    (powerline-hud 'hudred 'grey-on-grey)
+    :tight t)
+
+  (spaceline-compile "jneidel"
+    ;; left side
+    '(
+      ((;; evil-state
+        buffer-modified
+        buffer-id) ; TODO: include file path in buffer-id
+       :face 'white-on-grey
+       :separator " "
+       :tight-left t
+       :priority 100)
+      (major-mode
+       :face 'grey-on-grey
+       :priority 79)
+      (process
+       :face 'grey-on-grey
+       :when active)
+      ;;(version-control
+      ;; :when active
+      ;; :priority 78)
+      (org-clock
+       :face 'grey-on-grey
+       :when active)
+      )
+    ;; right side
+    '(
+      (selection-info
+       :face 'grey-on-grey
+       :priority 95)
+      (minor-modes
+       :face 'grey-on-grey
+       :priority 9
+       :separator " ")
+      (remote-host
+       :face 'grey-on-grey
+       :priority 98)
+      (global
+       :face 'grey-on-grey
+       :when active)
+     (red-hud
+       :face 'grey-on-grey
+       :priority 99)
+      )
+    )
+  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-jneidel)))) ; activate
+  )
+#+end_src
+
+On loss of focus the modeline would flash annoyingly.
+This would happen chiefly with system-level keybindings (sxhkd.)
+To prevent this flashing I remove the box around the modeline faces and
+explicitly overwrite their backgrounds.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package spaceline
+  :config
+  (set-face-attribute 'default             nil :background "#1c1c1c")
+  (set-face-attribute 'fringe              nil :background "#1c1c1c")
+  (set-face-attribute 'mode-line           nil :background "#1c1c1c" :box nil)
+  (set-face-attribute 'mode-line-inactive  nil :background "#1c1c1c" :box nil)
+  (set-face-attribute 'powerline-active0   nil :background "#1c1c1c" :box nil :inherit 'mode-line)
+  (set-face-attribute 'powerline-active1   nil :background "#1c1c1c" :box nil :inherit 'mode-line) ; major mode
+  (set-face-attribute 'powerline-active2   nil :background "#1c1c1c" :box nil :inherit 'mode-line) ; file format
+  (set-face-attribute 'powerline-inactive0 nil :background "#1c1c1c" :box nil :inherit 'mode-line-inactive)
+  (set-face-attribute 'powerline-inactive1 nil :background "#1c1c1c" :box nil :inherit 'mode-line-inactive)
+  (set-face-attribute 'powerline-inactive2 nil :background "#1c1c1c" :box nil :inherit 'mode-line-inactive))
+#+end_src
+
+** Styling
+Disable GUI menu, toolbar and scroll bar which take up screen real estate.
+Do so in the ~early-init.el~ for faster startup.
+#+begin_src emacs-lisp :tangle "early-init.el" :results silent
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(set-frame-font "ComicCodeLigatures Nerd Font 13" nil t)
+(when (eq system-type 'darwin)
+  (set-frame-font "ComicCodeLigatures Nerd Font 16" nil t))
+
+(set-face-attribute 'underline nil
+                    :inherit 'default
+                    :underline t)
+
+(setq blink-cursor-blinks 10
+      blink-cursor-mode nil)
+#+end_src
+
+** Keybindings
+https://github.com/noctuid/general.el
+#+begin_src emacs-lisp :results silent
+(use-package general) ;; https://github.com/noctuid/general.el#evil-examples
+
+;; <leader> and <localleader>
+  ;;;; use as (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
+(evil-set-leader nil (kbd "C-SPC"))
+(evil-set-leader 'normal (kbd "SPC"))
+;; local leader
+(evil-set-leader 'normal "," t)
+
+(defun jneidel/jump-to-placeholder ()
+  "Jump to the next <++>, replace it and go into insert mode."
+  (interactive)
+  (let ((placeholder-found
+         (search-forward "<++>" nil t)))
+    (if placeholder-found
+        (progn
+          (goto-char (match-beginning 0))
+          (delete-char 4)
+          (evil-insert-state)
+          )
+      (message "No <++> found"))))
+
+(general-define-key
+ :states 'normal
+ ", ," 'jneidel/jump-to-placeholder)
+#+end_src
+
+https://github.com/abo-abo/hydra
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package hydra
+  :bind (("C-+ +" . text-size-hydra/text-scale-increase)
+         ("C-+ -" . text-size-hydra/text-scale-decrease))
+  :config
+  (defhydra text-size-hydra (global-map "C-+") "Adjust text size"
+    ("+" text-scale-increase "bigger")
+    ("-" text-scale-decrease "smaller")
+    ("=" (text-scale-set 0) "set default")
+    ("d" (text-scale-set 0) "set default")
+    ("f" (text-scale-set 6) "set far"))
+  )
+
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "M-O") '(lambda () (interactive) (other-window -1)))
+
+(global-set-key (kbd "M-u") 'undo)
+;; (global-set-key (kbd "M-RET") 'eshell)
+
+
+(global-set-key (kbd "M-<delete>") (kbd "<delete>"))
+(global-set-key (kbd "C-<return>") (kbd "<return>"))
+#+end_src
+
+Open frequently used file directly via a short-cut menu:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package transient
+  :ensure nil
+  :config
+  (transient-define-prefix jump-menu-common-files ()
+    "A jump menu to open frequently used files."
+    [("d" "dotemacs" (lambda () (interactive) (find-file "~/.emacs.d/dotemacs.org")))
+     ("b" "practice emacs bindings" (lambda () (interactive) (find-file (substitute-in-file-name "$ORG_RESOURCES/emacs/Emacs keys training - deliberate practice.org"))))
+     ("n" "notmuch" (lambda () (interactive) (notmuch)))
+     ("r" "elfeed rss" (lambda () (interactive) (elfeed) (elfeed-update)))
+     ("c" "remind calendar" (lambda () (interactive) (remind-calendar)))
+     ("s" "scratch buffer" (lambda () (interactive) (scratch-buffer)))
+     ("p" "parcels" (lambda () (interactive) (find-file "~/org/3_resources/Parcels tracking.org")))
+     ("e" "exercise routine" (lambda () (interactive) (find-file "~/org/2_areas/routine/My Sustainable Training Routine.org")))
+     ])
+
+  (global-set-key (kbd "H-j") #'jump-menu-common-files)
+  )
+#+end_src
+
+Hydra to adjust window
+([[https://blog.genenakagaki.com/en/my-emacs-life-is-better-with-hydra.html][Inspiration]])
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package hydra
+  :config
+  (defhydra split-window-hydra (global-map "H-w" :hint nil :color blue) ""
+    ("i"  split-window-right)
+    ("-"  split-window-below)
+    ))
+#+end_src
+
+Resize windows with easily repeatable keybindings.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package move-border
+  :quelpa (move-border :fetcher github :repo "ramnes/move-border")
+  :bind (
+         ("M-H" . 'move-border-left)
+         ("M-L" . 'move-border-right)
+         ("M-K" . 'enlarge-window)
+         ("M-J" . 'shrink-window)
+         ("M-B" . 'balance-windows)
+         ))
+#+end_src
+
+[[https://codelearn.me/2023/01/17/emacs-change-inner.html][Change]][[https://github.com/magnars/change-inner.el][ inner]], like in vim. ~ci"~ to change in quotes, ~ci(~ in parentheses, etc.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package change-inner
+  :quelpa (change-inner :fetcher github :repo "magnars/change-inner.el")
+  :bind (
+         ("M-i" . 'change-inner)
+         ("M-I" . 'change-outer)
+         ))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package general
+  :config
+  (general-define-key
+   "C-x h" 'previous-buffer
+   "C-x l" 'next-buffer
+#+end_src
+
+Acting by S-Expressions/balanced expressions.
+Those are pairs of ="= or ='= around strings and =()=, =[]=, ={}=.
+Emacs bindings are familiar, only using the =C-M= modifier (e.g. =C-M-f= =
+forward-sexp.)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+   "C-M-d" 'kill-sexp ; to mirror M-d
+   "C-M-j" 'down-list ; jump into nearest sexp after point
+   "C-M-k" 'backward-up-list ; jump out of and to the beginning of sexp
+))
+#+end_src
+
+Enabled non-prefixed repeats for some commands, like undo.
+For example =C-x u u u= instead of =C-x u C-x u C-x u=.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(repeat-mode 1)
+#+end_src
+
+Improved C-g ([[https://emacsredux.com/blog/2025/06/01/let-s-make-keyboard-quit-smarter/][Source]])
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun keyboard-quit-dwim ()
+  "Do-What-I-Mean behaviour for a general `keyboard-quit'.
+
+The generic `keyboard-quit' does not do the expected thing when
+the minibuffer is open.  Whereas we want it to close the
+minibuffer, even without explicitly focusing it."
+  (interactive)
+  (if (> (minibuffer-depth) 0)
+      (abort-recursive-edit)
+    (keyboard-quit)))
+
+(global-set-key [remap keyboard-quit] #'keyboard-quit-dwim)
+#+end_src
+
+** Tabs
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+                                        ; https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html
+
+                                        ; upgrade to: https://github.com/ema2159/centaur-tabs
+
+(setq tab-bar-show 1
+      tab-bar-auto-width nil
+      tab-bar-auto-width-max '(220 30)
+      tab-bar-close-button-show nil
+      tab-bar-format '(tab-bar-format-history tab-bar-format-tabs tab-bar-separator))
+(tab-bar-mode t)
+
+(set-face-attribute 'tab-bar nil
+                    :background "#1c1c1c"
+                    :slant 'italic
+                    :height 0.85)
+(set-face-attribute 'tab-bar-tab nil
+                    :inherit 'tab-bar
+                    :foreground "#d70000"
+                    :box nil)
+(set-face-attribute 'tab-bar-tab-inactive nil
+                    :inherit 'tab-bar-tab
+                    :foreground "dim grey"
+                    :background 'unspecified)
+
+(general-define-key
+ "ħ" 'tab-previous ;; AltGr + h, default C-S-tab
+ "ł" 'tab-next)    ;; AltGr + l, default C-tab
+
+                                        ; bindings
+;; C-x t r: rename tab
+#+end_src
+
+Persist a tab and it's window configuration as a bookmark.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package tab-bookmark
+  :quelpa (tab-bookmark :fetcher "github" :repo "minad/tab-bookmark"))
+#+end_src
+
+** Org-mode
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org
+  :ensure nil
+  :config
+  (set-face-attribute 'org-block nil
+                      :background "grey6")
+  (set-face-attribute 'org-block-begin-line nil
+                      :background "grey8" ; a shade between the blocks darker grey and the backgrounds brighter gray
+                      :foreground "#0030a0"
+                      :overline "red4")
+  (unless (eq system-type 'darwin)
+    (set-face-attribute 'org-block-end-line nil
+                        :overline nil
+                        :underline '(:color "red4" :position t :style dashes)))
+  (set-face-attribute 'org-level-1 nil
+                      :height 1.4)
+  (set-face-attribute 'org-level-2 nil
+                      :height 1.4)
+  (set-face-attribute 'org-level-3 nil
+                      :height 1.3)
+  (set-face-attribute 'org-level-4 nil
+                      :height 1.2)
+  )
+#+end_src
+
+After typing 80 chars automatically insert a line break/new line.
+Can be changed dynamically with C-x f.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(set-fill-column 80)
+#+end_src
+
+Visually break the line at the edge of the screen instead of letting the text of
+a long line flow off the screen.
+Necessary for reading text produced by people who write paragraphs of text as
+a single line.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(add-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'org-mode-hook #'visual-line-mode)
+(add-hook 'markdown-mode-hook #'visual-line-mode)
+(diminish 'visual-line-mode)
+
+(add-hook 'org-mode-hook #'(lambda ()
+                             (auto-fill-mode 1)
+                             (setq-local tab-width 8) ; org-mode needs this or it prevents tangling files
+                             ))
+(diminish 'auto-fill-function)
+
+(setq org-startup-with-inline-images t)
+
+(defun jneidel/insert-org-list-item ()
+  "Insert a new item at the same level as the current list item."
+  (interactive)
+  (if (org-table-check-inside-data-field t)
+      (next-line)
+    (let* ((context (org-element-lineage (org-element-context) '(item) t))
+           (bullet (when context (org-element-property :bullet context)))
+           (indent (if bullet
+                       (make-string (org-get-indentation) ?\s)
+                     "")))
+      (if bullet
+          (progn
+            (end-of-line)
+            (insert "\n" indent bullet "")
+            (org-ctrl-c-ctrl-c) ;; fix ol
+            ;; (evil-insert-state)
+            )
+        (progn
+          (end-of-line)
+          (insert "\n- " )
+          ;; (evil-insert-state)
+          )))))
+
+(defun jneidel/insert-org-list-item-or-copy-down-table ()
+  "Insert a new item at the same level as the current list item.
+      If in a table, copy down values."
+  (interactive)
+  (if (org-table-check-inside-data-field t)
+      (org-table-copy-down 1) ;; default S-RET functionality
+    (jneidel/insert-org-list-item)))
+
+;; https://orgmode.org/manual/Checkboxes.html
+(defun jneidel/org-set-checkbox-in-progress ()
+  (interactive)
+  (org-toggle-checkbox '(16)))
+
+(defun jneidel/insert-latest-chart-screenshot ()
+  "Insert the latest chart screenshot."
+  (interactive)
+  (let ((latest_chart (string-trim (shell-command-to-string "screenshot-chart get_latest"))))
+    (if (not (string-empty-p latest_chart))
+        (insert (format "[[file:%s]]\n" latest_chart))
+      (message "Take a chart screenshot first."))))
+
+;; recalc formulas
+;; TODO: enhance by checking if output is "Not a table" and running the command
+;; of C-c C-c (recalc if on TBLFM)
+
+(use-package org
+  :ensure nil
+  :defer t
+  :bind (:map org-mode-map
+              ("C-c C-+" . org-table-iterate)
+              ;; ("g i" . org-toggle-inline-images)
+              ;; ("g l" . org-insert-link)
+              ;; ("g a" . jneidel/insert-latest-chart-screenshot)
+              ;; ("g t p" . jneidel/org-set-checkbox-in-progress)
+              ;; ("g r" . org-table-recalculate)
+              ;; ("TAB" . org-cycle)
+              ;; ("<S-return>" . jneidel/insert-org-list-item-or-copy-down-table)
+              ("M-j" . org-metadown)
+              ("M-k" . org-metaup)
+              ("M-h" . org-metaleft)
+              ("M-l" . org-metaright)
+              ;; (kbd "RET") #'jneidel/insert-org-list-item ;; RET in cal doesn't work anyway
+              ("C-c a" . org-table-recalculate)
+              ))
+
+;; (evil-define-key "insert" org-mode-map
+;;   (kbd "<S-return>") #'jneidel/insert-org-list-item-or-copy-down-table
+;;   (kbd "C-c a") #'org-table-recalculate
+;;   (kbd "<leader> d") #'org-ctrl-c-ctrl-c ;; toggle done/undone
+;;   )
+    ;;; evil-define-key does not need with-eval-after-load and can assign multiple at once
+
+;; Outline headings
+(with-eval-after-load 'outline
+  (set-face-attribute 'outline-1 nil
+                      :inherit 'font-lock-function-name-face
+                      :foreground "#EA3D54")
+  (set-face-attribute 'outline-4 nil
+                      :inherit 'font-lock-comment-face
+                      :foreground "orange")
+  (set-face-attribute 'outline-6 nil
+                      :inherit 'font-lock-constant-face
+                      :foreground "green"
+                      :weight 'normal)
+  (set-face-attribute 'outline-8 nil
+                      :inherit 'font-lock-string-face
+                      :foreground "purple")
+  )
+#+end_src
+
+Automates the use-case of inserting a link from the clipboard into an org
+document.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun insert-url-as-org-link-fancy ()
+  "Version of org-insert-link that uses the link from the clipboard if there is
+one. Otherwise just call org-insert-link."
+  (interactive)
+  (let ((link (substring-no-properties (x-get-selection 'CLIPBOARD)))
+        (url  "\\(http[s]?://\\|www\\.\\)"))
+    (save-match-data
+      (if (string-match url link)
+          (let ((description (read-string "Description: ")))
+            (insert (concat "[[" link "][" description "]]")))
+        (call-interactively #'org-insert-link)
+        ))))
+
+(general-define-key
+ :keymaps 'org-mode-map
+ "C-c C-l" 'insert-url-as-org-link-fancy)
+#+end_src
+
+*** Code blocks
+Execute the code within source blocks with <kbd>C-c C-c</kbd>.
+Disable the default confirmation prompt for these executions:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq org-confirm-babel-evaluate nil)
+#+end_src
+
+The langages which can be evaluated inline with `C-c C-c`.
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq org-babel-load-languages '((emacs-lisp . t)
+                                 (shell . t)
+                                 (bash . t)
+                                 (octave . t)
+                                 (js . t)
+                                 (python . t)
+                                 (makefile . t)
+                                 (conf . t)
+                                 (css . t)
+                                 (calc . t)
+                                 (lisp . t)
+                                 (sass . t)
+                                 (sql . t)
+                                 (hledger . t)
+                                 (php . t)
+                                 (racket . t)))
+#+end_src
+[[https://orgmode.org/worg/org-contrib/babel/languages/index.html][See the list of available languages for `org-babel-load-languages`.]]
+
+Fix [[https://emacs.stackexchange.com/questions/64886/indentation-in-org-mode-source-block-with-return][this undesired behavior]] where under some condition in the src block on
+pressing RET the entire block would be repeatedly indented.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq org-src-preserve-indentation t)
+#+end_src
+
+Complete ~<...~ into org blocks.
+~<q~ becomes a quote block, ~<eli~ and emacs-lisp one.
+A more complete and simpler to use alternative to org-tempo.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-block-capf
+  :quelpa (org-block-capf :fetcher github :repo "xenodium/org-block-capf")
+  :hook (org-mode . org-block-capf-add-to-completion-at-point-functions)
+  :custom
+  (org-block-capf-auto-indent nil)
+  (org-edit-src-content-indentation nil)
+  (org-block-capf-edit-style 'auto) ;; disable with 'inline
+  )
+#+end_src
+
+TODO Is this needed? Elisp completions seemed to have worked (inconsistently) without it.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun register-elisp-block-cape ()
+  (add-hook 'completion-at-point-functions #'cape-elisp-block nil 'local))
+
+(use-package org
+  :hook (org-mode . register-elisp-block-cape))
+#+end_src
+
+*** Org-capture
+[[info:org#Capture templates][Info page about capture templates]]
+https://orgmode.org/manual/Capture-templates.html
+#+begin_src elisp :tangle "init.el" :results silent
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(use-package org-capture
+  :ensure nil
+  :bind ("C-c c" . org-capture)
+  :config
+  (setq org-capture-templates '())
+
+  ;; (add-hook 'org-capture-mode-hook #'evil-insert-state)
+
+  (defvar jneidel-note-capture-location nil
+    "Temporary path for current org-capture note.")
+  (defun jneidel-generate-note-capture-location ()
+    "Generate a temp file path, store it and open it."
+    (setq jneidel-note-capture-location
+          (make-temp-file "org-capture-" nil ".org"))
+    ;; template target (function …) expects file to be opened
+    (find-file jneidel-note-capture-location)
+    (goto-char (point-min)))
+  (defun jneidel-note-capture ()
+    "Extract the title and move the note to the inbox."
+    (let* ((title (string-trim (shell-command-to-string
+                                (format "grep -E '^#\\+(TITLE|title):.*' %s | cut -d: -f2-" jneidel-note-capture-location))))
+           (inbox (substitute-in-file-name "$ORG_INBOX/"))
+           (new-note-filename (expand-file-name (concat title ".org") inbox))
+           (capture-buffer (find-buffer-visiting jneidel-note-capture-location)))
+      (progn
+        (kill-buffer capture-buffer)
+        (rename-file jneidel-note-capture-location new-note-filename t)
+        (message "Wrote note %s" new-note-filename))
+      )
+    ;; TODO support capture of 2+ notes at the same time
+    ;; TODO check and handle if destination file already exists
+    )
+  (add-to-list 'org-capture-templates
+               `("n" "Note" plain
+                 (function jneidel-generate-note-capture-location)
+                 ,(concat "#+title: %?\n"
+                          "#+date: %t\n"
+                          "\n%a\n%i")
+                 :hook delete-other-windows
+                 :after-finalize jneidel-note-capture
+                 ))
+
+  ;; tasks
+  (add-to-list 'org-capture-templates
+               '("m" "Message to send" entry
+                 (file+headline (lambda () (substitute-in-file-name "$ORG_INBOX/messages to send.org")) "Messages to send")
+                 "* TODO %?\n"
+                 :prepend 1 :empty-lines-after 1))
+
+  (add-to-list 'org-capture-templates
+               '("t" "Task" entry
+                 (file+headline "~/org/tasks.org" "Tasks")
+                 "* TODO %?\n  %i\n  %a"))
+
+  (add-to-list 'org-capture-templates
+               '("h" "Health journal" item
+                 (file+olp+datetree "~/org/2_areas/body/health-journal.org")
+                 "%?\n"
+                 :prepend 1))
+
+  ;; sprint retrospective for work
+  (setq retro-notes (substitute-in-file-name "$DAVA_ORG/2_areas/retro notes.org"))
+  (add-to-list 'org-capture-templates
+               '("g" "Retro Goodness" entry
+                 (file+headline retro-notes "Goodness")
+                 "* %?\n  %t"
+                 :prepend 1 :empty-lines-after 1))
+  (add-to-list 'org-capture-templates
+               '("b" "Retro Goodness" entry
+                 (file+headline retro-notes "Badness")
+                 "* %?\n  %t"
+                 :prepend 1 :empty-lines-after 1))
+  )
+#+end_src
+- refactor with: https://miguelcrespo.co/posts/using-org-capture-to-create-new-org-files
+- ideas from: https://howardism.org/Technical/Emacs/capturing-content.html
+  & https://protesilaos.com/emacs/dotemacs#h:f8f06938-0dfe-45c3-b4cf-996d36cba82d
+- further info: https://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
+
+Keybinds
+- `C-c c` org-capture
+- `C-u C-c c` Visit the target location of a capture template.
+- `C-u C-u C-c c` Visit the last stored capture item in its buffer.
+
+*** Org-agenda
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun set-org-agenda-files ()
+  "Set to directories which contain todos.
+Expand project and area dirs to include todo files at the first level inside of a project/area."
+  (interactive)
+  (let* ((files-as-is (list (substitute-in-file-name "$ORG")
+                            (substitute-in-file-name "$HOME/.emacs.d/dotemacs.org")
+                            (substitute-in-file-name "$ORG_INBOX")))
+         (subdirectories-one-level-deep-to-be-expanded (list (substitute-in-file-name "$ORG_PROJECTS")
+                                                             (substitute-in-file-name "$ORG_AREAS"))))
+
+    (setq org-agenda-files
+          (append files-as-is
+                  (mapcan
+                   (lambda (root)
+                     (let* ((r (file-name-as-directory (expand-file-name root)))
+                            (children (directory-files r nil "^[^.]" t)))
+                       (mapcar #'file-name-as-directory
+                               (seq-filter #'file-directory-p
+                                           (mapcar (lambda (name) (expand-file-name name r))
+                                                   children)))))
+                   subdirectories-one-level-deep-to-be-expanded)))))
+
+(setq org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s") ; everything but todo are the defaults
+                                 (todo . "%-2i %-40(org-agenda-directory): ")
+                                 (tags . " %i %-12:c")
+                                 (search . " %i %-12:c")))
+
+(defun org-agenda-directory ()
+  "Return the base directory name of the current org-agenda file."
+  (let ((file (or (buffer-file-name (org-base-buffer (current-buffer)))
+                  "")))
+    (if (string-equal (file-name-nondirectory file) "index.org")
+        (file-name-nondirectory (directory-file-name (file-name-directory file)))
+      (file-name-sans-extension (file-name-nondirectory file)))))
+
+(defun todos ()
+  "Open org project todo list"
+  (interactive)
+  (set-org-agenda-files)
+  (org-todo-list))
+#+end_src
+
+Add [[https://github.com/egregius313/org-agenda-category-icons][icons]] to org-agenda:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(when (eq system-type 'gnu/linux)
+          (use-package org-agenda-category-icons
+            :quelpa (org-agenda-category-icons :fetcher "github" :repo "egregius313/org-agenda-category-icons")
+            :after all-the-icons
+            :config
+            (org-agenda-category-icons!
+             :fileicon
+             (emacs dotemacs)
+             ;; :octicon
+             ;; (comment "messages to send")
+             )))
+#+end_src
+
+[[https://github.com/domtronn/all-the-icons.el][All the icons]].
+Needs to run =M-x all-the-icons-install-fonts= once.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package all-the-icons
+  :defer t
+)
+
+;; (use-package all-the-icons-dired
+;;  :after all-the-icons
+;;  :hook (dired-mode . all-the-icons-dired-mode)
+;;  :config
+;;  (set-face-attribute 'all-the-icons-dired-dir-face nil
+;;                    :distant-foreground "#1c1c1c")
+;;)
+#+end_src
+
+*** Org-modern
+https://github.com/minad/org-modern
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-modern
+  :after org
+  :config
+  (with-eval-after-load 'org (global-org-modern-mode))
+  (with-eval-after-load 'org (display-line-numbers-mode -1))
+
+  ;; disable headings styles
+  (setq org-modern-star nil
+        org-modern-todo nil)
+
+  ;; adjust list tasks styles
+  (setq org-modern-checkbox
+        '((88 . "") (45 . "") (32 . "×") (95 . "")))
+
+  (set-face-attribute 'org-modern-date-active nil
+                      :background "gray20"
+                      :foreground "white"
+                      :height 1.0
+                      :inherit 'org-modern-label)
+                                        ; :inverse-video - inverts back/fore colors
+                                        ;    is needed so labels look consistent, when cursor is on the same line
+  (set-face-attribute 'org-modern-done nil
+                      :background "#1c1c1c"
+                      :foreground "forest green"
+                      :inverse-video t
+                      :weight 'semi-bold
+                      :inherit 'org-modern-label)
+  (set-face-attribute 'org-modern-todo nil
+                      :background "#1c1c1c"
+                      :foreground "#d70000"
+                      :inverse-video t
+                      :weight 'semi-bold
+                      :inherit 'org-modern-label)
+  )
+#+end_src
+
+*** Org todo management
+[[https://orgmode.org/manual/Fast-access-to-TODO-states.html][Fast access todo states]] for org outlines.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)")
+        (sequence "NEXT(n)" "WAITING(w)" "|")
+        (sequence "|" "REJECTED(r)")))
+#+end_src
+
+Set [[https://orgmode.org/manual/Faces-for-TODO-keywords.html][custom faces]] for the todo states based on the color of trafic lights.
+Green means ready to go. Yellow is inactive. Orange is no concern.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq org-todo-keyword-faces
+      '(("TODO" . "green") ("NEXT" . "green")  ("IN PROGRESS" . "green")
+        ("WAITING" . "yellow")
+        ("DONE" . org-warning) ("REJECTED" . org-warning)))
+#+end_src
+
+*** Snippets
+[[https://orgmode.org/manual/Structure-Templates.html][structure template]] (has list of keys)
+
+Not included by default anymore.
+#+begin_quote
+The new mechanism is called [[https://orgmode.org/manual/Structure-Templates.html][structure template]]. The command
+`org-insert-structure-template` bound to `C-c C-,` gives you a list
+of `#+begin_`-`#+end_` pairs that narrows down while you type and you can use
+completion.
+#+end_quote
+https://emacs.stackexchange.com/a/46992
+
+#+begin_src emacs-lisp :results silent
+;; for <q TAB and more completions
+(with-eval-after-load 'org
+  (add-to-list 'org-modules 'org-tempo)
+  )
+#+end_src
+
+Evaluate this for a list of all available keys.
+#+begin_src elisp
+(org-tempo--keys)
+#+end_src
+
+I use:
+- <s: empty src
+- <q: quote
+- <e: example
+
+(use-package yasnippet-snippets
+:ensure t)
+(use-package yasnippet
+:ensure t
+:config (yas-global-mode 1))
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun hide-zero-cell(cell)
+  (if (= (string-to-number cell) 0)
+      ""
+    cell))
+(defun hide-minus-cell(cell)
+  (if (< (string-to-number cell) 0)
+      ""
+    cell))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; https://github.com/QiangF/org-extra-emphasis/raw/refs/heads/main/org-extra-emphasis.el
+;; (use-package ox-odt ; wrong version, because package is locked to specific version
+;;   :ensure nil
+;;   :after org)
+;; (use-package org-extra-emphasis
+;;   :after ox-odt
+;;   :quelpa (org-extra-emphasis :fetcher github :repo "qiangf/org-extra-emphasis"))
+
+#+end_src
+
+** Info
+#+begin_src elisp :tangle "init.el" :results silent
+(set-face-attribute 'Info-quoted nil
+                    :background "gold2"
+                    :foreground "black"
+                    :inherit nil)
+(set-face-attribute 'info-isolated-backquote nil
+                    :background "transparent")
+(set-face-attribute 'info-isolated-quote nil
+                    :background "transparent")
+
+(add-hook 'Info-mode-hook #'variable-pitch-mode)
+(set-face-attribute 'variable-pitch nil
+                    :family "DejaVu Serif")
+#+end_src
+
+TODO: I'm in the market for a new serif font.
+
+* Completion
+
+Emacs differentiates between two main types of completion.
+1. Completing-read occurs in the minibuffer (M-x, find-file, and all sorts prompts).
+2. Completion-at-point (and completion-in-region) are used to complete text in
+   the buffer itself (pressing tab to complete a word, function, etc.)
+
+
+Now package headlines like these don't seem so mysterious anymore:
+- "🔍 consult.el - Consulting completing-read"
+- "🏝️ corfu.el - COmpletion in Region FUnction"
+
+** Completing-read (minibuffer)
+#+begin_src emacs-lisp :results silent
+(fido-mode t)
+#+end_src
+
+** Completion-at-point/in buffer (corfu)
+[[https://github.com/minad/corfu][Corfu]] provides a pop-up UIs for completing words in the buffer.
+As a UI it does not provide any completions of it's own.
+It gets those from emacs-standard completion-at-point-functions (CAPFs), which
+many modes, such as elisp-mode, eglot and lsp-mode, come with.
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; TAB key: fix indentation if needed, otherwise perform completion
+(setq tab-always-indent 'complete)
+
+(use-package corfu
+  :hook (after-init . global-corfu-mode)
+  ;; :bind
+  ;; (:map corfu-map
+  ;;       ("<tab>" . corfu-next)
+  ;;       ("<backtab>" . corfu-previous)
+  ;;       )
+  :custom
+  (corfu-cycle t) ; cycle around to first entry after reaching the last
+  (corfu-preview-current nil) ; don't expand text at point until I press return
+  (corfu-min-width 20)
+  (corfu-on-exact-match 'insert) ; complete if there is only a single candidate
+  (corfu-quit-no-match t)
+  (corfu-quit-at-boundary t)
+  :config
+  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+  (corfu-popupinfo-mode 1) ; shows documentation next to completions
+
+  ;; sort by input history
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1)
+    (add-to-list 'savehist-additional-variables 'corfu-history))
+  )
+
+(defun complete-first-then-indent ()
+  "Try completion at point, if nothing completes then indent."
+  (interactive)
+  (unless (completion-at-point)
+    (indent-for-tab-command)))
+    #+end_src
+
+[[https://github.com/minad/cape][Cape]] allows us to complete from words in the buffer and paths in the filesystem.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package cape
+  :defer 1
+  :config
+  (add-hook 'completion-at-point-functions #'cape-dabbrev 20) ; words from buffer
+  (add-hook 'completion-at-point-functions #'cape-file 20))
+#+end_src
+
+[[https://github.com/jdtsmith/kind-icon][Kind-icon]] adds icons to corfu.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package kind-icon
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; fix overly large icons (https://github.com/jdtsmith/kind-icon/issues/22)
+(setq kind-icon-default-style
+      '(:padding -1 :stroke 0 :margin 0 :radius 0 :height 0.4 :scale 1))
+#+end_src
+
+;; Emacs 30 and newer: Disable Ispell completion function.
+;; Try `cape-dict' as an alternative.
+(setq text-mode-ispell-word-completion nil)
+
+** Minibuffer
+(`M-x` and friends.)
+
+*** Vertico
+[[https://github.com/minad/vertico][Vertico]] present minibuffer candidates in a vertical layout, one at a time.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package vertico
+  :demand t
+  :bind (:map minibuffer-local-map
+              ("<tab>" . vertico-next)
+              ("<backtab>" . vertico-previous))
+  :custom
+  (vertico-cycle t) ; C-p at the top of the list goes to the bottom
+  :config
+  (vertico-mode t))
+#+end_src
+
+Verticos highlight font was clashing with the completion part:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(set-face-attribute 'vertico-current nil
+                    :background "#ffd700")
+(set-face-attribute 'completions-common-part nil
+                    :weight 'bold
+                    :background "#d70000"
+                    :foreground "#ffd700")
+(set-face-attribute 'minibuffer-prompt nil
+                    :foreground "#ffd700")
+
+(use-package consult
+  :defer t
+  :config
+  (set-face-attribute 'consult-preview-match nil
+                      :background "#d70000"
+                      :foreground "#ffd700")
+  (set-face-attribute 'consult-highlight-match nil
+                      :background "#d70000"
+                      :foreground "#ffd700")
+  )
+#+end_src
+
+**** Problems
+- M-x, ^n to select an entry that is not the first one, return -> first entry
+  was used
+  by pressing tab, return the correct one is used though
+
+*** Marginalia
+[[https://github.com/minad/marginalia][Marginalia]] add descriptions or other relevant information to minibuffer menus.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package marginalia
+  :config
+  (marginalia-mode t))
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(set-face-attribute 'marginalia-documentation nil
+                    :inherit nil
+                    :slant 'italic
+                    :foreground "grey35")
+#+end_src
+
+*** Consult & affe
+[[https://github.com/minad/consult][Consult]] provides a suite of tools to interact with emacs in an enhanced way.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package consult
+  :bind (;; new ones
+         ("H-o" . consult-outline)
+         ("H-l" . consult-line)
+         ("H-m" . consult-mark)
+         ("H-r" . consult-ripgrep)
+         ;; replace old ones with superior versions
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x t b" . consult-buffer-other-tab)
+         ("M-y" . consult-yank-pop)
+         ([remap Info-search] . consult-info)
+         ([remap list-buffers] . ibuffer)
+         ))
+#+end_src
+
+TODO test that this works with new mac build
+=consult-buffer= is broken on mac. Only bind it on linux.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; (when (eq system-type 'gnu/linux)
+  (use-package consult
+    :bind (("H-b" . consult-buffer)
+           ([remap switch-to-buffer] . consult-buffer)))
+
+;; (when (eq system-type 'darwin)
+;;   (use-package consult
+;;     :bind (("H-b" . switch-to-buffer))))
+#+end_src
+
+Matches for finding files are generated with ripgrep, which is much faster than
+find.
+To make it even faster I reduce the matches with ignore patterns.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defvar rg-ignore-flags
+  "-g \"!*.mp3\" -g \"!*.jpg\" -g \"!*.JPG\" -g \"!*.jpeg\" \
+  -g \"!*.mkv\" -g \"!*.mp4\" -g \"!*.avi\" -g \"!*.zip\" -g \"!*.ddl\" \
+  -g \"!*.ods\" -g \"!*.xlsx\" -g \"!*.m3u\" -g \"!*.url\" -g \"!*.aac\" \
+  -g \"!*.mpc\" -g \"!*.sql\" -g \"!*.ydb\" -g \"!dist/\" \
+  -g \"!.git/\" -g \"!git/*\" -g \"!node_modules/\" -g \"!*cache/\" \
+  -g \"!.cache\" -g \"!vendor/\" \
+  -g \"!.pki/\" -g \"!.local/share/*/\" \
+  -g \"!coverage\" -g \"!build/\" -g \"!var/\" -g \"!npm/\" \
+  -g \"!Library/\" -g \"!*.app\" -g \"!.DS_Store\" -g \"!.stfolder\""
+  "Exclusion flags for usage with ripgrep commands.")
+(defvar rg-find-files-command
+  (format "rg -L --ignore --hidden --files --color=never %s" rg-ignore-flags)
+  "Command for finding files with ripgrep.")
+(defvar rg-find-directories-command
+  (format "rg-dir -L --ignore --hidden --color=never %s" rg-ignore-flags)
+  "Command for finding directories with ripgrep.")
+#+end_src
+
+For find I prefer the interface of [[https://github.com/minad/affe][affe]].
+It feels like fzf, but integrates with and looks like consult.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun affe-find-file (&optional dir) (interactive) ; default dir is cwd
+       (setq affe-find-command rg-find-files-command)
+       (affe-find dir))
+(defun affe-find-directory (&optional dir) (interactive) ; default dir is cwd
+       (setq affe-find-command rg-find-directories-command)
+       (affe-find dir))
+(defun affe-find-file-home () (interactive)
+       (affe-find-file (substitute-in-file-name "$HOME")))
+(defun affe-find-directory-home () (interactive)
+       (affe-find-directory (substitute-in-file-name "$HOME")))
+#+end_src
+
+For finding files I prefer fast access to the global search (from home directory).
+The local search (in current working directory or project) is easily available also.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package affe
+  :bind (("H-f" . affe-find-file-home)
+         ("H-M-f" . affe-find-file)
+         ("H-s" . affe-find-directory-home)
+         ("H-M-s" . affe-find-directory)
+         )
+  :init
+  (setq affe-count 5000)
+  )
+#+end_src
+
+*** Minibuffer Completion
+Expand on this with
+https://github.com/protesilaos/dotfiles/blob/master/emacs/.emacs.d/prot-emacs.org#54-the-prot-emacs-completionel-module
+
+Problems:
+- TODO lowercase query does not match until orderless kicks in
+
+**** Orderless
+[[https://github.com/oantolin/orderless][Orderless]] allows matching query terms out of order.
+E.g. the query "in pack" will still match "package-install".
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package orderless)
+(setq orderless-matching-styles '(orderless-prefixes orderless-flex))
+(setq completion-ignore-case t)
+#+end_src
+
+The matching style of my choice is the one closest to how fzf works.
+#+begin_quote
+orderless-flex
+the characters of the component should appear in that order in the candidate,
+but not necessarily consecutively. This maps `abc` to `a.*b.*c`.
+#+end_quote
+Another example: "The input `lad` will thus match `list-faces-display` as well
+as `pulsar-highlight-dwim`.
+
+Enable orderless via the `completion-styles` variable, which checks for matches
+in order.
+So go from strictest to losest.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq completion-styles '(basic substring initials orderless)
+      completion-category-overrides '((file (styles basic partial-completion))))
+#+end_src
+
+The [[https://github.com/oantolin/orderless?tab=readme-ov-file#overview][README]] has this to say about the fallback and overrides:
+#+begin_quote
+The basic completion style is specified as fallback in addition to orderless in
+order to ensure that completion commands which rely on dynamic completion
+tables, e.g., completion-table-dynamic or completion-table-in-turn, work
+correctly.
+Furthermore the basic completion style needs to be tried first (not as a
+fallback) for TRAMP hostname completion to work. In order to achieve that, we
+add an entry for the file completion category in the
+completion-category-overrides variable. In addition, the partial-completion
+style allows you to use wildcards for file completion and partial paths, e.g.,
+/u/s/l for /usr/share/local.
+#+end_quote
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; Hide commands in M-x which do not apply to the current mode.  Corfu
+;; commands are hidden, since they are not used via M-x. This setting is
+;; useful beyond Corfu.
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+#+end_src
+
+** Abbreviations
+https://github.com/minad/cape can have them be transformed via completion
+I want:
+- :) -> 🙂
+
+https://protesilaos.com/emacs/dotemacs#h:567bb00f-1d82-4746-93e5-e0f60721728a
+https://github.com/minad/corfu section on dabbrev
+** History
+https://protesilaos.com/emacs/dotemacs#h:25765797-27a5-431e-8aa4-cc890a6a913a
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package savehist
+  :ensure nil
+  :hook (after-init . savehist-mode)
+  :config
+  (setq savehist-file (locate-user-emacs-file "savehist"))
+  (setq history-length 500) ; prot 100
+  (setq history-delete-duplicates t)
+  (setq savehist-save-minibuffer-history t)
+  (add-to-list 'savehist-additional-variables 'kill-ring))
+#+end_src
+
+** Highlight Colors
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package rainbow-mode
+  :defer 1
+  :diminish
+  :config
+  (rainbow-mode 1))
+#+end_src
+
+** Fonts
+Find out what font-face is used at point:
+describe-text-properties
+
+** Spellchecking (jinx)
+Use [[https://github.com/minad/jinx][jinx]] as spellchecking frontend.
+~M-$~ to correct the previous word and ~C-u M-$~ for the whole buffer.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package jinx
+  :bind (("M-$" . jinx-correct))
+  :hook ((text-mode-hook . jinx-mode)
+         (prog-mode-hook . jinx-mode)
+         (conf-mode-hook . jinx-mode))
+  :diminish
+  :custom (jinx-languages "en_US,de_DE")
+  :config (when (eq system-type 'darwin) (jinx-languages "en_US")))
+#+end_src
+On system-level I have hunspell configured as my spellchecker, which jinx uses through enchant.
+
+** Programming
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; highlight matching pairs of parentheses
+(show-paren-mode t)
+(setq show-paren-delay 0.0)
+
+;; Treat CamelCaseSubWords as separate words
+(use-package subword
+  :ensure nil
+  :hook (prog-mode . subword-mode)
+  :diminish subword-mode)
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; Turn on syntax highlighting whenever possible.
+(global-font-lock-mode t)
+
+;; https://github.com/jacktasia/dumb-jump
+;; (use-package dumb-jump)
+;; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+;; 2 spaces as default indentation
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq sh-basic-offset 2)
+
+;; overwrite e.g. indentation based on local editorconfig
+(use-package editorconfig
+  :hook (prog-mode . editorconfig-mode)
+  :diminish editorconfig-mode)
+#+end_src
+
+*** Line numbers
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+(setq display-line-numbers-type 'relative)
+
+(set-face-attribute 'line-number nil
+                    :background "#1c1c1c"
+                    :foreground "dim gray")
+(set-face-attribute 'line-number-current-line nil
+                    :inherit 'line-number
+                    :background "#ea3d54"
+                    :foreground "#1c1c1c")
+#+end_src
+
+*** Eglot
+[[https://github.com/joaotavora/eglot][Eglot]]
+[[https://protesilaos.com/emacs/dotemacs#h:92258aa8-0d8c-4c12-91b4-5f44420435ce][Prots section]] (has nice description of typical capabilities)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package eglot
+  :ensure nil
+  :functions (eglot-ensure)
+  :commands (eglot)
+  :hook (prog-mode . eglot-ensure) ; replace with actual programming modes
+  ;; :config
+  ;; (setq eglot-sync-connect nil)
+  ;; (setq eglot-autoshutdown t)
+  )
+#+end_src
+
+Eglot uses flymake for diagnostics.
+Configure it if needed ([[https://protesilaos.com/emacs/dotemacs#h:df6d1b52-0306-4ace-9099-17dded11fbed][prot config]]).
+There is no need for flycheck.
+
+** Apps
+*** Ledger
+[[https://hledger.org/editors.html#emacs][hledger notes]]
+[[https://github.com/narendraj9/hledger-mode][hledger-mode]]
+
+TODO: consider [[https://codelearn.me/2022/10/13/ledger-mode.html][ledger-mode]]
+
+TODO: look at hledger-input for quick capture
+
+TODO: write M-j move/down up functionality (kill entry (w/o poluting kill ring?)
+move, call next entry, etc.)
+[[https://chatgpt.com/c/68a6d758-fe88-832d-8416-beb6809803ff][failed attempt]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package hledger-mode
+  :mode ("\\.journal\\'" . hledger-mode)
+  :preface
+  (defun hledger/next-entry ()
+    "Move to next entry and pulse."
+    (interactive)
+    (hledger-next-or-new-entry)
+    (hledger-pulse-momentary-current-entry))
+  (defun hledger/prev-entry ()
+    "Move to last entry and pulse."
+    (interactive)
+    (hledger-backward-entry)
+    (hledger-pulse-momentary-current-entry))
+  :bind (:map hledger-mode-map
+              ("C-c j" . hledger-run-command)
+              ("C-c e" . hledger-jentry)
+              ("M-p" . hledger/prev-entry)
+              ("M-n" . hledger/next-entry)
+              ("M-+" . hledger-increment-entry-date)
+              ("M--" . hledger-decrement-entry-date)
+              ("TAB" . complete-first-then-indent)
+              ("M-j" . hledger-move-entry-down)
+              ("M-k" . hledger-move-entry-up)
+              )
+  :init
+  (setq hledger-jfile (expand-file-name "~/code/geld/2024.journal"))
+  :config
+  ;; enable completion through corfu
+  (defun hledger-completion-accounts ()
+    (when-let ((bounds (and (boundp 'hledger-accounts-cache)
+                            (bounds-of-thing-at-point 'symbol))))
+      (list (car bounds) (point) hledger-accounts-cache)))
+  (add-hook 'hledger-mode-hook
+            (lambda ()
+              (add-hook 'completion-at-point-functions 'hledger-completion-accounts)))
+
+  )
+
+(use-package flymake-hledger
+  :after hledger-mode)
+;; https://hledger.org/editors.html#flymake-hledger
+
+(setq ledger-binary-path "hledger"
+      ledger-highlight-xact-under-point nil
+      ledger-use-iso-dates nil
+      ledger-mode-should-check-version nil)
+
+(with-eval-after-load 'hledger-mode
+  (setq tab-width 2))
+;; (when (memq window-system '(mac ns)) broken on mac, needed on linux?
+;;   (exec-path-from-shell-copy-env "LEDGER_FILE")))
+
+(add-hook 'ledger-mode-hook 'goto-address-prog-mode)
+
+;; no rupee after transaction
+;; src: https://github.com/narendraj9/hledger-mode/issues/39
+(defun hledger-indent-account-line* ()
+  "Called when the line to indent is an account listing line."
+  (cond
+   ((hledger-cur-line-matchesp (concat hledger-whitespace-account-regex "\\s-*" hledger-amount-value-regex))
+    (insert "    "))
+   ((hledger-expecting-rupeep) (insert "    "))
+   (t (indent-line-to tab-width))))
+(advice-add 'hledger-indent-account-line :override #'hledger-indent-account-line*)
+#+end_src
+
+** Automatically save files
+If I make I change I want to see it written to the file.
+I don't want to think about it.
+I can always undo if it wasn't what I needed.
+
+This allows me, for example, to change some HTML, switch to my browser and see
+the new change (because emacs wrote the file, which triggered browsersync, which
+reloaded the page).
+
+I use [[https://github.com/bbatsov/super-save][super-save]] rather than the built-in ~auto-save-mode~.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; discard buffer changes on file change
+(global-auto-revert-mode t)
+
+(use-package super-save
+  :custom
+  (super-save-auto-save-when-idle t)
+  :diminish
+  :config
+  (super-save-mode +1))
+#+end_src
+
+** Backups
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Backup.html][Backup files]] contain a copy of a file at a point in time.
+They look like this: "dotemacs.el~".
+
+By default emacs creates a copy only on the first save after a file has been
+opened.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; make emacs back up every time I save
+(defun force-backup-of-buffer ()
+  "Lie to Emacs, telling it the curent buffer has yet to be backed up."
+  (setq buffer-backed-up nil))
+(add-hook 'before-save-hook  'force-backup-of-buffer)
+
+(setq version-control t) ;; keep multiple versions of a file
+(setq delete-old-versions t) ;; silently delete execess backup versions, starting in the middle
+(setq kept-new-versions 100)
+(setq kept-old-versions 50)
+(setq vc-make-backup-files t) ;; do back up files in git directories
+
+;; keep backups out of my way
+(setq backup-directory-alist '(("." . "~/.local/share/emacs/backups")))
+#+end_src
+
+Lockfiles prevent multiple users from editing the same file.
+They look like this "#dotemacs.el#".
+Since I can't configure the location to be somewhere else, I'd rather not have it.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq create-lockfiles nil)
+#+end_src
+
+** Misc fixes
+I prefer elisp over the customize menu.
+While not having a custom-file is not an options, this make it disposable and
+keeps it out of the way.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq custom-file (make-temp-file "customize.el"))
+#+end_src
+
+Do not report warnings and errors from asynchronous native compilation.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; make emacs backup every time I save
+(setq confirm-kill-processes nil)
+
+;; don't quit the emacs when I mess up a keybind
+(general-define-key
+ :states 'normal
+ "C-x C-c" 'ignore)
+
+;; Makes buffer management more elegant when working with "temporary" buffers
+;; https://github.com/emacsmirror/fullframe
+(use-package fullframe)
+
+;; always follow symlinks
+(setq vc-follow-symlinks t)
+
+;; delete trailing whitespace on save
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; this becomes really annoying in combination with autosave on focus switch (e.g. visiting the browser)
+
+;; When saving a file that starts with `#!', make it executable.
+(add-hook 'after-save-hook
+          'executable-make-buffer-file-executable-if-script-p)
+
+;; single space after a period
+(setq sentence-end-double-space nil)
+
+;; offer to create parent directories on save
+(add-hook 'before-save-hook
+          (lambda ()
+            (when buffer-file-name
+              (let ((dir (file-name-directory buffer-file-name)))
+                (when (and (not (file-exists-p dir))
+                           (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+                  (make-directory dir t))))))
+
+;; (defun sensible-defaults/apply-changes-to-highlighted-region ()
+;;   "Turn on transient-mark-mode."
+(transient-mark-mode t)
+
+;; If some text is selected, and you type some text, delete the
+;; selected text and start inserting your typed text.
+(delete-selection-mode t)
+
+;; ensure that files end with newline
+(setq require-final-newline t)
+#+end_src
+
+Disable annoying audible and visible bells.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; default line length
+(setq-default fill-column 80)
+
+;; When middle-clicking the mouse to yank from the clipboard,
+;; insert the text where point is, not where the mouse cursor is.
+(setq mouse-yank-at-point t)
+
+;; includes some of https://github.com/hrs/sensible-defaults.el/tree/main
+#+end_src
+
+By default at a "yes/no" prompt one would have to type out the whole thing.
+"y/n" is better, but I want to be able to confirm with RET, so "Y/n".
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setopt use-short-answers t)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(defun jneidel-Y-or-n-p (prompt)
+  "Prompt user for (Y/n)."
+  (if (string= "n"
+               (downcase
+                (read-from-minibuffer
+                 (concat prompt "(Y/n) "))))
+      nil
+    t))
+(defalias 'y-or-n-p 'jneidel-Y-or-n-p)
+#+end_src
+
+Have Emacs running as a server and the connect to it as a client
+https://www.polyomica.com/weekly-emacs-tip-27-emacs-as-a-server-daemon-and-emacsclient/
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package server
+  :ensure nil
+  :defer 1
+  :config
+  (unless (server-running-p) (server-start)))
+#+end_src
+
+*** Improve startup time
+Don't present the usual startup message, and clear the scratch buffer.
+#+begin_src emacs-lisp :tangle "early-init.el" :results silent
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
+#+end_src
+
+The default amount of memory before garbage collection is called is
+very small (0.76MB).
+This slows down startup, so increase it temporarily and set it to a normal value
+afterwards.
+You don't want to set it [[https://emacsredux.com/blog/2025/03/28/speed-up-emacs-startup-by-tweaking-the-gc-settings/][too high]] permanently.
+#+begin_src emacs-lisp :tangle "early-init.el" :results silent
+(setq gc-cons-threshold most-positive-fixnum)
+
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 50 1024 1024)))) ; 50MB
+#+end_src
+
+** MacOS
+There are multiple sources for MacOS builds available.
+Their performance can differ significantly.
+[[https://github.com/jimeh/emacs-builds][This]] is the build I'm using.
+
+*** Make macos keyboard usable
+The right option key outside of emacs act as AltGr.
+On a key like "8" you get "(" for "Shift+8" and "{" for "AltGr/right option+8".
+By default emacs overrides this right option with and replace it with another
+meta key.
+This returns original behavior by disabling emaces overwrite.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq mac-right-option-modifier 'none)
+#+end_src
+
+Remap right command/super to real hyper key assignable in Emacs with "H-".
+I have two different configuration which assign a right super key, which Emacs
+then understands as hyper.
+1. Karabiner Elements adds a mod-tap to my ö/semicolon key.
+2. My Vial/QMK keyboard has right super assigned to a key.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq mac-right-command-modifier 'hyper)
+#+end_src
+
+To be able to use consistent keybinding between MacOS and Linux I am reassigning
+common keybindings, usually using command as a prefix, to control to mirror
+their linux equivalents (ctrl+c copy, ctrl+t new tab, etc.)
+This means that e.g. a literal ctrl+t would be translated to command+t.
+For Emacs this is obviously undesirable since ctrl+t and many other are in use.
+So for Emacs, we will just turn command into ctrl :)
+(Sequence: I press ctrl+t, Karabiner turns it into command+t (which is what the
+browser wants), Emacs turns it back into ctrl+t.)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq mac-command-modifier 'ctrl)
+#+end_src
+
+** Git
+** Window management
+
+*** Switching windows
+The default binding to switch windows is <kbd>C-x o</kbd>.
+This cycles between windows, like <kbd>M-Tab</kbd> on Mac/Windows.
+With two windows open it's fine.
+At 3+ you have more than one keypress and a delay of "I press the binding, I
+check if I am in the desired window" and repeat.
+This scales terribly.
+
+With a directional binding ("go to the right") I can omit the check "if I am in
+the desired window" and it's always predictable.
+The same thing applies to linux window managers.
+I use i3 for the same reason.
+My browser is always on <kbd>M+2</kbd>.
+I don't have to cycle, I get what I except.
+It needs less of my attention.
+
+-> windmove
+
+Bindings use the home row because I don't want to leave the home row for such a
+common action.
+
+*** Return to a previous layout
+One constantly modifies the window layout.
+New windows get opened and closed all the time.
+One thing this is particularly useful is if you have an arrangement of windows.
+For example documentation and code.
+~C-x 1~ to make the program fullscreen while you code and ~H-p~/~H-n~ to pop
+back into the docs when needed.
+
+Winner mode allows you go go back and forth between these window layouts.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package winner
+  :ensure nil
+  :bind (("H-p" . winner-undo)
+         ("H-n" . winner-redo))
+  :config
+  (winner-mode))
+#+end_src
+
+*** Vterm, terminal
+https://www.masteringemacs.org/article/running-shells-in-emacs-overview
+https://github.com/akermu/emacs-libvterm
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package vterm
+  :bind (("M-t" . vterm)
+         :map vterm-mode-map
+         ("M-t" . bury-buffer))
+  :commands (vterm vterm-mode))
+#+end_src
+~rename-buffer~ to give give existing vterm a new name.
+"M-t" to spawn a new one.
+
+**** Music player (ncmpcpp)
+I use [[https://musicpd.org/][mpd]] as a daemon and a frontend to interfacing with mpd.
+In the terminal I use [[https://github.com/ncmpcpp/ncmpcpp][ncmpcpp]], which I access through vterm.
+I tried some Emacs frontends for mpd, but found them unergonomic, lacking in
+features or needing a lot of time and configuring to get used to.
+For something I use so little, where I already got ncmpcpps bindings down and
+which runs fine in Emacs it does not make sense to convert my workflow.
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun ncmpcpp ()
+  "Open ncmpcpp in vterm."
+  (interactive)
+  (let ((buf (get-buffer-create "*ncmpcpp*")))
+    (with-current-buffer buf
+      (unless (derived-mode-p 'vterm-mode)
+        (progn
+          (vterm-mode)
+          (vterm-send-string "ncmpcpps")
+          (vterm-send-return))
+        ))
+    (pop-to-buffer buf))
+  (delete-other-windows)
+  )
+#+end_src
+
+***** Home screen
+Sometimes I just want an empty screen.
+A blank page to dive into something new or a clean background to not disturb a
+conversation at my desk.
+This empty buffer is just that: an empty screen.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun homepage()
+  "Open homepage (empty scratch)."
+  (interactive)
+  (let ((buf (get-buffer-create "*empty*")))
+    (pop-to-buffer buf))
+  (delete-other-windows)
+  )
+(global-set-key (kbd "H-e") 'homepage)
+#+end_src
+
+Other people fill their home screen with places to go.
+I have a keyboard driven jump menu and bookmarks for that.
+Having them there visually would only disrupt me.
+
+** Project
+https://protesilaos.com/emacs/dotemacs#h:7dcbcadf-8af6-487d-b864-e4ce56d69530
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Projects.html
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package project
+  :ensure nil
+  :bind
+  (("C-x p p" . project-switch-project)
+   ("C-x p ." . project-dired)
+   ("C-x p C-g" . keyboard-quit)
+   ("C-x p <return>" . project-dired)
+   ("C-x p <delete>" . project-forget-project))
+  )
+#+end_src
+
+** Major modes by file type
+These major modes add highlighting and related tooling to specific files.
+
+*** Programming languages
+Configuration per language.
+
+**** Emacs Lisp
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(diminish 'eldoc-mode)
+#+end_src
+
+**** Common Lisp
+[[https://slime.common-lisp.dev/][Slime]],[[https://www.youtube.com/watch?v=sBcPNr1CKKw][ useful keybindings]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq inferior-lisp-program "sbcl")
+(use-package slime
+  ; :hook ((lisp-mode . slime-mode) ; spawn even on org demarcate/tangle of lisp blocks
+         ; (lisp-mode . slime))
+  )
+#+end_src
+
+Execute org-babel lisp blocks:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org
+  :config (require 'ob-lisp))
+#+end_src
+
+**** Racket
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package racket-mode)
+
+(use-package ob-racket
+  :quelpa (ob-racket :fetcher "github" :repo "hasu/emacs-ob-racket"))
+#+end_src
+
+**** Markdown
+[[https://github.com/jrblevin/markdown-mode][Markdown-mode]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package markdown-mode
+  :mode ("\\.md\\'" . markdown-mode)
+  :config
+  (setq markdown-fontify-code-blocks-natively t))
+#+end_src
+
+***** Mermaid
+[[https://github.com/abrochard/mermaid-mode][Mermaid mode]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package mermaid-mode
+  :after markdown-mode)
+#+end_src
+
+**** PHP
+[[https://github.com/emacs-php/php-mode][PHP mode]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package php-mode
+  :mode ("\\.php\\'"))
+#+end_src
+
+TODO: setup with phpactor:
+https://codelearn.me/2022/10/24/eglot_php.html
+
+**** YAML
+[[https://github.com/yoshiki/yaml-mode][YAML mode]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package yaml-mode
+  :mode ("\\.ya?ml\\'"))
+#+end_src
+
+*** Linux configuration files
+**** sxhkd
+[[https://github.com/protesilaos/sxhkdrc-mode][Major mode]] that provides highlighting for the [[https://github.com/baskerville/sxhkd][sxhkd]] config.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package sxhkdrc-mode
+  :mode "sxhkdrc.*"
+  :hook (sxhkdrc-mode . sxhkdrc-mode-auto-restart)
+  :config
+  (advice-add 'sxhkdrc-mode-restart-notify :override
+              (lambda () (message "Restarted the sxhkd process")))
+  )
+#+end_src
+
+*** Ebooks
+[[https://depp.brause.cc/nov.el/][Nov.el]] for reading epubs.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package nov
+  :mode ("\\.epub\\'" . nov-mode))
+#+end_src
+Alternatives:
+- [[https://github.com/chenyanming/calibredb.el][Using calibre]]
+- [[https://codeberg.org/divyaranjan/emacs-reader][Using mupdf]] (supports all ebook extensions)
+
+
+https://github.com/chenyanming/nov-xwidget
+https://redlib.privacyredirect.com/r/emacs/comments/v2fjec/a_new_epub_reader_in_emacs_novxwidgetel/
+#+begin_src emacs-lisp
+(if (featurep 'xwidget-internal)
+    (use-package nov-xwidget
+      :quelpa (nov-xwidget :fetcher "github" :repo "chenyanming/nov-xwidget")
+      :after nov
+      ;;   :config
+      ;;   (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+      ;;   (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+      ))
+     #+end_src
+
+*** Remind
+I use the [[https://dianne.skoll.ca/wiki/Remind][remind]] calendar.
+There is no emacs packge for it, so this quick function displays a rendered
+calendar in it's own buffer.
+The date range is fixed at one month in the past and three into the future.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ansi-color
+  :ensure nil
+  :commands (remind-calendar)
+  :config
+  (defun remind-calendar()
+    "Display colored remind calendar."
+    (interactive)
+    (let ((buf (get-buffer-create "*remind-calendar*")))
+      (with-current-buffer buf
+        (read-only-mode -1)
+        (call-process-shell-command
+         "rem -b1 -cu3 -m -w141 -@2,0 $(date -d '-4 weeks' +%Y-%m-%d ) 2>/dev/null"
+         ;; -4 weeks = 1 month into the past, -cu3 = 3 months into the future
+         nil buf t)
+        (ansi-color-apply-on-region (point-min) (point-max))
+        (goto-char (point-min))
+        (view-mode 1))
+      (pop-to-buffer buf))
+    (delete-other-windows)
+    (search-forward "******") ;; find today
+    (beginning-of-line)
+    (recenter-top-bottom 1) ;; this week at the top of the screen
+    ))
+#+end_src
+
+*** PKGBUILD
+[[https://github.com/juergenhoetzel/pkgbuild-mode][mode]] for editing Arch Linux PKGBUILD files.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package pkgbuild-mode
+  :quelpa (pkgbuild-mode :fetcher "github" :repo "juergenhoetzel/pkgbuild-mode")
+  :config
+  (setq pkgbuild-makepkg-command "yes | makepkg -mfcs")
+  (setq pkgbuild-sums-command nil)
+  )
+#+end_src
+
+** Help
+
+Shows all a selection of relevant help options in case I don't remember
+([[https://paste.pound-python.org/show/OJpNBWfjAjsyeklwNWqe/][Source]]).
+
+[[https://github.com/Wilfred/helpful][helpful]] for more help buffers with more structure and context.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package helpful
+  :after hydra)
+
+(use-package hydra
+  :bind ("C-h" . hydra-metahelp-menu/body)
+  :config
+  (setq my-default-hydra-delay 0.5)
+
+  (defhydra hydra-metahelp-menu (:hint nil :exit t :idle my-default-hydra-delay :foreign-keys warn)
+    "
+  _k_ey briefly                    _m_ode                             _a_propos (all)
+_C-k_ey                          _C-m_ode (customize)                 _i_nfo manual
+                                 _p_ackage (by name)                search _C-i_nfo manuals
+  _c_ommand                      _C-p_ackage (by group)               _d_ocumentation string (apropos)
+_C-c_ommand (apropos)            _C-l_ibrary                        _C-m_an page
+  _f_unction
+_C-f_unction (info)                *M_e_ssages*                       About _C-e_macs
+  _v_ariable                       _l_ossage (pressed keys)
+  _s_ymbol
+_C-s_ymbol (info)              _C-d_ at point
+  f_C-a_ce
+  ke_y_map
+  synta_x_
+  by _C-v_alue (apropos)
+"
+    ("a"   apropos)
+    ("C-a" describe-face)
+    ("c"   helpful-command)
+    ("C-c" apropos-command)
+    ("d"   apropos-documentation)
+    ("e"   view-echo-area-messages)
+    ("C-e" hydra-metahelp-emacs-menu/body)
+    ("f"   helpful-callable)
+    ("C-f" Info-goto-emacs-command-node)
+    ("i"   info)
+    ("C-i" consult-info)
+    ("k"   describe-key-briefly)
+    ("C-k" describe-key)
+    ("l"   view-lossage)
+    ("C-l" apropos-library)
+    ("m"   describe-mode)
+    ("C-m" customize-mode)
+    ("C-m" consult-man)
+    ("p"   describe-package)
+    ("C-p" finder-by-keyword)
+    ("s"   describe-symbol)
+    ("C-s" info-lookup-symbol)
+    ("v"   helpful-variable)
+    ("C-v" apropos-value)
+    ("y"   describe-keymap)
+    ("x"   describe-syntax)
+    ("C-d"   helpful-at-point)
+    ;; not listed
+    ("q"   nil nil)
+    ("ESC" nil nil)
+    ("b"   describe-bindings))
+
+  (defhydra hydra-metahelp-emacs-menu (:hint nil :exit t :idle my-default-hydra-delay :foreign-keys warn)
+    "
+Emacs
+----------------------------------------------------------------------------------------
+_a_bout Emacs  _D_istribution  _h_ello file     _n_ews            _T_odo
+_c_opying      _F_AQ           _i_nfo manual    known _p_roblems
+_d_ebuging     _G_NU           order _m_anuals  _t_utorial
+"
+    ("a" about-emacs)
+    ("c" describe-copying)
+    ("d" view-emacs-debugging)
+    ("D" describe-distribution)
+    ("F" view-emacs-FAQ)
+    ("G" describe-gnu-project)
+    ("h" view-hello-file)
+    ("i" info-manual)
+    ("n" view-emacs-news)
+    ("t" help-with-tutorial)
+    ("m" view-order-manuals)
+    ("p" view-emacs-problems)
+    ("T" view-emacs-todo)
+    ("q" nil nil))
+  )
+
+;; after pressing prefix key show available keys to press
+(use-package which-key
+  :if (eq system-type 'gnu/linux)
+  :ensure nil
+  :config
+(which-key-mode 1)
+(diminish 'which-key-mode)
+(setq which-key-idle-delay 1.5))
+
+(global-unset-key (kbd "<f1>")) ; unbind from global keymap
+#+end_src
+To show the options of a prefix one can append `C-h`.
+For example `C-x 8 C-h` to list the various special characters contained behind
+that prefix.
+
+For other such prefix listing helpers see [[https://karthinks.com/software/persistent-prefix-keymaps-in-emacs/][here]]
+
+https://www.emacswiki.org/emacs/InfoPlus
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package info+
+  :quelpa (info+ :fetcher "wiki"))
+#+end_src
+
+*** Casual
+[[https://github.com/kickingvegas/casual][Casual]] adds keyboard driven menus that provide discoverability for rarely used
+commands.
+~?~ to open the docstring of a command in question.
+
+To invoke use ~H-h~ (reminicent of ~C-h~ for help.)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq casual-bind "H-h")
+#+end_src
+
+[[https://kickingvegas.github.io/casual/EditKit.html][EditKit]] provides a menu for general purpose editing.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+
+(use-package casual
+  :config
+  (keymap-global-set casual-bind #'casual-editkit-main-tmenu))
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/Elisp.html][emacs-lisp]] development. Meant as an enhancement for EditKit.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (keymap-set emacs-lisp-mode-map "H-c" #'casual-elisp-tmenu))
+#+end_src
+
+For the [[https://kickingvegas.github.io/casual/Info.html][info]] mode.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (keymap-set Info-mode-map "C-o" #'casual-info-tmenu)
+
+  ;; Use web-browser history navigation bindings
+  (keymap-set Info-mode-map "M-[" #'Info-history-back)
+  (keymap-set Info-mode-map "M-]" #'Info-history-forward)
+  ;; Bind p and n to paragraph navigation
+  (keymap-set Info-mode-map "p" #'casual-info-browse-backward-paragraph)
+  (keymap-set Info-mode-map "n" #'casual-info-browse-forward-paragraph)
+  ;; Bind h and l to navigate to previous and next nodes
+  ;; Bind j and k to navigate to next and previous references
+  (keymap-set Info-mode-map "h" #'Info-prev)
+  (keymap-set Info-mode-map "j" #'Info-next-reference)
+  (keymap-set Info-mode-map "k" #'Info-prev-reference)
+  (keymap-set Info-mode-map "l" #'Info-next)
+  ;; Bind / to search
+  (keymap-set Info-mode-map "/" #'Info-search)
+  ;; Set Bookmark
+  (keymap-set Info-mode-map "B" #'bookmark-set)
+
+  (add-hook 'Info-mode-hook #'hl-line-mode)
+  (add-hook 'Info-mode-hook #'scroll-lock-mode)
+  )
+#+end_src
+
+For the [[https://kickingvegas.github.io/casual/Help.html][help]] mode.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (keymap-set help-mode-map "C-o" #'casual-help-tmenu)
+  (keymap-set help-mode-map "M-[" #'help-go-back)
+  (keymap-set help-mode-map "M-]" #'help-go-forward)
+  (keymap-set help-mode-map "p" #'casual-lib-browse-backward-paragraph)
+  (keymap-set help-mode-map "n" #'casual-lib-browse-forward-paragraph)
+  (keymap-set help-mode-map "P" #'help-goto-previous-page)
+  (keymap-set help-mode-map "N" #'help-goto-next-page)
+  (keymap-set help-mode-map "j" #'forward-button)
+  (keymap-set help-mode-map "k" #'backward-button)
+  )
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/Man.html][man]] mode.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (add-hook 'man-mode-hook
+            (lambda ()
+              (keymap-set Man-mode-map casual-bind #'casual-man-tmenu)
+
+              (keymap-set Man-mode-map "n" #'casual-lib-browse-forward-paragraph)
+              (keymap-set Man-mode-map "p" #'casual-lib-browse-backward-paragraph)
+              (keymap-set Man-mode-map "[" #'Man-previous-section)
+              (keymap-set Man-mode-map "]" #'Man-next-section)
+              (keymap-set Man-mode-map "j" #'next-line)
+              (keymap-set Man-mode-map "k" #'previous-line)
+              (keymap-set Man-mode-map "K" #'Man-kill)
+              (keymap-set Man-mode-map "o" #'casual-man-occur-options)
+              )))
+#+end_src
+
+For the [[https://kickingvegas.github.io/casual/Compile.html][compilation/grep]] modes.
+TODO test grep mode menu with consult/embark.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (keymap-set compilation-mode-map casual-bind #'casual-compile-tmenu)
+  (keymap-set compilation-mode-map "k" #'compilation-previous-error)
+  (keymap-set compilation-mode-map "j" #'compilation-next-error)
+  (keymap-set compilation-mode-map "o" #'compilation-display-error)
+  (keymap-set compilation-mode-map "[" #'compilation-previous-file)
+  (keymap-set compilation-mode-map "]" #'compilation-next-file)
+  
+  (keymap-set grep-mode-map casual-bind #'casual-compile-tmenu)
+  (keymap-set grep-mode-map "k" #'compilation-previous-error)
+  (keymap-set grep-mode-map "j" #'compilation-next-error)
+  (keymap-set grep-mode-map "o" #'compilation-display-error)
+  (keymap-set grep-mode-map "[" #'compilation-previous-file)
+  (keymap-set grep-mode-map "]" #'compilation-next-file)
+  )
+#+end_src
+
+For the [[https://kickingvegas.github.io/casual/Calc.html][calc]] mode.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package calc
+  :ensure nil
+  :after casual
+  :bind (:map calc-mode-map
+	            ("H-h" . casual-calc-tmenu))
+  :defer t)
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/Dired.html][dired/dirvish]].
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dired
+  :ensure nil
+  :after casual
+  :defer t
+  :bind (:map dired-mode-map
+              ("H-h" . casual-dired-tmenu)
+              ("s" . casual-dired-sort-by-tmenu)
+              ;; ("/" . casual-dired-search-replace-tmenu)
+              ))
+#+end_src
+
+For the [[https://kickingvegas.github.io/casual/Calendar.html][calendar]].
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (keymap-set calendar-mode-map casual-bind #'casual-calendar))
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/I_002dSearch.html][i-search]].
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package casual
+  :config
+  (keymap-set isearch-mode-map casual-bind #'casual-isearch-tmenu))
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/Eshell.html][eshell]].
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package eshell
+  :ensure nil
+  :after casual
+  :defer t
+  :bind (:map eshell-mode-map
+              ("H-h" . casual-eshell-tmenu)))
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/IBuffer.html][ibuffer]] (buffer management.)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ibuffer
+  :ensure nil
+  :after casual
+  :defer t
+  :bind (:map ibuffer-mode-map
+              ("H-h" . casual-ibuffer-tmenu)
+
+  ("F" . casual-ibuffer-filter-tmenu)
+  ("s" . casual-ibuffer-sortby-tmenu)
+
+  ("{" . ibuffer-backwards-next-marked)
+  ("}" . ibuffer-forward-next-marked)
+  ("[" . ibuffer-backward-filter-group)
+  ("]" . ibuffer-forward-filter-group)
+  ("$" . ibuffer-toggle-filter-group)
+
+  ("<double-mouse-1>" . ibuffer-visit-buffer)
+  ("M-<double-mouse-1>" . ibuffer-visit-buffer-other-window)
+  )
+  :init
+  (require 'hl-line)
+  (require 'mouse)
+  :hook ((ibuffer-mode . hl-line-mode)
+         (ibuffer-mode . ibuffer-auto-mode))
+  )
+#+end_src
+
+For [[https://kickingvegas.github.io/casual/Make.html][make]] mode (Makefiles.) Meant as an enhancement for EditKit.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package makefile
+  :ensure nil
+  :after casual
+  :defer t
+  :bind (:map makefile-mode-map
+              ("H-c" . casual-make-tmenu)))
+#+end_src
+
+Other modes to enable for:
+- [[https://kickingvegas.github.io/casual/Ediff.html][ediff]]
+- org [[https://kickingvegas.github.io/casual/Agenda.html][agenda]]
+- [[https://kickingvegas.github.io/casual/Image.html][image]]
+- [[https://kickingvegas.github.io/casual/RE_002dBuilder.html][re-builder]] (regex building)
+- [[https://kickingvegas.github.io/casual/Timezone.html][timezone]]
+- [[https://kickingvegas.github.io/casual/BibTeX.html][bibtex]]
+- [[http://yummymelon.com/devnull/announcing-casual-csv.html][csv]]
+
+** File manager (dirvish, dired)
+
+[[https://www.youtube.com/watch?v=5dlydii7tAU][dired basics]]
+
+dired-get-file-for-visit
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq-default dired-listing-switches "-alh")
+
+(defun dired-toggle-hidden-directories()
+  "Toggle hidden directories"
+  (interactive)
+  (if (or (string-match-p "-A" dired-listing-switches) (string-match-p "-A" dired-actual-switches))
+      (let ((switches (replace-regexp-in-string " -A" "" dired-listing-switches)))
+        (setq dired-actual-switches switches)
+        (setq dired-listing-switches switches)
+        (message "Hide hidden directories")
+        (revert-buffer))
+    (let ((switches (concat dired-actual-switches " -A")))
+      (setq dired-actual-switches switches)
+      (setq dired-listing-switches switches)
+      (message "Show hidden directories")
+      (revert-buffer))
+    ))
+
+(defun dired-set-sort-switch(sort-value)
+  "Update the --sort= switch in dired-actual-switches"
+  (let* ((sort-option (concat " --sort=" sort-value))
+         (switches
+          (if (string-match " --sort=" dired-actual-switches)
+              (replace-regexp-in-string " --sort=[^ ]+" sort-option dired-actual-switches)
+            (concat dired-actual-switches sort-option))
+          ))
+    (setq dired-actual-switches switches)
+    ))
+
+;; TODO use $ORG_ var
+;; TODO sortby time resource/*, areas/*, project/*
+(defun dired-sort-on-cd()
+  "Adjust sorting based on the directory"
+  (let ((sortby (pcase default-directory ; cwd
+                  ("~/org/" "name")
+                  ("~/org/0_inbox/" "time")
+                  ("~/org/1_project/" "version")
+                  ("~/org/1_project/.design/" "version")
+                  ("~/org/dava_org/1_project/" "version")
+                  ((pred (string-match "^~/org")) "time")
+                  (_ "name"))))
+    (dired-set-sort-switch sortby)
+    ))
+
+(defun jneidel-dired-toggle-mark ()
+  "Toggle the mark on the file at point in Dired/Dirvish."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (save-excursion
+      (beginning-of-line)
+      (if (looking-at dired-re-mark)
+          (dired-unmark 1)
+        (dired-mark 1)))
+    (next-line)))
+
+(defun touch-org-file (name)
+  (interactive (list (read-string "File name: ")))
+  (if (string-match-p "\\." name)
+      (progn (shell-command (format "touch '%s'" name))
+             (revert-buffer)
+             (dired-goto-file (expand-file-name name default-directory)))
+    (let ((file-name (format "%s.org" name)))
+      (shell-command (format "generate-orgmode-metadata \"%s\" >\"%s\"" name file-name))
+      (revert-buffer)
+      (dired-goto-file (expand-file-name file-name default-directory))
+      (dired-find-file)) ; used over find-file for consistency (work with dirvish preview)
+    ))
+
+(defun mkdir-dired (name)
+  (interactive (list (read-string "Directory: ")))
+  (dired-create-directory (expand-file-name name default-directory))
+  (dired-find-file))
+#+end_src
+
+Select a directory inside of the main categories of my note-taking system via the minibuffer.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun org-select-area ()
+  "Prompt user to select an org area in $ORG_AREAS."
+  (format "%s/%s" (substitute-in-file-name "$ORG_AREAS")
+          (string-trim (shell-command-to-string
+                        (format "select-area transform '%s'"
+                                (completing-read "Pick area: "
+                                                 (split-string (string-trim (shell-command-to-string "select-area")) "\n")))))))
+(defun org-select-project ()
+  "Prompt user to select an org project in $ORG_PROJECTS."
+  (format "%s/%s" (substitute-in-file-name "$ORG_PROJECTS")
+          (completing-read "Pick project: "
+                           (split-string (string-trim (shell-command-to-string "select-project")) "\n"))))
+(defun org-select-design ()
+  "Prompt user to select an org design in $ORG_PROJECTS/.design."
+  (format "%s/%s" (substitute-in-file-name "$ORG_PROJECTS/.design")
+          (completing-read "Pick design: "
+                           (split-string (string-trim (shell-command-to-string "select-design")) "\n"))))
+(defun org-select-resource ()
+  "Prompt user to select an org resource in $ORG_RESOURCES."
+  (format "%s/%s" (substitute-in-file-name "$ORG_RESOURCES")
+          (completing-read "Pick resource: "
+                           (split-string (string-trim (shell-command-to-string "select-resource")) "\n"))))
+(defun org-select-archive ()
+  "Prompt user to select an org archive directory in $ORG_ARCHIVE."
+  (format "%s/%s" (substitute-in-file-name "$ORG_ARCHIVE")
+          (completing-read "Pick archive: "
+                           (split-string (string-trim (shell-command-to-string "select-archive")) "\n"))))
+#+end_src
+
+Move file at point (or the marked files) to a fixed or selected location in my
+note-taking system.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun move-to (destination)
+  (dolist (to-be-moved (dired-get-marked-files)) ; if none marked, use the one at point
+    (let ((target (expand-file-name (file-name-nondirectory to-be-moved) destination)))
+      (dired-rename-file to-be-moved target nil)
+      (message (format "Moved %s to %s" (file-name-nondirectory to-be-moved) destination))
+      (revert-buffer))))
+
+(defun move-to-inbox () (interactive) (move-to (substitute-in-file-name "$ORG_INBOX")))
+(defun move-to-selected-resource () (interactive) (move-to (org-select-resource)))
+(defun move-to-selected-area () (interactive) (move-to (org-select-area)))
+(defun move-to-selected-project () (interactive) (move-to (org-select-project)))
+(defun move-to-selected-design () (interactive) (move-to (org-select-design)))
+(defun move-to-projects () (interactive) (move-to (substitute-in-file-name "$ORG_PROJECTS")))
+(defun move-to-selected-archive () (interactive) (move-to (org-select-archive)))
+(defun move-to-paperless () (interactive) (move-to (substitute-in-file-name "$ORG/.paperless_import")))
+(defun move-to-blog-post-ideas () (interactive) (move-to (substitute-in-file-name "$ORG_AREAS/blog/posts/0 ideas")))
+(defun move-to-designs () (interactive) (move-to (substitute-in-file-name "$ORG_DESIGN/2 ideas")))
+(defun move-to-other-inbox () (interactive) (move-to (string-trim (shell-command-to-string "select-other-inbox"))))
+(defun move-to-local-archive () (interactive) (let ((local-archive (expand-file-name ".archive" default-directory)))
+                                                (make-directory local-archive t)
+                                                (move-to local-archive)))
+#+end_src
+
+I use emoji to convey the status of the project at a glace:
+- 🟢 is a project I am actively persuing
+- 🟨 is a project that has fallen inactive, but will be continued
+- 🪀 is an externally blocked project
+
+The individual emoji representing the different colors of the traffic light were
+chosen based on their unicode symbols.
+Natural sort returns them in the correct order.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun set-project-status (status)
+  (let* ((path-after-status-change (string-trim-right
+                                    (shell-command-to-string
+                                     (format "project-status set %s '%s' -nomv" status (dired-get-file-for-visit)))))
+         (new-path (pcase status
+                        ("inactive" (format "%s/%s"
+                                            (substitute-in-file-name "$ORG_DESIGN/0 inactive")
+                                            (file-name-nondirectory path-after-status-change)))
+                        ("active" (format "%s/%s"
+                                          (substitute-in-file-name "$ORG_PROJECTS")
+                                          (file-name-nondirectory path-after-status-change)))
+                        (_ path-after-status-change)
+                        )))
+    (dired-rename-file (dired-get-file-for-visit) (string-trim-right new-path) nil)
+    (revert-buffer)
+    (dirvish (file-name-directory new-path))
+    (dired-goto-file new-path)))
+
+(defun prompt-for-status-line-update ()
+  (when (eq system-type 'gnu/linux)
+    (progn
+      (let ((index-file (expand-file-name "index.org" (dired-get-file-for-visit))))
+        (when (not (file-exists-p index-file))
+          (shell-command (format "generate-orgmode-metadata \"index\" >\"%s\"" index-file)))
+
+        (let ((updated-status
+               (read-string "Update status line: "
+                            (string-trim (shell-command-to-string
+                                          (format "grep -Po '#\\+(status|STATUS): \\K.*' '%s' 2>/dev/null" index-file))))))
+
+          (if (zerop (shell-command (format "grep '^#+status: ' '%s'" index-file)))
+              (shell-command (format "sed -i 's/^#+status: .*/#+status: %s/' '%s'" updated-status index-file))
+            (shell-command (format "echo '#+status: %s' >>'%s'" updated-status index-file))))))))
+
+(defun set-project-status-active () (interactive) (prompt-for-status-line-update) (set-project-status "active"))
+(defun set-project-status-inactive () (interactive) (set-project-status "inactive"))
+(defun set-project-status-blocked () (interactive) (prompt-for-status-line-update) (set-project-status "blocked"))
+(defun set-project-status-none () (interactive) (set-project-status "none"))
+(defun set-project-status-important () (interactive) (set-project-status "important"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dired
+  :ensure nil
+  :custom
+  (dired-listing-switches "--human-readable")
+  (dired-deletion-confirmer 'always) ; TODO make this ask if removing a non-empty dir
+  (dired-clean-confirm-killing-deleted-buffers nil)
+  (dired-auto-revert-buffer #'dired-directory-changed-p)
+  :bind (("C-x d" . dirvish)
+         ("H-d" . dirvish)
+         :map dired-mode-map
+         ("H-d" . dirvish-quit)
+         ("h" . dired-up-directory)
+         ("l" . dired-find-file)
+         ("j" . dired-next-line)
+         ("k" . dired-previous-line)
+         ("g" . dirvish-quick-access)
+         ("." . dired-toggle-hidden-directories)
+         ("SPC" . jneidel-dired-toggle-mark)
+         ("I" . dired-toggle-marks) ; [I]nvert
+         ("t" . touch-org-file)
+         ("d" . mkdir-dired)
+         ("p" . dirvish-move) ; move marked into cwd
+         ("y" . dirvish-yank) ; copy marked into cwd
+         ("r m" . dired-do-delete)
+         ("r s" . revert-buffer)
+         ("/" . dirvish-narrow)
+         ("i" . dirvish-history-go-forward)
+         ("o" . dirvish-history-go-backward)
+         ; dired-find-file-other-window ; quickly edit file in preview buffer
+         ("m" . nil)
+         ("m i" . move-to-inbox)
+         ("m r" . move-to-selected-resource)
+         ("m a" . move-to-selected-area)
+         ("m p" . move-to-selected-project)
+         ("m P" . move-to-projects)
+         ("m A" . move-to-selected-archive)
+         ("m s" . move-to-paperless)
+         ("m b" . move-to-blog-post-ideas)
+         ("m d" . move-to-selected-design)
+         ("m D" . move-to-designs)
+         ("m I" . move-to-other-inbox)
+         ("m l" . move-to-local-archive)
+         ("ö a" . set-project-status-active)
+         ("ö i" . set-project-status-inactive)
+         ("ö b" . set-project-status-blocked)
+         ("ö n" . set-project-status-none)
+         ("ö !" . set-project-status-important)
+         )
+  :config
+  (add-hook 'dired-before-readin-hook #'dired-sort-on-cd))
+#+end_src
+
+https://github.com/alexluigit/dirvish
+
+https://github.com/alexluigit/dirvish/blob/main/docs/CUSTOMIZING.org
+https://github.com/alexluigit/dirvish/blob/main/docs/EXTENSIONS.org
+https://github.com/alexluigit/dirvish/issues/324
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dirvish
+  :commands
+  (dirvish)
+  :init
+  (dirvish-override-dired-mode)
+  (add-to-list 'load-path (concat user-emacs-directory "elpa/dirvish-2.3.0/extensions")) ; bug in 2.3.0
+  :config
+  (require 'dirvish-quick-access)
+  (require 'dirvish-yank)
+  (require 'dirvish-narrow)
+  (require 'dirvish-history)
+  ;; (require 'dirvish-vc)
+
+  (require 'dirvish-peek)
+  (dirvish-peek-mode 1) ; preview during find-file
+
+  (require 'dirvish-icons)
+  (setq dirvish-all-the-icons-height 0.8
+        dirvish-all-the-icons-palette nil ; same font for icons as text
+        dirvish-attributes '(all-the-icons))
+  :custom
+  (dirvish-quick-access-entries `(
+                                  ("h" "~/"                          "Home")
+                                  ("D" "~/Downloads/"                "Downloads")
+                                  ("e" "~/.emacs.d/"                 "Emacs")
+                                  ("c" "~/.emacs.d/dotemacs.org"     "Emacs config")
+                                  ("C" "~/code"                      "Code")
+                                  ("l" ".archive"                    "Local archive")
+                                  ("o" ,(substitute-in-file-name "$ORG") "Org")
+                                  ("i" ,(substitute-in-file-name "$ORG_INBOX") "Org Inbox")
+                                  ("I" ,(string-trim (shell-command-to-string "select-other-inbox")) "Other Inbox")
+                                  ("d" ,(substitute-in-file-name "$ORG_DESIGN") "Org Designs")
+                                  ("p" ,(substitute-in-file-name "$ORG_PROJECTS") "Org Projcts")
+                                  ("a" ,(substitute-in-file-name "$ORG_AREAS") "Org Areas")
+                                  ("P" ,(substitute-in-file-name "$ORG_AREAS/blog/posts") "Blog posts")
+                                  ("b" ,(substitute-in-file-name "$ORG_AREAS/blog") "Blog")
+                                  ("r" ,(substitute-in-file-name "$ORG_RESOURCES") "Org Resources")
+                                  ("n" ,(substitute-in-file-name "$ORG_RESOURCES/Neurostreams/Neurostreams") "Neurostreams")
+                                  ("m" ,(substitute-in-file-name "$ORG_MEDIA") "Media")
+                                  ("M" ,(substitute-in-file-name "$ORG_MEDIA/music") "Music")
+                                  ("A" ,(substitute-in-file-name "$ORG_ARCHIVE") "Org Archive")
+                                  ("s" ,(substitute-in-file-name "$ORG_INBOX/screenshots") "Screenshots") ; TODO show inbox if dir doesn't exist
+                                  ))
+  )
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dirvish
+  :defer t
+  :config
+  (setq dirvish-default-layout '(0 0.6 0.4))
+  ; (setq dirvish-default-layout nil)
+
+(dirvish-define-preview eza (file)
+  "Use `eza' to generate directory preview."
+  :require ("eza") ; tell Dirvish to check if we have the executable
+  (when (file-directory-p file) ; we only interest in directories here
+    `(shell . ("eza" "-1h" "--group-directories-first" "--color=always" ,file))))
+
+(push 'eza dirvish-preview-dispatchers)
+#+end_src
+
+In dirvish the line under point is marked up by the `dirvish-hl-line` face.
+By default that is a fixed color as specified by the face.
+Because of this you can't tell by the color if what you are on is a file or a directory.
+
+I wanted the same effect as in lf, where the foreground color of the e.g.
+directory turn into the background color when highlighted.
+The built-in way to achive this would be with `inverse-video`:
+#+begin_src elisp
+  (set-face-attribute 'dirvish-hl-line nil
+                       :inherit nil
+                       :inverse-video t
+                       :extend t
+                       )
+#+end_src
+[[file:img/dirvish-hl-line-inverse-video.png]]
+
+That already works, but I want the color to stretch across the whole width.
+To achieve that we need to fetch the foreground color at point and apply it as a
+background color for `dirvish-hl-line`.
+This needs to be updated after every command run (which includes movement
+comands).
+
+TODO: advice quick-access to also run after changing into a dir (g p)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dirvish
+  :defer t
+  :config
+ (set-face-attribute 'dired-directory nil
+                 :foreground "#005fd7"
+                 :weight 'bold)
+  (set-face-attribute 'dirvish-hl-line nil
+                      :weight 'bold)
+  )
+
+(defun jn/dired--colors-at-filename ()
+  "Return a plist (:fg COLOR :bg COLOR) of the face at point’s filename.
+Falls back to the `default` face if needed."
+  (save-excursion
+    (when (ignore-errors (dired-move-to-filename nil) t)
+      (let* ((fp (get-text-property (point) 'face))
+             (face (cond ((facep fp) fp)
+                         ((consp fp) (seq-find #'facep fp))
+                         (t 'default)))
+             (dfg (face-foreground 'default nil t))
+             (dbg (face-background 'default nil t))
+             (fg  (or (face-foreground face nil t) dfg))
+             (bg  (or (face-background face nil t) dbg)))
+        (list :fg fg :bg bg :dfg dfg :dbg dbg :face face)))))
+
+(defun jn/dired-set-entry-fg-as-hl-bg ()
+  "Achive a consistent inverse color effect by setting the foreground color from the entry at point as the background of `dirvish-hl-line'."
+  (interactive)
+  ;; (message "Called at %s in %s" (current-time-string) default-directory)
+  (when (derived-mode-p 'dired-mode)
+    (let* ((colors (jn/dired--colors-at-filename))
+           (fg  (plist-get colors :fg))
+           (bg  (plist-get colors :bg))
+           (dfg (plist-get colors :dfg))
+           (dbg (plist-get colors :dbg))
+           ;; Does the entry at point have a custom bg color?
+           (has-custom-bg (and bg (not (equal bg dbg)))))
+      (if has-custom-bg
+          ;; Case 1: extend the custom bg across the whole width
+          (set-face-attribute 'dirvish-hl-line nil
+                              :background bg
+                              :foreground fg)
+        ;; Case 2: invert bg and fg
+        (set-face-attribute 'dirvish-hl-line nil
+                            :background (or fg dfg)
+                            :foreground (or bg dbg))))))
+
+(defun jn/dired-inverse-hl-color-mode ()
+  (interactive)
+  ;; TODO does not work if a non-first entry is highlighted in a directy you are returning to
+  (advice-add 'dirvish-post-command-h :after #'jn/dired-set-entry-fg-as-hl-bg)
+  (add-hook 'dired-after-readin-hook ; trigger post-command after enter a directory
+          (lambda ()
+            (call-interactively #'next-line)
+            )
+          nil)
+  (jn/dired-set-entry-fg-as-hl-bg))
+
+(add-hook 'dired-mode-hook   #'jn/dired-inverse-hl-color-mode)
+)
+#+end_src
+
+** setup Latex
+
+Broken in my setup.
+[[https://karthinks.com/software/latex-input-for-impatient-scholars][configuring it]]
+[[https://bwestbro.com/blogs/latex.html][simple setup]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; (use-package auctex)
+#+end_src
+
+[[https://www.youtube.com/watch?v=u44X_th6_oY&pp=ygUUZW1hY3MgbGF0ZXggd29ya2Zsb3c%3D][latex preview everywhere]]
+
+** Session
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html
+#+begin_src emacs-lisp :results silent
+(desktop-save-mode 1)
+(setq desktop-load-locked-desktop t)
+#+end_src
+
+** Hugo
+
+WIP
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ox-hugo
+  :after ox)
+#+end_src
+
+** AI
+
+The Copilot chat does not work, presumably because it was [[https://github.com/orgs/community/discussions/68463][disabled in my enterprise org settings]].
+#+begin_src emacs-lisp :results silent
+(use-package copilot-chat)
+(use-package markdown-mode)
+(use-package gptel
+  :config
+  (gptel-make-gh-copilot "Copilot")
+  )
+#+end_src
+
+- [[https://github.com/karthink/gptel][gptel]]
+- [[https://www.youtube.com/watch?v=bsRnh_brggM][gptel intro]]
+- https://gitea.com/PublicAffairs/openai-github-copilot/src/branch/main/scripts
+  https://gitlab.com/TECHNOFAB/go-copilot-proxy
+- [[https://github.com/charmbracelet/crush][for terminal]]
+
+** Email (notmuch)
+[[https://protesilaos.com/emacs/dotemacs#h:755e195b-9471-48c7-963b-33055969b4e2][prot]]
+
+With email in Emacs or in the terminal, there is a separation of conerns.
+Different required functionalities are handled by different tools following the
+unix philosophy.
+
+- IMAP synchronization (mail down/uploading) is handled by isync (mbsync)
+  through the ~mailsync~ script. It is triggered by [[https://gitlab.com/shackra/goimapnotify][goimapnotify]] whenever mail
+  arrives on the mailserver or by me to sync sent, moved and deleted emails.
+- Mail sending is handled by msmtp.
+- Mail is composed in ~composer.el~.
+- Mail indexing is handled by the CLI utilities ~mu~ or ~notmuch~, making it easy to search.
+- ~mu4e~ or ~notmuch~ are Emacs clients for interfacing with mail and bringing it all together.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package notmuch
+  :ensure nil
+  :defer nil
+  :commands (notmuch notmuch-mua-new-mail compose-mail))
+#+end_src
+
+I have multiple domains available through one mailsever and one catchall mailbox.
+This one configuration is capable of sending from and receiving mail to
+*@jneidel.com, *@jneidel.de, *@neidel.xyz.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq user-mail-address "jneidel@jneidel.com"
+      user-full-name "Jonathan Neidel"
+      notmuch-identities '("Jonathan Neidel <jneidel@jneidel.com>"))
+
+(setq send-mail-function 'sendmail-send-it
+      message-send-mail-function 'sendmail-send-it
+      sendmail-program "/bin/msmtp"
+
+      mail-specify-envelope-from t
+      message-sendmail-envelope-from 'header
+      mail-envelope-from 'header)
+
+;; path are relative to notmuch index base root
+(setq notmuch-draft-folder "jneidel@jneidel.de/Drafts"
+      notmuch-fcc-dirs "jneidel@jneidel.de/Sent +sent -unread -inbox")
+#+end_src
+
+Clicking mailto: links saves the sent mail the same as through notmuch.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq mail-user-agent 'notmuch-user-agent)
+(setq message-fcc-handler-function #'notmuch-fcc-handler)
+#+end_src
+
+Replace default notmuch hello screen with a collection of saved searches.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package notmuch
+  :defer t
+  :config
+  (setq notmuch-show-logo nil
+        notmuch-column-control 1.0
+        notmuch-hello-auto-refresh t
+        notmuch-hello-thousands-separator ""
+        notmuch-hello-sections '(notmuch-hello-insert-saved-searches)
+        notmuch-search-oldest-first nil)
+
+  (setq notmuch-show-empty-saved-searches t)
+  (setq notmuch-saved-searches
+        `(( :name "📥 inbox"
+            :query "tag:inbox"
+            :sort-order newest-first
+            :key ,(kbd "i"))
+          ( :name "👀 all unread (inbox)"
+            :query "tag:unread and tag:inbox"
+            :sort-order newest-first
+            :key ,(kbd "u"))
+          ( :name "✏️ drafts"
+            :query "tag:draft and not:tag:trash"
+            :sort-order newest-first
+            :key ,(kbd "d"))
+          ( :name "🗃️ archive"
+            :query "tag:archived and not:tag:trash"
+            :sort-order newest-first
+            :key ,(kbd "a"))
+          ( :name "🛒 invoices"
+            :query "tag:invoice and not:tag:trash"
+            :sort-order newest-first
+            :key ,(kbd "n"))
+          ( :name "📨 sent"
+            :query "tag:sent and not:tag:trash"
+            :sort-order newest-first
+            :key ,(kbd "s"))
+          ( :name "🪓 spam"
+            :query "tag:spam and not:tag:trash"
+            :sort-order newest-first
+            :key ,(kbd "m"))
+          ( :name "🗑️ trash"
+            :query "tag:trash"
+            :sort-order newest-first
+            :key ,(kbd "t"))
+          ( :name "🌍 all"
+            :query "not:tag:trash and not:tag:spam"
+            :sort-order newest-first
+            :key ,(kbd "A"))
+          ))
+
+  (keymap-set notmuch-common-keymap (kbd "g") #'notmuch-jump-search)
+  )
+#+end_src
+
+notmuch by itself does not move mail, it only offers tagging.
+To do automated tagging and moving based on tags I use [[https://github.com/afewmail/afew][afew]].
+It is called from ~mailsync~.
+
+Tags are shown in the interface.
+To make it less verbose I turn them into emoji.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package notmuch
+  :defer t
+  :config
+  (setq notmuch-archive-tags '("+archived")
+        notmuch-message-replied-tags '("+replied")
+        notmuch-message-forwarded-tags '("+forwarded")
+        notmuch-show-mark-read-tags '("-unread")
+        notmuch-draft-tags '("+draft")
+        notmuch-draft-save-plaintext 'ask)
+
+  (setq notmuch-tag-formats
+        '(("unread" "👀")
+          ("attachment" "📎")
+          ("signed" "🔑")
+          ("encrypted" "🔒")
+          ("replied" "💬")
+          ("forwarded" "⏩")
+          ("sent" "📨")
+          ("inbox" "📥")
+          ("spam" "🪓")
+          ("invoice" "🛒")
+          ("archived" "🗃️")
+          ("draft" "✏️")
+          ("trash" "🗑️")
+          ("lists" "📜lists")
+          ("flag" (propertize tag 'face 'notmuch-tag-flagged)
+           (concat tag "🚩")))
+        notmuch-tag-deleted-formats
+        '(("unread" (notmuch-apply-face bare-tag 'notmuch-tag-deleted)
+           (concat "👀" tag))
+          (".*" (notmuch-apply-face tag 'notmuch-tag-deleted)
+           (concat "🚫" tag)))
+        notmuch-tag-added-formats
+        '(("del" (notmuch-apply-face tag 'notmuch-tag-added)
+           (concat "💥" tag))
+          (".*" (notmuch-apply-face tag 'notmuch-tag-added)
+           (concat "🏷️" tag))))
+
+  (setq notmuch-tagging-keys
+        `((,(kbd "d") ("+trash" "-inbox" "-unread") "🗑️ Mark for deletion")
+          (,(kbd "s") ("+spam" "-inbox" "-unread") "🪓 Mark as spam")
+          (,(kbd "f") ("+flag") "🚩 Flag as important")
+          (,(kbd "i") ("+invoice" "-inbox" "-unread") "🛒 Mark as invoice")
+          (,(kbd "a") ("+archived" "-inbox" "-unread") "🗃️ Mark as archived")
+          (,(kbd "r") ("-unread") "👀 Mark as read")
+          (,(kbd "u") ("+unread") "👀 Mark as unread")))
+
+  (keymap-set notmuch-common-keymap (kbd "u") #'notmuch-tag-undo)
+
+  (defun notmuch-search-mode-delete-goto-next ()
+    "Tag current mail as trash and move to the next."
+    (interactive)
+    (notmuch-search-tag '("+trash" "-unread" "-inbox"))
+    (forward-line)
+    )
+  (defun notmuch-show-mode-delete-goto-next ()
+    "Tag current mail as trash and move to the next."
+    (interactive)
+    (notmuch-show-tag '("+trash" "-unread" "-inbox"))
+    (notmuch-show-next-message t)
+    (notmuch-search-show-thread)
+    )
+
+  (keymap-set notmuch-search-mode-map (kbd "d") #'notmuch-search-mode-delete-goto-next)
+  (keymap-set notmuch-show-mode-map (kbd "d") #'notmuch-show-mode-delete-goto-next)
+
+  (defun notmuch-show-mode-open-html ()
+    "Open HTML part of message in browser (via ~/.mailcap)."
+    (interactive)
+    (save-excursion
+      (notmuch-show-previous-message)
+      (condition-case nil
+          (search-forward "text/html")
+        (error (message "No HTML part."))
+        (:success (notmuch-show-view-part)
+                  (shell-command "open-i3-workspace 2")
+                  (message "Opened HTML in browser")
+                  ))))
+  (defun notmuch-search-mode-open-html ()
+    "Open HTML part of message in browser (via ~/.mailcap)."
+    (interactive)
+    (save-excursion
+      (notmuch-search-show-thread)
+      (notmuch-show-previous-message)
+      (condition-case nil
+          (search-forward "text/html")
+        (error (message "No HTML part."))
+        (:success (notmuch-show-view-part)
+                  (shell-command "open-i3-workspace 2")
+                  (message "Opened HTML in browser")
+                  ))))
+  (keymap-set notmuch-search-mode-map (kbd "o") #'notmuch-search-mode-open-html)
+  (keymap-set notmuch-show-mode-map (kbd "o") #'notmuch-show-mode-open-html)
+
+  (keymap-set notmuch-common-keymap (kbd "$") #'notmuch-refresh-this-buffer)
+  )
+#+end_src
+
+Mutt has an option called ~reverse_name~.
+If activated the /From:/ line in a reply will be built using the address the
+message was orignally sent /To:/.
+If somebody writes me an email to "hi@jneidel.com", I will answer from
+"hi@jneidel.com", even though "jneidel@jneidel.de" is my configured default.
+The code below replicates that behavior.
+
+I have multiple own domains and all mail sent to *@mydomain.com is delivered to
+my catchall mailbox.
+Each website that I interact with get assigned a unique email (e.g.
+"github@jneidel.com"), so I know what service was responsible for delivering me
+spam.
+"Burnt" addresses (that get a lot of spam) can just be wholly redirected into
+the spam.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package notmuch
+  :defer t
+  :config
+  (defun notmuch--get-message-to ()
+    "Return the raw To: header of the message or nil."
+    (let ((message-properties (cond
+                               ((derived-mode-p 'notmuch-show-mode)
+                                (notmuch-show-get-message-properties))
+                               ((derived-mode-p 'notmuch-search-mode)
+                                (notmuch-search-show-thread)
+                                (notmuch-show-get-message-properties))
+                               ((derived-mode-p 'notmuch-tree-mode)
+                                (notmuch-tree-get-message-properties))
+                               (t nil))))
+      (if (eq message-properties nil)
+          nil
+        (plist-get (plist-get message-properties :headers) :To))))
+
+  (defun notmuch-reply-reverse-name-advice (orig-fn &rest args)
+    "Advice 'notmuch-mua-reply' to use the original To: addresses as the From:."
+    (let ((to-address (notmuch--get-message-to)))
+      (apply orig-fn args)
+      (when to-address
+        (message-replace-header "From" to-address))))
+
+  (advice-add 'notmuch-mua-reply :around #'notmuch-reply-reverse-name-advice))
+#+end_src
+
+Link to from org-mode to notmuch messages and queries with [[https://github.com/tarsius/ol-notmuch][ol-notmuch]].
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ol-notmuch
+  :bind
+  ("C-c l" . org-store-link))
+#+end_src
+
+Commonly PDFs are attached on incoming emails.
+By default these would need to be manually saved and then opened.
+This script extracts the text from PDF attachments and pops it into a new buffer ([[https://notmuchmail.org/emacstips/#index1h2][src]]).
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun user/mm-pipe-- (handle cmd)
+  ;; conveniently, '-' '-' a args to pdftotext and docx2txt.pl work fine
+  ;; fixme: naming inconsistency (fn name and buffer name)
+  (let ((buffer (get-buffer-create "*attachment-to-text*")))
+    (with-current-buffer buffer
+      (setq buffer-read-only nil)
+      (erase-buffer))
+    (with-temp-buffer
+      ;; "based on mm-pipe-part in mm-decode.el"
+      (mm-with-unibyte-buffer
+        (mm-insert-part handle)
+        (mm-add-meta-html-tag handle)
+        (let ((coding-system-for-write 'binary))
+          (call-process-region (point-min) (point-max)
+                               cmd nil buffer nil "-" "-"))))
+    (pop-to-buffer buffer)
+    (goto-char (point-min))
+    (text-mode)
+    (visual-line-mode)
+    (view-mode)))
+
+(defun user/notmuch-show-pop-attachment-to-buffer ()
+  ;; "based on notmuch-show-apply-to-current-part-handle"
+  (interactive)
+  (let ((handle (notmuch-show-current-part-handle)))
+    ;;(message "%s" handle)
+    (unwind-protect
+        (pcase (car (nth 1 handle))
+          ("application/pdf"
+           (user/mm-pipe-- handle "pdftotext"))
+          ("application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+           (user/mm-pipe-- handle "docx2txt.pl"))
+          (_ (notmuch-show-save-part)))
+      (kill-buffer (mm-handle-buffer handle)))))
+
+(setq notmuch-show-part-button-default-action
+      #'user/notmuch-show-pop-attachment-to-buffer)
+#+end_src
+
+Sometime we forget to add an attachment.
+Notmuch has [[https://notmuchmail.org/emacstips/#index26h2][builtin functionality]]]] for scanning the email for certain terms that
+imply a file should be attached and will warn if no attachment is supplied.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq-default notmuch-mua-attachment-regexp
+              "\\b\\(attach\\|attachment\\|attached\\|anbei\\|Anhang\\)\\b")
+(add-hook 'message-send-hook 'notmuch-mua-attachment-check)
+#+end_src
+
+*** Mail composer (attachments and encryption)
+In the composer (~message.el~):
+- Encrypt and sign: ~C-c C-m C-e~ (~mml-secure-message-sign-encrypt~)
+- Add an attachment: ~C-c C-a~ (~mml-attach-file~)
+- Add an attachment with dired: ~C-c C-m C-a~ (~gnus-dired-attach~)
+- Send it: ~C-c C-c~
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package message
+  :ensure nil
+  :defer t
+  :hook
+  (message-setup . message-sort-headers)
+  :config
+  (setq message-confirm-send nil)
+  (setq message-wide-reply-confirm-recipients nil)
+  (setq mail-header-separator "")
+  (setq compose-mail-user-agent-warnings nil)
+  (setq message-kill-buffer-on-exit t)
+
+  (setq mail-user-agent 'message-user-agent
+        message-mail-user-agent t) ; use `mail-user-agent'
+  )
+
+(use-package mm-encode
+  :ensure nil
+  :defer t
+  :config
+  (setq mm-encrypt-option nil ; use 'guided for both if you need more control
+        mm-sign-option nil))
+
+(use-package mml-sec
+  :ensure nil
+  :defer t
+  :config
+  (setq mml-secure-openpgp-encrypt-to-self t
+        mml-secure-openpgp-sign-with-sender t
+        mml-secure-smime-encrypt-to-self t
+        mml-secure-smime-sign-with-sender t))
+
+;;;; Add attachments from Dired (`gnus-dired' does not require `gnus')
+(use-package gnus-dired
+  :ensure nil
+  :after message
+  :hook
+  (dired-mode . turn-on-gnus-dired-mode))
+#+end_src
+
+
+fixing citation if needed
+(setq message-citation-line-function #'message-insert-formatted-citation-line)
+  (setq message-citation-line-format (concat "> From: %f\n"
+                                             "> Date: %a, %e %b %Y %T %z\n"
+                                             ">")
+        message-ignored-cited-headers "") ; default is "." for all headers
+
+
+
+  (setq notmuch-search-result-format
+        '(("date" . "%12s  ")
+          ("count" . "%-7s  ")
+          ("authors" . "%-20s  ")
+          ("subject" . "%-80s  ")
+          ("tags" . "(%s)")))
+  (setq notmuch-tree-result-format
+        '(("date" . "%12s  ")
+          ("authors" . "%-20s  ")
+          ((("tree" . "%s")
+            ("subject" . "%s"))
+           . " %-80s  ")
+          ("tags" . "(%s)")))
+  (setq notmuch-search-line-faces
+        '(("unread" . notmuch-search-unread-face)
+          ;; ;; NOTE 2022-09-19: I disable this because I add a cosmeic
+          ;; ;; emoji via `notmuch-tag-formats'.  This way I do not get
+          ;; ;; an intense style which is very distracting when I filter
+          ;; ;; my mail to include this tag.
+          ;;
+          ;; ("flag" . notmuch-search-flagged-face)
+          ;;
+          ;; Using `italic' instead is just fine.  Though I also tried
+          ;; it without any face and I was okay with it.  The upside of
+          ;; having a face is that you can identify the message even
+          ;; when the window is split and you don't see the tags.
+          ("flag" . italic)))
+
+#+begin_src emacs-lisp :results silent
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/")
+
+(use-package mu4e
+  :ensure nil
+  :config
+  (setq mu4e-maildir "~/.local/share/mail"
+        mu4e-get-mail-command "mailsync")
+
+  (setq mu4e-change-filenames-when-moving t) ; works better with mbsync
+
+  (setq mu4e-confirm-quit nil)
+
+  (setq mu4e-contexts
+        (list
+         (make-mu4e-context
+          :name "de"
+          :match-func
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/jneidel@jneidel.de" (mu4e-message-field msg :maildir))))
+          :vars `((user-mail-address . "jneidel@jneidel.de")
+                  (user-full-name    . "Jonathan Neidel")
+                  (smtpmail-smtp-server  . "pizarro.uberspace.de")
+                  (smtpmail-smtp-service . "465")
+                  (smtpmail-stream-type  . ssl)
+                  (smtpmail-smtp-user . "jneidel@jneidel.de")
+                  (mu4e-drafts-folder  . "/jneidel@jneidel.de/Drafts")
+                  (mu4e-sent-folder  . "/jneidel@jneidel.de/Sent")
+                  (mu4e-trash-folder  . "/jneidel@jneidel.de/Trash")
+                  (mu4e-refile-folder  . "/jneidel@jneidel.de/archive")
+                  ))
+         (make-mu4e-context
+          :name "com"
+          :match-func
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/jneidel@jneidel.com" (mu4e-message-field msg :maildir))))
+          :vars `((user-mail-address . "jneidel@jneidel.com")
+                  (user-full-name    . "Jonathan Neidel")
+                  (smtpmail-smtp-server  . "mail.in-berlin.de")
+                  (smtpmail-smtp-service . "465")
+                  (smtpmail-stream-type  . ssl)
+                  (smtpmail-smtp-user . "jneidel@jneidel.com")
+                  (mu4e-drafts-folder  . "/jneidel@jneidel.com/Drafts")
+                  (mu4e-sent-folder  . "/jneidel@jneidel.com/Sent")
+                  (mu4e-trash-folder  . "/jneidel@jneidel.com/Trash")
+                  (mu4e-refile-folder  . "/jneidel@jneidel.com/archive")
+                  ))))
+  (setq message-send-mail-function 'smtpmail-send-it)
+  (setq message-kill-buffer-on-exit t)
+  (setq mu4e-context-policy 'pick-first)
+
+  (setq mu4e-bookmarks
+        '((:name "Unread messages"
+                 :query #1="flag:unread AND NOT flag:trashed"
+                 :effective-query #1#
+                 :key ?u)
+          ))
+
+  (setq mu4e-maildir-shortcuts
+        `((:maildir "/inbox" :key ?i :hide-if-no-unread t)
+          ;; (:maildir ,mu4e-drafts-folder :key ?d)
+          ;; (:maildir ,mu4e-refile-folder :key ?a)
+          ;; (:maildir ,mu4e-trash-folder :key ?t)
+          ))
+
+  )
+#+end_src
+
+http://miikanissi.com/blog/email-setup-with-mbsync-mu4e/
+https://rakhim.org/fastmail-setup-with-emacs-mu4e-and-mbsync-on-macos/
+https://irreal.org/blog/?p=8004
+https://redlib.privacyredirect.com/r/emacs/comments/bfsck6/mu4e_for_dummies/
+#+begin_src emacs-lisp :results silent
+  ;; (require 'org-mu4e)
+  ;; (require 'org-mime) ; for sending html email
+
+(setq m/mu4e-inbox-query
+      "(maildir:/<mail account dir>/<inbox dir>) AND flag:unread")
+(defun m/go-to-inbox ()
+  (interactive)
+  (mu4e-headers-search m/mu4e-inbox-query))
+;; start mu4e
+(mu4e t))
+#+end_src
+
+** Movement
+~C-l~ recenters the screen.
+What I use it for is to quickly check the context above the current screen.
+Example: ~C-v~ going through an info manual. With a quick cycle through ~C-l~ I
+can see the context above and then return to my original position.
+
+The cycling order is either optimized for use with ~C-v~ or ~M-v~ (try it to see
+what I mean.)
+I optimize for ~C-v~ by having the order ~bottom top~ (not ~top bottom~.)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+; (setq recenter-positions '(middle bottom top))
+(setq recenter-positions '(middle top bottom))
+#+end_src
+
+** Utility functions
+[[http://xahlee.info/emacs/emacs/emacs_copy_file_path.html][Source]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun copy-current-file-path (&optional DirPathOnlyQ)
+  "Copy current buffer file path or dired path.
+Result is full path.
+If `universal-argument' is called first, copy only the dir path.
+
+If in dired, copy the current or marked files.
+
+If a buffer is not file and not dired, copy value of `default-directory'."
+  (interactive "P")
+  (let ((xfpath
+         (if (eq major-mode 'dired-mode)
+             (progn
+               (let ((xresult (mapconcat #'identity
+                                         (dired-get-marked-files) "\n")))
+                 (if (equal (length xresult) 0)
+                     (progn default-directory )
+                   (progn xresult))))
+           (if buffer-file-name
+               buffer-file-name
+             (expand-file-name default-directory)))))
+    (kill-new
+     (if DirPathOnlyQ
+         (progn
+           (message "Directory copied: %s" (file-name-directory xfpath))
+           (file-name-directory xfpath))
+       (progn
+         (message "File path copied: %s" xfpath)
+         xfpath )))))
+#+end_src
+
+** RSS feeds in elfeed
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package elfeed
+  :commands (elfeed)
+  :custom
+  (elfeed-db-directory "~/.emacs.d/elfeed")
+  :bind (:map elfeed-show-mode-map
+              ("C-c C-o" . shr-browse-url)
+  )
+)
+#+end_src
+
+Relevant keybindings:
+- o: open in browser
+- r: mark read
+- u: mark unread
+- g: refresh (removes read entries)
+- s: adjust search filter
+- c: reset search filter
+- G: manually ~elfeed-update~
+- C-c C-o/RET: open link at point
+
+
+I maintain my list of feed in an org-mode file.
+It's nice and readable.
+Tags and links are easily inserted and I have plenty of space to describe the feed.
+[[https://lucidmanager.org/productivity/read-rss-feeds-with-emacs-and-elfeed/][See this nice description]] on how to setup.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package elfeed-org
+  :after elfeed
+  :config
+  (elfeed-org)
+  :custom
+  (rmh-elfeed-org-files '("~/.emacs.d/elfeed.org")))
+#+end_src
+
+I have elfeed update the feeds in the background with this cronjob:
+#+begin_example
+1 */4 * * * emacsclient -e "(elfeed-update)" >/dev/null
+#+end_example
+
+One common action I perform on posts is to open them in the browser.
+To watch the YouTube video or read the article on the website.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package elfeed
+  :config
+  (defun elfeed-search-open-in-browser ()
+    "Open the URL of the feed entry in the browser and navigate there."
+    (interactive)
+    (elfeed-search-browse-url)
+    (shell-command "open-i3-workspace 2"))
+  (defun elfeed-show-open-in-browser ()
+    "Open the URL of the feed entry in the browser and navigate there."
+    (interactive)
+    (elfeed-show-visit)
+    (shell-command "open-i3-workspace 2"))
+
+  :bind (:map elfeed-search-mode-map
+              ("b" . elfeed-search-untag-all-unread)
+              ("o" . elfeed-search-open-in-browser)
+         :map elfeed-show-mode-map
+              ("o" . elfeed-show-open-in-browser)))
+#+end_src
+
+A lot of YouTubers use shorts to boost their engagement.
+Unfortunately this spams the RSS feed and makes it hard to use, since I find
+shorts to be pointless and a waste of time.
+Below I tag all shorts and the filter them out.
+A consistent filter like this, across all feeds, is to me one of the killer
+features of elfeed.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package elfeed
+  :config
+  (add-hook 'elfeed-new-entry-hook
+          (elfeed-make-tagger :entry-link "youtube\\.com/shorts"
+                              :add 'junk
+                              :remove 'unread))
+
+  (setq-default elfeed-search-filter "-junk +unread"))
+#+end_src
+
+TODO: its update functionality does not work
+[[https://github.com/manojm321/elfeed-dashboard][Dashboard]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package elfeed-dashboard
+  :quelpa (elfeed-dashboard :fetcher github :repo "Manoj321/elfeed-dashboard")
+  :config
+  (setq elfeed-dashboard-file (concat user-emacs-directory "elfeed-dashboard.org")))
+#+end_src
+
+~/.emacs.d/init.el
+
+[[https://github.com/karthink/elfeed-tube][elfeed-tube]] add thumbnail, descriptions, captions and more to Youtube channel feeds.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package elfeed-tube
+  :after elfeed
+  :config
+  (elfeed-tube-setup)
+  :custom
+  (elfeed-tube-thumbnail-size 'medium)
+  (elfeed-tube-captions-languages '("de" "german" "en" "english"))
+  :bind (:map elfeed-show-mode-map
+              ("F" . elfeed-tube-fetch)
+              ([remap save-buffer] . elfeed-tube-save)
+         :map elfeed-search-mode-map
+              ("F" . elfeed-tube-fetch)
+              ([remap save-buffer] . elfeed-tube-save)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package whole-line-or-region
+  :diminish 'whole-line-or-region-local-mode
+  :config
+  (whole-line-or-region-global-mode t))
+#+end_src
+
+** Interactive utilities
+Interative (~M-x~) commands that do useful things.
+
+[[https://xenodium.com/copy-from-desktop-to-mobile-via-qr-code/][Create a QR code from the clipboard]].
+Useful to quickly open a link on my phone or transfer a snippet of text.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun util/clipboard-to-qr-code ()
+  "Convert text in clipboard to a QR code and display it."
+  (interactive)
+  (let ((temp-file (concat (temporary-file-directory) "qr-code")))
+    (if (eq 0 (shell-command (format "qrencode -s10 -o %s %s"
+                                     temp-file
+                                     (shell-quote-argument (current-kill 0)))
+                             "*qrencode*"))
+        (switch-to-buffer (find-file-noselect temp-file t))
+      (error "Error: Could not create qrcode, check *qrencode* buffer"))))
+#+end_src
+
+Same thing but for logging into the current wifi network from a phone.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun util/wifi-login-qr-code ()
+  "Display a QR code to log into the current wifi network."
+  (interactive)
+  (let ((temp-file (concat (temporary-file-directory) "qr-code")))
+    (if (eq 0 (shell-command (format "qrencode -s10 -o %s \"WIFI:T:WPA;S:$(wifipass ssid);P:$(wifipass password);;\""
+                                     temp-file)
+                             "*qrencode*"))
+        (switch-to-buffer (find-file-noselect temp-file t))
+      (error "Error: Could not create qrcode, check *qrencode* buffer"))))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun save-sicp ()
+  (interactive)
+  (let ((tab-name (cdr (assq 'name (tab-bar--tab)))))
+    (if (equal tab-name "sicp")
+        (tab-bookmark-save "sicp")
+      (message "Not on the tab 'sicp'"))))
+#+end_src
+
+** Documents
+Improve this by checkng the file is a pdf or only hooking into those
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun open-pdf-in-zathura ()
+  "Open current file in zathura."
+  (interactive)
+  (when buffer-file-name
+    (start-process "zathura" nil "zathura" buffer-file-name)))
+(global-set-key (kbd "C-c z") #'open-pdf-in-zathura)
+#+end_src
+
+** General/misc improvements
+
+# Local Variables:
+# jinx-local-words: "Coc"
+# End:
