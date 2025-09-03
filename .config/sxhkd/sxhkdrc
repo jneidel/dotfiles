@@ -79,7 +79,11 @@ shift + XF86MonBrightnessDown
 super + p
   screenshot
 super + P
-  ~/scripts/sxhkd/screenshot -s
+  screenshot -s
+super + ctrl + p
+  screenshot -c
+super + ctrl + P
+  screenshot -sc
 
 ## dunst
 super + c

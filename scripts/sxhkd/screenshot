@@ -5,33 +5,57 @@ mkdir -p $PIC_DIR
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
-$ screenshot [-s]
-Take a screenshot
+$ screenshot [-s|-c|-d DELAY]
+Take a screenshot.
+Saves to $PIC_DIR and the clipboard.
 
 Flags:
-  -s: select screen snippet (+3s delay)
-  -s [delay]: select with custom delay (in secs)
+  -s: select screen snippet (1s delay)
+  -d [delay]: select with custom delay (in secs), implies -s
+  -c: only save screenshot to clipboard, not the file system
+
+Examples:
+  $ screenshot
+  $ screenshot -d 3
+  $ screenshot -sc
 EOF
   exit
 fi
 
-hash scrot >/dev/null || exit 127
+hash scrot maim xclip notify-send tee >/dev/null || exit 127
 
-mkdir -p $PIC_DIR
+use_delay=false
+delay="1"
+clipboard_only=false
+clipboard_notify=""
 
-DELAY="1"
-[ -n "$2" ] && DELAY="$2"
+while getopts ":sd:c" opt; do
+  case "$opt" in
+    s) use_delay=true;;
+    c) clipboard_only=true
+      clipboard_notify=" (clipboard only)";;
+    d) delay="$OPTARG"
+      use_delay=true;;
+    :) printf '%s\n' "error: -$OPTARG requires an argument" >&2; exit 2 ;;
+ esac
+done
+shift $((OPTIND - 1))
 
-if [ "$1" = "-s" ]; then
-  notify-send "screen shot in ${DELAY}s" -t 1000 -i camera
-  FORMAT="screenshot_$(date +%Y-%m-%d_%H:%M:%S).png"
-  sleep "$DELAY"s && \
-  /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z --freeze --select &&
-    cat "$PIC_DIR/$FORMAT" | xclip -selection clipboard -t image/png
+format="screenshot_$(date +%Y-%m-%d_%H:%M:%S).png"
+file="$PIC_DIR/$format"
+
+if $use_delay; then
+  notify-send "screen shot in ${delay}s${clipboard_notify}" -t 1000 -i camera
+  sleep "$delay"s && \
+  /bin/scrot "$format" -e "notify-send \"took screenshot${clipboard_notify}\" -t 1000 -i camera; mv \$f $PIC_DIR" -z --freeze --select &&
+    cat "$file" | xclip -selection clipboard -t image/png
 else
-  # /bin/scrot "$FORMAT" -e "notify-send \"took screenshot\" -t 1000 -i camera; mv \$f $PIC_DIR" -z
   maim -i $(xdotool getactivewindow) |
-    tee "$PIC_DIR/screenshot_$(date +%Y-%m-%d_%H:%M:%S).png" |
+    tee "$file" |
     xclip -selection clipboard -t image/png &&
-    notify-send "took screenshot" -t 1000 -i camera
+    notify-send "took screenshot${clipboard_notify}" -t 1000 -i camera
+fi
+
+if $clipboard_only; then
+  rm "$file"
 fi
