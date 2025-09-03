@@ -1,0 +1,56 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ human-date-to-iso
+Prompt for human date and insert a formatted date.
+
+Flags:
+  None: Date output is YYYY-MM-YY,  eg. 2025-02-28
+  -c  : Date output is bbb DD YYYY, eg. Feb 28 2025
+
+Date input examples:
+  wed
+  next tue
+  mon +2 weeks
+  apr12
+EOF
+  exit
+fi
+
+hash rofi xdotool || exit 127
+
+calendar_format=false
+[ "$1" = "-c" ] && calendar_format=true
+
+show_unable_to_parse_error() {
+  rofi -l 0 -theme-str 'window {width: 250px;}' -e "Unable to parse date: $date_input"
+  exit 10
+}
+
+date_input=$(rofi -dmenu -l 0 -theme-str 'window {width: 250px;}' -p Date)
+case "$date_input" in
+  tom) date_input="tomorrow";;
+esac
+
+resolved_date=$(date --date="$date_input" +%Y-%m-%d 2>/dev/null)
+if [ -z "$resolved_date" ]; then
+  show_unable_to_parse_error
+fi
+
+today=$(date +%Y-%m-%d)
+if [[ "$resolved_date" < "$today" ]]; then
+  normalized_future="$normalized next year"
+  resolved_date=$(date --date="$normalized_future" +%Y-%m-%d 2>/dev/null)
+  if [ -z "$resolved_date" ]; then
+    show_unable_to_parse_error
+  fi
+fi
+
+final_date="$resolved_date"
+if $calendar_format; then
+  final_date="$(date --date="$resolved_date" +'%b %d %Y')"
+fi
+
+xdotool type "$final_date"
+# "$(echo -n $final_date | sed 's/-/ß/g')"

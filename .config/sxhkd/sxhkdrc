@@ -122,6 +122,10 @@ super + g
   pick-hugo-article en
 super + G
   pick-hugo-article de
+super + t
+  human-date-to-iso -c
+super + T
+  human-date-to-iso
 
 # xtouchpad -t; exec notify-send -t 1500 'toggled keyboard'
 
