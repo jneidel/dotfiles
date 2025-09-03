@@ -15,6 +15,7 @@ Flags:
 Example:
   $ monitor off
   $ monitor -m
+  $ monitor -m on
 "; exit
 fi
 
@@ -45,14 +46,14 @@ printf "Using:
   External: $MONITOR - $MONITOR_RESOLUTION
 \n"
 
-IS_MIRROR=0
-while getopts "m" OPTION; do
-  case $OPTION in
-  m)
-    IS_MIRROR=1
-  ;;
-  esac
+IS_MIRROR=false
+while getopts "m" opt; do
+  case "$opt" in
+    m) IS_MIRROR=true;;
+    :) printf '%s\n' "error: -$OPTARG requires an argument" >&2; exit 2 ;;
+ esac
 done
+shift $((OPTIND - 1))
 
 turn_off() {
   if [ -z "$MONITOR" ]; then
@@ -78,7 +79,7 @@ mirror() {
 }
 
 turn_on() {
-  if [ "$IS_MIRROR" -gt 0 ]; then
+  if $IS_MIRROR; then
     mirror || exit 1
   else
     add_monitor || exit 1
