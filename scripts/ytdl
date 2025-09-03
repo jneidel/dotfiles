@@ -1,0 +1,60 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ ytdl VIDEO_LINK
+Download a youtube video.
+
+Youtube does not offer a combination of high quality video with audio anymore.
+This script gets audio and video (1080p) separately and then combines them.
+
+Parameters:
+  \$1: youtube link
+EOF
+  exit
+fi
+
+hash yt-dlp ffmpeg grep awk || exit 127
+
+video="$1"
+
+formats=$(mktemp)
+yt-dlp "$video" --list-formats >$formats
+audio_format=$(grep "audio only" $formats | grep "opus" | head -n1 | awk '{ print $1 }')
+video_format=$(grep "video only" $formats | grep "1920x1080" | head -n1 | awk '{ print $1 }')
+
+if [ -z "$audio_format" ]; then
+  echo "No audio format found (audio only, opus)"
+  cat $formats
+  exit 1
+elif [ -z "$video_format" ]; then
+  echo "No video format found (video only, 1920x1080)"
+  cat $formats
+  exit 1
+fi
+
+dir=$(mktemp -d)
+
+echo "Downloading audio"
+yt-dlp -i --retries 4 -f $audio_format -o "$dir/%(title)s.%(ext)s" "$video"
+echo "\nDownloading video"
+yt-dlp -i --retries 4 -f $video_format -o "$dir/%(title)s.%(ext)s" "$video"
+
+video_file="$(find $dir -name '*.mp4')"
+audio_file="$(find $dir -name '*.webm')"
+filename=$(basename -- "$video_file")
+title="${filename%.*}"
+
+if [ -z "$audio_file" ]; then
+  echo "No audio file found (in $dir, no webm file)"
+  ls $dir
+  exit 1
+elif [ -z "$video_file" ]; then
+  echo "No video file found (in $dir, no mp4 file)"
+  ls $dir
+  exit 1
+fi
+
+echo "\nCombinding audio and video"
+ffmpeg -i "$video_file" -i "$audio_file" -map 0:v -map 1:a -c:v copy -c:a copy "$ORG_INBOX/$title.mkv" &&
+  echo "Wrote $ORG_INBOX/$title.mkv"
