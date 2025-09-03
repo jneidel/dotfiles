@@ -1,0 +1,61 @@
+#! /bin/sh
+
+. $HOME/.zsh/org.env
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PROJECTS" ]; then
+  cat <<EOF
+$ org-projects-to-now-json
+Transform org project directories into a json for jneidel.com/now
+EOF
+  exit
+fi
+
+hash jq || exit 127
+
+get_project_list() {
+  potential_projects=$(mktemp)
+  find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -not -path '*/.*' | sort -V >$potential_projects
+
+  ignored_projects=$(mktemp)
+  find "$ORG_PROJECTS" -mindepth 2 -type f -name ".now-ignore" | rev | cut -d/ -f2- | rev | sort -V >$ignored_projects
+
+  diff $potential_projects $ignored_projects --old-line-format='%L'
+}
+
+assemble_json() {
+  json=$(mktemp)
+  cat <<EOF >$json
+{
+"date_updated": "$(date '+%b%d at %H:%M')",
+"projects": [
+EOF
+
+  get_project_list | while read -r project; do
+    title="$(basename "$project")"
+    status=""
+    if echo $project | grep -ve "🟨"; then
+      status="$(grep -Po '#\+(status|STATUS): \K.*' "${project}/index.org" 2>/dev/null)"
+    fi
+
+    printf '  { "title": "%s", "status": "%s" },\n' "$title" "$status" >>$json
+  done
+
+  sed '$s/},/}/' -i $json # valid json: last line in array has no trailing ,
+  echo "]}" >>$json
+
+  if ! cat $json | jq >/dev/null; then # validate json
+    echo "org-projects-to-now-json json validation failed at $(date) in $json" >>"$ORG_INBOX/org-projects-to-now-json errors"
+    exit 1
+  fi
+
+  cat $json
+}
+
+upload_json() {
+  json=$(mktemp)
+  assemble_json >$json
+
+  echo "Uploading to neidel.xyz/now.json" >&2
+  ~/scripts/cron/waitforinternet && scp -q $json k:~/websites/neidel.xyz/now.json
+}
+upload_json
