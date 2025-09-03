@@ -22,16 +22,15 @@ alias greata="grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/
 
 #### youtube-dl
 local ytdl_location=$ORG_INBOX
-alias ytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height<=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
+alias yytdl="nice yt-dlp --yes-playlist -c -i --retries 4 -f 'mp4[height<=1080]' -o '$ytdl_location/%(title)s.%(ext)s'"
 alias ytmp3="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ytdl_location/%(title)s.%(ext)s' --embed-thumbnail"
 alias ytraw="nice yt-dlp -c --retries 4 -o '$ytdl_location/%(title)s.%(ext)s'" # Does not force height, try --write-pages if not working
 alias ythere="nice yt-dlp -c -i --retries 4 -f 'mp4[height=1080]' -o './%(title)s.%(ext)s'"
 alias yt3="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o './%(title)s.%(ext)s' --embed-thumbnail"
 alias -g PE="--playlist-end"
+alias ytpod="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ORG_MEDIA/phone/audio/%(title)s.%(ext)s' --embed-thumbnail"
 
 ### redefining existing commands
-alias cat="bat"
-alias ccat="/bin/cat"
 alias scrot="~/scripts/sxhkd/screenshot"
 alias scrott="~/scripts/sxhkd/screenshot -s 5"
 alias man="colored-man"
@@ -87,6 +86,7 @@ lf() {
     fi
   fi
 }
+alias mp3cut="mcut"
 
 ### shorter script names
 alias rc="rename-comic"

@@ -3,7 +3,7 @@
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
 $ mcut FILE START [END]
-Easily cut mp3 files.
+Easily cut mp3 files. (mp3cut alternative)
 Test until you find the right timing and then overwrite the file.
 
 Parameters:

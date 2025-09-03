@@ -127,7 +127,7 @@ cmd move-to-blog-post-ideas %{{
 }}
 cmd move-to-designs %{{
   local filename="${f##*/}"
-  mv "$f" "$ORG_DESIGN/0 inbox/"
+  mv "$f" "$ORG_DESIGN/1 ideas/"
   printf "Moved '${f##*/}' to design inbox"
 }}
 cmd move-to-projects %{{
@@ -174,7 +174,7 @@ cmd move-to-resource ${{
     printf "Moved '${f##*/}' to resource: $resource"
   fi
 }}
-cmd move-to-mmusic ${{
+cmd move-to-materialistic-music ${{
   dir="$ORG_MEDIA/materialistic music"
   if echo "$f" | grep -F "/main/" >/dev/null; then
     cp -r "$f" $dir/main/ && rm -r "$f"
@@ -226,7 +226,7 @@ cmd create-project ${{
 
   mkdir -p "$project"
   lf -remote "send $id :cd '$project'; reload" &
-  plan "$project/index.norg"
+  plan "$project/index.org"
 }}
 cmd create-design ${{
   printf "Design dir name: "
@@ -289,7 +289,7 @@ cmd on-cd &{{
       # sort: alphabetical
       lf -remote "send $id :set sortby natural; set noreverse";;
   esac
-  # can be paritally recreated with setlocal: https://github.com/gokcehan/lf/pull/1381
+  # can be partially recreated with setlocal: https://github.com/gokcehan/lf/pull/1381
 }}
 on-cd # run on startup
 
@@ -381,7 +381,7 @@ map ma move-to-area
 map mp move-to-project
 map mP move-to-projects
 map mr move-to-resource
-map mM move-to-mmusic
+map mM move-to-materialistic-music
 
 ### jump - cd to dirs
 map go  %lf -remote "send $id cd $ORG"
@@ -417,3 +417,5 @@ map ö! set-status-important
 
 map o jump-prev
 map i jump-next
+
+map F tag-toggle

@@ -2,7 +2,7 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ generate-orgmode-metadata [TITLE]
+$ generate-orgmode-metadata TITLE
 Generate the metadata block for the top of an orgmode file.
 
 Arguments:

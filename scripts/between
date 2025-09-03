@@ -6,8 +6,8 @@ $ between AFTER [BEFORE]
 Check if its currently after a certain time and before another.
 
 Parameters:
-  \$1: after or start time, 5 checks if after 5am
-  [\$2]: before or end time, 22 checks if after 11pm
+  \$1: after or start time, 5 checks if after 5:00
+  [\$2]: before or end time, 22 checks if before 23:00
 
 Example:
   $ between 18 22

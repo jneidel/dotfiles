@@ -26,7 +26,7 @@ e404() {
 # exit 1 means the handler does not like to be run in the background (&)
 case $EXT in
   txt|md|java|yml|yaml|json|norg|rem|js|ts) echo "$EDITOR"; exit 1;;
-  png|jpg|jpeg|gif|webp|svg) echo nsxiv -b;;
+  png|jpg|jpeg|gif|webp|svg|avif) echo nsxiv -b;;
   pdf) echo zathura;;
   sh) echo sh; exit 1;;
   bash) echo bash; exit 1;;

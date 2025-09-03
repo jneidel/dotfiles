@@ -11,4 +11,4 @@ hash tmux || exit 127
 
 tmux -u new-window -n "backups" -t main
 tmux send-keys "clear && ho" "Enter"
-tmux send-keys "cd config; lsblk" "Enter" "./sync-backup "
+tmux send-keys "cd config; lsblk" "Enter" "./sync-backup sde"

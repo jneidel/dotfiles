@@ -59,6 +59,6 @@ run_lazy() {
   /bin/nvim --headless '+Lazy! sync' +qa
   /bin/nvim --headless '+TSUpdate' +qa
 }
-command -v /bin/nvim >/dev/null && run_lazy
+# command -v /bin/nvim >/dev/null && run_lazy
 
 cleanup-fs

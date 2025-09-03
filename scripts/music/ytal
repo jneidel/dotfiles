@@ -8,12 +8,7 @@ EOF
   exit
 fi
 
-command -v yt-dlp >/dev/null || { echo "yt-dlp is not installed" 1>&2; exit 127; }
-command -v bandcamp-dl >/dev/null || { echo "bandcamp-dl is not installed" 1>&2; exit 127; }
-command -v tsr >/dev/null || { echo "tsr script is not installed" 1>&2; exit 127; }
-command -v 1337x-to-magnet >/dev/null || { echo "1337x-to-magnet is not installed" 1>&2; exit 127; }
-command -v $BROWSER >/dev/null || { echo "$BROWSER (\$BROWSER) is not installed" 1>&2; exit 127; }
-command -v eyeD3 >/dev/null || { echo "eyeD3 is not installed" 1>&2; exit 127; }
+hash yt-dlp bandcamp-dl tsr 1337x-to-magnet $BROWSER eyeD3 || exit 127
 
 get_playlist_name() {
   yt-dlp --get-filename -o '%(playlist_title)s' "$1" --playlist-end 1 2>/dev/null

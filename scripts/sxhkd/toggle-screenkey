@@ -11,4 +11,4 @@ fi
 command -v screenkey >/dev/null || { echo "screenkey is not installed" 1>&2; exit 127; }
 command -v fkill >/dev/null || { echo "fkill is not installed" 1>&2; exit 127; }
 
-fkill screenkey -fs >/dev/null 2>&1 || screenkey &
+fkill screenkey -f >/dev/null 2>&1 || screenkey &

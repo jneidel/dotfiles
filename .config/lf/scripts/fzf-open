@@ -15,9 +15,7 @@ EOF
   exit
 fi
 
-command -v fzf >/dev/null || { echo "fzf is not installed" 1>&2; exit 127; }
-command -v lf >/dev/null || { echo "lf is not installed" 1>&2; exit 127; }
-command -v rg >/dev/null || { echo "ripgrep is not installed" 1>&2; exit 127; }
+hash fzf lf rg || exit 127
 
 openType=$1
 
@@ -27,24 +25,27 @@ fzf_cmd() {
   fzf --bind TAB:up,Shift-TAB:down --height=0 --margin=40%,12%
 }
 
-if [ "$openType" = "file" ]; then
-  pick() {
-    FZF_DEFAULT_COMMAND="rg $sharedFlags ~/org | cut -d/ -f4-" fzf_cmd
-  }
-  picked="$HOME/$(pick)"
-  if [ "$picked" != "$HOME/" ]; then
-    lf -remote "send $id select '$picked'" &
-    ( cd "$(dirname "$picked")" && ~/scripts/mime/mime -e lf open "$picked" )
-  fi
-elif [ "$openType" = "dir" ]; then
-  pick() {
-    FZF_DEFAULT_COMMAND="rg $sharedFlags --null ~/org | xargs -0 dirname | sort -r | uniq | cut -d/ -f4-" fzf_cmd
-  }
-  picked="$HOME/$(pick)"
-  if [ "$picked" != "$HOME/" ]; then
-    lf -remote "send $id cd '$picked'"
-  fi
-else
-  echo "Wrong type passed, needs one off: file|dir"
-  exit 1
-fi
+case "$openType" in
+  file)
+    pick() {
+      FZF_DEFAULT_COMMAND="rg $sharedFlags ~/org | cut -d/ -f4-" fzf_cmd
+    }
+    picked="$HOME/$(pick)"
+    if [ "$picked" != "$HOME/" ]; then
+      lf -remote "send $id select '$picked'" &
+      ( cd "$(dirname "$picked")" && ~/scripts/mime/mime -e lf open "$picked" )
+    fi
+    break;;
+  dir)
+    pick() {
+      FZF_DEFAULT_COMMAND="rg $sharedFlags --null ~/org | xargs -0 dirname | sort -r | uniq | cut -d/ -f4-" fzf_cmd
+    }
+    picked="$HOME/$(pick)"
+    if [ "$picked" != "$HOME/" ]; then
+      lf -remote "send $id cd '$picked'"
+    fi
+    break;;
+  *)
+    echo "Wrong type passed, needs one off: file|dir"
+    exit 1
+esac

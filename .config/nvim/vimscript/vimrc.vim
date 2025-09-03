@@ -28,7 +28,7 @@ set splitbelow " on sp
 set splitright " on vsp
 
 " toggle paste mode
-" set pastetoggle=<F5> broken
+" set pastetoggle=<F5>
 
 " unmap ex mode, src: https://unix.stackexchange.com/a/180927
 map Q <Nop>

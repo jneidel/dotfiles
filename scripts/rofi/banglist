@@ -1,7 +1,7 @@
   https://duckduckgo.com/?q=%s
 - https://duckduckgo.com/?q=%s
 lg https://libgen.li/index.php?req=%s&topics%5B%5D=l
-lgf http://libgen.st/fiction/?q=%s
+lgf https://libgen.li/index.php?req=%s&topics%5B%5D=f
 anna https://annas-archive.gs/search?q=%s
 zl https://z-lib.gs/s/%s
 tpb https://tpb.party/search/%s/1/99/0
@@ -112,10 +112,11 @@ i https://duckduckgo.com/?q=%s&ia=images&iax=images
 wb https://www.worldofbooks.com/de-de/search?q=%s
 wob https://www.worldofbooks.com/de-de/search?q=%s
 o https://org-search.neidel.xyz/?query=%s
-roh https://www.rohkostwiki.de/w/index.php?title=Spezial%3ASuche&search=%s&fulltext=1
-top https://www.topfruits.de/search?sSearch=%s
+roh https://wiki.rohkost-tagebuch.de/index.php?title=Spezial%3ASuche&search=%s&go=Seite
+top https://www.topfruits.de/search?search=%s
 vamp https://vampire.survivors.wiki/?search=%s&title=Special%3ASearch&wprov=acrw1_-1
 c https://duckduckgo.com/?q=Cataclysm+dark+days+ahead+%s
 cc https://github.com/search?q=repo%3ACleverRaven%2FCataclysm-DDA+%s
+dew https://stardewvalleywiki.com/mediawiki/index.php?search=%s&title=Special%3ASearch&go=Go
 fb https://fruchtbote.com/?s=%s&post_type=product
 hgg https://cdda-guide.nornagon.net/search/%s?v=0.H-RELEASE
