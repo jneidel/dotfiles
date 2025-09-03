@@ -69,10 +69,10 @@ bindsym $mod+space focus mode_toggle
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:🌍
-set $ws1 1:$
+set $ws1 1:E
 set $ws2 2:
-set $ws3 3:@
-set $ws4 4
+set $ws3 3:$
+set $ws4 4:@
 set $ws5 5
 set $ws6 6
 set $ws7 7
@@ -123,33 +123,40 @@ bindsym $mod+Shift+odiaeresis move left
 ## 'class' matches the 'WM_CLASS': xprop | grep WM_CLASS
 ## 'title' matches the 'WM_NAME': xprop | grep WM_NAME
 ## docs: https://i3wm.org/docs/userguide.html#command_criteria
-assign [class="Mozilla Firefox"] $ws2
-assign [class="Nightly"] $ws2
-assign [class="Firefox Developer Edition"] $ws2
-assign [class="firefoxdeveloperedition"] $ws2
+### workspace 1: emacs
+assign [class="Emacs"] $ws1
+### workspace 2: browser
+assign [class="firefox"] $ws2
+assign [class="Navigator"] $ws2
+assign [class="firefox-developer-edition"] $ws2
 assign [class="Chromium"] $ws2
 assign [class="Tor Browser"] $ws2
 assign [class="brave-browser"] $ws2
 assign [class="Brave-browser"] $ws2
-assign [class="keepassxc"] $ws9
-assign [class="mosh"] $ws3
-assign [class="signal"] $ws3
-assign [class="Signal"] $ws3
-assign [class="YACReaderLibrary"] $ws3
-assign [class="Zeal"] $ws3
-assign [title="Anki"] $ws3
-assign [title="Interactive Brokers"] $ws3
-assign [title="OptionTrader"] $ws3
-assign [class="OptionTrader"] $ws3
-assign [class="jclient-LoginFrame"] $ws3
-assign [class="sun-awt-X11-XFramePeer"] $ws3
-assign [class="jclient-LoginFrame"] $ws3
-assign [class="java"] $ws3
-assign [class="monero-wallet-gui"] $ws3
-assign [class="Emacs"] $ws3
+### workspace 3: terminal
+#### moved manually, retain ability to open it on any workspace
+### workspace 4: communication and misc
+assign [class="mosh"] $ws4
+assign [class="signal"] $ws4
+assign [class="Signal"] $ws4
+assign [class="YACReaderLibrary"] $ws4
+assign [class="Zeal"] $ws4
+assign [title="Anki"] $ws4
+assign [title="Interactive Brokers"] $ws4
+assign [title="OptionTrader"] $ws4
+assign [class="OptionTrader"] $ws4
+assign [class="jclient-LoginFrame"] $ws4
+assign [class="sun-awt-X11-XFramePeer"] $ws4
+assign [class="jclient-LoginFrame"] $ws4
+assign [class="java"] $ws4
+assign [class="monero-wallet-gui"] $ws4
+### workspace 5: games
 assign [class="steam"] $ws5
 assign [class="factorio"] $ws5
 assign [class="cataclysm-tiles"] $ws5
+### workspace 9: keepass
+assign [class="keepassxc"] $ws9
+assign [class="KeePassXC"] $ws9
 
 # Open specific applications in floating mode
 for_window [class="mpv"] floating enable
