@@ -1,68 +1,63 @@
 #! /bin/sh
 
-DEFAULT_FILENAME=index.norg
+DEFAULT_FILENAME=index.org
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ plan [FILENAME]
 Create a new project plan at the given file,
-with all the boilerplate and open it in $EDITOR.
+with all the boilerplate and open it for editing.
 
 Parameters:
   [\$1]: filename of the project plan, default: $DEFAULT_FILENAME
 
 Example:
   $ plan
-  $ plan project-definition.norg
+  $ plan project-definition.org
 EOF
   exit
 fi
 
-command -v $EDITOR >/dev/null || { echo "$EDITOR is not installed or \$EDITOR var not set" 1>&2; exit 127; }
+hash generate-orgmode-metadata emacs-open || exit 127
 
 FILE="$1"
 [ -z "$FILE" ] && FILE=$DEFAULT_FILENAME
 
 template() {
   cat <<EOF
-@document.meta
-title: <++>
-created: $(date +%Y-%m-%d)
-updated: $(date +%Y-%m-%d)
-_deadline: $(date +%Y)-<++>
-@end
+$(generate-orgmode-metadata)
 
 * Project definition
 ** Ist-Zustand
-   > Wo stehst Du aktuell?
+/Wo stehst Du aktuell?/
 
-   <++>
+<++>
 
 ** Soll-Zustand
-   > Wo willst du hin, wenn Du es Dir bei der guten Fee wünschen dürftest?
+/Wo willst du hin, wenn Du es Dir bei der guten Fee wünschen dürftest?/
 
-   <++>
+<++>
 
 ** Ziele (Goals) & Zwecke (Purposes)
-   > Wo willst du durch diese Gesamtaktion hin? Orientierungsziele
-   > Warum willst du das? Genaue Erklärung der Goals, Unterziele
+/Wo willst du durch diese Gesamtaktion hin? Orientierungsziele
+Warum willst du das? Genaue Erklärung der Goals, Unterziele/
 
 *** <++>
 
 ** Richtlinien
-   > Wie soll das von statten gehen? Grundlegende Spielregeln und wichtige Pfeiler
+/Wie soll das von statten gehen? Grundlegende Spielregeln und wichtige Pfeiler/
 
-   - <++>
+- <++>
 
 ** Pläne
-   > Wie kann man den Ist-Zustand in Richtung Idealzustand bringen? Allgemein formulierte, schlaue Ideen
+/Wie kann man den Ist-Zustand in Richtung Idealzustand bringen? Allgemein formulierte, schlaue Ideen/
 
 *** Dinge, die da sein müssen, um überhaupt arbeiten zu können
-   - <++>
+- <++>
 
 *** <++>
 EOF
 }
 
 template >>"$FILE"
-$EDITOR "$FILE"
+emacs-open title-insert "$FILE"
