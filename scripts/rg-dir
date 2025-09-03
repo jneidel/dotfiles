@@ -1,0 +1,21 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ rg-dir [RIPGREP_ARGS]
+Like rg --files for directories.
+
+Parameters:
+  [\$1]: any arguments to pass to ripgrep
+
+Example:
+  $ rg-dir
+  $ rg-dir $HOME
+  $ rg-dir -L --hidden -g "\!.git" .
+EOF
+  exit
+fi
+
+hash rg || exit 127
+
+rg --files --null $@ | xargs -0 dirname | sort -r | uniq
