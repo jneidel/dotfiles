@@ -1,0 +1,21 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ open-i3-workspace N
+Navigate to an i3 workspace.
+
+Parameters:
+  \$1: number of the workspace
+
+Example:
+  $ open-i3-workspace 2
+EOF
+  exit
+fi
+
+hash i3-msg || exit 127
+
+n="$1"
+workspace_name="$(grep -Po "^set \\\$ws$n \K$n:.*" $HOME/.config/i3/config)"
+i3-msg "workspace $workspace_name" >/dev/null
