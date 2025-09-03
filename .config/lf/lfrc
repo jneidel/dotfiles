@@ -326,7 +326,26 @@ cmd on-cd &{{
       # sort: alphabetical
       lf -remote "send $id :set sortby natural; set noreverse";;
   esac
-  # can be paritally recreated with setlocal: https://github.com/gokcehan/lf/pull/1381
+  # can be partially recreated with setlocal: https://github.com/gokcehan/lf/pull/1381
+
+  # https://github.com/gokcehan/lf/pull/2012
+  # after release 36
+  cd "$(dirname "$1")" || exit 1
+  git rev-parse >/dev/null 2>&1 || exit 0
+
+  cmds=""
+
+  for file in "$@"; do
+    status=$(git status --porcelain --ignored -- "$file" | cut -c1-2 | head -n1)
+
+    if [ -n "$status" ]; then
+      cmds="${cmds}addcustominfo ${file} \"$status\"; "
+    else
+      cmds="${cmds}addcustominfo ${file} ''; "
+    fi
+  done
+
+  lf -remote "send $id :$cmds"
 }}
 on-cd # run on startup
 
