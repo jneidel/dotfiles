@@ -266,7 +266,7 @@ create /etc/pam.d
 .config/kmonad
 
 [emacs]
-clean .config/emacs
+clean .emacs.d
 
 [gimp]
 create .config/GIMP/2.10

@@ -598,6 +598,7 @@ kmonad-bin Flexible keyboard rebinding
 
 [emacs]
 emacs Editor and ecosystem
+libvips Thumbnail generation for images in dirvish
 
 [wg]
 wireguard-tools Wireguard
