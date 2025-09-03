@@ -55,7 +55,7 @@ get_series_id_from_query() {
 fetch_chapter_list() {
   seriesId="$(echo $seriesId | tr a-z A-Z)"
   curl "https://weebcentral.com/series/$seriesId/full-chapter-list" -Ss -H "$USER_AGENT" \
-    | pcregrep -Mo1 -o2 -o3 --om-separator=, ">([#A-Za-z ]+) (\d+\.?\d*)[^\']*'([A-Z0-9]+)" >$chapterList
+    | pcregrep -Mo1 -o2 -o3 --om-separator=, ">([#A-Za-z1-9- ]+) (\d+\.?\d*)[^\']*'([A-Z0-9]+)" >$chapterList
 }
 
 determine_starting_chapter() {
