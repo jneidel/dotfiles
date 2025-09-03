@@ -4,11 +4,18 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PRO
   cat <<EOF
 $ select-area
 Interactively select an area in $ORG_PROJECTS
+
+If caller is not a tty, print list of options instead.
 EOF
   exit
 fi
 
 hash gum || exit 127
+
+has_tty=true
+if [ ! -t 0 ]; then
+    has_tty=false
+fi
 
 declare -a projects
 while IFS= read -r dir; do
@@ -16,4 +23,8 @@ while IFS= read -r dir; do
   projects+=("$dir")
 done < <(find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
 
-gum filter ${projects[*]}
+if $has_tty; then
+  gum filter ${projects[*]}
+else
+  printf "%s\n" "${projects[@]}"
+fi

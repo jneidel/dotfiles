@@ -4,28 +4,56 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_ARE
   cat <<EOF
 $ select-area
 Interactively select an area in $ORG_AREAS
+
+If caller is not a tty, print list of options instead.
+
+Commands:
+  - transform AREA:
 EOF
   exit
 fi
 
 hash gum || exit 127
 
-declare -a areas
-while IFS= read -r dir; do
-  [[ -z "$dir" ]] && continue
-  areas+=("$dir")
-done < <(find "$ORG_AREAS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
-
-area="$(gum filter ${areas[*]})"
-
-if [ -n "$area" ]; then
-  if [ -d "$ORG_AREAS/$area/.inbox" ]; then
-    echo "$area/.inbox"
-  elif [ -d "$ORG_AREAS/$area/_inbox" ]; then
-    echo "$area/_inbox"
-  elif [ -d "$ORG_AREAS/$area/inbox" ]; then
-    echo "$area/inbox"
-  else
-    echo "$area"
-  fi
+has_tty=true
+if [ ! -t 0 ]; then
+    has_tty=false
 fi
+
+area=
+prompt_for_area() {
+  declare -a areas
+  while IFS= read -r dir; do
+    [[ -z "$dir" ]] && continue
+    areas+=("$dir")
+  done < <(find "$ORG_AREAS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+
+  if $has_tty; then
+    area="$(gum filter ${areas[*]})"
+  else
+    printf "%s\n" "${areas[@]}"
+    exit 0
+    # select manually and call "transform AREA" for post processing
+  fi
+}
+
+transform() {
+  if [ -n "$area" ]; then
+    if [ -d "$ORG_AREAS/$area/.inbox" ]; then
+      echo "$area/.inbox"
+    elif [ -d "$ORG_AREAS/$area/_inbox" ]; then
+      echo "$area/_inbox"
+    elif [ -d "$ORG_AREAS/$area/inbox" ]; then
+      echo "$area/inbox"
+    else
+      echo "$area"
+    fi
+  fi
+}
+
+case "$1" in
+  transform) area="$2"
+             transform;; # manually called post-processing
+  *) prompt_for_area
+     transform;;
+esac

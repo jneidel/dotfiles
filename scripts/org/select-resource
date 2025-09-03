@@ -4,11 +4,18 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_RES
   cat <<EOF
 $ select-resource
 Interactively select a resource in $ORG_RESOURCES
+
+If caller is not a tty, print list of options instead.
 EOF
   exit
 fi
 
 hash gum || exit 127
+
+has_tty=true
+if [ ! -t 0 ]; then
+    has_tty=false
+fi
 
 declare -a resources
 while IFS= read -r dir; do
@@ -16,4 +23,8 @@ while IFS= read -r dir; do
   resources+=("$dir")
 done < <(find "$ORG_RESOURCES" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
 
-gum filter ${resources[*]}
+if $has_tty; then
+  gum filter ${resources[*]}
+else
+  printf '%s\n' "${resources[@]}"
+fi

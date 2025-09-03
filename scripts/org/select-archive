@@ -1,0 +1,33 @@
+#! /bin/zsh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_ARCHIVE" ]; then
+  cat <<EOF
+$ select-archive
+Interactively select an archive in $ORG_ARCHIVE
+
+If caller is not a tty, print list of options instead.
+EOF
+  exit
+fi
+
+hash gum || exit 127
+
+has_tty=true
+if [ ! -t 0 ]; then
+    has_tty=false
+fi
+
+declare -a archives
+while IFS= read -r dir; do
+  [[ -z "$dir" ]] && continue
+  archives+=("$dir")
+done < <(find "$ORG_ARCHIVE" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+
+if $has_tty; then
+  archive="$(gum filter ${archives[*]})"
+  if [ -n "$archive" ]; then
+    echo "$archive"
+  fi
+else
+  printf '%s\n' "${archives[@]}"
+fi

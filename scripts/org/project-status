@@ -1,0 +1,107 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PROJECT_STATUS_ACTIVE" ] || [ -z "$3" ]; then
+  cat <<EOF
+$ project-status set STATUS PATH
+Change the status of a project directory in $ORG_PROJECTS
+
+Commands:
+  set STATUS PATH: for PATH set it's status to STATUS
+
+Statuses:
+  - active
+  - inactive
+  - blocked
+  - none
+  - important: applies on top of these above
+
+Example:
+  $ project-status set blocked "~/org/1_project/🟢 switch to emacs"
+EOF
+  exit
+fi
+
+has_status() {
+  project_name="$1"
+  echo $project_name | grep -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null
+}
+
+set_traffic_light_status() { # green, yellow, red; aka active, inactive, blocked
+  status="$1"
+  path="$2"
+  project_name="$(basename "$path")"
+  project_name_no_emoji_prefix=
+
+  if has_status "$project_name"; then
+    project_name_no_emoji_prefix="$(echo $project_name | cut -c5-)"
+  else
+    project_name_no_emoji_prefix=" $project_name"
+  fi
+
+  new_path="$ORG_PROJECTS/${status}${project_name_no_emoji_prefix}"
+  mv "$path" "$new_path" 2>/dev/null
+  echo "$new_path"
+}
+
+remove_status() {
+  path="$1"
+  project_name="$(basename "$path")"
+  project_name_no_emoji_prefix=
+
+  if has_status "$project_name"; then
+    project_name_no_emoji_prefix="$(echo $project_name | cut -d\  -f2-)"
+  else
+    project_name_no_emoji_prefix=" $project_name"
+  fi
+
+  new_path="$ORG_PROJECTS/${project_name_no_emoji_prefix}"
+  mv "$path" "$new_path" 2>/dev/null
+  echo "$new_path"
+}
+
+set_important() {
+  path="$1"
+  project_name="$(basename "$path")"
+
+  if ! has_status "$project_name"; then
+    echo "Important only applies to projects which already have a status." >&2
+    exit 1
+  fi
+
+  project_name_no_emoji_prefix="$(echo $project_name | cut -d\  -f2-)"
+  status_emoji="$(echo $project_name | cut -c1-4)" # the circles are 4 chars long, adjust if other emojis are introduced
+
+  new_path=
+  if echo $project_name | grep -e$ORG_PROJECT_STATUS_IMPORTANT >/dev/null; then
+    new_path="$ORG_PROJECTS/${status_emoji} ${project_name_no_emoji_prefix}"
+  else
+    new_path="$ORG_PROJECTS/${status_emoji}${ORG_PROJECT_STATUS_IMPORTANT} ${project_name_no_emoji_prefix}"
+  fi
+
+  mv "$path" "$new_path" 2>/dev/null
+  echo "$new_path"
+}
+
+command="$1"
+status="$2"
+path="$3"
+
+if [ "$command" != "set" ]; then
+  echo "Command not found. Consult --help"
+  exit 1
+fi
+
+projects_dir="$(dirname "~/org/1_project/🟢 switch to emacs" | sed "s|~|$HOME|")"
+if [ "$ORG_PROJECTS" != "$projects_dir" ]; then
+  echo "Path is not a project in $ORG_PROJECTS"
+  exit 1
+fi
+
+case $status in
+  "active") set_traffic_light_status "$ORG_PROJECT_STATUS_ACTIVE" "$path";;
+  "inactive") set_traffic_light_status "$ORG_PROJECT_STATUS_INACTIVE" "$path";;
+  "blocked") set_traffic_light_status "$ORG_PROJECT_STATUS_BLOCKED" "$path";;
+  "none") remove_status "$path";;
+  "important") set_important "$path";;
+  *) echo "Passed status '$2' does not apply. See --help"; exit 1 ;;
+esac

@@ -85,14 +85,18 @@ cmd move-to-other-inbox ${{
   fi
   printf "Moved '${f##*/}' to inbox"
 }}
-cmd move-to-archive %{{
+cmd move-to-archive ${{
   local filename="${f##*/}"
-  if [ -e "$ORG_ARCHIVE/$filename" ]; then
-    mv "$f" "$ORG_ARCHIVE/$(date +%s)-$filename"
-  else
-    mv "$f" $ORG_ARCHIVE/
+  archive="$(select-archive)"
+  dir="$ORG_ARCHIVE/$archive"
+  if [ -n "$archive" ] && [ -d "$dir" ]; then
+    if [ -e "$dir/$filename" ]; then
+      mv "$f" "$dir/$(date +%s)-$filename"
+    else
+      mv "$f" $dir/
+    fi
+    printf "Moved '${f##*/}' to archive: $archive"
   fi
-  printf "Moved '${f##*/}' to archive"
 }}
 cmd move-to-local-archive %{{
   local filename="${f##*/}"
@@ -293,61 +297,24 @@ cmd show-tasks %tmux split-window -v -l 30%; tmux select-pane -T 'task-view'; tm
 
 # project status
 cmd set-status-active %{{
-  local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
-  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
-    filenameWithoutEmojiPrefix=" $filename"
-  fi
-
-  mv "$filename" "${ORG_PROJECT_STATUS_ACTIVE}${filenameWithoutEmojiPrefix}" 2>/dev/null
-  lf -remote "send $id select '${ORG_PROJECT_STATUS_ACTIVE}${filenameWithoutEmojiPrefix}'"
+  new_path="$(project-status set active "$f")"
+  lf -remote "send $id select '$new_path'"
 }}
 cmd set-status-inactive %{{
-  local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
-  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
-    filenameWithoutEmojiPrefix=" $filename"
-  fi
-
-  mv "$filename" "${ORG_PROJECT_STATUS_INACTIVE}${filenameWithoutEmojiPrefix}" 2>/dev/null
-  lf -remote "send $id select '${ORG_PROJECT_STATUS_INACTIVE}${filenameWithoutEmojiPrefix}'"
+  new_path="$(project-status set inactive "$f")"
+  lf -remote "send $id select '$new_path'"
 }}
 cmd set-status-blocked %{{
-  local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -c5-)"
-  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
-    filenameWithoutEmojiPrefix=" $filename"
-  fi
-
-  mv "$filename" "${ORG_PROJECT_STATUS_BLOCKED}${filenameWithoutEmojiPrefix}" 2>/dev/null
-  lf -remote "send $id select '${ORG_PROJECT_STATUS_BLOCKED}${filenameWithoutEmojiPrefix}'"
+  new_path="$(project-status set blocked "$f")"
+  lf -remote "send $id select '$new_path'"
 }}
 cmd set-status-none %{{
-  local filename="${f##*/}"
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
-  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
-    filenameWithoutEmojiPrefix="$filename"
-  fi
-
-  mv "$filename" "$filenameWithoutEmojiPrefix" 2>/dev/null
-  lf -remote "send $id select '$filenameWithoutEmojiPrefix'"
+  new_path="$(project-status set none "$f")"
+  lf -remote "send $id select '$new_path'"
 }}
 cmd set-status-important %{{
-  local filename="${f##*/}"
-  if echo $filename | grep -v -e$ORG_PROJECT_STATUS_ACTIVE -e$ORG_PROJECT_STATUS_INACTIVE -e$ORG_PROJECT_STATUS_BLOCKED >/dev/null; then
-    printf "Only use with project that already have a status"
-    exit 0
-  fi
-
-  local statusEmoji="$(echo $filename | cut -c1-4)" # the circles are 4 chars long, adjust if other emojis are introduced
-  local filenameWithoutEmojiPrefix="$(echo $filename | cut -d\  -f2-)"
-  if echo $filename | grep -e$ORG_PROJECT_STATUS_IMPORTANT >/dev/null; then
-    mv "$filename" "$statusEmoji $filenameWithoutEmojiPrefix"
-    lf -remote "send $id select '$statusEmoji $filenameWithoutEmojiPrefix'"
-  else
-    mv "$filename" "${statusEmoji}${ORG_PROJECT_STATUS_IMPORTANT} $filenameWithoutEmojiPrefix"
-    lf -remote "send $id select '${statusEmoji}${ORG_PROJECT_STATUS_IMPORTANT} $filenameWithoutEmojiPrefix'"
-  fi
+  new_path="$(project-status set important "$f")"
+  lf -remote "send $id select '$new_path'"
 }}
 
 ## bindings
