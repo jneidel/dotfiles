@@ -26,6 +26,7 @@ scripts/ftp/*-ip
 
 .config/nvim/jaspers-neovim
 .config/mpv/scripts/sponsorblock_shared/sponsorblock.txt
+.config/neomutt/kudu
 
 repo/PKGBUILD/*
 !repo/PKGBUILD/install

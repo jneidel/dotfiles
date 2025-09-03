@@ -1,0 +1,24 @@
+IMAPStore jneidel@jneidel.com-remote
+Host imap4.in-berlin.de
+Port 993
+User jneidel
+PassCmd "cat /home/jneidel/.config/sensitive/jneidel.com"
+AuthMechs LOGIN
+TLSType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore jneidel@jneidel.com-local
+Subfolders Verbatim
+Path /home/jneidel/.local/share/mail/jneidel@jneidel.com/
+Inbox /home/jneidel/.local/share/mail/jneidel@jneidel.com/INBOX
+
+Channel jneidel@jneidel.com
+Expunge Both
+Far :jneidel@jneidel.com-remote:
+Near :jneidel@jneidel.com-local:
+Patterns * !"*virtual*"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+# End profile

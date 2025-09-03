@@ -96,3 +96,7 @@ cataclysm
 xmodmap
 udev
 scrcpy
+neomutt
+imapsync
+notmuch
+imapnotify

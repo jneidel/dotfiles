@@ -1,0 +1,150 @@
+## misc
+source /home/jneidel/.config/neomutt/rc/mutt-wizard.muttrc
+source /usr/local/share/mutt-wizard/switch.muttrc
+
+## contacts
+  # set query_command = "abook --mutt-query '%s'"
+  # set query_command = "khard email --parsable %s"
+  set query_command = "echo %s | xargs khard email --parsable --"
+  bind editor <Tab> complete-query
+  bind editor ^T    complete
+# macro index,pager A \
+#   "<pipe-message>khard add-email<return>" \
+#   "add the sender email address to khard"
+
+## go-to
+  macro index,pager gi "<change-folder>=INBOX<enter>"    "go to inbox"
+  macro index,pager gs "<change-folder>=Sent<enter>"     "go to sent"
+  macro index,pager gd "<change-folder>=Drafts<enter>"   "go to drafts"
+  macro index,pager gt "<change-folder>=Trash<enter>"    "go to trash"
+  macro index,pager ga "<change-folder>=archive<enter>"  "go to archive"
+  macro index,pager gI "<change-folder>=invoices<enter>" "go to invoices"
+  macro index,pager gS "<change-folder>=spam<enter>"     "go to spam"
+
+
+## sidebar
+  bind index,pager ^K noop
+  bind index,pager ö sidebar-next
+  bind index,pager Ö sidebar-prev
+  bind index,pager ä sidebar-open
+
+## answer by the address the message had been received with.
+## you need to tell mutt about your addresses for it to recognize.
+## do this with the "alternates" command!
+  set reverse_name
+
+## translate email addresses into the names you have assigned (if available)
+  set reverse_alias
+
+## do NOT move read mails from the mailbox
+  unset move
+
+## composing mail
+  set edit_headers # edit mail with headers
+  set use_from     # include From field
+# set autoedit   # don't prompt for recipient and subject interactively
+
+## citing the message you're replying to
+  set include # include it
+  set attribution="* %n <%a>:" # attribute with name + address
+# set attribution="* %n <%a> [%(%y%m%d %H:%M)]:" # attribute with date
+
+## repair broken subject lines to a single "Re:":
+  set reply_regexp="^((aw|antw.?|antwort|re|r e|r?f|sv):[ \t]*)*"
+
+# Pager -> Header:
+## choose the header lines to see
+  ignore *
+  unignore from: date: subject: to: cc: reply-to: X-Envelope-To: # X-Spam-Score:
+## choose the order of header lines
+  unhdr_order *
+  hdr_order Subject: From: To: Date: Reply-To: X-Envelope-To: X-Spam-Score:
+## color them
+  color header color234 blue ".*" # rest is grey on blue
+  color header white red "Subject:"
+  color header white blue "From:"
+  color header white blue "^(Date|To):"
+
+## overwrite $EDITOR
+  set editor="emacsclient -t"
+
+# Status and help/bindings line:
+## put the status line to the top
+  set status_on_top
+## color it, light grey on grey
+  color status color240 color234
+## color specific features
+## https://neomutt.org/feature/status-color
+
+## h to exit all menus
+  bind pager,attach h exit
+  bind index h quit
+
+# color index brightyellow black \
+#   "~h 'in-reply-to:.*@jneidel.com>'"
+
+
+  # set header_color_partial
+  # color header yellow default "\<.*\>"
+  # color index_subject red default ".*"
+
+# Index colors:
+## highlight lines based on if email matches
+## whole line
+# color index          yellow default "~f Lidl"
+## just the author column
+# color index_author   black red     "~f email@eric-scheibler.de"
+
+# Pager colors:
+
+
+# GPG:
+## enable signing by default
+  set crypt_autosign
+## enable encryption by default, if the key can be located
+  set crypt_opportunistic_encrypt
+## enable encryption even if the key does not have
+## full validity according to the web-of-trust algorithm
+  unset crypt_opportunistic_encrypt_strong_keys
+## dont encrypt mail in the sent folder
+  set fcc_clear
+## Color the brackets around attach headers, incl. GPGs
+  color   attach_headers     brightyellow    default    "^\\[--"
+  color   attach_headers     brightyellow    default    "--]$"
+## Color GPG signature checks
+  color   body     brightgreen     default    "Good signature from.*"
+  color   body     brightred       default    "Bad signature from.*"
+  color   body     brightred       default    "BAD signature from.*"
+  color   body     brightred       default    "Note: This key has expired!"
+  color   body     brightmagenta   default    "Problem signature from.*"
+  color   body     brightmagenta   default    "WARNING: This key is not certified with a trusted signature!"
+  color   body     brightmagenta   default    "WARNING: We have NO indication whether the key belongs to the person named as shown above"
+  color   attach_headers                    brightmagenta   default    "can't handle these multiple signatures"
+  color   attach_headers               brightmagenta   default    "signature verification suppressed"
+  color   attach_headers          brightmagenta   default    "invalid node with packet of type"
+  color   attach_headers     yellow   default    "The following data is signed"
+
+# HTML emails
+## if no text version, automatically view HTML
+auto_view text/html
+## highlight that autoview is in use
+color   attach_headers     brightgreen     default    "Autoview"
+## open html version of email in browser
+## https://demu.red/blog/2017/11/neomutt-macro-opening-texthtml-attachment-from-the-index-view/
+unbind  index,pager o
+macro index,pager o '<view-attachments><search>html<enter><view-mailcap><exit><shell-escape>open-i3-workspace 2<enter>'
+
+
+## TODO: test how mime_forward looks with html emails, pdf attachments
+# Forwarding:
+## forward mail body as text
+unset mime_forward
+## attach attachements
+set forward_attachments
+
+
+# Accounts:
+source /home/jneidel/.config/neomutt/accounts/jneidel@jneidel.com.muttrc
+
+## switch accounts
+# macro index,pager i1 '<sync-mailbox><enter-command>source /home/jneidel/.config/neomutt/accounts/jneidel@jneidel.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to jneidel@jneidel.com"

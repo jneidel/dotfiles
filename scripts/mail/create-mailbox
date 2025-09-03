@@ -1,0 +1,38 @@
+#! /bin/bash
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ create-mailbox NAME
+Create a new mailbox on a locally synced IMAP server.
+
+Parameters:
+  \$1: name of the new mailbox
+
+Example:
+  $ create-mailbox invoices
+EOF
+  exit
+fi
+
+hash gum mbsync find || exit 127
+
+if [ -z "$MAIL_DIR" ]; then
+  echo "MAIL_DIR variable is not set"
+  exit 1
+fi
+
+mailbox="$1"
+account_dir=
+if [ "$(find $MAIL_DIR -mindepth 1 -maxdepth 1 -type d -not -name '.*' | wc -l)" -eq 1 ]; then
+  account_dir=$(find $MAIL_DIR -mindepth 1 -maxdepth 1 -type d -not -name '.*')
+else
+  account_dir=$(gum filter $(find $MAIL_DIR -mindepth 1 -maxdepth 1 -type d -not -name '.*'))
+fi
+
+if [ -z "$account_dir" ]; then
+  echo "Empty account dir"
+  exit 1
+fi
+
+mkdir -p "$account_dir/$mailbox"/{cur,new,tmp} && echo "Created mailbox: $account_dir/$mailbox"
+mbsync -a

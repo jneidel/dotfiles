@@ -618,3 +618,18 @@ factorio-space-age Automation game
 
 [scrcpy]
 scrcpy Control connected android device
+
+[neomutt]
+neomutt Mail client
+elinks View html rendering in neomutt
+urlview Open links in external browser
+
+[imapsync]
+isync mbsync for syncing imap mail
+
+[notmuch]
+notmuch Mail tagger
+afew Mail mover
+
+[imapnotify]
+goimapnotify Notify of IMAP changes

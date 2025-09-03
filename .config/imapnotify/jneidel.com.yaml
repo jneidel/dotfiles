@@ -1,0 +1,14 @@
+{
+    "host": "imap4.in-berlin.de",
+    "port": 993,
+    "tls": true,
+    "tlsOptions": {
+            "rejectUnauthorized": false
+    },
+    "username": "jneidel",
+    "password": "",
+    "passwordCmd": "cat /home/jneidel/.config/sensitive/jneidel.com",
+    "onNewMail": "/home/jneidel/scripts/mail/mailsync",
+    "onNewMailPost": "",
+    "boxes": [ "INBOX" ]
+}

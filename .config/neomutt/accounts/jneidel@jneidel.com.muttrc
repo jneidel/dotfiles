@@ -1,0 +1,26 @@
+# @jneidel.com, neidel.xyz account setup
+set real_name = "Jonathan Neidel"
+set from = "jneidel@jneidel.com"
+set pgp_default_key  = 'jneidel@jneidel.com'
+set hostname = "jneidel.com"
+alias me Jonathan Neidel <jneidel@jneidel.com>
+alternates @jneidel.com
+alternates @neidel.xyz
+alternates @jneidel.in-berlin.de
+
+set folder = "/home/jneidel/.local/share/mail/jneidel@jneidel.com"
+set spool_file = "+INBOX"
+set postponed = "+Drafts"
+set trash = "+Trash"
+set record = "+Sent"
+
+set mbox_type = Maildir
+# mailboxes to display, autodiscover
+mailboxes `find ~/.local/share/mail/jneidel@jneidel.com/* -maxdepth 0 -type d | grep -ve Trash | sed 's!.*/!!;s/^/"=/;s/$/"/' | tr '\n' ' '`
+
+set sendmail = "msmtp -a jneidel@jneidel.com"
+set header_cache = "/home/jneidel/.cache/mutt-wizard/jneidel_jneidel.com/headers"
+set header_cache_backend = "lmdb"
+set message_cachedir = "/home/jneidel/.cache/mutt-wizard/jneidel_jneidel.com/bodies"
+## relevance of header caching 
+## https://news.ycombinator.com/item?id=20091450
