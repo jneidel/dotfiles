@@ -267,7 +267,7 @@ create /etc/pam.d
 .config/kmonad/caps_as_ctrl_esc.kbd
 
 [emacs]
-clean .config/emacs
+clean .emacs.d
 
 [gimp]
 create .config/GIMP/2.10
