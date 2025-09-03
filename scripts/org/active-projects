@@ -10,4 +10,11 @@ fi
 
 command -v find >/dev/null || { echo "find is not installed" 1>&2; exit 127; }
 
-find $ORG_PROJECTS -mindepth 1 -maxdepth 1 -type d -name "[^.]*" | wc -l
+number_of_projects=$(find $ORG_PROJECTS -mindepth 1 -maxdepth 1 -type d -name "[^.]*" | wc -l)
+
+# You can only realistically manage about 10 active projects at a time.
+if [ "$number_of_projects" -gt 10 ]; then
+  echo "󰻷$number_of_projects"
+else
+  echo "$number_of_projects"
+fi
