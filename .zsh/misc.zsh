@@ -3,7 +3,7 @@
 alias dir="dirs -v | head -10"
 
 ## colortest
-alias colortest="~/.vim/colors/colortest -w -r -s | grep / --color=never L"
+alias colortest="~/scripts/colortest -w -r -s | grep / --color=never L"
 hex() {
   echo $1 | tr a-z A-Z | awk '{ print "ibase=16;"$1 }' | bc
 }
