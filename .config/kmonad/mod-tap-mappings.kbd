@@ -1,0 +1,30 @@
+(defcfg
+  input  (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+  output (uinput-sink "kmonad-output")
+
+  ;; This option tells KMonad to let non-configured keys act normal
+  fallthrough true
+)
+
+(defsrc
+  caps
+  semicolon ;; evdev version of ö
+)
+
+(defalias
+  ;; capslock mod-tap: tap = esc, hold = control
+  caps_ctrl_esc (tap-hold-next 200 esc lctl)
+
+  ;; ö mod-tap: tap = ö, hold = hyper
+  ö_hyper (tap-hold-next 200 semicolon end)
+  ;; why is the hold mapped to end?
+  ;; kmonad doesn't know hyper (https://github.com/kmonad/kmonad/issues/22).
+  ;; X does, so we have kmoand output a keysignal (end)
+  ;; that we will remap to hyper in ~/.Xmodmap
+  ;; My full setup description is on the linked issue above.
+)
+
+(deflayer base
+  @caps_ctrl_esc
+  @ö_hyper
+)
