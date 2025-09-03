@@ -29,7 +29,8 @@ test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &
   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # installed with pacman: zsh-syntax-highlighting[-git]
 
-bindkey -v # shell vim mode (default emacs)
+# bindkey -v # shell vim mode
+bindkey -e # emacs mode
 bindkey "^r" history-incremental-pattern-search-backward # history search
 export KEYTIMEOUT=1
 
