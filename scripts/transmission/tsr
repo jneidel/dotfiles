@@ -11,9 +11,9 @@ fi
 command -v transmission-remote >/dev/null || { echo "transmission-remote is not installed"; exit 127; }
 command -v transmission-startup >/dev/null || { echo "transmission-startup script is not in PATH"; exit 127; }
 
-if ! transmission-remote -l >/dev/null 2>&1; then
-  transmission-startup
-  sleep 7
-fi
+# if ! transmission-remote $TRANSMISSION_HOST:$TRANSMISSION_PORT --auth=$TRANSMISSION_USER:$TRANSMISSION_PASS -l >/dev/null 2>&1; then
+#   transmission-startup
+#   sleep 7
+# fi
 
-transmission-remote "${@:1}" || exit 1
+transmission-remote $TRANSMISSION_HOST:$TRANSMISSION_PORT --auth=$TRANSMISSION_USER:$TRANSMISSION_PASS "${@:1}" || exit 1
