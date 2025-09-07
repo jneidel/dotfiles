@@ -1,0 +1,29 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ split-keyboard connect
+Run some scripts on connect
+
+Commands:
+  \$1: connect
+EOF
+  exit
+fi
+
+hash xmodmap xset || exit 127
+
+if [ "$1" != "connect" ]; then
+  exit 1
+fi
+
+# set env for udev to interact with Xorg
+export DISPLAY=:0
+export XAUTHORITY=/run/user/1000/Xauthority
+
+# apply to keyboard
+sleep 1s && xmodmap /home/jneidel/.config/Xmodmap &
+# sleep 5s && xset r rate 185 100 &
+
+# make firmware editable to vial.rocks
+ls -tc /dev/hidraw* | head -n3 | tr "\n" " " | xargs chmod a+rw

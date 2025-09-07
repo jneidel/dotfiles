@@ -619,6 +619,9 @@ factorio-space-age Automation game
 [scrcpy]
 scrcpy Control connected android device
 
+[vial]
+vial-appimage Keyboard configuration
+
 [neomutt]
 neomutt Mail client
 elinks View html rendering in neomutt
