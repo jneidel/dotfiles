@@ -21,9 +21,14 @@ fi
 export DISPLAY=:0
 export XAUTHORITY=/run/user/1000/Xauthority
 
-# apply to keyboard
-sleep 1s && xmodmap /home/jneidel/.config/Xmodmap &
-# sleep 5s && xset r rate 185 100 &
+# does not work when called directly, despite correct X env vars
+# run through ethemeral tmux background window
+export TMUX=/tmp/tmux-1000/default
+tmux_session=main
+if tmux has-session -t $tmux_session; then
+  tmux -u new-window -d -n "xset" -t $tmux_session:99
+  tmux send-keys -t $tmux_session:99 "xmodmap /home/jneidel/.config/Xmodmap-remove-Hyper_R; xmodmap /home/jneidel/.config/Xmodmap; xset r rate 185 100; exit" "enter"
+fi
 
-# make firmware editable to vial.rocks
+# make firmware on microchip editable by vial
 ls -tc /dev/hidraw* | head -n3 | tr "\n" " " | xargs chmod a+rw
