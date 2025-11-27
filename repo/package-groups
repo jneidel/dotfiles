@@ -638,3 +638,6 @@ afew Mail mover
 
 [imapnotify]
 goimapnotify Notify of IMAP changes
+
+[nyxt]
+nyxt Hackers browser

@@ -1,0 +1,77 @@
+#+title: Nyxt browser configuration
+#+date: <2025-11-26 Wed>
+
+Recreate Emacs keybindings.
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration buffer
+    ((default-modes
+         (pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%))))
+
+(define-configuration input-buffer
+    ((override-map
+      (let ((map (make-keymap "override-map")))
+        (define-key map
+            "M-x" 'execute-command
+            "C-space" 'nothing
+            "H-b" 'switch-buffer
+            "H-k" 'delete-buffer
+            "H-h" 'history-backwards
+            "H-l" 'history-forwards
+            "H-f" 'visual-mode
+            )))))
+#+end_src
+
+Enable browsing history for going backwards.
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration buffer
+    ((default-modes
+         (pushnew 'nyxt/mode/history:history-mode %slot-value%))))
+#+end_src
+
+Enable bookmarks.
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration buffer
+    ((default-modes
+         (pushnew 'nyxt/mode/bookmark:history-mode %slot-value%))))
+#+end_src
+
+| Function              | Binding | Brave |
+|-----------------------+---------+-------|
+| Bookmark current page | C-x r M |       |
+
+Ad-blocking
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration buffer
+    ((default-modes
+         (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
+#+end_src
+
+TODO Make Duckduckgo the default search engine.
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration context-buffer
+  "Add a single search engine manually."
+  ((search-engines
+    (pushnew
+     (make-instance 'search-engine :name "DuckDuckGo" :shortcut "d"
+                    :search-url "https://duckduckgo.com/?q=~a"
+                    :fallback-url "https://duckduckgo.com")
+     %slot-value%))))
+#+end_src
+
+TODO C-s to search in page
+
+** Keybindings
+These are relevant browsing-specific default bindings:
+
+| Function     | Binding            | Brave   |
+|--------------+--------------------+---------|
+| New tab      | M-l                | C-t     |
+| Close tab    | M-k RET, C-x k RET | C-w     |
+| Focus on URL | C-l                | C-l     |
+| Reload       | C-r                | C-r, F5 |
+
+On top of that standard Emacs bindings apply.
+
+
+
+
