@@ -25,18 +25,13 @@ kill_xflux() {
 
 start() {
   start_xflux
-
-  if [ ! -f "/tmp/docked" ]; then
-    ~/scripts/sxhkd/backlight percent 60 >/dev/null
-  fi
+  natural-brightness
 }
 
 stop() {
-  # start_xflux # start before killing to reset screen temperature
-  # kill_xflux
-  if [ ! -f "/tmp/docked" ]; then
-    ~/scripts/sxhkd/backlight max >/dev/null
-  fi
+  start_xflux # start before killing to reset screen temperature
+  kill_xflux
+  natural-brightness
 }
 
 export DISPLAY=:0

@@ -1,0 +1,59 @@
+#! /bin/sh
+
+SLEEP_TIME=21 # in winter time go to bed around 21:00
+WIND_DOWN_DURATION=1 # start preparing for bed around 20:00
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ natural-brightness
+Adjust the screens brightness based on the time of day (and season).
+
+Flags:
+  -q: quiet, suppress notification
+EOF
+  exit
+fi
+
+sunset_time=$(~/scripts/sunrise set)
+sunset_hour=$(echo $sunset_time | cut -d: -f1)
+sunset_minute=$(echo $sunset_time | cut -d: -f2)
+if [ "$sunset_minute" -gt "30" ]; then # round up/down to whole hour
+  sunset_hour=$(echo $sunset_hour+1 | bc)
+fi
+
+daylight_savings=winter
+month=$(date +%m)
+# eu changes to summer around 30.03 and back around 30.10
+if [ "$month" -gt "4" ] || [ "$month" -lt "10" ]; then
+  daylight_savings=summer
+fi
+
+wind_down_hour=$(echo ${SLEEP_TIME}-${WIND_DOWN_DURATION} | bc)
+if [ "$daylight_savings" = "summer" ]; then
+  wind_down_hour=$(echo ${SLEEP_TIME}+1-${WIND_DOWN_DURATION} | bc)
+fi
+
+set_brightness_percent() {
+  set_percentage=$1
+  current_percentage=$(/home/jneidel/scripts/sxhkd/backlight -q dynamic-get)
+  override=$2
+
+  if [ -n "$override" ]; then
+    /home/jneidel/scripts/sxhkd/backlight -q dynamic-percent $1
+
+  # don't increase brightness if the user manually lowered it, but do correct it if the dock turned the screen off
+  elif [ "$current_percentage" -gt "$set_percentage" ] || [ "$current_percentage" -lt 1 ]; then
+    /home/jneidel/scripts/sxhkd/backlight -q dynamic-percent $1
+  fi
+}
+
+two_h_before_sunset=$(echo ${sunset_hour}-2 | bc)
+if /home/jneidel/scripts/between 04 $two_h_before_sunset 2>/dev/null; then
+  set_brightness_percent 100 true
+elif /home/jneidel/scripts/between $two_h_before_sunset $sunset_hour 2>/dev/null; then
+  set_brightness_percent 55
+elif /home/jneidel/scripts/between $sunset_hour $wind_down_hour 2>/dev/null; then
+  set_brightness_percent 40 # winddown might start before sunset in summer?
+elif /home/jneidel/scripts/between $wind_down_hour 2>/dev/null; then
+  set_brightness_percent 10
+fi

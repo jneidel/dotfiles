@@ -1,5 +1,7 @@
 #! /bin/sh
 
+LOCK_FILE=/tmp/docked
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
 $ dock [connect|disconnect]
@@ -12,22 +14,32 @@ fi
 export DISPLAY=:0
 export XAUTHORITY=/run/user/1000/Xauthority
 
+export TMUX=/tmp/tmux-1000/default
+tmux_session=main
+
 case "$1" in
   connect)
-    /home/jneidel/scripts/monitor -m on
-    touch /tmp/docked
+    if /home/jneidel/scripts/monitor -m on; then
+      /home/jneidel/scripts/monitor off
+      /home/jneidel/scripts/monitor -m on
+    fi
+    touch $LOCK_FILE
+
     sleep 4s; /home/jneidel/scripts/sxhkd/backlight set 0
+    if tmux has-session -t $tmux_session; then
+      tmux -u new-window -d -n "dock" -t $tmux_session:98
+      tmux send-keys -t $tmux_session:98 "/home/jneidel/scripts/cron/natural-brightness; exit" "enter"
+    fi
     ;;
   disconnect)
-    /home/jneidel/scripts/monitor off
-    rm /tmp/docked 2>/dev/null
+    /home/jneidel/scripts/monitor off &
+    rm $LOCK_FILE /tmp/secondary-monitor 2>/dev/null
+    /home/jneidel/scripts/sxhkd/backlight percent 50 &
 
-    if /home/jneidel/scripts/between 22; then
-        /home/jneidel/scripts/sxhkd/backlight percent 10
-    elif /home/jneidel/scripts/between 19; then
-        /home/jneidel/scripts/sxhkd/backlight percent 60
-    else
-        /home/jneidel/scripts/sxhkd/backlight max
+    if tmux has-session -t $tmux_session; then
+      tmux -u new-window -d -n "dock" -t $tmux_session:98
+      sleep 8s; tmux send-keys -t $tmux_session:98 "/home/jneidel/scripts/cron/natural-brightness; exit
+" "enter"
     fi
     ;;
 esac
