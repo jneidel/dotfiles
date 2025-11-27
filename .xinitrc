@@ -54,7 +54,19 @@ mkfifo /tmp/xobpipe
 sleep 2; tail -f /tmp/xobpipe | xob &
 
 # desktop monitor
-# ~/scripts/conky/start-conky &
+~/scripts/conky/start-conky &
+
+# CPU frequency scaling governor
+# TODO test whats the minimal required setup. Both uncommented worked.
+(sleep 1m; sudo cpupower frequency-set --governor conservative) &
+# {
+#   sleep 30s
+#   if tmux has-session -t main; then
+#     tmux -u new-window -d -n "freq" -t main:98
+#     tmux send-keys -t main:98 "sudo cpupower frequency-set --governor conservative; exit" "enter"
+#   fi
+# } &
+## systemd service fails on boot, but works once in userspace
 
 # lock the screen on suspend/hibernate
 xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &
