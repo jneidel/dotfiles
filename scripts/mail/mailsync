@@ -106,9 +106,10 @@ done
 
 wait
 
-notmuch new 2>/dev/null
+notmuch new
 afew --tag --new
 afew --move-mails --all
+# mu index
 
-#Create a touch file that indicates the time of the last run of mailsync
+# Create a touch file that indicates the time of the last run of mailsync
 touch "$lastrun"

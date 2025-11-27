@@ -1,0 +1,16 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ watch-imap
+Self-restarting goimapnotify process.
+EOF
+  exit
+fi
+
+watch_imap() {
+  goimapnotify -conf ~/.config/imapnotify/jneidel.de.yaml
+  watch_imap # restart if process shuts down because of fatal "connection reset by peer" error after suspend
+}
+
+watch_imap

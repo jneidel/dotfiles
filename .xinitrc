@@ -77,6 +77,9 @@ nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 # fix backlight permissions
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
+# fetch new mail to local when it arrives on imap server
+~/scripts/mail/watch-imap >/dev/null 2>&1 &
+
 # fix cpu frequency
 (
   echo passive | sudo tee /sys/devices/system/cpu/intel_pstate/status ; sudo cpupower frequency-set -g userspace
