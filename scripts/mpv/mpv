@@ -15,8 +15,7 @@ EOF
   exit
 fi
 
-command -v /bin/mpv >/dev/null || { echo "mpv is not installed"; exit 1; }
-command -v manage-mpv-sockets >/dev/null || { echo "manage-mpv-sockets script is not in PATH"; exit 127; }
+hash /bin/mpv manage-mpv-sockets || exit 127
 
 SOCKET=
 if echo "$@" | grep '\--socket-name' >/dev/null; then
@@ -48,10 +47,10 @@ if echo "$@" | grep -e "projects/uni" -e "mediathek.htw-berlin.de" >/dev/null; t
 fi
 
 if btdevice >/dev/null; then
-  echo "Adapting for bluetooth delay (-120ms)"
-  /bin/mpv $ICP_SOCK $YTDL_OPTIONS $OPTIONS --audio-delay='-.120' "$@"
+  echo "Adapting for bluetooth delay (+120ms)"
+  /bin/mpv $ICP_SOCK $YTDL_OPTIONS $OPTIONS --audio-delay='+.120' "$@"
 else
-  echo "Adapting for speaker delay (+100ms)"
-  /bin/mpv $ICP_SOCK $YTDL_OPTIONS $OPTIONS --audio-delay='+.100' "$@"
+  # echo "Adapting for speaker delay (+100ms)"
+  /bin/mpv $ICP_SOCK $YTDL_OPTIONS $OPTIONS  "$@" # --audio-delay='+.100' "$@"
 fi
 # jbl connect ideal: -.380

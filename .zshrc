@@ -52,7 +52,7 @@ if [ "$TERM" = "tmux-256color" ]; then
 fi
 
 ## Paths
-export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/.rd/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/sbin:/usr/bin/site_perl:$HOME/.cargo/bin
+export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/.rd/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/sbin:/usr/bin/site_perl:$HOME/.cargo/bin:$(ls -d ~/.local/share/gem/ruby/*/bin | tr '\n' ':')
 export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
 export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/3_areas:~/org/4_resources:~/org/4_resources/media:~/scripts:~/.config:~/code/notes:~/.local/org
 
@@ -100,5 +100,5 @@ source $ZSH_DIR/init.zsh
 # start xorg on first login into the tty
 # runs commands in ~/.xinitrc
 if [ "$(tty)" = "/dev/tty1" ]; then
-  pgrep -x Xorg >/dev/null || startx -- -dpi 120
+  pgrep -x Xorg >/dev/null || startx -- -dpi 120 -ardelay 185 -arinterval 10 # rate only applies on startup
 fi

@@ -1,0 +1,18 @@
+#! /bin/sh
+
+FILE="/home/jneidel/org/2_areas/routine/My Sustainable Training Routine.org"
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ append-health-tracking-date
+Appends current date to org file: $FILE
+To be called through cron.
+
+Example:
+  $ append-health-tracking-date
+EOF
+  exit
+fi
+
+#       Date | Breath   | Leg day | Push ups | Plank | Full | m2  | m3  | m4  | m5  |
+printf "| %s |          |         |          |       |      |     |     |     |     |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"

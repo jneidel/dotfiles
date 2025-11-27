@@ -632,6 +632,7 @@ urlview Open links in external browser
 
 [imapsync]
 isync mbsync for syncing imap mail
+msmtp SMTP client
 
 [notmuch]
 notmuch Mail tagger

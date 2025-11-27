@@ -19,6 +19,7 @@ rm -f ~/.password-store/heroku.gpg 2>/dev/null
 rm -f ~/1 2>/dev/null
 rm -f ~/.netrc 2>/dev/null
 rm -f /tmp/ddc-lock 2>/dev/null
+rm -f ~/org/0_inbox/.org 2>/dev/null
 
 # dirs
 rmdir ~/Desktop 2>/dev/null
@@ -43,6 +44,7 @@ rm -rf ~/.standard-v14-cache 2>/dev/null
 rm -rf ~/.gnome 2>/dev/null
 rm -rf ~/.zi 2>/dev/null
 rm -rf ~/.designer 2>/dev/null
+rm -rf ~/Games ~/Screenshots 2>/dev/null
 
 findex $ORG_MEDIA/phone/music -type d 'rmdir "$1"' 2>/dev/null
 

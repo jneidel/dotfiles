@@ -260,7 +260,7 @@ create /etc/pam.d
 /etc/default/cpupower
 
 [sioyek]
-.config/sioyek
+create .config/sioyek
 .config/sioyek/keys_user.config
 
 [kmonad]

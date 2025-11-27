@@ -166,8 +166,13 @@ download_updates() {
 list_new_updates() {
   file="${XDG_DATA_HOME:-$HOME/.local/shared}/mangadl-new"
   if sort -u $file 2>/dev/null; then
-    if gum confirm "Open YACReaderLibrary?"; then
-      YACReaderLibrary >/dev/null 2>&1 &
+    if hash YACReaderLibrary; then
+      if gum confirm "Open YACReaderLibrary?"; then
+        YACReaderLibrary >/dev/null 2>&1 &
+        if hash open-i3-workspace; then
+          open-i3-workspace 4
+        fi
+      fi
     fi
 
     if gum confirm "Clear the list of new updates?"; then

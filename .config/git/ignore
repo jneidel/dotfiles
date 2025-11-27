@@ -27,3 +27,6 @@ tmp/
 *.tec
 *.log
 *.toc
+
+# coding agents
+.agent-shell

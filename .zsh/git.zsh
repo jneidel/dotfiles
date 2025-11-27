@@ -100,7 +100,7 @@ re() {
 alias reh="git reset --hard"
 
 ## log
-alias gl="git log --oneline --graph --decorate"
+alias gl="git log --oneline --graph --decorate --date=relative"
 alias reflog="git reflog"
 
 ## diff

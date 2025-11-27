@@ -44,6 +44,8 @@ nice -n 5 dunst &
 # bluelight filter
 if [ "$(date +%H)" -ge 18 ]; then
   bluelight start &
+else
+  xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1 &
 fi
 
 # music player daemon
@@ -69,9 +71,9 @@ sleep 2; tail -f /tmp/xobpipe | xob &
 ## systemd service fails on boot, but works once in userspace
 
 # lock the screen on suspend/hibernate
-xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &
+# xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &
 # lock screen after 5h of inactivity
-xset dpms 0 0 18000
+# xset dpms 0 0 18000
 # https://wiki.archlinux.org/title/Session_lock
 # https://unix.stackexchange.com/a/639552
 
@@ -90,7 +92,7 @@ nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
 # fetch new mail to local when it arrives on imap server
-~/scripts/mail/watch-imap >/dev/null 2>&1 &
+sleep 10s; ~/scripts/mail/watch-imap >/dev/null 2>&1 &
 
 # fix cpu frequency
 (
@@ -99,9 +101,9 @@ sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
 ## autostart gui applications
 nice -n -7 kitty ~/scripts/tmux/tp main &
-nice -n 19 brave &
-nice -n 19 signal-desktop &
-nice -n 19 watch-for-deadline-changes &
+nice -n 17 brave &
+nice -n 17 signal-desktop &
+nice -n 17 watch-for-deadline-changes &
 emacs &
 
 # start window manager

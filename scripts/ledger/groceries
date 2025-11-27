@@ -17,7 +17,7 @@ Parameters:
 Titles with special treatment:
 - "Lidl": deduct from shared
 - "DM": 60/40 split between ex:food/ex:hygine
-- "Eier und Brot": deduct 100% from me
+- "Eier und Brot", "Fisch": deduct 100% from me
 
 Example:
   $ groceries "Edeka" "18.5+5.6"
@@ -49,7 +49,7 @@ $DATE $TITLE
   [shared]                 $AMOUNT_TOTAL
 EOF
 };;
-    "Eier und Brot")
+    "Eier und Brot"|"Fisch")
         print() {
 cat <<EOF
 

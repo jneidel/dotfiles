@@ -7,10 +7,10 @@
 [alias]
   s = status
   b = branch
-  l = log --oneline --graph --decorate
+  l = log --oneline --graph --decorate --date=relative
   ref = reflog
 [commit]
-  ; gpgsign = true
+  # gpgsign = true
   # How to setup commit signing:
   # https://help.github.com/en/articles/managing-commit-signature-verification
 [pull]
@@ -22,3 +22,5 @@
 [rebase]
 	autosquash = true
 	autostash = true
+[github]
+	user = jneidel

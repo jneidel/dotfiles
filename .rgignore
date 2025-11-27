@@ -11,6 +11,8 @@
 .pulse-cookie
 .slime
 .slime-history.eld
+.steam
 .vim
 .zcompcache
 tmp
+*.kdbx

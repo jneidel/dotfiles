@@ -1,0 +1,20 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ factorio <++>
+<++>
+
+Parameters:
+  \$1: <++>
+  [\$1]: <++>
+
+Example:
+  $ factorio <++>
+EOF
+  exit
+fi
+
+hash /bin/factorio || exit 127
+
+nice -n 15 /bin/factorio >/dev/null 2>&1 &

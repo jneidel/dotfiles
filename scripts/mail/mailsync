@@ -107,8 +107,8 @@ done
 wait
 
 notmuch new
-afew --tag --new
-afew --move-mails --all
+afew --tag --new 2>/dev/null
+afew --move-mails --all 2>/dev/null
 # mu index
 
 # Create a touch file that indicates the time of the last run of mailsync
