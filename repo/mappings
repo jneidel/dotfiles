@@ -209,8 +209,8 @@ create .config/X11
 .config/X11/Xresources
 
 [gpg]
-create .local/share/gnupg
-.local/share/gnupg/gpg-agent.conf
+create .config/gnupg
+.config/gnupg/gpg-agent.conf
 
 [pipewire]
 create .config/pipewire
