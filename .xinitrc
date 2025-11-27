@@ -7,12 +7,14 @@
 # ö mod-tap: tap = ö, hold = hyper
 # setxkbmap -option caps:escape &
 sudo kmonad ~/.config/kmonad/mod-tap-mappings.kbd &
-sleep 5s && xmodmap ~/.config/Xmodmap &
-sleep 15s && xmodmap ~/.config/Xmodmap &
+{
+  sleep 5s; xmodmap /home/jneidel/.config/Xmodmap-remove-Hyper_R; xmodmap ~/.config/Xmodmap
+  sleep 15s; xmodmap /home/jneidel/.config/Xmodmap-remove-Hyper_R; xmodmap ~/.config/Xmodmap
+} &
 
 # set higher keyboard repeat after kmonad/xmodmap
-sleep 7s && xset r rate 185 100 &
-sleep 17s && xset r rate 185 100 &
+(sleep 7s && xset r rate 185 100) &
+(sleep 17s && xset r rate 185 100) &
 
 # disable annoying system beep
 xset -b &

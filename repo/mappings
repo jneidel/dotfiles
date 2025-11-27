@@ -64,6 +64,7 @@ create .config/polybar
 
 [xmodmap]
 .config/Xmodmap
+.config/Xmodmap-remove-Hyper_R
 
 [xresources]
 create .config/X11

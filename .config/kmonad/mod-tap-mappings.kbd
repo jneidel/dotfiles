@@ -12,11 +12,11 @@
 )
 
 (defalias
-  ;; capslock mod-tap: tap = esc, hold = control
-  caps_ctrl_esc (tap-hold-next 200 esc lctl)
+  ;; capslock mod-tap: tap = ret, hold = control
+  caps_ctrl_esc (tap-hold-next 200 return lctl)
 
-  ;; ö mod-tap: tap = ö, hold = hyper
-  ö_hyper (tap-hold-next 200 semicolon end)
+  ;; ö mod-tap: tap = ö, hold = hyper (through right super via xmodmap)
+  ö_hyper (tap-hold-next 200 semicolon rmet)
   ;; why is the hold mapped to end?
   ;; kmonad doesn't know hyper (https://github.com/kmonad/kmonad/issues/22).
   ;; X does, so we have kmoand output a keysignal (end)
