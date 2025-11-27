@@ -6,22 +6,37 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ wifipass
 Print current wifi connection and save the PSK to the clipboard
+
+Commands:
+  ssid: print only the ssid
+  password: print only the password
 EOF
   exit
 fi
 
-command -v tee >/dev/null || { echo "tee is not installed" 1>&2; exit 127; }
-command -v nmcli >/dev/null || { echo "nmcli is not installed" 1>&2; exit 127; }
-command -v xclip >/dev/null || { echo "xclip is not installed" 1>&2; exit 127; }
-command -v su >/dev/null || { echo "su is not installed" 1>&2; exit 127; }
-command -v notify-send >/dev/null || { echo "notify-send is not installed" 1>&2; exit 127; }
+hash tee nmcli xclip su notify-send || exit 127
 
-NAME=$(nmcli device | grep -F "wifi " | grep -F connected | awk '{ $1=$2=$3=""; print $0 }' | cut -d\  -f4-)
 
-printf "Wifi Connection\nSSID: %s\nPSK : \033[1;32m" "$NAME"
-sudo su -c "cat \"$DIR/$NAME\"*" | grep "^psk" | cut -d= -f2 | tail -n 1 | tee >(xclip -sel clip)
+print_pass() {
+  sudo su -c "cat \"$DIR/$(print_ssid)\"*" | grep "^psk" | cut -d= -f2 | tail -n 1
+}
+print_ssid() {
+  nmcli device | grep -F "wifi " | grep -F connected | awk '{ $1=$2=$3=""; print $0 }' | cut -d\  -f4-
+}
+pretty_print() {
+  printf "Wifi Connection\nSSID: %s\nPSK : \033[1;32m" "$(print_ssid)"
+  print_pass | tee >(xclip -sel clip)
 
-echo "----------------------------------------------------------------------------------------------------------------------------------"
-figlet $(xclip -sel clip -o) -w 180 -f roman
+  echo "----------------------------------------------------------------------------------------------------------------------------------"
+  figlet $(xclip -sel clip -o) -w 180 -f roman
 
-notify-send "Saved wifi password to clip" -t 1202
+  notify-send "Saved wifi password to clip" -t 1202
+}
+
+if [ "$1" = "ssid" ]; then
+  print_ssid
+elif [ "$1" = "password" ]; then
+  print_pass
+else
+  pretty_print
+fi
