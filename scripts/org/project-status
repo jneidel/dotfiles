@@ -8,6 +8,9 @@ Change the status of a project directory in $ORG_PROJECTS
 Commands:
   set STATUS PATH: for PATH set it's status to STATUS
 
+Argument:
+  -nomv: don't move the directory
+
 Statuses:
   - active
   - inactive
@@ -17,9 +20,14 @@ Statuses:
 
 Example:
   $ project-status set blocked "~/org/1_project/🟢 switch to emacs"
+  $ project-status set blocked "~/org/1_project/🟢 switch to emacs" -nomv
 EOF
   exit
 fi
+
+argument="$4"
+no_move=false
+[ "$argument" = "-nomv" ] && no_move=true
 
 has_status() {
   project_name="$1"
@@ -39,8 +47,10 @@ set_traffic_light_status() { # green, yellow, red; aka active, inactive, blocked
   fi
 
   new_path="$ORG_PROJECTS/${status}${project_name_no_emoji_prefix}"
-  mv "$path" "$new_path" 2>/dev/null
   echo "$new_path"
+  if ! $no_move; then
+    mv "$path" "$new_path" 2>/dev/null
+  fi
 }
 
 remove_status() {
@@ -55,8 +65,10 @@ remove_status() {
   fi
 
   new_path="$ORG_PROJECTS/${project_name_no_emoji_prefix}"
-  mv "$path" "$new_path" 2>/dev/null
   echo "$new_path"
+  if ! $no_move; then
+    mv "$path" "$new_path" 2>/dev/null
+  fi
 }
 
 set_important() {
@@ -78,8 +90,10 @@ set_important() {
     new_path="$ORG_PROJECTS/${status_emoji}${ORG_PROJECT_STATUS_IMPORTANT} ${project_name_no_emoji_prefix}"
   fi
 
-  mv "$path" "$new_path" 2>/dev/null
   echo "$new_path"
+  if ! $no_move; then
+    mv "$path" "$new_path" 2>/dev/null
+  fi
 }
 
 command="$1"

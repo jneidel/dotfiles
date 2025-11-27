@@ -2,8 +2,8 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PROJECTS" ]; then
   cat <<EOF
-$ select-project
-Interactively select a project in $ORG_PROJECTS
+$ select-design
+Interactively select a design in $ORG_PROJECTS/.design
 
 If caller is not a tty, print list of options instead.
 EOF
@@ -17,14 +17,14 @@ if [ ! -t 0 ]; then
     has_tty=false
 fi
 
-declare -a projects
+declare -a designs
 while IFS= read -r dir; do
   [[ -z "$dir" ]] && continue
-  projects+=("$dir")
-done < <(find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+  designs+=("$dir")
+done < <(find "$ORG_PROJECTS/.design" -maxdepth 2 -mindepth 2 -type d -name "[^.]*" | rev | cut -d/ -f1-2 | rev)
 
 if $has_tty; then
-  gum filter ${projects[*]}
+  gum filter ${designs[*]}
 else
-  printf "%s\n" "${projects[@]}"
+  printf "%s\n" "${designs[@]}"
 fi
