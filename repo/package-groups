@@ -639,5 +639,11 @@ afew Mail mover
 [imapnotify]
 goimapnotify Notify of IMAP changes
 
+[spellchecking]
+enchant API for spellcheckers
+hunspell Spellchecker
+hunspell-de German dict
+hunspell-en_us English dict
+
 [nyxt]
 nyxt Hackers browser

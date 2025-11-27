@@ -280,6 +280,9 @@ create .config/GIMP/2.10
 create /etc/udev/rules.d
 /etc/udev/rules.d/thinkpad-dock.rules
 
+[spellchecking]
+.config/enchant
+
 [ripgrep]
 .rgignore
 .config/.rgignore
