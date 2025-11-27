@@ -639,6 +639,9 @@ afew Mail mover
 [imapnotify]
 goimapnotify Notify of IMAP changes
 
+[ddc]
+ddcutil Control monitor brightness
+
 [spellchecking]
 enchant API for spellcheckers
 hunspell Spellchecker

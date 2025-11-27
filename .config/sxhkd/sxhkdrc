@@ -66,12 +66,12 @@ XF86Display
 
 ## brightness
 XF86MonBrightnessUp
-  ~/scripts/sxhkd/backlight p +10 >/dev/null
+  ~/scripts/sxhkd/backlight dynamic-percent +10 >/dev/null
 XF86MonBrightnessDown
-  ~/scripts/sxhkd/backlight p -10 >/dev/null
+  ~/scripts/sxhkd/backlight dynamic-percent -10 >/dev/null
 
 shift + XF86MonBrightnessUp
-  ~/scripts/sxhkd/backlight p +01 >/dev/null
+  ~/scripts/sxhkd/backlight p +01 >/dev/null # small units don't make sense because monitor control is quite slow
 shift + XF86MonBrightnessDown
   ~/scripts/sxhkd/backlight p -01 >/dev/null
 

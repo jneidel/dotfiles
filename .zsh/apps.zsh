@@ -190,9 +190,9 @@ alias vl="vim-light"
 
 ## brightness
 alias bright="backlight"
-alias max="bright max N1"
-alias min="bright min N1"
-alias half="bright p 50 N1"
+alias max="bright dynamic-percent 100 N1"
+alias min="bright dynamic-percent 0 N1"
+alias half="bright dynamic-percent 50 N1"
 
 ## cat updates files
 alias mup="show-updates manga"

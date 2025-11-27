@@ -2,6 +2,8 @@
 
 DIR=/sys/class/backlight
 XOB=/tmp/xobpipe
+DOCKED_LOCK=/tmp/docked
+DDC_LOCK=/tmp/ddc-lock
 
 case "$(cat /etc/hostname)" in
   jneidel-x240) ARCH=intel_backlight ;;
@@ -20,19 +22,43 @@ $ backlight COMMAND
 Interact with the backlight.
 
 Commands:
-  get: get current brightness
-  set BRIGHTNESS: set the brightness
-  max: set the max brightness ($MAX)
-  min: set the min brightness ($MIN)
-  percent +/-N: set the brightness using percentages (+02, -5)
+  Laptop display:
+    get: get current brightness
+    set BRIGHTNESS: set the brightness
+    max: set the max brightness ($MAX)
+    min: set the min brightness ($MIN)
+    percent [+/-]N: set the brightness using percentages (+02, -5)
+  External monitor:
+    mget: get current brightness
+    mset BRIGHTNESS: set the brightness
+    mmax: set to maximum brightness
+    mmin: set to minumum brightness
+    mpercent [+/-]N: set the brightness using percent (+02, -20)
+  Dynamic:
+  (act on monitor if connected, otherwise laptop display)
+    dynamic-get: get the current brightness as a percentage
+    dynamic-percent [+/-]N: set the brightness using percent
+
+Flags:
+  -q: quiet, disable notification
 
 Example:
   $ backlight set 250
-  $ backlight p +1 # increase brightness by 10%
-  $ backlight p +02 # increase brightness by 2%
+  $ backlight percent +10 # increase brightness by 10%
+  $ backlight percent -02 # decrease brightness by 2%
+  $ backlight percent 20 # set to 20%
+  $ backlight -q mmax
 EOF
   exit
 fi
+
+disable_notification=false
+while getopts "q" opt; do
+  case "$opt" in
+    q) disable_notification=true;;
+ esac
+done
+shift $((OPTIND - 1))
 
 FILE=$DIR/$ARCH/brightness
 # you might need to run
@@ -43,7 +69,7 @@ FILE=$DIR/$ARCH/brightness
 set_brightness() {
   if [ -n "$1" ] && [ "$1" -gt -1 ] && [ "$1" -lt "$(($MAX+1))" ]; then
     echo $1 >$FILE
-    notification
+    notification $(get_brightness) $MAX
   else
     echo "Invalid number passed to set"
     echo "It needs to be between 0 and $MAX"
@@ -52,9 +78,12 @@ set_brightness() {
 }
 
 notification() {
-  BRIGHTNESS=$(get_brightness)
-  BRIGHTNESS_PERCENT=$(($BRIGHTNESS*100/$MAX))
-  echo $BRIGHTNESS_PERCENT >$XOB
+  if ! $disable_notification; then
+    BRIGHTNESS=$1
+    MAX_VAL=$2
+    BRIGHTNESS_PERCENT=$(($BRIGHTNESS*100/$MAX_VAL))
+    echo $BRIGHTNESS_PERCENT >$XOB
+  fi
 }
 
 get_brightness() {
@@ -88,8 +117,8 @@ percent() {
     set_brightness $RES
   else
     PERCENTAGE=$1
-    if [ "$PERCENTAGE" -gt 100 ] || [ "$PERCENTAGE" -lt 1 ]; then
-      echo "Percentage need to be in range 1-100"
+    if [ "$PERCENTAGE" -gt 100 ] || [ "$PERCENTAGE" -lt 0 ]; then
+      echo "Percentage need to be in range 0-100"
       exit 1
     fi
 
@@ -98,11 +127,99 @@ percent() {
   fi
 }
 
+MONITOR_MIN=0
+MONITOR_MAX=100
+set_monitor_brightness() {
+  if [ -f "/tmp/secondary-monitor" ]; then
+    ddcutil setvcp 10 $1 -d 2
+  else
+    ddcutil setvcp 10 $1
+  fi
+  notification $(get_monitor_brightness) $MONITOR_MAX
+}
+get_monitor_brightness() {
+  if [ -e "/tmp/secondary-monitor" ]; then
+    ddcutil getvcp 10 -d 2 | cut -d, -f1 | rev | cut -d\  -f1 | rev
+  else
+    ddcutil getvcp 10 | cut -d, -f1 | rev | cut -d\  -f1 | rev
+  fi
+}
+monitor_percent() {
+  # ddcutil execution is quite slow, so use lockfile + sleep to stall multiple
+  # invokations in succession (via keybinding) to avoid debilitating CPU spike
+  if [ -e "$DDC_LOCK" ]; then
+    echo "ddcutil is locked; retry in .5s"
+    sleep .5s
+    monitor_percent $1
+    return
+  else
+    touch $DDC_LOCK
+  fi
+
+  if [ -z "$1" ]; then
+    echo "No argument passed to percent"
+    rm $DDC_LOCK
+    exit 1
+  elif [ "$(echo $1 | cut -c 1)" = "+" ]; then
+    PERCENTAGE=$(echo $1 | cut -d + -f 2)
+    RES=$(echo "$(get_monitor_brightness)+$PERCENTAGE" | bc | cut -d . -f 1)
+    if [ "$RES" -lt -1 ]; then
+      RES=0
+    elif [ "$RES" -gt "$MONITOR_MAX" ]; then
+      RES=$MAX
+    fi
+    set_monitor_brightness $RES
+  elif [ "$(echo $1 | cut -c 1)" = "-" ]; then
+    PERCENTAGE=$(echo $1 | cut -d - -f 2)
+    RES=$(echo "$(get_monitor_brightness)-$PERCENTAGE" | bc | awk '{printf "%f", $0}' | cut -d . -f 1)
+    if [ "$RES" -lt -1 ] || [ "$RES" -eq -1 ] || [ "$RES" -eq -0 ]; then
+      RES=0
+    elif [ "$RES" -gt "$MAX" ]; then
+      RES=$MONITOR_MAX
+    fi
+    set_monitor_brightness $RES
+  else
+    PERCENTAGE=$1
+    if [ "$PERCENTAGE" -gt 100 ] || [ "$PERCENTAGE" -lt 0 ]; then
+      echo "Percentage need to be in range 0-100"
+      exit 1
+    fi
+
+    set_monitor_brightness $PERCENTAGE
+  fi
+  rm $DDC_LOCK
+}
+
+dynamic_percent() {
+  if [ -e "$DOCKED_LOCK" ]; then
+    monitor_percent $1
+  else
+    percent $1
+  fi
+}
+dynamic_percent_get() {
+  if [ -e "$DOCKED_LOCK" ]; then
+    get_monitor_brightness
+  else
+    echo $(($(get_brightness)*100/$MAX))
+  fi
+}
+
 case $1 in
+  # laptop display
   s|set) set_brightness $2;;
   g|get) get_brightness;;
   max) set_brightness $MAX;;
   min) set_brightness $MIN;;
   p|perc|percent) percent $2;;
+  # monitor
+  mset) set_monitor_brightness $2;;
+  mget) get_monitor_brightness;;
+  mmax) set_monitor_brightness $MONITOR_MAX;;
+  mmin) set_monitor_brightness $MONITOR_MIN;;
+  mpercent) monitor_percent $2;;
+  # dynamic (monitor or display)
+  dynamic-percent) dynamic_percent $2;;
+  dynamic-get) dynamic_percent_get;;
   *) echo "Please pass a command. Pass 'help' for help.";;
 esac
