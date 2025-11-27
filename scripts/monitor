@@ -1,23 +1,36 @@
 #! /bin/sh
 
-command -v xrandr >/dev/null || { echo "xrandr is not installed"; exit 1; }
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ monitor [on|off] [-m]
-Toggle the connected display $MONITOR as a second monitor.
+  printf "$ monitor [-m|-e] [-s] [on|off|swap]
+Control the connected monitor in various ways.
 
-Parameters:
-  [\$1]: on|off - turn display on/off
+Commands:
+      : if none, toggle on/off (mirroring)
+  on  : turn external display on
+  off : turn external display off
+  swap: swap between two connected external displays
+        transfers mirroring from one to the other
 
-Flags:
-  -m: mirror instead of adding as 2nd monitor
+Action flags:
+  -m: mirror (default)
+  -e: extend, add as a second screen
+
+Selection flags:
+  -s: use the second of the two connected monitors
+      if omitted uses the first one
 
 Example:
+  $ monitor # toggle mirroring on/off
   $ monitor off
   $ monitor -m
   $ monitor -m on
+  $ monitor -s -m on
+  $ monitor -e
+  $ monitor swap
 "; exit
 fi
+
+hash xrandr || exit 127
 
 case `cat /etc/hostname` in
   jneidel-x270)
@@ -38,18 +51,23 @@ esac
 [ -z "$MAIN_RESOLUTION" ] && MAIN_RESOLUTION=$(xrandr | grep primary | cut -d\  -f4 | awk -F+ '{ print $1 }')
 
 # first connected monitor (apart from MAIN) it can find
-MONITOR=$(xrandr | grep " connected" | grep -v "$MAIN" | head -n1 | cut -d\  -f1)
+MONITOR_PRIMARY=$(xrandr | grep " connected" | grep -v "$MAIN" | head -n1 | cut -d\  -f1)
+MONITOR_SECONDARY=$(xrandr | grep " connected" | grep -ve "$MAIN" -e "$MONITOR_PRIMARY" | head -n1 | cut -d\  -f1)
 MONITOR_RESOLUTION=1920x1080
 
 printf "Using:
-  Main    : $MAIN - $MAIN_RESOLUTION
-  External: $MONITOR - $MONITOR_RESOLUTION
+  Main     : $MAIN - $MAIN_RESOLUTION
+  Primary  : $MONITOR_PRIMARY - $MONITOR_RESOLUTION
+  Secondary: $MONITOR_SECONDARY
 \n"
 
-IS_MIRROR=false
-while getopts "m" opt; do
+IS_MIRROR=true
+MONITOR=$MONITOR_PRIMARY
+while getopts "mse" opt; do
   case "$opt" in
     m) IS_MIRROR=true;;
+    s) MONITOR=$MONITOR_SECONDARY;;
+    e) IS_MIRROR=false;;
     :) printf '%s\n' "error: -$OPTARG requires an argument" >&2; exit 2 ;;
  esac
 done
@@ -65,8 +83,10 @@ turn_off() {
   if [ -n "$MONITOR" ]; then
     xrandr --output $MONITOR --off
     echo "Turned external monitor off."
+    true
   else
     echo "No monitor found, doing nothing."
+    false
   fi
 }
 
@@ -84,16 +104,43 @@ turn_on() {
   else
     add_monitor || exit 1
   fi
+  xwallpaper --zoom ~/.config/wallpaper.png &
 
   echo "Turned external monitor on"
-
-  xwallpaper --zoom ~/.config/wallpaper.png &
+  true
 }
 
-if xrandr --listactivemonitors | grep " $MONITOR" >/dev/null; then
-  [ ! "$1" = "on" ] && turn_off
-else
-  [ ! "$1" = "off" ] && turn_on
+swap() {
+  monitor_active="$(xrandr --listmonitors | grep -v "*" | tail -n1 | cut -d\  -f3 | cut -c2-)"
+  if [ "$MONITOR_PRIMARY" ] && [ "$MONITOR_SECONDARY" ] && [ "$monitor_active" ]; then
+    if [ "$monitor_active" = "$MONITOR_PRIMARY" ]; then
+      monitor -s -m on &
+      monitor off &
+      touch /tmp/secondary-monitor
+    else
+      monitor -m on &
+      monitor -s off &
+      rm /tmp/secondary-monitor
+    fi
+  fi
+  natural-brightness -q
+}
+
+if [ "$1" = "swap" ]; then
+  swap
+  exit 0
 fi
 
-true
+if xrandr --listactivemonitors | grep " $MONITOR" >/dev/null; then
+  if [ ! "$1" = "on" ]; then
+    turn_off
+  else
+    false
+  fi
+else
+  if [ ! "$1" = "off" ]; then
+    turn_on
+  else
+    false
+  fi
+fi

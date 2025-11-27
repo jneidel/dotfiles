@@ -280,6 +280,7 @@ alias mpr="mpd-toggle-local"
 alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
 alias ho="ssh home"
 alias phone="mpv 'http://192.168.178.62:8080/stream.mjpeg'"
+alias ms="monitor swap"
 
 ## cameras
 alias webcam='mpv "/dev/video0"'
