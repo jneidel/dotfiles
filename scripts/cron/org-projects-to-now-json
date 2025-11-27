@@ -1,5 +1,6 @@
 #! /bin/sh
 
+export HOME=/home/jneidel
 . $HOME/.zsh/org.env
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PROJECTS" ]; then
@@ -14,12 +15,25 @@ hash jq || exit 127
 
 get_project_list() {
   potential_projects=$(mktemp)
-  find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -not -path '*/.*' | sort -V >$potential_projects
+  find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -not -path '*/.*' -not -path '*trip: *' | sort -V >$potential_projects
 
   ignored_projects=$(mktemp)
   find "$ORG_PROJECTS" -mindepth 2 -type f -name ".now-ignore" | rev | cut -d/ -f2- | rev | sort -V >$ignored_projects
 
   diff $potential_projects $ignored_projects --old-line-format='%L'
+}
+
+get_description() {
+  index_file="$1"
+
+  description_without_headers="$(head -n30 "$index_file" 2>/dev/null | grep -ve '^#+')"
+  description_without_sections="$description_without_headers"
+  if grep '^\*' -m1 "$index_file" >/dev/null 2>&1; then
+    description_without_sections="$(echo "$description_without_headers" | grep -m1 '^\*' -B30 | head -n-1)"
+  fi
+  trimmed_oneline_description="$(echo "$description_without_sections" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+
+  echo $description_without_sections | $HOME/scripts/urlencode | sed 's/^%0A$//'
 }
 
 assemble_json() {
@@ -31,13 +45,15 @@ assemble_json() {
 EOF
 
   get_project_list | while read -r project; do
+    index_file="${project}/$ORG_INDEX_FILE_NAME"
     title="$(basename "$project")"
     status=""
-    if echo $project | grep -ve "🟨"; then
-      status="$(grep -Po '#\+(status|STATUS): \K.*' "${project}/index.org" 2>/dev/null)"
+    if echo $project | grep -ve "🟨" >/dev/null; then
+      status="$(grep -Po '#\+(status|STATUS): \K.*' "$index_file" 2>/dev/null)"
     fi
+    description="$(get_description "$index_file")"
 
-    printf '  { "title": "%s", "status": "%s" },\n' "$title" "$status" >>$json
+    printf '  { "title": "%s", "status": "%s", "description": "%s" },\n' "$title" "$status" "$description" >>$json
   done
 
   sed '$s/},/}/' -i $json # valid json: last line in array has no trailing ,
@@ -55,7 +71,8 @@ upload_json() {
   json=$(mktemp)
   assemble_json >$json
 
-  echo "Uploading to neidel.xyz/now.json" >&2
-  ~/scripts/cron/waitforinternet && scp -q $json k:~/websites/neidel.xyz/now.json
+  echo "Uploading to jneidel.*/now/now.json" >&2
+  scp -q $json u:~/html/jneidel.com/now/now.json
+  scp -q $json u:~/html/jneidel.de/now/now.json
 }
-upload_json
+~/scripts/cron/waitforinternet && upload_json
