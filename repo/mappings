@@ -291,3 +291,15 @@ create /etc/udev/rules.d
 create .config/nyxt
 .config/nyxt/auto-config.3.lisp
 .config/nyxt/nyxt-config.org
+
+[notmuch]
+.config/notmuch-config
+.config/afew
+
+[imapnotify]
+create .config/imapnotify
+.config/imapnotify/jneidel.de.yaml
+
+[imapsync]
+.config/isyncrc
+.config/msmtp

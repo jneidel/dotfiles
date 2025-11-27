@@ -1,21 +1,21 @@
-IMAPStore jneidel@jneidel.com-remote
-Host imap4.in-berlin.de
+IMAPStore jneidel@jneidel.de-remote
+Host pizarro.uberspace.de
 Port 993
-User jneidel
-PassCmd "cat /home/jneidel/.config/sensitive/jneidel.com"
+User jneidel@jneidel.de
+PassCmd "pass jneidel@jneidel.de"
 AuthMechs LOGIN
 TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-MaildirStore jneidel@jneidel.com-local
+MaildirStore jneidel@jneidel.de-local
 Subfolders Verbatim
-Path /home/jneidel/.local/share/mail/jneidel@jneidel.com/
-Inbox /home/jneidel/.local/share/mail/jneidel@jneidel.com/INBOX
+Path /home/jneidel/.local/share/mail/jneidel@jneidel.de/
+Inbox /home/jneidel/.local/share/mail/jneidel@jneidel.de/INBOX
 
-Channel jneidel@jneidel.com
+Channel jneidel@jneidel.de
 Expunge Both
-Far :jneidel@jneidel.com-remote:
-Near :jneidel@jneidel.com-local:
+Far :jneidel@jneidel.de-remote:
+Near :jneidel@jneidel.de-local:
 Patterns * !"*virtual*"
 Create Both
 SyncState *

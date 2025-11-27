@@ -1,0 +1,69 @@
+[Filter.1]
+message = Remove new tag everywhere but INBOX folder
+query   = NOT folder:jneidel@jneidel.de/INBOX
+tags    = -unread;-inbox
+
+[Filter.2]
+message = Hide jobdirecto mails
+query   = folder:jneidel@jneidel.de/INBOX AND to:wilfredocasas100@gmail.com
+tags    = +trash;-unread;-inbox
+
+[Filter.3]
+message = Remove Lidl Pay confirmations
+query   = subject:Abbuchungsankündigung AND from:lidlpay@lidl.de
+tags    = +trash;-unread;-inbox
+
+[Filter.4]
+message = Hide bellicon
+query   = from:affiliate@bellicon.com
+tags    = +trash;-unread;-inbox
+
+[Filter.5]
+message = Remove IB trade confirmations
+query   = subject:Trade Confirmation Flex AND from:donotreply@interactivebrokers.com
+tags    = +trash;-unread;-inbox
+
+[Filter.6]
+message = Move Telekom invoices
+query   = subject:'Telekom Festnetz-Rechnung' AND from:rechnungonline@telekom.de
+tags    = +invoice;-unread;-inbox
+
+[Filter.7]
+message = Blutspende
+query   = to:spenderservice@jneidel.com
+tags    = +trash;-unread;-inbox
+
+[Filter.8]
+message = Tag mail in sent dir as sent
+query   = folder:jneidel@jneidel.com/Sent OR folder:jneidel@jneidel.de/Sent
+tags    = +sent;-unread;-inbox
+
+[Filter.9]
+message = Tag mail in archive dir as archieved
+query   = folder:jneidel@jneidel.com/archive OR folder:jneidel@jneidel.de/archive
+tags    = +archived;-unread;-inbox
+
+[Filter.10]
+message = Tag mail in invoices dir as invoice
+query   = folder:jneidel@jneidel.com/invoices OR folder:jneidel@jneidel.de/invoices
+tags    = +invoice;-unread;-inbox
+
+[Filter.11]
+message = spam
+query   = from:*@consultores-rh.com
+tags    = +spam;-unread;-inbox
+
+[ArchiveSentMailsFilter]
+sent_tag = sent
+
+[MailMover]
+folders = jneidel@jneidel.de/INBOX jneidel@jneidel.de/archive jneidel@jneidel.de/spam jneidel@jneidel.de/invoices jneidel@jneidel.de/Sent
+rename = True
+
+jneidel@jneidel.de/INBOX = 'tag:spam':jneidel@jneidel.de/Spam 'tag:trash':jneidel@jneidel.de/Trash 'tag:invoice':jneidel@jneidel.de/invoices 'tag:archived':jneidel@jneidel.de/archive
+jneidel@jneidel.de/spam = 'tag:trash':jneidel@jneidel.de/Trash
+jneidel@jneidel.de/archive = 'tag:trash':jneidel@jneidel.de/Trash
+jneidel@jneidel.de/invoices = 'tag:trash':jneidel@jneidel.de/Trash
+jneidel@jneidel.de/Sent = 'tag:trash':jneidel@jneidel.de/Trash
+
+# Test queries with notmuch search

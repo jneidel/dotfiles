@@ -1,0 +1,13 @@
+account jneidel@jneidel.de
+host pizarro.uberspace.de
+port 465
+from jneidel@jneidel.de
+user jneidel@jneidel.de
+passwordeval "pass jneidel@jneidel.de"
+auth on
+tls on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/jneidel/.local/share/msmtp/jneidel.de.log
+tls_starttls off
+
+account default : jneidel@jneidel.de

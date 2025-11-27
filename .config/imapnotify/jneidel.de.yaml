@@ -1,0 +1,14 @@
+{
+    "host": "pizarro.uberspace.de",
+    "port": 993,
+    "tls": true,
+    "tlsOptions": {
+            "rejectUnauthorized": false
+    },
+    "username": "jneidel@jneidel.de",
+    "password": "",
+    "passwordCmd": "pass jneidel@jneidel.de",
+    "onNewMail": "/home/jneidel/scripts/mail/mailsync",
+    "onNewMailPost": "",
+    "boxes": [ "INBOX" ]
+}
