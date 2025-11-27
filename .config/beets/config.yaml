@@ -16,7 +16,8 @@ paths:
   albumtype:soundtrack: Soundtracks/$album/$track. $artist - $title
 asciify_paths: yes
 art_filename: cover
-plugins: fetchart embedart lyrics fromfilename scrub convert
+plugins: fetchart embedart lyrics fromfilename scrub convert musicbrainz
+# spotify
 lyrics:
   force: yes
   sources: google lyricwiki musixmatch genius
