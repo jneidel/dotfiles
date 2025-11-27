@@ -1,16 +1,15 @@
-#! /bin/sh
+#! /bin/bash
 
 BASE_DIR="$ORG_MEDIA/manga"
 USER_AGENT="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
 PARALLEL_DOWNLOAD=99
-# At 99 all image requests for the chapter are fired off at the same time.
+# At PARALLEL_DOWNLOAD=99 all of a chapters image requests are fired off at the same time.
 # Given that a chapter has 30 images, at n=10 you have 3 rounds of requests, at n=15 two rounds.
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ mangadl [QUERY]
-Download manga.
-Uses weebcentral.com as the source.
+Download manga from weebcentral.com
 
 Download mode:
   Parameters:
@@ -64,35 +63,29 @@ determine_starting_chapter() {
   startingChapter=`gum input --placeholder "$nMin" --prompt "Start downloading at chapter ($nMin-$nMax): "`
   [ $? -gt 0 ] && exit 0
   [ -z "$startingChapter" ] && startingChapter="$nMin"
-  # validate $startingChapter
+  # TODO validate $startingChapter
 }
 
 download_chapter_images() {
   chapterId="$1"
-  chapterNum="$2"
-  chapterType="$3"
-  dir="/tmp/$seriesTitle-$chapterNum"
-  if [ -n "$chapterType" ]; then
-    dir="/tmp/$seriesTitle-${chapterNum}$chapterType"
-  fi
+  dir="$2"
 
   mkdir -p "$dir"
   cd "$dir"
-  echo "$dir"
   curl "https://weebcentral.com/chapters/$chapterId/images?is_prev=False&current_page=1&reading_style=long_strip" -Ss -H "$USER_AGENT" \
-    | grep -Po "src=\"\K[^\"]+" | xargs -n 1 -P $PARALLEL_DOWNLOAD nice wget -q --header 'Referer: https://weebcentral.com/'
+    | grep -Po "src=\"\K[^\"]+" | xargs -n 1 -P $PARALLEL_DOWNLOAD nice curl -OJ -Ss -H 'Referer: https://weebcentral.com/' -H '$USER_AGENT'
 
   exitCode=$?
   if [ "$exitCode" -gt 0 ]; then
     echo "Download ran into an error (exit code $exitCode).\nThe image page below might have more info (e.g. if IP was blocked.)" >&2
     curl "https://weebcentral.com/chapters/$chapterId/images?is_prev=False&current_page=1&reading_style=long_strip" -Ss -H "$USER_AGENT" \
       | grep -Po "src=\"\K[^\"]+" | head >&2
-    exit 1
+    return 1
   fi
 }
 
 download_chapters() {
-  tac $chapterList | grep ",$startingChapter," -A9999 | while read -r chap; do
+  while read -r chap; do
     chapterType=`echo "$chap" | cut -d, -f1`
     chapterNum=`echo "$chap" | cut -d, -f2`
     chapterId=`echo "$chap" | cut -d, -f3`
@@ -103,7 +96,14 @@ download_chapters() {
     fi
 
     echo "Downloading chapter $chapterNum"
-    downloadDir=`download_chapter_images $chapterId "$chapterNum" "$chapterType"`
+    downloadDir="/tmp/$seriesTitle-$chapterNum"
+    if [ -n "$chapterType" ]; then
+      downloadDir="/tmp/$seriesTitle-${chapterNum}$chapterType"
+    fi
+    if ! download_chapter_images $chapterId "$downloadDir"; then
+      return 1
+    fi
+
     cd "$downloadDir"
     outDir="$BASE_DIR/$seriesTitle"
     outFile="$outDir/$seriesTitle-${chapterNum}$chapterType.cbz"
@@ -114,9 +114,9 @@ download_chapters() {
       echo "Writting the zip file ran into an error.\nOutput:" >&2
       cat /tmp/mangadl-zip-output.txt >&2
       echo "Also see contents of download directory: $downloadDir" >&2
-      exit 1
+      return 1
     fi
-  done
+  done < <(tac "$chapterList" | grep ",$startingChapter," -A9999)
 
   if [ "$isUpdateMode" -eq 0 ]; then
     if gum confirm "Subscribe to updates? (Check for and download updates with 'mangadl update')"; then
@@ -153,10 +153,10 @@ download_updates() {
     fetch_chapter_list
     latestChapter=`head -n1 $chapterList | cut -d, -f2`
     if [ -n "$(tac $chapterList | grep ",$startingChapter," -A9999)" ]; then
-      download_chapters
-
-      skate set "$seriesId.chapter@mangadl" "$(echo "$latestChapter + 1" | sed -r 's/\.[^ ]+//' | bc)"
-      echo "$titleClean" >> "${XDG_DATA_HOME:-$HOME/.local/shared}/mangadl-new"
+      if download_chapters; then
+        skate set "$seriesId.chapter@mangadl" "$(echo "$latestChapter + 1" | sed -r 's/\.[^ ]+//' | bc)"
+        echo "$titleClean" >> "${XDG_DATA_HOME:-$HOME/.local/shared}/mangadl-new"
+      fi
     else
       echo "No updates available (latest was $latestChapter.)" >&2
     fi
@@ -166,6 +166,10 @@ download_updates() {
 list_new_updates() {
   file="${XDG_DATA_HOME:-$HOME/.local/shared}/mangadl-new"
   if sort -u $file 2>/dev/null; then
+    if gum confirm "Open YACReaderLibrary?"; then
+      YACReaderLibrary >/dev/null 2>&1 &
+    fi
+
     if gum confirm "Clear the list of new updates?"; then
       rm $file
     fi
