@@ -1,0 +1,9 @@
+*
+
+!README.md
+!Makefile
+
+!repo/
+!repo/**
+repo/PKGBUILD/*/*
+repo/PKGBUILD/*.zst

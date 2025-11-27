@@ -206,6 +206,8 @@ shell:mkdir -p $XDG_STATE_HOME/zsh $XDG_CACHE_HOME/zsh
 vim The text editor
 par Text wrapper, 80 chars
 fzf Fuzzy finder
+
+[ripgrep]
 ripgrep Grep alternative for nvim-telescope
 
 [neovim]

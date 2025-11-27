@@ -1,0 +1,17 @@
+beekeeper-studio
+BraveSoftware
+chromium
+coc
+GIMP
+gnupg/
+!gnupg/gpg-agent.conf
+go
+GOG Games
+java
+libreoffice
+MongoDB Compass
+PrusaSlicer
+Signal
+syncthing
+unity3d
+

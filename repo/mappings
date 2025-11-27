@@ -278,3 +278,7 @@ create .config/GIMP/2.10
 [udev]
 create /etc/udev/rules.d
 /etc/udev/rules.d/thinkpad-dock.rules
+
+[ripgrep]
+.rgignore
+.config/.rgignore
