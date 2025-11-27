@@ -18,7 +18,7 @@ super + Return
   kitty
 
 super + F1
-  nice -n 19 brave
+  nice -n 17 brave
 
 super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc

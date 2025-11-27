@@ -120,3 +120,5 @@ cc https://github.com/search?q=repo%3ACleverRaven%2FCataclysm-DDA+%s
 dew https://stardewvalleywiki.com/mediawiki/index.php?search=%s&title=Special%3ASearch&go=Go
 fb https://fruchtbote.com/?s=%s&post_type=product
 hgg https://cdda-guide.nornagon.net/search/%s?v=0.H-RELEASE
+dc https://deadcells.wiki.gg/wiki/Special:Search?search=%s
+gog https://www.gog.com/de/games?query=%s

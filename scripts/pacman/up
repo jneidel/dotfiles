@@ -29,10 +29,10 @@ log() {
 run_yay() {
   log yay "System update"
 
-  sudo pacman -Syu
+  nice -n 19 sudo pacman -Syu
   reapply_X_settings
 
-  yay --color=always --noconfirm
+  nice -n 19 yay --color=always --noconfirm
   reapply_X_settings
 
   yay -Qtdq | yay -Rsn --noconfirm -

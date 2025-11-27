@@ -13,7 +13,7 @@ EOF
   exit
 fi
 
-command -v xflux >/dev/null || { echo "xflux is not installed" 1>&2; exit 127; }
+hash xflux || exit 127
 
 start_xflux() {
   xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1

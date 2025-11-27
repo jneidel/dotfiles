@@ -5,15 +5,16 @@ MAX_FREQUENCY=`cat $DIR/policy0/cpuinfo_max_freq`
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
-$ cpufreq <++>
-<++>
+$ cpufreq COMMAND
+Display current cpu frequency.
 
-Parameters:
-  \$1: <++>
-  [\$1]: <++>
+Verbose alternative: cpupower frequency-info
 
-Example:
-  $ cpufreq <++>
+Commands:
+  abs       Display absolute frequency in KHz
+  percent   Display frequency as percentage of max frequency
+  ghz       Display frequency in GHz
+  mhz       Display frequency in MHz
 EOF
   exit
 fi

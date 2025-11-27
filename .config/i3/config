@@ -154,6 +154,7 @@ assign [class="monero-wallet-gui"] $ws4
 assign [class="steam"] $ws5
 assign [class="factorio"] $ws5
 assign [class="cataclysm-tiles"] $ws5
+assign [class="deadcells"] $ws5
 ### workspace 9: keepass
 assign [class="keepassxc"] $ws9
 assign [class="KeePassXC"] $ws9
