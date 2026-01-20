@@ -17,31 +17,51 @@ fi
 hash yt-dlp ffmpeg grep awk || exit 127
 
 video="$1"
+video_resolution="$2"
 
 formats=$(mktemp)
 yt-dlp "$video" --list-formats >$formats
+
 audio_format=$(grep "audio only" $formats | grep "opus" | head -n1 | awk '{ print $1 }')
-video_format=$(grep "video only" $formats | grep "1920x1080" | head -n1 | awk '{ print $1 }')
+if [ -z "$audio_format" ]; then
+  audio_format=$(grep "audio only" $formats | head -n1 | awk '{ print $1 }')
+fi
+
+if [ -n "$2" ]; then
+  video_format=$(grep "video only" $formats | grep $video_resolution | head -n1 | awk '{ print $1 }')
+fi
+if [ -z "$video_format" ]; then
+  video_format=$(grep "video only" $formats | grep "1920x1080" | head -n1 | awk '{ print $1 }')
+fi
+if [ -z "$video_format" ]; then
+  video_format=$(grep "video only" $formats | grep "1280x720" | head -n1 | awk '{ print $1 }')
+fi
 
 if [ -z "$audio_format" ]; then
-  echo "No audio format found (audio only, opus)"
+  echo "No audio format found (audio only, opus or none)"
   cat $formats
   exit 1
 elif [ -z "$video_format" ]; then
-  echo "No video format found (video only, 1920x1080)"
+  echo "No video format found (video only, 1920x1080/1280x720)"
   cat $formats
   exit 1
 fi
 
 dir=$(mktemp -d)
+cd $dir
 
 echo "Downloading audio"
-yt-dlp -i --retries 4 -f $audio_format -o "$dir/%(title)s.%(ext)s" "$video"
-echo "\nDownloading video"
-yt-dlp -i --retries 4 -f $video_format -o "$dir/%(title)s.%(ext)s" "$video"
+nice -n 19 yt-dlp -i --retries 4 -f "$audio_format" -o "$dir/%(title)s.%(ext)s" "$video"
 
-video_file="$(find $dir -name '*.mp4')"
-audio_file="$(find $dir -name '*.webm')"
+audio_tmp="$(find $dir | tail -n1)"
+audio_file="audio.${audio_tmp##*.}"
+mv "$audio_tmp" $audio_file # in case audio file is mp4
+
+echo "\nDownloading video"
+nice -n 19 yt-dlp -i --retries 4 -f "$video_format" -o "$dir/%(title)s.%(ext)s" "$video"
+# --sub-format srt --sub-langs "de,en" --write-subs
+
+video_file="$(find $dir -name '*.mp4' -not -name "audio.mp4")"
 filename=$(basename -- "$video_file")
 title="${filename%.*}"
 
@@ -56,5 +76,6 @@ elif [ -z "$video_file" ]; then
 fi
 
 echo "\nCombinding audio and video"
-ffmpeg -i "$video_file" -i "$audio_file" -map 0:v -map 1:a -c:v copy -c:a copy "$ORG_INBOX/$title.mkv" &&
+nice -n 19 \
+     ffmpeg -i "$video_file" -i "$audio_file" -map 0:v -map 1:a -c:v copy -c:a copy "$ORG_INBOX/$title.mkv" &&
   echo "Wrote $ORG_INBOX/$title.mkv"
