@@ -1,6 +1,8 @@
 #+title: Nyxt browser configuration
 #+date: <2025-11-26 Wed>
 
+TODO: serif font by default, only use comic code for code and interface
+
 Recreate Emacs keybindings.
 #+begin_src lisp :tangle "config.lisp" :results silent
 (define-configuration buffer
@@ -12,14 +14,37 @@ Recreate Emacs keybindings.
       (let ((map (make-keymap "override-map")))
         (define-key map
             "M-x" 'execute-command
-            "C-space" 'nothing
+            "C-space" 'toggle-mark
             "H-b" 'switch-buffer
             "H-k" 'delete-buffer
-            "H-h" 'history-backwards
-            "H-l" 'history-forwards
             "H-f" 'visual-mode
+            "H-m" 'hint-mpv
+            "C-q" 'delete-current-buffer
             )))))
 #+end_src
+
+Host based ad blocking.
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration web-buffer
+    ((default-modes
+         (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
+#+end_src
+
+Disable JS by default.
+Disable manually when needed.
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration web-buffer
+    ((default-modes
+         (pushnew 'nyxt/mode/no-script:no-script-mode %slot-value%))))
+#+end_src
+
+[[nyxt:manual#auto-rules][Remember which modes I enabled/disabled for websites.]]
+Does not work, needs to apply to other type. "buffer", "browser"?
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration web-buffer
+  ((prompt-on-mode-toggle-p t)))
+#+end_src
+The rules are stored in ~~/.local/share/nyxt/auto-mode-rules.lisp~
 
 Enable browsing history for going backwards.
 #+begin_src lisp :tangle "config.lisp" :results silent
@@ -28,28 +53,41 @@ Enable browsing history for going backwards.
          (pushnew 'nyxt/mode/history:history-mode %slot-value%))))
 #+end_src
 
+| Function             | Binding | Brave |
+|----------------------+---------+-------|
+| Backwards in history | C-b     | S     |
+| Forward in history   | C-f     | D     |
+| Query URL backwards  | C-M-b   |       |
+| Query URL forwards   | C-M-f   |       |
+
 Enable bookmarks.
 #+begin_src lisp :tangle "config.lisp" :results silent
 (define-configuration buffer
     ((default-modes
-         (pushnew 'nyxt/mode/bookmark:history-mode %slot-value%))))
+         (pushnew 'nyxt/mode/bookmark:bookmark-mode %slot-value%))))
 #+end_src
 
 | Function              | Binding | Brave |
 |-----------------------+---------+-------|
 | Bookmark current page | C-x r M |       |
 
-Ad-blocking
+
+Follow links with the keyboard (hint mode).
 #+begin_src lisp :tangle "config.lisp" :results silent
 (define-configuration buffer
     ((default-modes
-         (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
+         (pushnew 'nyxt/mode/hint:hint-mode %slot-value%))))
 #+end_src
+
+| Function                      | Binding     | Brave        |
+|-------------------------------+-------------+--------------|
+| Follow link in new tab        | M-g g       | a f          |
+| Follow link in background tab | C-u M-g M-g | g f, C-Click |
 
 TODO Make Duckduckgo the default search engine.
 #+begin_src lisp :tangle "config.lisp" :results silent
 (define-configuration context-buffer
-  "Add a single search engine manually."
+    "Add a single search engine manually."
   ((search-engines
     (pushnew
      (make-instance 'search-engine :name "DuckDuckGo" :shortcut "d"
@@ -58,20 +96,167 @@ TODO Make Duckduckgo the default search engine.
      %slot-value%))))
 #+end_src
 
-TODO C-s to search in page
-
 ** Keybindings
 These are relevant browsing-specific default bindings:
 
-| Function     | Binding            | Brave   |
-|--------------+--------------------+---------|
-| New tab      | M-l                | C-t     |
-| Close tab    | M-k RET, C-x k RET | C-w     |
-| Focus on URL | C-l                | C-l     |
-| Reload       | C-r                | C-r, F5 |
+| Function              | Binding            | Brave       |
+|-----------------------+--------------------+-------------|
+| New tab               | M-l                | C-t         |
+| Close tab             | M-k RET, C-x k RET | C-w         |
+| Focus on URL          | C-l                | C-l         |
+| Copy URL              | C-M-l              | C-l C-c ESC |
+| Reload                | C-r                | C-r, F5     |
+| Search                | s                  | C-f         |
+| Next/previous heading | M-{, M-}           |             |
+| Jump to heading       | C-.                |             |
+| Table of contents     | M-.                |             |
 
 On top of that standard Emacs bindings apply.
 
+** Play YouTube videos via mpv
+#+begin_src lisp :tangle "config.lisp" :results silent
+(defun mpv (url)
+  "Launch mpv."
+  (uiop:run-program (list "open_clip_mpv" url "&")))
 
+(define-command-global hint-mpv ()
+  "Show hints and open the selection (presumably a video) in mpv."
+  (nyxt/mode/hint:query-hints
+   "Open URL in mpv."
+   (lambda (results)
+     (let* ((result (first results))
+            (url-string (nyxt:render-url (nyxt:url result))))
+       (when url-string
+         (mpv url-string))))))
+#+end_src
 
+** For video support
+Incl. HTML 5 videos and YouTube.
 
+#+begin_src shell
+yay -S gstreamer gst-plugins-good gst-libav
+#+end_src
+
+** Status bar
+[[https://github.com/aartaka/nyxt-config/tree/master][src]]
+#+begin_src lisp :tangle "config.lisp" :results silent
+(define-configuration :status-buffer
+    "Display modes as short glyphs."
+  ((glyph-mode-presentation-p t)))
+
+(define-configuration :blocker-mode ((glyph "β")))
+;; (define-configuration :force-https-mode ((glyph "ϕ")))
+;; (define-configuration :user-script-mode ((glyph "u")))
+;; (define-configuration :proxy-mode ((glyph "π")))
+;; (define-configuration :reduce-tracking-mode ((glyph "τ")))
+;; (define-configuration :certificate-exception-mode ((glyph "χ")))
+;; (define-configuration :style-mode ((glyph "ϕ")))
+;; (define-configuration :cruise-control-mode ((glyph "σ")))
+
+(define-configuration status-buffer
+    "Hide most of the status elements but URL and modes."
+  ((style (str:concat
+           %slot-value%
+           (theme:themed-css (theme *browser*)
+	                         `("#controls,#tabs"
+	                           :display none !important))))))
+
+(defmethod format-status-load-status ((status status-buffer))
+  "A fancier load status."
+  (spinneret:with-html-string
+      (:span (if (and (current-buffer)
+                      (web-buffer-p (current-buffer)))
+                 (case (slot-value (current-buffer) 'nyxt::status)
+                   (:unloaded "∅")
+                   (:loading "∞")
+                   (:finished ""))
+                 ""))))
+#+end_src
+
+** Style
+Adapted from [[https://github.com/aartaka/nyxt-config/tree/master][src]] using my own colors.
+#+begin_src lisp :tangle "config.lisp" :results silent
+;; This automatically darkens WebKit-native interfaces and sends the
+;; "prefers-color-scheme: dark" to all the supporting websites.
+(setf (uiop:getenv "GTK_THEME") "Arc:dark")
+
+(define-configuration browser
+    "Configuring my reddish theme."
+  ((theme
+    ;; theme:+dark-theme+
+    ;; theme:+light-theme+
+    (apply
+     #'make-instance
+     'theme:theme
+     :background-color "#1c1c1c"
+     :background-color- "#333"
+     :background-color+ "#000"
+     :on-background-color "#ddd"
+
+     :text-color "#ddd"
+     :text-color- "#ccc"
+     :text-color+ "#fff"
+     :contrast-text-color "#1c1c1c"
+
+     :primary-color "#d70000"
+     :primary-color- "#ff5f5f"
+     :primary-color+ "#f00"
+     :on-primary-color "#1c1c1c"
+     
+     :secondary-color "#005fd7"
+     :secondary-color- "#0033aa"
+     :secondary-color+ "#00f"
+
+     :action-color "#005fd7"
+     :action-color- "#03a"
+     :action-color+ "#00f"
+     ; can't change the foreground color to action-color consistently, so it has to be a color that works with white foreground
+     
+     :codeblock-color "#ddd"
+     :on-codeblock-color "#1c1c1c"
+
+     ;; did not see this used
+     :highlight-color "#00ff5f"
+     :highlight-color- "#00dd55"
+     :highlight-color+ "#00ff5f"
+     :on-highlight-color "#1c1c1c"
+     :success-color "#00ff5f"
+     :warning-color "#ffd700"
+
+     #-nyxt-4
+     nil
+     ,#+nyxt-4
+     (list
+      :text-color "#d0d0d0"
+      :highlight-color "#d70000"
+      :contrast-text-color "#250000"
+      :success-color "#00ff5f"
+      :codeblock-color "#ff005f")))))
+
+(define-configuration :dark-mode
+    "Dark-mode is a simple mode for simple HTML pages to color those in a darker palette.
+
+I don't like the default gray-ish colors, though. Thus, I'm overriding
+those to be a bit more laconia-like.
+
+I'm not using this mode, though: I have nx-dark-reader."
+  ((style
+    (theme:themed-css (theme *browser*)
+                      `(*
+                        :background-color ,(if (theme:dark-p theme:theme)
+                                               theme:background
+                                               theme:on-background)
+                        "!important"
+                        :background-image none "!important"
+                        :color ,(if (theme:dark-p theme:theme)
+                    theme:on-background
+                    theme:background)
+        "!important")
+      `(a
+        :background-color ,(if (theme:dark-p theme:theme)
+                               theme:background
+                               theme:on-background)
+        "!important"
+        :background-image none "!important"
+        :color ,theme:primary "!important")))))
+#+end_src
