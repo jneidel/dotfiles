@@ -7,18 +7,21 @@ if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 fi
 
 CLIP_CONTENT="$1"
-[ -z "$1" ] && CLIP_CONTENT=$(get-clip)
+[ -z "$1" ] && CLIP_CONTENT=$(~/scripts/get-clip)
 
-if [ -t 1 ]; then
-  echo $CLIP_CONTENT
+if [ -z "$CLIP_CONTENT" ]; then
+  notify-send -t 3500 -u critical -i preferences-system-notifications -a "open clip mpv" "Clipboard empty"
+  exit 1
 fi
 
-if echo $CLIP_CONTENT | grep -e invidious -e yewtu >/dev/null; then
-  CLIP_CONTENT="$(echo $CLIP_CONTENT | sed 's|//.*invidious.*/|//www.youtube.com/|' | sed 's|//yewtu\.be/|//www.youtube.com/|')"
+if echo $CLIP_CONTENT | grep -e invidious -e yewtu -e inv.nadeko >/dev/null; then
+  CLIP_CONTENT="$(echo $CLIP_CONTENT | sed 's|//inv.nadeko.net/|//www.youtube.com/|' | sed 's|//.*invidious.*/|//www.youtube.com/|' | sed 's|//yewtu\.be/|//www.youtube.com/|')"
 fi
 
 if echo $CLIP_CONTENT | grep ".mp3" >/dev/null; then
   tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video --profile=music '$CLIP_CONTENT'"
 else
-  tsp mpv --profile=overlay --fs "$CLIP_CONTENT" 2>/dev/null >/dev/null
+  notify-send -t 3500 -u normal -i preferences-system-notifications -a "open clip mpv" "Scheduled video" "$CLIP_CONTENT"
+  # tsp mpv --profile=yt "$CLIP_CONTENT" 2>/dev/null >/dev/null
+  tsp mpv --profile=yt --ytdl-raw-options=force-ipv4= "$CLIP_CONTENT" 2>/dev/null >/dev/null
 fi

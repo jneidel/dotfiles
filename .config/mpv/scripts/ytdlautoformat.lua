@@ -1,80 +1,78 @@
 --[[
 
-A simple mpv script to automatically change ytdl-format (for youtube-dl)
-specifically if the URL is Youtube or Twitch.
+    A simple mpv script to automatically change ytdl-format (yt-dlp)
+    for specified domains/streams.
 
-Options:
-- To add more domains, simply add them to the StreamSource set.
-- To adjust quality, edit changedQuality value.
-- To enable VP9 codec, change enableVP9 to true.
-- To change frame rate, adjust FPSLimit, default is 30.
-
-For more details:
-https://github.com/Samillion/mpv-ytdlautoformat
+    Info: https://github.com/Samillion/mpv-ytdlautoformat
 
 --]]
 
-local function Set (t)
-	local set = {}
-	for _, v in pairs(t) do set[v] = true end
-	return set
-end
+local options = {
+    -- Which domains should ytdl-format change on?
+    domains = {
+        "youtu.be", "youtube.com", "www.youtube.com",
+        "twitch.tv", "www.twitch.tv",
+    },
 
--- Domains list for custom quality
-local StreamSource = Set {
-	'youtu.be', 'youtube.com', 'www.youtube.com',
-	'twitch.tv', 'www.twitch.tv'
+    -- Set maximum video quality (on load/start)
+    -- 240, 360, 480, 720, 1080, 1440, 2160, 4320
+    -- use 0 to ignore quality
+    quality = 1080,
+
+    -- Prefered codec. avc, hevc, vp9, av1 or novp9
+    -- novp9: accept any codec except vp9
+    codec = "vp9",
+
+    -- rare: to avoid mpv shutting down if nothing is found with the specified format
+    -- if true, and format not found, it'll use fallback_format
+    fallback = true,
+    fallback_format = "bv+ba/b",
 }
 
--- Accepts: 240, 360, 480, 720, 1080, 1440, 2160
--- local changedQuality = 480
-local changedQuality = 720
+-- Do not edit beyond this point
+local msg = require "mp.msg"
 
--- Affects matched and non-matched domains
-local enableVP9 = true
-local FPSLimit = 30
-
--- Do not edit from here on
-local msg = require 'mp.msg'
-local utils = require 'mp.utils'
-
-local VP9value = ""
-
-if enableVP9 == false then
-	VP9value = "[vcodec!=?vp9]"
-else
-	VP9value = "[vcodec=vp9]"
+local function create_set(list)
+    local set = {}
+    for _, v in pairs(list) do
+        set[type(v) == "string" and v:lower() or v] = true
+    end
+    return set
 end
 
-local ytdlChange = "bestvideo[height<=?"..changedQuality.."][fps<=?"..FPSLimit.."]"..VP9value.."+bestaudio/best[height<="..changedQuality.."]"
-local ytdlDefault = "bestvideo[fps<=?"..FPSLimit.."]"..VP9value.."+bestaudio/best"
+local function update_ytdl_format()
+    local codec_list = {
+        ["avc"] = "[vcodec~='^(avc|h264)']",
+        ["hevc"] = "[vcodec~='^(hevc|h265)']",
+        ["vp9"] = "[vcodec~='^(vp0?9)']",
+        ["av1"] = "[vcodec~='^(av01)']",
+        ["novp9"] = "[vcodec!~='^(vp0?9)']",
+    }
 
-local function getStreamSource(path)
-	local hostname = path:match '^%a+://([^/]+)/' or ''
-	return hostname:match '([%w%.]+%w+)$'
+    local format = {
+        quality = options.quality > 0 and "[height<=?" .. options.quality .. "]" or "",
+        codec = codec_list[options.codec:lower()] or "",
+        fallback = options.fallback and " / " .. options.fallback_format or "",
+    }
+
+    local ytdl_custom = "bv" .. format.quality .. format.codec .. "+ba/b" .. format.quality .. format.fallback
+
+    mp.set_property("file-local-options/ytdl-format", ytdl_custom)
+    msg.info("Changed ytdl-format to: " .. ytdl_custom)
 end
 
-local function ytdlAutoChange(name, value)
-	local path = value
+local list = create_set(options.domains)
 
-	if StreamSource[getStreamSource(string.lower(path))] then
-		mp.set_property("ytdl-format", ytdlChange)
-		msg.info("Domain match found, ytdl-format has been changed.")
-		msg.info("Changed ytdl-format: "..mp.get_property("ytdl-format"))
-	end
+mp.add_hook("on_load", 9, function()
+                              local path = mp.get_property("path", "")
 
-	mp.unobserve_property(ytdlAutoChange)
-end
+                              if path:match("^%a+://") then
+                                  local hostname = path:lower():match("^%a+://([^/]+)/?") or ""
+                                  local domain = hostname:match("([%w%-]+%.%w+%.%w+)$") or hostname:match("([%w%-]+%.%w+)$") or ""
 
-local function ytdlCheck()
-	local path = mp.get_property("path", "")
-
-	if string.match(string.lower(path), "^(%a+://)") then
-		mp.set_property("ytdl-format", ytdlDefault)
-		-- msg.info("Current ytdl-format: "..mp.get_property("ytdl-format"))
-
-		mp.observe_property("path", "string", ytdlAutoChange)
-	end
-end
-
-mp.register_event("start-file", ytdlCheck)
+                                  if list[domain] then
+                                      msg.info("Domain match found: " .. domain)
+                                      update_ytdl_format()
+                                  end
+                              end
+end)
