@@ -54,11 +54,13 @@ bindsym $mod+s layout stacking
 bindsym $mod+e layout toggle split
 #bindsym $mod+w layout tabbed # never used it
 
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+bindsym $mod+g focus mode_toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+g floating toggle
 
 # toggle sticky
 # bindsym $mod+Shift+s sticky toggle
