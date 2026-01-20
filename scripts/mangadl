@@ -82,6 +82,19 @@ download_chapter_images() {
       | grep -Po "src=\"\K[^\"]+" | head >&2
     return 1
   fi
+
+  remove_spam
+}
+
+remove_spam() {
+  declare -a SPAM_ARRAY=("080cf6f8961abec950cc178ce72f852c" "6f1a9f2a1b1d29df7e752baca531fd42" "63cf494a243950003de9534a6c20d167" "5805d73ac1bb7c433c7f5109adc3cbf4" "5e262601f5fde096b37de38dbf04aecc" "3e5cba6eb05016fc049ad129ea2e9f51" "467c9fd55f8bead4b25d625d98e5a28b" "9837f5a2782a5b94dec94577020a7165") # flamecomics nags
+  
+  for img in $(ls *.png); do
+    hash=$(md5sum $img | awk '{ print $1 }')
+    if [[ " ${SPAM_ARRAY[@]} " =~ " ${hash} " ]]; then
+      rm $img
+    fi
+  done
 }
 
 download_chapters() {
