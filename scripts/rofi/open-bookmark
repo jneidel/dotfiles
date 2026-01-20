@@ -11,8 +11,11 @@ EOF
   exit
 fi
 
-command -v rofi >/dev/null || { echo "rofi is not installed" 1>&2; exit 127; }
-command -v $BROWSER >/dev/null || { echo "$BROWSER is not installed or var \$BROWSER is not set" 1>&2; exit 127; }
+MAIN_BROWSER=$BROWSER
+SECONDARY_BROWSER=brave
+
+hash rofi $MAIN_BROWSER $SECONDARY_BROWSER node || exit 127
+
 
 if [ ! -f "$BOOKMARK_FILE" ]; then
   echo "Bookmark file '$BOOKMARK_FILE' does not exist"
@@ -28,4 +31,11 @@ bookmarks() {
 }
 
 SELECTION=`bookmarks | rofi -dmenu -i -lines 15 -eh 1 -p open -auto-select 2>/dev/null | rev | cut -d\  -f1 | rev`
-[ -n "$SELECTION" ] && $BROWSER $SELECTION >/dev/null 2>&1
+
+if [ -n "$SELECTION" ]; then
+  if echo $SELECTION | grep -e jellyfin -e flood -e flickfocus -e jc141; then
+    $SECONDARY_BROWSER $SELECTION >/dev/null 2>&1
+  else
+    $MAIN_BROWSER $SELECTION >/dev/null 2>&1
+  fi
+fi

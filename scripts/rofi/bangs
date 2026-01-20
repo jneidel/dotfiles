@@ -62,7 +62,10 @@ case "$bang" in
   yts)
     ~/scripts/yts $rawquery
     exit;;
-  yt|j)
+  13|nyaa|yy|j)
+    bangList | grep -m 1 "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $SECONDARY_BROWSER >/dev/null 2>&1 &
+    exit;;
+  rap)
     $SECONDARY_BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
     exit;;
 esac

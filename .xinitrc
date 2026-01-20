@@ -101,7 +101,7 @@ sleep 10s; ~/scripts/mail/watch-imap >/dev/null 2>&1 &
 
 ## autostart gui applications
 nice -n -7 kitty ~/scripts/tmux/tp main &
-nice -n 17 brave &
+nice -n 17 nyxt &
 nice -n 17 signal-desktop &
 nice -n 17 watch-for-deadline-changes &
 emacs &
