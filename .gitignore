@@ -36,11 +36,6 @@ repo/PKGBUILD/*
 .local/share/icons/*
 !.local/share/icons/*.png
 
-.emacs.d/*
-!.emacs.d/dotemacs.org
-!.emacs.d/img
-!.emacs.d/an-old-hope-theme.el
-
 .local/share/fonts/Comic Code/.uuid
 
 # install via emacs: M-x all-the-icons-install-fonts

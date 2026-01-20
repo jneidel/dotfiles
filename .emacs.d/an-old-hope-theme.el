@@ -11,15 +11,10 @@ this theme is largely just a shot for shot copy of `jesseleite/an-old-hope-synta
 ported to emacs because I refuse to live with an IDE that doesn't look like it XD.
 This theme isn't compatible with emacs in the terminal yet, when I find an easy way
 to approximate true-color colors to non-true-color colors, then I'll add support for
-it.
-")
+it.")
 
-(with-eval-after-load 'ivy
-  (defface ivy-actual-highlight-face '((t (:inherit highlight)))
-    "face actually used by ivy to highlight some candidates.
-see an-old-hope-theme.el for why this is necessary."))
-
-(custom-theme-set-faces 'an-old-hope
+(custom-theme-set-faces
+ 'an-old-hope
  ;; defaults
  '(default ((t (:background "#1c1c1c" :foreground "#cbccd1"))))
  '(italic ((t (:italic t :inherit default))))
@@ -195,17 +190,6 @@ see an-old-hope-theme.el for why this is necessary."))
  ;; for some reason... if hydra-posframe-face inherits default, internal border won't work
  '(hydra-posframe-face ((t (:background "#1c1d20" :foreground "#cbccd1"))))
  '(hydra-posframe-border-face ((t (:inherit internal-border))))
-
- ;;; ivy
- ;; by default, it seems if ivy-highlight-face has its own spec, it'll interfere
- ;; with the face of ivy-current-match. Which'll make it harder to tell which
- ;; candidate is the current candidate.
- ;;
- ;; If ivy-highlight-face just inherits another face, then when both it and
- ;; ivy-current-match are applied to a string, ivy-current-match will override
- ;; ivy-highlight-face. Thus, this.
- '(ivy-actual-highlight-face ((t (:foreground "#1c1d20" :background "#67e4c4" :distant-foreground "#67e4c4" :inherit bold))))
- '(ivy-highlight-face ((t (:inherit ivy-actual-highlight-face))))
 
 ;;; org-mode
  '(org-link ((t (:foreground "#4fb3d8" :inherit bold))))

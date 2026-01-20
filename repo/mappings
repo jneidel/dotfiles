@@ -267,7 +267,10 @@ create .config/sioyek
 .config/kmonad
 
 [emacs]
-clean .emacs.d
+create .emacs.d
+.emacs.d/dotemacs.org
+.emacs.d/img
+.emacs.d/an-old-hope-theme.el
 .mailcap
 
 [gimp]
