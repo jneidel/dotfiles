@@ -1,4 +1,5 @@
 set selection-clipboard clipboard
+set selection-notification false
 set scroll-page-aware false
 set guioptions ""
 set adjust-open width
@@ -8,14 +9,15 @@ set default-bg "#1C1C1C"
 set recolor-lightcolor "#1C1C1C"
 map D set recolor
 
-map e scroll half-up
 map d scroll half-down
-
-map u scroll half-up
-map i scroll half-down
 
 map < navigate previous
 map > navigate next
 
-map <Space> navigate next
-map b navigate previous
+map n navigate next
+map p navigate previous
+
+# Emacs scroll
+# Space/S-Space or
+map <C-v> scroll full-down
+map <A-v> scroll full-up
