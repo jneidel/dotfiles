@@ -16,14 +16,16 @@ fi
 
 hash gum || exit 127
 
-# by default, regular inbox
-inbox=$ORG_INBOX
+INBOX_DIR_NAME=$(basename $ORG_INBOX)
 
-if [ "$ORG" != "$DAVA_ORG" ]; then
+# everything that is not root org uses root inbox
+inbox=$ROOT_ORG/$INBOX_DIR_NAME
+
+if [ "$ORG" = "$ROOT_ORG" ]; then
   # org=$(gum filter dava)
   org=dava
   case "$org" in
-    dava) inbox=$DAVA_ORG/0_inbox;;
+    dava) inbox=$DAVA_ORG/$INBOX_DIR_NAME;;
   esac
 fi
 
