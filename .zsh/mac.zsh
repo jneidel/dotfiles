@@ -10,9 +10,11 @@ if [ "$(uname)" = "Darwin" ]; then
   # php
   alias pt="./vendor/bin/phpunit"
 
+  alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &; disown"
+
   # oraclett
-  local ORACLETT_MAIN_PROJECT=ORFDV001
-  local ORACLETT_MAIN_TASK_DETAILS=03
+  local ORACLETT_MAIN_PROJECT=INTET999DXD
+  local ORACLETT_MAIN_TASK_DETAILS=01
 
   alias onl="oraclett note list"
   alias ona="oraclett note add -p $ORACLETT_MAIN_PROJECT -t $ORACLETT_MAIN_TASK_DETAILS"

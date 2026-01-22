@@ -110,7 +110,6 @@ alias gitlab="gitlab-runner exec docker"
 
 function pulldev() {
   co develop
-  pull develop
-  make vendor
-  mig
+  git pull origin develop
+  make vendor && sc doctrine:migrations:migrate --no-interaction
 }

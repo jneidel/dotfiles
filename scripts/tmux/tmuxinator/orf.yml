@@ -3,5 +3,6 @@ root: ~/code/orf
 windows:
   - nvim: vim
   - zsh: make up; clear
+  - lf: lf
   - org: lf
-  - ssh:
+  - ~: 'cp "$HOME/Library/CloudStorage/OneDrive-ENDAVA/data/endava.kdbx" "$ORG_RESOURCES/endava: admin/"; clear'
