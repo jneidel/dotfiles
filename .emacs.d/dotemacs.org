@@ -2674,26 +2674,25 @@ https://codelearn.me/2022/10/24/eglot_php.html
 *** Ebooks
 [[https://depp.brause.cc/nov.el/][Nov.el]] for reading epubs.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/nov-font-setup()
+  (face-remap-add-relative 'shr-text
+                           :family "DejaVu Serif"
+                           :height 1.2))
+
+(use-package visual-fill-column
+  :defer t)
 (use-package nov
-  :mode ("\\.epub\\'" . nov-mode))
+  :mode ("\\.epub\\'" . nov-mode)
+  :custom
+  (nov-text-width t)
+  (visual-fill-column-center-text t)
+  :hook ((nov-mode . jn/nov-font-setup)
+         (nov-mode . visual-line-mode)
+         (nov-mode . visual-fill-column-mode)))
 #+end_src
+
 Alternatives:
-- [[https://github.com/chenyanming/calibredb.el][Using calibre]]
 - [[https://codeberg.org/divyaranjan/emacs-reader][Using mupdf]] (supports all ebook extensions)
-
-
-https://github.com/chenyanming/nov-xwidget
-https://redlib.privacyredirect.com/r/emacs/comments/v2fjec/a_new_epub_reader_in_emacs_novxwidgetel/
-#+begin_src emacs-lisp
-(if (featurep 'xwidget-internal)
-    (use-package nov-xwidget
-      :quelpa (nov-xwidget :fetcher "github" :repo "chenyanming/nov-xwidget")
-      :after nov
-      ;;   :config
-      ;;   (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
-      ;;   (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
-      ))
-     #+end_src
 
 *** Remind
 I use the [[https://dianne.skoll.ca/wiki/Remind][remind]] calendar.
