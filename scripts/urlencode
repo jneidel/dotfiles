@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+const fs = require("node:fs");
+
+function readStdin() {
+    return fs.readFileSync(0, "utf8");
+}
+
+function stripOneTrailingNewline(input) {
+    if (input.endsWith("\n")) input = input.slice(0, -1);
+    if (input.endsWith("\r")) input = input.slice(0, -1);
+    return input;
+}
+
+const args = process.argv.slice(2);
+
+let input;
+if (args.length > 0) {
+    input = args.join(" ");
+} else if (process.stdin.isTTY) {
+    console.error("usage: urlencode <string>  (or pipe via stdin)");
+    process.exit(2);
+} else {
+    input = stripOneTrailingNewline(readStdin());
+}
+
+process.stdout.write(`${encodeURIComponent(input)}\n`);
