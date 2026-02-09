@@ -15,10 +15,10 @@ hash jq || exit 127
 
 get_project_list() {
   potential_projects=$(mktemp)
-  find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -not -path '*/.*' -not -path '*trip: *' | sort -V >$potential_projects
+  find "$ORG_PROJECTS" -maxdepth 2 -mindepth 2 -not -path '*/.*' -not -path '*blocked' -not -path '*trip: *' | sort -Vr >$potential_projects
 
   ignored_projects=$(mktemp)
-  find "$ORG_PROJECTS" -mindepth 2 -type f -name ".now-ignore" | rev | cut -d/ -f2- | rev | sort -V >$ignored_projects
+  find "$ORG_PROJECTS" -mindepth 3 -type f -name ".now-ignore" | rev | cut -d/ -f2- | rev | sort -V >$ignored_projects
 
   diff $potential_projects $ignored_projects --old-line-format='%L'
 }
@@ -46,11 +46,11 @@ EOF
 
   get_project_list | while read -r project; do
     index_file="${project}/$ORG_INDEX_FILE_NAME"
-    title="$(basename "$project")"
-    status=""
-    if echo $project | grep -ve "🟨" >/dev/null; then
-      status="$(grep -Po '#\+(status|STATUS): \K.*' "$index_file" 2>/dev/null)"
-    fi
+    title="$(basename "$project" | sed 's/\.org$//')"
+    status="$(basename "$(dirname "$project")")"
+    # if echo $project | grep -ve "🟨" >/dev/null; then
+    #   status="$(grep -Po '#\+(status|STATUS): \K.*' "$index_file" 2>/dev/null)"
+    # fi
     description="$(get_description "$index_file")"
 
     printf '  { "title": "%s", "status": "%s", "description": "%s" },\n' "$title" "$status" "$description" >>$json
@@ -75,4 +75,5 @@ upload_json() {
   scp -q $json u:~/html/jneidel.com/now/now.json
   scp -q $json u:~/html/jneidel.de/now/now.json
 }
+# assemble_json
 ~/scripts/cron/waitforinternet && upload_json

@@ -1115,13 +1115,12 @@ Keybinds
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun set-org-agenda-files ()
   "Set to directories which contain todos.
-Expand project and area dirs to include todo files at the first level inside of a project/area."
+Expand project dirs to include todo files at the first level inside of a project."
   (interactive)
   (let* ((files-as-is (list (substitute-in-file-name "$ORG")
                             (substitute-in-file-name "$HOME/.emacs.d/dotemacs.org")
                             (substitute-in-file-name "$ORG_INBOX")))
-         (subdirectories-one-level-deep-to-be-expanded (list (substitute-in-file-name "$ORG_PROJECTS")
-                                                             (substitute-in-file-name "$ORG_AREAS"))))
+         (subdirectories-one-level-deep-to-be-expanded (list (substitute-in-file-name "$ORG_PROJECTS"))))
 
     (setq org-agenda-files
           (append files-as-is
@@ -3103,58 +3102,10 @@ TODO: wide embark which-key view (see advanced section)
 ** File manager (dired)
 [[https://www.youtube.com/watch?v=5dlydii7tAU][dired basics]]
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun dired-toggle-hidden-directories()
-  "Toggle hidden directories"
-  (interactive)
-  (if (or (string-match-p "-A" dired-listing-switches) (string-match-p "-A" dired-actual-switches))
-      (let ((switches (replace-regexp-in-string " -A" "" dired-listing-switches)))
-        (setq dired-actual-switches switches)
-        (setq dired-listing-switches switches)
-        (message "Hide hidden directories")
-        (revert-buffer))
-    (let ((switches (concat dired-actual-switches " -A")))
-      (setq dired-actual-switches switches)
-      (setq dired-listing-switches switches)
-      (message "Show hidden directories")
-      (revert-buffer))
-    ))
-
-(defun dired-set-sort-switch(sort-value)
-  "Update the --sort= switch in dired-actual-switches"
-  (let* ((sort-option (concat " --sort=" sort-value))
-         (switches
-          (if (string-match " --sort=" dired-actual-switches)
-              (replace-regexp-in-string " --sort=[^ ]+" sort-option dired-actual-switches)
-            (concat dired-actual-switches sort-option))
-          ))
-    (setq dired-actual-switches switches)
-    ))
-
-;; TODO use $ORG_ var
-;; TODO sortby time resource/*, areas/*, project/*
-(defun dired-sort-on-cd()
-  "Adjust sorting based on the directory"
-  (let ((sortby (pcase default-directory ; cwd
-                  ("~/org/" "name")
-                  ("~/org/0_inbox/" "time")
-                  ("~/org/1_project/" "version")
-                  ("~/org/1_project/.design/" "version")
-                  ("~/org/dava_org/1_project/" "version")
-                  ((pred (string-match "^~/org")) "time")
-                  (_ "name"))))
-    (dired-set-sort-switch sortby)
-    ))
-
-(defun jneidel-dired-toggle-mark ()
-  "Toggle the mark on the file at point in Dired/Dirvish."
-  (interactive)
-  (let ((inhibit-read-only t))
-    (save-excursion
-      (beginning-of-line)
-      (if (looking-at dired-re-mark)
-          (dired-unmark 1)
-        (dired-mark 1)))
-    (next-line)))
+(defun mkdir-dired (name)
+  (interactive (list (read-string "Directory: ")))
+  (dired-create-directory (expand-file-name name default-directory))
+  (dired-find-file))
 
 (defun touch-org-file (name)
   (interactive (list (read-string "File name: ")))
@@ -3166,227 +3117,86 @@ TODO: wide embark which-key view (see advanced section)
       (shell-command (format "generate-orgmode-metadata \"%s\" >\"%s\"" name file-name))
       (revert-buffer)
       (dired-goto-file (expand-file-name file-name default-directory))
-      (dired-find-file)) ; used over find-file for consistency (work with dirvish preview)
-    ))
-
-(defun mkdir-dired (name)
-  (interactive (list (read-string "Directory: ")))
-  (dired-create-directory (expand-file-name name default-directory))
-  (dired-find-file))
-#+end_src
-
-Select a directory inside of the main categories of my note-taking system via the minibuffer.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun org-select-area ()
-  "Prompt user to select an org area in $ORG_AREAS."
-  (format "%s/%s" (substitute-in-file-name "$ORG_AREAS")
-          (string-trim (shell-command-to-string
-                        (format "select-area transform '%s'"
-                                (completing-read "Pick area: "
-                                                 (split-string (string-trim (shell-command-to-string "select-area")) "\n") nil t))))))
-(defun org-select-project ()
-  "Prompt user to select an org project in $ORG_PROJECTS."
-  (format "%s/%s" (substitute-in-file-name "$ORG_PROJECTS")
-          (completing-read "Pick project: "
-                           (split-string (string-trim (shell-command-to-string "select-project")) "\n") nil t)))
-(defun org-select-design ()
-  "Prompt user to select an org design in $ORG_PROJECTS/.design."
-  (format "%s/%s" (substitute-in-file-name "$ORG_PROJECTS/.design")
-          (completing-read "Pick design: "
-                           (split-string (string-trim (shell-command-to-string "select-design")) "\n") nil t)))
-(defun org-select-resource ()
-  "Prompt user to select an org resource in $ORG_RESOURCES."
-  (format "%s/%s" (substitute-in-file-name "$ORG_RESOURCES")
-          (completing-read "Pick resource: "
-                           (split-string (string-trim (shell-command-to-string "select-resource")) "\n") nil t)))
-(defun org-select-archive ()
-  "Prompt user to select an org archive directory in $ORG_ARCHIVE."
-  (format "%s/%s" (substitute-in-file-name "$ORG_ARCHIVE")
-          (completing-read "Pick archive: "
-                           (split-string (string-trim (shell-command-to-string "select-archive")) "\n") nil t)))
-#+end_src
-
-Move file at point (or the marked files) to a fixed or selected location in my
-note-taking system.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun move-to (destination)
-  "Move dired files (marked or the one at point) to a given destination directory."
-  (dolist (to-be-moved (dired-get-marked-files)) ; if none marked, use the one at point
-    (let ((target (expand-file-name (file-name-nondirectory to-be-moved) destination)))
-      (dired-rename-file to-be-moved target nil)
-      (message (format "Moved %s to %s" (file-name-nondirectory to-be-moved) destination)) ; TODO format fails if directory is moved
-      (revert-buffer))))
-
-(defun move-to-inbox () (interactive) (move-to (substitute-in-file-name "$ORG_INBOX")))
-(defun move-to-selected-resource () (interactive) (move-to (org-select-resource)))
-(defun move-to-selected-area () (interactive) (move-to (org-select-area)))
-(defun move-to-selected-project () (interactive) (move-to (org-select-project)))
-(defun move-to-selected-design () (interactive) (move-to (org-select-design)))
-(defun move-to-projects () (interactive) (move-to (substitute-in-file-name "$ORG_PROJECTS")))
-(defun move-to-selected-archive () (interactive) (move-to (org-select-archive)))
-(defun move-to-paperless () (interactive) (move-to (substitute-in-file-name "$ORG/.paperless_import")))
-(defun move-to-blog-post-ideas () (interactive) (move-to (substitute-in-file-name "$ORG_AREAS/blog/posts/0 ideas")))
-(defun move-to-designs () (interactive) (move-to (substitute-in-file-name "$ORG_DESIGN/2 ideas")))
-(defun move-to-other-inbox () (interactive) (move-to (string-trim (shell-command-to-string "select-other-inbox"))))
-(defun move-to-local-archive () (interactive) (let ((local-archive (expand-file-name ".archive" default-directory)))
-                                                (make-directory local-archive t)
-                                                (move-to local-archive)))
-#+end_src
-
-I use emoji to convey the status of the project at a glace:
-- 🟢 is a project I am actively persuing
-- 🟨 is a project that has fallen inactive, but will be continued
-- 🪀 is an externally blocked project
-
-The individual emoji representing the different colors of the traffic light were
-chosen based on their unicode symbols.
-Natural sort returns them in the correct order.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun set-project-status (status)
-  (let* ((path-after-status-change (string-trim-right
-                                    (shell-command-to-string
-                                     (format "project-status set %s '%s' -nomv" status (dired-get-file-for-visit)))))
-         (new-path (pcase status
-                        ("inactive" (format "%s/%s"
-                                            (substitute-in-file-name "$ORG_DESIGN/0 inactive")
-                                            (file-name-nondirectory path-after-status-change)))
-                        ("active" (format "%s/%s"
-                                          (substitute-in-file-name "$ORG_PROJECTS")
-                                          (file-name-nondirectory path-after-status-change)))
-                        (_ path-after-status-change)
-                        )))
-    (dired-rename-file (dired-get-file-for-visit) (string-trim-right new-path) nil)
-    (revert-buffer)
-    (dirvish (file-name-directory new-path))
-    (dired-goto-file new-path)))
-
-(defun prompt-for-status-line-update ()
-  (when (eq system-type 'gnu/linux)
-    (progn
-      (let ((index-file (expand-file-name "index.org" (dired-get-file-for-visit))))
-        (when (not (file-exists-p index-file))
-          (shell-command (format "generate-orgmode-metadata \"index\" >\"%s\"" index-file)))
-
-        (let ((updated-status
-               (read-string "Update status line: "
-                            (string-trim (shell-command-to-string
-                                          (format "grep -Po '#\\+(status|STATUS): \\K.*' '%s' 2>/dev/null" index-file))))))
-
-          (if (zerop (shell-command (format "grep '^#+status: ' '%s'" index-file)))
-              (shell-command (format "sed -i 's/^#+status: .*/#+status: %s/' '%s'" updated-status index-file))
-            (shell-command (format "echo '#+status: %s' >>'%s'" updated-status index-file))))))))
-
-(defun set-project-status-active () (interactive) (prompt-for-status-line-update) (set-project-status "active"))
-(defun set-project-status-inactive () (interactive) (set-project-status "inactive"))
-(defun set-project-status-blocked () (interactive) (prompt-for-status-line-update) (set-project-status "blocked"))
-(defun set-project-status-none () (interactive) (set-project-status "none"))
-(defun set-project-status-important () (interactive) (set-project-status "important"))
-#+end_src
-
-Put different archiving options into code.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun jn/note-taking/file-away-based-on-type ()
-  (interactive)
-  (let* ((type-by-dir (if (file-in-directory-p default-directory (substitute-in-file-name "$ORG_DESIGN"))
-                            nil ;"Design"
-                        (if (file-in-directory-p default-directory (substitute-in-file-name "$ORG_RESOURCES"))
-                            "Resource"
-                          (if (file-in-directory-p default-directory (substitute-in-file-name "$ORG_PROJECTS"))
-                              "Project"
-                            nil))))
-         (type (if type-by-dir
-                   type-by-dir
-                 (completing-read "What type? " '("Project" "Design" "Resource" "Task" "Note") nil t))))
-    (pcase type
-      ("Task" (pcase (completing-read "What state? " '("Done") nil t)
-                ("Done" (message "Moving into archive.")
-                 (move-to (substitute-in-file-name "$ORG_ARCHIVE/task: completed/")))))
-      ("Note" (pcase (completing-read "What state? " '("For reference") nil t)
-                ("For reference" (message "Moving into archive.")
-                 (move-to (substitute-in-file-name "$ORG_ARCHIVE/note: reference/")))))
-      ("Resource" (pcase (completing-read "What state? " '("For reference") nil t)
-                    ("For reference" (message "Moving into archive.")
-                     (move-to (substitute-in-file-name "$ORG_ARCHIVE/resource: dropped interests/")))))
-      ("Design" (pcase (completing-read "What state? " '("New idea" "New pitch" "Rejected idea" "Rejected pitch") nil t)
-                  ("New idea" (message "Moving into design ideas.")
-                   (move-to (substitute-in-file-name "$ORG_DESIGN/2 ideas/")))
-                  ("New pitch" (message "Moving into design pitches.")
-                   (move-to (substitute-in-file-name "$ORG_DESIGN/1 pitches/")))
-                  ((or "Rejected idea" "Rejected pitch") (message "Moving into archive.")
-                   (move-to (substitute-in-file-name "$ORG_ARCHIVE/design: rejected/")))))
-      ("Project" (pcase (completing-read "What state? " '("Completed" "Stalled/inactive" "Aborted" "Trip done") nil t)
-                   ("Completed" (message "Moving into archive.")
-                    (move-to (substitute-in-file-name "$ORG_ARCHIVE/project: completed/")))
-                   ("Stalled/inactive" (message "Moving into designs.")
-                    (move-to (substitute-in-file-name "$ORG_DESIGN/0 inactive/")))
-                   ("Aborted" (message "Moving into archive.")
-                    (move-to (substitute-in-file-name "$ORG_ARCHIVE/project: aborted/")))
-                   ("Trip done" (message "Moving into archive.")
-                    (move-to (substitute-in-file-name "$ORG_ARCHIVE/project: past trips/")))))
-      ))
-  (revert-buffer))
-#+end_src
-
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun dirvish-in-projects ()
-  "Open dirvish in org projects."
-  (interactive)
-  (dirvish (substitute-in-file-name "$ORG_PROJECTS")))
+      (dired-find-file))))
 
 (use-package dired
   :ensure nil
+  :bind (:map dired-mode-map
+              ("t" . touch-org-file)
+              ("d" . mkdir-dired)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dired
+  :ensure nil
   :custom
-  (dired-listing-switches "--human-readable")
-  (dired-deletion-confirmer 'always) ; TODO make this ask if removing a non-empty dir
+  (dired-deletion-confirmer 'always)
   (dired-clean-confirm-killing-deleted-buffers nil)
   (dired-auto-revert-buffer #'dired-directory-changed-p)
   :bind (("C-x d" . dirvish)
          ("H-d" . dirvish)
-         ("H-p" . dirvish-in-projects)
          :map dired-mode-map
          ("H-d" . dirvish-quit)
-         ("h" . dired-up-directory)
-         ("l" . dired-find-file)
          ("j" . dired-next-line)
          ("k" . dired-previous-line)
-         ("g" . dirvish-quick-access)
-         ("." . dired-toggle-hidden-directories)
-         ("SPC" . jneidel-dired-toggle-mark)
-         ("I" . dired-toggle-marks) ; [I]nvert
-         ("t" . touch-org-file)
-         ("d" . mkdir-dired)
-         ("p" . dirvish-move) ; move marked into cwd
-         ("y" . dirvish-yank) ; copy marked into cwd
+         ("h" . dired-up-directory)
+         
+         ("l" . dired-find-file)
+         ("L" . dired-find-file-other-window)
+         ("F" . dired-do-find-marked-files)
+         
          ("r m" . dired-do-delete)
-         ("r s" . revert-buffer)
-         ("r r" . revert-buffer)
-         ("/" . dirvish-narrow)
-         ("i" . dirvish-history-go-forward)
-         ("o" . dirvish-history-go-backward)
-         ; dired-find-file-other-window ; quickly edit file in preview buffer
-         ("m" . nil)
-         ("m i" . move-to-inbox)
-         ("m r" . move-to-selected-resource)
-         ("m a" . move-to-selected-area)
-         ("m p" . move-to-selected-project)
-         ("m P" . move-to-projects)
-         ("m s" . move-to-paperless)
-         ("m b" . move-to-blog-post-ideas)
-         ("m d" . move-to-selected-design)
-         ("m D" . move-to-designs)
-         ("m I" . move-to-other-inbox)
-         ("m l" . move-to-local-archive)
-         ;; ("m A" . move-to-selected-archive)
-         ("m A" . jn/note-taking/file-away-based-on-type)
-         ("m t" . jn/note-taking/file-away-based-on-type)
-         ("ö a" . set-project-status-active)
-         ("ö i" . set-project-status-inactive)
-         ("ö b" . set-project-status-blocked)
-         ("ö n" . set-project-status-none)
-         ("ö !" . set-project-status-important)
-         )
+         ("r r" . revert-buffer) ; refresh
+         ("r s" . revert-buffer)))
+#+end_src
+
+[[https://www.gnu.org/software/emacs/manual/html_mono/dired-x.html#Omitting-Files-in-Dired][Omit]] uninteresting files, including hidden files/directories.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dired-x
+  :ensure nil
+  :custom
+  (dired-listing-switches "-Alh") ; never show . .. dirs
+  :hook (dired-mode . dired-omit-mode) ; omit by default
+  :bind (:map dired-mode-map
+              ("." . dired-omit-mode))
+  :diminish 'dired-omit-mode
   :config
-  (add-hook 'dired-before-readin-hook #'dired-sort-on-cd))
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\.")) ; setq for load order
+  ;; (dired-omit-extensions (concat dired-omit-extensions
+  )
+#+end_src
+
+TODO continue https://protesilaos.com/emacs/dotemacs#h:d7d5e619-3d50-4d9e-a951-7262462a60c9
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/dired-do-open ()
+  "Open current or all marked files using `mime open'." ; built-in dired-do-open uses xdg-open
+  (interactive nil dired-mode)
+  (dolist (file (dired-get-marked-files))
+    (pcase system-type
+      ('gnu/linux
+       (call-process "mime" nil 0 nil file))
+      ('darwin
+       (start-process "mime" nil "mime" file)))))
+
+(defun jn/dired-do-edit ()
+  "Edit current or all marked files using `mime edit'."
+  (interactive nil dired-mode)
+  (dolist (file (dired-get-marked-files))
+    (pcase system-type
+      ('gnu/linux
+       (call-process "mime" nil 0 nil "edit" file))
+      ('darwin
+       (start-process "mime edit" nil "mime" "edit" file)))))
+
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("e" . jn/dired-do-open)
+              ("E" . jn/dired-do-edit)))
+  ;; (dired-guess-shell-alist-user ; those are the suggestions for ! and & in Dired
+  ;;     '(("\\.\\(png\\|jpe?g\\|tiff\\)" "mime")
+  ;;       ("\\.\\(mp[34]\\|m4a\\|ogg\\|flac\\|webm\\|mkv\\)" "mime")
+  ;;       (".*" "mime"))))
 #+end_src
 
 *** Dirvish
@@ -3397,75 +3207,92 @@ https://github.com/alexluigit/dirvish/blob/main/docs/EXTENSIONS.org
 https://github.com/alexluigit/dirvish/issues/324
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dirvish
-  :commands
-  (dirvish)
+  :after dired
+  :commands (dirvish)
   :init
   (dirvish-override-dired-mode)
   (add-to-list 'load-path (concat user-emacs-directory "elpa/dirvish-2.3.0/extensions")) ; bug in 2.3.0
   :config
-  (require 'dirvish-quick-access)
-  (require 'dirvish-yank)
-  (require 'dirvish-narrow)
-  (require 'dirvish-history)
-
-  (require 'dirvish-peek)
-  ; (dirvish-peek-mode 1) ; preview files during find-file, performance impact esp. on the mac
-  ; TODO: access whether I miss this option
-
   (require 'dirvish-icons)
   (setq dirvish-all-the-icons-height 0.8
         dirvish-all-the-icons-palette nil ; same font for icons as text
         dirvish-attributes '(all-the-icons))
   :custom
-  (dirvish-quick-access-entries `(
-                                  ("h" "~/"                          "Home")
-                                  ("D" "~/Downloads/"                "Downloads")
-                                  ("e" "~/.emacs.d/"                 "Emacs")
-                                  ("c" "~/.emacs.d/dotemacs.org"     "Emacs config")
-                                  ("C" "~/code"                      "Code")
-                                  ("l" ".archive"                    "Local archive")
-                                  ("o" ,(substitute-in-file-name "$ORG") "Org")
-                                  ("i" ,(substitute-in-file-name "$ORG_INBOX") "Org Inbox")
-                                  ("I" ,(string-trim (shell-command-to-string "select-other-inbox")) "Other Inbox")
-                                  ("d" ,(substitute-in-file-name "$ORG_DESIGN") "Org Designs")
-                                  ("p" ,(substitute-in-file-name "$ORG_PROJECTS") "Org Projcts")
-                                  ("a" ,(substitute-in-file-name "$ORG_AREAS") "Org Areas")
-                                  ("P" ,(substitute-in-file-name "$ORG_AREAS/blog/posts") "Blog posts")
-                                  ("b" ,(substitute-in-file-name "$ORG_AREAS/blog") "Blog")
-                                  ("r" ,(substitute-in-file-name "$ORG_RESOURCES") "Org Resources")
-                                  ("n" ,(substitute-in-file-name "$ORG_RESOURCES/Neurostreams/Neurostreams") "Neurostreams")
-                                  ("m" ,(substitute-in-file-name "$ORG_MEDIA") "Media")
-                                  ("M" ,(substitute-in-file-name "$ORG_MEDIA/music") "Music")
-                                  ("A" ,(substitute-in-file-name "$ORG_ARCHIVE") "Org Archive")
-                                  ("s" ,(substitute-in-file-name "$ORG_INBOX/screenshots") "Screenshots") ; TODO show inbox if dir doesn't exist
-                                  ))
-  )
-
+  (dirvish-use-mode-line nil))
 #+end_src
 
-A preview window on the side like in lf can be recreated.
-It works, but has it's problems:
-1. opening a file via a non-dired way (find-file, shortcut, etc.) will open it
-   in the preview window
-2. the preview of directories looks way different than in the main view
-3. with the preview divish (~H-d~) takes the full screen temporarily if I want
-   to choose a file in a split window
+Marking that mirrors lf.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/dired-toggle-mark ()
+  "Toggle mark on the file at point in dired."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (save-excursion
+      (beginning-of-line)
+      (if (looking-at dired-re-mark)
+          (dired-unmark 1)
+        (dired-mark 1)))
+    (next-line)))
+
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("SPC" . jn/dired-toggle-mark)
+              ("I" . dired-toggle-marks))) ; [I]nvert
+#+end_src
+
+Move or copy all selected at a time.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dirvish
   :defer t
   :config
-  ;; (setq dirvish-default-layout '(0 0.6 0.4))
-  (setq dirvish-default-layout nil))
+  (require 'dirvish-yank)
+  :bind (:map dired-mode-map
+              ("p" . dirvish-move)   ; move marked into cwd
+              ("y" . dirvish-yank))) ; copy marked into cwd
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(dirvish-define-preview eza (file)
-  "Use `eza' to generate directory preview."
-  :require ("eza") ; tell Dirvish to check if we have the executable
-  (when (file-directory-p file) ; we only interest in directories here
-    `(shell . ("eza" "-1h" "--group-directories-first" "--color=always" ,file))))
+(use-package dirvish
+  :defer t
+  :config
+  (require 'dirvish-narrow)
+  :bind (:map dired-mode-map
+              ("/" . dirvish-narrow)))
+#+end_src
 
-(push 'eza dirvish-preview-dispatchers)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dirvish
+  :defer t
+  :config
+  (require 'dirvish-quick-access)
+  :bind (:map dired-mode-map
+              ("g" . dirvish-quick-access))
+  :custom
+  (dirvish-quick-access-entries `(
+                                ("h" "~/"                          "Home")
+                                ("C" "~/code"                      "Code")
+                                ("D" "~/Downloads/"                "Downloads")
+                                ("e" "~/.emacs.d/"                 "Emacs")
+                                ("l" ".archive"                    "Local archive")
+                                ("o" ,(substitute-in-file-name "$ORG") "Org")
+                                ("i" ,(substitute-in-file-name "$ORG_INBOX") "Org Inbox")
+                                ("I" ,(string-trim (shell-command-to-string "select-other-inbox")) "Other Inbox")
+                                ("d" ,(substitute-in-file-name "$ORG_DESIGN") "Org Designs")
+                                ("P" ,(substitute-in-file-name "$ORG_PROJECTS") "Org Projects")
+                                ("c" ,(substitute-in-file-name "$ORG_PROJECTS/🚀 completing") "Org completing projects")
+                                ("s" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging") "Org staging projects")
+                                ("p" ,(substitute-in-file-name "$ORG_PROJECTS/⚡ sparking") "Org sparking projects")
+                                ("b" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging/🛑 blocked") "Org blocked projects")
+                                ("a" ,(substitute-in-file-name "$ORG_AREAS") "Org Areas")
+                                ("r" ,(substitute-in-file-name "$ORG_RESOURCES") "Org Resources")
+                                ("n" ,(substitute-in-file-name "$ORG_RESOURCES/Neurostreams/Neurostreams") "Neurostreams")
+                                ("m" ,(substitute-in-file-name "$ORG_MEDIA") "Media")
+                                ("M" ,(substitute-in-file-name "$ORG_MEDIA/music") "Music")
+                                ("A" ,(substitute-in-file-name "$ORG_ARCHIVE") "Org Archive")
+                                ("S" ,(substitute-in-file-name "$ORG_INBOX/screenshots") "Screenshots") ; TODO show inbox if dir doesn't exist
+                                ))
+)
 #+end_src
 
 In dirvish the line under point is marked up by the ~dirvish-hl-line~ face.
@@ -3545,6 +3372,354 @@ Falls back to the `default` face if needed."
   (jn/dired-set-entry-fg-as-hl-bg))
 
 (add-hook 'dired-mode-hook #'jn/dired-inverse-hl-color-mode)
+#+end_src
+
+By default use no parent or child/preview panes.
+They can be enabled on demand and will not persist after dired is closed
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dirvish
+  :defer t
+  :custom
+  (dirvish-default-layout nil)
+  :bind (:map dired-mode-map
+              ("," . jn/dirvish-toggle-preview))
+  :config
+  (dirvish-define-preview eza (file)
+    "Use `eza' to generate directory preview."
+    :require ("eza") ; tell Dirvish to check if we have the executable
+    (when (file-directory-p file) ; we only interest in directories here
+      `(shell . ("eza" "-1h" "--group-directories-first" "--color=always" ,file))))
+  (push 'eza dirvish-preview-dispatchers)
+
+  (defun jn/dirvish-toggle-preview ()
+    "Toggle two pane layout with preview.
+It's `dirvish-layout-toggle' using my layout."
+    (interactive)
+    (let* ((dv (or (dirvish-curr) (user-error "Not a dirvish buffer")))
+           (my-layout '(0 0.6 0.4))
+           (old-layout (dv-curr-layout dv)) (conf (dv-winconf dv))
+           (new-layout (unless old-layout my-layout))
+           (buf (current-buffer)))
+      (setf (dv-preview-hash dv) (dirvish--ht) (dv-parent-hash dv) (dirvish--ht))
+      (if old-layout (and conf (set-window-configuration conf))
+        (with-selected-window (dv-root-window dv) (quit-window)))
+      (setf (dv-curr-layout dv) new-layout)
+      (with-selected-window (dirvish--create-root-window dv)
+        (dirvish-save-dedication (switch-to-buffer buf))
+        (dirvish--build-layout dv))))
+  )
+#+end_src
+
+*** Dired history
+Go (i)n and (o)ut of history.
+~dired-hist~ provides a reliable stack across jumps and searches.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package dired-hist
+  :hook (dired-mode)
+  :bind (:map dired-mode-map
+              ("o" . dired-hist-go-back)
+              ("i" . dired-hist-go-forward)))
+#+end_src
+
+** Org (my note-taking system)
+The logic of my note-taking system is heavily implemented in and automated through dired.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun dired-in-projects ()
+  "Open dired in org projects."
+  (interactive)
+  (dired (substitute-in-file-name "$ORG_PROJECTS")))
+
+(use-package dired
+  :ensure nil
+  :bind ("H-p" . dired-in-projects))
+#+end_src
+
+Select a directory inside of the main categories of my note-taking system via the minibuffer.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun org-select-project ()
+  "Prompt user to select an org project in $ORG_PROJECTS."
+  (format "%s/%s" (substitute-in-file-name "$ORG_PROJECTS")
+          (completing-read "Pick project: "
+                           (split-string (string-trim (shell-command-to-string "select-project")) "\n") nil t)))
+(defun org-select-design ()
+  "Prompt user to select an org design in $ORG_PROJECTS/.design."
+  (format "%s/%s" (substitute-in-file-name "$ORG_PROJECTS/.design")
+          (completing-read "Pick design: "
+                           (split-string (string-trim (shell-command-to-string "select-design")) "\n") nil t)))
+(defun org-select-resource ()
+  "Prompt user to select an org resource in $ORG_RESOURCES."
+  (format "%s/%s" (substitute-in-file-name "$ORG_RESOURCES")
+          (completing-read "Pick resource: "
+                           (split-string (string-trim (shell-command-to-string "select-resource")) "\n") nil t)))
+(defun org-select-archive ()
+  "Prompt user to select an org archive directory in $ORG_ARCHIVE."
+  (format "%s/%s" (substitute-in-file-name "$ORG_ARCHIVE")
+          (completing-read "Pick archive: "
+                           (split-string (string-trim (shell-command-to-string "select-archive")) "\n") nil t)))
+#+end_src
+
+Move file at point (or the marked files) to a fixed or selected location in my
+note-taking system.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun move-to (destination)
+  "Move dired files (marked or the one at point) to a given destination directory."
+  (dolist (to-be-moved (dired-get-marked-files)) ; if none marked, use the one at point
+    (let ((target (expand-file-name (file-name-nondirectory to-be-moved) destination)))
+      (dired-rename-file to-be-moved target nil)
+      (message (format "Moved %s to %s" (file-name-nondirectory to-be-moved) destination)) ; TODO format fails if directory is moved
+      (revert-buffer))))
+
+(defun move-to-inbox () (interactive) (move-to (substitute-in-file-name "$ORG_INBOX")))
+(defun move-to-selected-resource () (interactive) (move-to (org-select-resource)))
+(defun move-to-selected-project () (interactive) (move-to (org-select-project)))
+(defun move-to-selected-design () (interactive) (move-to (org-select-design)))
+(defun move-to-projects () (interactive) (move-to (substitute-in-file-name "$ORG_PROJECTS")))
+(defun move-to-paperless () (interactive) (move-to (substitute-in-file-name "$ORG/.paperless_import")))
+(defun move-to-blog-post-ideas () (interactive) (move-to (substitute-in-file-name "$ORG_AREAS/blog/posts/0 ideas")))
+(defun move-to-designs () (interactive) (move-to (substitute-in-file-name "$ORG_DESIGN/2 ideas")))
+(defun move-to-other-inbox () (interactive) (move-to (string-trim (shell-command-to-string "select-other-inbox"))))
+(defun move-to-local-archive () (interactive) (let ((local-archive (expand-file-name ".archive" default-directory)))
+                                                (make-directory local-archive t)
+                                                (move-to local-archive)))
+(defun move-to-resources-raw () (interactive)
+       (let ((monthly-raw-dir (substitute-in-file-name (format "$ORG_RESOURCES/raw/%s" (format-time-string "%Y-%m")))))
+         (mkdir monthly-raw-dir t)
+         (move-to monthly-raw-dir)))
+
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("m" . nil)
+              ("m m" . dired-toggle-read-only) ; [m]ass [m]ove
+              ("m i" . move-to-inbox)
+              ("m r" . move-to-selected-resource)
+              ("m w" . move-to-resources-raw)
+              ("m p" . move-to-selected-project)
+              ("m P" . move-to-projects)
+              ("m s" . move-to-paperless)
+              ("m b" . move-to-blog-post-ideas)
+              ("m d" . move-to-selected-design)
+              ("m D" . move-to-designs)
+              ("m I" . move-to-other-inbox)
+              ("m l" . move-to-local-archive)))
+#+end_src
+
+TODO: remove set-project-status if I stick with sparking/staging/completing
+
+I use emoji to convey the status of the project at a glace:
+- 🟢 is a project I am actively persuing
+- 🪀 is an externally blocked project
+
+The individual emoji representing the different colors of the traffic light were
+chosen based on their unicode symbols.
+Natural sort returns them in the correct order.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun set-project-status (status)
+  (let* ((path-after-status-change (string-trim-right
+                                    (shell-command-to-string
+                                     (format "project-status set %s '%s' -nomv" status (dired-get-file-for-visit)))))
+         (new-path (pcase status
+                     ("inactive" (format "%s/%s"
+                                         (substitute-in-file-name "$ORG_DESIGN/0 sort")
+                                         (file-name-nondirectory path-after-status-change)))
+                     ("active" (format "%s/%s"
+                                       (substitute-in-file-name "$ORG_PROJECTS")
+                                       (file-name-nondirectory path-after-status-change)))
+                     (_ path-after-status-change)
+                     )))
+    (dired-rename-file (dired-get-file-for-visit) (string-trim-right new-path) nil)
+    (revert-buffer)
+    (dirvish (file-name-directory new-path))
+    (dired-goto-file new-path)))
+
+(defun prompt-for-status-line-update ()
+  (when (eq system-type 'gnu/linux)
+    (progn
+      (let ((index-file (expand-file-name "index.org" (dired-get-file-for-visit))))
+        (when (not (file-exists-p index-file))
+          (shell-command (format "generate-orgmode-metadata \"index\" >\"%s\"" index-file)))
+
+        (let ((updated-status
+               (read-string "Update status line: "
+                            (string-trim (shell-command-to-string
+                                          (format "grep -Po '#\\+(status|STATUS): \\K.*' '%s' 2>/dev/null" index-file))))))
+
+          (if (zerop (shell-command (format "grep '^#+status: ' '%s'" index-file)))
+              (shell-command (format "sed -i 's/^#+status: .*/#+status: %s/' '%s'" updated-status index-file))
+            (shell-command (format "echo '#+status: %s' >>'%s'" updated-status index-file))))))))
+
+(defun set-project-status-sparking () (interactive)
+       (move-to (substitute-in-file-name "$ORG_PROJECTS/⚡ sparking")))
+(defun set-project-status-staging () (interactive)
+       (move-to (substitute-in-file-name "$ORG_PROJECTS/✊ staging")))
+(defun set-project-status-completing () (interactive)
+       (prompt-for-status-line-update)
+       (move-to (substitute-in-file-name "$ORG_PROJECTS/🚀 completing")))
+(defun set-project-status-blocked () (interactive)
+       (prompt-for-status-line-update)
+       (move-to (substitute-in-file-name "$ORG_PROJECTS/✊ staging/🛑 blocked")))
+(defun set-project-status-none () (interactive) (set-project-status "none"))
+(defun set-project-status-important () (interactive) (set-project-status "important"))
+
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("ö c" . set-project-status-completing)
+              ("ö a" . set-project-status-completing)
+              ("ö p" . set-project-status-sparking)
+              ("ö s" . set-project-status-staging)
+              ("ö b" . set-project-status-blocked)
+              ("ö n" . set-project-status-none)
+              ("ö !" . set-project-status-important)))
+#+end_src
+
+Put different archiving options into code.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/note-taking/file-away-based-on-type ()
+  (interactive)
+  (let* ((type-by-dir (if (file-in-directory-p default-directory (substitute-in-file-name "$ORG_DESIGN"))
+                            nil ;"Design"
+                        (if (file-in-directory-p default-directory (substitute-in-file-name "$ORG_RESOURCES"))
+                            "Resource")))
+         (type (if type-by-dir
+                   type-by-dir
+                 (completing-read "What type? " '("Project"
+                                                  "Design"
+                                                  "Resource"
+                                                  "Task"
+                                                  "Note")
+                                  nil t))))
+    (pcase type
+      ("Task" (pcase (completing-read "What state? " '("Done") nil t)
+                ("Done" (message "Moving into archive.")
+                 (move-to (substitute-in-file-name "$ORG_ARCHIVE/task: completed/")))))
+      ("Note" (pcase (completing-read "What state? " '("For reference" "Processed reflection") nil t)
+                ("For reference" (message "Moving into archive.")
+                 (move-to (substitute-in-file-name "$ORG_ARCHIVE/note: reference/")))
+                ("Processed reflection" (message "Moving into archive.")
+                 (move-to (substitute-in-file-name "$ORG_ARCHIVE/reflection: processed/")))))
+      ("Resource" (pcase (completing-read "What state? " '("For reference") nil t)
+                    ("For reference" (message "Moving into archive.")
+                     (move-to (substitute-in-file-name "$ORG_ARCHIVE/resource: dropped interests/")))))
+      ("Design" (pcase (completing-read "What state? " '("Retired idea" "Rejected idea") nil t)
+                  ("Retired idea" (message "Moving into archive.")
+                   (move-to (substitute-in-file-name "$ORG_ARCHIVE/design: retired/")))
+                  ((or "Rejected idea" "Rejected pitch") (message "Moving into archive.")
+                   (move-to (substitute-in-file-name "$ORG_ARCHIVE/design: rejected/")))))
+      ("Project" (pcase (completing-read "What state? " '("Completed" "Stalled/inactive" "Abandoned" "Trip done") nil t)
+                   ("Completed" (message "Moving into archive.")
+                    (move-to (substitute-in-file-name "$ORG_ARCHIVE/project: completed/")))
+                   ("Stalled/inactive/To sort out" (message "Moving into designs.")
+                    (move-to (substitute-in-file-name "$ORG_DESIGN/0 sort/")))
+                   ("Abandoned" (message "Moving into archive.")
+                    (move-to (substitute-in-file-name "$ORG_ARCHIVE/project: abandoned/")))
+                   ("Trip done" (message "Moving into archive.")
+                    (move-to (substitute-in-file-name "$ORG_ARCHIVE/project: past trips/")))))
+      ))
+  (revert-buffer))
+
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("m a" . jn/note-taking/file-away-based-on-type)
+              ("m A" . jn/note-taking/file-away-based-on-type)
+              ("m t" . jn/note-taking/file-away-based-on-type)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/dired-set-sort-switch(sort-value)
+  "Update the --sort= switch in dired-actual-switches."
+  (let* ((sort-option (concat " --sort=" sort-value))
+         (switches
+          (if (string-match " --sort=" dired-actual-switches)
+              (replace-regexp-in-string " --sort=[^ ]+" sort-option dired-actual-switches)
+            (concat dired-actual-switches sort-option))
+          ))
+    (setq dired-actual-switches switches)))
+
+(defun jn/dired-sort-on-cd()
+  "Apply sorting rules based on org directory."
+  (unless (file-remote-p default-directory)
+    (let ((sortby (pcase default-directory ; cwd
+                    ("~/org/" "name")
+                    ("~/org/0_inbox/" "time")
+                    ("~/org/1_project/" "version")
+                    ("~/org/1_project/.design/" "version")
+                    ("~/org/dava_org/1_project/" "version")
+                    ((pred (string-match "^~/org")) "time")
+                    (_ "name"))))
+      (jn/dired-set-sort-switch sortby))))
+
+(use-package dired
+  :ensure nil
+  :hook (dired-before-readin-hook . jn/dired-sort-on-cd))
+#+end_src
+
+** TODO Tramp
+Enable full-featured Dirvish over TRAMP on ssh connections
+https://www.gnu.org/software/tramp/#Improving-performance-of-asynchronous-remote-processes
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package tramp
+  :config
+  (connection-local-set-profile-variables
+   'remote-direct-async-process
+   '((tramp-direct-async-process . t)))
+  (connection-local-set-profiles
+   '(:application tramp :protocol "ssh")
+   'remote-direct-async-process)
+  :custom
+  (tramp-verbose 0)
+  (tramp-chunksize 2000)
+  (tramp-ssh-controlmaster-options nil))
+#+end_src
+
+Convenience functions for faster access.
+[[https://www.emacswiki.org/emacs?action=browse;oldid=Tramp;id=TrampMode#h5o-31][sudo-edit-current-file source]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun find-file-sudo ()
+  "`find-file' starting with /sudo:root@localhost:/"
+  (interactive)
+  (let ((default-directory "/sudo:root@localhost:/"))
+    (call-interactively #'find-file)))
+
+(defun find-file-ssh ()
+  "`find-file' starting with /ssh:"
+  (interactive)
+  (let ((default-directory "/ssh:"))
+    (call-interactively #'find-file)))
+
+(use-package tramp
+  :bind (:map dired-mode-map
+              ("S-<return>" . sudo-edit-current-file)
+              ))
+
+(defun sudo-edit-current-file ()
+  (interactive)
+  (let ((my-file-name) ; fill this with the file to open
+        (position))    ; if the file is already open save position
+    (if (equal major-mode 'dired-mode) ; test if we are in dired-mode 
+        (progn
+          (setq my-file-name (dired-get-file-for-visit))
+          (find-alternate-file (prepare-tramp-sudo-string my-file-name)))
+      (setq my-file-name (buffer-file-name); hopefully anything else is an already opened file
+            position (point))
+      (find-alternate-file (prepare-tramp-sudo-string my-file-name))
+      (goto-char position))))
+
+(defun prepare-tramp-sudo-string (tempfile)
+  (if (file-remote-p tempfile)
+      (let ((vec (tramp-dissect-file-name tempfile)))
+        (tramp-make-tramp-file-name
+         "sudo"
+         ""
+         (tramp-file-name-domain vec)
+         (tramp-file-name-host vec)
+         (tramp-file-name-port vec)
+         (tramp-file-name-localname vec)
+         (format "ssh:%s@%s|"
+                 (tramp-file-name-user vec)
+                 (tramp-file-name-host vec))))
+    (concat "/sudo:root@localhost:" tempfile)))
 #+end_src
 
 ** setup Latex
