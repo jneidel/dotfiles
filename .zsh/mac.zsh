@@ -13,7 +13,7 @@ if [ "$(uname)" = "Darwin" ]; then
   alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &; disown"
 
   # oraclett
-  local ORACLETT_MAIN_PROJECT=INTET999DXD
+  local ORACLETT_MAIN_PROJECT=INTET999DE_DEV
   local ORACLETT_MAIN_TASK_DETAILS=01
 
   alias onl="oraclett note list"
@@ -30,6 +30,7 @@ if [ "$(uname)" = "Darwin" ]; then
   alias oha="oraclett hour add -p $ORACLETT_MAIN_PROJECT -t $ORACLETT_MAIN_TASK_DETAILS"
   alias ohe="oraclett hour edit"
   alias ohr="oraclett hour remove"
+  
   alias oha8="oha -H8"
 
   alias otl="oraclett ticket list -p $ORACLETT_MAIN_PROJECT"

@@ -316,3 +316,7 @@ create /etc/nix
 
 [xremap]
 .config/xremap.yml
+
+[karabiner-elements]
+create .config/karabiner
+.config/karabiner/karabiner.json
