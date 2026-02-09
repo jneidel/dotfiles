@@ -1,0 +1,215 @@
+#!/bin/bash
+# Compatibility script for hledger for use with Emacs ledger-mode.
+# Source: https://hledger.org/editors.html?highlight=ledger-mode#ledger-mode
+
+# The script is contingent on ledger-default-date-string
+# being set to "%Y-%m-%d", aka ISO date format.
+# (setq ledger-default-date-string "%Y-%m-%d")
+
+iargs=("$@")
+oargs=()
+j=0
+date=
+emacs_report=0
+emacs_sort=
+emacs_account=
+balance_display_total=0
+balance_limit=
+balance_account=
+ledger_cmd=${LEDGER_BIN:-ledger}
+for((i=0; i<${#iargs[@]}; ++i)); do
+  case ${iargs[i]} in
+    --date-format)
+      # drop --date-format and the next arg
+      i=$((i+1))
+      ;;
+    --date-format=*)
+      # drop --date-format=... (single arg form)
+      ;;
+    cleared) # for ledger-di
+      # ledger's `cleared` report shows cleared-or-pending balances.
+      # hledger equivalent: include cleared and pending.
+      oargs[j]=balance; oargs[j+1]=-N; oargs[j+2]=--cleared; oargs[j+3]=--pending; j=$((j+4));
+      ;;
+    xact)
+      # convert "xact" to "print --match"
+      oargs[j]=print; oargs[j+1]=--match; j=$((j+2));
+      # drop xact argument and stash the date argument
+      i=$((i+1));
+      date=${iargs[i]};
+      ;;
+    balance) # used by `ledger-display-balance` during reconciliation
+      # We'll emulate ledger's `--format %(scrub(display_total))` below.
+      oargs[j]=balance; j=$((j+1))
+      ;;
+    emacs) # for reconciliation (ledger has an "emacs" report; hledger does not)
+      emacs_report=1
+      ;;
+    --limit) # ledger filter expression
+      i=$((i+1))
+      balance_limit=${iargs[i]}
+      ;;
+    --format) # ledger formatting (not compatible with hledger)
+      i=$((i+1))
+      if test "${iargs[i]}" = "%(scrub(display_total))"
+      then
+        balance_display_total=1
+      fi
+      ;;
+    --collapse) # ledger-only balance option; ignore
+      ;;
+    --sort) # for reconciliation
+      if test "$emacs_report" = 1
+      then
+        # ledger provides its own expression language (eg "(date)");
+        # capture and sort in our converter instead.
+        i=$((i+1))
+        emacs_sort=${iargs[i]}
+      else
+        # pass through for non-reconcile usage
+        oargs[j]=${iargs[i]}; oargs[j+1]=${iargs[i+1]}; j=$((j+2))
+        i=$((i+1))
+      fi
+      ;;
+    --columns) # ledger report width option; ignore for hledger
+      # drop --columns and the next arg
+      i=$((i+1))
+      ;;
+    --uncleared) # for reconciliation
+      # hledger doesn't have `--uncleared`; approximate it with
+      # "either unmarked or pending" (ie, not cleared).
+      oargs[j]=--unmarked; oargs[j+1]=--pending; j=$((j+2))
+      ;;
+    --real) # ledger's "real postings only" (exclude virtual postings)
+      oargs[j]=-R; j=$((j+1))
+      ;;
+    --color) # ledger flag; hledger expects yes/no/auto
+      oargs[j]=--color=yes; j=$((j+1))
+      ;;
+    --force-color) # ledger flag; already handled by --color
+      ;;
+    --color=always) # hledger expects yes/no/auto
+      oargs[j]=--color=yes; j=$((j+1))
+      ;;
+    *)
+      # keep any other args:
+      oargs[j]=${iargs[i]};
+      j=$((j+1));
+      ;;
+  esac
+done
+
+if test "$balance_display_total" = 1
+then
+  # `ledger-reconcile-get-cleared-or-pending-balance' passes the account last.
+  balance_account="${iargs[@]: -1}"
+
+  # Drop the `balance` command; we’ll run `print -O json` instead.
+  oargs_filtered=()
+  k=0
+  dropped_balance=0
+  for arg in "${oargs[@]}"; do
+    if test "$dropped_balance" = 0 && test "$arg" = "balance"; then dropped_balance=1; continue; fi
+    oargs_filtered[k]="$arg"; k=$((k+1))
+  done
+  oargs=("${oargs_filtered[@]}")
+  j=${#oargs[@]}
+
+  # Drop the account from the hledger arg list; we re-add it as an acct: query.
+  if test "${#oargs[@]}" -gt 0 && test "${oargs[${#oargs[@]}-1]}" = "$balance_account"
+  then
+    unset "oargs[${#oargs[@]}-1]"
+    j=${#oargs[@]}
+  fi
+
+  # Translate the one ledger `--limit` expression we need for reconciliation.
+  # ledger: "cleared or pending"  => hledger: include cleared and pending
+  status_args=()
+  if test "$balance_limit" = "cleared or pending"
+  then
+    status_args=(--cleared --pending)
+  fi
+
+  hledger "${oargs[@]}" print -O json "${status_args[@]}" "acct:$balance_account" \
+    | python3 -c '
+import json, sys
+from decimal import Decimal
+
+def amount_decimal(a) -> Decimal:
+    q = (a or {}).get("aquantity") or {}
+    mant = int(q.get("decimalMantissa", 0))
+    places = int(q.get("decimalPlaces", 0))
+    d = Decimal(mant)
+    if places:
+        d = d / (Decimal(10) ** places)
+    return d
+
+def format_total(commodity: str, total: Decimal, side: str, spaced: bool, places: int) -> str:
+    sign = "-" if total < 0 else ""
+    total_abs = -total if total < 0 else total
+    if places:
+        q = Decimal(10) ** -places
+        s = f"{total_abs.quantize(q):f}"
+    else:
+        s = f"{total_abs.quantize(Decimal(1)):f}"
+        if s.endswith(".0"):
+            s = s[:-2]
+    number = sign + s
+    sep = " " if (spaced and commodity) else ""
+    if commodity:
+        if side == "R":
+            return f"{number}{sep}{commodity}"
+        return f"{commodity}{sep}{number}"
+    return number
+
+account = sys.argv[1] if len(sys.argv) > 1 else ""
+account_prefix = account + ":" if account else None
+txns = json.load(sys.stdin)
+
+totals = {}     # commodity -> Decimal
+styles = {}     # commodity -> (side, spaced, places)
+
+for t in txns:
+    for p in (t.get("tpostings") or []):
+        if p.get("ptype") in ("VirtualPosting", "BalancedVirtualPosting"):
+            continue
+        acct = p.get("paccount", "") or ""
+        if account:
+            if acct != account and not (account_prefix and acct.startswith(account_prefix)):
+                continue
+        for a in (p.get("pamount") or []):
+            commodity = a.get("acommodity") or ""
+            totals[commodity] = totals.get(commodity, Decimal(0)) + amount_decimal(a)
+            if commodity not in styles:
+                style = a.get("astyle") or {}
+                side = style.get("ascommodityside", "L")
+                spaced = bool(style.get("ascommodityspaced", False))
+                places = int((a.get("aquantity") or {}).get("decimalPlaces", 0))
+                styles[commodity] = (side, spaced, places)
+
+if not totals:
+    sys.stdout.write("0\n")
+    raise SystemExit(0)
+
+# Prefer a non-empty commodity when present.
+commodities = sorted(totals.keys(), key=lambda c: (c == "", c))
+commodity = commodities[0]
+side, spaced, places = styles.get(commodity, ("L", False, 0))
+sys.stdout.write(format_total(commodity, totals[commodity], side, spaced, places) + "\n")
+' "$balance_account"
+  exit $?
+fi
+
+if test "$emacs_report" = 1
+then
+  exec "$ledger_cmd" "${iargs[@]}"
+fi
+
+if test "$date"
+then
+  # substitute the given date for the old date:
+  hledger "${oargs[@]}" | sed "1s/....-..-../$date/"
+else
+  # echo "${oargs[@]}"
+  hledger "${oargs[@]}"
+fi

@@ -1997,6 +1997,78 @@ There is no need for flycheck.
 
 ** Apps
 *** Ledger
+I use hledger.
+The well maintained [[https://github.com/ledger/ledger-mode][ledger-mode]] can be used with hledger.
+See these articles for instructions and caveats: [[https://hledger.org/editors.html#ledger-mode][hledger.org]], [[https://codelearn.me/2022/10/13/ledger-mode.html][codelearn.me]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ledger-mode
+  :mode ("\\.journal\\'" . ledger-mode)
+  :hook (ledger-mode . (lambda () (jinx-mode -1)))
+  :custom
+  (ledger-post-amount-alignment-at :decimal)
+  (ledger-highlight-xact-under-point t)
+  (ledger-reconcile-default-commodity "€")
+  (ledger-copy-transaction-insert-blank-line-after t)
+  :config
+  (set-face-attribute 'ledger-font-xact-highlight-face nil
+                      :inherit nil
+                      :background "#333")
+  (set-face-attribute 'ledger-occur-xact-face nil
+                      :inherit nil
+                      :background "#333")
+  (set-face-attribute 'ledger-font-payee-uncleared-face nil
+                      :inherit nil
+                      :foreground "#ea3d54")
+  :bind (:map ledger-mode-map
+        ("C-c C-w" . calc-dispatch))
+  )
+#+end_src
+
+These options are required to make ledger-mode work with the hledger binary.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ledger-mode
+  :custom (
+  (ledger-binary-path "compat-hledger") ; hledger compatibility script, flymake requires the name to end on "hledger"
+  (ledger-default-date-format "%Y-%m-%d") ; required by compatibility script
+  (ledger-mode-should-check-version nil)
+  (ledger-report-auto-width t)
+  (ledger-report-links-in-register nil)
+  (ledger-report-native-highlighting-arguments '("--color=always"))))
+#+end_src
+
+- Add transaction: C-c C-a
+  use the given xact prompt to match past transaction to or C-c TAB to complete
+  from transaction title/payee
+- List errors: C-c f l
+- Increment date: S-up/down
+- Do math on number under point: C-c C-w w -> embedded calc mode
+  C-c C-b to open in calc, y to yank and confirm
+- Narrow transactions: C-c C-f
+  Update: C-c C-g
+- Next transaction: M-n/M-p
+- Change state: C-c C-c, C-c C-e
+- Reconcile: C-c C-r
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package flymake
+  :bind (:map flymake-mode-map
+              ("C-c f n" . flymake-goto-next-error)
+              ("C-c f p" . flymake-goto-prev-error)
+              ("C-c f l" . flymake-show-buffer-diagnostics)  ; a new list for each buffer, unlike flycheck
+              ("C-c f v" . flymake-switch-to-log-buffer)))
+
+(use-package flymake-hledger
+  :after (ledger-mode flymake)
+  :hook (ledger-mode . flymake-hledger-enable)
+  :custom
+  (flymake-show-diagnostics-at-end-of-line t)
+  (flymake-suppress-zero-counters t)
+  (flymake-hledger-checks '("accounts" "commodities" "balanced")) ; autobalanced as a weaker substitute
+  )
+#+end_src
+See list of applicable [[https://hledger.org/1.41/hledger.html#check][hledger checks]].
+
+**** hledger-mode
 [[https://hledger.org/editors.html#emacs][hledger notes]]
 [[https://github.com/narendraj9/hledger-mode][hledger-mode]]
 
@@ -2007,9 +2079,9 @@ TODO: look at hledger-input for quick capture
 TODO: write M-j move/down up functionality (kill entry (w/o poluting kill ring?)
 move, call next entry, etc.)
 [[https://chatgpt.com/c/68a6d758-fe88-832d-8416-beb6809803ff][failed attempt]]
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp
 (use-package hledger-mode
-  :mode ("\\.journal\\'" . hledger-mode)
+  ;;:mode ("\\.journal\\'" . hledger-mode)
   :preface
   (defun hledger/next-entry ()
     "Move to next entry and pulse."
@@ -2049,8 +2121,9 @@ move, call next entry, etc.)
   :after hledger-mode)
 ;; https://hledger.org/editors.html#flymake-hledger
 
+;; run flymake-hledger-enable
+
 (setq ledger-binary-path "hledger"
-      ledger-highlight-xact-under-point nil
       ledger-use-iso-dates nil
       ledger-mode-should-check-version nil)
 
