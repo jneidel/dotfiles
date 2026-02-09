@@ -962,25 +962,24 @@ Disable the default confirmation prompt for these executions:
 (setq org-confirm-babel-evaluate nil)
 #+end_src
 
-The langages which can be evaluated inline with `C-c C-c`.
-
+The languages which can be evaluated inline with `C-c C-c`.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq org-babel-load-languages '((emacs-lisp . t)
-                                 (shell . t)
-                                 (bash . t)
-                                 (octave . t)
-                                 (js . t)
-                                 (python . t)
-                                 (makefile . t)
-                                 (conf . t)
-                                 (css . t)
-                                 (calc . t)
-                                 (lisp . t)
-                                 (sass . t)
-                                 (sql . t)
-                                 (hledger . t)
-                                 (php . t)
-                                 (racket . t)))
+(use-package org
+  :config
+  (setq org-babel-load-languages '((emacs-lisp . t)
+                                   (shell . t)
+                                   (octave . t)
+                                   (js . t)
+                                   (python . t)
+                                   (makefile . t)
+                                   (css . t)
+                                   (calc . t)
+                                   (lisp . t)
+                                   (sass . t)
+                                   (sql . t)
+                                   (hledger . t)
+                                   (racket . t)))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
 #+end_src
 [[https://orgmode.org/worg/org-contrib/babel/languages/index.html][See the list of available languages for `org-babel-load-languages`.]]
 
@@ -2611,6 +2610,12 @@ Execute org-babel lisp blocks:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
   :config (require 'ob-lisp))
+#+end_src
+
+**** Shell
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq org-babel-default-header-args:shell
+      '((:results . "output")))
 #+end_src
 
 **** Racket
