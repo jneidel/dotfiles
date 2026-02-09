@@ -34,11 +34,11 @@ super + F4
 XF86AudioMute
   ~/scripts/sxhkd/set-volume mute >/dev/null
 XF86AudioLowerVolume
-  ~/scripts/sxhkd/set-volume -3 >/dev/null
+  ~/scripts/sxhkd/set-volume 3%- >/dev/null
 XF86AudioRaiseVolume
-  ~/scripts/sxhkd/set-volume +3 >/dev/null
+  ~/scripts/sxhkd/set-volume 3%+ >/dev/null
 
-### sound mixer
+    ### sound mixer
 super + ctrl + m
   kitty pulsemixer
 super + m

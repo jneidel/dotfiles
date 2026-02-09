@@ -4,47 +4,45 @@ XOB=/tmp/xobpipe
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
-$ set-volume.sh COMMAND
+$ set-volume COMMAND
 Set the volume and send a notification.
 
 Commands:
   mute: toggle mute
-  +<n>: raise volume
-  -<n>: lower volume
+  <n>%+: raise volume
+  <n>%-: lower volume
 
 Example:
-  $ set-volume.sh +5
-  $ set-volume.sh -5
-  $ set-volume.sh mute
+  $ set-volume 5%+
+  $ set-volume 5%-
+  $ set-volume mute
 EOF
   exit
 fi
 
-command -v pulsemixer >/dev/null || { echo "pulsemixer is not installed"; exit 1; }
+hash wpctl pactl || exit 127
 
 COMMAND="$1"
 
-get_active_sink() {
-  if RUNNING_SINKS="$(pactl list sinks short | grep -F 'RUNNING' -m1)"; then
-    echo $RUNNING_SINKS | tail -n1 | awk '{ print $1 }'
-  else
-    case "$(cat /etc/hostname)" in
-      *x240) echo 1;;
-      *x270) echo 0;;
-      *e495) echo 0;;
-      *) echo 0;;
-    esac
-  fi
-}
 notification() {
-  PROPS="$(pactl list sinks | grep -F "Sink #$SINK" -A 32)"
+  WPCTL_OUT="$(LC_ALL=C wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null || true)"
 
-  MUTE=$(echo $PROPS | grep -F "Mute: no" >/dev/null && echo 0 || echo 1)
+  printf '%s\n' "$WPCTL_OUT" | grep -q '\[MUTED\]' && MUTE=1 || MUTE=0
+  VOL="$(
+      printf '%s\n' "$WPCTL_OUT" |
+        awk '
+          /Volume:/ {
+            v=$2
+            gsub(",", ".", v)
+            if (v ~ /^[0-9.]+$/) {
+              printf "%d\n", int(v*100 + 0.5)
+              exit
+            }
+          }
+        '
+    )"
 
-  VOL="$(echo $PROPS | grep -Po '\d+%' )"
-  VOL="$(echo $VOL | awk -F % '{print $1}' )"
   [ -z "$VOL" ] && VOL=0
-
   echo mute: $MUTE, vol: $VOL
 
   IS_MUTE=""
@@ -54,22 +52,12 @@ notification() {
     echo "$VOL$IS_MUTE"
     echo "$VOL$IS_MUTE" >$XOB
   fi
-}
-
-SINK="$(get_active_sink)"
-echo "using sink: $SINK"
+ }
 
 case "$COMMAND" in
-  mute) pactl set-sink-mute "$SINK" toggle ;;
-  +*|-*) pactl set-sink-volume "$SINK" "${COMMAND}%" ;;
+  mute) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle 2>/dev/null;;
+  *%+|*%-) wpctl set-volume @DEFAULT_AUDIO_SINK@ "${COMMAND}" 2>/dev/null;;
   *) echo Invalid command, see --help ;;
 esac
 
 notification
-
-# MPD=~/scripts/mpd
-# if [ "$(cat $MPD/mpd-server-status)" -gt 0 ]; then
-#   if $MPD/is-mpd-playing; then # nested for performance
-#     echo ok # control mpd server instead of local volume as long as music is playing
-#   fi
-# fi
