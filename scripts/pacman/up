@@ -48,6 +48,13 @@ run_volta() {
 }
 command -v volta >/dev/null && run_volta
 
+run_nix() {
+  log nix "Update nix packages"
+  nice -n 19 nix profile upgrade --all
+  nice -n 19 nix-collect-garbage
+}
+command -v nix >/dev/null && run_nix
+
 run_hosts() {
   log hosts "Updating hosts"
   update-hosts

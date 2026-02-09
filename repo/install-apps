@@ -44,6 +44,10 @@ install_npm() {
   echo "npm: Install $1 [$2]: $3"
   sudo npm i -g "$1"
 }
+install_nix() {
+  echo "nix: Install $1 [$2]: $3"
+  nix profile add "$1"
+}
 install_pip() {
   echo "pip: Install $1 [$2]: $3"
   sudo pip install "$1"
@@ -68,6 +72,7 @@ logged_failed() {
 
 command -v yay >/dev/null || { install_PKGBUILD yay-git required "AUR helper"; }
 command -v npm >/dev/null || { install_pacman nodejs required "node package manager"; }
+command -v nix >/dev/null || { install_pacman nix required "nix package manager"; }
 command -v systemctl >/dev/null || { echo "systemd is available" 1>&2; exit 127; }
 
 CATEGORY=""
@@ -93,6 +98,8 @@ function install-apps {
       case $PREFIX in
         npm)
           install_npm "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
+        nix)
+          install_nix "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
         systemd)
           enable_systemd "$PKG" "$CATEGORY" "$DESC" || logged_failed "$LINE";;
         pip)

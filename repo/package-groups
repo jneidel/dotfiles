@@ -21,6 +21,13 @@
 # To list user-installed apps:
 #   comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
 
+[nix]
+nix Package manager
+systemd:nix-daemon
+shell:nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+shell:nix-channel --update
+shell:sudo gpasswd -a jneidel nixbld
+
 [dunst]
 dunst Notification daemon
 arc-icon-theme Icon theme

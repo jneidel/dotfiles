@@ -309,3 +309,10 @@ create .config/imapnotify
 [imapsync]
 .config/isyncrc
 .config/msmtp
+
+[nix]
+create /etc/nix
+/etc/nix/nix.conf
+
+[xremap]
+.config/xremap.yml
