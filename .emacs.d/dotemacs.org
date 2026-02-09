@@ -1959,7 +1959,17 @@ Viewport
 | C-Space M-x agent-shell-prompt-compose | ask about selection                    |
 | q                                      | minimize                               |
 
-With my font the agent icon is too big (double what it should be).
+Put all transcripts in one place.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq agent-shell-transcript-file-path-function
+      '(lambda () 
+         (let* ((dir (concat user-emacs-directory "agent-shell/transcripts"))
+                (filename (format-time-string "%F-%H-%M-%S.md"))
+                (filepath (expand-file-name filename dir)))
+           filepath)))
+#+end_src
+
+With my font the agent icon is too big (double what it should be). ([[https://github.com/xenodium/agent-shell/issues/202?notification_referrer_id=NT_kwHOAYZ309oAJlJlcG9zaXRvcnk7MTA1MzQ5NjM2NjtJc3N1ZTszODI1NzI0NzE5&notifications_query=is%3Adone#issuecomment-3765312823][See issue]].)
 The header could be reverted to text-only mode: ~(setq agent-shell-header-style 'text)~,
 but this also disabled useful information like state and page number.
 So this advice halves the font-height for the relevant function.
