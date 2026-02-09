@@ -581,187 +581,6 @@ One way to do this is keeping project stuff in one tab and persisting it with [[
   (setq tab-bar-tab-name-function #'my/tab-bar-tab-name-with-icon))
 #+end_src
 
-** Workspaces (perspective)
-In the terminal I used tmux sessions to group a collection of windows belonging to
-one project.
-When I was working on a project, I was in the project directory and would only
-see stuff relating to the project, keeping me focused.
-When I was in my main session I would not be reminded of the projects work in
-progress.
-There too I could focus on the task at hand.
-
-I wanted to replicate this in Emacs and [[https://github.com/nex3/perspective-el][perspective]] does this seamlessly.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package perspective
-  :custom
-  (persp-mode-prefix-key (kbd "C-x C-p"))
-  (persp-show-modestring nil)
-  :init
-  (persp-mode)
-  :bind (("C-x k" . persp-kill-buffer*)
-         ([remap kill-buffer] . persp-kill-buffer*)))
-#+end_src
-
-Perspective keeps track of which perspective a buffer belongs to.
-To only see buffers of the current perspective in ~consult-buffer~ it needs to
-filter by ~persp-is-current-buffer~, which I have configured below and set it as
-the ~:default~ consult buffer source.
-
-As described in the section on consult, the split between regular and special
-buffers (help, ~*Messages*~, etc.) is also implemented here.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package consult
-  :config
-  (consult-customize consult-source-buffer :hidden t :default nil) ; disable
-  (consult-customize persp-consult-source
-                     :name "Perspective Buffer"
-                     :default t
-                     :items '(lambda () (consult--buffer-query
-                                         :sort 'visibility
-                                         :as #'buffer-name
-                                         :predicate (lambda (buf) (persp-is-current-buffer buf t))
-                                         :include jn/consult-regular-buffer-regex)))
-  (defvar consult-special-buffer
-    `( :name "Special Buffer"
-       :default nil
-       :face consult-buffer
-       :category buffer
-       :history buffer-name-history
-       :state ,#'consult--buffer-state
-       :items ,(lambda () (consult--buffer-query
-                           :sort 'visibility
-                           :as #'buffer-name
-                           :predicate (lambda (buf) (persp-is-current-buffer buf t))
-                           :exclude (append jn/consult-regular-buffer-regex '("^ \\*"))
-                           ))))
-
-  (add-to-list 'consult-buffer-sources consult-special-buffer)
-  (add-to-list 'consult-buffer-sources persp-consult-source)
-#+end_src
-
-Have bookmark and recent file ~consult-buffer~ sources only show up on the main
-perspective.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-  (consult-customize consult-source-bookmark
-                     :enabled (lambda () (equal (persp-current-name) "main")))
-  (consult-customize consult-source-recent-file
-                     :enabled (lambda () (equal (persp-current-name) "main")))
-)
-#+end_src
-
-~H-b~ thus filters by perspective.
-Make available ~H-B~ to switch to a buffer in any perspective.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package perspective
-  :bind ("H-B" . persp-switch-to-buffer))
-#+end_src
-
-I am not using perspectives functionality to persist the current perspectives to
-a file, neither am I using [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][desktop-save-mode]].
-I tried it and had similar problems as with saving vim sessions:
-1. corrupted state: opening Emacs shows me errors not only errors in my config
-   but also those persisted along the session
-2. trash accumulates (unneeded buffers, moved files, etc.), can be mitigated
-   with midnight-mode
-3. state is saved on exit, so I will loose it occasionally
-4. unexpected behaviors with multiple open instances
-
-These problems can be mitigated (midnight-mode for cleanup, auto save
-functionality for regular saving, lock file, etc.), but is it worth the
-headache?
-For me it isn't.
-I have instead setup ways to quickly jump to files I use all the time and
-created a way to reopen a preconfigured project workspace with everything I
-need.
-
-([[https://github.com/karthink/project-x][project-x]] might be a minimal way to only save project.el buffers.
-Integration with projectile seem trivial if I need it.)
-
-You can also use a pure [[https://www.rahuljuliato.com/posts/emacs-tab-bar-groups][tab-bar-mode]] variant to replace tmux sessions.
-
-*** Open project workspaces
-With tmux I used [[https://github.com/tmuxinator/tmuxinator][tmuxinator]] to create sessions for projects.
-Per project I would configure a directory, a window arrangement and run some
-commands.
-I have replicated that functionality centered around perspective.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(cl-defstruct jn/persp-project
-  name      ;; Pretty name
-  dir       ;; Project root
-  setup-fn) ;; Custom code to run
-
-(defvar jn/persp-projects nil
-  "Alist of (NAME . jn/persp-project) registered projects.")
-
-(defun jn/persp-register-project (name dir setup-fn)
-  "Register a project."
-  (let* ((key name)
-         (proj (make-jn/persp-project :name name :dir dir :setup-fn setup-fn)))
-    (setq jn/persp-projects (assoc-delete-all key jn/persp-projects))
-    (push (cons key proj) jn/persp-projects)))
-
-(defun jn/persp-switch-persp-open-project ()
-  "Open a configured project in perspective or switch to a running perspective."
-  (interactive)
-  (let ((name (completing-read "Open Perspective: " (append
-                                                     (persp-names)
-                                                     (mapcar #'car jn/persp-projects)))))
-    (if (member name (persp-names))
-        (persp-switch name)
-      (let* ((proj (cdr (assoc name jn/persp-projects)))
-             (dir (file-name-as-directory (expand-file-name (jn/persp-project-dir proj))))
-             (setup-fn (jn/persp-project-setup-fn proj)))
-        (persp-switch name)
-        (let ((default-directory dir))
-          (when (and (fboundp 'project-remember-project)
-                     (fboundp 'project--find-in-directory)
-                     (not (project-current nil dir)))
-            (ignore-errors
-              (project-remember-project
-               (project--find-in-directory dir))))
-          (when (functionp setup-fn)
-            (funcall setup-fn)))))))
-
-(keymap-set perspective-map "s" #'jn/persp-switch-persp-open-project)
-#+end_src
-
-**** Perspective project definitions
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(jn/persp-register-project
- "Rails exploration"
- "~/code/experiments/2025-12-03-rails.org-follow-along"
- (lambda () (dirvish)))
-#+end_src
-
-To quickly create a new (temporary) perspective definition use this utility function.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun jn/persp-create-for-current-project ()
-  "Create a perspective for the current project and switch to it."
-  (interactive)
-  (let* ((proj (project-current nil))
-         (root (when proj (expand-file-name (project-root proj)))))
-    (if (not root)
-        (message "Not in a project.")
-      (let* ((project-name (file-name-nondirectory (directory-file-name root)))
-             (persp-existsp (member project-name (persp-names))))
-        (cond
-         (persp-existsp
-          (kill-buffer)
-          (persp-switch project-name)
-          (message "Switched to existing perspective: %s" project-name))
-         ((not (y-or-n-p (format "Create perspective for current project '%s'? " project-name)))
-          (message "Aborted."))
-         (t
-          (jn/persp-register-project project-name root nil)
-          (kill-buffer)
-          (persp-switch project-name)
-          (dirvish root)
-          (message "Switched to new perspective: %s" project-name)))))))
-
-(keymap-set perspective-map "c" #'jn/persp-create-for-current-project)
-(keymap-set project-prefix-map "C-p" #'jn/persp-create-for-current-project)
-#+end_src
-
 ** Org-mode
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
@@ -1325,6 +1144,251 @@ https://www.emacswiki.org/emacs/InfoPlus
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package info+
   :quelpa (info+ :fetcher "wiki"))
+#+end_src
+
+** Buffer management (popper)
+Emacs has many buffers that I would consider secondary.
+In primary buffers I do my work and I want to keep open and switch between them.
+Secondary buffers are temporary and often unasked for.
+[[https://github.com/karthink/popper][Popper]] can keep those secondary buffers out of your way by uniformly grouping
+them at the bottom of the screen or stop them from interrupting you in the first place.
+It makes it easy to hide/unhide these popups and cycle through the various ones.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq jn/secondary-buffer-regexes
+      '("\\*Messages\\*"
+        ("\\*Warnings\\*" . hide)
+        "\\*Man.*"
+        "\\*Help.*"
+        "\\*helpful.*"
+        ("\\*Compile.*" . hide)
+        ("\\*Org-Babel Error Output\\*" . hide)
+        ("\\*Async Shell Command\\*" . hide)
+        "\\*slime.*"
+        ("\\*inferior-lisp\\*" . hide)
+        ("\\*sldb.*" . hide)
+        "\\*Backtrace\\*"
+        "\\*org-search\\*"
+        "\\* Merriam-Webster"
+        "\\*Flymake diagnostics"))
+
+(use-package popper
+  :custom
+  (popper-reference-buffers jn/secondary-buffer-regexes)
+  (popper-mode-line '(:eval ""))
+  (popper-window-height 12) ; default function maxes out at 33%, which seems too small to me
+  :defer nil
+  :config
+  (popper-mode +1)
+  
+  (defhydra popper-hydra (:hint nil)
+    "
+_n_ext    _p_revious    promo_t_e/demo_t_e    show/_u_nshow"
+    ("n" popper-cycle)
+    ("p" popper-cycle-backwards)
+    ("t" popper-toggle-type)
+    ("u" popper-toggle)
+    ("q"   nil nil)
+    ("C-g" nil nil)
+    ("ESC" nil nil))
+  :bind (("H-u"   . popper-toggle) ; quick show/hide popups
+         ("H-U"   . popper-hydra/body)))
+#+end_src
+
+To gain more control over buffer placement use [[https://depp.brause.cc/shackle/][shakle]] and
+~(setq popper-display-control nil)~.
+
+** Workspaces (perspective)
+In the terminal I used tmux sessions to group a collection of windows belonging to
+one project.
+When I was working on a project, I was in the project directory and would only
+see stuff relating to the project, keeping me focused.
+When I was in my main session I would not be reminded of the projects work in
+progress.
+There too I could focus on the task at hand.
+
+I wanted to replicate this in Emacs and [[https://github.com/nex3/perspective-el][perspective]] does this seamlessly.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package perspective
+  :custom
+  (persp-mode-prefix-key (kbd "C-x C-p"))
+  (persp-show-modestring nil)
+  :init
+  (persp-mode)
+  :bind (("C-x k" . persp-kill-buffer*)
+         ([remap kill-buffer] . persp-kill-buffer*)))
+#+end_src
+
+Perspective keeps track of which perspective a buffer belongs to.
+To only see buffers of the current perspective in ~consult-buffer~ it needs to
+filter by ~persp-is-current-buffer~, which I have configured below and set it as
+the ~:default~ consult buffer source.
+
+As described in the sections on consult and popper, the split between primary
+and secondary buffers (help, ~*Messages*~, etc.) is implemented here.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/strip-alists (buffers)
+  (mapcar
+   (lambda (item)
+     (if (consp item)
+         (car item)
+       item))
+   buffers))
+
+(setq jn/secondary-buffer-pure-regexes (jn/strip-alists jn/secondary-buffer-regexes))
+
+(use-package consult
+  :custom
+  (popper-group-function #'popper-group-by-perspective)
+  :config
+  (consult-customize consult-source-buffer :hidden t :default nil) ; disable
+  (consult-customize persp-consult-source
+                     :name "Perspective Buffer"
+                     :default t
+                     :items '(lambda () (consult--buffer-query
+                                         :sort 'visibility
+                                         :as #'buffer-name
+                                         :predicate (lambda (buf) (persp-is-current-buffer buf t))
+                                         :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))) ; hidden buffers like minibuffer
+  
+  (defvar consult-special-buffer
+    `( :name "Special Buffer"
+       :default nil
+       :face consult-buffer
+       :category buffer
+       :history buffer-name-history
+       :state ,#'consult--buffer-state
+       :items ,(lambda () (consult--buffer-query
+                           :sort 'visibility
+                           :as #'buffer-name
+                           :predicate (lambda (buf) (persp-is-current-buffer buf t))
+                           :include jn/secondary-buffer-pure-regexes
+                           ))))
+
+  (add-to-list 'consult-buffer-sources consult-special-buffer)
+  (add-to-list 'consult-buffer-sources persp-consult-source)
+#+end_src
+
+Have bookmark and recent file ~consult-buffer~ sources only show up on the main
+perspective.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+  (consult-customize consult-source-bookmark
+                     :enabled (lambda () (equal (persp-current-name) "main")))
+  (consult-customize consult-source-recent-file
+                     :enabled (lambda () (equal (persp-current-name) "main")))
+)
+#+end_src
+
+~H-b~ thus filters by perspective.
+Make available ~H-B~ to switch to a buffer in any perspective.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package perspective
+  :bind ("H-B" . persp-switch-to-buffer))
+#+end_src
+
+I am not using perspectives functionality to persist the current perspectives to
+a file, neither am I using [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][desktop-save-mode]].
+I tried it and had similar problems as with saving vim sessions:
+1. corrupted state: opening Emacs shows me errors not only errors in my config
+   but also those persisted along the session
+2. trash accumulates (unneeded buffers, moved files, etc.), can be mitigated
+   with midnight-mode
+3. state is saved on exit, so I will loose it occasionally
+4. unexpected behaviors with multiple open instances
+
+These problems can be mitigated (midnight-mode for cleanup, auto save
+functionality for regular saving, lock file, etc.), but is it worth the
+headache?
+For me it isn't.
+I have instead setup ways to quickly jump to files I use all the time and
+created a way to reopen a preconfigured project workspace with everything I
+need.
+
+([[https://github.com/karthink/project-x][project-x]] might be a minimal way to only save project.el buffers.
+Integration with projectile seem trivial if I need it.)
+
+You can also use a pure [[https://www.rahuljuliato.com/posts/emacs-tab-bar-groups][tab-bar-mode]] variant to replace tmux sessions.
+
+*** Open project workspaces
+With tmux I used [[https://github.com/tmuxinator/tmuxinator][tmuxinator]] to create sessions for projects.
+Per project I would configure a directory, a window arrangement and run some
+commands.
+I have replicated that functionality centered around perspective.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(cl-defstruct jn/persp-project
+  name      ;; Pretty name
+  dir       ;; Project root
+  setup-fn) ;; Custom code to run
+
+(defvar jn/persp-projects nil
+  "Alist of (NAME . jn/persp-project) registered projects.")
+
+(defun jn/persp-register-project (name dir setup-fn)
+  "Register a project."
+  (let* ((key name)
+         (proj (make-jn/persp-project :name name :dir dir :setup-fn setup-fn)))
+    (setq jn/persp-projects (assoc-delete-all key jn/persp-projects))
+    (push (cons key proj) jn/persp-projects)))
+
+(defun jn/persp-switch-persp-open-project ()
+  "Open a configured project in perspective or switch to a running perspective."
+  (interactive)
+  (let ((name (completing-read "Open Perspective: " (append
+                                                     (persp-names)
+                                                     (mapcar #'car jn/persp-projects)))))
+    (if (member name (persp-names))
+        (persp-switch name)
+      (let* ((proj (cdr (assoc name jn/persp-projects)))
+             (dir (file-name-as-directory (expand-file-name (jn/persp-project-dir proj))))
+             (setup-fn (jn/persp-project-setup-fn proj)))
+        (persp-switch name)
+        (let ((default-directory dir))
+          (when (and (fboundp 'project-remember-project)
+                     (fboundp 'project--find-in-directory)
+                     (not (project-current nil dir)))
+            (ignore-errors
+              (project-remember-project
+               (project--find-in-directory dir))))
+          (when (functionp setup-fn)
+            (funcall setup-fn)))))))
+
+(keymap-set perspective-map "s" #'jn/persp-switch-persp-open-project)
+#+end_src
+
+**** Perspective project definitions
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(jn/persp-register-project
+ "Rails exploration"
+ "~/code/experiments/2025-12-03-rails.org-follow-along"
+ (lambda () (dirvish)))
+#+end_src
+
+To quickly create a new (temporary) perspective definition use this utility function.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/persp-create-for-current-project ()
+  "Create a perspective for the current project and switch to it."
+  (interactive)
+  (let* ((proj (project-current nil))
+         (root (when proj (expand-file-name (project-root proj)))))
+    (if (not root)
+        (message "Not in a project.")
+      (let* ((project-name (file-name-nondirectory (directory-file-name root)))
+             (persp-existsp (member project-name (persp-names))))
+        (cond
+         (persp-existsp
+          (kill-buffer)
+          (persp-switch project-name)
+          (message "Switched to existing perspective: %s" project-name))
+         ((not (y-or-n-p (format "Create perspective for current project '%s'? " project-name)))
+          (message "Aborted."))
+         (t
+          (jn/persp-register-project project-name root nil)
+          (kill-buffer)
+          (persp-switch project-name)
+          (dirvish root)
+          (message "Switched to new perspective: %s" project-name)))))))
+
+(keymap-set perspective-map "c" #'jn/persp-create-for-current-project)
+(keymap-set project-prefix-map "C-p" #'jn/persp-create-for-current-project)
 #+end_src
 
 * Completion
@@ -2334,53 +2398,6 @@ Add any number of additional ~C-SPC~ lets you jump further.
 Besides buffer-local marks there are also global marks across all buffers.
 Jump through them with ~C-x C-SPC~ (~pop-global-mark~.)
 
-*** Buffer management (popper)
-[[https://github.com/karthink/popper][Popper]] brings order into the many popup windows by uniformly grouping them at
-the bottom of the screen.
-It makes it easy to hide/unhide these popups and cycle through the various ones.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package popper
-  :custom
-  (popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          ("\\*Async Shell Command\\*" . hide)
-          ;; "^\\*eshell.*\\*$" eshell-mode
-          "\\*slime.*"
-          ("\\*inferior-lisp\\*" . hide)
-          ("\\*sldb.*" . hide)
-          "\\*Backtrace\\*"
-          "\\*Man.*"
-          "\\*org-search\\*"
-          "\\* Merriam-Webster"
-          ("\\*Warnings\\*" . hide)
-          help-mode
-          helpful-mode
-          man-mode
-          (compilation-mode . hide)))
-  (popper-group-function #'popper-group-by-perspective)
-  (popper-mode-line '(:eval ""))
-  (popper-window-height 12) ; default function maxes out at 33%, which seems too small to me
-  :defer nil
-  :config
-  (popper-mode +1)
-  
-  (defhydra popper-hydra (:hint nil)
-    "
-_n_ext    _p_revious    promo_t_e/demo_t_e    show/_u_nshow"
-    ("n" popper-cycle)
-    ("p" popper-cycle-backwards)
-    ("t" popper-toggle-type)
-    ("u" popper-toggle)
-    ("q"   nil nil)
-    ("C-g" nil nil)
-    ("ESC" nil nil))
-  :bind (("H-u"   . popper-toggle) ; quick show/hide popups
-         ("H-U"   . popper-hydra/body)))
-#+end_src
-
-To gain more control over buffer placement use [[https://depp.brause.cc/shackle/][shakle]] and
-~(setq popper-display-control nil)~.
 
 ** MacOS
 There are multiple sources for MacOS builds available.
