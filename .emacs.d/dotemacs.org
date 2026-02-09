@@ -1574,20 +1574,20 @@ is the only way (I found) to get rid of them:
                     :foreground "#00ff5f")
 #+end_src
 
-*** Consult & affe
+*** Consult
 [[https://github.com/minad/consult][Consult]] provides a suite of tools to interact with Emacs in an enhanced way.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package consult
-  :bind (;; new ones
+  :bind (;; new functionality
          ("H-l"   . consult-line) 
          ("M-g l" . consult-line)
          ("H-m"   . consult-mark)
          ("M-g m" . consult-mark)
          ("H-r" . consult-ripgrep)
-         ;; replace old ones with superior versions
+         ;; replace built-in functions with superior versions
+         ("M-y" . consult-yank-pop)
          ("C-x 4 b" . consult-buffer-other-window)
          ("C-x t b" . consult-buffer-other-tab)
-         ("M-y" . consult-yank-pop)
          ([remap Info-search] . consult-info)
          ([remap list-buffers] . ibuffer)
          ))
@@ -1620,21 +1620,13 @@ most recently accessed they are at the top of the selection.
 This denies me from quickly (~H-b H-b~) switching to my last opened *real*
 buffer.
 
-Luckily consult allows splitting buffer and special buffers into separate
-sections:
+Luckily consult allows splitting primary buffers and secondary buffers into
+separate sections:
+
 [[file:img/consult-buffer-after.png]]
+See section on [[*Workspaces (perspective)][perspective]] for implementation.
 
-I use this regex to identify special buffers, while keeping ~*scratch*~ as a
-regular buffer.
-The exception for the scratch buffer (i.e. ignore any buffer starting with ~*s~)
-is admittedly native but I'll keep it simple until I discover false positives
-that require a more complex regex.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq jn/consult-regular-buffer-regex '("^[^*]" "^\\*\\(?:scratch\\)" "^\\*\\(?:remind-calendar\\)" "^\\*\\(?:elfeed-\\)" "^\\*\\(?:notmuch-\\)"))
-#+end_src
-The regex comes into play in the section on [[*Workspaces (perspective)][perspective]].
-
-
+*** Fuzzy finder (affe)
 Matches for finding files are generated with ripgrep, which is much faster than
 find.
 To make it even faster I reduce the matches with ignore patterns.
@@ -1679,9 +1671,7 @@ The local search (in current working directory or project) is easily available a
 (use-package affe
   :bind (("H-f" . affe-find-file-home)
          ("H-M-f" . affe-find-file)
-         ("H-s" . affe-find-directory-home)
-         ("H-M-s" . affe-find-directory)
-         ([remap find-file] . affe-find-file))
+         ("H-s" . affe-find-directory-home))
   :custom
   (affe-count 5000))
 #+end_src
