@@ -9,6 +9,7 @@
   b = branch
   l = log --oneline --graph --decorate --date=relative
   ref = reflog
+  publish = !sh -lc \"git-publish ${1:-origin} ${2:-HEAD}\" - # scripts/git-publish
 [commit]
   # gpgsign = true
   # How to setup commit signing:

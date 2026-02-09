@@ -55,6 +55,7 @@ fi
 alias gp="git push"
 alias push="git push origin"
 alias pushf="git push --force-with-lease origin"
+alias pub="git publish" # custom git command, see git config
 alias pull="git pull origin"
 alias master="git pull origin master; git push origin master"
 alias gpu="git push uber master"

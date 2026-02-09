@@ -1906,6 +1906,19 @@ Move by line (C-n/p) by section (M-n/p)
 
 Continue: https://emacsair.me/2017/09/01/magit-walk-through/#committing
 
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package magit
+  :defer t
+  :config
+  (defun jn/magit-publish ()
+    (interactive)
+    (magit-run-git-async "publish")) ; custom git command, see my git config
+
+  (transient-append-suffix 'magit-push "p"
+    '("P" "Publish (push + deploy)" jn/magit-publish)))
+#+end_src
+
+**** Forge
 #+begin_quote
 [[https://docs.magit.vc/forge/][Forge]] allows you to work with Git forges, currently Github and Gitlab, from the
 comfort of Magit and Emacs.
