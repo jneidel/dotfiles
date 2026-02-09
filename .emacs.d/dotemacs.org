@@ -3797,7 +3797,8 @@ This one configuration is capable of sending from and receiving mail to
 
 ;; path are relative to notmuch index base root
 (setq notmuch-draft-folder "jneidel@jneidel.de/Drafts"
-      notmuch-fcc-dirs "jneidel@jneidel.de/Sent +sent -unread -inbox")
+      notmuch-fcc-dirs "jneidel@jneidel.de/Sent +sent -unread -inbox"
+      message-auto-save-directory "~/.cache/emacs/message-drafts/")
 #+end_src
 
 Clicking mailto: links saves the sent mail the same as through notmuch.
