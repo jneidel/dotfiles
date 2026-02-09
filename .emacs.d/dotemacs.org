@@ -1474,6 +1474,13 @@ many modes, such as elisp-mode, eglot and lsp-mode, come with.
 ** Minibuffer
 (`M-x` and friends.)
 
+Enable nested minibuffers.
+Example: ~org-insert-link~ to create a link, ~C-y~ paste in the link, ~M-y~ to
+select the description you also killed from the kill-ring.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq enable-recursive-minibuffers t)
+#+end_src
+
 *** Vertico
 [[https://github.com/minad/vertico][Vertico]] present minibuffer candidates in a vertical layout, one at a time.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
