@@ -1490,9 +1490,24 @@ select the description you also killed from the kill-ring.
               ("<tab>" . vertico-next)
               ("<backtab>" . vertico-previous))
   :custom
-  (vertico-cycle t) ; C-p at the top of the list goes to the bottom
+  (vertico-cycle t) ; C-n at the bottom of the list loops around to the top
   :config
-  (vertico-mode t))
+  (vertico-mode t)
+  (vertico-reverse-mode t))
+#+end_src
+
+Directory navigation the way I expect it!
+No more writing the whole directory name.
+This works exactly how I intuitively would use it.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 #+end_src
 
 Verticos highlight font was clashing with the completion part:
@@ -1518,6 +1533,21 @@ Verticos highlight font was clashing with the completion part:
                       :background "#d70000"
                       :foreground "#ffd700")
   )
+#+end_src
+
+For whatever reason my vertico has some indicators in the right fringe and this
+is the only way (I found) to get rid of them:
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/vertico-hide-fringe-and-truncation-indicators ()
+  (when vertico-mode
+    (setq-local fringe-indicator-alist
+                (let ((a (copy-alist fringe-indicator-alist)))
+                  (setf (cdr (assq 'continuation a)) nil)
+                  (setf (cdr (assq 'truncation  a)) nil)
+                  a))
+    (setq-local truncation-string "")))
+(add-hook 'minibuffer-setup-hook
+          #'jn/vertico-hide-fringe-and-truncation-indicators)
 #+end_src
 
 **** Problems
