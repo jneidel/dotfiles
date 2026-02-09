@@ -4551,6 +4551,51 @@ For scheduling meetings across multiple time zones.
 (use-package time-zones)
 #+end_src
 
+Add my shape up pitch template.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/insert-shapeup-pitch-template ()
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (insert
+     "\n* Pitch
+\*\* Problem
+/The raw idea, a use case, or something we've seen that motivates us to work on this/
+
+\*\* Appetite
+/How much time we want to spend and how that constrains the solution/
+
+\*\* Solution
+/The core elements we came up with, presented in a form that's easy for people to immediately understand/
+
+\*\* Rabbit holes
+/Details about the solution worth calling out to avoid problems/
+
+\*\* No-gos
+/Anything specifically excluded from the concept: functionality or use cases we
+intentionally aren't covering to fit the appetite or make the problem tractable/\n"))
+  (next-line 3))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/morning-routine ()
+  "Open my morning routine org files and start Neurostreams."
+  (interactive)
+  (find-file (substitute-in-file-name "$ORG_RESOURCES/morning routine/My personal internal commitment.org"))
+  (split-window-right)
+  (other-window 1)
+  (find-file (substitute-in-file-name "$ORG_RESOURCES/morning routine/spiritual windshield wipers.org"))
+  (end-of-buffer)
+  (org-insert-heading-respect-content)
+  (insert (format-time-string "[%Y-%m-%d %a]"))
+  (recenter-top-bottom)
+  (recenter-top-bottom)
+  (other-window 1)
+  (start-process-shell-command
+   "jn-morning-tmux" nil
+   "sh -lc 'FILE=$(find \"$ORG_RESOURCES/Neurostreams/Neurostreams/Neurostreams Flow trifft Genie\" -mindepth 1 -maxdepth 1 -type f -print0 | shuf -z -n1 | xargs -0 -I{} echo \"{}\" ); tmux new-window -t main -n mpv \"mpv --loop=inf \\\"$FILE\\\"\"; tmux select-window -t main:6'"))
+#+end_src
+
 ** Documents
 Improve this by checking the file is a PDF or only hooking into those
 #+begin_src emacs-lisp :tangle "init.el" :results silent
