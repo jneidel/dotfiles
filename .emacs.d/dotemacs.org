@@ -410,9 +410,9 @@ https://github.com/abo-abo/hydra
 (global-set-key (kbd "M-O") '(lambda () (interactive) (other-window -1)))
 
 (global-set-key (kbd "M-u") 'undo)
-;; (global-set-key (kbd "M-RET") 'eshell)
+;; (global-set-key (kbd "M-RET") 'eshell) ; overlaps in org-mode
 (global-set-key (kbd "C-x C-K") 'kill-current-buffer) ; match nyxt
-
+(global-set-key (kbd "C-q") 'kill-current-buffer) ; match firefox
 
 (global-set-key (kbd "M-<delete>") (kbd "<delete>"))
 (global-set-key (kbd "C-<return>") (kbd "<return>"))

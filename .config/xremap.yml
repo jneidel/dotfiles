@@ -1,0 +1,65 @@
+keymap:
+  - name: Emacs
+    application:
+      not: [Emacs, Nyxt, kitty]
+    remap:
+      # Cursor
+      C-b: { with_mark: left }
+      C-f: { with_mark: right }
+      C-p: { with_mark: up }
+      C-n: { with_mark: down }
+      # Forward/Backward word
+      M-b: { with_mark: C-left }
+      M-f: { with_mark: C-right }
+      # Beginning/End of line or page
+      # C-a: { with_mark: home }, C-x h does not work in input fields as a replacement
+      C-e: { with_mark: end }
+      Alt-KEY_102ND: { with_mark: home } # M-<
+      Alt-Shift-KEY_102ND: { with_mark: end } # M->
+      # Page up/down
+      M-v: { with_mark: pageup }
+      C-v: { with_mark: pagedown }
+      # Copy & paste
+      C-w: [C-x, { set_mark: false }]
+      M-w: [C-c, { set_mark: false }]
+      C-z: [C-v, { set_mark: false }]
+      Super-z: [C-v, { set_mark: false }] # I use this accidentally all the time
+      # Delete
+      C-d: [delete, { set_mark: false }]
+      M-d: [C-delete, { set_mark: false }]
+      # Kill line
+      C-k: [Shift-end, C-x, { set_mark: false }]
+      # Kill word backward
+      Alt-backspace: [C-backspace, {set_mark: false}]
+      # Undo
+      Alt-u: [C-y, { set_mark: false }] # not working
+      # Mark
+      C-space: { set_mark: true }
+      C-x:
+        remap:
+          h: C-a # C-x h
+      # Search
+      C-s: C-f
+      # Cancel
+      C-g: [esc, { set_mark: false }]
+
+  - name: Browser only
+    application:
+      only: [firefox, Brave-browser]
+    remap:
+      # Kill tab
+      C-q: C-w
+      C-x:
+        remap:
+          k: C-w # C-x k
+
+  - name: Terminal
+    application:
+      only: [kitty]
+    remap:
+      # Page up/down
+      M-v: { with_mark: pageup }
+      C-v: { with_mark: pagedown }
+      # Cancel
+      C-g: [esc, { set_mark: false }]
+      # Copy & paste are directly configured in kitty.conf

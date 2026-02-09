@@ -1,0 +1,24 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ remap
+Run all my Xorg remap programs in order
+EOF
+  exit
+fi
+
+hash xremap xmodmap xset || exit 127
+
+sudo kill -9 $(pidof xremap) 2>/dev/null
+sleep 3s
+sudo xremap ~/.config/xremap.yml >/dev/null &
+sleep 3s
+
+xmodmap /home/jneidel/.config/Xmodmap-remove-Hyper_R 2>/dev/null
+xmodmap /home/jneidel/.config/Xmodmap 2>/dev/null
+xset r rate 185 100 2>/dev/null
+
+xmodmap /home/jneidel/.config/Xmodmap-remove-Hyper_R
+xmodmap /home/jneidel/.config/Xmodmap
+xset r rate 185 100

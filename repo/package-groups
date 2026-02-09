@@ -652,3 +652,6 @@ hunspell-en_us English dict
 
 [nyxt]
 nyxt Hackers browser
+
+[xremap]
+xremap-x11-bin Remap keybindings based on running application

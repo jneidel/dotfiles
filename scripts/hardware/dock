@@ -28,7 +28,7 @@ case "$1" in
     sleep 4s; /home/jneidel/scripts/sxhkd/backlight set 0
     if tmux has-session -t $tmux_session; then
       tmux -u new-window -d -n "dock" -t $tmux_session:98
-      tmux send-keys -t $tmux_session:98 "/home/jneidel/scripts/cron/natural-brightness; exit" "enter"
+      tmux send-keys -t $tmux_session:98 "natural-brightness; remap; exit" "enter"
     fi
     ;;
   disconnect)
@@ -38,7 +38,7 @@ case "$1" in
 
     if tmux has-session -t $tmux_session; then
       tmux -u new-window -d -n "dock" -t $tmux_session:98
-      sleep 8s; tmux send-keys -t $tmux_session:98 "/home/jneidel/scripts/cron/natural-brightness; exit
+      sleep 8s; tmux send-keys -t $tmux_session:98 "natural-brightness; remap; exit
 " "enter"
     fi
     ;;
