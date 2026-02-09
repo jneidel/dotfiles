@@ -3734,14 +3734,19 @@ https://github.com/progfolio/elpaca/wiki/auctex
 [[https://www.youtube.com/watch?v=u44X_th6_oY&pp=ygUUZW1hY3MgbGF0ZXggd29ya2Zsb3c%3D][latex preview everywhere]]
 
 ** Hugo
-WIP
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package ox-hugo
-  :after ox)
+  :after ox
+  :custom
+  (org-hugo-use-code-for-kbd t) ; ~KBD~, =code=
+  ;; shared global configuration for all posts
+  (org-hugo-auto-set-lastmod t)
+  )
 #+end_src
 
-** AI
 
+
+** AI
 The Copilot chat does not work, presumably because it was [[https://github.com/orgs/community/discussions/68463][disabled in my enterprise org settings]].
 #+begin_src emacs-lisp :results silent
 (use-package copilot-chat)
