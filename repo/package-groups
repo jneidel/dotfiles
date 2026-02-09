@@ -96,7 +96,7 @@ kitty Terminal emulator
 [tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
 # tmate Share tmux sessions
-tmuxinator Session management
+nix:nixpkgs#tmuxinator Tmux session manager
 
 [gimp]
 gimp Photo editing
@@ -384,7 +384,6 @@ npm:dict-cc-cli Offline dict.cc
 # npm:mangareader-dl Manga downloader
 
 [js]
-python-grip-git Reader markdown file with github styles
 typescript Typescript compiler
 nodejs-webpack Javscript build tool
 npm:webpack-cli Webpack interface
@@ -396,6 +395,7 @@ npm:@captainsafia/legit Create license files
 npm:oclif oclif project helper
 npm:markdown-toc Create a md toc
 npm:doctoc Create a md toc
+nix:nixpkgs#python313Packages.grip Markdown file preview
 
 [eslint]
 npm:eslint Javascript linter
