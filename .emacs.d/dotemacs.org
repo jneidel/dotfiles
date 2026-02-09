@@ -3964,6 +3964,15 @@ To make it less verbose I turn them into emoji.
   (keymap-set notmuch-show-mode-map (kbd "o") #'notmuch-show-mode-open-html)
 
   (keymap-set notmuch-common-keymap (kbd "$") #'notmuch-refresh-this-buffer)
+
+  (defun browse-url-at-point ()
+    "browse-url without confirmation."
+    (interactive)
+    (let ((url (thing-at-point 'url t)))
+      (unless url
+        (user-error "No URL at point"))
+      (browse-url url)))
+  (keymap-set notmuch-show-mode-map "C-c C-o" #'browse-url-at-point)
   )
 #+end_src
 
@@ -4295,13 +4304,20 @@ If a buffer is not file and not dired, copy value of `default-directory'."
   :commands (elfeed)
   :custom
   (elfeed-db-directory "~/.emacs.d/elfeed")
-  :bind (:map elfeed-show-mode-map
-              ("C-c C-o" . shr-browse-url)
-  )
-)
+  :bind
+  (:map elfeed-search-mode-map
+        ("h" . elfeed-search-quit-window)
+        ("l" . elfeed-search-show-entry))
+  (:map elfeed-show-mode-map
+        ("h" . elfeed-kill-buffer)
+        ("l" . elfeed-show-visit)
+        ("C-c C-o" . shr-browse-url)))
 #+end_src
 
 Relevant keybindings:
+- j/k: up/down
+- l: go in, open
+- q, h: quit
 - o: open in browser
 - r: mark read
 - u: mark unread
@@ -4309,7 +4325,7 @@ Relevant keybindings:
 - s: adjust search filter
 - c: reset search filter
 - G: manually ~elfeed-update~
-- C-c C-o/RET: open link at point
+- C-c C-o: open link at point
 - SPC: (show) go forward
 
 
