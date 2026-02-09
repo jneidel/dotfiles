@@ -3,9 +3,12 @@
 ## example: https://raw.githubusercontent.com/BrodieRobertson/dotfiles/master/config/lf/lfrc
 
 # from https://github.com/thimc/lfimg
-set previewer ~/.config/lf/preview
-set cleaner ~/.config/lf/cleaner
-# set previewer ~/scripts/lf-preview
+# set previewer ~/.config/lf/preview
+# set cleaner ~/.config/lf/cleaner
+
+set previewer ~/.config/lf/preview-kitty
+set cleaner ~/.config/lf/cleaner-kitty
+
 set nodirfirst
 set relativenumber
 set ratios 5:4
