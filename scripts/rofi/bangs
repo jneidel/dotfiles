@@ -19,8 +19,8 @@ Examples:
 "; exit
 fi
 
-MAIN_BROWSER=nyxt
-SECONDARY_BROWSER=brave
+MAIN_BROWSER=firefox
+SECONDARY_BROWSER=firefox
 
 hash rofi $MAIN_BROWSER $SECONDARY_BROWSER node || exit 127
 

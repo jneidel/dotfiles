@@ -60,7 +60,7 @@ export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/
 export EDITOR=vim
 export PAGER=less
 export LESS="-R"
-export BROWSER=nyxt
+export BROWSER=firefox
 export B=$BROWSER
 export ALT_BROWSER=firefox-developer-edition
 # for eslint, see: https://github.com/eslint/eslint/issues/11914#issuecomment-525498682
