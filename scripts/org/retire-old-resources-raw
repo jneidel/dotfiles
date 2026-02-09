@@ -1,0 +1,22 @@
+#! /bin/sh
+
+export HOME=/home/jneidel
+. $HOME/.zsh/org.env
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ retire-old-resources-raw
+Retire directories in resources/raw older than 2 months.
+EOF
+  exit
+fi
+
+RESOURCES_RAW="$ORG_RESOURCES/raw"
+DESTINATION="$ORG_ARCHIVE/resource: raw"
+
+CURRENT_MONTH_DIR="$RESOURCES_RAW/$(date +%Y-%m)"
+PREVIOUS_MONTH_DIR="$RESOURCES_RAW/$(date -d "$(date +%Y-%m-01) -1 month" +%Y-%m)"
+
+find "$RESOURCES_RAW" -maxdepth 1 -mindepth 1 |
+  grep -ve "$PREVIOUS_MONTH_DIR" -e "$CURRENT_MONTH_DIR" |
+  xargs -I@ mv "@" "$DESTINATION/"

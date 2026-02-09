@@ -1,0 +1,20 @@
+#! /bin/sh
+
+export HOME=/home/jneidel
+. $HOME/.zsh/org.env
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ retire-old-design-ideas
+Retire directories in project/⚡ sparking older than 2 months.
+EOF
+  exit
+fi
+
+hash find || exit 127
+
+DESTINATION="$ORG_ARCHIVE/design: retired"
+
+find "$ORG_DESIGN/⚡ sparking" \
+     -mindepth 1 -maxdepth 1 -mtime +60 \
+     -exec sh -c 'mv "$1" "$2"' sh {} "$DESTINATION" ';'

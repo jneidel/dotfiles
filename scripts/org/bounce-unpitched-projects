@@ -1,0 +1,31 @@
+#! /bin/sh
+
+export HOME=/home/jneidel
+. $HOME/.zsh/org.env
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ bounce-unpitched-projects
+Bouce completing projects without a pitch back into design/sort.
+EOF
+  exit
+fi
+
+DESIGNS="$ORG_DESIGN/0 sort"
+ALL_DIRS=$(mktemp)
+PITCHED_DIRS=$(mktemp)
+
+find "$ORG_PROJECTS/🚀 completing" -maxdepth 1 -mindepth 1 -not -name ".design" | sort >$ALL_DIRS
+find "$ORG_PROJECTS/🚀 completing" -maxdepth 2 -mindepth 2 -type f -name "*.org" -not -name ".*" \
+     -exec awk '
+/Appetite/ {a=1}
+/No-gos/   {n=1}
+/Rabbit/  {r=1}
+ENDFILE {
+  if (a && n && r) print FILENAME
+  a=n=r=0
+}
+' {} + | xargs -I@ dirname "@" | sort >$PITCHED_DIRS
+
+comm -3 $ALL_DIRS $PITCHED_DIRS | # excluded out shared dirs (i.e. pitched one)
+  xargs -I@ mv "@" "$DESIGNS/"
