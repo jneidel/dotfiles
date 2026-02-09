@@ -1061,6 +1061,23 @@ Green means ready to go. Yellow is inactive. Orange is no concern.
         ("DONE" . org-warning) ("REJECTED" . org-warning)))
 #+end_src
 
+*** Org-clock
+By default these are only assigned inside of org-mode.
+I also want to have access to everything, but clocking in, outside of org-mode.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org
+  :ensure nil
+  :bind (; C-c C-x C-i    org-clock-in only inside of org files
+         ("C-c C-x C-o" . org-clock-out)
+         ("C-c C-x C-x" . org-clock-in-last)
+         ("C-c C-x C-j" . org-clock-goto)
+         ("C-c C-x C-c" . org-clock-cancel)
+         ("C-c C-x C-d" . org-clock-display))
+  :config
+  (add-hook 'org-clock-in-hook (lambda () (org-todo "IN PROGRESS")))
+  )
+#+end_src
+
 *** Snippets
 [[https://orgmode.org/manual/Structure-Templates.html][structure template]] (has list of keys)
 
