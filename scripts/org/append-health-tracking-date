@@ -14,5 +14,5 @@ EOF
   exit
 fi
 
-#       Date | Breath   | Leg day | Push ups | Plank | Full | m2  | m3  | m4  | m5  |
-printf "| %s |          |         |          |       |      |     |     |     |     |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"
+#       Date | Leg day | Push ups | Plank |
+printf "| %s |         |          |       |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"

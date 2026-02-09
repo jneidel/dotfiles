@@ -11,11 +11,11 @@ alias readme="grip -b 7777" # render readme.md with github styles
 # [ -n "$GH_ACCESS_TOKEN" ] && alias readme="grip --browser --user $USER --pass $GH_ACCESS_TOKEN" # remove rate limit
 md() {
   FILE="$1"
- if [ -n "$GH_ACCESS_TOKEN" ]; then
-  grip "$FILE" -b 7777 --user $USER --pass $GH_ACCESS_TOKEN
- else
-   grip "$FILE" -b 7777
- fi
+  if [ -n "$GH_ACCESS_TOKEN" ]; then
+    grip "$FILE" -b 7777 --user $USER --pass $GH_ACCESS_TOKEN
+  else
+    grip "$FILE" -b 7777
+  fi
 }
 alias great="timeout 5 grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/code/notes/great-books.md >/dev/null 2>&1 &"
 alias greata="grip --browser --user $USER --pass $GH_ACCESS_TOKEN /home/jneidel/code/notes/great-books.md >/dev/null 2>&1"
@@ -182,151 +182,151 @@ alias pdfe="masterpdfeditor5"
 ## tui
 alias job="taskell ~/code/notes/taskell/job-applications.md 2> /dev/null"
 alias flat="taskell ~/code/notes/taskell/flat-applications.md 2> /dev/null"
-alias sec="watch -t -n 1 figlet-clock"
+  alias sec="watch -t -n 1 figlet-clock"
 
-## light versions
-alias vim-light="vim -c 'source ~/.vim/colors/light.vim'"
-alias vl="vim-light"
+  ## light versions
+  alias vim-light="vim -c 'source ~/.vim/colors/light.vim'"
+  alias vl="vim-light"
 
-## brightness
-alias bright="backlight"
-alias max="bright dynamic-percent 100 N1"
-alias min="bright dynamic-percent 0 N1"
-alias half="bright dynamic-percent 50 N1"
+  ## brightness
+  alias bright="backlight"
+  alias max="bright dynamic-percent 100 N1"
+  alias min="bright dynamic-percent 0 N1"
+  alias half="bright dynamic-percent 50 N1"
 
-## cat updates files
-alias mup="show-updates manga"
-alias cup="show-updates comic"
+  ## cat updates files
+  alias mup="show-updates manga"
+  alias cup="show-updates comic"
 
-## psql
-export PGPASSFILE="$HOME/.config/psql/pgpass"
+  ## psql
+  export PGPASSFILE="$HOME/.config/psql/pgpass"
 
-## vnstat
-alias vnstatq="vnstat --query wlp3s0"
+  ## vnstat
+  alias vnstatq="vnstat --query wlp3s0"
 
-## webtorrent
-alias wt="webtorrent -o /tmp --mpv"
-alias wtc="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv" # wtc[lipboard]
-wts() {
-  TORRENT="$1"
-  SELECT="$2"
-  if [ -z "$SELECT" ]; then
-    webtorrent "$TORRENT" -o /tmp --quiet -s
-  else
-    webtorrent "$TORRENT" -o /tmp --mpv --quiet -s "$SELECT" 2>/dev/null
-    # --not-on-top
-  fi
-}
+  ## webtorrent
+  alias wt="webtorrent -o /tmp --mpv"
+  alias wtc="xclip -o -sel clip | xargs webtorrent -o /tmp --mpv" # wtc[lipboard]
+  wts() {
+    TORRENT="$1"
+    SELECT="$2"
+    if [ -z "$SELECT" ]; then
+      webtorrent "$TORRENT" -o /tmp --quiet -s
+    else
+      webtorrent "$TORRENT" -o /tmp --mpv --quiet -s "$SELECT" 2>/dev/null
+      # --not-on-top
+    fi
+  }
 
-## nvim
-alias luamake=/home/jneidel/.local/share/nvim/lua-language-server/3rd/luamake/luamake
+  ## nvim
+  alias luamake=/home/jneidel/.local/share/nvim/lua-language-server/3rd/luamake/luamake
 
-## pubs, bib ba
-alias bb="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
-bbd() {
-  bb doc open "$1" >/dev/null 2>/dev/null
-}
-alias bbdoc="bbd"
-alias bbn="bb note"
-alias bbnote="bbn"
-bbo() {
-  local citekey="$1"
-  if [ -z "$citekey" ]; then
-    echo "Pass a citekey"
-    return 1
-  fi
-  bbd "$citekey"
-  bbn "$citekey"
-}
-alias bbopen="bbo"
-alias bbl="bb list"
+  ## pubs, bib ba
+  alias bb="/bin/pubs -c ~/projects/uni/z_ba/pubs/pubsrc"
+  bbd() {
+    bb doc open "$1" >/dev/null 2>/dev/null
+  }
+  alias bbdoc="bbd"
+  alias bbn="bb note"
+  alias bbnote="bbn"
+  bbo() {
+    local citekey="$1"
+    if [ -z "$citekey" ]; then
+      echo "Pass a citekey"
+      return 1
+    fi
+    bbd "$citekey"
+    bbn "$citekey"
+  }
+  alias bbopen="bbo"
+  alias bbl="bb list"
 
-alias np="n p"
-alias na="n a"
+  alias np="n p"
+  alias na="n a"
 
-ssm() { # cd into currently playing mpd album
-  ALBUM=`dirname "$(mpc-get file)"`
-  source ~/scripts/mpd/shared-mpd-variables
+  ssm() { # cd into currently playing mpd album
+    ALBUM=`dirname "$(mpc-get file)"`
+    source ~/scripts/mpd/shared-mpd-variables
 
-  if [ "$IS_SERVER" -eq 1 ]; then
-    DIR="usb/music/$ALBUM"
-    ssh pi -t "cd '$DIR'; zsh"
+    if [ "$IS_SERVER" -eq 1 ]; then
+      DIR="usb/music/$ALBUM"
+      ssh pi -t "cd '$DIR'; zsh"
 
-    exit 0
-  else
-    DIR="$ORG_MEDIA/music/$ALBUM"
-    cd $DIR
-  fi
-}
+      exit 0
+    else
+      DIR="$ORG_MEDIA/music/$ALBUM"
+      cd $DIR
+    fi
+  }
 
-tere() {
-  local result=$(command tere --filter-search "$@")
-  [ -n "$result" ] && cd -- "$result"
-}
+  tere() {
+    local result=$(command tere --filter-search "$@")
+    [ -n "$result" ] && cd -- "$result"
+  }
 
-reflux() {
-  fkill xflux
-  xflux -k 3000 -l 52 -g 13
-}
+  reflux() {
+    fkill xflux
+    xflux -k 3000 -l 52 -g 13
+  }
 
-dot() {
-  cd dotfiles
-  make import
-  clear
-  s
-}
+  dot() {
+    cd dotfiles
+    make import
+    clear
+    s
+  }
 
-alias mpr="mpd-toggle-local"
-alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
-alias ho="ssh home"
-alias phone="mpv 'http://192.168.178.62:8080/stream.mjpeg'"
-alias ms="monitor swap"
+  alias mpr="mpd-toggle-local"
+  alias mph="(mpv --socket-name music http://192.168.178.69:9111 >/dev/null 2>/dev/null &)"
+  alias ho="ssh home"
+  alias phone="mpv 'http://192.168.178.62:8080/stream.mjpeg'"
+  alias ms="monitor swap"
 
-## cameras
-alias webcam='mpv "/dev/video0"'
-phonecam() {
-  scrcpy --no-audio-playback -d --video-codec h265 -w --mouse disabled  --crop 1080:1430:0:450 --window-width 500 --window-x 1420 --window-y 680
-  # meta+shift+space to make unfloat
-  # https://iamfaisalmehmood.com/posts/android-webcam/
-}
-phonecontrol() {
-  scrcpy --no-audio-playback -d
-}
+  ## cameras
+  alias webcam='mpv "/dev/video0"'
+  phonecam() {
+    scrcpy --no-audio-playback -d --video-codec h265 -w --mouse disabled  --crop 1080:1430:0:450 --window-width 500 --window-x 1420 --window-y 680
+    # meta+shift+space to make unfloat
+    # https://iamfaisalmehmood.com/posts/android-webcam/
+  }
+  phonecontrol() {
+    scrcpy --no-audio-playback -d
+  }
 
-format() {
-  # what is this format?
-  curl "https://format.wtf/?q=$1" -H Accept:text/x-ansi
-}
+  format() {
+    # what is this format?
+    curl "https://format.wtf/?q=$1" -H Accept:text/x-ansi
+  }
 
-inbox-leerung() {
-  tmux -u new-window -n "inbox" -t main
-  tmux send-keys -t main "clear && ~/scripts/org/inbox-leerung" "Enter"
-}
+  inbox-leerung() {
+    tmux -u new-window -n "inbox" -t main
+    tmux send-keys -t main "clear && ~/scripts/org/inbox-leerung" "Enter"
+  }
 
-cputemp() {
-  cat /sys/class/thermal/thermal_zone*/temp | tr '\n' + | sed 's|+$||' | xargs -I@ node -e "console.log( ((@)/4/1000).toFixed(1) + '°C' )"
-}
+  cputemp() {
+    cat /sys/class/thermal/thermal_zone*/temp | tr '\n' + | sed 's|+$||' | xargs -I@ node -e "console.log( ((@)/4/1000).toFixed(1) + '°C' )"
+  }
 
-_complete_gamechanger() {
-  local files=($(gamechanger print_completions))
-  compadd -a files
-}
-compdef _complete_gamechanger gamechanger
+  _complete_gamechanger() {
+    local files=($(gamechanger print_completions))
+    compadd -a files
+  }
+  compdef _complete_gamechanger gamechanger
 
-_complete_post() {
-  local categories=(newsletter review essay dev guide project recipe misc)
-  compadd -a categories
-}
-compdef _complete_post post
+  _complete_post() {
+    local categories=(newsletter review essay dev guide project recipe misc)
+    compadd -a categories
+  }
+  compdef _complete_post post
 
-_complete_bl() {
-  local cmds=(start stop on off)
-  compadd -a cmds
-}
-compdef _complete_bl bl
+  _complete_bl() {
+    local cmds=(start stop on off)
+    compadd -a cmds
+  }
+  compdef _complete_bl bl
 
-_complete_collect-metrics() {
-  local cmds=(paper live)
-  compadd -a cmds
-}
-compdef _complete_collect-metrics collect-metrics
+  _complete_collect-metrics() {
+    local cmds=(paper live)
+    compadd -a cmds
+  }
+  compdef _complete_collect-metrics collect-metrics

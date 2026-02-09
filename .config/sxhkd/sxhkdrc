@@ -118,12 +118,12 @@ super + S
   toggle-screenkey
 super + u
   gpt
-super + g
-  pick-hugo-article en
-super + G
-  pick-hugo-article de
+# super +g
+#   pick-hugo-article en
+# super + G
+#   pick-hugo-article de
 super + t
-  human-date-to-iso -c
+    human-date-to-iso -c
 super + T
   human-date-to-iso
 

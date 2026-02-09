@@ -290,6 +290,8 @@ create /etc/udev/rules.d
 [ripgrep]
 .rgignore
 .config/.rgignore
+create code
+code/.rgignore
 
 [nyxt]
 create .config/nyxt

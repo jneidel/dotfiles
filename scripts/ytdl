@@ -60,6 +60,7 @@ mv "$audio_tmp" $audio_file # in case audio file is mp4
 echo "\nDownloading video"
 nice -n 19 yt-dlp -i --retries 4 -f "$video_format" -o "$dir/%(title)s.%(ext)s" "$video"
 # --sub-format srt --sub-langs "de,en" --write-subs
+# --write-auto-sub for generated subs
 
 video_file="$(find $dir -name '*.mp4' -not -name "audio.mp4")"
 filename=$(basename -- "$video_file")

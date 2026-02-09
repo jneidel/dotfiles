@@ -21,7 +21,7 @@ declare -a projects
 while IFS= read -r dir; do
   [[ -z "$dir" ]] && continue
   projects+=("$dir")
-done < <(find "$ORG_PROJECTS" -maxdepth 1 -mindepth 1 -type d -name "[^.]*" | rev | cut -d/ -f1 | rev)
+done < <(find "$ORG_PROJECTS" -maxdepth 2 -mindepth 2 -type d -name "[^.]*" -not -path "*.design*" | rev | cut -d/ -f1-2 | rev)
 
 if $has_tty; then
   gum filter ${projects[*]}

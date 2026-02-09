@@ -1,0 +1,28 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ couch
+Setup computer for watching something from the couch.
+EOF
+  exit
+fi
+
+hash monitor wpctl brave i3-msg || exit 127
+
+toggle_on() {
+  monitor swap &
+  wpctl set-volume @DEFAULT_AUDIO_SINK@ 135% 2>/dev/null
+  $BROWSER "https://jellyfin.neidel.xyz/web/index.html#!/home.html" 2>/dev/null &
+  i3-msg workspace "2:" >/dev/null
+}
+toggle_off() {
+  monitor swap &
+  wpctl set-volume @DEFAULT_AUDIO_SINK@ 40% 2>/dev/null
+}
+
+if [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)" = "Volume: 1.35" ] && [ -f "/tmp/secondary-monitor" ]; then
+  toggle_off
+else
+  toggle_on
+fi

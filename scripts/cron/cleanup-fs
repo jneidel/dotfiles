@@ -1,5 +1,6 @@
 #! /bin/sh
 
+export HOME=/home/jneidel
 . $HOME/.zsh/org.env
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
@@ -15,11 +16,10 @@ rm -f ~/.bash_history 2>/dev/null
 rm -f ~/.hwid 2>/dev/null
 rm -f ~/.octave_hist 2>/dev/null
 rm -f ~/.Xauthority 2>/dev/null
-rm -f ~/.password-store/heroku.gpg 2>/dev/null
 rm -f ~/1 2>/dev/null
 rm -f ~/.netrc 2>/dev/null
 rm -f /tmp/ddc-lock 2>/dev/null
-rm -f ~/org/0_inbox/.org 2>/dev/null
+rm -f $ORG_INBOX/.org 2>/dev/null
 
 # dirs
 rmdir ~/Desktop 2>/dev/null

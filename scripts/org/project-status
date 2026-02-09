@@ -113,7 +113,8 @@ fi
 
 case $status in
   "active") set_traffic_light_status "$ORG_PROJECT_STATUS_ACTIVE" "$path";;
-  "inactive") set_traffic_light_status "$ORG_PROJECT_STATUS_INACTIVE" "$path";;
+  "inactive") remove_status "$path";;
+  # set_traffic_light_status "$ORG_PROJECT_STATUS_INACTIVE" "$path";;
   "blocked") set_traffic_light_status "$ORG_PROJECT_STATUS_BLOCKED" "$path";;
   "none") remove_status "$path";;
   "important") set_important "$path";;

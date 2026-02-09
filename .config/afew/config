@@ -53,6 +53,11 @@ message = spam
 query   = from:*@consultores-rh.com
 tags    = +spam;-unread;-inbox
 
+[Filter.12]
+message = IB reminder
+query   = subject:'Zur Erinnerung: Nicht unbedacht auf Links klicken!' AND from:donotreply@email.interactivebrokers.com
+tags    = +trash;-unread;-inbox
+
 [ArchiveSentMailsFilter]
 sent_tag = sent
 

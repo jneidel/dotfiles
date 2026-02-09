@@ -46,7 +46,7 @@ fi
 
 test_lang() {
   case $lang in
-    -|en|de)
+    -|both|en|de)
       true
       break;;
     *)
@@ -79,7 +79,7 @@ apply_category_specific_rules() {
 
 create_based_on_language_argument() {
   case $lang in
-    -)
+    -|both)
       hugo new $en_extra "content/${category}${post_name}/index.md"
       hugo new $de_extra "content/${category}${post_name}/index.de.md"
       break;;

@@ -57,7 +57,7 @@ sample https://www.whosampled.com/search/?q=%s
 l https://www.online-latin-dictionary.com/latin-english-dictionary.php?parola=%s
 la https://dela.dict.cc/?s=%s
 lat http://www.archives.nd.edu/cgi-bin/wordz.pl?keyword=%s
-dot https://neidel.xyz/dot/%s
+dot https://jneidel.com/dot/%s
 node https://duckduckgo.com/?q=site%3Ahttps%3A%2F%2Fnodejs.org%2Fapi%2F+%s
 div https://dividata.com/stock/%s
 divd https://dividata.com/stock/%s
@@ -73,6 +73,7 @@ w https://en.wikipedia.org/wiki/Special:Search?search=%s
 wd https://en.wikipedia.org/wiki/Special:Search?search=%s+discography
 wde https://de.wikipedia.org/wiki/Special:Search?search=%s
 ru https://rutracker.org/forum/tracker.php?nm=%s
+git https://github.com/search?utf8=%E2%9C%93&q=%s
 gh https://github.com/jneidel/%s
 e https://dees.dict.cc/?s=%s
 es https://enes.dict.cc/?s=%s

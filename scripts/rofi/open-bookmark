@@ -23,17 +23,13 @@ if [ ! -f "$BOOKMARK_FILE" ]; then
 fi
 
 bookmarks() {
-  # if command -v isfaturday >/dev/null && ! isfaturday; then
-  #   grep -vf $FATURDAY_EXCLUDE_FILE <$BOOKMARK_FILE
-  # else
-
   cat $BOOKMARK_FILE | sed "s/12345678/$(shuf -i 1-9999999 -n 1)/"
 }
 
 SELECTION=`bookmarks | rofi -dmenu -i -lines 15 -eh 1 -p open -auto-select 2>/dev/null | rev | cut -d\  -f1 | rev`
 
 if [ -n "$SELECTION" ]; then
-  if echo $SELECTION | grep -e jellyfin -e flood -e flickfocus -e jc141; then
+  if echo $SELECTION | grep -e jellyfin -e flood -e flickfocus -e jc141 -e 178.69 >/dev/null; then
     $SECONDARY_BROWSER $SELECTION >/dev/null 2>&1
   else
     $MAIN_BROWSER $SELECTION >/dev/null 2>&1

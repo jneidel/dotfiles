@@ -1,0 +1,12 @@
+mealcoachpro
+orf
+pots
+dotfiles/scripts
+dotfiles/.config
+dotfiles/.emacs.d
+dotfiles/.local
+dotfiles/.mailcap
+dotfiles/.rgignore
+dotfiles/.xinitrc
+dotfiles/.zsh
+dotfiles/.zshrc

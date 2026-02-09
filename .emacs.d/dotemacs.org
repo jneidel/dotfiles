@@ -477,7 +477,7 @@ Resize windows with easily repeatable keybindings.
          ))
 #+end_src
 
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp
 (use-package general
   :config
   (general-define-key
@@ -490,6 +490,9 @@ Those are pairs of ="= or ='= around strings and =()=, =[]=, ={}=.
 Emacs bindings are familiar, only using the =C-M= modifier (e.g. =C-M-f= =
 forward-sexp.)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package general
+  :config
+  (general-define-key
    "C-M-d" 'kill-sexp ; to mirror M-d
    "C-M-j" 'down-list ; jump into nearest sexp after point
    "C-M-k" 'backward-up-list ; jump out of and to the beginning of sexp
@@ -763,6 +766,9 @@ To quickly create a new (temporary) perspective definition use this utility func
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
   :ensure nil
+  :custom
+  (org-hide-emphasis-markers t)
+  (org-hide-leading-stars t)
   :config
   (set-face-attribute 'org-block nil
                       :background "grey6")
@@ -943,7 +949,8 @@ Results are formatted in a colorized org-mode buffer."
       (require 'ansi-color)
       (ansi-color-apply-on-region (point-min) (point-max))
       (goto-char (point-min)))
-    (pop-to-buffer buf)))
+    (pop-to-buffer buf))
+  (org-shifttab 2))
 
 (general-define-key "C-c s" 'org-search)
 #+end_src
@@ -1016,10 +1023,13 @@ https://orgmode.org/manual/Capture-templates.html
   :ensure nil
   :bind ("C-c c" . org-capture)
   :config
-  (setq org-capture-templates '())
+  (setq org-capture-templates '()))
+#+end_src
 
-  ;; (add-hook 'org-capture-mode-hook #'evil-insert-state)
-
+#+begin_src elisp :tangle "init.el" :results silent
+(use-package org-capture
+  :ensure nil
+  :config
   (defvar jneidel-note-capture-location nil
     "Temporary path for current org-capture note.")
   (defun jneidel-generate-note-capture-location ()
@@ -1051,8 +1061,16 @@ https://orgmode.org/manual/Capture-templates.html
                           "#+date: %t\n"
                           "\n** ref\n%a\n%i")
                  :hook delete-other-windows
-                 :after-finalize jneidel-note-capture
-                 ))
+                 :after-finalize jneidel-note-capture))
+
+  (add-to-list 'org-capture-templates
+               `("v" "Video" plain
+                 (function jneidel-generate-note-capture-location)
+                 ,(concat "#+title: video: %?\n"
+                          "#+date: %t\n"
+                          "\n** ref\n%a\n%i")
+                 :hook delete-other-windows
+                 :after-finalize jneidel-note-capture))
 
   ;; tasks
   (add-to-list 'org-capture-templates
@@ -1060,13 +1078,7 @@ https://orgmode.org/manual/Capture-templates.html
                  (file+headline (lambda () (substitute-in-file-name "$ORG/messages to send.org")) "Messages to send")
                  "* TODO %?\n"
                  :prepend 1 :empty-lines-after 1))
-
-  (add-to-list 'org-capture-templates
-               '("h" "Health journal" item
-                 (file+olp+datetree "~/org/2_areas/body/health-journal.org")
-                 "%?\n"
-                 :prepend 1))
-)
+  )
 #+end_src
 
 Not in use:
@@ -1318,7 +1330,6 @@ https://www.emacswiki.org/emacs/InfoPlus
 #+end_src
 
 * Completion
-
 Emacs differentiates between two main types of completion.
 1. Completing-read occurs in the minibuffer (M-x, find-file, and all sorts prompts).
 2. Completion-at-point (and completion-in-region) are used to complete text in
@@ -1331,10 +1342,6 @@ Now package headlines like these don't seem so mysterious anymore:
 
 ** Completing-read (minibuffer)
 [[https://xenodium.com/bending-emacs-episode-8-completing-read][Intro]].
-
-#+begin_src emacs-lisp :results silent
-(fido-mode t)
-#+end_src
 
 ** Completion-at-point/in buffer (corfu)
 [[https://github.com/minad/corfu][Corfu]] provides a pop-up UIs for completing words in the buffer.
@@ -1370,11 +1377,11 @@ many modes, such as elisp-mode, eglot and lsp-mode, come with.
     (add-to-list 'savehist-additional-variables 'corfu-history))
   )
 
-(defun complete-first-then-indent ()
-  "Try completion at point, if nothing completes then indent."
-  (interactive)
-  (unless (completion-at-point)
-    (indent-for-tab-command)))
+;; (defun complete-first-then-indent ()
+;;   "Try completion at point, if nothing completes then indent."
+;;   (interactive)
+;;   (unless (completion-at-point)
+;;     (indent-for-tab-command)))
     #+end_src
 
 [[https://github.com/minad/cape][Cape]] allows us to complete from words in the buffer and paths in the filesystem.
@@ -1454,9 +1461,10 @@ Verticos highlight font was clashing with the completion part:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package marginalia
   :config
-  (marginalia-mode t))
+  (marginalia-mode t)
+  :custom
+  (marginalia-align 'right))
 #+end_src
-
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (set-face-attribute 'marginalia-documentation nil
@@ -1492,14 +1500,16 @@ Use the great consult interface for switching to buffers, bookmarks and recent f
   :bind (("H-b" . consult-buffer)
          ([remap switch-to-buffer] . consult-buffer)))
 
-(recentf-mode t)
-(setq recentf-exclude '((lambda (filename)
-                          (let ((excluded-files '("~/.emacs.d/bookmarks" "~/.emacs.d/elfeed/index"))
-                                (excluded-regex '("^\\/tmp\\/org-capture")))
-                            (or
-                             (member filename excluded-files)
-                             (seq-some (lambda (rx) (string-match-p rx filename))
-                                       excluded-regex))))))
+(use-package recentf
+  :hook (after-init . recentf-mode)
+  :custom
+  (recentf-exclude '((lambda (filename)
+                       (let ((excluded-files '("~/.emacs.d/bookmarks" "~/.emacs.d/elfeed/index"))
+                             (excluded-regex '("^\\/tmp\\/org-capture")))
+                         (or
+                          (member filename excluded-files)
+                          (seq-some (lambda (rx) (string-match-p rx filename))
+                                    excluded-regex)))))))
 #+end_src
 
 By default ~consult-buffer~ shows all active buffers together.
@@ -1531,7 +1541,7 @@ find.
 To make it even faster I reduce the matches with ignore patterns.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defvar rg-ignore-flags
-  "-g \"!*.mp3\" -g \"!*.jpg\" -g \"!*.JPG\" -g \"!*.jpeg\" \
+  "-g \"!*.mp3\" -g \"!*.jpg\" -g \"!*.JPG\" -g \"!*.jpeg\" -g \"!*.png\" \
   -g \"!*.mkv\" -g \"!*.mp4\" -g \"!*.avi\" -g \"!*.zip\" -g \"!*.ddl\" \
   -g \"!*.ods\" -g \"!*.xlsx\" -g \"!*.m3u\" -g \"!*.url\" -g \"!*.aac\" \
   -g \"!*.mpc\" -g \"!*.sql\" -g \"!*.ydb\" -g \"!dist/\" \
@@ -1678,16 +1688,20 @@ https://protesilaos.com/emacs/dotemacs#h:567bb00f-1d82-4746-93e5-e0f60721728a
 https://github.com/minad/corfu section on dabbrev
 ** History
 https://protesilaos.com/emacs/dotemacs#h:25765797-27a5-431e-8aa4-cc890a6a913a
-
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package savehist
-  :ensure nil
   :hook (after-init . savehist-mode)
+  :custom
+  (savehist-file (locate-user-emacs-file "savehist"))
+  (history-length 500) ; prot 100
+  (savehist-save-minibuffer-history t)
+  (history-delete-duplicates t) ; sorting algos (vertico, corfu) rank duplicates higher
   :config
-  (setq savehist-file (locate-user-emacs-file "savehist"))
-  (setq history-length 500) ; prot 100
-  (setq history-delete-duplicates nil) ; sorting algos (vertico, corfu) rank duplicates higher
-  (setq savehist-save-minibuffer-history t)
+  (with-eval-after-load 'savehist ; but make M-x sort purely by recency, not frequency 
+    (add-hook 'savehist-save-hook
+              (lambda ()
+                (setq extended-command-history
+                      (delete-dups extended-command-history)))))
   (add-to-list 'savehist-additional-variables 'kill-ring))
 #+end_src
 
@@ -1878,7 +1892,8 @@ So this advice halves the font-height for the relevant function.
 It's very intuitive and obscure functionality like decreasing hunk size ~git add
 --patch~ are easily done (I abandoned this in terminal because it was such a headache.)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package magit)
+(use-package magit
+  :defer t)
 #+end_src
 
 | Key   | CLI | Description                 |
@@ -1895,11 +1910,13 @@ Continue: https://emacsair.me/2017/09/01/magit-walk-through/#committing
 [[https://docs.magit.vc/forge/][Forge]] allows you to work with Git forges, currently Github and Gitlab, from the
 comfort of Magit and Emacs.
 #+end_quote
+
+After [[info:forge#Initial Setup][configuring a git forge]] you can initialize a repo with ~forge-add-repository~.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package auth-source
   :ensure nil
   :custom
-  (auth-sources '(password-store)))
+  (auth-sources '("~/.config/sensitive/authinfo" "~/.config/sensitive/authinfo.gpg")))
 
 (use-package forge
   :after magit)
@@ -2293,7 +2310,7 @@ By default emacs overrides this right option with and replace it with another
 meta key.
 This returns original behavior by disabling emaces overwrite.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq mac-right-option-modifier 'none)
+(setq mac-right-option-modifier 'none) 
 #+end_src
 
 Remap right command/super to real hyper key assignable in Emacs with "H-".
@@ -2315,6 +2332,21 @@ So for Emacs, we will just turn command into ctrl :)
 browser wants), Emacs turns it back into ctrl+t.)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq mac-command-modifier 'ctrl)
+#+end_src
+
+[[https://www.reddit.com/r/emacs/comments/1qlnde7/comment/o1fq5lj/][See]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(when (eq system-type 'darwin)
+  (defun start-process@use-pipe (fn &rest args)
+    ;; checkdoc-params: (fn args)
+    "Advice to ensure that `start-process' uses a pipe rather than
+a pty for the compilation command. This increases performance on OSX
+by a factor of 10, as the default pty size is a pitiful 1024 bytes."
+    (let ((process-connection-type nil))
+      (apply fn args)))
+
+  (server-start) ; required by Emacs-plus  
+)
 #+end_src
 
 ** Git
@@ -2470,17 +2502,23 @@ Using colors from [[https://jneidel.com/misc/colors/][my personal colorscheme]] 
   )
 #+end_src
 
-**** JavaScript
+**** TODO JavaScript
+Find a better way to disable/enable flymake on the fly
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(add-hook 'js-ts-mode-hook (lambda ()
+                   (remove-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)))
+#+end_src
 
 **** Ruby
 
 **** Common Lisp
 [[https://slime.common-lisp.dev/][Slime]],[[https://www.youtube.com/watch?v=sBcPNr1CKKw][ useful keybindings]]
+
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq inferior-lisp-program "sbcl")
 (use-package slime
-  ; :hook ((lisp-mode . slime-mode) ; spawn even on org demarcate/tangle of lisp blocks
-         ; (lisp-mode . slime))
+                                        ; :hook ((lisp-mode . slime-mode) ; spawn even on org demarcate/tangle of lisp blocks
+                                        ; (lisp-mode . slime))
   )
 #+end_src
 
@@ -3090,7 +3128,7 @@ note-taking system.
   (dolist (to-be-moved (dired-get-marked-files)) ; if none marked, use the one at point
     (let ((target (expand-file-name (file-name-nondirectory to-be-moved) destination)))
       (dired-rename-file to-be-moved target nil)
-      (message (format "Moved %s to %s" (file-name-nondirectory to-be-moved) destination))
+      (message (format "Moved %s to %s" (file-name-nondirectory to-be-moved) destination)) ; TODO format fails if directory is moved
       (revert-buffer))))
 
 (defun move-to-inbox () (interactive) (move-to (substitute-in-file-name "$ORG_INBOX")))
@@ -4405,7 +4443,6 @@ In avy it's slightly different:
 #+end_src
 
 ** Re:Zero
-
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org-contrib)
 (use-package org-expiry
@@ -4432,7 +4469,7 @@ Create new todos through an org-capture template:
   (add-to-list 'org-capture-templates
                '("t" "Todo" entry
                  (file+headline "~/org/rezero.org" "Re:Zero")
-                 "* %?\n  %i\n  %a"
+                 "* TODO %?\n  %i\n  %a"
                  :prepend 1
                  :before-finalize org-expiry-insert-expiry-two-weeks
                  )))

@@ -33,6 +33,7 @@ run_yay() {
   reapply_X_settings
 
   nice -n 19 yay --color=always --noconfirm
+  nice -n 19 yay -S yt-dlp-git
   reapply_X_settings
 
   yay -Qtdq | yay -Rsn --noconfirm -
@@ -44,6 +45,7 @@ run_volta() {
   volta install node
   volta install npm
   volta install yarn
+  volta install bun
 }
 command -v volta >/dev/null && run_volta
 

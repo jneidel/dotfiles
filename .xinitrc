@@ -53,7 +53,7 @@ mpd &
 
 # bar for volume & brightness
 mkfifo /tmp/xobpipe
-sleep 2; tail -f /tmp/xobpipe | xob &
+(sleep 2; tail -f /tmp/xobpipe | xob &) &
 
 # desktop monitor
 ~/scripts/conky/start-conky &
@@ -78,7 +78,7 @@ sleep 2; tail -f /tmp/xobpipe | xob &
 # https://unix.stackexchange.com/a/639552
 
 # status bar
-nice -n -10 ~/scripts/lemonbar/run-lemonbar &
+(sleep 10s; nice -n -10 ~/scripts/lemonbar/run-lemonbar &) &
 
 # doesn't work if started directly
 # {
@@ -92,7 +92,7 @@ nice -n -10 ~/scripts/lemonbar/run-lemonbar &
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
 # fetch new mail to local when it arrives on imap server
-sleep 10s; ~/scripts/mail/watch-imap >/dev/null 2>&1 &
+(sleep 10s; ~/scripts/mail/watch-imap >/dev/null 2>&1 &) &
 
 # fix cpu frequency
 (
@@ -101,7 +101,7 @@ sleep 10s; ~/scripts/mail/watch-imap >/dev/null 2>&1 &
 
 ## autostart gui applications
 nice -n -7 kitty ~/scripts/tmux/tp main &
-nice -n 17 nyxt &
+nice -n 17 firefox &
 nice -n 17 signal-desktop &
 nice -n 17 watch-for-deadline-changes &
 emacs &
