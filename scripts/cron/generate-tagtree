@@ -1,0 +1,17 @@
+#! /bin/sh
+
+export HOME=/home/jneidel
+. $HOME/.zsh/org.env
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG" ]; then
+  cat <<EOF
+$ generate-tagtree
+Generate the filetags tagtree
+EOF
+  exit
+fi
+
+hash filetags || exit 127
+
+. $HOME/.zsh/apps/filetags.zsh
+tagtree

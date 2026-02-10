@@ -3,6 +3,7 @@
 set $black #1c1d21
 set $grey  #1c1c1c
 set $white #d0d0d0
+set $red   #d70000
 
 # set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
@@ -166,6 +167,7 @@ for_window [class="mpv"] floating enable
 for_window [class="conky"] floating enable
 for_window [class="gui.Main"] floating enable
 for_window [class="scrcpy"] floating enable
+for_window [title="floating"] floating enable, border pixel 2
 
 # Open in the background on a second screen
 no_focus [class="MuPDF"]
@@ -188,12 +190,12 @@ bindsym $mod+Shift+h resize grow width 2 px or 2 ppt
 bindsym $mod+Shift+l resize shrink width 2 px or 2 ppt
 
 # Theme colors
-# class                 border backgr text    indic.   child_border
-client.focused          $grey  $grey  $white  $grey
-client.focused_inactive $grey  $grey  #555753 $grey
-client.unfocused        $grey  $grey  #555753 $grey
-client.urgent           $grey  $grey  #eb3d54 $grey
-client.placeholder      $grey  $grey  $white  $grey
+# class                 border backgr text    indic. child_border
+client.focused          $grey  $grey  $white  $grey  $red 
+client.focused_inactive $grey  $grey  #555753 $grey  $red
+client.unfocused        $grey  $grey  #555753 $grey  $red
+client.urgent           $grey  $grey  #eb3d54 $grey  $red
+client.placeholder      $grey  $grey  $white  $grey  $red
 
 client.background       $grey
 

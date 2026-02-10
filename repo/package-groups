@@ -662,3 +662,6 @@ nyxt Hackers browser
 
 [xremap]
 xremap-x11-bin Remap keybindings based on running application
+
+[filetags]
+filetags-git File tagging utility

@@ -3243,15 +3243,30 @@ TODO: wide embark which-key view (see advanced section)
 
 TODO continue https://protesilaos.com/emacs/dotemacs#h:d7d5e619-3d50-4d9e-a951-7262462a60c9
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun jn/dired-do-open ()
-  "Open current or all marked files using `mime open'." ; built-in dired-do-open uses xdg-open
+(defun jn/dired-jump-to-link-source ()
+  "In Dired take the first marked file and visit its containing directory.
+This is meant to jump to the original file behind a symlink."
   (interactive nil dired-mode)
-  (dolist (file (dired-get-marked-files))
-    (pcase system-type
-      ('gnu/linux
-       (call-process "mime" nil 0 nil file))
-      ('darwin
-       (start-process "mime" nil "mime" file)))))
+  (let* ((marked (car (dired-get-marked-files nil nil)))
+         (final  (file-truename marked))
+         (dir    (file-name-directory final)))
+    (dired dir)
+    (dired-goto-file final)))
+
+(defun jn/dired-do-open ()
+  "Open current or all marked files using `mime open'.
+Or follow a symlink if " ; built-in dired-do-open uses xdg-open
+  (interactive nil dired-mode)
+  (let ((marked (car (dired-get-marked-files nil nil))))
+    (if (file-symlink-p marked)
+        (jn/dired-jump-to-link-source)
+      (dolist (file (dired-get-marked-files))
+        (pcase system-type
+          ('gnu/linux
+           (call-process "mime" nil 0 nil file))
+          ('darwin
+           (start-process "mime" nil "mime" file)))))
+    ))
 
 (defun jn/dired-do-edit ()
   "Edit current or all marked files using `mime edit'."
@@ -3268,10 +3283,27 @@ TODO continue https://protesilaos.com/emacs/dotemacs#h:d7d5e619-3d50-4d9e-a951-7
   :bind (:map dired-mode-map
               ("e" . jn/dired-do-open)
               ("E" . jn/dired-do-edit)))
-  ;; (dired-guess-shell-alist-user ; those are the suggestions for ! and & in Dired
-  ;;     '(("\\.\\(png\\|jpe?g\\|tiff\\)" "mime")
-  ;;       ("\\.\\(mp[34]\\|m4a\\|ogg\\|flac\\|webm\\|mkv\\)" "mime")
-  ;;       (".*" "mime"))))
+;; (dired-guess-shell-alist-user ; those are the suggestions for ! and & in Dired
+;;     '(("\\.\\(png\\|jpe?g\\|tiff\\)" "mime")
+;;       ("\\.\\(mp[34]\\|m4a\\|ogg\\|flac\\|webm\\|mkv\\)" "mime")
+;;       (".*" "mime"))))
+#+end_src
+
+[[https://github.com/novoid/filetags][filetags]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/dired-filetags ()
+  "Run \"filetags\" on current or marked files"
+  (interactive)
+  (dired-do-shell-command
+   "kitty -o remember_window_size=no -o initial_window_width=60c -o initial_window_height=15c --position 535x300 -o window_padding_width='0 20 0 20' --title floating -- filetags -q --force-cv --interactive *"
+   nil
+   (dired-get-marked-files))
+  (revert-buffer nil t t))
+
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("t" . jn/dired-filetags)))
 #+end_src
 
 *** Dirvish
