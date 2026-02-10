@@ -220,8 +220,9 @@ create .config/wireplumber/main.lua.d
 
 [fcron]
 # run ... command to import/export fcrontab -l 2>/dev/null
-create .config/neomutt
-.config/neomutt/neomuttrc
+# postfix to deliver local mail
+create /etc/postfix
+/etc/postfix/main.cf
 
 [nm]
 .config/networkmanager-dmenu

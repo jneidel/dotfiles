@@ -450,9 +450,9 @@ signal-desktop Messenger
 
 [fcron]
 fcron Cron implementation
-systemd:fcron Enable cron
+systemd:fcron
 postfix Enable local mail for errors
-neomutt Read local mail
+systemd:postfix
 
 [xournalpp]
 xournalpp PDF editing
