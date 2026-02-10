@@ -83,7 +83,6 @@ masterpdfeditor
 tws
 antidot
 syncthing
-task
 ledger
 cpupower
 kmonad
@@ -91,12 +90,9 @@ emacs
 wg
 github
 acpid
-factorio
-cataclysm
 xmodmap
 udev
 scrcpy
-neomutt
 imapsync
 notmuch
 imapnotify
@@ -104,6 +100,6 @@ vial
 ddc
 spellchecking
 ripgrep
-nyxt
 xremap
 nix
+karabiner-elements

@@ -525,7 +525,7 @@ minibuffer, even without explicitly focusing it."
 
 ** Tabs
 https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html
-upgrade to: 
+upgrade to:
 
 One way to do this is keeping project stuff in one tab and persisting it with [[https://github.com/minad/tab-bookmark][tab-bookmark]].
 #+begin_src emacs-lisp :tangle "init.el" :results silent
@@ -592,7 +592,7 @@ One way to do this is keeping project stuff in one tab and persisting it with [[
   (set-face-attribute 'org-block nil
                       :background "grey6")
   (set-face-attribute 'org-block-begin-line nil
-                      :background "grey8" ; a shade between the blocks darker grey and the backgrounds brighter gray
+                      :background "grey8" ; a shade between the blocks darker grey and the backgrounds brighter grey
                       :foreground "#0030a0"
                       :overline "red4")
   (unless (eq system-type 'darwin)
@@ -1196,7 +1196,7 @@ It makes it easy to hide/unhide these popups and cycle through the various ones.
   :defer nil
   :config
   (popper-mode +1)
-  
+
   (defhydra popper-hydra (:hint nil)
     "
 _n_ext    _p_revious    promo_t_e/demo_t_e    show/_u_nshow"
@@ -1266,7 +1266,7 @@ and secondary buffers (help, ~*Messages*~, etc.) is implemented here.
                                          :as #'buffer-name
                                          :predicate (lambda (buf) (persp-is-current-buffer buf t))
                                          :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))) ; hidden buffers like minibuffer
-  
+
   (defvar consult-special-buffer
     `( :name "Special Buffer"
        :default nil
@@ -1596,7 +1596,7 @@ is the only way (I found) to get rid of them:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package consult
   :bind (;; new functionality
-         ("H-l"   . consult-line) 
+         ("H-l"   . consult-line)
          ("M-g l" . consult-line)
          ("H-m"   . consult-mark)
          ("M-g m" . consult-mark)
@@ -1803,7 +1803,7 @@ https://protesilaos.com/emacs/dotemacs#h:25765797-27a5-431e-8aa4-cc890a6a913a
   (savehist-save-minibuffer-history t)
   (history-delete-duplicates t) ; sorting algos (vertico, corfu) rank duplicates higher
   :config
-  (with-eval-after-load 'savehist ; but make M-x sort purely by recency, not frequency 
+  (with-eval-after-load 'savehist ; but make M-x sort purely by recency, not frequency
     (add-hook 'savehist-save-hook
               (lambda ()
                 (setq extended-command-history
@@ -1979,7 +1979,7 @@ Viewport
 Put all transcripts in one place.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq agent-shell-transcript-file-path-function
-      '(lambda () 
+      '(lambda ()
          (let* ((dir (concat user-emacs-directory "agent-shell/transcripts"))
                 (filename (format-time-string "%F-%H-%M-%S.md"))
                 (filepath (expand-file-name filename dir)))
@@ -2009,7 +2009,9 @@ It's very intuitive and obscure functionality like decreasing hunk size ~git add
 --patch~ are easily done (I abandoned this in terminal because it was such a headache.)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package magit
-  :defer t)
+  :defer t
+  :custom
+  (diff-font-lock-syntax 'hunk-also))
 #+end_src
 
 | Key   | CLI | Description                 |
@@ -2465,7 +2467,7 @@ By default emacs overrides this right option with and replace it with another
 meta key.
 This returns original behavior by disabling emaces overwrite.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq mac-right-option-modifier 'none) 
+(setq mac-right-option-modifier 'none)
 #+end_src
 
 Remap right command/super to real hyper key assignable in Emacs with "H-".
@@ -2500,7 +2502,7 @@ by a factor of 10, as the default pty size is a pitiful 1024 bytes."
     (let ((process-connection-type nil))
       (apply fn args)))
 
-  (server-start) ; required by Emacs-plus  
+  (server-start) ; required by Emacs-plus
 )
 #+end_src
 
@@ -3039,7 +3041,7 @@ TODO test grep mode menu with consult/embark.
   (keymap-set compilation-mode-map "o" #'compilation-display-error)
   (keymap-set compilation-mode-map "[" #'compilation-previous-file)
   (keymap-set compilation-mode-map "]" #'compilation-next-file)
-  
+
   (keymap-set grep-mode-map casual-bind #'casual-compile-tmenu)
   (keymap-set grep-mode-map "k" #'compilation-previous-error)
   (keymap-set grep-mode-map "j" #'compilation-next-error)
@@ -3055,7 +3057,7 @@ For the [[https://kickingvegas.github.io/casual/Calc.html][calc]] mode.
   :ensure nil
   :after casual
   :bind (:map calc-mode-map
-	            ("H-h" . casual-calc-tmenu))
+                    ("H-h" . casual-calc-tmenu))
   :defer t)
 #+end_src
 
@@ -3215,11 +3217,11 @@ TODO: wide embark which-key view (see advanced section)
          ("j" . dired-next-line)
          ("k" . dired-previous-line)
          ("h" . dired-up-directory)
-         
+
          ("l" . dired-find-file)
          ("L" . dired-find-file-other-window)
          ("F" . dired-do-find-marked-files)
-         
+
          ("r m" . dired-do-delete)
          ("r r" . revert-buffer) ; refresh
          ("r s" . revert-buffer)))
@@ -3804,7 +3806,7 @@ Convenience functions for faster access.
   (interactive)
   (let ((my-file-name) ; fill this with the file to open
         (position))    ; if the file is already open save position
-    (if (equal major-mode 'dired-mode) ; test if we are in dired-mode 
+    (if (equal major-mode 'dired-mode) ; test if we are in dired-mode
         (progn
           (setq my-file-name (dired-get-file-for-visit))
           (find-alternate-file (prepare-tramp-sudo-string my-file-name)))
@@ -4503,7 +4505,7 @@ YouTube video will be opened in mpv.
   :bind (:map elfeed-search-mode-map
               ("b" . elfeed-search-untag-all-unread)
               ("o" . elfeed-search-browse-url)
-         :map elfeed-show-mode-map
+              :map elfeed-show-mode-map
               ("o" . elfeed-show-visit)))
 #+end_src
 
@@ -4521,12 +4523,12 @@ This automated tagging works across all feeds.
           (elfeed-make-tagger :entry-link "youtube\\.com/shorts"
                               :add 'junk
                               :remove 'unread))
-    (add-hook 'elfeed-new-entry-hook
-          (elfeed-make-tagger :entry-title "Sportclub Story" ; NDR Dokus
-                              :add 'junk
-                              :remove 'unread))
+    ;; (add-hook 'elfeed-new-entry-hook
+    ;;       (elfeed-make-tagger :entry-title "In title"
+    ;;                           :add 'junk
+    ;;                           :remove 'unread))
 
-  (setq-default elfeed-search-filter "-junk -music +unread -spam"))
+  (setq-default elfeed-search-filter "-junk -music +unread"))
 #+end_src
 [[https://karthinks.com/software/lazy-elfeed][karthink improvement ideas]]
 
@@ -4546,7 +4548,7 @@ video is worth watching.
   (defun elfeed-tube-cycle-captions-lang()
     (interactive)
     (if (equal (car elfeed-tube-captions-languages) "en")
-        (progn 
+        (progn
           (setq elfeed-tube-captions-languages '("de" "german"))
           (message "Set `deelfeed-tube-captions-languages' to de"))
       (progn
@@ -4742,7 +4744,7 @@ Currently I'm still locked on low DPI, making it not so readable.
 (setq package-vc-allow-build-commands t)
 (use-package reader
   :vc (:url "https://codeberg.org/divyaranjan/emacs-reader"
-  	        :make "all"))
+                :make "all"))
 #+end_src
 
 ** General/misc improvements
@@ -4844,7 +4846,7 @@ In avy it's slightly different:
         (alist-get ?Y avy-dispatch-alist) 'avy-action-yank-whole-line
         (alist-get ?w avy-dispatch-alist) 'avy-action-copy
         (alist-get ?W avy-dispatch-alist) 'avy-action-copy-whole-line)
-  
+
   (defun avy-action-teleport-whole-line (pt)
     (avy-action-kill-whole-line pt)
     (save-excursion (yank)) t)
@@ -4887,7 +4889,7 @@ In avy it's slightly different:
 (defun org-expiry-insert-expiry-two-weeks ()
   "Insert a property with an expiry date two weeks from now"
   (interactive)
-  (let ((timestr (format-time-string "<%Y-%m-%d %a 23:00>" 
+  (let ((timestr (format-time-string "<%Y-%m-%d %a 23:00>"
                                      (time-add (current-time) (days-to-time 14)))))
     (save-excursion
       (org-entry-put

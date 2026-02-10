@@ -21,13 +21,11 @@ rm -f ~/.netrc 2>/dev/null
 rm -f /tmp/ddc-lock 2>/dev/null
 rm -f $ORG_INBOX/.org 2>/dev/null
 
-# dirs
+# empty dirs
 rmdir ~/Desktop 2>/dev/null
-rmdir ~/.lyrics 2>/dev/null
-rmdir ~/.newsboat 2>/dev/null
-rmdir ~/.password-store 2>/dev/null
+rmdir $ORG_INBOX/screenshots
 
-# dirs with contents
+# dirs
 rm -rf ~/.w3m 2>/dev/null
 rm -rf ~/.????????.ib-tws 2>/dev/null
 rm -rf ~/.gradle/

@@ -358,6 +358,7 @@ map Y diropenShuffle
 map S source-config
 map . set hidden!
 map R reload
+map rr reload
 map I gimp # [I]mage
 map L show-tasks
 map sr set reverse!
