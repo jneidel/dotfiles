@@ -4909,6 +4909,226 @@ Completed and expired todos should be archive automatically.
   (org-shifttab 2))
 #+end_src
 
+
+** Crontab
+Original code from [[https://github.com/emacs-pe/crontab-mode][emacs-pe]] and [[https://github.com/smoeding/crontab-mode][smoeding]].
+Modified for use with fcron.
+
+Launch with =crontab-edit-user-crontab= and install with ~C-c C-c~.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(eval-when-compile (require 'cl-lib))
+(require 'sh-script)
+
+(defgroup crontab nil
+  "Major mode for editing fcrontab(5) files."
+  :prefix "crontab-"
+  :group 'languages)
+
+(defface crontab-minute
+  '((t :inherit outline-1))
+  "Face to use for highlighting crontab minute field."
+  :group 'crontab)
+
+(defface crontab-hour
+  '((t :inherit outline-2))
+  "Face to use for highlighting crontab hour field."
+  :group 'crontab)
+
+(defface crontab-month-day
+  '((t :inherit outline-3))
+  "Face to use for highlighting crontab day of month field."
+  :group 'crontab)
+
+(defface crontab-month
+  '((t :inherit outline-4))
+  "Face to use for highlighting crontab month field."
+  :group 'crontab)
+
+(defface crontab-week-day
+  '((t :inherit outline-5))
+  "Face to use for highlighting crontab day of week field."
+  :group 'crontab)
+
+(defface crontab-predefined
+  '((t :inherit outline-1))
+  "Face to use for crontab predefined definitions."
+  :group 'crontab)
+
+(defvar crontab-fields '("minute (0-59)" "hour (0-23)" "day (1-31)" "month (1-12)" "day-of-week (0-6)" "command")
+  "Fields used by `crontab-eldoc-function' to show the crontab information.")
+
+(eval-and-compile
+  (defconst crontab-rx-constituents
+    ;; https://en.wikipedia.org/wiki/Cron#CRON_expression
+    `((unit    . ,(rx (+ (in "-,*" num))))
+      (step    . ,(rx (? "/" (+ num))))
+      (month   . ,(rx (or "jan" "feb" "mar" "apr" "may" "jun" "jul" "aug" "sep" "oct" "nov" "dec")))
+      (weekday . ,(rx (or "sun" "mon" "tue" "wed" "thu" "fri" "sat")))
+      )
+    "Additional specific sexps for `crontab-rx'")
+
+  (defmacro crontab-rx (&rest regexps)
+    "Crontab specialized rx macro."
+    (let ((rx-constituents (append crontab-rx-constituents rx-constituents)))
+      (cond ((null regexps)
+             (error "No regexp"))
+            ((cdr regexps)
+             (rx-to-string `(and ,@regexps) t))
+            (t
+             (rx-to-string (car regexps) t))))))
+
+(defvar crontab-font-lock-keywords
+  `(
+    ;;  ┌───────────────────────── min (0 - 59)
+    ;;  │ ┌─────────────────────── hour (0 - 23)
+    ;;  │ │ ┌───────────────────── day of month (1 - 31)
+    ;;  │ │ │ ┌─────────────────── month (1 - 12)
+    ;;  │ │ │ │ ┌───────────────── day of week (0 - 6) (Sunday to Saturday; 7 is also Sunday)
+    ;;  │ │ │ │ │
+    ;;  │ │ │ │ │
+    ;;  │ │ │ │ │
+    ;;  * * * * *  command to execute
+    (,(crontab-rx line-start (* space)
+                  (group unit (? step)) (+ space) ; minutes
+                  (group unit (? step)) (+ space) ; hours
+                  (group (or (seq unit (? step)) "?" "L" "W")) (+ space) ; day of month
+                  (group (or unit month) (? step)) (+ space)             ; month
+                  (group (or unit weekday) (? step)) (+ space) ; day of week
+                  (group (+ not-newline))                      ; command
+                  line-end)
+     (1 'crontab-minute)
+     (2 'crontab-hour)
+     (3 'crontab-month-day)
+     (4 'crontab-month)
+     (5 'crontab-week-day))
+
+    ;; Nonstandard predefined scheduling definitions
+    (,(rx line-start (* space)
+          (group (or "@reboot" "@yearly" "@annually"
+                     "@monthly" "@weekly" "@daily" "@hourly"))
+          (+ space)
+          (group (+ not-newline))       ; Command
+          line-end)
+     (1 'crontab-predefined))
+
+    ;; Variables
+    ("^\\([^#=]+\\)=\\(.*\\)$"
+     (1 font-lock-variable-name-face)
+     (2 font-lock-string-face)))
+  "Info for function `font-lock-mode'.")
+
+(defun crontab-indent-line ()
+  "Indent current line as crontab mode."
+  (interactive)
+  (indent-line-to 0))
+
+(defun crontab-eldoc-function ()
+  "`eldoc-documentation-function' for Crontab."
+  (let* ((point (point))
+         (end-of-line (point-at-eol))
+         (fields (copy-sequence crontab-fields))
+         (n (save-excursion
+              (beginning-of-line)
+              (cl-loop while (re-search-forward "[^[:space:]]+" end-of-line t)
+                       with field = -1
+                       do (cl-incf field)
+                       if (or (>= (point) point) (>= field 5))
+                       return field))))
+    (when n
+      (setcar (nthcdr n fields) (propertize (elt fields n) 'face 'font-lock-constant-face)))
+    (mapconcat 'identity fields "  ")))
+
+(defun crontab-edit-user-crontab ()
+  "Create a buffer to edit the user crontab.
+The crontab can be edited and then installed again by calling
+`crontab-install-user-crontab'.  The buffer does not need to be
+saved since no file is associated with it.
+
+The `crontab(1)' executable is used to load the crontab."
+  (interactive)
+  (let ((buffer (get-buffer-create "*crontab*")))
+    (switch-to-buffer buffer)
+    (erase-buffer)
+    (when (> (call-process "sh" nil t nil "-c" "fcrontab -l 2>/dev/null") 0)
+      (goto-char (point-min))
+      (unless (looking-at "^crontab: no crontab")
+        (error "Loading crontab failed"))
+      (erase-buffer)
+      (insert "# crontab\n"))
+    (set-buffer-modified-p nil)
+    (goto-char (point-min))
+    (crontab-mode)
+    (setq-local crontab-user-crontab-file t)))
+
+(defun crontab-install-user-crontab ()
+  "Install the contents of the current buffer as user crontab asynchronously via `fcrontab -`."
+  (interactive)
+  (unless crontab-user-crontab-file
+    (error "Only a user crontab can be installed"))
+  (save-restriction
+    (widen)
+    ;; Ensure trailing newline
+    (unless (eq (char-before (point-max)) ?\n)
+      (goto-char (point-max))
+      (insert "\n"))
+    (let* ((src-buf (current-buffer))
+           (output-buf (get-buffer-create "*fcrontab*"))
+           (proc
+            (make-process
+             :name "fcrontab-install"
+             :buffer output-buf
+             :command (list "fcrontab" "-")
+             :connection-type 'pipe
+             :noquery t
+             :sentinel
+             (lambda (p event)
+               (when (memq (process-status p) '(exit signal))
+                 (let ((code (process-exit-status p)))
+                   (if (zerop code)
+                       (progn
+                         (when (buffer-live-p src-buf)
+                           (kill-buffer src-buf))
+                         (message "Installed crontab"))
+                     (message "Installing crontab failed (exit %s). See buffer %s"
+                              code (buffer-name (process-buffer p))))))))))
+      (with-current-buffer output-buf
+        (erase-buffer))
+      ;; Send buffer to stdin of fcrontab
+      (process-send-region proc (point-min) (point-max))
+      (process-send-eof proc)
+      (message "Installing crontab..."))))
+
+
+;;;###autoload
+(define-derived-mode crontab-mode text-mode "Crontab"
+  "Major mode for editing crontab file.
+
+\\{crontab-mode-map}"
+  :syntax-table sh-mode-syntax-table
+  (set (make-local-variable 'comment-start) "# ")
+  (set (make-local-variable 'comment-start-skip) "#+\\s-*")
+
+  (if (null eldoc-documentation-function) ; Emacs<25
+      (set (make-local-variable 'eldoc-documentation-function)
+           #'crontab-eldoc-function)
+    (add-function :before-until (local 'eldoc-documentation-function)
+                  #'crontab-eldoc-function))
+
+  (set (make-local-variable 'font-lock-defaults)
+       '(crontab-font-lock-keywords nil t))
+
+  (set (make-local-variable 'indent-line-function)
+       'crontab-indent-line)
+
+  ;; Set to t by `crontab-edit-user-crontab' when editing a user crontab
+  (set (make-local-variable 'crontab-user-crontab-file)
+       nil)
+
+  (define-key crontab-mode-map (kbd "C-c C-c") #'crontab-install-user-crontab))
+
+(add-to-list 'auto-mode-alist '("/crontab\\(\\.X*[[:alnum:]]+\\)?\\'" . crontab-mode))
+#+end_src
+
 # Local Variables:
 # jinx-local-words: "avy"
 # End:
