@@ -1,2 +1,0 @@
-#! /bin/bash
-yt-dlp -c --retries 4 -f 'mp4[height<=1080]' -o "$ORG_INBOX/%(title)s.%(ext)s" $1 >/dev/null 2>&1 &

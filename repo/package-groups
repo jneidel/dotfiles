@@ -128,10 +128,6 @@ shell:ln -s /bin/nsxiv ~/.local/bin/sxiv
 [gwenview]
 gwenview Extensive image viewer
 
-[newsboat]
-newsboat RSS feed reader
-# w3m Terminal browser
-
 [yacreader]
 # yacreader-nopdf Comicbook reader # shit version, compile manually from https://jneidel.com/yacreader9.tar.xz
 libunarr Build dependency

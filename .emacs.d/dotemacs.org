@@ -4413,7 +4413,7 @@ If a buffer is not file and not dired, copy value of `default-directory'."
          xfpath )))))
 #+end_src
 
-** RSS feeds in elfeed
+** RSS feeds (elfeed)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package elfeed
   :commands (elfeed)
@@ -4508,6 +4508,25 @@ YouTube video will be opened in mpv.
               :map elfeed-show-mode-map
               ("o" . elfeed-show-visit)))
 #+end_src
+
+I [[https://aur.archlinux.org/packages?O=0&SeB=M&K=jneidel&outdated=&SB=p&SO=d&PP=50&submit=Go][maintain a few AUR packages]].
+For updating them my flow is:
+1. be notified of new release via RSS
+2. run a script that prepares everything for the release
+3. confirm
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/elfeed-release-aur-pkg ()
+  (interactive)
+  (let* ((entry (elfeed-search-selected :single))
+         (url (elfeed-entry-link entry)))
+    (async-shell-command (format "~/scripts/release-aur-from-rss %s"
+                                 (shell-quote-argument url)))
+    (message "Started AUR release flow in tmux")))
+
+(use-package elfeed
+  :bind (:map elfeed-search-mode-map
+              ("R" . jn/elfeed-release-aur-pkg)))
+    #+end_src
 
 A lot of YouTubers use shorts to boost their engagement.
 I find shorts to be pointless and a waste of time.

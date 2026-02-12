@@ -24,7 +24,6 @@ VERSION=$(echo $URL | cut -d/ -f8 | cut -dv -f2)
 
 transform_pkgname() {
   case "$PKG" in
-    webpack) echo nodejs-webpack;;
     yacreader) echo yacreader-bin;;
     phpactor) echo phpactor;;
     portal) echo portal-bin;;

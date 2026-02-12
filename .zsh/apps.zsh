@@ -129,25 +129,6 @@ sentix() {
     awk '{ print "https://www.sentix.de"$1 }' | xargs $B
 }
 alias pdfcombine="pdfunite"
-
-### newsboat
-wait_for_newsboat() {
-  local NAME="$1"
-  out=$(mktemp)
-  if ! newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet; then
-    newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db >$out
-    echo "Waiting for reload-newsboat to finish"
-    tail --pid=`grep -Po "PID: \K\d+" $out` -f /dev/null && newsboat -u ~/.config/newsboat/urls-$NAME -c ~/.config/newsboat/cache-$NAME.db --quiet && clear
-  fi
-}
-alias new="wait_for_newsboat clean"
-alias pod="is-focus-challenge || wait_for_newsboat pod"
-alias misc="is-focus-challenge || wait_for_newsboat misc"
-alias yt="is-focus-challenge || wait_for_newsboat yt"
-alias mus="is-focus-challenge -v && between 16 22 && wait_for_newsboat music"
-alias apps="is-focus-challenge || wait_for_newsboat gh-app-updates"
-alias q="podqueue"
-alias podboat="/bin/podboat -a"
 alias ma="mangadl update new"
 alias mau="mangadl update"
 

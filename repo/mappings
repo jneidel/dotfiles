@@ -133,11 +133,6 @@ create .config/ncmpcpp
 create .config/beets
 .config/beets/config.yaml
 
-### rss
-[newsboat]
-create .config/newsboat
-.config/newsboat/config
-
 ### torrents
 [transmission]
 create .config/transmission-daemon

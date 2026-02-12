@@ -1,6 +1,0 @@
-#! /bin/bash
-
-curl -sS "$1" |
-  sed 's/<img[^>]*>//g' | # remove img tags
-  w3m -T text/html
-
