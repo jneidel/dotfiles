@@ -3178,29 +3178,64 @@ TODO: wide embark which-key view (see advanced section)
 
 ** File manager (dired)
 [[https://www.youtube.com/watch?v=5dlydii7tAU][dired basics]]
+
+Create a new file or directory and open it.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun mkdir-dired (name)
+  "Create a new directory and change into it."
   (interactive (list (read-string "Directory: ")))
   (dired-create-directory (expand-file-name name default-directory))
   (dired-find-file))
 
-(defun touch-org-file (name)
-  (interactive (list (read-string "File name: ")))
-  (if (string-match-p "\\." name)
-      (progn (shell-command (format "touch '%s'" name))
-             (revert-buffer)
-             (dired-goto-file (expand-file-name name default-directory)))
-    (let ((file-name (format "%s.org" name)))
-      (shell-command (format "generate-orgmode-metadata \"%s\" >\"%s\"" name file-name))
-      (revert-buffer)
-      (dired-goto-file (expand-file-name file-name default-directory))
-      (dired-find-file))))
+(defun touch-file (name &optional no-fallback)
+  "Create a new file and open it.
+If the name given has no file extension, by default .org is used.
+This behavior can be disabled by setting the second argument `no-fallback' to non-nil."
+  (interactive
+   (list (read-string "File name: ")
+         current-prefix-arg))
+  (cond
+   ;; has extension
+   ((string-match-p "\\." name)
+    (shell-command (format "touch '%s'" name))
+    (revert-buffer)
+    (dired-goto-file (expand-file-name name default-directory)))
+
+   ;; no extension, use as is
+   (no-fallback
+    (shell-command (format "touch '%s'" name))
+    (revert-buffer)
+    (dired-goto-file (expand-file-name name default-directory)))
+
+    ;; no extension, fallback to org-mode
+    (t
+     (let ((file-name (format "%s.org" name)))
+       (shell-command
+        (format "generate-orgmode-metadata \"%s\" >\"%s\"" name file-name))
+       (revert-buffer)
+       (dired-goto-file (expand-file-name file-name default-directory)))))
+  (dired-find-file))
+
+(defun create-in-fs (name)
+  "Create something on the filesystem (file or directory).
+First enter the new name, then decide what it is."
+  (interactive (list (read-string "Name: ")))
+  (let ((choice (read-key
+                 (concat
+                  (propertize "Create" 'face 'transient-heading) "  "
+                  "[" (propertize "d" 'face 'transient-key) "] directory   "
+                  "[" (propertize "f" 'face 'transient-key) "] file   "
+                  "[" (propertize "n" 'face 'transient-key) "] file " (propertize "(no .org)" 'face 'grey-on-grey )))))
+    (pcase choice
+      (?d (mkdir-dired name))
+      (?f (touch-file name))
+      (?n (touch-file name t))
+      (_  (keyboard-quit)))))
 
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
-              ("t" . touch-org-file)
-              ("d" . mkdir-dired)))
+              ("d" . create-in-fs)))
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
