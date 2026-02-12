@@ -3817,8 +3817,7 @@ https://www.gnu.org/software/tramp/#Improving-performance-of-asynchronous-remote
   (tramp-ssh-controlmaster-options nil))
 #+end_src
 
-Convenience functions for faster access.
-[[https://www.emacswiki.org/emacs?action=browse;oldid=Tramp;id=TrampMode#h5o-31][sudo-edit-current-file source]]
+Different variants of =find-file=, starting in tramp locations.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun find-file-sudo ()
   "`find-file' starting with /sudo:root@localhost:/"
@@ -3832,11 +3831,23 @@ Convenience functions for faster access.
   (let ((default-directory "/ssh:"))
     (call-interactively #'find-file)))
 
-(use-package tramp
-  :bind (:map dired-mode-map
-              ("S-<return>" . sudo-edit-current-file)
-              ))
+(defun find-file-home ()
+  "`find-file' starting in $HOME"
+  (interactive)
+  (let ((default-directory  "/home/jneidel/"))
+    (call-interactively #'find-file)))
 
+(use-package emacs
+  :ensure nil
+  :bind (("C-x C-f" . nil)
+         ("C-x C-f C-f" . find-file)
+         ("C-x C-f C-h" . find-file-home)
+         ("C-x C-f C-d" . find-file-sudo)
+         ("C-x C-f C-s" . find-file-ssh)))
+#+end_src
+[[https://www.emacswiki.org/emacs?action=browse;oldid=Tramp;id=TrampMode#h5o-31][
+sudo-edit-current-file source]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun sudo-edit-current-file ()
   (interactive)
   (let ((my-file-name) ; fill this with the file to open
@@ -3864,6 +3875,10 @@ Convenience functions for faster access.
                  (tramp-file-name-user vec)
                  (tramp-file-name-host vec))))
     (concat "/sudo:root@localhost:" tempfile)))
+
+(use-package tramp
+  :bind (:map dired-mode-map
+              ("S-<return>" . sudo-edit-current-file)))
 #+end_src
 
 ** setup Latex
