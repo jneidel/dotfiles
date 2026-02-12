@@ -5,57 +5,123 @@ mkdir -p $PIC_DIR
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
-$ screenshot [-s|-c|-d DELAY]
+$ screenshot CMD
 Take a screenshot.
-Saves to $PIC_DIR and the clipboard.
+Save it to $PIC_DIR and the clipboard.
 
-Flags:
-  -s: select screen snippet (1s delay)
-  -d [delay]: select with custom delay (in secs), implies -s
-  -c: only save screenshot to clipboard, not the file system
+Commands:
+  kitty: screenshot menu in kitty
+
+Screenshot commands:
+  app: current app
+  app-clip: current app, only save to clipboard
+  selection: do selection
+  selection-clip: do selection app, only save to clipboard
+  screen: whole screen
 
 Examples:
-  $ screenshot
-  $ screenshot -d 3
-  $ screenshot -sc
+  $ screenshot kitty
+  $ screenshot app
 EOF
   exit
 fi
 
-hash scrot maim xclip notify-send tee >/dev/null || exit 127
+hash maim scrot xclip notify-send tee || exit 127
+# Commentary:
+# Why main and scrot?
+# main plays nicely with pipes and is thus much easier to work with.
+# maim has a --select option, but not a --freeze. Without it the screen stutters and flashes terribly.
+# see: https://github.com/naelstrof/maim/issues/193
+# scrot has this, which is why I keep it around.
 
-use_delay=false
-delay="1"
-clipboard_only=false
-clipboard_notify=""
-
-while getopts ":sd:c" opt; do
-  case "$opt" in
-    s) use_delay=true;;
-    c) clipboard_only=true
-      clipboard_notify=" (clipboard only)";;
-    d) delay="$OPTARG"
-      use_delay=true;;
-    :) printf '%s\n' "error: -$OPTARG requires an argument" >&2; exit 2 ;;
- esac
-done
-shift $((OPTIND - 1))
-
-format="screenshot_$(date +%Y-%m-%d_%H:%M:%S).png"
+format="screenshot$(date +%Y-%m-%d_%H:%M:%S | md5sum | cut -d\  -f1).png"
+#   md5 > date because it's one "word" for Emacs subword-mode and all kept files will be renamed
 file="$PIC_DIR/$format"
+notify_send_options="-t 1500 -i camera"
 
-if $use_delay; then
-  notify-send "screen shot in ${delay}s${clipboard_notify}" -t 1000 -i camera
-  sleep "$delay"s && \
-  /bin/scrot "$format" -e "notify-send \"took screenshot${clipboard_notify}\" -t 1000 -i camera; mv \$f $PIC_DIR" -z --freeze --select &&
+screenshot_selection() {
+  msg="$1"
+  xdotool mousemove_relative -- 1 0; xdotool mousemove_relative -- -1 0 # move cursor to force it to show (why: unclutter-xfixes)
+  /bin/scrot "$format" -e "notify-send \"took screenshot$msg\" $notify_send_options; mv \$f $PIC_DIR" -z --freeze --select &&
     cat "$file" | xclip -selection clipboard -t image/png
-else
-  maim -i $(xdotool getactivewindow) |
+}
+screenshot_selection_clip() {
+  screenshot_selection " 📎"
+  rm "$file"
+  rmdir "$PIC_DIR"
+}
+screenshot_app() {
+  maim --window $(xdotool getactivewindow) |
     tee "$file" |
     xclip -selection clipboard -t image/png &&
-    notify-send "took screenshot${clipboard_notify}" -t 1000 -i camera
-fi
+    notify-send "took screenshot" $notify_send_options
+}
+screenshot_app_clip() {
+  maim --window $(xdotool getactivewindow) |
+    xclip -selection clipboard -t image/png &&
+    notify-send "took screenshot 📎" $notify_send_options
+}
+screenshot_screen() {
+  maim |
+    tee "$file" |
+    xclip -selection clipboard -t image/png &&
+    notify-send "took screenshot" -t 1000 -i camera
+}
 
-if $clipboard_only; then
-  rm "$file"
-fi
+transient_menu() {
+  printf '%b' \
+         "[\033[1;32mp\033[0m] App\n" \
+         "[\033[1;32ma\033[0m] App \033[2m(clipboard only)\033[0m\n\n" \
+         "[\033[1;32ms\033[0m] Select\n" \
+         "[\033[1;32mc\033[0m] Select \033[2m(clipboard only)\033[0m\n\n" \
+         "[\033[1;32mf\033[0m] Fullscreen\n\n" \
+         "\033[2mPress… \033[0m"
+
+  # kill itself on focus loss
+  xdotool behave $(xdotool getactivewindow) blur windowkill &
+
+  # read exactly one key
+  stty -icanon -echo min 1 time 0
+  key=$(dd bs=1 count=1 2>/dev/null)
+
+  case "$key" in
+    p) echo app >&3;;
+    s) echo selection >&3;;
+    a) echo app_clip >&3;;
+    c) echo selection_clip >&3;;
+    f) echo screen >&3;;
+  esac
+  exit 0
+}
+
+start_in_kitty() {
+  tmp=$(mktemp)
+  kitty -o remember_window_size=no -o initial_window_width=27c -o initial_window_height=10c --position 1520x40 -o window_padding_width='10 10 0 10' --title floating \
+        -- sh -c "~/scripts/sxhkd/screenshot transient 3>$tmp"
+
+  choice=$(cat "$tmp")
+
+  case "$choice" in
+    app) screenshot_app ;;
+    selection) screenshot_selection ;;
+    app_clip) screenshot_app_clip ;;
+    selection_clip) screenshot_selection_clip ;;
+    screen) screenshot_screen ;;
+  esac
+}
+
+case "$1" in
+  app) screenshot_app; break;;
+  app-clip) screenshot_app_clip; break;;
+  selection) screenshot_selection; break;;
+  selection-clip) screenshot_selection_clip; break;;
+  screen) screenshot_screen; break;;
+  kitty) start_in_kitty; break;;
+  transient) transient_menu; break;;
+  *) if [ -z "$1" ]; then
+       screenshot_app
+     else
+       echo "Invalid comand given"
+       false
+     fi;;
+esac

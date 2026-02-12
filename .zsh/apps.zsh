@@ -31,8 +31,6 @@ alias -g PE="--playlist-end"
 alias ytpod="nice yt-dlp --yes-playlist -c -i --retries 4 -x --audio-format 'mp3' --audio-quality '320K' -o '$ORG_MEDIA/phone/audio/%(title)s.%(ext)s' --embed-thumbnail"
 
 ### redefining existing commands
-alias scrot="~/scripts/sxhkd/screenshot"
-alias scrott="~/scripts/sxhkd/screenshot -s 5"
 alias man="colored-man"
 alias v="vim"
 alias nvim="vim"
