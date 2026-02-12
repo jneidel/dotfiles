@@ -1612,9 +1612,13 @@ is the only way (I found) to get rid of them:
 
 Use the great consult interface for switching to buffers, bookmarks and recent files.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package consult
-  :bind (("H-b" . consult-buffer)
-         ([remap switch-to-buffer] . consult-buffer)))
+(if (not (eq system-type 'darwin))
+  (use-package consult
+    :bind
+    ("H-b" . consult-buffer)
+    ([remap switch-to-buffer] . consult-buffer))
+  (use-package consult
+    :bind ("H-b" . switch-to-buffer)))
 
 (use-package recentf
   :hook (after-init . recentf-mode)
