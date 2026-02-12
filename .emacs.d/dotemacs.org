@@ -848,46 +848,54 @@ https://orgmode.org/manual/Capture-templates.html
 (use-package org-capture
   :ensure nil
   :config
-  (defvar jneidel-note-capture-location nil
-    "Temporary path for current org-capture note.")
   (defun jneidel-generate-note-capture-location ()
     "Generate a temp file path, store it and open it."
-    (setq jneidel-note-capture-location
-          (make-temp-file "org-capture-" nil ".org"))
-    ;; template target (function …) expects file to be opened
-    (find-file jneidel-note-capture-location)
-    (goto-char (point-min)))
+    (let ((tmp (make-temp-file "org-capture-" nil ".org")))
+      (org-capture-put :jneidel-temp-file tmp)
+      ;; template target (function …) expects file to be opened
+      (set-buffer (find-file-noselect tmp))
+      (goto-char (point-min))))
+
   (defun jneidel-note-capture ()
     "Extract the title and move the note to the inbox."
-    (let* ((title (string-trim (shell-command-to-string
-                                (format "grep -E '^#\\+(TITLE|title):.*' %s | cut -d: -f2-" jneidel-note-capture-location))))
+    (let* ((tmp (org-capture-get :jneidel-temp-file))
+           (title (string-trim (shell-command-to-string
+                                (format "grep -E '^#\\+(TITLE|title):.*' %s | sed 's|/| |g' | cut -d: -f2-" tmp))))
            (inbox (substitute-in-file-name "$ORG_INBOX/"))
-           (new-note-filename (expand-file-name (concat title ".org") inbox))
-           (capture-buffer (find-buffer-visiting jneidel-note-capture-location)))
-      (progn
-        (kill-buffer capture-buffer)
-        (rename-file jneidel-note-capture-location new-note-filename t)
-        (message "Wrote note %s" new-note-filename))
-      )
-    ;; TODO support capture of 2+ notes at the same time
-    ;; TODO check and handle if destination file already exists
-    )
+           (maybe-new-note-filename (expand-file-name (concat title ".org") inbox))
+           (new-note-filename
+            (if (file-exists-p maybe-new-note-filename)
+                (format "%s-%s.org"
+                        (file-name-sans-extension maybe-new-note-filename)
+                        (substring (make-temp-name "") 0 4)) ; random string
+              maybe-new-note-filename))
+           (capture-buffer (find-buffer-visiting tmp)))
+      (kill-buffer capture-buffer)
+      (rename-file tmp new-note-filename t)
+
+      (let ((buf (find-file-noselect new-note-filename)))
+        (with-current-buffer buf
+          (save-excursion
+            (goto-char (point-min))
+            (forward-line 3) ;; 4rd line (start of text)
+            (set-marker org-capture-last-stored-marker (point) (current-buffer)))))
+
+      (message "Wrote note %s" new-note-filename)))
+
   (add-to-list 'org-capture-templates
                `("n" "Note" plain
                  (function jneidel-generate-note-capture-location)
                  ,(concat "#+title: %?\n"
                           "#+date: %t\n"
                           "\n** ref\n%a\n%i")
-                 :hook delete-other-windows
                  :after-finalize jneidel-note-capture))
 
   (add-to-list 'org-capture-templates
                `("v" "Video" plain
                  (function jneidel-generate-note-capture-location)
-                 ,(concat "#+title: video: %?\n"
+                 ,(concat "#+title: video: %? -- videos\n"
                           "#+date: %t\n"
                           "\n** ref\n%a\n%i")
-                 :hook delete-other-windows
                  :after-finalize jneidel-note-capture))
 
   ;; tasks
