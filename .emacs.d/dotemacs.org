@@ -1139,6 +1139,23 @@ https://github.com/minad/org-modern
                       :inherit 'org-modern-label)
   )
 #+end_src
+customize: org-src-block-faces
+
+**** org-(modern)-indent
+[[https://github.com/jdtsmith/org-modern-indent][org-modern-indent]], [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraCode/Light/FiraCodeNerdFontMono-Light.ttf][exact font I am using]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-modern-indent
+  :quelpa (org-modern-indent :fetcher "github" :repo "jdtsmith/org-modern-indent")
+  :diminish 'org-indent-mode
+  :config
+  (set-face-attribute 'org-modern-indent-bracket-line nil
+                      ;; sync color
+                      :inherit 'org-block-begin-line
+                      :overline nil
+                      ;; get rid of vertical space between pipes
+                      :family "FiraCode Nerd Font Mono"
+                      :height 1.1)) ; eliminates residual space
+#+end_src
 
 *** Org todo management
 [[https://orgmode.org/manual/Fast-access-to-TODO-states.html][Fast access todo states]] for org outlines.
