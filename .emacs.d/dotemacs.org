@@ -3355,12 +3355,11 @@ For [[https://kickingvegas.github.io/casual/I_002dSearch.html][i-search]].
 
 For [[https://kickingvegas.github.io/casual/Eshell.html][eshell]].
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package eshell
+(use-package esh-mode
   :ensure nil
   :after casual
-  :defer t)
-  ;:bind (:map eshell-mode-map
-  ;           ("H-h" . casual-eshell-tmenu)))
+  :bind (:map eshell-mode-map
+            ("H-h" . casual-eshell-tmenu)))
 #+end_src
 
 For [[https://kickingvegas.github.io/casual/IBuffer.html][ibuffer]] (buffer management.)
@@ -5587,6 +5586,19 @@ The `crontab(1)' executable is used to load the crontab."
   (define-key crontab-mode-map (kbd "C-c C-c") #'crontab-install-user-crontab))
 
 (add-to-list 'auto-mode-alist '("/crontab\\(\\.X*[[:alnum:]]+\\)?\\'" . crontab-mode))
+#+end_src
+
+** eshell
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package eshell
+  :ensure nil
+  :bind ("M-=" . eshell))
+
+(use-package esh-mode
+  :ensure nil
+  :after eshell
+  :bind (:map eshell-mode-map
+              ("M-=" . kill-current-buffer)))
 #+end_src
 
 # Local Variables:
