@@ -25,17 +25,17 @@ kill_xflux() {
 
 start() {
   start_xflux
-  natural-brightness
+  ~/scripts/cron/natural-brightness
 }
 
 stop() {
   start_xflux # start before killing to reset screen temperature
   kill_xflux
-  natural-brightness
+  ~/scripts/cron/natural-brightness
 }
 
 export DISPLAY=:0
-XAUTHORITY=/run/user/1000/Xauthority
+export XAUTHORITY=/run/user/1000/Xauthority
 xauth add $(xauth -f $XAUTHORITY list|tail -1)
 
 case $1 in

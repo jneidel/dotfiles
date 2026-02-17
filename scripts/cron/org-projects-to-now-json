@@ -71,7 +71,7 @@ upload_json() {
   json=$(mktemp)
   assemble_json >$json
 
-  echo "Uploading to jneidel.*/now/now.json" >&2
+  echo "Uploading to jneidel.*/now/now.json"
   scp -q $json u:~/html/jneidel.com/now/now.json
   scp -q $json u:~/html/jneidel.de/now/now.json
 }

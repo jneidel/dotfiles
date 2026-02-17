@@ -15,6 +15,6 @@ hash find || exit 127
 
 DESTINATION="$ORG_ARCHIVE/design: retired"
 
-find "$ORG_DESIGN/⚡ sparking" \
+find "$ORG_PROJECTS/⚡ sparking" \
      -mindepth 1 -maxdepth 1 -mtime +60 \
      -exec sh -c 'mv "$1" "$2"' sh {} "$DESTINATION" ';'

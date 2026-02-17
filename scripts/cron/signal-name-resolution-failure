@@ -10,7 +10,7 @@ fi
 
 SCRIPT=
 case "$1" in
-  "inbox") SCRIPT=~/scripts/personal/signal-to-inbox;; # see https://github.com/jneidel/signal-cli-to-file
+  "inbox") SCRIPT=~/.local/bin/signal-to-inbox;; # see https://github.com/jneidel/signal-to-inbox
   "challenge-review") SCRIPT=~/scripts/cron/send-challenge-review-notification;;
   *) exit 1;;
 esac
@@ -23,5 +23,5 @@ if find $ORG_INBOX -name "signal-api-errors*" 2>/dev/null | tail -n1 | xargs cat
   [ -n "$DISPLAY" ] && echo "restarting…"
   ssh home "docker restart signal-cli" >/dev/null
   sleep 2s
-  $SCRIPT
+  $SCRIPT >/dev/null
 fi

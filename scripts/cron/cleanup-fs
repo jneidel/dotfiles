@@ -23,7 +23,7 @@ rm -f $ORG_INBOX/.org 2>/dev/null
 
 # empty dirs
 rmdir ~/Desktop 2>/dev/null
-rmdir $ORG_INBOX/screenshots
+rmdir $ORG_INBOX/screenshots 2>/dev/null
 
 # dirs
 rm -rf ~/.w3m 2>/dev/null
