@@ -11,9 +11,10 @@ keymap:
       # Forward/Backward word
       M-b: { with_mark: C-left }
       M-f: { with_mark: C-right }
-      # Beginning/End of line or page
-      # C-a: { with_mark: home }, C-x h does not work in input fields as a replacement
+      # Beginning/End of line
       C-e: { with_mark: end }
+      C-a: { with_mark: home }
+      # Beginning/End of page
       Alt-KEY_102ND: { with_mark: home } # M-<
       Alt-Shift-KEY_102ND: { with_mark: end } # M->
       # Page up/down
@@ -35,6 +36,7 @@ keymap:
       Alt-u: [C-y, { set_mark: false }] # not working
       # Mark
       C-space: { set_mark: true }
+      C-h: C-a # C-x h does not work in browser input field
       C-x:
         remap:
           h: C-a # C-x h
