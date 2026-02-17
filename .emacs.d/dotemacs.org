@@ -873,14 +873,17 @@ https://orgmode.org/manual/Capture-templates.html
               maybe-new-note-filename))
            (capture-buffer (find-buffer-visiting tmp)))
       (kill-buffer capture-buffer)
+      (shell-command (format "sed 's/ -- .*$//' -i %s" tmp)) ; remove tags from title
       (rename-file tmp new-note-filename t)
 
       (let ((buf (find-file-noselect new-note-filename)))
         (with-current-buffer buf
           (save-excursion
             (goto-char (point-min))
-            (forward-line 3) ;; 4rd line (start of text)
-            (set-marker org-capture-last-stored-marker (point) (current-buffer)))))
+            (org-id-get-create) ;; for org-roam
+            (forward-line 6) ;; start of text for marker
+            (set-marker org-capture-last-stored-marker (point) (current-buffer)))
+          (save-buffer)))
 
       (message "Wrote note %s" new-note-filename)))
 
@@ -1144,6 +1147,64 @@ I use:
 ;;   :quelpa (org-extra-emphasis :fetcher github :repo "qiangf/org-extra-emphasis"))
 
 #+end_src
+
+*** Note linking (org-roam)
+[[https://github.com/org-roam/org-roam][org-roam]]
+#+begin_src elisp :tangle "init.el" :results silent
+(use-package org-roam
+  :defer 2
+  :if (eq system-type 'gnu/linux)
+  :autoload (org-roam-file-p)
+  :custom
+  (org-roam-directory (substitute-in-file-name "$ORG"))
+  (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))))
+#+end_src
+Functions of interest: org-roam-buffer-toggle, org-roam-graph
+
+Protect performance expensive db sync mode from being triggered multiple times.
+#+begin_src elisp :tangle "init.el" :results silent
+(use-package org-roam
+  :if (eq system-type 'gnu/linux)
+  :defer t
+  :config
+  (unless (default-value 'org-roam-db-autosync-mode)
+    (org-roam-db-autosync-mode)))
+#+end_src
+
+Add =#+filetags: :index_node:= to an index node to spawn it's buffer on open.
+#+begin_src elisp :tangle "init.el" :results silent
+(defun jn/org-roam-open-file-buffer ()
+  "Open org-roam dedicated buffer for current file."
+  (interactive)
+  (when (org-roam-file-p)
+    (run-at-time ; when file is already displayed
+     0 nil
+     (lambda ()
+       (let ((node (save-excursion (org-roam-node-at-point))))
+         (when (member "index_node" (org-roam-node-tags node))
+           (let ((buffer (get-buffer-create
+                          (org-roam-buffer--dedicated-name node))))
+             (with-current-buffer buffer
+               (setq-local org-roam-buffer-current-node node)
+               (setq-local org-roam-buffer-current-directory org-roam-directory)
+               (org-roam-buffer-render-contents))
+             (set-window-buffer (selected-window) buffer))))))))
+
+(add-hook 'org-mode-hook #'jn/org-roam-open-file-buffer)
+#+end_src
+
+Use ([[https://github.com/jxq0/org-tidy][org-tidy]]) clean up those properties drawers ([[https://github.com/krisbalintona/org-hide-drawers][alternative]] if unhappy.)
+#+begin_src elisp :tangle "init.el" :results silent
+(use-package org-tidy
+  :hook org-mode)
+#+end_src
+
+[[https://github.com/org-roam/org-roam-ui][org-roam-ui]]
+#+begin_src elisp :tangle "init.el" :results silent
+(use-package org-roam-ui
+  :commands (org-roam-ui-mode org-roam-ui-open))
+#+end_src
+
 
 ** Info
 #+begin_src elisp :tangle "init.el" :results silent
@@ -3236,27 +3297,33 @@ This behavior can be disabled by setting the second argument `no-fallback' to no
   (interactive
    (list (read-string "File name: ")
          current-prefix-arg))
-  (cond
-   ;; has extension
-   ((string-match-p "\\." name)
-    (shell-command (format "touch '%s'" name))
+  (let ((filename
+         (cond
+          ((string-match-p "\\." name) name)
+          (no-fallback name) ; no extension, use as is
+          (t ; no extension, fallback to org-mode
+           (format "%s.org" name)))))
+    (if (string-match-p "\\.org\\'" filename)
+        (let ((title
+               (replace-regexp-in-string " -- .*\\'" "" ; remove tags
+                                         (file-name-sans-extension name))))
+          (shell-command
+           (format "generate-orgmode-metadata \"%s\" >\"%s\"" title filename)))
+      (shell-command (format "touch '%s'" filename)))
     (revert-buffer)
-    (dired-goto-file (expand-file-name name default-directory)))
+    (dired-goto-file (expand-file-name filename default-directory))
+    (dired-find-file)))
 
-   ;; no extension, use as is
-   (no-fallback
-    (shell-command (format "touch '%s'" name))
-    (revert-buffer)
-    (dired-goto-file (expand-file-name name default-directory)))
-
-    ;; no extension, fallback to org-mode
-    (t
-     (let ((file-name (format "%s.org" name)))
-       (shell-command
-        (format "generate-orgmode-metadata \"%s\" >\"%s\"" name file-name))
-       (revert-buffer)
-       (dired-goto-file (expand-file-name file-name default-directory)))))
-  (dired-find-file))
+(defun jn/touch-index-node-file (name)
+    "Create org-roam index node file."
+    (let ((filename (if (string-match-p "\\." name) name (format "%s.org" name)))
+          (title (replace-regexp-in-string " -- .*\\'" "" ; remove tags
+                                           (file-name-sans-extension name))))
+      (shell-command
+       (format "generate-orgmode-metadata \"%s\" >\"%s\"; echo '#+filetags: :index_node:' >>\"%s\"" title filename filename))
+      (revert-buffer)
+      (dired-goto-file (expand-file-name filename default-directory))
+      (dired-find-file)))
 
 (defun create-in-fs (name)
   "Create something on the filesystem (file or directory).
@@ -3267,11 +3334,15 @@ First enter the new name, then decide what it is."
                   (propertize "Create" 'face 'transient-heading) "  "
                   "[" (propertize "d" 'face 'transient-key) "] directory   "
                   "[" (propertize "f" 'face 'transient-key) "] file   "
-                  "[" (propertize "n" 'face 'transient-key) "] file " (propertize "(no .org)" 'face 'grey-on-grey )))))
+                  "[" (propertize "n" 'face 'transient-key) "] file " (propertize "(no .org)" 'face 'grey-on-grey )
+                  "[" (propertize "N" 'face 'transient-key) "] file " (propertize "(index node)" 'face 'grey-on-grey )
+                  ))))
     (pcase choice
       (?d (mkdir-dired name))
       (?f (touch-file name))
+      (?t (touch-file name))
       (?n (touch-file name t))
+      (?N (jn/touch-index-node-file name))
       (_  (keyboard-quit)))))
 
 (use-package dired
@@ -3885,7 +3956,8 @@ Different variants of =find-file=, starting in tramp locations.
          ("C-x C-f C-f" . find-file)
          ("C-x C-f C-h" . find-file-home)
          ("C-x C-f C-d" . find-file-sudo)
-         ("C-x C-f C-s" . find-file-ssh)))
+         ("C-x C-f C-s" . find-file-ssh)
+         ("C-x C-f C-n" . org-roam-node-find)))
 #+end_src
 [[https://www.emacswiki.org/emacs?action=browse;oldid=Tramp;id=TrampMode#h5o-31][
 sudo-edit-current-file source]]

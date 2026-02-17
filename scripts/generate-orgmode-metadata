@@ -12,5 +12,12 @@ EOF
 fi
 
 title="$1"
+id=$(uuidgen)
 
-echo "#+title: $title\n#+date: $(date +%Y-%m-%d)"
+cat <<EOF
+:PROPERTIES:
+:ID: $id
+:END:
+#+title: $title
+#+date: $(date +%Y-%m-%d)
+EOF
