@@ -1510,6 +1510,25 @@ perspective.
 )
 #+end_src
 
+Most of the time I want to switch back to the buffer I was just in.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/switch-to-last-buffer ()
+     "Switch to the last opened buffer.
+Activating it two times in a row will bring you back to the buffer you were in.
+The buffer list is filtered the same way as for `consult-buffer'.
+Keeps things predictable."
+     (interactive)
+     (switch-to-buffer
+      (car (consult--buffer-query
+            :sort 'visibility
+            :as #'buffer-name
+            :predicate (lambda (buf) (persp-is-current-buffer buf t))
+            :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))))
+
+(use-package consult
+  :bind ("H-<SPC>" . jn/switch-to-last-buffer))
+#+end_src
+
 ~H-b~ thus filters by perspective.
 Make available ~H-B~ to switch to a buffer in any perspective.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
