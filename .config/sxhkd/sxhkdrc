@@ -78,6 +78,8 @@ shift + XF86MonBrightnessDown
 ## screenshot
 super + p
     screenshot kitty
+super + P
+    screenshot app
 
 ## dunst
 super + c
