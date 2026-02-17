@@ -4,11 +4,12 @@ PROJECT=$WEB_HOME
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat <<EOF
-$ pick-hugo-article LANG
+$ pick-hugo-article LANG [list]
 Pick out and insert an articles from within a given project.
 
 Parameters:
-  \$1: language to filter articles by, e.g.: en, de
+  \$1: language to filter articles by: en, de, -
+  \$2: if given list, list articles instead of picking
 
 Example:
   $ pick-hugo-article en
@@ -21,14 +22,25 @@ hash rofi xdotool || exit 127
 lang=$1
 
 list_files() {
+  # excludes _index and NAME.md
+  cd $WEB_HOME
   case $lang in
     en)
-      find $PROJECT/content -name "*.md" | grep -vE "/.*\.\w+\.md"
+      hugo list all --noBuildLock | tail -n+2 | cut -d, -f1 | grep -v "_index" | cut -d/ -f2- |
+        grep -v ".de.md" | rev | cut -d/ -f2- | rev
       break;;
-    de|*)
-      find $PROJECT/content -name "*.$lang.md"
+    de)
+      hugo list all --noBuildLock | tail -n+2 | cut -d, -f1 | grep -v "_index" | cut -d/ -f2- |
+        grep ".de.md" | rev | cut -d/ -f2- | rev
       break;;
-esac
+    -|both)
+      hugo list all --noBuildLock | tail -n+2 | cut -d, -f1 | grep -v "_index" | cut -d/ -f2- |
+        rev | cut -d/ -f2- | rev | sort | uniq
+      break;;
+    *)
+      echo "Invalid language"
+      exit 1
+  esac
 }
 
 transform_matches() {
@@ -44,10 +56,14 @@ pick() {
   echo "$list" | rofi rofi -dmenu -i -lines 15 -eh 1 -p "$lang articles" -auto-select
 }
 
-list="$(list_files | transform_matches | exclude_matches)"
-choice="$(pick "$list")"
-
-if [ -n "$choice" ]; then
-  echo $choice | # | sed 's/y/z/g; s/:/Ö/g; s|-|ß|g; s/_/?/g; s|/|-|g' | # because I use a german keyboard layout
-    xargs xdotool type --clearmodifiers
-fi
+case "$2" in
+  list)
+    list_files
+    break;;
+  *)
+    choice="$(pick "$(list_files)")"
+    if [ -n "$choice" ]; then
+      echo $choice | # | sed 's/y/z/g; s/:/Ö/g; s|-|ß|g; s/_/?/g; s|/|-|g' | # because I use a german keyboard layout
+        xargs xdotool type --clearmodifiers
+    fi
+esac

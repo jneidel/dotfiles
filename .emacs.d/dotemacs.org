@@ -4108,17 +4108,45 @@ https://github.com/progfolio/elpaca/wiki/auctex
 [[https://www.youtube.com/watch?v=u44X_th6_oY&pp=ygUUZW1hY3MgbGF0ZXggd29ya2Zsb3c%3D][latex preview everywhere]]
 
 ** Hugo
+[[https://ox-hugo.scripter.co/][ox-hugo]]
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package ox-hugo
   :after ox
   :custom
   (org-hugo-use-code-for-kbd t) ; ~KBD~, =code=
   ;; shared global configuration for all posts
-  (org-hugo-auto-set-lastmod t)
-  )
+  (org-hugo-auto-set-lastmod t))
 #+end_src
 
+Completion for website internal links.
+When not editing the website, return the actual website URL.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/org-web-complete (lang)
+  "Completion for links to my website."
+  (let* ((articles (shell-command-to-string (format "pick-hugo-article %s list" lang)))
+         (link (completing-read "web: " (split-string articles "\n" t) nil t))
+         (current-file (when buffer-file-name
+                         (file-truename buffer-file-name)))
+         (is-editing-website (and
+                              current-file
+                              (string-prefix-p (substitute-in-file-name "$WEB_HOME") current-file)))
+         (website-root (if (equal lang "de")
+                           "https://jneidel.de/"
+                         "https://jneidel.com/")))
+    (if is-editing-website
+        link
+      (concat website-root link))))
 
+(defun jn/org-web-de-complete ()
+  (jn/org-web-complete "de"))
+(defun jn/org-web-en-complete ()
+  (jn/org-web-complete "en"))
+
+(use-package org
+  :config
+  (org-link-set-parameters "de" :complete #'jn/org-web-de-complete)
+  (org-link-set-parameters "en" :complete #'jn/org-web-en-complete))
+#+end_src
 
 ** AI
 The Copilot chat does not work, presumably because it was [[https://github.com/orgs/community/discussions/68463][disabled in my enterprise org settings]].
