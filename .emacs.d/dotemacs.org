@@ -109,7 +109,7 @@ Choose from the installed themes in `M-x customize-themes`.
 [[https://www.greghendershott.com/2017/02/emacs-themes.html#][Setup for easy switching.]]
 
 ** Packaging
-Prevent package.el from loading packages prior to init.el.
+Prevent =package.el= from loading packages in =early-init.el=.
 #+begin_src emacs-lisp :tangle "early-init.el" :results silent
 (setq package-enable-at-startup nil)
 #+end_src
@@ -118,50 +118,22 @@ https://protesilaos.com/emacs/dotemacs#h:424340cc-f3d7-4083-93c9-d852d40dfd40
 https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (package-initialize)
-;; (setq package-enable-at-startup t)
-(setq package-install-upgrade-built-in t)
-
-(eval-and-compile
-  (require 'use-package-ensure)
-  (setq use-package-always-ensure t))
-;; default use-package only lazy load package if it exists, this also downloads a package if it is not installed
-
-;; Make native compilation silent and prune its cache.
-(when (native-comp-available-p)
-  (setq native-comp-async-report-warnings-errors 'silent)
-  (setq native-compile-prune-cache t))
-
+(setq use-package-compute-statistics t)
 (setq package-archives
       '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
         ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa" . "https://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")
-        ))
+        ("org" . "http://orgmode.org/elpa/")))
 (setq package-archive-priorities
       '(("gnu-elpa" . 3)
         ("melpa" . 2)
         ("nongnu" . 1)))
 
-;; refresh packages in the background upon startup
-;;(unless package-archive-contents
-;;  (package-refresh-contents t))
-
-;; use-package
-;; (unless (package-installed-p 'use-package)
-;;   (package-refresh-contents)
-;;   (package-install 'use-package))
-
-;; Install into separate package dirs for each Emacs version, to prevent bytecode incompatibility
-;; (setq package-user-dir
-;;       (expand-file-name (format "packages-%s.%s" emacs-major-version emacs-minor-version)
-;;                         "~/.local/share/emacs"))
-
-;; (setq package-enable-at-startup nil)
-;; (package-initialize)
-
-;; packages not available from repositories are in lib
-;; (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
+;; Make native compilation silent and prune its cache.
+(when (native-comp-available-p)
+  (setq native-comp-async-report-warnings-errors 'silent)
+  (setq native-compile-prune-cache t))
 #+end_src
 
 While the package management works great, after a long period of use I came
@@ -172,47 +144,73 @@ Same unexplainable error.
 ~rm ~/.emacs.d/elpa~ and a reinstall (start emacs) fixed it.
 Everything loaded and new packages could be installed.
 
+*** use-package
+[[https://protesilaos.com/codelog/2024-07-23-emacs-use-package-essentials/][use-package essentials]]
 
-[[https://protesilaos.com/codelog/2024-07-23-emacs-use-package-essentials/][`use-package` essentials]]
-use-package is very smart.
-`:hook` is not only used for lazy loading, but also activates the mode in question.
-`:mode` lazy loads when a pattern is matched and activates the mode.
-
-#+begin_example elisp
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
-
-  ;; same as lazy load package on prog-mode and create this hook
-
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-#+end_example
-
-- `:defer t` will defer loading the package until something triggers it's loading.
-Well maintained packages have their functions and keybindings auto-loaded.
-So they will activate themselves.
-- `:defer` is not needed if you have :hook, :bind or :mode.
-
-
-
-Hide a minor mode from the modeline.
-https://github.com/myrjola/diminish.el
+Set default to =:ensure t=.
+All packages are expected to be remote packages to be pulled in.
+Set =:ensure nil= for built-in packages.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-;; use-package syntax
-;; :init - run code before import
-;; :config - run code after import
-;; :diminish mode - hide mode from modeline
-(use-package diminish)
+(eval-and-compile
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t))
 #+end_src
 
+**** Lazy loading (use-package)
+My config uses lazy loading whenever possible to reduce =M-x emacs-init-time=.
+The principle behind use-packages lazy loading
+
+The *fundamental principles* of use-package are:
+1. You can only use lazy load with functions defined inside of the package you are configuring.
+2. Each =use-package= stands by itself.
+
+
+=:hook= to trigger a package mode or function:
+#+begin_example elisp
+  (use-package rainbow-delimiters
+    :hook prog-mode
+    :hook (prog-mode elisp-mode)
+    :hook (prog-mode . rainbow-delimiters-mode)
+    :hook ((prog-mode elisp-mode) . rainbow-delimiters-mode)
+    :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+end_example
+
+=:mode=
+=:bind=
+
+You can autoload commands (=:commands=) or functions (=:autoload=) which do not have
+autoload declared on them inside of the package.
+#+begin_example elisp
+(use-package org-roam
+  :defer 2
+  :autoload (org-roam-file-p)) ; non-autoloaded function I use in my code
+#+end_example
+
+**** Hide a minor modes from the modeline (diminish)
+[[https://github.com/myrjola/diminish.el][diminish]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package diminish)
+#+end_src
+Equivalent ways to diminish a mode:
+#+begin_example elisp
+(use-package subword
+  :diminish
+  :diminish 'subword-mode
+  :config (diminish 'subword-mode))
+#+end_example
+
+**** Install from git (quelpa)
 [[https://github.com/quelpa/quelpa][Quelpa]] allows for installation of packages from a wide range of sources.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq quelpa-checkout-melpa-p nil) ; disable melpa functionality, only use for recipe-based install
-(use-package quelpa)
+(use-package quelpa
+  :custom
+  (quelpa-checkout-melpa-p nil)) ; disable melpa functionality, only use for recipe-based install
 (use-package quelpa-use-package
   :after quelpa)
 #+end_src
 Now quelpa can be used via [[https://github.com/quelpa/quelpa-use-package][`use-package`]].
 [[https://github.com/melpa/melpa/#recipe-format][See recipe format.]]
+
 
 ** Mode-line (status bar)
 https://github.com/domtronn/all-the-icons.el/wiki/Spaceline
@@ -353,7 +351,14 @@ Do so in the ~early-init.el~ for faster startup.
 (set-frame-font "ComicCodeLigatures Nerd Font 13" nil t)
 (when (eq system-type 'darwin)
   (set-frame-font "ComicCodeLigatures Nerd Font 16" nil t))
+#+end_src
+ComicCodes ascender on the Bold variant is is 40 units taller than on the regular.
+This means on other font sizes than 13 (namely 11, 12) I get a noticeable bounce when text
+switches between bold/non bold, which is the case everywhere.
+This is related to my X11 dpi too.
+Font size 13 is stable at 115 and 120 dpi, but unstable at 96, 110, 112.
 
+#+begin_src emacs-lisp :tangle "init.el" :results silent
 (set-face-attribute 'underline nil
                     :inherit 'default
                     :underline t)
@@ -363,33 +368,19 @@ Do so in the ~early-init.el~ for faster startup.
 #+end_src
 
 ** Keybindings
-https://github.com/noctuid/general.el
-#+begin_src emacs-lisp :results silent
-(use-package general) ;; https://github.com/noctuid/general.el#evil-examples
-
-;; <leader> and <localleader>
-  ;;;; use as (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
-(evil-set-leader nil (kbd "C-SPC"))
-(evil-set-leader 'normal (kbd "SPC"))
-;; local leader
-(evil-set-leader 'normal "," t)
-
-(defun jneidel/jump-to-placeholder ()
-  "Jump to the next <++>, replace it and go into insert mode."
-  (interactive)
-  (let ((placeholder-found
-         (search-forward "<++>" nil t)))
-    (if placeholder-found
-        (progn
-          (goto-char (match-beginning 0))
-          (delete-char 4)
-          (evil-insert-state)
-          )
-      (message "No <++> found"))))
-
-(general-define-key
- :states 'normal
- ", ," 'jneidel/jump-to-placeholder)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package emacs
+  :ensure nil
+  :bind
+  ("M-o" . other-window)
+  ("M-u" . undo)
+  ("M-\\" . indent-region)
+  ("C-x C-k" . kill-current-buffer)
+  ("C-q" . kill-current-buffer) ; match custom firefox kill tab
+  ("S-SPC" . cycle-spacing)
+  :config
+  (global-set-key (kbd "M-<delete>") (kbd "<delete>"))
+  (global-set-key (kbd "C-<return>") (kbd "<return>")))
 #+end_src
 
 https://github.com/abo-abo/hydra
@@ -405,19 +396,6 @@ https://github.com/abo-abo/hydra
     ("d" (text-scale-set 0) "set default")
     ("f" (text-scale-set 6) "set far"))
   )
-
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key (kbd "M-O") '(lambda () (interactive) (other-window -1)))
-
-(global-set-key (kbd "M-u") 'undo)
-;; (global-set-key (kbd "M-RET") 'eshell) ; overlaps in org-mode
-(global-set-key (kbd "C-x C-K") 'kill-current-buffer) ; match nyxt
-(global-set-key (kbd "C-q") 'kill-current-buffer) ; match firefox
-
-(global-set-key (kbd "M-<delete>") (kbd "<delete>"))
-(global-set-key (kbd "C-<return>") (kbd "<return>"))
-
-(global-set-key (kbd "S-SPC") 'cycle-spacing)
 #+end_src
 
 Open frequently used file directly via a short-cut menu:
@@ -437,52 +415,37 @@ Open frequently used file directly via a short-cut menu:
      ("p" "parcels" (lambda () (interactive) (persp-switch "main") (find-file "~/org/3_resources/Parcels tracking.org")))
      ("e" "exercise routine" (lambda () (interactive) (persp-switch "main") (find-file "~/org/2_areas/routine/My Sustainable Training Routine.org")))
      ("t" "Re:Zero todos" (lambda () (interactive) (persp-switch "main") (rezero)))
+     ("f" "filetags" (lambda () (interactive) (persp-switch "main") (find-file "~/org/.filetags")))
      ])
-
-  (global-set-key (kbd "H-j") #'jump-menu-common-files)
-  )
+  :bind ("H-j" . jump-menu-common-files))
 #+end_src
 
-Hydra to adjust window
-([[https://blog.genenakagaki.com/en/my-emacs-life-is-better-with-hydra.html][Inspiration]])
+Hydra to adjust windows ([[https://blog.genenakagaki.com/en/my-emacs-life-is-better-with-hydra.html][Inspiration]]).
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package hydra
   :config
   (defhydra split-window-hydra (global-map "H-w" :hint nil :color blue) ""
     ("i"  split-window-right)
-    ("-"  split-window-below)
-    ))
+    ("-"  split-window-below)))
 #+end_src
 
 Resize windows with easily repeatable keybindings.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package move-border
   :quelpa (move-border :fetcher github :repo "ramnes/move-border")
-  :bind (
-         ("M-H" . 'move-border-left)
+  :bind (("M-H" . 'move-border-left)
          ("M-L" . 'move-border-right)
          ("M-K" . 'enlarge-window)
          ("M-J" . 'shrink-window)
-         ("M-B" . 'balance-windows)
-         ))
+         ("M-B" . 'balance-windows)))
 #+end_src
 
 [[https://codelearn.me/2023/01/17/emacs-change-inner.html][Change]][[https://github.com/magnars/change-inner.el][ inner]], like in vim. ~ci"~ to change in quotes, ~ci(~ in parentheses, etc.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package change-inner
   :quelpa (change-inner :fetcher github :repo "magnars/change-inner.el")
-  :bind (
-         ("M-i" . 'change-inner)
-         ("M-I" . 'change-outer)
-         ))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package general
-  :config
-  (general-define-key
-   "C-x h" 'previous-buffer
-   "C-x l" 'next-buffer
+  :bind (("M-i" . 'change-inner)
+         ("M-I" . 'change-outer)))
 #+end_src
 
 Acting by S-Expressions/balanced expressions.
@@ -490,13 +453,12 @@ Those are pairs of ="= or ='= around strings and =()=, =[]=, ={}=.
 Emacs bindings are familiar, only using the =C-M= modifier (e.g. =C-M-f= =
 forward-sexp.)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package general
-  :config
-  (general-define-key
-   "C-M-d" 'kill-sexp ; to mirror M-d
-   "C-M-j" 'down-list ; jump into nearest sexp after point
-   "C-M-k" 'backward-up-list ; jump out of and to the beginning of sexp
-))
+(use-package emacs
+  :ensure nil
+  :bind
+  ("C-M-d" . kill-sexp) ; to mirror M-d
+  ("C-M-j" . down-list) ; jump into nearest sexp after point
+  ("C-M-k" . backward-up-list)) ; jump out of and to the beginning of sexp
 #+end_src
 
 Enabled non-prefixed repeats for some commands, like undo.
@@ -530,7 +492,10 @@ upgrade to:
 One way to do this is keeping project stuff in one tab and persisting it with [[https://github.com/minad/tab-bookmark][tab-bookmark]].
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package tab-bookmark
-  :quelpa (tab-bookmark :fetcher "github" :repo "minad/tab-bookmark"))
+  :quelpa (tab-bookmark :fetcher "github" :repo "minad/tab-bookmark")
+  :commands (tab-bookmark
+             tab-bookmark-save
+             tab-bookmark-open))
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
@@ -560,12 +525,13 @@ One way to do this is keeping project stuff in one tab and persisting it with [[
  "ħ" 'tab-previous ;; AltGr + h, default C-S-tab
  "ł" 'tab-next)    ;; AltGr + l, default C-tab
 
-                                        ; bindings
+;; bindings
 ;; C-x t r: rename tab
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(when (require 'all-the-icons nil 'noerror)
+(use-package all-the-icons
+  :config
   (defun my/tab-bar-tab-name-with-icon ()
     "Tab name with an icon based on major mode."
     (let* ((icon (when (and (fboundp 'all-the-icons-icon-for-buffer)
@@ -577,8 +543,8 @@ One way to do this is keeping project stuff in one tab and persisting it with [[
                   "" ;; fallback if no icon
                 icon)
               name)))
-
-  (setq tab-bar-tab-name-function #'my/tab-bar-tab-name-with-icon))
+  :custom
+  (tab-bar-tab-name-function #'my/tab-bar-tab-name-with-icon))
 #+end_src
 
 ** Org-mode
@@ -701,13 +667,9 @@ a single line.
               ;; (kbd "RET") #'jneidel/insert-org-list-item ;; RET in cal doesn't work anyway
               ("C-c a" . org-table-recalculate)
               ))
-
-;; (evil-define-key "insert" org-mode-map
 ;;   (kbd "<S-return>") #'jneidel/insert-org-list-item-or-copy-down-table
 ;;   (kbd "C-c a") #'org-table-recalculate
 ;;   (kbd "<leader> d") #'org-ctrl-c-ctrl-c ;; toggle done/undone
-;;   )
-    ;;; evil-define-key does not need with-eval-after-load and can assign multiple at once
 
 ;; Outline headings
 (with-eval-after-load 'outline
@@ -858,11 +820,12 @@ Results are formatted in a colorized org-mode buffer."
 (general-define-key "C-c s" 'org-search)
 #+end_src
 
-*** Code blocks
-Execute the code within source blocks with <kbd>C-c C-c</kbd>.
+*** Code blocks (org-babel)
+Execute the code within source blocks with ~C-c C-c~.
 Disable the default confirmation prompt for these executions:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq org-confirm-babel-evaluate nil)
+(use-package org
+  :custom (org-confirm-babel-evaluate nil))
 #+end_src
 
 The languages which can be evaluated inline with `C-c C-c`.
@@ -904,8 +867,7 @@ A more complete and simpler to use alternative to org-tempo.
   :custom
   (org-block-capf-auto-indent nil)
   (org-edit-src-content-indentation nil)
-  (org-block-capf-edit-style 'auto) ;; disable with 'inline
-  )
+  (org-block-capf-edit-style 'auto)) ;; disable with 'inline
 #+end_src
 
 TODO Is this needed? Elisp completions seemed to have worked (inconsistently) without it.
@@ -921,14 +883,13 @@ TODO Is this needed? Elisp completions seemed to have worked (inconsistently) wi
 [[info:org#Capture templates][Info page about capture templates]]
 https://orgmode.org/manual/Capture-templates.html
 #+begin_src elisp :tangle "init.el" :results silent
-(global-set-key (kbd "C-c c") 'org-capture)
-
 (use-package org-capture
   :ensure nil
   :bind ("C-c c" . org-capture)
-  :config
-  (setq org-capture-templates '()))
+  :custom
+  (org-capture-templates '()))
 #+end_src
+~C-u C-u C-c c~ to visit the last stored capture item.
 
 #+begin_src elisp :tangle "init.el" :results silent
 (use-package org-capture
@@ -1021,103 +982,88 @@ Not in use:
   & https://protesilaos.com/emacs/dotemacs#h:f8f06938-0dfe-45c3-b4cf-996d36cba82d
 - further info: https://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
 
-Keybinds
-- `C-c c` org-capture
-- `C-u C-c c` Visit the target location of a capture template.
-- `C-u C-u C-c c` Visit the last stored capture item in its buffer.
-
 *** Org-agenda
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun set-org-agenda-files ()
-  "Set to directories which contain todos.
-Expand project dirs to include todo files at the first level inside of a project."
-  (interactive)
-  (let* ((files-as-is (list (substitute-in-file-name "$ORG")
-                            (substitute-in-file-name "$HOME/.emacs.d/dotemacs.org")
-                            (substitute-in-file-name "$ORG_INBOX")))
-         (subdirectories-one-level-deep-to-be-expanded (list (substitute-in-file-name "$ORG_PROJECTS"))))
 
-    (setq org-agenda-files
-          (append files-as-is
-                  (mapcan
-                   (lambda (root)
-                     (let* ((r (file-name-as-directory (expand-file-name root)))
-                            (children (directory-files r nil "^[^.]" t)))
-                       (mapcar #'file-name-as-directory
-                               (seq-filter #'file-directory-p
-                                           (mapcar (lambda (name) (expand-file-name name r))
-                                                   children)))))
-                   subdirectories-one-level-deep-to-be-expanded)))))
+  (defun set-org-agenda-files ()
+    "Set to directories which contain todos.
+Expand project dirs to include todo files at the first level inside of a project."
+    (interactive)
+    (let* ((files-as-is (list (substitute-in-file-name "$ORG")
+                              (substitute-in-file-name "$HOME/.emacs.d/dotemacs.org")
+                              (substitute-in-file-name "$ORG_INBOX")))
+           (subdirectories-one-level-deep-to-be-expanded (list (substitute-in-file-name "$ORG_PROJECTS"))))
+
+      (setq org-agenda-files
+            (append files-as-is
+                    (mapcan
+                     (lambda (root)
+                       (let* ((r (file-name-as-directory (expand-file-name root)))
+                              (children (directory-files r nil "^[^.]" t)))
+                         (mapcar #'file-name-as-directory
+                                 (seq-filter #'file-directory-p
+                                             (mapcar (lambda (name) (expand-file-name name r))
+                                                     children)))))
+                     subdirectories-one-level-deep-to-be-expanded)))))
+
+  (defun org-agenda-directory ()
+    "Return the base directory name of the current org-agenda file."
+    (let ((file (or (buffer-file-name (org-base-buffer (current-buffer)))
+                    "")))
+      (if (string-equal (file-name-nondirectory file) "index.org")
+          (file-name-nondirectory (directory-file-name (file-name-directory file)))
+        (file-name-sans-extension (file-name-nondirectory file)))))
+
+(defun todos ()
+    "Open org project todo list"
+    (interactive)
+    (set-org-agenda-files)
+    (org-todo-list))
 
 (setq org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s") ; everything but todo are the defaults
                                  (todo . "%-2i %-40(org-agenda-directory): ")
                                  (tags . " %i %-12:c")
                                  (search . " %i %-12:c")))
-
-(defun org-agenda-directory ()
-  "Return the base directory name of the current org-agenda file."
-  (let ((file (or (buffer-file-name (org-base-buffer (current-buffer)))
-                  "")))
-    (if (string-equal (file-name-nondirectory file) "index.org")
-        (file-name-nondirectory (directory-file-name (file-name-directory file)))
-      (file-name-sans-extension (file-name-nondirectory file)))))
-
-(defun todos ()
-  "Open org project todo list"
-  (interactive)
-  (set-org-agenda-files)
-  (org-todo-list))
 #+end_src
 
 Add [[https://github.com/egregius313/org-agenda-category-icons][icons]] to org-agenda:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(when (eq system-type 'gnu/linux)
-          (use-package org-agenda-category-icons
-            :quelpa (org-agenda-category-icons :fetcher "github" :repo "egregius313/org-agenda-category-icons")
-            :after all-the-icons
-            :config
-            (org-agenda-category-icons!
-             :fileicon
-             (emacs dotemacs)
-             ;; :octicon
-             ;; (comment "messages to send")
-             )))
+(use-package org-agenda-category-icons
+  :quelpa (org-agenda-category-icons :fetcher "github" :repo "egregius313/org-agenda-category-icons")
+  :if (eq system-type 'gnu/linux)
+  :after all-the-icons
+  :commands (org-agenda-category-icons!)
+  :hook (org-agenda-mode . (lambda ()
+                             (org-agenda-category-icons!
+                              :fileicon
+                              (emacs dotemacs)))))
 #+end_src
 
 [[https://github.com/domtronn/all-the-icons.el][All the icons]].
 Needs to run =M-x all-the-icons-install-fonts= once.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package all-the-icons
-  :defer t
-)
-
-;; (use-package all-the-icons-dired
-;;  :after all-the-icons
-;;  :hook (dired-mode . all-the-icons-dired-mode)
-;;  :config
-;;  (set-face-attribute 'all-the-icons-dired-dir-face nil
-;;                    :distant-foreground "#1c1c1c")
-;;)
+  :defer t) ; will be loaded through :after on dependents
 #+end_src
 
-*** Org-modern
-https://github.com/minad/org-modern
-
+*** Pretty org
+Make org great again!
+**** org-modern
+[[https://github.com/minad/org-modern][org-modern]]
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org-modern
-  :after org
-  :config
-  (with-eval-after-load 'org (global-org-modern-mode))
-  (with-eval-after-load 'org (display-line-numbers-mode -1))
-
+  :hook (org-mode)
+  (org-mode . (lambda () (display-line-numbers-mode -1)))
+  :custom
   ;; disable headings styles
-  (setq org-modern-star nil
-        org-modern-todo nil)
+  (org-modern-star nil)
+  (org-modern-todo nil)
+  (org-modern-block-name nil)
 
   ;; adjust list tasks styles
-  (setq org-modern-checkbox
-        '((88 . "") (45 . "") (32 . "×") (95 . "")))
-
+  (org-modern-checkbox
+   '((88 . "") (45 . "") (32 . "×") (95 . "")))
+  :config
   (set-face-attribute 'org-modern-date-active nil
                       :background "gray20"
                       :foreground "white"
@@ -1134,6 +1080,7 @@ https://github.com/minad/org-modern
   (set-face-attribute 'org-modern-todo nil
                       :background "#1c1c1c"
                       :foreground "#d70000"
+
                       :inverse-video t
                       :weight 'semi-bold
                       :inherit 'org-modern-label)
@@ -1375,7 +1322,9 @@ TODO: I'm in the market for a new serif font.
 https://www.emacswiki.org/emacs/InfoPlus
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package info+
-  :quelpa (info+ :fetcher "wiki"))
+  :quelpa (info+ :fetcher "wiki")
+  :defer t
+  :hook (Info-mode . (lambda () (require 'info+))))
 #+end_src
 
 ** Buffer management (popper)
@@ -1400,6 +1349,7 @@ It makes it easy to hide/unhide these popups and cycle through the various ones.
         ("\\*sldb.*" . hide)
         "\\*Backtrace\\*"
         "\\*org-search\\*"
+        "\\*Dictionary"
         "\\* Merriam-Webster"
         "\\*Flymake diagnostics"))
 
@@ -1408,7 +1358,7 @@ It makes it easy to hide/unhide these popups and cycle through the various ones.
   (popper-reference-buffers jn/secondary-buffer-regexes)
   (popper-mode-line '(:eval ""))
   (popper-window-height 12) ; default function maxes out at 33%, which seems too small to me
-  :defer nil
+  :defer 1
   :config
   (popper-mode +1)
 
@@ -1469,6 +1419,7 @@ and secondary buffers (help, ~*Messages*~, etc.) is implemented here.
 (setq jn/secondary-buffer-pure-regexes (jn/strip-alists jn/secondary-buffer-regexes))
 
 (use-package consult
+  :defer t
   :custom
   (popper-group-function #'popper-group-by-perspective)
   :config
@@ -1504,9 +1455,9 @@ Have bookmark and recent file ~consult-buffer~ sources only show up on the main
 perspective.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
   (consult-customize consult-source-bookmark
-                     :enabled (lambda () (equal (persp-current-name) "main")))
+                   :enabled (lambda () (equal (persp-current-name) "main")))
   (consult-customize consult-source-recent-file
-                     :enabled (lambda () (equal (persp-current-name) "main")))
+                   :enabled (lambda () (equal (persp-current-name) "main")))
 )
 #+end_src
 
@@ -1829,6 +1780,7 @@ is the only way (I found) to get rid of them:
 [[https://github.com/minad/consult][Consult]] provides a suite of tools to interact with Emacs in an enhanced way.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package consult
+  :demand t
   :bind (;; new functionality
          ("H-l"   . consult-line)
          ("M-g l" . consult-line)
@@ -1846,16 +1798,18 @@ is the only way (I found) to get rid of them:
 
 Use the great consult interface for switching to buffers, bookmarks and recent files.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(if (not (eq system-type 'darwin))
-  (use-package consult
-    :bind
+(use-package consult
+  :if (eq system-type 'gnu/linux)
+  :bind
     ("H-b" . consult-buffer)
     ([remap switch-to-buffer] . consult-buffer))
-  (use-package consult
-    :bind ("H-b" . switch-to-buffer)))
+(use-package emacs
+  :ensure nil
+  :if (eq system-type 'darwin)
+  :bind ("H-b" . switch-to-buffer))
 
 (use-package recentf
-  :hook (after-init . recentf-mode)
+  :hook after-init
   :custom
   (recentf-exclude '((lambda (filename)
                        (let ((excluded-files '("~/.emacs.d/bookmarks" "~/.emacs.d/elfeed/index"))
@@ -1924,6 +1878,7 @@ For finding files I prefer fast access to the global search (from home directory
 The local search (in current working directory or project) is easily available also.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package affe
+  :defer t
   :bind (("H-f" . affe-find-file-home)
          ("H-M-f" . affe-find-file)
          ("H-s" . affe-find-directory-home))
@@ -2034,7 +1989,7 @@ https://github.com/minad/corfu section on dabbrev
 https://protesilaos.com/emacs/dotemacs#h:25765797-27a5-431e-8aa4-cc890a6a913a
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package savehist
-  :hook (after-init . savehist-mode)
+  :hook after-init
   :custom
   (savehist-file (locate-user-emacs-file "savehist"))
   (history-length 500) ; prot 100
@@ -2068,9 +2023,7 @@ Use [[https://github.com/minad/jinx][jinx]] as spellchecking frontend.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package jinx
   :bind (("M-$" . jinx-correct))
-  :hook ((text-mode-hook . jinx-mode)
-         (prog-mode-hook . jinx-mode)
-         (conf-mode-hook . jinx-mode))
+  :hook (text-mode prog-mode conf-mode)
   :diminish
   :custom (jinx-languages "en_US,de_DE")
   :config (when (eq system-type 'darwin) (jinx-languages "en_US")))
@@ -2080,7 +2033,7 @@ On system-level I have hunspell configured as my spellchecker, which jinx uses t
 ** Programming
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook prog-mode)
 
 ;; highlight matching pairs of parentheses
 (show-paren-mode t)
@@ -2089,8 +2042,8 @@ On system-level I have hunspell configured as my spellchecker, which jinx uses t
 ;; Treat CamelCaseSubWords as separate words
 (use-package subword
   :ensure nil
-  :hook (prog-mode . subword-mode)
-  :diminish subword-mode)
+  :hook prog-mode
+  :diminish)
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
@@ -2108,8 +2061,8 @@ On system-level I have hunspell configured as my spellchecker, which jinx uses t
 
 ;; overwrite e.g. indentation based on local editorconfig
 (use-package editorconfig
-  :hook (prog-mode . editorconfig-mode)
-  :diminish editorconfig-mode)
+  :hook prog-mode
+  :diminish)
 #+end_src
 
 
@@ -2139,7 +2092,7 @@ On system-level I have hunspell configured as my spellchecker, which jinx uses t
 [[https://github.com/jdtsmith/indent-bars][indent-bars]]
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package indent-bars
-  :hook ((yaml-mode json-mode) . indent-bars-mode)
+  :hook (yaml-mode json-mode)
   :after prism
   :custom
   (indent-bars-color '(highlight :face-bg t :blend 0.8))
@@ -2163,30 +2116,34 @@ Navigate to relevant "headings" of a file.
 In org or markdown files this means literal headings.
 In shell it is function definitions.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun jn/consult-outline-or-imenu ()
-  "Run `consult-outline`, falling back to `imenu` if it finds no headings."
-  (interactive)
-  (condition-case err
-      (progn
-        (consult--outline-candidates) ; would throw "No headings"
-        (call-interactively #'consult-outline))
-    (user-error
-     (if (string-equal (error-message-string err) "No headings")
-         (call-interactively #'imenu)
-       (signal (car err) (cdr err)))))) ; re-signal other errors
-
-(global-set-key (kbd "M-g i") #'jn/consult-outline-or-imenu)
-(global-set-key (kbd "M-g h") #'jn/consult-outline-or-imenu)
+(use-package consult
+  :defer t
+  :bind
+  ("M-g i" . jn/consult-outline-or-imenu)
+  ("M-g h" . jn/consult-outline-or-imenu)
+  :config
+  (defun jn/consult-outline-or-imenu ()
+    "Run `consult-outline`, falling back to `imenu` if it finds no headings."
+    (interactive)
+    (condition-case err
+        (progn
+          (consult--outline-candidates) ; would throw "No headings"
+          (call-interactively #'consult-outline))
+      (user-error
+       (if (string-equal (error-message-string err) "No headings")
+           (call-interactively #'imenu)
+         (signal (car err) (cdr err))))))) ; re-signal other errors
 #+end_src
 
 *** Coding Agents
 [[https://xenodium.com/bending-emacs-episode-10-agent-shell][agent-shell]]
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp :tangle "init.el" :results silent :noweb tangle
 (use-package agent-shell
   :ensure-system-package
   ((codex . "yay -S openai-codex")
    (codex-acp . "npm i -g @zed-industries/codex-acp"))
   :diminish 'agent-shell-ui-mode
+  :defer
   :bind ("H-a" . agent-shell)
   (:map agent-shell-mode-map
         ("C-M-p" . agent-shell-ui-backward-block)
@@ -2201,7 +2158,9 @@ In shell it is function definitions.
   (agent-shell-prefer-viewport-interaction t) ; C-c C-o to switch between them
   (agent-shell-highlight-blocks t) ; could cause lag, disable if bad
   (agent-shell-permission-icon "🛑")
-  )
+  <<exclude-transcripts>>
+  :config
+  <<header-logo-fix>>)
 #+end_src
 
 Viewport
@@ -2215,41 +2174,44 @@ Viewport
 | q                                      | minimize                               |
 
 Put all transcripts in one place.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq agent-shell-transcript-file-path-function
-      '(lambda ()
-         (let* ((dir (concat user-emacs-directory "agent-shell/transcripts"))
-                (filename (format-time-string "%F-%H-%M-%S.md"))
-                (filepath (expand-file-name filename dir)))
-           filepath)))
-#+end_src
+#+NAME: exclude-transcripts
+#+begin_src emacs-lisp :results silent
+(agent-shell-transcript-file-path-function
+ '(lambda ()
+    (let* ((dir (concat user-emacs-directory "agent-shell/transcripts"))
+           (filename (format-time-string "%F-%H-%M-%S.md"))
+           (filepath (expand-file-name filename dir)))
+      filepath)))
+  #+end_src
 
 With my font the agent icon is too big (double what it should be). ([[https://github.com/xenodium/agent-shell/issues/202?notification_referrer_id=NT_kwHOAYZ309oAJlJlcG9zaXRvcnk7MTA1MzQ5NjM2NjtJc3N1ZTszODI1NzI0NzE5&notifications_query=is%3Adone#issuecomment-3765312823][See issue]].)
 The header could be reverted to text-only mode: ~(setq agent-shell-header-style 'text)~,
 but this also disabled useful information like state and page number.
 So this advice halves the font-height for the relevant function.
-#+begin_src emacs-lisp
-(with-eval-after-load 'agent-shell
-  (require 'cl-lib)
-  (advice-add
-   'agent-shell--make-header :around
-   (lambda (fn state &rest args)
-     (let ((orig-default-font-height (symbol-function 'default-font-height)))
-       (cl-letf (((symbol-function 'default-font-height)
-                  (lambda (&rest fh-args)
-                    (* 0.5 (apply orig-default-font-height fh-args)))))
-         (apply fn state args))))))
-#+end_src
+#+NAME: header-logo-fix
+#+begin_src emacs-lisp :results silent
+(require 'cl-lib)
+(advice-add
+ 'agent-shell--make-header :around
+ (lambda (fn state &rest args)
+   (let ((orig-default-font-height (symbol-function 'default-font-height)))
+     (cl-letf (((symbol-function 'default-font-height)
+                (lambda (&rest fh-args)
+                  (* 0.5 (apply orig-default-font-height fh-args)))))
+       (apply fn state args)))))
+  #+end_src
 
 *** Magit
 [[https://magit.vc/][Magit]] is probably the best git interface that exists.
 It's very intuitive and obscure functionality like decreasing hunk size ~git add
 --patch~ are easily done (I abandoned this in terminal because it was such a headache.)
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp :tangle "init.el" :results silent :noweb tangle
 (use-package magit
-  :defer t
+  :bind ("C-x g" . magit-status)
   :custom
-  (diff-font-lock-syntax 'hunk-also))
+  (diff-font-lock-syntax 'hunk-also)
+  :config
+  <<magit-publish>>)
 #+end_src
 
 | Key   | CLI | Description                 |
@@ -2262,16 +2224,13 @@ Move by line (C-n/p) by section (M-n/p)
 
 Continue: https://emacsair.me/2017/09/01/magit-walk-through/#committing
 
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package magit
-  :defer t
-  :config
-  (defun jn/magit-publish ()
-    (interactive)
-    (magit-run-git-async "publish")) ; custom git command, see my git config
-
-  (transient-append-suffix 'magit-push "p"
-    '("P" "Publish (push + deploy)" jn/magit-publish)))
+#+name: magit-publish
+#+begin_src emacs-lisp
+(defun jn/magit-publish ()
+  (interactive)
+  (magit-run-git-async "publish")) ; custom git command, see my git config
+(transient-append-suffix 'magit-push "p"
+  '("P" "Publish (push + deploy)" jn/magit-publish))
 #+end_src
 
 **** Forge
@@ -2296,21 +2255,19 @@ Provides better abstract syntax trees and thus improves highlighting and syntax
 based commands.
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-
 (use-package tree-sitter
-  :config
-  (global-tree-sitter-mode t))
+  :hook (prog-mode-hook . global-tree-sitter-mode))
 #+end_src
 
 By default tree-sitter grammars need to be downloaded and enabled for every
 programming mode. [[https://github.com/renzmann/treesit-auto][treesit-auto]] automates that.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package treesit-auto
+  :hook (prog-mode-hook . global-treesit-auto-mode)
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
+  (treesit-auto-add-to-auto-mode-alist 'all))
 #+end_src
 
 *** Line numbers
@@ -2343,8 +2300,7 @@ programming mode. [[https://github.com/renzmann/treesit-auto][treesit-auto]] aut
   :config
   (set-face-attribute 'eglot-highlight-symbol-face nil
                       :foreground "#ffd700"
-                      :underline t)
-  )
+                      :underline t))
 #+end_src
 
 Eglot uses flymake for diagnostics.
@@ -2383,6 +2339,7 @@ See these articles for instructions and caveats: [[https://hledger.org/editors.h
 These options are required to make ledger-mode work with the hledger binary.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package ledger-mode
+  :defer t
   :custom (
   (ledger-binary-path "compat-hledger") ; hledger compatibility script, flymake requires the name to end on "hledger"
   (ledger-default-date-format "%Y-%m-%d") ; required by compatibility script
@@ -2407,6 +2364,7 @@ These options are required to make ledger-mode work with the hledger binary.
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package flymake
+  :defer t
   :bind (:map flymake-mode-map
               ("C-c f n" . flymake-goto-next-error)
               ("C-c f p" . flymake-goto-prev-error)
@@ -2909,7 +2867,7 @@ Find a better way to disable/enable flymake on the fly
 **** Common Lisp
 [[https://slime.common-lisp.dev/][Slime]],[[https://www.youtube.com/watch?v=sBcPNr1CKKw][ useful keybindings]]
 
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp
 (setq inferior-lisp-program "sbcl")
 (use-package slime
                                         ; :hook ((lisp-mode . slime-mode) ; spawn even on org demarcate/tangle of lisp blocks
@@ -2920,6 +2878,7 @@ Find a better way to disable/enable flymake on the fly
 Execute org-babel lisp blocks:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
+  :defer t
   :config (require 'ob-lisp))
 #+end_src
 
@@ -2930,7 +2889,7 @@ Execute org-babel lisp blocks:
 #+end_src
 
 **** Racket
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp
 (use-package racket-mode)
 
 (use-package ob-racket
@@ -3074,10 +3033,10 @@ The date range is fixed at one month in the past and three into the future.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package pkgbuild-mode
   :quelpa (pkgbuild-mode :fetcher "github" :repo "juergenhoetzel/pkgbuild-mode")
-  :config
-  (setq pkgbuild-makepkg-command "yes | makepkg -mfcs")
-  (setq pkgbuild-sums-command nil)
-  )
+  :mode ("/PKGBUILD\\'" . pkgbuild-mode)
+  :custom
+  (pkgbuild-makepkg-command "yes | makepkg -mfcs")
+  (pkgbuild-sums-command nil))
 #+end_src
 
 ** Help
@@ -3087,7 +3046,7 @@ Shows all a selection of relevant help options in case I don't remember
 [[https://github.com/Wilfred/helpful][helpful]] for more help buffers with more structure and context.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package helpful
-  :after hydra)
+  :hook help-mode)
 #+end_src
 
 I reconfigure all of ~C-h~ to my liking, grouping related concepts and adding
@@ -3172,7 +3131,6 @@ _d_ebuging     _G_NU           order _m_anuals  _t_utorial
     ("q" nil nil)
     ("C-g" nil nil)
     ("ESC" nil nil))
-  )
 #+end_src
 
 After pressing any prefix key a menu will show up listing all available keys.
@@ -3197,12 +3155,12 @@ For other such prefix listing helpers see [[https://karthinks.com/software/persi
 [[https://flandrew.srht.site/listful/sw-emacs-democratize.html][Democratize]] populates function help buffers with usage examples.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package xht
+  :defer t
   :quelpa (xht :fetcher "sourcehut" :repo "flandrew/xht"))
 (use-package democratize
   :after xht
   :quelpa (democratize :fetcher "sourcehut" :repo "flandrew/democratize")
-  :config
-  (democratize-enable-examples-in-helpful))
+  :hook (help-mode . democratize-enable-examples-in-helpful))
 #+end_src
 Now run ~democratize-all-libraries~ to scan what you have locally available and
 populate helpful buffers with examples.
@@ -3297,7 +3255,7 @@ For [[https://kickingvegas.github.io/casual/Man.html][man]] mode.
 
 For the [[https://kickingvegas.github.io/casual/Compile.html][compilation/grep]] modes.
 TODO test grep mode menu with consult/embark.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp
 (use-package casual
   :config
   (keymap-set compilation-mode-map casual-bind #'casual-compile-tmenu)
@@ -3329,9 +3287,8 @@ For the [[https://kickingvegas.github.io/casual/Calc.html][calc]] mode.
 For [[https://kickingvegas.github.io/casual/Dired.html][dired/dirvish]].
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :after casual
-  :defer t
   :bind (:map dired-mode-map
               ("H-h" . casual-dired-tmenu)
               ("s" . casual-dired-sort-by-tmenu)
@@ -3507,39 +3464,25 @@ First enter the new name, then decide what it is."
       (_  (keyboard-quit)))))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("d" . create-in-fs)))
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dired
-  :ensure nil
+  :after dirvish
+  :ensure nil :defer t
   :custom
   (dired-deletion-confirmer 'always)
   (dired-clean-confirm-killing-deleted-buffers nil)
-  (dired-auto-revert-buffer #'dired-directory-changed-p)
-  :bind (("C-x d" . dirvish)
-         ("H-d" . dirvish)
-         :map dired-mode-map
-         ("H-d" . dirvish-quit)
-         ("j" . dired-next-line)
-         ("k" . dired-previous-line)
-         ("h" . dired-up-directory)
-
-         ("l" . dired-find-file)
-         ("L" . dired-find-file-other-window)
-         ("F" . dired-do-find-marked-files)
-
-         ("r m" . dired-do-delete)
-         ("r r" . revert-buffer) ; refresh
-         ("r s" . revert-buffer)))
+  (dired-auto-revert-buffer #'dired-directory-changed-p))
 #+end_src
 
 [[https://www.gnu.org/software/emacs/manual/html_mono/dired-x.html#Omitting-Files-in-Dired][Omit]] uninteresting files, including hidden files/directories.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dired-x
-  :ensure nil
+  :ensure nil :defer t
   :custom
   (dired-listing-switches "-Alh") ; never show . .. dirs
   :hook (dired-mode . dired-omit-mode) ; omit by default
@@ -3590,7 +3533,7 @@ Or follow a symlink if " ; built-in dired-do-open uses xdg-open
        (start-process "mime edit" nil "mime" "edit" file)))))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("e" . jn/dired-do-open)
               ("E" . jn/dired-do-edit)))
@@ -3612,7 +3555,7 @@ Or follow a symlink if " ; built-in dired-do-open uses xdg-open
   (revert-buffer nil t t))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("t" . jn/dired-filetags)))
 #+end_src
@@ -3625,10 +3568,24 @@ https://github.com/alexluigit/dirvish/blob/main/docs/EXTENSIONS.org
 https://github.com/alexluigit/dirvish/issues/324
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dirvish
-  :after dired
-  :commands (dirvish)
+  :hook (dired-load . dirvish-override-dired-mode)
+  :bind (("C-x d" . dirvish)
+         ("H-d" . dirvish)
+         :map dired-mode-map
+         ("H-d" . dirvish-quit)
+
+         ("j" . dired-next-line)
+         ("k" . dired-previous-line)
+         ("h" . dired-up-directory)
+
+         ("l" . dired-find-file)
+         ("L" . dired-find-file-other-window)
+         ("F" . dired-do-find-marked-files)
+
+         ("r m" . dired-do-delete)
+         ("r r" . revert-buffer) ; refresh
+         ("r s" . revert-buffer))
   :init
-  (dirvish-override-dired-mode)
   (add-to-list 'load-path (concat user-emacs-directory "elpa/dirvish-2.3.0/extensions")) ; bug in 2.3.0
   :config
   (require 'dirvish-icons)
@@ -3653,7 +3610,7 @@ Marking that mirrors lf.
     (next-line)))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("SPC" . jn/dired-toggle-mark)
               ("I" . dired-toggle-marks))) ; [I]nvert
@@ -3789,26 +3746,13 @@ Falls back to the `default` face if needed."
             nil)
   (jn/dired-set-entry-fg-as-hl-bg))
 
-(add-hook 'dired-mode-hook #'jn/dired-inverse-hl-color-mode)
+(with-eval-after-load 'dired
+  (add-hook 'dired-before-readin-hook #'jn/dired-inverse-hl-color-mode))
 #+end_src
 
 By default use no parent or child/preview panes.
 They can be enabled on demand and will not persist after dired is closed
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package dirvish
-  :defer t
-  :custom
-  (dirvish-default-layout nil)
-  :bind (:map dired-mode-map
-              ("," . jn/dirvish-toggle-preview))
-  :config
-  (dirvish-define-preview eza (file)
-    "Use `eza' to generate directory preview."
-    :require ("eza") ; tell Dirvish to check if we have the executable
-    (when (file-directory-p file) ; we only interest in directories here
-      `(shell . ("eza" "-1h" "--group-directories-first" "--color=always" ,file))))
-  (push 'eza dirvish-preview-dispatchers)
-
   (defun jn/dirvish-toggle-preview ()
     "Toggle two pane layout with preview.
 It's `dirvish-layout-toggle' using my layout."
@@ -3825,7 +3769,20 @@ It's `dirvish-layout-toggle' using my layout."
       (with-selected-window (dirvish--create-root-window dv)
         (dirvish-save-dedication (switch-to-buffer buf))
         (dirvish--build-layout dv))))
-  )
+
+(use-package dirvish
+  :defer t
+  :custom
+  (dirvish-default-layout nil)
+  :bind (:map dired-mode-map
+              ("," . jn/dirvish-toggle-preview))
+  :config
+  (dirvish-define-preview eza (file)
+    "Use `eza' to generate directory preview."
+    :require ("eza") ; tell Dirvish to check if we have the executable
+    (when (file-directory-p file) ; we only interest in directories here
+      `(shell . ("eza" "-1h" "--group-directories-first" "--color=always" ,file))))
+  (push 'eza dirvish-preview-dispatchers))
 #+end_src
 
 *** Dired history
@@ -3833,7 +3790,7 @@ Go (i)n and (o)ut of history.
 ~dired-hist~ provides a reliable stack across jumps and searches.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package dired-hist
-  :hook (dired-mode)
+  :hook dired-mode
   :bind (:map dired-mode-map
               ("o" . dired-hist-go-back)
               ("i" . dired-hist-go-forward)))
@@ -3848,7 +3805,7 @@ The logic of my note-taking system is heavily implemented in and automated throu
   (dired (substitute-in-file-name "$ORG_PROJECTS")))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind ("H-p" . dired-in-projects))
 #+end_src
 
@@ -3905,7 +3862,7 @@ note-taking system.
          (move-to monthly-raw-dir)))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("m" . nil)
               ("m m" . dired-toggle-read-only) ; [m]ass [m]ove
@@ -3980,7 +3937,7 @@ Natural sort returns them in the correct order.
 (defun set-project-status-important () (interactive) (set-project-status "important"))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("ö c" . set-project-status-completing)
               ("ö a" . set-project-status-completing)
@@ -4037,7 +3994,7 @@ Put different archiving options into code.
   (revert-buffer))
 
 (use-package dired
-  :ensure nil
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("m a" . jn/note-taking/file-away-based-on-type)
               ("m A" . jn/note-taking/file-away-based-on-type)
@@ -4068,9 +4025,8 @@ Put different archiving options into code.
                     (_ "name"))))
       (jn/dired-set-sort-switch sortby))))
 
-(use-package dired
-  :ensure nil
-  :hook (dired-before-readin-hook . jn/dired-sort-on-cd))
+(with-eval-after-load 'dired
+  (add-hook 'dired-before-readin-hook #'jn/dired-sort-on-cd))
 #+end_src
 
 ** TODO Tramp
@@ -4078,6 +4034,7 @@ Enable full-featured Dirvish over TRAMP on ssh connections
 https://www.gnu.org/software/tramp/#Improving-performance-of-asynchronous-remote-processes
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package tramp
+  :ensure nil :defer t
   :config
   (connection-local-set-profile-variables
    'remote-direct-async-process
@@ -4151,7 +4108,8 @@ sudo-edit-current-file source]]
                  (tramp-file-name-host vec))))
     (concat "/sudo:root@localhost:" tempfile)))
 
-(use-package tramp
+(use-package dired
+  :ensure nil :defer t
   :bind (:map dired-mode-map
               ("S-<return>" . sudo-edit-current-file)))
 #+end_src
@@ -4292,10 +4250,10 @@ Replace default notmuch hello screen with a collection of saved searches.
             :query "tag:inbox"
             :sort-order newest-first
             :key ,(kbd "i"))
-          ( :name "👀 all unread (inbox)"
-            :query "tag:unread and tag:inbox"
+          ( :name "🌍 website"
+            :query "tag:unread and tag:website"
             :sort-order newest-first
-            :key ,(kbd "u"))
+            :key ,(kbd "w"))
           ( :name "✏️ drafts"
             :query "tag:draft and not:tag:trash"
             :sort-order newest-first
@@ -4359,6 +4317,7 @@ To make it less verbose I turn them into emoji.
           ("spam" "🪓")
           ("invoice" "🛒")
           ("archived" "🗃️")
+          ("website" "🌍")
           ("draft" "✏️")
           ("trash" "🗑️")
           ("lists" "📜lists")
@@ -4759,7 +4718,8 @@ If a buffer is not file and not dired, copy value of `default-directory'."
 ** RSS feeds (elfeed)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package elfeed
-  :commands (elfeed)
+  :commands (elfeed elfeed-update)
+  :after elfeed-org
   :custom
   (elfeed-db-directory "~/.emacs.d/elfeed")
   :bind
@@ -4792,7 +4752,6 @@ Tags and links are easily inserted and I have plenty of space to describe the fe
 [[https://lucidmanager.org/productivity/read-rss-feeds-with-emacs-and-elfeed/][See this nice description]] on how to setup.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package elfeed-org
-  :after elfeed
   :config
   (elfeed-org)
   :custom
@@ -4802,6 +4761,7 @@ Tags and links are easily inserted and I have plenty of space to describe the fe
 [[https://karthinks.com/software/lazy-elfeed/][Lazily]] navigate the feed (in show mode) with one key (space.)
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package elfeed
+  :defer t
   :bind (:map elfeed-search-mode-map
               ("j" . next-line)
               ("k" . previous-line))
@@ -4844,6 +4804,7 @@ YouTube video will be opened in mpv.
 (push (cons "https:\\/\\//youtu\\.be\\/" 'browse-url-mpv) browse-url-handlers)
 
 (use-package elfeed
+  :defer t
   :bind (:map elfeed-search-mode-map
               ("b" . elfeed-search-untag-all-unread)
               ("o" . elfeed-search-browse-url)
@@ -4866,6 +4827,7 @@ For updating them my flow is:
     (message "Started AUR release flow in tmux")))
 
 (use-package elfeed
+  :defer t
   :bind (:map elfeed-search-mode-map
               ("R" . jn/elfeed-release-aur-pkg)))
     #+end_src
@@ -4879,6 +4841,7 @@ successfully excluded.
 This automated tagging works across all feeds.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package elfeed
+  :defer t
   :config
   (add-hook 'elfeed-new-entry-hook
           (elfeed-make-tagger :entry-link "youtube\\.com/shorts"
@@ -4903,9 +4866,9 @@ video is worth watching.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package elfeed-tube
   :after elfeed
+  :defer t
+  :hook elfeed-mode
   :config
-  (elfeed-tube-setup)
-
   (defun elfeed-tube-cycle-captions-lang()
     (interactive)
     (if (equal (car elfeed-tube-captions-languages) "en")
@@ -5110,20 +5073,19 @@ Currently I'm still locked on low DPI, making it not so readable.
 
 ** General/misc improvements
 By default keybinding like ~C-w~ or ~M-w~ only work on a selected region.
-Through use of ~whole-line-or-region~ these will act on the line instead if
-exists.
-This fills a void I had coming from vim.
+With ~whole-line-or-region~ these will act on the line instead.
+I use this many times a day.
+It fills a void I had coming from vim.
 ~dd~ (delete line) and ~yy~ (copy line) were dear to my heart and
-~C-a C-k (C-y)~ were not sufficient replacements for these common action.
+~C-a C-k (C-y)~ was not a sufficiently fast replacement.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package whole-line-or-region
-  :diminish 'whole-line-or-region-local-mode
-  :config
-  (whole-line-or-region-global-mode t))
+  :hook (after-init . whole-line-or-region-global-mode)
+  :diminish 'whole-line-or-region-local-mode)
 #+end_src
 
-*** Word definitions
-Available through ~C-h~-hydra
+*** Look up word definitions
+Available through: ~C-h w~
 
 [[https://github.com/abo-abo/define-word][Look up]] the word at point with ~wordnik.com~.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
@@ -5556,7 +5518,6 @@ The `crontab(1)' executable is used to load the crontab."
       (process-send-region proc (point-min) (point-max))
       (process-send-eof proc)
       (message "Installing crontab..."))))
-
 
 ;;;###autoload
 (define-derived-mode crontab-mode text-mode "Crontab"
