@@ -214,7 +214,7 @@ create .config/wireplumber/main.lua.d
 .config/wireplumber/main.lua.d/51-disable-suspension.lua
 
 [fcron]
-# run ... command to import/export fcrontab -l 2>/dev/null
+export-fcrontab
 # postfix to deliver local mail
 create /etc/postfix
 /etc/postfix/main.cf

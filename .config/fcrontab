@@ -1,0 +1,24 @@
+!bootrun(1),nice(10),serialonce(1)
+MAILTO=jneidel
+0    */2  *  *    *    vdirsyncer sync >/dev/null
+0    18   *  *    *    ~/scripts/cron/update-sensitive.sh
+0    */3  *  *    *    ~/scripts/cron/cleanup-fs
+0    6    *  *    *    ~/scripts/personal/append-unhrd-data
+0    18   *  *    *    ~/scripts/mpd/backup-main-playlist
+2    */2  *  *    *    ~/scripts/cron/signal-name-resolution-failure inbox
+0    20   1  *    *    ~/scripts/cron/vacuum-sql-dbs.sh
+30   4    *  *    *    ~/scripts/cron/bluelight stop
+30   16   *  *    *    ~/scripts/cron/bluelight start
+0    *    *  *    *    ~/scripts/cron/natural-brightness >/dev/null
+0    16   *  *    *    ~/scripts/cron/background-manga-update
+0    16   *  *    *    ~/scripts/org/add-project-deadlines-to-calendar
+0    5    *  *    *    ~/scripts/org/append-health-tracking-date
+0    10   1  *    *    ~/scripts/org/retire-old-resources-raw
+0    10   *  *    1    ~/scripts/org/retire-old-design-ideas
+0    18   *  jan  *    ~/scripts/org/bounce-unpitched-projects
+0    18   *  *    *    ~/scripts/cron/org-projects-to-now-json >/dev/null
+15   5    *  *    *    ~/scripts/tmux/new-day
+*/5  *    *  *    *    ~/scripts/cron/generate-tagtree
+*/4  *    *  *    *    ~/scripts/cron/battery-alert
+1    18   *  *    *    scp .main.kdbx  home:syncthing/mama/.jneidel-backup.kdbx
+1    18   *  *    *    cp .main.kdbx  ~/Downloads/media/phone/

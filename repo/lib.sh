@@ -82,5 +82,10 @@ function shouldWorkOnRootFile {
 function run-command {
   CMD=$(echo "$1" | cut -d\  -f2)
   [ "$DISABLE_LOGGING" -eq 0 ] && echo "run cmd:      $CMD"
-  [ -e "$CMD" ] && sh $CMD || echo file does not exist
+  [ -e "$CMD" ] && sh -c "$CMD"
+}
+
+function export-fcrontab {
+  [ "$DISABLE_LOGGING" -eq 0 ] && echo "run cmd:      export-fcrontab"
+  fcrontab -l 2>/dev/null >"$BASE/.config/fcrontab"
 }

@@ -62,6 +62,8 @@ parse_instruction() {
       clean-copy-dir "$HOME/$REST" "$BASE/$REST";;
     run)
       run-command $instruction;;
+    export-fcrontab)
+      export-fcrontab;;
     *)
       [ "$DISABLE_LOGGING" -eq 0 ] && echo "skipped:      $instruction"
   esac
