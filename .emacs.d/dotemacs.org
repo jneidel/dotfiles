@@ -784,20 +784,22 @@ Disable the default confirmation prompt for these executions:
 The languages which can be evaluated inline with `C-c C-c`.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
+  :custom
+  (org-babel-load-languages '((emacs-lisp . t)
+                              (shell . t)
+                              (octave . t)
+                              (js . t)
+                              (python . t)
+                              (makefile . t)
+                              (css . t)
+                              (calc . t)
+                              (lisp . t)
+                              (sass . t)
+                              (sql . t)
+                              (hledger . t)
+                              (mermaid . t)
+                              (racket . t)))
   :config
-  (setq org-babel-load-languages '((emacs-lisp . t)
-                                   (shell . t)
-                                   (octave . t)
-                                   (js . t)
-                                   (python . t)
-                                   (makefile . t)
-                                   (css . t)
-                                   (calc . t)
-                                   (lisp . t)
-                                   (sass . t)
-                                   (sql . t)
-                                   (hledger . t)
-                                   (racket . t)))
   (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
 #+end_src
 [[https://orgmode.org/worg/org-contrib/babel/languages/index.html][See the list of available languages for `org-babel-load-languages`.]]
@@ -2729,6 +2731,34 @@ TODO fix this being overwritte
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package mermaid-mode
   :after markdown-mode)
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package ob-mermaid)
+#+end_src
+
+To generate an inline result ob-mermaid want a file name.
+I don't want to think about that, so a new =:file auto= generates a random /tmp
+svg path for the file.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org
+  :custom
+  (org-babel-default-header-args:mermaid
+   '((:file . "auto")
+     (:results . "file")
+     (:theme . "dark"))))
+
+(advice-add
+ 'org-babel-execute:mermaid :around
+ (lambda (orig body params)
+   (let* ((f (cdr (assq :file params)))
+          (out-file (if (and (stringp f) (string= f "auto"))
+                        (make-temp-file "mermaid-" nil ".svg")
+                      f))
+          (params (cons (cons :file out-file)
+                        (assq-delete-all :file params))))
+     (funcall orig body params)
+     out-file)))
 #+end_src
 
 **** PHP

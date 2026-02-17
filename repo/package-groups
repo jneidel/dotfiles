@@ -664,3 +664,6 @@ filetags-git File tagging utility
 
 [codex]
 openai-codex Coding agent
+
+[mermaid]
+mermaid-cli Diagram tool
