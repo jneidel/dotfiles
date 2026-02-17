@@ -3109,8 +3109,8 @@ _C-f_unction (info)                *M_e_ssages*                       About _C-e
   _v_ariable                       _l_ossage (pressed keys)
   _s_ymbol
 _C-s_ymbol (info)              _C-d_ at point
-  f_C-a_ce                         Define _w_ord (mw)
-  ke_y_map                         Define _C-w_ord (wordnik)
+  f_C-a_ce                         Define/lookup _w_ord
+  ke_y_map
   synta_x_
   by _C-v_alue (apropos)
 "
@@ -3141,8 +3141,7 @@ _C-s_ymbol (info)              _C-d_ at point
     ("y"   describe-keymap)
     ("x"   describe-syntax)
     ("C-d" helpful-at-point)
-    ("w"   mw-thesaurus-lookup-dwim)
-    ("C-w" define-word-at-point)
+    ("w"   dict-transient)
     ;; not listed
     ("b"   embark-bindings)
     ("q"   nil nil)
@@ -5141,6 +5140,67 @@ Available through ~C-h~-hydra
   :commands (mw-thesaurus-lookup-dwim mw-thesaurus-lookup)
   :hook (mw-thesaurus-mode . variable-pitch-mode)
   )
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq dictionary-server "dict.org")
+(defun dictionary-search-at-point()
+  (interactive)
+  (let ((word
+         (cond
+          ((eq major-mode 'pdf-view-mode)
+           (car (pdf-view-active-region-text)))
+          ((use-region-p)
+           (buffer-substring-no-properties
+            (region-beginning)
+            (region-end)))
+          (t
+           (substring-no-properties
+            (thing-at-point 'word))))))
+    (dictionary-search word)))
+#+end_src
+
+Lookup the word at point in the browser ([[https://gnu.support/gnu-emacs/emacs-lisp/Emacs-Lisp-duden-lookup-opens-up-https-www-duden-de-German-dictionary-to-lookup-definitions.html][Inspiration]]).
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/lookup-word-at-point (webpage)
+  "Open the word at point on the given webpage.
+Webpage should include %s to be replaced with the word."
+  (let* ((thing (thing-at-point 'word 'no-properties))
+         (query (if thing thing (read-from-minibuffer "Word: ")))
+         (query (replace-regexp-in-string " " "_" query))
+         (lookup (format webpage query)))
+    (browse-url lookup)))
+
+(defun jn/lookup-bang (bang)
+  (interactive (list (read-string "!")))
+  (let ((webpage
+         (string-trim
+          (shell-command-to-string
+           (format "(bangs list | grep '^%s' -m1 || echo ' https://duckduckgo.com/?q=%%s') | cut -d ' ' -f2" bang)))))
+    (jn/lookup-word-at-point webpage)))
+
+(defun jn/lookup-duden ()           (interactive) (jn/lookup-bang "duden"))
+(defun jn/lookup-merriam-webster () (interactive) (jn/lookup-bang "mw"))
+(defun jn/lookup-synonym ()         (interactive) (jn/lookup-bang "syn"))
+(defun jn/lookup-dictcc ()          (interactive) (jn/lookup-bang "d"))
+#+end_src
+
+Assemble all word definition and lookup providers into a single menu.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package transient
+  :ensure nil
+  :config
+  (transient-define-prefix dict-transient ()
+    "A jump menu to open frequently used files."
+    [
+     ("m" "Merriam Webster  🐃" mw-thesaurus-lookup-dwim)
+     ("M" "Merriam Webster  🌍" jn/lookup-merriam-webster)
+     ("w" "Wordnik          🐃" define-word-at-point)
+     ("o" "Dict.org         🐃" dictionary-search-at-point)
+     ("d" "Duden            🌍" jn/lookup-duden)
+     ("s" "Synonym          🌍" jn/lookup-synonym)
+     ("c" "Dict.cc          🌍" jn/lookup-dictcc)
+     ]))
 #+end_src
 
 ** Avy
