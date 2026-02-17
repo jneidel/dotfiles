@@ -1157,6 +1157,18 @@ customize: org-src-block-faces
                       :height 1.1)) ; eliminates residual space
 #+end_src
 
+**** Make hidden element in org-appear
+[[https://github.com/awth13/org-appear][org-appear]]: Make hidden styling elements appear when point is on the element.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-appear
+  :hook org-mode
+  :custom
+  (org-appear-autolinks t)
+  (org-pretty-entities t) ; pretty 2^2 4_2
+  (org-appear-autosubmarkers t)
+  (org-appear-autoentities t))
+#+end_src
+
 *** Org todo management
 [[https://orgmode.org/manual/Fast-access-to-TODO-states.html][Fast access todo states]] for org outlines.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
