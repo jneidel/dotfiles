@@ -1306,6 +1306,37 @@ Use ([[https://github.com/jxq0/org-tidy][org-tidy]]) clean up those properties d
   :commands (org-roam-ui-mode org-roam-ui-open))
 #+end_src
 
+*** Generic open at point (hyperbole)
+[[https://www.gnu.org/software/hyperbole][hyperbole]], [[https://emacs.stackexchange.com/questions/75055/hyperbole-mode-overrides-org-mode-c-c-binding][Hyperbole mode overrides org mode C-c / binding - Emacs Stack Exchange]]
+#+begin_src elisp :tangle "init.el" :results silent
+(defun jn/hyperbole-open-at-point-no-fallback (&optional arg)
+  "Open something at point with hyperbole.
+In org-mode prevent fallback to hardcoded M-RET behavior."
+  (interactive "P")
+  (let ((hsys-org-mode-function (lambda () nil))) ;; disable smart-org dispatch
+    (ignore-errors
+      (if arg
+          (assist-key)
+        (action-key)))))
+
+(use-package hyperbole
+  :bind (("C-c C-o" . jn/hyperbole-open-at-point-no-fallback))
+  :init ; disallow it from setting it's many intrusive bindings
+  (setq hyperbole-mode-map nil)
+  (advice-add 'hkey-initialize :around
+              (lambda (orig &rest args)
+                (ignore-errors
+                    (apply orig args))))
+  :diminish 'hyperbole-mode
+  :defer 4
+  :config
+  (hyperbole-mode 1))
+
+(use-package org
+  :ensure nil
+  :bind (:map org-mode-map
+              ("C-c C-o" . jn/hyperbole-open-at-point-no-fallback)))
+#+end_src
 
 ** Info
 #+begin_src elisp :tangle "init.el" :results silent
@@ -4371,17 +4402,7 @@ To make it less verbose I turn them into emoji.
   (keymap-set notmuch-search-mode-map (kbd "o") #'notmuch-search-mode-open-html)
   (keymap-set notmuch-show-mode-map (kbd "o") #'notmuch-show-mode-open-html)
 
-  (keymap-set notmuch-common-keymap (kbd "$") #'notmuch-refresh-this-buffer)
-
-  (defun browse-url-at-point ()
-    "browse-url without confirmation."
-    (interactive)
-    (let ((url (thing-at-point 'url t)))
-      (unless url
-        (user-error "No URL at point"))
-      (browse-url url)))
-  (keymap-set notmuch-show-mode-map "C-c C-o" #'browse-url-at-point)
-  )
+  (keymap-set notmuch-common-keymap (kbd "$") #'notmuch-refresh-this-buffer))
 #+end_src
 
 Mutt has an option called ~reverse_name~.
@@ -4718,8 +4739,7 @@ If a buffer is not file and not dired, copy value of `default-directory'."
         ("l" . elfeed-search-show-entry))
   (:map elfeed-show-mode-map
         ("h" . elfeed-kill-buffer)
-        ("l" . elfeed-show-visit)
-        ("C-c C-o" . shr-browse-url)))
+        ("l" . elfeed-show-visit)))
 #+end_src
 
 Relevant keybindings:
