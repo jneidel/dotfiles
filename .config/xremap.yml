@@ -54,6 +54,17 @@ keymap:
       C-x:
         remap:
           k: C-w # C-x k
+          
+  - name: KeepassXC
+    application:
+      only: [KeePassXC]
+    remap:
+      # M-w to copy password
+      C-u: C-b # copy username
+      # C-t to copy TOTP
+      # C-s to search
+      # C-S to open current entries URL
+      C-l: C-f # search instead of locking db
 
   - name: Terminal
     application:
