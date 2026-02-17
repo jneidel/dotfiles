@@ -5517,6 +5517,18 @@ The `crontab(1)' executable is used to load the crontab."
     (crontab-mode)
     (setq-local crontab-user-crontab-file t)))
 
+(defun crontab--install-sentinel (p event)
+  (when (memq (process-status p) '(exit signal))
+    (let* ((code (process-exit-status p))
+           (src-buf (process-get p 'src-buf)))
+      (if (zerop code)
+          (progn
+            (when (buffer-live-p src-buf)
+              (kill-buffer src-buf))
+            (message "Installed crontab"))
+        (message "Installing crontab failed (exit %s). See buffer %s"
+                 code (buffer-name (process-buffer p)))))))
+
 (defun crontab-install-user-crontab ()
   "Install the contents of the current buffer as user crontab asynchronously via `fcrontab -`."
   (interactive)
@@ -5537,17 +5549,8 @@ The `crontab(1)' executable is used to load the crontab."
              :command (list "fcrontab" "-")
              :connection-type 'pipe
              :noquery t
-             :sentinel
-             (lambda (p event)
-               (when (memq (process-status p) '(exit signal))
-                 (let ((code (process-exit-status p)))
-                   (if (zerop code)
-                       (progn
-                         (when (buffer-live-p src-buf)
-                           (kill-buffer src-buf))
-                         (message "Installed crontab"))
-                     (message "Installing crontab failed (exit %s). See buffer %s"
-                              code (buffer-name (process-buffer p))))))))))
+             :sentinel #'crontab--install-sentinel)))
+      (process-put proc 'src-buf src-buf)
       (with-current-buffer output-buf
         (erase-buffer))
       ;; Send buffer to stdin of fcrontab
