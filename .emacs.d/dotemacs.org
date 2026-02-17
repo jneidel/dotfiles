@@ -1364,10 +1364,10 @@ In org-mode prevent fallback to hardcoded M-RET behavior."
   (set-face-attribute 'info-isolated-quote nil
                       :background "transparent")
 
-  (add-hook 'Info-mode-hook #'variable-pitch-mode)
   (set-face-attribute 'variable-pitch nil
-                      :family "DejaVu Serif")
-)
+                      :family "Libre Caslon Text"
+                      :height 1.1)
+  :hook (Info-mode . variable-pitch-mode))
 #+end_src
 
 TODO: I'm in the market for a new serif font.
