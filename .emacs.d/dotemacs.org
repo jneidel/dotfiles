@@ -723,29 +723,113 @@ a single line.
                       :weight 'normal)
   (set-face-attribute 'outline-8 nil
                       :inherit 'font-lock-string-face
-                      :foreground "purple")
-  )
+                      :foreground "purple"))
 #+end_src
 
-Automates the use-case of inserting a link from the clipboard into an org
-document.
+*** Insert link DWIM
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun insert-url-as-org-link-fancy ()
-  "Version of org-insert-link that uses the link from the clipboard if there is
-one. Otherwise just call org-insert-link."
+(defun jn/org-insert-link-with-org-roam-override ()
+  "Call `org-insert-link'.
+Inside it's minibuffer bind C-l for `org-roam-node-insert' to take over."
   (interactive)
-  (let ((link (substring-no-properties (x-get-selection 'CLIPBOARD)))
-        (url  "\\(http[s]?://\\|www\\.\\)"))
-    (save-match-data
-      (if (string-match url link)
-          (let ((description (read-string "Description: ")))
-            (insert (concat "[[" link "][" description "]]")))
-        (call-interactively #'org-insert-link)
-        ))))
+  (let ((run-roam nil))
+    (minibuffer-with-setup-hook
+        (lambda () (define-key (current-local-map) (kbd "C-l")
+                               (lambda ()
+                                 (interactive)
+                                 (setq run-roam t)
+                                 (abort-recursive-edit))))
+      (condition-case nil
+          (call-interactively #'org-insert-link)
+        (kill-buffer "*Org Links*")
+        (quit nil)))
+    (when run-roam
+      (call-interactively #'org-roam-node-insert))))
 
-(general-define-key
- :keymaps 'org-mode-map
- "C-c C-l" 'insert-url-as-org-link-fancy)
+(defun jn/org-insert-link-dwim ()
+  "Like `org-insert-link' but with personal dwim preferences.
+
+That is:
+- works in Markdown and HTML
+- uses a URL in the clipboard if there is one and fetches it's title
+- in org: C-l to do org-roam-node-insert instead
+- use as title or overwrite region (if there is any)"
+  (interactive)
+  (let* ((in-org   (derived-mode-p 'org-mode))
+         (in-md    (derived-mode-p 'markdown-mode))
+         (in-html  (derived-mode-p 'html-mode 'web-mode))
+
+         (clipboard-url (when (string-match-p "^http" (current-kill 0))
+                          (current-kill 0)))
+         (point-in-org-link
+          (and in-org (org-in-regexp org-link-any-re 1))))
+    (cond
+     (point-in-org-link
+      (call-interactively #'jn/org-insert-link-with-org-roam-override))
+
+     (clipboard-url
+      (let ((title (read-string "Title: "
+                                (with-current-buffer (url-retrieve-synchronously clipboard-url)
+                                  (dom-text (car
+                                             (dom-by-tag (libxml-parse-html-region
+                                                          (point-min)
+                                                          (point-max))
+                                                         'title)))))))
+        (when (region-active-p)
+          (delete-region (region-beginning) (region-end)))
+
+        (cond
+         (in-md
+          (insert (format "[%s](%s)" title clipboard-url)))
+         (in-html
+          (insert (format "<a href=\"%s\">%s</a>" clipboard-url title)))
+         (in-org
+          (insert (org-link-make-string clipboard-url title)))
+         (t
+          (insert (string-trim (format "%s %s" title clipboard-url)))))))
+
+     (in-org
+      (call-interactively #'jn/org-insert-link-with-org-roam-override))
+
+     (t
+      (let* ((typed-url (read-string "URL: "))
+             (region-content (when (region-active-p)
+                               (buffer-substring-no-properties (region-beginning)
+                                                               (region-end))))
+             (title (if (and region-content (not (string-empty-p region-content)))
+                        region-content
+                      (read-string "Title: "))))
+        (when (region-active-p)
+          (delete-region (region-beginning) (region-end)))
+        (cond
+         (in-md
+          (insert (format "[%s](%s)" title typed-url)))
+         (in-html
+          (insert (format "<a href=\"%s\">%s</a>" typed-url title)))
+         (t
+          (insert (string-trim (format "%s %s" title typed-url))))))))))
+
+(use-package org
+  :ensure nil
+  :bind
+  ("C-c C-l" . jn/org-insert-link-dwim)
+  (:map org-mode-map
+        ("C-c C-l" . jn/org-insert-link-dwim)))
+
+(use-package markdown-mode
+  :defer t
+  :bind (:map markdown-mode-map
+              ("C-c C-l" . jn/org-insert-link-dwim)))
+#+end_src
+
+Disable useless =*Org Links*= buffer ([[https://emacs.stackexchange.com/a/84583][src]])
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/org-insert-link-advice (oldfun &rest _r)
+  "Advice for `org-insert-link' to omit the \*Org Links\* window."
+  (cl-letf (((symbol-function 'switch-to-buffer-other-window) 'get-buffer-create))
+    (call-interactively oldfun)))
+
+(advice-add 'org-insert-link :around 'jn/org-insert-link-advice)
 #+end_src
 
 *** org-search (full-text search)
