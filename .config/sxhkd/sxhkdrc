@@ -81,7 +81,7 @@ super + p
 
 ## dunst
 super + c
-  dunstctl close
+    dunstctl close
 super + C
   dunstctl close-all
 # super + h

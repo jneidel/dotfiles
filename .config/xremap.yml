@@ -43,7 +43,7 @@ keymap:
       # Cancel
       C-g: [esc, { set_mark: false }]
 
-  - name: Browser only
+  - name: Browser
     application:
       only: [firefox, Brave-browser]
     remap:

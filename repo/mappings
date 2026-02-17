@@ -288,6 +288,8 @@ create /etc/udev/rules.d
 .config/.rgignore
 create code
 code/.rgignore
+create .local
+.local/.rgignore
 
 [nyxt]
 create .config/nyxt
@@ -316,3 +318,8 @@ create /etc/nix
 [karabiner-elements]
 create .config/karabiner
 .config/karabiner/karabiner.json
+
+[codex]
+create .config/codex
+.config/codex/.rgignore
+.zsh/apps/codex.env

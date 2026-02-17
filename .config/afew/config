@@ -1,11 +1,11 @@
 [Filter.1]
-message = Remove new tag everywhere but INBOX folder
-query   = NOT folder:jneidel@jneidel.de/INBOX
-tags    = -unread;-inbox
+message = Tag mailserver categorized spam so that it is visible
+query   = folder:jneidel@jneidel.de/Spam
+tags    = +spam
 
 [Filter.2]
 message = Hide jobdirecto mails
-query   = folder:jneidel@jneidel.de/INBOX AND to:wilfredocasas100@gmail.com
+query   = folder:jneidel@jneidel.de/INBOX AND to:wilfredocasas100@gmail.com OR subject:'User Data Deletion Request for jobdirecto'
 tags    = +trash;-unread;-inbox
 
 [Filter.3]
@@ -57,6 +57,11 @@ tags    = +spam;-unread;-inbox
 message = IB reminder
 query   = subject:'Zur Erinnerung: Nicht unbedacht auf Links klicken!' AND from:donotreply@email.interactivebrokers.com
 tags    = +trash;-unread;-inbox
+
+[Filter.13]
+message = Website feedback
+query   = to:web-*@jneidel.*
+tags    = +website;-inbox
 
 [ArchiveSentMailsFilter]
 sent_tag = sent
