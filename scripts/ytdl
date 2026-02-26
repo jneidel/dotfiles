@@ -14,7 +14,7 @@ EOF
   exit
 fi
 
-hash yt-dlp ffmpeg grep awk || exit 127
+hash yt-dlp ffmpeg grep awk ecos || exit 127
 
 video="$1"
 video_resolution="$2"
@@ -31,18 +31,18 @@ if [ -n "$2" ]; then
   video_format=$(grep "video only" $formats | grep $video_resolution | head -n1 | awk '{ print $1 }')
 fi
 if [ -z "$video_format" ]; then
-  video_format=$(grep "video only" $formats | grep "1920x1080" | head -n1 | awk '{ print $1 }')
+  video_format=$(grep "video only" $formats | grep "1920x" | head -n1 | awk '{ print $1 }')
 fi
 if [ -z "$video_format" ]; then
-  video_format=$(grep "video only" $formats | grep "1280x720" | head -n1 | awk '{ print $1 }')
+  video_format=$(grep "video only" $formats | grep "1280x" | head -n1 | awk '{ print $1 }')
 fi
 
 if [ -z "$audio_format" ]; then
-  echo "No audio format found (audio only, opus or none)"
+  ecos .red "No audio format found (audio only, opus or none)"
   cat $formats
   exit 1
 elif [ -z "$video_format" ]; then
-  echo "No video format found (video only, 1920x1080/1280x720)"
+  ecos .red "No video format found (video only, 1920x.../1280x...)"
   cat $formats
   exit 1
 fi
@@ -58,8 +58,7 @@ audio_file="audio.${audio_tmp##*.}"
 mv "$audio_tmp" $audio_file # in case audio file is mp4
 
 echo "\nDownloading video"
-nice -n 19 yt-dlp -i --retries 4 -f "$video_format" -o "$dir/%(title)s.%(ext)s" "$video"
-# --sub-format srt --sub-langs "de,en" --write-subs
+nice -n 19 yt-dlp -i --retries 4 -f "$video_format" -o "$dir/%(title)s.%(ext)s" "$video" --sub-format srt --sub-langs "de,en" --write-subs
 # --write-auto-sub for generated subs
 
 video_file="$(find $dir -name '*.mp4' -not -name "audio.mp4")"
@@ -76,7 +75,9 @@ elif [ -z "$video_file" ]; then
   exit 1
 fi
 
-echo "\nCombinding audio and video"
+echo "Combinding audio and video"
 nice -n 19 \
      ffmpeg -i "$video_file" -i "$audio_file" -map 0:v -map 1:a -c:v copy -c:a copy "$ORG_INBOX/$title.mkv" &&
   echo "Wrote $ORG_INBOX/$title.mkv"
+
+# ffmpeg -i ./THE\ PRIMORDIAL\ CODE\ III,\ The\ Return\ of\ the\ Stars.mkv -i ./THE\ PRIMORDIAL\ CODE\ III,\ The\ Return\ of\ the\ Stars.en.srt -map 0:v -map 0:a -map 1:s -c:v copy -c:a copy -c:s copy "out.mkv"
