@@ -15,6 +15,7 @@ MAILTO=jneidel
 0    5    *  *    *    ~/scripts/org/append-health-tracking-date
 0    10   1  *    *    ~/scripts/org/retire-old-resources-raw
 0    10   *  *    1    ~/scripts/org/retire-old-design-ideas
+0    */2  *  *    *    ~/scripts/org/add-project-deadlines-to-calendar
 0    18   *  jan  *    ~/scripts/org/bounce-unpitched-projects
 0    18   *  *    *    ~/scripts/cron/org-projects-to-now-json >/dev/null
 15   5    *  *    *    ~/scripts/tmux/new-day
