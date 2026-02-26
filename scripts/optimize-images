@@ -1,0 +1,76 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ optimize-images [IMGS]
+Optimizes all images recursively from the current directory or those passed as arguments.
+
+Optimization per image type:
+- png: lossless
+- jpg: lossy, resize to 2400 as the longest side, quality level 84
+- svg: lossy
+EOF
+  exit
+fi
+
+hash optipng magick jpegoptim || exit 127
+
+process_file() {
+  echo "Processing: $file"
+  echo "  Before: $(du -sh -- "$file" | awk '{print $1}')"
+
+  case "$file" in
+    *.png|*.PNG)
+      optipng -quiet -strip all "$file"
+
+      # lossy color compression (16mio to 256 colors), can have huge savings, can look bad on gradients
+      # pngquant --force --skip-if-larger --strip --output "$file" -- "$file"
+      ;;
+    *.jpg|*.jpeg|*.JPG|*.JPEG)
+      # lossless: 
+      width=$(magick identify -format "%w" "$file")
+      height=$(magick identify -format "%h" "$file")
+
+      if [ "$width" -gt 2400 ] || [ "$height" -gt 2400 ]; then
+        magick "$file" \
+               -auto-orient \
+               -resize "2400x2400>" \
+               -strip \
+               -sampling-factor 4:2:0 \
+               -quality 84 \
+               -interlace Plane \
+               "$file"
+      else
+        echo "  Already resized or too small. Skipping lossy optimizations."
+      fi
+      # jpegoptim --strip-all --all-progressive --preserve --quiet "$file"
+      ;;
+    *.svg|*.SVG)
+      npx svgo \
+          -i "$file" -o "$file" \
+          --multipass \
+          --config='{
+            "plugins": [{
+              "name": "preset-default",
+              "params": { "overrides": { "removeViewBox": false } }
+            }, {
+              "name": "cleanupIds",
+              "active": false
+            }]}';;
+    *)
+      echo "  Invalid file given, doing nothing";;
+  esac
+
+  echo "  After:  $(du -sh -- "$file" | awk '{print $1}')"
+}
+
+if [ "$#" -gt 0 ]; then
+  for file do 
+    process_file
+  done
+else
+  find . -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.svg"  \) |
+    while IFS= read -r file; do
+      process_file
+    done
+fi
