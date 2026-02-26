@@ -4203,15 +4203,15 @@ When not editing the website, return the actual website URL.
 (defun jn/org-web-complete (lang)
   "Completion for links to my website."
   (let* ((articles (shell-command-to-string (format "pick-hugo-article %s list" lang)))
-         (link (completing-read "web: " (split-string articles "\n" t) nil t))
+         (link (format "/%s" (completing-read "web: " (split-string articles "\n" t) nil t)))
          (current-file (when buffer-file-name
                          (file-truename buffer-file-name)))
          (is-editing-website (and
                               current-file
                               (string-prefix-p (substitute-in-file-name "$WEB_HOME") current-file)))
          (website-root (if (equal lang "de")
-                           "https://jneidel.de/"
-                         "https://jneidel.com/")))
+                           "https://jneidel.de"
+                         "https://jneidel.com")))
     (if is-editing-website
         link
       (concat website-root link))))
@@ -4221,8 +4221,7 @@ When not editing the website, return the actual website URL.
 (defun jn/org-web-en-complete ()
   (jn/org-web-complete "en"))
 
-(use-package org
-  :config
+(with-eval-after-load 'org
   (org-link-set-parameters "de" :complete #'jn/org-web-de-complete)
   (org-link-set-parameters "en" :complete #'jn/org-web-en-complete))
 #+end_src
