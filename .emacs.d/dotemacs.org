@@ -723,6 +723,9 @@ That is:
 
          (clipboard-url (when (string-match-p "^http" (current-kill 0))
                           (current-kill 0)))
+         (region-content (when (region-active-p)
+                           (buffer-substring-no-properties (region-beginning)
+                                                           (region-end))))
          (point-in-org-link
           (and in-org (org-in-regexp org-link-any-re 1))))
     (cond
@@ -730,13 +733,16 @@ That is:
       (call-interactively #'jn/org-insert-link-with-org-roam-override))
 
      (clipboard-url
-      (let ((title (read-string "Title: "
-                                (with-current-buffer (url-retrieve-synchronously clipboard-url)
-                                  (dom-text (car
-                                             (dom-by-tag (libxml-parse-html-region
-                                                          (point-min)
-                                                          (point-max))
-                                                         'title)))))))
+      (let ((title
+             (if (and region-content (not (string-empty-p region-content)))
+                 region-content
+               (read-string "Title: "
+                            (with-current-buffer (url-retrieve-synchronously clipboard-url)
+                              (dom-text (car
+                                         (dom-by-tag (libxml-parse-html-region
+                                                      (point-min)
+                                                      (point-max))
+                                                     'title))))))))
         (when (region-active-p)
           (delete-region (region-beginning) (region-end)))
 
@@ -755,9 +761,6 @@ That is:
 
      (t
       (let* ((typed-url (read-string "URL: "))
-             (region-content (when (region-active-p)
-                               (buffer-substring-no-properties (region-beginning)
-                                                               (region-end))))
              (title (if (and region-content (not (string-empty-p region-content)))
                         region-content
                       (read-string "Title: "))))
