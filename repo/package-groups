@@ -661,6 +661,7 @@ xremap-x11-bin Remap keybindings based on running application
 
 [filetags]
 filetags-git File tagging utility
+python-date2name File naming utility
 
 [codex]
 openai-codex Coding agent

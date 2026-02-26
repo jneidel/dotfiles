@@ -3587,10 +3587,19 @@ Or follow a symlink if " ; built-in dired-do-open uses xdg-open
    (dired-get-marked-files))
   (revert-buffer nil t t))
 
+(defun jn/dired-add-date-to-name ()
+  "Run \"date2name\" on current or marked files."
+  (interactive)
+  (dired-do-shell-command "date2name --delimiter ' '"
+   nil
+   (dired-get-marked-files))
+  (revert-buffer nil t t))
+
 (use-package dired
   :ensure nil :defer t
   :bind (:map dired-mode-map
-              ("t" . jn/dired-filetags)))
+              ("t" . jn/dired-filetags)
+              ("r d" . jn/dired-add-date-to-name)))
 #+end_src
 
 *** Dirvish
