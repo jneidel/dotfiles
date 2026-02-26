@@ -4443,8 +4443,8 @@ the spam.
 Link to from org-mode to notmuch messages and queries with [[https://github.com/tarsius/ol-notmuch][ol-notmuch]].
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package ol-notmuch
-  :bind
-  ("C-c l" . org-store-link))
+  :bind (:map notmuch-common-keymap
+              ("C-c l" . org-store-link)))
 #+end_src
 
 Commonly PDFs are attached on incoming emails.
@@ -4643,6 +4643,7 @@ If a buffer is not file and not dired, copy value of `default-directory'."
         ("l" . elfeed-search-show-entry))
   (:map elfeed-show-mode-map
         ("h" . elfeed-kill-buffer)
+        ("C-c l" . org-store-link)
         ("l" . elfeed-show-visit)))
 #+end_src
 
