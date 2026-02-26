@@ -323,3 +323,6 @@ create .config/karabiner
 create .config/codex
 .config/codex/.rgignore
 .zsh/apps/codex.env
+
+[youtube-dl]
+.config/yt-dlp.conf
