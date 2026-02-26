@@ -1,7 +1,8 @@
+# This configuration provides Emacs bindings to other applications.
 keymap:
   - name: Emacs
     application:
-      not: [Emacs, Nyxt, kitty]
+      not: [Emacs, Nyxt, kitty, Gimp]
     remap:
       # Cursor
       C-b: { with_mark: left }
@@ -33,7 +34,7 @@ keymap:
       # Kill word backward
       Alt-backspace: [C-backspace, {set_mark: false}]
       # Undo
-      Alt-u: [C-y, { set_mark: false }] # not working
+      Alt-u: [C-y, { set_mark: false }]
       # Mark
       C-space: { set_mark: true }
       C-h: C-a # C-x h does not work in browser input field
@@ -76,3 +77,17 @@ keymap:
       # Cancel
       C-g: [esc, { set_mark: false }]
       # Copy & paste are directly configured in kitty.conf
+
+  - name: GIMP
+    application:
+      only: [Gimp]
+    remap:
+      C-b: left
+      C-f: right
+      C-p: up
+      C-n: down
+      Alt-u: C-y
+      C-w: [C-x, { set_mark: false }]
+      M-w: [C-c, { set_mark: false }]
+      C-z: [C-v, { set_mark: false }]
+      Super-z: [C-v, { set_mark: false }]
