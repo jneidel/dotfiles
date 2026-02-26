@@ -67,13 +67,13 @@ tags    = +website;-inbox
 sent_tag = sent
 
 [MailMover]
-folders = jneidel@jneidel.de/INBOX jneidel@jneidel.de/archive jneidel@jneidel.de/spam jneidel@jneidel.de/invoices jneidel@jneidel.de/Sent
+folders = jneidel@jneidel.de/INBOX jneidel@jneidel.de/archive jneidel@jneidel.de/Spam jneidel@jneidel.de/invoices jneidel@jneidel.de/Sent
 rename = True
 
 jneidel@jneidel.de/INBOX = 'tag:spam':jneidel@jneidel.de/Spam 'tag:trash':jneidel@jneidel.de/Trash 'tag:invoice':jneidel@jneidel.de/invoices 'tag:archived':jneidel@jneidel.de/archive
-jneidel@jneidel.de/spam = 'tag:trash':jneidel@jneidel.de/Trash
-jneidel@jneidel.de/archive = 'tag:trash':jneidel@jneidel.de/Trash
-jneidel@jneidel.de/invoices = 'tag:trash':jneidel@jneidel.de/Trash
+jneidel@jneidel.de/Spam = 'tag:trash':jneidel@jneidel.de/Trash 'tag:invoice':jneidel@jneidel.de/invoices 'tag:archived':jneidel@jneidel.de/archive 'tag:inbox':jneidel@jneidel.de/INBOX 
+jneidel@jneidel.de/archive = 'tag:trash':jneidel@jneidel.de/Trash 'tag:invoice':jneidel@jneidel.de/invoices 'tag:spam':jneidel@jneidel.de/Spam 'tag:inbox':jneidel@jneidel.de/INBOX
+jneidel@jneidel.de/invoices = 'tag:trash':jneidel@jneidel.de/Trash 'tag:spam':jneidel@jneidel.de/Spam 'tag:archived':jneidel@jneidel.de/archive 'tag:inbox':jneidel@jneidel.de/INBOX
 jneidel@jneidel.de/Sent = 'tag:trash':jneidel@jneidel.de/Trash
 
 # Test queries with notmuch search

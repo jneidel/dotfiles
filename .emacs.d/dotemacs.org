@@ -4251,29 +4251,33 @@ Replace default notmuch hello screen with a collection of saved searches.
             :sort-order newest-first
             :key ,(kbd "i"))
           ( :name "🌍 website"
-            :query "tag:unread and tag:website"
+            :query "tag:website and tag:unread"
             :sort-order newest-first
             :key ,(kbd "w"))
           ( :name "✏️ drafts"
-            :query "tag:draft and not:tag:trash"
+            :query "tag:draft"
             :sort-order newest-first
             :key ,(kbd "d"))
           ( :name "🗃️ archive"
-            :query "tag:archived and not:tag:trash"
+            :query "tag:archived"
             :sort-order newest-first
             :key ,(kbd "a"))
           ( :name "🛒 invoices"
-            :query "tag:invoice and not:tag:trash"
+            :query "tag:invoice"
             :sort-order newest-first
             :key ,(kbd "n"))
           ( :name "📨 sent"
-            :query "tag:sent and not:tag:trash"
+            :query "tag:sent"
             :sort-order newest-first
             :key ,(kbd "s"))
-          ( :name "🪓 spam"
-            :query "tag:spam and not:tag:trash"
+          ( :name "👀 new spam"
+            :query "tag:spam and tag:unread"
             :sort-order newest-first
             :key ,(kbd "m"))
+          ( :name "🪓 spam"
+            :query "tag:spam"
+            :sort-order newest-first
+            :key ,(kbd "M"))
           ( :name "🗑️ trash"
             :query "tag:trash"
             :sort-order newest-first
@@ -4282,6 +4286,10 @@ Replace default notmuch hello screen with a collection of saved searches.
             :query "not:tag:trash and not:tag:spam"
             :sort-order newest-first
             :key ,(kbd "A"))
+          ( :name "🚧 conflicts"
+            :query "(tag:spam OR tag:trash OR tag:invoice OR tag:archived OR tag:inbox) AND (tag:spam AND (tag:trash OR tag:invoice OR tag:archived OR tag:inbox) OR tag:invoice AND (tag:archived OR tag:inbox) OR tag:archived AND tag:inbox)"
+            :sort-order newest-first
+            :key ,(kbd "c"))
           ))
 
   (keymap-set notmuch-common-keymap (kbd "g") #'notmuch-jump-search)
@@ -4295,102 +4303,100 @@ It is called from ~mailsync~.
 Tags are shown in the interface.
 To make it less verbose I turn them into emoji.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq jn/notmuch-tag-trash '("+trash" "-inbox" "-archived" "-spam" "-invoice" "-unread"))
+(defun notmuch-search-mode-delete-goto-next ()
+  "Tag current mail as trash and move to the next."
+  (interactive)
+  (notmuch-search-tag jn/notmuch-tag-trash)
+  (forward-line))
+(defun notmuch-show-mode-delete-goto-next ()
+  "Tag current mail as trash and move to the next."
+  (interactive)
+  (notmuch-show-tag jn/notmuch-tag-trash)
+  (notmuch-show-next-message t)
+  (notmuch-search-show-thread))
+
+(defun notmuch-show-mode-open-html ()
+  "Open HTML part of message in browser (via ~/.mailcap)."
+  (interactive)
+  (save-excursion
+    (notmuch-show-previous-message)
+    (condition-case nil
+        (search-forward "text/html")
+      (error (message "No HTML part."))
+      (:success (notmuch-show-view-part)
+                (shell-command "open-i3-workspace 2")
+                (message "Opened HTML in browser")))))
+(defun notmuch-search-mode-open-html ()
+  "Open HTML part of message in browser (via ~/.mailcap)."
+  (interactive)
+  (save-excursion
+    (notmuch-search-show-thread)
+    (notmuch-show-previous-message)
+    (condition-case nil
+        (search-forward "text/html")
+      (error (message "No HTML part."))
+      (:success (notmuch-show-view-part)
+                (shell-command "open-i3-workspace 2")
+                (message "Opened HTML in browser")))))
+
 (use-package notmuch
   :defer t
-  :config
-  (setq notmuch-archive-tags '("+archived")
-        notmuch-message-replied-tags '("+replied")
-        notmuch-message-forwarded-tags '("+forwarded")
-        notmuch-show-mark-read-tags '("-unread")
-        notmuch-draft-tags '("+draft")
-        notmuch-draft-save-plaintext 'ask)
+  :custom
+  (notmuch-archive-tags '("+archived"))
+  (notmuch-message-replied-tags '("+replied"))
+  (notmuch-message-forwarded-tags '("+forwarded"))
+  (notmuch-show-mark-read-tags '("-unread"))
+  (notmuch-draft-tags '("+draft"))
+  (notmuch-draft-save-plaintext 'ask)
 
-  (setq notmuch-tag-formats
-        '(("unread" "👀")
-          ("attachment" "📎")
-          ("signed" "🔑")
-          ("encrypted" "🔒")
-          ("replied" "💬")
-          ("forwarded" "⏩")
-          ("sent" "📨")
-          ("inbox" "📥")
-          ("spam" "🪓")
-          ("invoice" "🛒")
-          ("archived" "🗃️")
-          ("website" "🌍")
-          ("draft" "✏️")
-          ("trash" "🗑️")
-          ("lists" "📜lists")
-          ("flag" (propertize tag 'face 'notmuch-tag-flagged)
-           (concat tag "🚩")))
-        notmuch-tag-deleted-formats
-        '(("unread" (notmuch-apply-face bare-tag 'notmuch-tag-deleted)
-           (concat "👀" tag))
-          (".*" (notmuch-apply-face tag 'notmuch-tag-deleted)
-           (concat "🚫" tag)))
-        notmuch-tag-added-formats
-        '(("del" (notmuch-apply-face tag 'notmuch-tag-added)
-           (concat "💥" tag))
-          (".*" (notmuch-apply-face tag 'notmuch-tag-added)
-           (concat "🏷️" tag))))
+  (notmuch-tag-formats
+   '(("unread" "👀")
+     ("attachment" "📎")
+     ("signed" "🔑")
+     ("encrypted" "🔒")
+     ("replied" "💬")
+     ("forwarded" "⏩")
+     ("sent" "📨")
+     ("inbox" "📥")
+     ("spam" "🪓")
+     ("invoice" "🛒")
+     ("archived" "🗃️")
+     ("website" "🌍")
+     ("draft" "✏️")
+     ("trash" "🗑️")
+     ("lists" "📜lists")
+     ("flag" (propertize tag 'face 'notmuch-tag-flagged)
+      (concat tag "🚩"))))
+  (notmuch-tag-deleted-formats
+   '(("unread" (notmuch-apply-face bare-tag 'notmuch-tag-deleted)
+      (concat "👀" tag))
+     (".*" (notmuch-apply-face tag 'notmuch-tag-deleted)
+      (concat "🚫" tag))))
+  (notmuch-tag-added-formats
+   '(("del" (notmuch-apply-face tag 'notmuch-tag-added)
+      (concat "💥" tag))
+     (".*" (notmuch-apply-face tag 'notmuch-tag-added)
+      (concat "🏷️" tag))))
 
-  (setq notmuch-tagging-keys
-        `((,(kbd "d") ("+trash" "-inbox" "-unread") "🗑️ Mark for deletion")
-          (,(kbd "m") ("+spam" "-inbox" "-unread") "🪓 Mark as spam")
-          (,(kbd "f") ("+flag") "🚩 Flag as important")
-          (,(kbd "i") ("+invoice" "-inbox" "-unread") "🛒 Mark as invoice")
-          (,(kbd "a") ("+archived" "-inbox" "-unread") "🗃️ Mark as archived")
-          (,(kbd "r") ("-unread") "👀 Mark as read")
-          (,(kbd "u") ("+unread") "👀 Mark as unread")))
+  (notmuch-tagging-keys
+   `((,(kbd "d") jn/notmuch-tag-trash "🗑️ Mark for deletion")
+     (,(kbd "m") ("+spam" "-inbox" "-archived" "-trash" "-invoice" "-unread") "🪓 Mark as spam")
+     (,(kbd "i") ("+invoice" "-inbox" "-archived" "-spam" "-trash"  "-unread") "🛒 Mark as invoice")
+     (,(kbd "a") ("+archived" "-inbox" "-trash" "-spam" "-invoice" "-unread") "🗃️ Mark as archived")
+     (,(kbd "f") ("+flag") "🚩 Flag as important")
+     (,(kbd "r") ("-unread") "👀 Mark as read")
+     (,(kbd "u") ("+unread") "👀 Mark as unread")))
 
-  (keymap-set notmuch-common-keymap (kbd "u") #'notmuch-tag-undo)
-
-  (defun notmuch-search-mode-delete-goto-next ()
-    "Tag current mail as trash and move to the next."
-    (interactive)
-    (notmuch-search-tag '("+trash" "-unread" "-inbox"))
-    (forward-line)
-    )
-  (defun notmuch-show-mode-delete-goto-next ()
-    "Tag current mail as trash and move to the next."
-    (interactive)
-    (notmuch-show-tag '("+trash" "-unread" "-inbox"))
-    (notmuch-show-next-message t)
-    (notmuch-search-show-thread)
-    )
-
-  (keymap-set notmuch-search-mode-map (kbd "d") #'notmuch-search-mode-delete-goto-next)
-  (keymap-set notmuch-show-mode-map (kbd "d") #'notmuch-show-mode-delete-goto-next)
-
-  (defun notmuch-show-mode-open-html ()
-    "Open HTML part of message in browser (via ~/.mailcap)."
-    (interactive)
-    (save-excursion
-      (notmuch-show-previous-message)
-      (condition-case nil
-          (search-forward "text/html")
-        (error (message "No HTML part."))
-        (:success (notmuch-show-view-part)
-                  (shell-command "open-i3-workspace 2")
-                  (message "Opened HTML in browser")
-                  ))))
-  (defun notmuch-search-mode-open-html ()
-    "Open HTML part of message in browser (via ~/.mailcap)."
-    (interactive)
-    (save-excursion
-      (notmuch-search-show-thread)
-      (notmuch-show-previous-message)
-      (condition-case nil
-          (search-forward "text/html")
-        (error (message "No HTML part."))
-        (:success (notmuch-show-view-part)
-                  (shell-command "open-i3-workspace 2")
-                  (message "Opened HTML in browser")
-                  ))))
-  (keymap-set notmuch-search-mode-map (kbd "o") #'notmuch-search-mode-open-html)
-  (keymap-set notmuch-show-mode-map (kbd "o") #'notmuch-show-mode-open-html)
-
-  (keymap-set notmuch-common-keymap (kbd "$") #'notmuch-refresh-this-buffer))
+  :bind (     :map notmuch-common-keymap
+              ("u" . notmuch-tag-undo)
+              ("$" . notmuch-refresh-this-buffer)
+              :map notmuch-search-mode-map
+              ("d" . notmuch-search-mode-delete-goto-next)
+              ("o" . notmuch-search-mode-open-html)
+              :map notmuch-show-mode-map
+              ("d" . notmuch-show-mode-delete-goto-next)
+              ("o" . notmuch-show-mode-open-html)))
 #+end_src
 
 Mutt has an option called ~reverse_name~.
@@ -4408,9 +4414,6 @@ spam.
 "Burnt" addresses (that get a lot of spam) can just be wholly redirected into
 the spam.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package notmuch
-  :defer t
-  :config
   (defun notmuch--get-message-to ()
     "Return the raw To: header of the message or nil."
     (let ((message-properties (cond
@@ -4433,6 +4436,7 @@ the spam.
       (when to-address
         (message-replace-header "From" to-address))))
 
+(with-eval-after-load 'notmuch
   (advice-add 'notmuch-mua-reply :around #'notmuch-reply-reverse-name-advice))
 #+end_src
 
@@ -4482,21 +4486,23 @@ This script extracts the text from PDF attachments and pops it into a new buffer
           (_ (notmuch-show-save-part)))
       (kill-buffer (mm-handle-buffer handle)))))
 
-(setq notmuch-show-part-button-default-action
-      #'user/notmuch-show-pop-attachment-to-buffer)
+(use-package notmuch
+  :custom (notmuch-show-part-button-default-action
+           #'user/notmuch-show-pop-attachment-to-buffer))
 #+end_src
 
 Sometime we forget to add an attachment.
 Notmuch has [[https://notmuchmail.org/emacstips/#index26h2][builtin functionality]]]] for scanning the email for certain terms that
 imply a file should be attached and will warn if no attachment is supplied.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq-default notmuch-mua-attachment-regexp
-              "\\b\\(attach\\|attachment\\|attached\\|anbei\\|Anhang\\)\\b")
-(add-hook 'message-send-hook 'notmuch-mua-attachment-check)
+(use-package notmuch
+  :custom (notmuch-mua-attachment-regexp
+           "\\b\\(attach\\|attachment\\|attached\\|anbei\\|Anhang\\)\\b")
+  :hook (message-send . notmuch-mua-attachment-check))
 #+end_src
 
 *** Mail composer (attachments and encryption)
-In the composer (~message.el~):
+In the composer (~message.el~) through =notmuch-mua-mail=:
 - Encrypt and sign: ~C-c C-m C-e~ (~mml-secure-message-sign-encrypt~)
 - Add an attachment: ~C-c C-a~ (~mml-attach-file~)
 - Add an attachment with dired: ~C-c C-m C-a~ (~gnus-dired-attach~)
@@ -4506,43 +4512,41 @@ In the composer (~message.el~):
 (use-package message
   :ensure nil
   :defer t
+  :after (mm-encode mml-sec)
   :hook
   (message-setup . message-sort-headers)
-  :config
-  (setq message-confirm-send nil)
-  (setq message-wide-reply-confirm-recipients nil)
-  (setq mail-header-separator "")
-  (setq compose-mail-user-agent-warnings nil)
-  (setq message-kill-buffer-on-exit t)
+  :custom
+  (message-confirm-send nil)
+  (message-wide-reply-confirm-recipients nil)
+  (mail-header-separator "")
+  (compose-mail-user-agent-warnings nil)
+  (message-kill-buffer-on-exit t)
 
-  (setq mail-user-agent 'message-user-agent
-        message-mail-user-agent t) ; use `mail-user-agent'
-  )
+  (mail-user-agent 'message-user-agent
+        message-mail-user-agent t)) ; use `mail-user-agent'
 
 (use-package mm-encode
   :ensure nil
   :defer t
-  :config
-  (setq mm-encrypt-option nil ; use 'guided for both if you need more control
-        mm-sign-option nil))
+  :custom
+  (mm-encrypt-option nil) ; use 'guided for both if you need more control
+  (mm-sign-option nil))
 
 (use-package mml-sec
   :ensure nil
   :defer t
-  :config
-  (setq mml-secure-openpgp-encrypt-to-self t
-        mml-secure-openpgp-sign-with-sender t
-        mml-secure-smime-encrypt-to-self t
-        mml-secure-smime-sign-with-sender t))
+  :custom
+  (mml-secure-openpgp-encrypt-to-self t)
+  (mml-secure-openpgp-sign-with-sender t)
+  (mml-secure-smime-encrypt-to-self t)
+  (mml-secure-smime-sign-with-sender t))
 
 ;;;; Add attachments from Dired (`gnus-dired' does not require `gnus')
 (use-package gnus-dired
   :ensure nil
-  :after message
   :hook
   (dired-mode . turn-on-gnus-dired-mode))
 #+end_src
-
 
 fixing citation if needed
 (setq message-citation-line-function #'message-insert-formatted-citation-line)
@@ -4550,8 +4554,6 @@ fixing citation if needed
                                              "> Date: %a, %e %b %Y %T %z\n"
                                              ">")
         message-ignored-cited-headers "") ; default is "." for all headers
-
-
 
   (setq notmuch-search-result-format
         '(("date" . "%12s  ")
@@ -4580,93 +4582,6 @@ fixing citation if needed
           ;; having a face is that you can identify the message even
           ;; when the window is split and you don't see the tags.
           ("flag" . italic)))
-
-#+begin_src emacs-lisp :results silent
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e/")
-
-(use-package mu4e
-  :ensure nil
-  :config
-  (setq mu4e-maildir "~/.local/share/mail"
-        mu4e-get-mail-command "mailsync")
-
-  (setq mu4e-change-filenames-when-moving t) ; works better with mbsync
-
-  (setq mu4e-confirm-quit nil)
-
-  (setq mu4e-contexts
-        (list
-         (make-mu4e-context
-          :name "de"
-          :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/jneidel@jneidel.de" (mu4e-message-field msg :maildir))))
-          :vars `((user-mail-address . "jneidel@jneidel.de")
-                  (user-full-name    . "Jonathan Neidel")
-                  (smtpmail-smtp-server  . "pizarro.uberspace.de")
-                  (smtpmail-smtp-service . "465")
-                  (smtpmail-stream-type  . ssl)
-                  (smtpmail-smtp-user . "jneidel@jneidel.de")
-                  (mu4e-drafts-folder  . "/jneidel@jneidel.de/Drafts")
-                  (mu4e-sent-folder  . "/jneidel@jneidel.de/Sent")
-                  (mu4e-trash-folder  . "/jneidel@jneidel.de/Trash")
-                  (mu4e-refile-folder  . "/jneidel@jneidel.de/archive")
-                  ))
-         (make-mu4e-context
-          :name "com"
-          :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/jneidel@jneidel.com" (mu4e-message-field msg :maildir))))
-          :vars `((user-mail-address . "jneidel@jneidel.com")
-                  (user-full-name    . "Jonathan Neidel")
-                  (smtpmail-smtp-server  . "mail.in-berlin.de")
-                  (smtpmail-smtp-service . "465")
-                  (smtpmail-stream-type  . ssl)
-                  (smtpmail-smtp-user . "jneidel@jneidel.com")
-                  (mu4e-drafts-folder  . "/jneidel@jneidel.com/Drafts")
-                  (mu4e-sent-folder  . "/jneidel@jneidel.com/Sent")
-                  (mu4e-trash-folder  . "/jneidel@jneidel.com/Trash")
-                  (mu4e-refile-folder  . "/jneidel@jneidel.com/archive")
-                  ))))
-  (setq message-send-mail-function 'smtpmail-send-it)
-  (setq message-kill-buffer-on-exit t)
-  (setq mu4e-context-policy 'pick-first)
-
-  (setq mu4e-bookmarks
-        '((:name "Unread messages"
-                 :query #1="flag:unread AND NOT flag:trashed"
-                 :effective-query #1#
-                 :key ?u)
-          ))
-
-  (setq mu4e-maildir-shortcuts
-        `((:maildir "/inbox" :key ?i :hide-if-no-unread t)
-          ;; (:maildir ,mu4e-drafts-folder :key ?d)
-          ;; (:maildir ,mu4e-refile-folder :key ?a)
-          ;; (:maildir ,mu4e-trash-folder :key ?t)
-          ))
-
-  )
-#+end_src
-
-http://miikanissi.com/blog/email-setup-with-mbsync-mu4e/
-https://rakhim.org/fastmail-setup-with-emacs-mu4e-and-mbsync-on-macos/
-https://irreal.org/blog/?p=8004
-https://redlib.privacyredirect.com/r/emacs/comments/bfsck6/mu4e_for_dummies/
-#+begin_src emacs-lisp :results silent
-  ;; (require 'org-mu4e)
-  ;; (require 'org-mime) ; for sending html email
-
-(setq m/mu4e-inbox-query
-      "(maildir:/<mail account dir>/<inbox dir>) AND flag:unread")
-(defun m/go-to-inbox ()
-  (interactive)
-  (mu4e-headers-search m/mu4e-inbox-query))
-;; start mu4e
-(mu4e t))
-#+end_src
 
 ** Movement
 ~C-l~ recenters the screen.
