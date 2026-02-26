@@ -4226,6 +4226,26 @@ When not editing the website, return the actual website URL.
   (org-link-set-parameters "en" :complete #'jn/org-web-en-complete))
 #+end_src
 
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun jn/hugo-open-in-dirvish ()
+  "Open the current org file's Hugo bundle directory in dirvish"
+  (interactive)
+  (let* ((get-keyword
+          (lambda (key)
+            (save-excursion
+              (goto-char (point-min))
+              (when (re-search-forward
+                     (format "^#\\+%s:[ \t]*\\(.*\\)$" (regexp-quote key))
+                     nil t)
+                (string-trim (match-string 1))))))
+         (section (funcall get-keyword "hugo_section"))
+         (bundle (funcall get-keyword "hugo_bundle"))
+         (dir (format "%s/content/%s/%s" (substitute-in-file-name "$WEB_HOME") section bundle)))
+    (unless (file-directory-p dir)
+      (user-error "Directory does not exist: %s" dir))
+    (dirvish dir)))
+#+end_src
+
 ** AI
 The Copilot chat does not work, presumably because it was [[https://github.com/orgs/community/discussions/68463][disabled in my enterprise org settings]].
 #+begin_src emacs-lisp :results silent
