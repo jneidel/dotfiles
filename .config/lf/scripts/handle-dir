@@ -19,9 +19,8 @@ DIR="$1"
 [ -d "$DIR" ] || DIR="$(pwd)"
 
 MIME_LIST=$(mktemp)
-find "$DIR" -type f | while read -r file; do
-  mimetype "$file" >> $MIME_LIST
-done
+find "$DIR" -type f -print0 |
+  xargs -0 -P "$(nproc)" -I{} sh -c 'mimetype "$1"' _ {} >> "$MIME_LIST"
 
 TOP_EXT=$(uniq -c $MIME_LIST | sort -br | head -n1 | awk '{print $2}')
 printf "Most common extension for this directory is: $TOP_EXT\n\n"
