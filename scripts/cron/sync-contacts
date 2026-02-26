@@ -1,0 +1,5 @@
+#! /bin/sh
+
+~/scripts/cron/waitforinternet
+
+vdirsyncer sync >/dev/null 2>&1

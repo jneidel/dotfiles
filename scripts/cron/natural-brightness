@@ -14,6 +14,7 @@ EOF
   exit
 fi
 
+~/scripts/cron/waitforinternet
 sunset_time=$(~/scripts/sunrise set)
 sunset_hour=$(echo $sunset_time | cut -d: -f1)
 sunset_minute=$(echo $sunset_time | cut -d: -f2)
