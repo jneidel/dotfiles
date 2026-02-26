@@ -530,7 +530,7 @@ systemd:haveged
 lxappearance
 
 [ausweis]
-ausweisapp2 Use german Personalausweis
+ausweisapp Use german Personalausweis online functionality
 
 [tree]
 npm:@aweary/alder Tree listing

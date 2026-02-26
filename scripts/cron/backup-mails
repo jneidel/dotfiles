@@ -1,0 +1,24 @@
+#! /bin/sh
+
+MAILDIR=~/.local/share/mail
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ backup-mails
+Gzip $MAILDIR and back it up.
+Delete last weeks backup.
+EOF
+  exit
+fi
+
+cd "$MAILDIR" || exit 1
+
+TODAY="$(date +%F)"
+ARCHIVE="/tmp/mail-${TODAY}.tar.gz"
+
+tar -czf "$ARCHIVE" .
+rsync -av "$ARCHIVE" home:backup/mail/ >/dev/null
+rm -f "$ARCHIVE"
+
+A_WEEK_AGO="$(date -d '7 days ago' +%F)"
+ssh home "rm -f backup/mail/mail-${A_WEEK_AGO}.tar.gz 2>/dev/null"

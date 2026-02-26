@@ -1,7 +1,7 @@
 [Filter.1]
 message = Tag mailserver categorized spam so that it is visible
 query   = folder:jneidel@jneidel.de/Spam
-tags    = +spam
+tags    = +spam;-inbox
 
 [Filter.2]
 message = Hide jobdirecto mails

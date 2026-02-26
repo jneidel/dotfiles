@@ -1,5 +1,8 @@
 #! /bin/sh
 
+export HOME=/home/jneidel
+. $HOME/.zsh/org.env
+
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   printf "$ vacuum-sql-dbs.sh
 Vacuum sqlite3 database files.
@@ -13,8 +16,8 @@ vacuum() {
   sqlite3 "$1" VACUUM;
 }
 
-ARR="ct/manga/.yacreaderlibrary/library.ydb ct/comics/.yacreaderlibrary/library.ydb .config/newsboat/cache-blog.db .config/newsboat/cache-manga.db .config/newsboat/cache-pod.db .config/newsboat/cache-ent.db"
+ARR="$ORG_MEDIA/manga/.yacreaderlibrary/library.ydb" # space separated array
 
 echo "$ARR" | tr ' ' '\n' | while read dir; do
-  vacuum "$HOME/$dir"
+  vacuum "$dir"
 done

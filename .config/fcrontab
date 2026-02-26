@@ -9,8 +9,9 @@ MAILTO=jneidel
 0    20   1  *    *    ~/scripts/cron/vacuum-sql-dbs.sh
 30   4    *  *    *    ~/scripts/cron/bluelight stop
 30   16   *  *    *    ~/scripts/cron/bluelight start
-0    *    *  *    *    ~/scripts/cron/natural-brightness >/dev/null
+0    *    *  *    *    ~/scripts/cron/natural-brightness
 0    16   *  *    *    ~/scripts/cron/background-manga-update
+1    10   *  *    *    ~/scripts/cron/backup-mails
 0    16   *  *    *    ~/scripts/org/add-project-deadlines-to-calendar
 0    5    *  *    *    ~/scripts/org/append-health-tracking-date
 0    10   1  *    *    ~/scripts/org/retire-old-resources-raw

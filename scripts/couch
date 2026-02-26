@@ -13,7 +13,7 @@ hash monitor wpctl brave i3-msg || exit 127
 toggle_on() {
   monitor swap &
   wpctl set-volume @DEFAULT_AUDIO_SINK@ 135% 2>/dev/null
-  $BROWSER "https://jellyfin.neidel.xyz/web/index.html#!/home.html" 2>/dev/null &
+  # $BROWSER "https://jellyfin.neidel.xyz/web/index.html#!/home.html" 2>/dev/null &
   i3-msg workspace "2:" >/dev/null
 }
 toggle_off() {

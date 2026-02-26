@@ -212,7 +212,7 @@ Now quelpa can be used via [[https://github.com/quelpa/quelpa-use-package][`use-
 [[https://github.com/melpa/melpa/#recipe-format][See recipe format.]]
 
 
-** Mode-line (status bar)
+** Modeline (status bar)
 https://github.com/domtronn/all-the-icons.el/wiki/Spaceline
 
 The mode-line is the status bar at the bottom of the screen.
@@ -376,7 +376,6 @@ Font size 13 is stable at 115 and 120 dpi, but unstable at 96, 110, 112.
   ("M-u" . undo)
   ("M-\\" . indent-region)
   ("C-x C-k" . kill-current-buffer)
-  ("C-q" . kill-current-buffer) ; match custom firefox kill tab
   ("S-SPC" . cycle-spacing)
   :config
   (global-set-key (kbd "M-<delete>") (kbd "<delete>"))
@@ -406,16 +405,16 @@ Open frequently used file directly via a short-cut menu:
   (transient-define-prefix jump-menu-common-files ()
     "A jump menu to open frequently used files."
     [("d" "dotemacs" (lambda () (interactive) (persp-switch "main") (find-file "~/.emacs.d/dotemacs.org")))
-     ("k" "practice emacs bindings" (lambda () (interactive) (persp-switch "main") (find-file (substitute-in-file-name "$ORG_RESOURCES/emacs/Emacs keys training - deliberate practice.org"))))
+     ("k" "practice emacs bindings" (lambda () (interactive) (persp-switch "main") (find-file (substitute-in-file-name "$ORG_RESOURCES/Emacs/Emacs keys training - deliberate practice.org"))))
      ("m" "notmuch mail" (lambda () (interactive) (persp-switch "main") (notmuch)))
      ("n" "ncmpcpp music" (lambda () (interactive) (ncmpcpp)))
      ("r" "elfeed rss" (lambda () (interactive) (persp-switch "main") (elfeed) (elfeed-update)))
      ("c" "remind calendar" (lambda () (interactive) (persp-switch "main") (remind-calendar)))
      ("s" "scratch buffer" (lambda () (interactive) (scratch-buffer)))
      ("p" "parcels" (lambda () (interactive) (persp-switch "main") (find-file "~/org/3_resources/Parcels tracking.org")))
-     ("e" "exercise routine" (lambda () (interactive) (persp-switch "main") (find-file "~/org/2_areas/routine/My Sustainable Training Routine.org")))
+     ("e" "exercise routine" (lambda () (interactive) (persp-switch "main") (find-file "~/org/3_resources/exercise/My Sustainable Training Routine.org")))
      ("t" "Re:Zero todos" (lambda () (interactive) (persp-switch "main") (rezero)))
-     ("f" "filetags" (lambda () (interactive) (persp-switch "main") (find-file "~/org/.filetags")))
+     ("f" "filetags" (lambda () (interactive) (persp-switch "main") (find-file "~/org/filetags.org")))
      ])
   :bind ("H-j" . jump-menu-common-files))
 #+end_src
@@ -895,46 +894,44 @@ https://orgmode.org/manual/Capture-templates.html
 ~C-u C-u C-c c~ to visit the last stored capture item.
 
 #+begin_src elisp :tangle "init.el" :results silent
-(use-package org-capture
-  :ensure nil
-  :config
-  (defun jneidel-generate-note-capture-location ()
-    "Generate a temp file path, store it and open it."
-    (let ((tmp (make-temp-file "org-capture-" nil ".org")))
-      (org-capture-put :jneidel-temp-file tmp)
-      ;; template target (function …) expects file to be opened
-      (set-buffer (find-file-noselect tmp))
-      (goto-char (point-min))))
+(defun jneidel-generate-note-capture-location ()
+  "Generate a temp file path, store it and open it."
+  (let ((tmp (make-temp-file "org-capture-" nil ".org")))
+    (org-capture-put :jneidel-temp-file tmp)
+    ;; template target (function …) expects file to be opened
+    (set-buffer (find-file-noselect tmp))
+    (goto-char (point-min))))
 
-  (defun jneidel-note-capture ()
-    "Extract the title and move the note to the inbox."
-    (let* ((tmp (org-capture-get :jneidel-temp-file))
-           (title (string-trim (shell-command-to-string
-                                (format "grep -E '^#\\+(TITLE|title):.*' %s | sed 's|/| |g' | cut -d: -f2-" tmp))))
-           (inbox (substitute-in-file-name "$ORG_INBOX/"))
-           (maybe-new-note-filename (expand-file-name (concat title ".org") inbox))
-           (new-note-filename
-            (if (file-exists-p maybe-new-note-filename)
-                (format "%s-%s.org"
-                        (file-name-sans-extension maybe-new-note-filename)
-                        (substring (make-temp-name "") 0 4)) ; random string
-              maybe-new-note-filename))
-           (capture-buffer (find-buffer-visiting tmp)))
-      (kill-buffer capture-buffer)
-      (shell-command (format "sed 's/ -- .*$//' -i %s" tmp)) ; remove tags from title
-      (rename-file tmp new-note-filename t)
+(defun jneidel-note-capture ()
+  "Extract the title and move the note to the inbox."
+  (let* ((tmp (org-capture-get :jneidel-temp-file))
+         (title (string-trim (shell-command-to-string
+                              (format "grep -E '^#\\+(TITLE|title):.*' %s | sed 's|/| |g' | cut -d: -f2-" tmp))))
+         (inbox (substitute-in-file-name "$ORG_INBOX/"))
+         (maybe-new-note-filename (expand-file-name (concat title ".org") inbox))
+         (new-note-filename
+          (if (file-exists-p maybe-new-note-filename)
+              (format "%s-%s.org"
+                      (file-name-sans-extension maybe-new-note-filename)
+                      (substring (make-temp-name "") 0 4)) ; random string
+            maybe-new-note-filename))
+         (capture-buffer (find-buffer-visiting tmp)))
+    (kill-buffer capture-buffer)
+    (shell-command (format "sed 's/ -- .*$//' -i %s" tmp)) ; remove tags from title
+    (rename-file tmp new-note-filename t)
 
-      (let ((buf (find-file-noselect new-note-filename)))
-        (with-current-buffer buf
-          (save-excursion
-            (goto-char (point-min))
-            (org-id-get-create) ;; for org-roam
-            (forward-line 6) ;; start of text for marker
-            (set-marker org-capture-last-stored-marker (point) (current-buffer)))
-          (save-buffer)))
+    (let ((buf (find-file-noselect new-note-filename)))
+      (with-current-buffer buf
+        (save-excursion
+          (goto-char (point-min))
+          (org-id-get-create) ;; for org-roam
+          (forward-line 6) ;; start of text for marker
+          (set-marker org-capture-last-stored-marker (point) (current-buffer)))
+        (save-buffer)))
 
-      (message "Wrote note %s" new-note-filename)))
+    (message "Wrote note %s" new-note-filename)))
 
+(with-eval-after-load 'org-capture
   (add-to-list 'org-capture-templates
                `("n" "Note" plain
                  (function jneidel-generate-note-capture-location)
@@ -1119,6 +1116,8 @@ customize: org-src-block-faces
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org-modern-indent
   :quelpa (org-modern-indent :fetcher "github" :repo "jdtsmith/org-modern-indent")
+  :hook (org-mode)
+  (org-mode . org-indent-mode)
   :diminish 'org-indent-mode
   :config
   (set-face-attribute 'org-modern-indent-bracket-line nil
@@ -1136,7 +1135,7 @@ customize: org-src-block-faces
 (use-package org-appear
   :hook org-mode
   :custom
-  (org-appear-autolinks t)
+  (org-appear-autolinks nil)
   (org-pretty-entities t) ; pretty 2^2 4_2
   (org-appear-autosubmarkers t)
   (org-appear-autoentities t))
@@ -1584,6 +1583,16 @@ I have replicated that functionality centered around perspective.
 
 **** Perspective project definitions
 #+begin_src emacs-lisp :tangle "init.el" :results silent
+(jn/persp-register-project
+ "website"
+ "~/code/web"
+ (lambda () (dirvish "src")))
+
+(jn/persp-register-project
+ "dotfiles"
+ "~/code/dotfiles"
+ (lambda () (magit-status) (delete-other-windows)))
+
 (jn/persp-register-project
  "Rails exploration"
  "~/code/experiments/2025-12-03-rails.org-follow-along"
@@ -2227,6 +2236,8 @@ So this advice halves the font-height for the relevant function.
        (apply fn state args)))))
   #+end_src
 
+Add emacs related skill once using claude code: [[elfeed:xenodium.com#https://xenodium.com/bending-emacs-episode-12-agent-shell-claude-skills][Bending Emacs - Episode 12: agent-shell + Claude Skills]]
+
 *** Magit
 [[https://magit.vc/][Magit]] is probably the best git interface that exists.
 It's very intuitive and obscure functionality like decreasing hunk size ~git add
@@ -2528,8 +2539,9 @@ opened.
 (setq kept-old-versions 50)
 (setq vc-make-backup-files t) ;; do back up files in git directories
 
-;; keep backups out of my way
-(setq backup-directory-alist '(("." . "~/.local/share/emacs/backups")))
+;; keep backups & auto-save files out of my way
+(setq backup-directory-alist '(("." . "~/.cache/emacs/backups")))
+(setq auto-save-file-name-transforms '((".*" "~/.cache/emacs/auto-saves" t)))
 #+end_src
 
 Lockfiles prevent multiple users from editing the same file.
@@ -2923,8 +2935,12 @@ Execute org-babel lisp blocks:
 #+end_src
 
 **** HTML
-TODO fix this being overwritte
-(global-set-key (kbd "M-o") 'other-window)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package sgml-mode
+  :ensure nil
+  :bind (:map html-mode-map
+              ("M-o" . nil)))
+#+end_src
 
 **** Markdown
 [[https://github.com/jrblevin/markdown-mode][Markdown-mode]]
@@ -3156,7 +3172,7 @@ _d_ebuging     _G_NU           order _m_anuals  _t_utorial
     ("T" view-emacs-todo)
     ("q" nil nil)
     ("C-g" nil nil)
-    ("ESC" nil nil))
+    ("ESC" nil nil)))
 #+end_src
 
 After pressing any prefix key a menu will show up listing all available keys.
@@ -3605,7 +3621,7 @@ Or follow a symlink if " ; built-in dired-do-open uses xdg-open
 [[https://github.com/novoid/filetags][filetags]]
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun jn/dired-filetags ()
-  "Run \"filetags\" on current or marked files"
+  "Run \"filetags\" on current or marked files."
   (interactive)
   (dired-do-shell-command
    "kitty -o remember_window_size=no -o initial_window_width=60c -o initial_window_height=15c --position 535x300 -o window_padding_width='0 20 0 20' --title floating -- filetags -q --force-cv --interactive *"
@@ -3713,29 +3729,40 @@ Move or copy all selected at a time.
               ("g" . dirvish-quick-access))
   :custom
   (dirvish-quick-access-entries `(
-                                ("h" "~/"                          "Home")
-                                ("C" "~/code"                      "Code")
-                                ("D" "~/Downloads/"                "Downloads")
-                                ("e" "~/.emacs.d/"                 "Emacs")
-                                ("l" ".archive"                    "Local archive")
-                                ("o" ,(substitute-in-file-name "$ORG") "Org")
-                                ("i" ,(substitute-in-file-name "$ORG_INBOX") "Org Inbox")
-                                ("I" ,(string-trim (shell-command-to-string "select-other-inbox")) "Other Inbox")
-                                ("d" ,(substitute-in-file-name "$ORG_DESIGN") "Org Designs")
-                                ("P" ,(substitute-in-file-name "$ORG_PROJECTS") "Org Projects")
-                                ("c" ,(substitute-in-file-name "$ORG_PROJECTS/🚀 completing") "Org completing projects")
-                                ("s" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging") "Org staging projects")
-                                ("p" ,(substitute-in-file-name "$ORG_PROJECTS/⚡ sparking") "Org sparking projects")
-                                ("b" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging/🛑 blocked") "Org blocked projects")
-                                ("a" ,(substitute-in-file-name "$ORG_AREAS") "Org Areas")
-                                ("r" ,(substitute-in-file-name "$ORG_RESOURCES") "Org Resources")
-                                ("n" ,(substitute-in-file-name "$ORG_RESOURCES/Neurostreams/Neurostreams") "Neurostreams")
-                                ("m" ,(substitute-in-file-name "$ORG_MEDIA") "Media")
-                                ("M" ,(substitute-in-file-name "$ORG_MEDIA/music") "Music")
-                                ("A" ,(substitute-in-file-name "$ORG_ARCHIVE") "Org Archive")
-                                ("S" ,(substitute-in-file-name "$ORG_INBOX/screenshots") "Screenshots") ; TODO show inbox if dir doesn't exist
-                                ))
-)
+                                  ("h" "~/"                          "Home")
+                                  ("C" "~/code"                      "Code")
+                                  ("D" "~/Downloads/"                "Downloads")
+                                  ("e" "~/.emacs.d/"                 "Emacs")
+                                  ("l" ".archive"                    "Local archive")
+                                  ("o" ,(substitute-in-file-name "$ORG") "Org")
+                                  ("i" ,(substitute-in-file-name "$ORG_INBOX") "Org Inbox")
+                                  ("I" ,(string-trim (shell-command-to-string "select-other-inbox")) "Other Inbox")
+                                  ("d" ,(substitute-in-file-name "$ORG_DESIGN") "Org Designs")
+                                  ("P" ,(substitute-in-file-name "$ORG_PROJECTS") "Org Projects")
+                                  ("c" ,(substitute-in-file-name "$ORG_PROJECTS/🚀 completing") "Org completing projects")
+                                  ("s" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging") "Org staging projects")
+                                  ("p" ,(substitute-in-file-name "$ORG_PROJECTS/⚡ sparking") "Org sparking projects")
+                                  ("b" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging/🛑 blocked") "Org blocked projects")
+                                  ("a" ,(substitute-in-file-name "$ORG_AREAS") "Org Areas")
+                                  ("r" ,(substitute-in-file-name "$ORG_RESOURCES") "Org Resources")
+                                  ("R" ,(substitute-in-file-name "$ORG_RESOURCES/raw") "Raw org resources")
+                                  ("t" ,(substitute-in-file-name "$ORG_RESOURCES/tags") "Org Resources")
+                                  ("n" ,(substitute-in-file-name "$ORG_RESOURCES/Neurostreams/Neurostreams") "Neurostreams")
+                                  ("m" ,(substitute-in-file-name "$ORG_MEDIA") "Media")
+                                  ("M" ,(substitute-in-file-name "$ORG_MEDIA/music") "Music")
+                                  ("A" ,(substitute-in-file-name "$ORG_ARCHIVE") "Org Archive")
+                                  ("S" ,(substitute-in-file-name "$ORG_INBOX/screenshots") "Screenshots") ; TODO show inbox if dir doesn't exist
+                                  ))
+  )
+#+end_src
+
+TODO Jump into resource
+#+begin_src emacs-lisp
+                                ("u" ,(format "%s/%s" (substitute-in-file-name "$ORG_RESOURCES")
+                                              (completing-read "Pick project: "
+                                                               (split-string (string-trim (shell-command-to-string "select-resource")) "\n") nil t))
+                                 "Select Resource")
+
 #+end_src
 
 In dirvish the line under point is marked up by the ~dirvish-hl-line~ face.
@@ -3919,7 +3946,7 @@ note-taking system.
 (defun move-to-selected-design () (interactive) (move-to (org-select-design)))
 (defun move-to-projects () (interactive) (move-to (substitute-in-file-name "$ORG_PROJECTS")))
 (defun move-to-paperless () (interactive) (move-to (substitute-in-file-name "$ORG/.paperless_import")))
-(defun move-to-blog-post-ideas () (interactive) (move-to (substitute-in-file-name "$ORG_AREAS/blog/posts/0 ideas")))
+(defun move-to-blog-post-ideas () (interactive) (move-to (substitute-in-file-name "$ORG_RESOURCES/website, jneidel.com/posts/0 ideas")))
 (defun move-to-designs () (interactive) (move-to (substitute-in-file-name "$ORG_DESIGN/2 ideas")))
 (defun move-to-other-inbox () (interactive) (move-to (string-trim (shell-command-to-string "select-other-inbox"))))
 (defun move-to-local-archive () (interactive) (let ((local-archive (expand-file-name ".archive" default-directory)))
@@ -4342,6 +4369,14 @@ Replace default notmuch hello screen with a collection of saved searches.
             :query "tag:website and tag:unread"
             :sort-order newest-first
             :key ,(kbd "w"))
+          ( :name "👀 new spam"
+            :query "tag:spam and tag:unread"
+            :sort-order newest-first
+            :key ,(kbd "m"))
+          ( :name "🚧 conflicts"
+            :query "(tag:spam OR tag:trash OR tag:invoice OR tag:archived OR tag:inbox) AND (tag:spam AND (tag:trash OR tag:invoice OR tag:archived OR tag:inbox) OR tag:invoice AND (tag:archived OR tag:inbox) OR tag:archived AND tag:inbox)"
+            :sort-order newest-first
+            :key ,(kbd "c"))
           ( :name "✏️ drafts"
             :query "tag:draft"
             :sort-order newest-first
@@ -4358,10 +4393,6 @@ Replace default notmuch hello screen with a collection of saved searches.
             :query "tag:sent"
             :sort-order newest-first
             :key ,(kbd "s"))
-          ( :name "👀 new spam"
-            :query "tag:spam and tag:unread"
-            :sort-order newest-first
-            :key ,(kbd "m"))
           ( :name "🪓 spam"
             :query "tag:spam"
             :sort-order newest-first
@@ -4370,14 +4401,10 @@ Replace default notmuch hello screen with a collection of saved searches.
             :query "tag:trash"
             :sort-order newest-first
             :key ,(kbd "t"))
-          ( :name "🌍 all"
+          ( :name "⛰️ all"
             :query "not:tag:trash and not:tag:spam"
             :sort-order newest-first
             :key ,(kbd "A"))
-          ( :name "🚧 conflicts"
-            :query "(tag:spam OR tag:trash OR tag:invoice OR tag:archived OR tag:inbox) AND (tag:spam AND (tag:trash OR tag:invoice OR tag:archived OR tag:inbox) OR tag:invoice AND (tag:archived OR tag:inbox) OR tag:archived AND tag:inbox)"
-            :sort-order newest-first
-            :key ,(kbd "c"))
           ))
 
   (keymap-set notmuch-common-keymap (kbd "g") #'notmuch-jump-search)
@@ -4472,6 +4499,7 @@ To make it less verbose I turn them into emoji.
      (,(kbd "m") ("+spam" "-inbox" "-archived" "-trash" "-invoice" "-unread") "🪓 Mark as spam")
      (,(kbd "i") ("+invoice" "-inbox" "-archived" "-spam" "-trash"  "-unread") "🛒 Mark as invoice")
      (,(kbd "a") ("+archived" "-inbox" "-trash" "-spam" "-invoice" "-unread") "🗃️ Mark as archived")
+     (,(kbd "I") ("+inbox" "-archived" "-trash" "-spam" "-invoice") "📥️ Mark as inbox")
      (,(kbd "f") ("+flag") "🚩 Flag as important")
      (,(kbd "r") ("-unread") "👀 Mark as read")
      (,(kbd "u") ("+unread") "👀 Mark as unread")))
@@ -4848,13 +4876,13 @@ This automated tagging works across all feeds.
   :defer t
   :config
   (add-hook 'elfeed-new-entry-hook
-          (elfeed-make-tagger :entry-link "youtube\\.com/shorts"
-                              :add 'junk
-                              :remove 'unread))
-    ;; (add-hook 'elfeed-new-entry-hook
-    ;;       (elfeed-make-tagger :entry-title "In title"
-    ;;                           :add 'junk
-    ;;                           :remove 'unread))
+            (elfeed-make-tagger :entry-link "youtube\\.com/shorts"
+                                :add 'junk
+                                :remove 'unread))
+  (add-hook 'elfeed-new-entry-hook
+            (elfeed-make-tagger :entry-title "TheStandup"
+                                :add 'junk
+                                :remove 'unread))
 
   (setq-default elfeed-search-filter "-junk -music +unread"))
 #+end_src
@@ -5037,7 +5065,7 @@ intentionally aren't covering to fit the appetite or make the problem tractable/
 #+end_src
 
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun jn/morning-routine ()
+(defun morning-routine ()
   "Open my morning routine org files and start Neurostreams."
   (interactive)
   (find-file (substitute-in-file-name "$ORG_RESOURCES/morning routine/My personal internal commitment.org"))

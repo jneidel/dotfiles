@@ -32,7 +32,7 @@ run_yay() {
   reapply_X_settings
 
   nice -n 19 yay --color=always --noconfirm
-  nice -n 19 yay -S yt-dlp-git
+  nice -n 19 yay -S yt-dlp-git --noconfirm
   reapply_X_settings
 
   yay -Qtdq | yay -Rsn --noconfirm -

@@ -22,7 +22,7 @@ hash rofi xdotool || exit 127
 lang=$1
 
 list_files() {
-  # excludes _index and NAME.md
+  # matches NAME/index.md files, excludes _index.md and NAME.md
   cd $WEB_HOME
   case $lang in
     en)
