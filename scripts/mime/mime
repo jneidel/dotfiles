@@ -1,7 +1,7 @@
 #! /bin/sh
 
 DIR=`dirname $0`
-AVAILABLE_ENVS="lf"
+AVAILABLE_ENVS="lf emacs"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
   cat << EOF
@@ -78,8 +78,15 @@ EXIT_CODE="$?"
 # environment specific extensions
 if [ "$ENV_" = "lf" ]; then
   case $EXT in
-    mp3|flac|ogg|wma|m4b) tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video \"$FILE\"" &
-    exit 0;;
+    mp3|flac|ogg|wma|m4b)
+      tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video \"$FILE\"" &
+      exit 0;;
+  esac
+elif [ "$ENV_" = "emacs" ]; then
+  case $EXT in
+    mp3|flac|ogg|wma|m4b)
+      tmux new-window -n mpv -d "exec mpv --no-audio-display --no-video \"$FILE\"" &
+      exit 0;;
   esac
 elif [ -z "$ENV_" ]; then
   true

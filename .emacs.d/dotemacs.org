@@ -3495,7 +3495,40 @@ First enter the new name, then decide what it is."
   )
 #+end_src
 
-TODO continue https://protesilaos.com/emacs/dotemacs#h:d7d5e619-3d50-4d9e-a951-7262462a60c9
+[[https://github.com/garberw/openwith][openwith]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package openwith
+  :hook after-init
+  :config
+  (setq openwith-associations
+        (list
+         (list (openwith-make-extension-regexp
+                '("mp4" "avi" "mkv" "m4v" "webm" "mpg" "vob"
+                  "pdf"
+                  "ods" "xlsx" "pptx" "odt" "odp" "docx"
+                  "tgz" "zip" "rar" "xz" "gz" "deb"
+                  "sent"
+                  "mp3" "flac" "ogg" "wma" "m4b"
+                  ))
+               "mime -e emacs"
+               '(file))
+         ))
+#+end_src
+
+[[https://emacs.stackexchange.com/a/62234/50580][src]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(define-advice abort-if-file-too-large
+    (:around (orig-fn size op-type filename &optional offer-raw) unless-openwith-handles-it)
+  "Do not check file size if FILENAME is handled by openwith.
+This cirumvents the 'file is large' prompt."
+  (let ((my-ok-large-file-types (mapconcat 'car openwith-associations "\\|")))
+    (unless (string-match-p my-ok-large-file-types filename)
+      (funcall orig-fn size op-type filename offer-raw))))
+)
+#+end_src
+
+TODO continue
+https://protesilaos.com/emacs/dotemacs#h:d7d5e619-3d50-4d9e-a951-7262462a60c9
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun jn/dired-jump-to-link-source ()
   "In Dired take the first marked file and visit its containing directory.

@@ -55,7 +55,7 @@ case $EXT in
   aup3) echo audacity;;
   gpg|*.gpg) echo extracthere; exit 1;;
   ods|xlsx|csv) echo libreoffice;;
-  docx|pptx|odp|odt|xltx) echo "libreoffice --convert-to pdf"; exit 1;;
+  docx|pptx|odp|odt) echo "libreoffice --convert-to pdf"; exit 1;;
   c) echo gcc; exit 1;;
   py) echo python3; exit 1;;
   browser-tabs) echo open-tabs;;
