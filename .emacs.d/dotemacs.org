@@ -3813,22 +3813,23 @@ Falls back to the `default` face if needed."
 By default use no parent or child/preview panes.
 They can be enabled on demand and will not persist after dired is closed
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-  (defun jn/dirvish-toggle-preview ()
-    "Toggle two pane layout with preview.
+(defun jn/dirvish-toggle-preview ()
+  "Toggle two pane layout with preview.
 It's `dirvish-layout-toggle' using my layout."
-    (interactive)
-    (let* ((dv (or (dirvish-curr) (user-error "Not a dirvish buffer")))
-           (my-layout '(0 0.6 0.4))
-           (old-layout (dv-curr-layout dv)) (conf (dv-winconf dv))
-           (new-layout (unless old-layout my-layout))
-           (buf (current-buffer)))
-      (setf (dv-preview-hash dv) (dirvish--ht) (dv-parent-hash dv) (dirvish--ht))
-      (if old-layout (and conf (set-window-configuration conf))
-        (with-selected-window (dv-root-window dv) (quit-window)))
-      (setf (dv-curr-layout dv) new-layout)
-      (with-selected-window (dirvish--create-root-window dv)
-        (dirvish-save-dedication (switch-to-buffer buf))
-        (dirvish--build-layout dv))))
+  (interactive)
+  (require 'dirvish)
+  (let* ((dv (or (dirvish-curr) (user-error "Not a dirvish buffer")))
+         (my-layout '(0 0.6 0.4))
+         (old-layout (dv-curr-layout dv)) (conf (dv-winconf dv))
+         (new-layout (unless old-layout my-layout))
+         (buf (current-buffer)))
+    (setf (dv-preview-hash dv) (dirvish--ht) (dv-parent-hash dv) (dirvish--ht))
+    (if old-layout (and conf (set-window-configuration conf))
+      (with-selected-window (dv-root-window dv) (quit-window)))
+    (setf (dv-curr-layout dv) new-layout)
+    (with-selected-window (dirvish--create-root-window dv)
+      (dirvish-save-dedication (switch-to-buffer buf))
+      (dirvish--build-layout dv))))
 
 (use-package dirvish
   :defer t
