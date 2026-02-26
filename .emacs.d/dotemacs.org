@@ -960,9 +960,23 @@ https://orgmode.org/manual/Capture-templates.html
   )
 #+end_src
 
+Eliminate/silence (timer) errors throw because of capture flow.
+#+begin_src elisp :tangle "init.el" :results silent
+(with-eval-after-load 'org-roam
+  (advice-add 'org-roam-node-tags :around
+              (lambda (orig node &rest args)
+                (if (null node) nil
+                  (apply orig node args))))
+  (advice-add 'org-roam-node-at-point :around
+              (lambda (orig-fn &rest args)
+                (when (derived-mode-p 'org-mode)
+                  (apply orig-fn args)))))
+#+end_src
+
 Not in use:
 #+begin_src elisp :results silent
-(add-to-list 'org-capture-templates
+(with-eval-after-load 'org-capture
+  (add-to-list 'org-capture-templates
              '("j" "Tracking Journal" item
                (file+olp+datetree "~/org/tracking-journal.org")
                "%<%H:%M> %?\n"))
@@ -979,6 +993,7 @@ Not in use:
                (file+headline retro-notes "Badness")
                "* %?\n  %t"
                :prepend 1 :empty-lines-after 1))
+)
 #+end_src
 - refactor with: https://miguelcrespo.co/posts/using-org-capture-to-create-new-org-files
 - ideas from: https://howardism.org/Technical/Emacs/capturing-content.html
