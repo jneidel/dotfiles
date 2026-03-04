@@ -3,6 +3,7 @@ keymap:
   - name: Emacs
     application:
       not: [Emacs, Nyxt, kitty, Gimp]
+    exact_match: true
     remap:
       # Cursor
       C-b: { with_mark: left }
@@ -59,6 +60,7 @@ keymap:
   - name: KeepassXC
     application:
       only: [KeePassXC]
+    exact_match: true
     remap:
       # M-w to copy password
       C-u: C-b # copy username
