@@ -1,0 +1,34 @@
+#! /bin/sh
+
+TMP_LIST=/tmp/generate-org-metadata-reused-titles
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ generate-orgmode-metadata TITLE
+Generate the metadata block for the top of an orgmode file.
+
+Arguments:
+  \$1: title
+EOF
+  exit
+fi
+
+title="$1"
+
+# I only want one metadata block per note with the same title.
+# For signal-to-inbox messages are parsed async, so the file exists check does not
+# guard against multiple metadata block for the same title.
+if [ -n "$title" ] && grep -F "${title}" $TMP_LIST >/dev/null 2>&1; then
+  sleep 0.5s # ensure no message gets written before the metadata block
+  exit 0
+else
+  echo "$title" >>$TMP_LIST
+fi
+
+cat <<EOF
+:PROPERTIES:
+:ID: $(uuidgen)
+:END:
+#+title: $title
+#+date: $(date +%Y-%m-%d)
+EOF
