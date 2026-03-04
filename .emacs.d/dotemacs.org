@@ -1064,6 +1064,14 @@ Needs to run =M-x all-the-icons-install-fonts= once.
   :defer t) ; will be loaded through :after on dependents
 #+end_src
 
+*** Auto tangle
+[[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]]
+Add a =#+auto_tangle: t= to the file to trigger.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-auto-tangle
+  :hook (org-src-mode . org-auto-tangle-mode))
+#+end_src
+
 *** Pretty org
 Make org great again!
 **** org-modern
