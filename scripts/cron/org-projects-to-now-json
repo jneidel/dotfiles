@@ -15,7 +15,7 @@ hash jq || exit 127
 
 get_project_list() {
   potential_projects=$(mktemp)
-  find "$ORG_PROJECTS" -maxdepth 2 -mindepth 2 -not -path '*/.*' -not -path '*blocked' -not -path '*trip: *' | sort -Vr >$potential_projects
+  find "$ORG_PROJECTS" -maxdepth 2 -mindepth 2 -not -path '*/.*' -not -path "*⚡ sparking*" -not -path '*blocked' -not -path '*trip: *' | sort -Vr >$potential_projects
 
   ignored_projects=$(mktemp)
   find "$ORG_PROJECTS" -mindepth 3 -type f -name ".now-ignore" | rev | cut -d/ -f2- | rev | sort -V >$ignored_projects
@@ -26,7 +26,7 @@ get_project_list() {
 get_description() {
   index_file="$1"
 
-  description_without_headers="$(head -n30 "$index_file" 2>/dev/null | grep -ve '^#+')"
+  description_without_headers="$(head -n30 "$index_file" 2>/dev/null | grep -ve '^#+' -e ':PROPERTIES:' -e ':ID:' -e ':END:')"
   description_without_sections="$description_without_headers"
   if grep '^\*' -m1 "$index_file" >/dev/null 2>&1; then
     description_without_sections="$(echo "$description_without_headers" | grep -m1 '^\*' -B30 | head -n-1)"
@@ -46,17 +46,17 @@ EOF
 
   get_project_list | while read -r project; do
     index_file="${project}/$ORG_INDEX_FILE_NAME"
-    title="$(basename "$project" | sed 's/\.org$//')"
-    status="$(basename "$(dirname "$project")")"
-    # if echo $project | grep -ve "🟨" >/dev/null; then
-    #   status="$(grep -Po '#\+(status|STATUS): \K.*' "$index_file" 2>/dev/null)"
-    # fi
+    title="$(basename "$project" | sed 's/\.org$//; s/ -- .*$//')"
+    status="$(basename "$(dirname "$project")" | cut -d\  -f2)"
+    if grep -P "#\+status: .+" "$index_file" >/dev/null 2>&1; then
+      status="$(grep -Po '#\+(status|STATUS): \K.*' "$index_file" 2>/dev/null)"
+    fi
     description="$(get_description "$index_file")"
 
     printf '  { "title": "%s", "status": "%s", "description": "%s" },\n' "$title" "$status" "$description" >>$json
   done
 
-  sed '$s/},/}/' -i $json # valid json: last line in array has no trailing ,
+  sed '$s/},/}/' -i $json # turn into valid json: last line in array has no trailing ,
   echo "]}" >>$json
 
   if ! cat $json | jq >/dev/null; then # validate json
