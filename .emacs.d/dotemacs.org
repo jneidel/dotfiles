@@ -5558,6 +5558,37 @@ The `crontab(1)' executable is used to load the crontab."
               ("M-=" . kill-current-buffer)))
 #+end_src
 
+** Templates (YASnippet)
+[[https://github.com/joaotavora/yasnippet][Github]], [[https://joaotavora.github.io/yasnippet/][docs]], [[https://www.youtube.com/watch?v=W-bRZlseNm0][short intro video]].
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package yasnippet
+  :hook (after-init . yas-global-mode)
+  :diminish 'yas-minor-mode
+  :custom
+  (yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
+#+end_src
+[[https://www.rahuljuliato.com/posts/abbrev-mode][Abbrev-mode as a minimal alternative]].
+
+Completing-read menu to invoke a snippet by name.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package consult-yasnippet
+  :bind ("H-y" . consult-yasnippet))
+#+end_src
+
+** Writing
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun continue-writing ()
+  "Open bookmarked spot to continue writing."
+  (interactive)
+  (tabspaces-switch-or-create-workspace "write")
+  (bookmark-jump "write")
+  (writeroom-mode 1)
+  (shell-command "i3-msg fullscreen enable >/dev/null"))
+
+(use-package writeroom-mode
+  :defer t)
+#+end_src
+
 # Local Variables:
 # jinx-local-words: "avy"
 # End:

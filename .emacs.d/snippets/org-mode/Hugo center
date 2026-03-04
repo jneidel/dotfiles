@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Hugo center
+# key: <cen
+# --
+
+#+begin_export hugo
+{{<center>}}
+#+end_export
+$0
+#+begin_export hugo
+{{</center>}}
+#+end_export

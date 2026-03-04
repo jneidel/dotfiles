@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Hugo image
+# key: <i
+# --
+
+#+attr_html: :class md:w-${3:12}/12 :alt ${2}
+[[file:${1}]]

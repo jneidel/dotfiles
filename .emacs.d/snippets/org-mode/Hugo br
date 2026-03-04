@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Hugo br
+# key: <br
+# --
+
+#+html: <br>
+$0

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Hugo details
+# key: <det
+# --
+
+#+html: <details>
+#+begin_summary
+${1}
+#+end_summary
+
+$0
+#+html: </details>
