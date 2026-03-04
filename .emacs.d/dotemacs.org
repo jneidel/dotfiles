@@ -237,18 +237,6 @@ and an interface to easily add your own.
     "A HUD that shows which part of the buffer is currently visible."
     (powerline-hud 'hudred 'grey-on-grey)
     :tight t)
-
-  (spaceline-define-segment perspective
-    "Shows the name of the current perspective."
-    (let ((name (persp-current-name)))
-      (when (not (equal name "main"))
-        (propertize name
-                    'mouse-face 'mode-line-highlight
-                    'help-echo "Perspective\n mouse-1: Switch workspaces"
-                    'local-map (make-mode-line-mouse-map
-                                'mouse-1 (lambda()
-                                           (interactive)
-                                           (call-interactively 'persp-switch)))))))
   )
 #+end_src
 
@@ -299,9 +287,6 @@ Left and right sides of the mode-line.
       (global
        ;; :face 'grey-on-grey
        :when active)
-      (perspective
-       ;; :face 'red-on-grey
-       :priority 70)
       (red-hud
        ;; :face 'grey-on-grey
        :priority 99)
@@ -404,17 +389,17 @@ Open frequently used file directly via a short-cut menu:
   :config
   (transient-define-prefix jump-menu-common-files ()
     "A jump menu to open frequently used files."
-    [("d" "dotemacs" (lambda () (interactive) (persp-switch "main") (find-file "~/.emacs.d/dotemacs.org")))
-     ("k" "practice emacs bindings" (lambda () (interactive) (persp-switch "main") (find-file (substitute-in-file-name "$ORG_RESOURCES/Emacs/Emacs keys training - deliberate practice.org"))))
-     ("m" "notmuch mail" (lambda () (interactive) (persp-switch "main") (notmuch)))
+    [("d" "dotemacs" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/.emacs.d/dotemacs.org")))
+     ("k" "practice emacs bindings" (lambda () (interactive) (workspace-switch-to-main) (find-file (substitute-in-file-name "$ORG_RESOURCES/Emacs/Emacs keys training - deliberate practice.org"))))
+     ("m" "notmuch mail" (lambda () (interactive) (workspace-switch-to-main) (notmuch)))
      ("n" "ncmpcpp music" (lambda () (interactive) (ncmpcpp)))
-     ("r" "elfeed rss" (lambda () (interactive) (persp-switch "main") (elfeed) (elfeed-update)))
-     ("c" "remind calendar" (lambda () (interactive) (persp-switch "main") (remind-calendar)))
+     ("r" "elfeed rss" (lambda () (interactive) (workspace-switch-to-main) (elfeed) (elfeed-update)))
+     ("c" "remind calendar" (lambda () (interactive) (workspace-switch-to-main) (remind-calendar)))
      ("s" "scratch buffer" (lambda () (interactive) (scratch-buffer)))
-     ("p" "parcels" (lambda () (interactive) (persp-switch "main") (find-file "~/org/3_resources/Parcels tracking.org")))
-     ("e" "exercise routine" (lambda () (interactive) (persp-switch "main") (find-file "~/org/3_resources/exercise/My Sustainable Training Routine.org")))
-     ("t" "Re:Zero todos" (lambda () (interactive) (persp-switch "main") (rezero)))
-     ("f" "filetags" (lambda () (interactive) (persp-switch "main") (find-file "~/org/filetags.org")))
+     ("p" "parcels" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/3_resources/Parcels tracking.org")))
+     ("e" "exercise routine" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/3_resources/exercise/My Sustainable Training Routine.org")))
+     ("t" "Re:Zero todos" (lambda () (interactive) (workspace-switch-to-main) (rezero)))
+     ("f" "filetags" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/filetags.org")))
      ])
   :bind ("H-j" . jump-menu-common-files))
 #+end_src
@@ -482,68 +467,6 @@ minibuffer, even without explicitly focusing it."
     (keyboard-quit)))
 
 (global-set-key [remap keyboard-quit] #'keyboard-quit-dwim)
-#+end_src
-
-** Tabs
-https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html
-upgrade to:
-
-One way to do this is keeping project stuff in one tab and persisting it with [[https://github.com/minad/tab-bookmark][tab-bookmark]].
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package tab-bookmark
-  :quelpa (tab-bookmark :fetcher "github" :repo "minad/tab-bookmark")
-  :commands (tab-bookmark
-             tab-bookmark-save
-             tab-bookmark-open))
-#+end_src
-
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(setq tab-bar-show 1
-      tab-bar-auto-width nil
-      tab-bar-auto-width-max '(220 30)
-      tab-bar-close-button-show nil
-      tab-bar-format '(tab-bar-format-history tab-bar-format-tabs tab-bar-separator))
-(tab-bar-mode t)
-
-(set-face-attribute 'tab-bar nil
-                    :background "#1c1c1c"
-                    :family (face-attribute 'default :family)
-                    :weight 'bold
-                    :slant 'italic
-                    :height 0.85)
-(set-face-attribute 'tab-bar-tab nil
-                    :inherit 'tab-bar
-                    :foreground "#d70000"
-                    :box nil)
-(set-face-attribute 'tab-bar-tab-inactive nil
-                    :inherit 'tab-bar-tab
-                    :foreground "dim grey"
-                    :background 'unspecified)
-
-(general-define-key
- "ħ" 'tab-previous ;; AltGr + h, default C-S-tab
- "ł" 'tab-next)    ;; AltGr + l, default C-tab
-
-;; bindings
-;; C-x t r: rename tab
-#+end_src
-
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package all-the-icons
-  :config
-  (defun my/tab-bar-tab-name-with-icon ()
-    "Tab name with an icon based on major mode."
-    (let* ((icon (when (and (fboundp 'all-the-icons-icon-for-buffer)
-                            (display-graphic-p))
-                   (all-the-icons-icon-for-buffer)))
-           (name (buffer-name)))
-      (format " %s %s"
-              (if (symbolp icon)
-                  "" ;; fallback if no icon
-                icon)
-              name)))
-  :custom
-  (tab-bar-tab-name-function #'my/tab-bar-tab-name-with-icon))
 #+end_src
 
 ** Org-mode
@@ -1379,14 +1302,13 @@ It makes it easy to hide/unhide these popups and cycle through the various ones.
         "\\*Flymake diagnostics"))
 
 (use-package popper
+  :hook (after-init popper-mode)
   :custom
   (popper-reference-buffers jn/secondary-buffer-regexes)
   (popper-mode-line '(:eval ""))
   (popper-window-height 12) ; default function maxes out at 33%, which seems too small to me
-  :defer 1
+  (popper-group-function #'popper-group-by-project)
   :config
-  (popper-mode +1)
-
   (defhydra popper-hydra (:hint nil)
     "
 _n_ext    _p_revious    promo_t_e/demo_t_e    show/_u_nshow"
@@ -1403,32 +1325,118 @@ _n_ext    _p_revious    promo_t_e/demo_t_e    show/_u_nshow"
 
 To gain more control over buffer placement use [[https://depp.brause.cc/shackle/][shakle]] and
 ~(setq popper-display-control nil)~.
+** Tabs
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html
+upgrade to:
 
-** Workspaces (perspective)
-In the terminal I used tmux sessions to group a collection of windows belonging to
-one project.
-When I was working on a project, I was in the project directory and would only
-see stuff relating to the project, keeping me focused.
-When I was in my main session I would not be reminded of the projects work in
-progress.
-There too I could focus on the task at hand.
-
-I wanted to replicate this in Emacs and [[https://github.com/nex3/perspective-el][perspective]] does this seamlessly.
+One way to do this is keeping project stuff in one tab and persisting it with [[https://github.com/minad/tab-bookmark][tab-bookmark]].
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package perspective
-  :custom
-  (persp-mode-prefix-key (kbd "C-x C-p"))
-  (persp-show-modestring nil)
-  :init
-  (persp-mode)
-  :bind (("C-x k" . persp-kill-buffer*)
-         ([remap kill-buffer] . persp-kill-buffer*)))
+(use-package tab-bookmark
+  :quelpa (tab-bookmark :fetcher "github" :repo "minad/tab-bookmark")
+  :commands (tab-bookmark
+             tab-bookmark-save
+             tab-bookmark-open))
 #+end_src
 
-Perspective keeps track of which perspective a buffer belongs to.
-To only see buffers of the current perspective in ~consult-buffer~ it needs to
-filter by ~persp-is-current-buffer~, which I have configured below and set it as
-the ~:default~ consult buffer source.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq tab-bar-show 1
+      tab-bar-auto-width nil
+      tab-bar-auto-width-max '(220 30)
+      tab-bar-close-button-show nil
+      tab-bar-format '(tab-bar-format-history tab-bar-format-tabs tab-bar-separator))
+(tab-bar-mode t)
+
+(set-face-attribute 'tab-bar nil
+                    :background "#1c1c1c"
+                    :family (face-attribute 'default :family)
+                    :weight 'bold
+                    :slant 'italic
+                    :height 0.85)
+(set-face-attribute 'tab-bar-tab nil
+                    :inherit 'tab-bar
+                    :foreground "grey42"
+                    :box nil)
+(set-face-attribute 'tab-bar-tab-inactive nil
+                    :inherit 'tab-bar-tab
+                    :foreground "grey30"
+                    :background 'unspecified)
+
+(general-define-key
+ "ħ" 'tab-previous ;; AltGr + h, default C-S-tab
+ "ł" 'tab-next)    ;; AltGr + l, default C-tab
+
+;; bindings
+;; C-x t r: rename tab
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package all-the-icons
+  :config
+  (defun my/tab-bar-tab-name-with-icon ()
+    "Tab name with an icon based on major mode."
+    (let* ((icon (when (and (fboundp 'all-the-icons-icon-for-buffer)
+                            (display-graphic-p))
+                   (all-the-icons-icon-for-buffer)))
+           (name (buffer-name)))
+      (format " %s %s"
+              (if (symbolp icon)
+                  "" ;; fallback if no icon
+                icon)
+              name)))
+  :custom
+  (tab-bar-tab-name-function #'my/tab-bar-tab-name-with-icon))
+#+end_src
+
+*** Workspaces (tabspaces)
+In the terminal I used tmux sessions to group a collection of windows belonging to
+one project.
+For this I use [[https://github.com/mclear-tools/tabspaces][tabspaces]].
+It integrates well into existing tools (project.el and tab-bar.el).
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun workspace-switch-to-main ()
+  (tab-bar-switch-to-tab "main"))
+(defun workspace-local-buffer-p (buf)
+  (tabspaces--local-buffer-p buf)
+  ;; persp-is-current-buffer
+  )
+
+(use-package tabspaces
+  :hook (after-init . tabspaces-mode)
+  :commands (tabspaces-switch-or-create-workspace
+             tabspaces-open-or-create-project-and-workspace)
+  :bind (("C-x t s" . tabspaces-switch-or-create-workspace) ; [s]witch
+         ("C-x t c" . tabspaces-switch-or-create-workspace) ; [c]reate
+         ("C-x t o" . tabspaces-open-or-create-project-and-workspace) ; [o]pen
+         ("C-x t p" . tabspaces-open-or-create-project-and-workspace) ; [p]roject
+         ("C-x t C-l" . tabspaces-clear-buffers) ; mirrors C-l in shell
+         ("C-x t C-k" . tabspaces-kill-buffers-close-workspace) ; mirrors C-x C-k
+         ("H-B" . tabspaces-switch-buffer-and-tab)) ; switch-buffer in any workspace
+  :custom
+  (tabspaces-use-filtered-buffers-as-default t)
+  (tabspaces-default-tab "main")
+  (tabspaces-remove-to-default t)
+  (tabspaces-include-buffers '("*scratch*"))
+  (tabspaces-initialize-project-with-todo t)
+  (tabspaces-todo-file-name "project-todo.org")
+  ;; additional options
+  (tabspaces-fully-resolve-paths t)  ; Resolve relative project paths to absolute
+  (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*"))  ; Additional buffers to exclude
+  (tab-bar-new-tab-choice "*scratch*")
+  :config
+  ;; rename initial tab "*scratch*"
+  (when (= (length (tab-bar-tabs)) 1) (tab-bar-rename-tab tabspaces-default-tab)))
+#+end_src
+
+Before tabspaces I use perspective.
+When I was using [[https://github.com/nex3/perspective-el][perspective]] my buffer list was messed up.
+Through some mechanism all my buffers where touched at the same time.
+Thus breaking my expectations in consult-buffer as I could not see recent
+buffers first, but saw a bunch of random stuff.
+
+**** Workspace scoped =consult-buffer=
+Tabspaces keeps track of which workspace a buffer belongs to.
+To only see buffers of the current workspace in ~consult-buffer~ it needs to be
+filtered by workspace and the ~:default~ consult buffer source disabled.
 
 As described in the sections on consult and popper, the split between primary
 and secondary buffers (help, ~*Messages*~, etc.) is implemented here.
@@ -1445,187 +1453,58 @@ and secondary buffers (help, ~*Messages*~, etc.) is implemented here.
 
 (use-package consult
   :defer t
-  :custom
-  (popper-group-function #'popper-group-by-perspective)
   :config
   (consult-customize consult-source-buffer :hidden t :default nil) ; disable
-  (consult-customize persp-consult-source
-                     :name "Perspective Buffer"
-                     :default t
-                     :items '(lambda () (consult--buffer-query
-                                         :sort 'visibility
-                                         :as #'buffer-name
-                                         :predicate (lambda (buf) (persp-is-current-buffer buf t))
-                                         :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))) ; hidden buffers like minibuffer
+  (defvar consult--source-workspace
+    (list :name     "Workspace Buffers"
+          :narrow   ?w
+          :history  'buffer-name-history
+          :category 'buffer
+          :state    #'consult--buffer-state
+          :default  t
+          :items (lambda () (consult--buffer-query
+                             :sort 'visibility
+                             :as #'buffer-name
+                             :predicate #'workspace-local-buffer-p
+                             :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*")))))) ; hidden buffers like minibuffer
 
-  (defvar consult-special-buffer
-    `( :name "Special Buffer"
-       :default nil
-       :face consult-buffer
-       :category buffer
-       :history buffer-name-history
-       :state ,#'consult--buffer-state
-       :items ,(lambda () (consult--buffer-query
-                           :sort 'visibility
-                           :as #'buffer-name
-                           :predicate (lambda (buf) (persp-is-current-buffer buf t))
-                           :include jn/secondary-buffer-pure-regexes
-                           ))))
+  (defvar consult--source-special
+    (list :name "Special Buffers"
+          :default nil
+          :face 'consult-buffer
+          :category 'buffer
+          :history 'buffer-name-history
+          :state #'consult--buffer-state
+          :items (lambda () (consult--buffer-query
+                             :sort 'visibility
+                             :as #'buffer-name
+                             :predicate #'workspace-local-buffer-p
+                             :include jn/secondary-buffer-pure-regexes))))
 
-  (add-to-list 'consult-buffer-sources consult-special-buffer)
-  (add-to-list 'consult-buffer-sources persp-consult-source)
-#+end_src
-
-Have bookmark and recent file ~consult-buffer~ sources only show up on the main
-perspective.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-  (consult-customize consult-source-bookmark
-                   :enabled (lambda () (equal (persp-current-name) "main")))
-  (consult-customize consult-source-recent-file
-                   :enabled (lambda () (equal (persp-current-name) "main")))
-)
+  (add-to-list 'consult-buffer-sources 'consult--source-special)
+  (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 #+end_src
 
 Most of the time I want to switch back to the buffer I was just in.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun jn/switch-to-last-buffer ()
-     "Switch to the last opened buffer.
+  "Switch to the last opened non-dired buffer.
 Activating it two times in a row will bring you back to the buffer you were in.
 The buffer list is filtered the same way as for `consult-buffer'.
 Keeps things predictable."
-     (interactive)
-     (switch-to-buffer
-      (car (consult--buffer-query
-            :sort 'visibility
-            :as #'buffer-name
-            :predicate (lambda (buf) (persp-is-current-buffer buf t))
-            :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))))
+  (interactive)
+  (switch-to-buffer
+   (car (consult--buffer-query
+         :sort 'visibility
+         :as #'buffer-name
+         :predicate (lambda (buf)
+                      (and (workspace-local-buffer-p buf)
+                           (with-current-buffer buf
+                             (not (derived-mode-p 'dired-mode)))))
+         :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))))
 
 (use-package consult
   :bind ("H-<SPC>" . jn/switch-to-last-buffer))
-#+end_src
-
-~H-b~ thus filters by perspective.
-Make available ~H-B~ to switch to a buffer in any perspective.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package perspective
-  :bind ("H-B" . persp-switch-to-buffer))
-#+end_src
-
-I am not using perspectives functionality to persist the current perspectives to
-a file, neither am I using [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html][desktop-save-mode]].
-I tried it and had similar problems as with saving vim sessions:
-1. corrupted state: opening Emacs shows me errors not only errors in my config
-   but also those persisted along the session
-2. trash accumulates (unneeded buffers, moved files, etc.), can be mitigated
-   with midnight-mode
-3. state is saved on exit, so I will loose it occasionally
-4. unexpected behaviors with multiple open instances
-
-These problems can be mitigated (midnight-mode for cleanup, auto save
-functionality for regular saving, lock file, etc.), but is it worth the
-headache?
-For me it isn't.
-I have instead setup ways to quickly jump to files I use all the time and
-created a way to reopen a preconfigured project workspace with everything I
-need.
-
-([[https://github.com/karthink/project-x][project-x]] might be a minimal way to only save project.el buffers.
-Integration with projectile seem trivial if I need it.)
-
-You can also use a pure [[https://www.rahuljuliato.com/posts/emacs-tab-bar-groups][tab-bar-mode]] variant to replace tmux sessions.
-
-*** Open project workspaces
-With tmux I used [[https://github.com/tmuxinator/tmuxinator][tmuxinator]] to create sessions for projects.
-Per project I would configure a directory, a window arrangement and run some
-commands.
-I have replicated that functionality centered around perspective.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(cl-defstruct jn/persp-project
-  name      ;; Pretty name
-  dir       ;; Project root
-  setup-fn) ;; Custom code to run
-
-(defvar jn/persp-projects nil
-  "Alist of (NAME . jn/persp-project) registered projects.")
-
-(defun jn/persp-register-project (name dir setup-fn)
-  "Register a project."
-  (let* ((key name)
-         (proj (make-jn/persp-project :name name :dir dir :setup-fn setup-fn)))
-    (setq jn/persp-projects (assoc-delete-all key jn/persp-projects))
-    (push (cons key proj) jn/persp-projects)))
-
-(defun jn/persp-switch-persp-open-project ()
-  "Open a configured project in perspective or switch to a running perspective."
-  (interactive)
-  (let ((name (completing-read "Open Perspective: " (append
-                                                     (persp-names)
-                                                     (mapcar #'car jn/persp-projects)))))
-    (if (member name (persp-names))
-        (persp-switch name)
-      (let* ((proj (cdr (assoc name jn/persp-projects)))
-             (dir (file-name-as-directory (expand-file-name (jn/persp-project-dir proj))))
-             (setup-fn (jn/persp-project-setup-fn proj)))
-        (persp-switch name)
-        (let ((default-directory dir))
-          (when (and (fboundp 'project-remember-project)
-                     (fboundp 'project--find-in-directory)
-                     (not (project-current nil dir)))
-            (ignore-errors
-              (project-remember-project
-               (project--find-in-directory dir))))
-          (when (functionp setup-fn)
-            (funcall setup-fn)))))))
-
-(keymap-set perspective-map "s" #'jn/persp-switch-persp-open-project)
-#+end_src
-
-**** Perspective project definitions
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(jn/persp-register-project
- "website"
- "~/code/web"
- (lambda () (dirvish "src")))
-
-(jn/persp-register-project
- "dotfiles"
- "~/code/dotfiles"
- (lambda () (magit-status) (delete-other-windows)))
-
-(jn/persp-register-project
- "Rails exploration"
- "~/code/experiments/2025-12-03-rails.org-follow-along"
- (lambda () (dirvish)))
-#+end_src
-
-To quickly create a new (temporary) perspective definition use this utility function.
-#+begin_src emacs-lisp :tangle "init.el" :results silent
-(defun jn/persp-create-for-current-project ()
-  "Create a perspective for the current project and switch to it."
-  (interactive)
-  (let* ((proj (project-current nil))
-         (root (when proj (expand-file-name (project-root proj)))))
-    (if (not root)
-        (message "Not in a project.")
-      (let* ((project-name (file-name-nondirectory (directory-file-name root)))
-             (persp-existsp (member project-name (persp-names))))
-        (cond
-         (persp-existsp
-          (kill-buffer)
-          (persp-switch project-name)
-          (message "Switched to existing perspective: %s" project-name))
-         ((not (y-or-n-p (format "Create perspective for current project '%s'? " project-name)))
-          (message "Aborted."))
-         (t
-          (jn/persp-register-project project-name root nil)
-          (kill-buffer)
-          (persp-switch project-name)
-          (dirvish root)
-          (message "Switched to new perspective: %s" project-name)))))))
-
-(keymap-set perspective-map "c" #'jn/persp-create-for-current-project)
-(keymap-set project-prefix-map "C-p" #'jn/persp-create-for-current-project)
 #+end_src
 
 * Completion
@@ -1868,7 +1747,7 @@ Luckily consult allows splitting primary buffers and secondary buffers into
 separate sections:
 
 [[file:img/consult-buffer-after.png]]
-See section on [[*Workspaces (perspective)][perspective]] for implementation.
+See section on [[*Workspaces (tabspaces)][workspaces]] for implementation.
 
 *** Fuzzy finder (affe)
 Matches for finding files are generated with ripgrep, which is much faster than
