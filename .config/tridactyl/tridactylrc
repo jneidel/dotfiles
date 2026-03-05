@@ -1,3 +1,5 @@
+" :source or :restart to apply changes
+
 " Open video in mpv.
 " Accepts one argument (the hinted URL). Shellescape for external output.
 alias mpvqueue composite shellescape | exclaim /home/jneidel/scripts/sxhkd/open_clip_mpv
@@ -8,6 +10,8 @@ autocmd DocStart jellyfin.neidel.xyz set modeindicator false
 
 bind <A-h> tabprev
 bind <A-l> tabnext
+
+unbind <C-f>
 
 bind --mode=ex <ArrowDown> ex.next_completion
 bind --mode=ex <ArrowUp>   ex.prev_completion
