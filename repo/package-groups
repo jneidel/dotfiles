@@ -138,6 +138,10 @@ qt5-script Build dependency
 [firefox]
 firefox Firefox
 
+[tridactyl]
+firefox-tridactyl Addon
+firefox-tridactyl-native-bin Native messenging
+
 [firefox-dev]
 firefox-developer-edition Developer edition of firefox
 

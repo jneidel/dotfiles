@@ -2556,6 +2556,12 @@ https://www.polyomica.com/weekly-emacs-tip-27-emacs-as-a-server-daemon-and-emacs
   (unless (server-running-p) (server-start)))
 #+end_src
 
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package emacs
+  :ensure nil
+  :mode ("tridactylrc\\'" . conf-mode))
+#+end_src
+
 *** Improve startup time
 Don't present the usual startup message, and clear the scratch buffer.
 #+begin_src emacs-lisp :tangle "early-init.el" :results silent

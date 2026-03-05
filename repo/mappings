@@ -277,6 +277,10 @@ create .config/GIMP/2.10
 [acpid]
 /etc/acpi/events/hibernate-on-lid
 
+[tridactyl]
+create .config/tridactyl
+.config/tridactyl/tridactylrc
+
 [udev]
 create /etc/udev/rules.d
 /etc/udev/rules.d/thinkpad-dock.rules
