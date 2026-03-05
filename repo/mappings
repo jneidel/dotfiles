@@ -327,3 +327,6 @@ create .config/codex
 
 [youtube-dl]
 .config/yt-dlp.conf
+
+[preload]
+/etc/gopreload.conf

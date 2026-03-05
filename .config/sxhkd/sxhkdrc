@@ -20,6 +20,9 @@ super + Return
 super + F1
   nice -n 17 brave
 
+super + Escape
+  nice -n 17 firefox
+
 super + F9
   export QT_STYLE_OVERRIDE=kvantum-dark; keepassxc
 
