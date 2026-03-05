@@ -1,0 +1,34 @@
+#! /bin/sh
+
+SRC_DIR=$WEB_HOME/src
+CONTENT_DIR=$WEB_HOME/content
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ hugo-src-mapping
+Generate a source map separated by colons with:
+1. org source file
+2. markdown file in content/
+EOF
+  exit
+fi
+
+find "$SRC_DIR" -type f -name "*.org" | while IFS= read -r file; do
+  section=$(grep -m1 -Po '^#\+hugo_section:\s*\K.*' "$file")
+  bundle=$(grep -m1 -Po '^#\+hugo_bundle:\s*\K.*' "$file")
+  export_name=$(grep -m1 -Po '^#\+export_file_name:\s*\K.*' "$file")
+
+  if [ -z "$export_name" ]; then
+    case "$file" in
+      *.de.org) export_name="index.de.md";;
+      *) export_name="index.md";;
+    esac
+  fi
+
+  if ! grep "^#.hugo_draft: true" "$file" >/dev/null; then
+    printf "$file:$CONTENT_DIR/%s/%s/%s\n" \
+           "$section" "$bundle" "$export_name"
+  else
+    echo "Skipping draft: $file" >&2
+  fi
+done
