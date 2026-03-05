@@ -432,6 +432,30 @@ Resize windows with easily repeatable keybindings.
          ("M-I" . 'change-outer)))
 #+end_src
 
+[[https://emacsredux.com/blog/2013/04/02/move-current-line-up-or-down/][Move current line up or down | Emacs Redux]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(use-package emacs
+  :ensure nil
+  :bind
+  ("C-S-k" . move-line-up)
+  ("C-S-j" . move-line-down))
+#+end_src
+
 Acting by S-Expressions/balanced expressions.
 Those are pairs of ="= or ='= around strings and =()=, =[]=, ={}=.
 Emacs bindings are familiar, only using the =C-M= modifier (e.g. =C-M-f= =
