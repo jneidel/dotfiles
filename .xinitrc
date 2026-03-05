@@ -56,6 +56,9 @@ mpd &
 mkfifo /tmp/xobpipe
 (sleep 2; tail -f /tmp/xobpipe | xob &) &
 
+# play jellyfin videos via mpv
+(sleep 1m; nice -n 10 jellyfin-mpv-shim &) &
+
 # desktop monitor
 ~/scripts/conky/start-conky &
 

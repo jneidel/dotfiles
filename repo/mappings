@@ -316,6 +316,10 @@ create /etc/nix
 [xremap]
 .config/xremap.yml
 
+[jellyfin-mpv-shim]
+create .config/jellyfin-mpv-shim
+.config/jellyfin-mpv-shim/scripts
+
 [karabiner-elements]
 create .config/karabiner
 .config/karabiner/karabiner.json

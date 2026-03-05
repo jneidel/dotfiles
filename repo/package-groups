@@ -674,3 +674,6 @@ gopreload-git Preload programs in RAM for faster start
 shell:sudo chown jneidel:users /usr/share/gopreload/enabled /usr/share/gopreload/disabled
 systemd:gopreload
 # https://wiki.archlinux.org/title/Preload
+
+[jellyfin-mpv-shim]
+jellyfin-mpv-shim Play jellfin videos via mpv
