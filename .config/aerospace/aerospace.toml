@@ -1,0 +1,104 @@
+# i3-like window management for MacOS.
+# Source: https://nikitabobko.github.io/AeroSpace/goodies#i3-like-config
+
+### On the prefix key.
+
+# On Linux I use the super key as a prefix.
+# Unlike control and alt/option it is unused by applications.
+# MacOS makes heavy use of command (super), so there is no easy empty prefix key available.
+# Since I want one a single prefix key, that can add shift as a modifier, I used Karabiner Elements
+# to put MacOS's cmd+... stuff on control and alt, replicating the Linux commands and freeing the cmd
+# to be used as the window management prefix.
+# In my setup karabiner expands a cmd keypress to "cmd-ctrl-alt", which stuff is mapped to here.
+# You may forgo the Karabiner translation layer and use another key combination as you prefix.
+
+
+### Configuration
+start-at-login = true
+
+# Mouse follows focus when focused monitor changes
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+[mode.main.binding]
+# change focus: cmd + h/j/k/l
+cmd-ctrl-alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
+cmd-ctrl-alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
+cmd-ctrl-alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
+cmd-ctrl-alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+
+# move window: cmd + H/J/K/L
+cmd-ctrl-alt-shift-h = 'move left'
+cmd-ctrl-alt-shift-j = 'move down'
+cmd-ctrl-alt-shift-k = 'move up'
+cmd-ctrl-alt-shift-l = 'move right'
+
+# change layout
+cmd-ctrl-alt-s = 'layout v_accordion' # cmd + s = vertical tabs
+cmd-ctrl-alt-w = 'layout h_accordion' # cmd + w = horizontal tabs
+cmd-ctrl-alt-e = 'layout tiles horizontal vertical' # cmd + e = change between vertical and horizontal splits
+
+cmd-ctrl-alt-f = 'fullscreen' # cmd + f to toggle fullscreen
+# alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+
+cmd-ctrl-alt-1 = 'workspace 1'
+cmd-ctrl-alt-2 = 'workspace 2'
+cmd-ctrl-alt-3 = 'workspace 3'
+cmd-ctrl-alt-4 = 'workspace 4'
+cmd-ctrl-alt-5 = 'workspace 5'
+cmd-ctrl-alt-6 = 'workspace 6'
+cmd-ctrl-alt-7 = 'workspace 7'
+cmd-ctrl-alt-8 = 'workspace 8'
+cmd-ctrl-alt-9 = 'workspace 9'
+cmd-ctrl-alt-0 = 'workspace 10'
+
+cmd-ctrl-alt-shift-1 = 'move-node-to-workspace 1'
+cmd-ctrl-alt-shift-2 = 'move-node-to-workspace 2'
+cmd-ctrl-alt-shift-3 = 'move-node-to-workspace 3'
+cmd-ctrl-alt-shift-4 = 'move-node-to-workspace 4'
+cmd-ctrl-alt-shift-5 = 'move-node-to-workspace 5'
+cmd-ctrl-alt-shift-6 = 'move-node-to-workspace 6'
+cmd-ctrl-alt-shift-7 = 'move-node-to-workspace 7'
+cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
+cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
+cmd-ctrl-alt-shift-0 = 'move-node-to-workspace 10'
+
+# interactively resize split
+cmd-ctrl-alt-r = 'mode resize'
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
+q = 'mode main'
+
+# Move app windows to specific workspaces.
+# The workspace assignment is the same as on Linux:
+# Workspace 1: Emacs
+# Workspace 2: Browser
+# Workspace 3: Terminal
+# Workspace 4: Communication
+# Workspace 5: Misc
+
+# You can find out the app id in Karabiner EventViewer or if the app
+# is running using: $ aerospace list-apps
+[[on-window-detected]]
+if.app-id = 'org.gnu.Emacs'
+run = ['move-node-to-workspace 1']
+
+[[on-window-detected]]
+if.app-id = 'org.chromium.Chromium'
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+run = ['move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = ['move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = ['move-node-to-workspace 5']
