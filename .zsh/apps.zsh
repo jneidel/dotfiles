@@ -104,6 +104,7 @@ function qr {
     xclip -selection clipboard -t image/png &&
     echo "qr code copied to clipboard"
 }
+alias milch="fisch milch"
 
 ### misc
 function dict {

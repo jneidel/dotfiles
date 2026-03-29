@@ -13,6 +13,8 @@ EOF
   exit
 fi
 
+command="$1"
+
 # debugging
 debugging_dotw=
 debugging_hour=
@@ -22,7 +24,7 @@ fi
 
 # command -v <++> >/dev/null || { echo "<++> is not installed" 1>&2; exit 127; }
 
-timetable() {
+timetable_fisch() {
   cat <<EOF
 Wed 9:00-14:00
 Thu 8:00-13:00 At Edeka in Kirchhain
@@ -30,8 +32,23 @@ Fri 9:00-18:00
 EOF
 }
 
-if [ "$1" = "list" ]; then
-  timetable
+timetable_milch() {
+  cat <<EOF
+Tue 15:00-18:00
+Fri 9:00-18:00
+Sat 9:00-14:00
+EOF
+}
+
+if [ "$command" = "list" ]; then
+  echo "Fisch:"
+  timetable_fisch
+  exit 0
+fi
+
+if [ "$command" = "milch" ] & [ "$2" = "list" ]; then
+  echo "Gut Ogrosen:"
+  timetable_milch
   exit 0
 fi
 
@@ -39,7 +56,14 @@ match_dotw() {
   if [ -n "$debugging_dotw" ]; then
     timetable | grep "^$debugging_dotw" | cut -d\  -f2-
   else
-    timetable | grep "^$(date +%a)" | cut -d\  -f2-
+    case "$command" in
+      "milch")
+        timetable_milch | grep "^$(date +%a)" | cut -d\  -f2-
+        ;;
+      *|"fisch")
+        timetable_fisch | grep "^$(date +%a)" | cut -d\  -f2-
+        ;;
+    esac
   fi
 }
 
