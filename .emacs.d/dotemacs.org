@@ -5027,6 +5027,22 @@ It fills a void I had coming from vim.
   :diminish 'whole-line-or-region-local-mode)
 #+end_src
 
+[[https://emacsredux.com/blog/2026/03/03/expreg-expand-region-reborn/][expreg: Expand Region, Reborn | Emacs Redux]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package expreg
+  :bind (("C-=" . expreg-expand)
+         ("C--" . expreg-contract))
+  :config
+  (add-hook 'text-mode-hook
+            (lambda ()
+              (add-to-list 'expreg-functions #'expreg--sentence))))
+#+end_src
+
+[[https://emacsredux.com/blog/2026/03/15/isearch-lazy-count/][isearch-lazy-count]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setopt isearch-lazy-count t)
+#+end_src
+
 *** Look up word definitions
 Available through: ~C-h w~
 
