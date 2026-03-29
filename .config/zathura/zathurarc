@@ -1,7 +1,7 @@
 set selection-clipboard clipboard
 set selection-notification false
 set scroll-page-aware false
-set guioptions ""
+# set guioptions ""
 set adjust-open width
 set filemonitor noop
 

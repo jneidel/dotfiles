@@ -20,6 +20,7 @@ rm -f ~/1 2>/dev/null
 rm -f ~/.netrc 2>/dev/null
 rm -f /tmp/ddc-lock 2>/dev/null
 rm -f $ORG_INBOX/.org 2>/dev/null
+rm -f ~/*.desktop 2>/dev/null
 
 # empty dirs
 rmdir ~/Desktop 2>/dev/null

@@ -2,5 +2,5 @@
 
 ~/scripts/cron/waitforinternet
 
-tmux -u new-window -d -n "ma" -t $SESSION:20
-tmux send-keys -t $SESSION:20 "mangadl update; exit" "enter"
+tmux -u new-window -d -n "ma" -t $SESSION:20 2>/dev/null
+tmux send-keys -t $SESSION:20 "mangadl update; exit" "enter" 2>/dev/null

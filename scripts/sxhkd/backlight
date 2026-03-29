@@ -131,9 +131,9 @@ MONITOR_MIN=0
 MONITOR_MAX=100
 set_monitor_brightness() {
   if [ -f "/tmp/secondary-monitor" ]; then
-    ddcutil setvcp 10 $1 -d 2
+    ddcutil setvcp 10 $1 -d 2 >/dev/null  2>&1
   else
-    ddcutil setvcp 10 $1
+    ddcutil setvcp 10 $1 >/dev/null 2>&1
   fi
   notification $(get_monitor_brightness) $MONITOR_MAX
 }

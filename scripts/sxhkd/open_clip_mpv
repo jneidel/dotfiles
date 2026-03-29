@@ -23,5 +23,6 @@ if echo $CLIP_CONTENT | grep ".mp3" >/dev/null; then
 else
   notify-send -t 3500 -u normal -i preferences-system-notifications -a "open clip mpv" "Scheduled video" "$CLIP_CONTENT"
   # tsp mpv --profile=yt "$CLIP_CONTENT" 2>/dev/null >/dev/null
-  tsp mpv --profile=yt --ytdl-raw-options=force-ipv4= "$CLIP_CONTENT" 2>/dev/null >/dev/null
+  tsp mpv --profile=yt --ytdl-raw-options=cookies-from-browser=firefox "$CLIP_CONTENT" 2>/dev/null >/dev/null
+  # force-ipv4=
 fi

@@ -1,0 +1,16 @@
+#! /bin/sh
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
+  cat <<EOF
+$ jellyfin-mpv-shim
+Self-restarting jellyfin-mpv-shim process.
+EOF
+  exit
+fi
+
+watch_mpv_shim() {
+  nice -n 10 /bin/jellyfin-mpv-shim >/dev/null
+  watch_mpv_shim
+}
+
+watch_mpv_shim

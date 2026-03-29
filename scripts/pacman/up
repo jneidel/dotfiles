@@ -5,17 +5,14 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ up
 Update everything.
 
-Not just pacman -Syu, but various other things that need regular updates.
+Not just yay -Syu, but also all other things that need regular updates.
 EOF
   exit
 fi
 
-reapply_X_settings() {
-  # reapply xorg settings after upgrading
-  remap
-}
 cleanup() {
-  reapply_X_settings
+  remap # Xorg remappings need to be reapplied
+  cleanup-fs
 }
 trap cleanup EXIT
 
@@ -37,7 +34,7 @@ run_yay() {
 
   yay -Qtdq | yay -Rsn --noconfirm -
 }
-command -v yay >/dev/null && run_yay
+hash yay && run_yay
 
 run_volta() {
   log volta "Update volta apps"
@@ -53,20 +50,10 @@ run_nix() {
   nice -n 19 nix profile upgrade --all
   nice -n 19 nix-collect-garbage
 }
-command -v nix >/dev/null && run_nix
+hash nix && run_nix
 
 run_hosts() {
   log hosts "Updating hosts"
   update-hosts
 }
-command -v update-hosts >/dev/null && run_hosts
-
-run_lazy() {
-  log hosts "Updating nvim plugins"
-  cd /tmp
-  /bin/nvim --headless '+Lazy! sync' +qa
-  /bin/nvim --headless '+TSUpdate' +qa
-}
-# command -v /bin/nvim >/dev/null && run_lazy
-
-cleanup-fs
+hash update-hosts && run_hosts

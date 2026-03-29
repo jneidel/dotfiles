@@ -104,9 +104,16 @@ https://www.jneidel.com/misc/colors/
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'an-old-hope))
 #+end_src
-
 Choose from the installed themes in `M-x customize-themes`.
 [[https://www.greghendershott.com/2017/02/emacs-themes.html#][Setup for easy switching.]]
+
+** Experiments
+https://emacsredux.com/blog/2026/03/08/customizing-font-lock-in-the-age-of-tree-sitter/
+[[elfeed:emacsredux.com#https://emacsredux.com/blog/2026/03/10/taming-font-lock-with-font-lock-ignore][Taming Font-Lock with font-lock-ignore]]
+[[elfeed:emacsredux.com#https://emacsredux.com/blog/2026/03/16/buffer-local-face-remapping-with-face-remap-add-relative][Buffer-Local Face Remapping with face-remap-add-relative]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq treesit-font-lock-level 4)
+#+end_src
 
 ** Packaging
 Prevent =package.el= from loading packages in =early-init.el=.
@@ -395,7 +402,7 @@ Open frequently used file directly via a short-cut menu:
      ("n" "ncmpcpp music" (lambda () (interactive) (ncmpcpp)))
      ("r" "elfeed rss" (lambda () (interactive) (workspace-switch-to-main) (elfeed) (elfeed-update)))
      ("c" "remind calendar" (lambda () (interactive) (workspace-switch-to-main) (remind-calendar)))
-     ("s" "scratch buffer" (lambda () (interactive) (scratch-buffer)))
+     ("s" "scratch buffer" (lambda () (interactive) (scratch-buffer) (lisp-interaction-mode)))
      ("p" "parcels" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/3_resources/Parcels tracking.org")))
      ("e" "exercise routine" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/3_resources/exercise/My Sustainable Training Routine.org")))
      ("t" "Re:Zero todos" (lambda () (interactive) (workspace-switch-to-main) (rezero)))
@@ -2096,6 +2103,7 @@ In shell it is function definitions.
   (agent-shell-prefer-viewport-interaction t) ; C-c C-o to switch between them
   (agent-shell-highlight-blocks t) ; could cause lag, disable if bad
   (agent-shell-permission-icon "🛑")
+  (agent-shell-session-strategy 'new) ; allow change of model and permissions before running first prompt
   <<exclude-transcripts>>
   :config
   <<header-logo-fix>>)
@@ -2126,6 +2134,7 @@ With my font the agent icon is too big (double what it should be). ([[https://gi
 The header could be reverted to text-only mode: ~(setq agent-shell-header-style 'text)~,
 but this also disabled useful information like state and page number.
 So this advice halves the font-height for the relevant function.
+TODO: [[https://github.com/xenodium/agent-shell/issues/202#issuecomment-4084547498][validate upstream fix]]
 #+NAME: header-logo-fix
 #+begin_src emacs-lisp :results silent
 (require 'cl-lib)
@@ -2420,7 +2429,8 @@ I use [[https://github.com/bbatsov/super-save][super-save]] rather than the buil
   (super-save-mode +1)
   :custom
   (super-save-auto-save-when-idle t)
-  (super-save-silent t))
+  (super-save-silent t)
+  (auto-save-default nil))
 #+end_src
 
 ** Backups
@@ -3575,6 +3585,7 @@ https://github.com/alexluigit/dirvish/issues/324
          ("L" . dired-find-file-other-window)
          ("F" . dired-do-find-marked-files)
 
+         ("D" . nil)
          ("r m" . dired-do-delete)
          ("r r" . revert-buffer) ; refresh
          ("r s" . revert-buffer))
@@ -3654,7 +3665,7 @@ Move or copy all selected at a time.
                                   ("b" ,(substitute-in-file-name "$ORG_PROJECTS/✊ staging/🛑 blocked") "Org blocked projects")
                                   ("a" ,(substitute-in-file-name "$ORG_AREAS") "Org Areas")
                                   ("r" ,(substitute-in-file-name "$ORG_RESOURCES") "Org Resources")
-                                  ("R" ,(substitute-in-file-name "$ORG_RESOURCES/raw") "Raw org resources")
+                                  ("w" ,(substitute-in-file-name "$ORG_RESOURCES/raw") "Raw org resources")
                                   ("t" ,(substitute-in-file-name "$ORG_RESOURCES/tags") "Org Resources")
                                   ("n" ,(substitute-in-file-name "$ORG_RESOURCES/Neurostreams/Neurostreams") "Neurostreams")
                                   ("m" ,(substitute-in-file-name "$ORG_MEDIA") "Media")
@@ -3809,7 +3820,7 @@ The logic of my note-taking system is heavily implemented in and automated throu
 (defun dired-in-projects ()
   "Open dired in org projects."
   (interactive)
-  (dired (substitute-in-file-name "$ORG_PROJECTS")))
+  (dired (substitute-in-file-name "$ORG_PROJECTS/🚀 completing")))
 
 (use-package dired
   :ensure nil :defer t
@@ -4262,64 +4273,62 @@ Replace default notmuch hello screen with a collection of saved searches.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package notmuch
   :defer t
-  :config
-  (setq notmuch-show-logo nil
-        notmuch-column-control 1.0
-        notmuch-hello-auto-refresh t
-        notmuch-hello-thousands-separator ""
-        notmuch-hello-sections '(notmuch-hello-insert-saved-searches)
-        notmuch-search-oldest-first nil)
+  :custom
+  (notmuch-show-logo nil)
+  (notmuch-column-control 1.0)
+  (notmuch-hello-auto-refresh t)
+  (notmuch-hello-thousands-separator "")
+  (notmuch-hello-sections '(notmuch-hello-insert-saved-searches))
+  (notmuch-search-oldest-first nil)
 
-  (setq notmuch-show-empty-saved-searches t)
-  (setq notmuch-saved-searches
-        `(( :name "📥 inbox"
-            :query "tag:inbox"
-            :sort-order newest-first
-            :key ,(kbd "i"))
-          ( :name "🌍 website"
-            :query "tag:website and tag:unread"
-            :sort-order newest-first
-            :key ,(kbd "w"))
-          ( :name "👀 new spam"
-            :query "tag:spam and tag:unread"
-            :sort-order newest-first
-            :key ,(kbd "m"))
-          ( :name "🚧 conflicts"
-            :query "(tag:spam OR tag:trash OR tag:invoice OR tag:archived OR tag:inbox) AND (tag:spam AND (tag:trash OR tag:invoice OR tag:archived OR tag:inbox) OR tag:invoice AND (tag:archived OR tag:inbox) OR tag:archived AND tag:inbox)"
-            :sort-order newest-first
-            :key ,(kbd "c"))
-          ( :name "✏️ drafts"
-            :query "tag:draft"
-            :sort-order newest-first
-            :key ,(kbd "d"))
-          ( :name "🗃️ archive"
-            :query "tag:archived"
-            :sort-order newest-first
-            :key ,(kbd "a"))
-          ( :name "🛒 invoices"
-            :query "tag:invoice"
-            :sort-order newest-first
-            :key ,(kbd "n"))
-          ( :name "📨 sent"
-            :query "tag:sent"
-            :sort-order newest-first
-            :key ,(kbd "s"))
-          ( :name "🪓 spam"
-            :query "tag:spam"
-            :sort-order newest-first
-            :key ,(kbd "M"))
-          ( :name "🗑️ trash"
-            :query "tag:trash"
-            :sort-order newest-first
-            :key ,(kbd "t"))
-          ( :name "⛰️ all"
-            :query "not:tag:trash and not:tag:spam"
-            :sort-order newest-first
-            :key ,(kbd "A"))
-          ))
-
-  (keymap-set notmuch-common-keymap (kbd "g") #'notmuch-jump-search)
-  )
+  (notmuch-show-empty-saved-searches t)
+  (notmuch-saved-searches
+   `(( :name "📥 inbox"
+       :query "tag:inbox"
+       :sort-order newest-first
+       :key ,(kbd "i"))
+     ( :name "🌍 website"
+       :query "tag:website and tag:unread"
+       :sort-order newest-first
+       :key ,(kbd "w"))
+     ( :name "👀 new spam"
+       :query "tag:spam and tag:unread"
+       :sort-order newest-first
+       :key ,(kbd "m"))
+     ( :name "🚧 conflicts"
+       :query "(tag:spam OR tag:trash OR tag:invoice OR tag:archived OR tag:inbox) AND (tag:spam AND (tag:trash OR tag:invoice OR tag:archived OR tag:inbox) OR tag:invoice AND (tag:archived OR tag:inbox) OR tag:archived AND tag:inbox)"
+       :sort-order newest-first
+       :key ,(kbd "c"))
+     ( :name "✏️ drafts"
+       :query "tag:draft"
+       :sort-order newest-first
+       :key ,(kbd "d"))
+     ( :name "🗃️ archive"
+       :query "tag:archived"
+       :sort-order newest-first
+       :key ,(kbd "a"))
+     ( :name "🛒 invoices"
+       :query "tag:invoice"
+       :sort-order newest-first
+       :key ,(kbd "n"))
+     ( :name "📨 sent"
+       :query "tag:sent"
+       :sort-order newest-first
+       :key ,(kbd "s"))
+     ( :name "🪓 spam"
+       :query "tag:spam"
+       :sort-order newest-first
+       :key ,(kbd "M"))
+     ( :name "🗑️ trash"
+       :query "tag:trash"
+       :sort-order newest-first
+       :key ,(kbd "t"))
+     ( :name "⛰️ all"
+       :query "not:tag:trash and not:tag:spam"
+       :sort-order newest-first
+       :key ,(kbd "A"))
+     ))
+  :bind (:map notmuch-common-keymap ("g" . notmuch-jump-search)))
 #+end_src
 
 notmuch by itself does not move mail, it only offers tagging.
@@ -4375,7 +4384,6 @@ To make it less verbose I turn them into emoji.
   (notmuch-show-mark-read-tags '("-unread"))
   (notmuch-draft-tags '("+draft"))
   (notmuch-draft-save-plaintext 'ask)
-
   (notmuch-tag-formats
    '(("unread" "👀")
      ("attachment" "📎")
@@ -4418,6 +4426,7 @@ To make it less verbose I turn them into emoji.
   :bind (     :map notmuch-common-keymap
               ("u" . notmuch-tag-undo)
               ("$" . notmuch-refresh-this-buffer)
+              ("r r" . notmuch-refresh-this-buffer)
               :map notmuch-search-mode-map
               ("d" . notmuch-search-mode-delete-goto-next)
               ("o" . notmuch-search-mode-open-html)
@@ -5549,7 +5558,8 @@ Completing-read menu to invoke a snippet by name.
   (shell-command "i3-msg fullscreen enable >/dev/null"))
 
 (use-package writeroom-mode
-  :defer t)
+  :defer t
+  :custom (writeroom-width 90))
 #+end_src
 
 # Local Variables:

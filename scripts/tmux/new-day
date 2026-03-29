@@ -19,5 +19,3 @@ fi
 
 tmux -u new-window -d -n "cal" -t $SESSION:6 2>/dev/null
 tmux send-keys -t $SESSION:6 "mc" "enter" # calendar
-
-nmcli radio wifi off
