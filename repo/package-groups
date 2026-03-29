@@ -36,7 +36,7 @@ arc-icon-theme Icon theme
 networkmanager NetworkManger
 systemd:NetworkManager
 iwd:NetworkManager backend
-networkmanager-dmenu-git Control NetworkManager through rofi
+nix:nixpkgs#networkmanager_dmenu Control NetworkManager through rofi
 shell:rfkill unblock wlan
 
 [dash]
@@ -96,7 +96,8 @@ kitty Terminal emulator
 [tmux]
 tmux Terminal muliplexer (multiple shells inside the same terminal window)
 # tmate Share tmux sessions
-nix:nixpkgs#tmuxinator Tmux session manager
+# nix:nixpkgs#tmuxinator Tmux session manager broken 3.3.7
+nix:nixpkgs/eb9ce0eed3cfbb14b73fa0080d1169b495028962#tmuxinator Tmux session manager 3.3.3
 
 [gimp]
 gimp Photo editing
