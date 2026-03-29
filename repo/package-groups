@@ -454,6 +454,7 @@ fcron Cron implementation
 systemd:fcron
 postfix Enable local mail for errors
 systemd:postfix
+util-linux For flock
 
 [xournalpp]
 xournalpp PDF editing
