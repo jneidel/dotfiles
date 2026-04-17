@@ -338,8 +338,8 @@ Migration from pulseaudio was super easy.
 
 In order of importance these are the browsers I use:
 
-- [Brave](https://github.com/brave/brave-browser)
 - Firefox
+- [Brave](https://github.com/brave/brave-browser)
 - [ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium)
 
 <details>
@@ -353,8 +353,6 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 
 </details>
 
-
-
 **Arc Dark** is my prefered theme (I based my terminal colorscheme on it.)
 [firefox](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme-we/)
 [chrome](https://chrome.google.com/webstore/detail/arc-dark/adicoenigffoolephelklheejpcpoolk)
@@ -363,22 +361,26 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 
 | name | description | links |
 |--|--|--|
-| uBlock Origin | Best free (as in freedom) adblocker | [firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) [chrome](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm) [git](https://github.com/gorhill/uBlock) |
-| Surfing Keys | Navigate browser with vim shortcuts | [firefox](https://addons.mozilla.org/en-US/firefox/addon/surfingkeys_ff/) [chrome](https://chrome.google.com/webstore/detail/surfingkeys/gfbliohnnapiefjpjlpjnehglfpaknnc) [git](https://github.com/brookhong/Surfingkeys) [simpler-alternative](https://github.com/philc/vimium) |
+| uBlock Origin | Adblocker | [firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) [chrome](https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh) [git](https://github.com/gorhill/uBlock) [git2](https://github.com/uBlockOrigin/uBOL-home) |
 | Dark Reader | Dark mode for all websites | [firefox](https://addons.mozilla.org/en-US/firefox/addon/darkreader) [chrome](https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh) [git](https://github.com/darkreader/darkreader) |
-| KeePassXC-Browser | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk) [git](https://github.com/keepassxreboot/keepassxc-browser) [setup on iridium](https://github.com/keepassxreboot/keepassxc/issues/1559#issuecomment-369732493) |
+| KeePassXC-Browser | KeePass integration for password insert | [firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) [chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk) [git](https://github.com/keepassxreboot/keepassxc-browser) [iridium](https://github.com/keepassxreboot/keepassxc/issues/1559#issuecomment-369732493) |
+| Consent-O-Matic | Automatically handle cookie consent | [firefox](https://addons.mozilla.org/en-US/firefox/addon/consent-o-matic/) [chrome](https://chromewebstore.google.com/detail/consent-o-matic/mdjildafknihdffpkfmmpnpoiajfjnjd) [git](https://github.com/cavi-au/Consent-O-Matic) |
+| Tridactyl | Navigate browser with shortcuts and more | [firefox](https://addons.mozilla.org/en-US/firefox/addon/tridactyl-vim) [git](https://github.com/tridactyl/tridactyl) [website](https://tridactyl.xyz/) |
 
 ### Useful
 
 | name | description | links |
 |--|--|--|
+| Surfing Keys | Navigate browser with shortcuts  (I use Tridactyl now) | [firefox](https://addons.mozilla.org/en-US/firefox/addon/surfingkeys_ff/) [chrome](https://chrome.google.com/webstore/detail/surfingkeys/gfbliohnnapiefjpjlpjnehglfpaknnc) [git](https://github.com/brookhong/Surfingkeys) |
+| Violentmonkey | Script the browser | [firefox](https://addons.mozilla.org/firefox/addon/violentmonkey/) [chrome](https://chrome.google.com/webstore/detail/violent-monkey/jinjaccalgkegednnccohejagnlnfdag) [git](https://github.com/violentmonkey/violentmonkey) [website](https://violentmonkey.github.io/) |
+| Bypass Paywalls | Ignore e.g. NYTs free articles limiter | [firefox](https://gitflic.ru/project/magnolia1234/bypass-paywalls-firefox-clean) [chrome](https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean) |
 | LeechBlock | Flexibly block sites | [firefox](https://addons.mozilla.org/en-US/firefox/addon/leechblock-ng/) [chrome](https://chrome.google.com/webstore/detail/leechblock-ng/blaaajhemilngeeffpbfkdjjoefldkok) [website](https://www.proginosko.com/leechblock/) |
 | FastForward | Skip link shorteners | [firefox](https://github.com/FastForwardTeam/FastForward/blob/main/INSTALLING.md#firefox-based-browsers-firefox-waterfox-pale-moon-librewolf-etc) [chrome](https://github.com/FastForwardTeam/FastForward/blob/main/INSTALLING.md#chromium-based-browsers-chrome-kiwi-opera-opera-gx-vivaldi-brave-etc) [git](https://github.com/FastForwardTeam/FastForward) |
-| I still don't care about cookies | Ignore cookie banners | [firefox](https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/) [chrome](https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm) [git](https://github.com/OhMyGuus/I-Still-Dont-Care-About-Cookies) |
 | Libredirect | Redirect to libre version of popular website | [firefox](https://addons.mozilla.org/firefox/addon/libredirect/) [chrome](https://libredirect.github.io/download_chromium.html) [git](https://github.com/libredirect/libredirect) |
-| Bypass Paywalls | Ignore e.g. NYTs free articles limiter | [firefox](https://gitflic.ru/project/magnolia1234/bypass-paywalls-firefox-clean) [chrome](https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean) |
 | Easy to RSS | List the rss feeds of the current site | [firefox](https://addons.mozilla.org/en-GB/firefox/addon/easy-to-rss/) [chrome](https://chrome.google.com/webstore/detail/easy-to-rss/hbcmpkcpbnecinpngdnfbnknfkdpdfli) [git](https://github.com/idealclover/Easy-to-RSS) |
-| Autofill | Automatically fill forms with configured data | [chrome](https://chrome.google.com/webstore/detail/autofill/nlmmgnhgdeffjkdckmikfpnddkbbfkkk) |
+| Consumer Rights Wiki | Be notified of anti-consumer behavior on a companies website | [firefox](https://addons.mozilla.org/firefox/addon/consumer-rights-wiki/) [chrome](https://chromewebstore.google.com/detail/consumer-rights-wiki/bppajinomefndbbmopljhbdfefnefdha) [git](https://github.com/FULU-Foundation/CRW-Extension) |
+| Download All Images | Flexible downloader | [firefox](https://addons.mozilla.org/firefox/addon/save-all-images-webextension/) [chrome](https://chromewebstore.google.com/detail/save-all-images/nnffbdeachhbpfapjklmpnmjcgamcdmm) [website](https://webextension.org/listing/save-images.html) |
+| Read Aloud | Read website via TTS API | [firefox](https://addons.mozilla.org/en-US/firefox/addon/read-aloud/) [chrome](https://chrome.google.com/webstore/detail/hdhinadidafjejdhmfkjgnolgimiaplp) [website](https://readaloud.app/) |
 
 #### Specific Websites
 
@@ -419,27 +421,6 @@ Search "Content" -> "Site and Shield Settings" -> "Notifications" -> Toggle
 | JSON Formatter | Easy to read JSON formatting | [chrome](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) [git](https://github.com/callumlocke/json-formatter) |
 | Modify Header Value | Set HTTP headers | [firefox](https://addons.mozilla.org/en-US/firefox/addon/modify-header-value) [chrome](https://chrome.google.com/webstore/detail/modify-header-value-http/cbdibdfhahmknbkkojljfncpnhmacdek) [homepage](https://mybrowseraddon.com/modify-header-value.html) |
 
-<details>
-<summary><strong>GitHub related plugins</strong></summary>
-
-A comprehensive list of GitHub chrome extensions can be found [here](https://github.com/stefanbuck/awesome-browser-extensions-for-github).
-
-| name | description | links |
-|--|--|--|
-| Refined GitHub | GitHub functional/visual upgrade | [chrome](https://chrome.google.com/webstore/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf) [git](https://github.com/sindresorhus/refined-github) |
-| npmhub | List npm dependencies in readme | [chrome](https://chrome.google.com/webstore/detail/npmhub/kbbbjimdjbjclaebffknlabpogocablj) [git](https://github.com/npmhub/npmhub) |
-| Octotree | GitHub file tree | [chrome](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc) [git](https://github.com/buunguyen/octotree/) |
-| Vscode-icons | Icons indicating file type | [chrome](https://chrome.google.com/webstore/detail/github-vscode-icons/hoccpcefjcgnabbmojbfoflggkecmpgd) [git](https://github.com/dderevjanik/github-vscode-icons) |
-| Lovely Forks | Shows notable forks | [chrome](https://chrome.google.com/webstore/detail/lovely-forks/ialbpcipalajnakfondkflpkagbkdoib) [git](https://github.com/musically-ut/lovely-forks) |
-| npm-stats | Display npm download stats in repo | [chrome](https://chrome.google.com/webstore/detail/github-npm-stats/oomfflokggoffaiagenekchfnpighcef) [git](https://github.com/katranci/github-npm-stats) |
-| show-email | Display email on profile, even if not provided | [chrome](https://chrome.google.com/webstore/detail/github-show-email/pndebicblkfcinlcedagfhjfkkkecibn) [git](https://github.com/prabhakar267/github-email-extractor) |
-| omnibar | Shortcut navigation for github | [chrome](https://chrome.google.com/webstore/detail/github-omnibar/njccjmmakcbdpnlbodllfgiloenfpocb/related?utm_source=chrome-ntp-icon) [git](https://github.com/jcouyang/gh-omnibar) |
-| issue-link-status | Colorize issue links depending on status | [chrome](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic) [git](https://github.com/bfred-it/github-issue-link-status/) |
-| build-tabs | Build tab for github | [chrome](https://chrome.google.com/webstore/detail/builds-tab-for-github/jnmdkbflmkjehkkdbjdfpmhgdafpcdkh) [git](https://github.com/duxet/builds-tab) |
-| github-autocomplete | Github search autocomplete | [chrome](https://chrome.google.com/webstore/detail/awesome-autocomplete-for/djkfdjpoelphhdclfjhnffmnlnoknfnd) [git](https://github.com/algolia/github-awesome-autocomplete) |
-| github-plus | Display repo size, download links | [chrome](https://chrome.google.com/webstore/detail/github-plus/anlikcnbgdeidpacdbdljnabclhahhmd) [git](https://github.com/softvar/github-plus) |
-
-</details><br/>
 </details>
 
 <!-- | name | description | links | -->
