@@ -2,7 +2,7 @@
 MAILTO=jneidel
 0    18   *  *    *    ~/scripts/cron/sync-contacts
 0    18   *  *    *    ~/scripts/cron/update-sensitive.sh
-0    */3  *  *    *    ~/scripts/cron/cleanup-fs
+0    */2  *  *    *    ~/scripts/cron/cleanup-fs
 0    6    *  *    *    ~/scripts/personal/append-unhrd-data
 0    18   *  *    *    ~/scripts/mpd/backup-main-playlist
 0    20   1  *    *    ~/scripts/cron/vacuum-sql-dbs.sh
@@ -18,9 +18,9 @@ MAILTO=jneidel
 0    18   *  1    *    ~/scripts/org/bounce-unpitched-projects
 0    18   *  *    *    ~/scripts/cron/org-projects-to-now-json >/dev/null
 15   5    *  *    *    ~/scripts/tmux/new-day
-*/5  *    *  *    *    flock -n /tmp/generate-tagtree.lock   ~/scripts/cron/generate-tagtree
-*/4  *    *  *    *    flock -n /tmp/battery-alert.lock      ~/scripts/cron/battery-alert
-2    */2  *  *    *    flock -n /tmp/signal-inbox.lock       ~/scripts/cron/signal-name-resolution-failure inbox
-0    *    *  *    *    flock -n /tmp/natural-brightness.lock ~/scripts/cron/natural-brightness
+*/5  *    *  *    *    flock -n /tmp/generate-tagtree.lock              ~/scripts/cron/generate-tagtree
+*/4  *    *  *    *    flock -n /tmp/battery-alert.lock                 ~/scripts/cron/battery-alert
+2    */2  *  *    *    flock -n /tmp/signal-inbox.lock       timeout 20 ~/scripts/cron/signal-name-resolution-failure inbox
+0    *    *  *    *    flock -n /tmp/natural-brightness.lock timeout 10 ~/scripts/cron/natural-brightness
 1    18   *  *    *    scp .main.kdbx  home:syncthing/mama/.jneidel-backup.kdbx
 1    18   *  *    *    cp .main.kdbx  ~/Downloads/media/phone/

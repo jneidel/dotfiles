@@ -5,7 +5,7 @@ set $grey  #1c1c1c
 set $white #d0d0d0
 set $red   #d70000
 
-# set mod key (Mod1=<Alt>, Mod4=<Super>)
+# set mod key to super, see list $ xmodmap -pm
 set $mod Mod4
 
 # set default desktop layout (default is tiling) <stacking|tabbed>

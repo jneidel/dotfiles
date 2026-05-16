@@ -50,7 +50,7 @@ tags    = +invoice;-unread;-inbox
 
 [Filter.11]
 message = spam
-query   = from:*@consultores-rh.com
+query   = from:*@consultores-rh.com OR to:td365@jneidel.com OR to:linkedin@jneidel.com
 tags    = +spam;-unread;-inbox
 
 [Filter.12]
