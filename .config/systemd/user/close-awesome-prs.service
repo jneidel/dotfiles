@@ -1,0 +1,5 @@
+[Unit]
+Description=Automatically close awesome-cli-list PRs that dont meet the requirements.
+
+[Service]
+ExecStart=/home/jneidel/code/awesome-cli-apps/auto-close-prs
