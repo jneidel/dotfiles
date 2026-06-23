@@ -1,0 +1,10 @@
+[Unit]
+Description=Every 3h and after suspend
+
+[Timer]
+OnCalendar=*-*-* 00..23/3:00:00
+RandomizedOffsetSec=500
+Persistent=true
+
+[Install]
+WantedBy=timers.target
