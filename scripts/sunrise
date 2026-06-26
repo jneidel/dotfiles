@@ -33,7 +33,7 @@ get_utc_time() {
   [ -n "$1" ] && TIME="$1"
   DATE="today"
   [ -n "$2" ] && DATE="$2"
-  /home/jneidel/scripts/curlj GET "https://api.sunrise-sunset.org/json?lat=$LAT&lng=$LONG&date=$DATE" | jq .results.$TIME
+  /home/jneidel/scripts/json/curlj GET "https://api.sunrise-sunset.org/json?lat=$LAT&lng=$LONG&date=$DATE" | jq .results.$TIME
 }
 to_german_time() {
   TIME_RAW=`cat /dev/stdin`

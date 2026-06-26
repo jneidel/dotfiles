@@ -4,6 +4,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$ORG_PRO
   cat <<EOF
 $ project-status set STATUS PATH
 Change the status of a project directory in $ORG_PROJECTS
+(I call this from Emacs.)
 
 Commands:
   set STATUS PATH: for PATH set it's status to STATUS

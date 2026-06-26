@@ -1,16 +1,18 @@
 #! /bin/bash
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ human-number"
-  echo "Make a long number more easily readable by"
-  echo "inserting dots after every 3rd character."
-  echo ""
-  echo "Parameters:"
-  echo "  stdin: number to work on"
-  echo ""
-  echo "Example:"
-  echo "$ echo '12345678910' | human-number"
-  echo "-> 12.345.678.910"
+  cat <<EOF
+$ human-number"
+Make a long number more easily readable by"
+inserting dots after every 3rd character."
+"
+Parameters:"
+  stdin: number to work on"
+"
+Example:"
+$ echo '12345678910' | human-number"
+-> 12.345.678.910"
+EOF
   exit
 fi
 

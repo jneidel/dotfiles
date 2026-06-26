@@ -6,16 +6,8 @@ DIR=~/scripts/mpd
 LOCAL_IP=0.0.0.0
 LOCAL_PORT=5555
 
-REMOTE_IP=192.168.178.69
-REMOTE_PORT=6600
-
-if "$DIR/is-mpd-server" && ! "$DIR/is-mpd-playing-local"; then
-  IS_SERVER=1
-  CONNECT="-h $REMOTE_IP -p $REMOTE_PORT"
-else
-  IS_SERVER=0
-  CONNECT="-h $LOCAL_IP -p $LOCAL_PORT"
-fi
+IS_SERVER=0
+CONNECT="-h $LOCAL_IP -p $LOCAL_PORT"
 
 REMOTE_NAME=home
 REMOTE_DIR="/root/media/music"

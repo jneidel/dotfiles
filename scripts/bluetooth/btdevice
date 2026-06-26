@@ -1,9 +1,11 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ btdevice"
-  echo "Display name of currently connected bluetooth device"
-  echo "Error if empty"
+  cat <<EOF
+$ btdevice
+Display name of currently connected bluetooth device
+Error if empty
+EOF
   exit
 fi
 

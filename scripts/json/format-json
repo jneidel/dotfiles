@@ -9,4 +9,3 @@ const d = require( path.resolve( process.cwd(), file ) );
 console.log("Formatting:", file)
 
 fs.writeFileSync( file, JSON.stringify( d, null, 2 ) );
-

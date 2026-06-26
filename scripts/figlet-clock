@@ -8,11 +8,10 @@ Requires figlet-fonts package
 "; exit
 fi
 
-command -v figlet >/dev/null || { echo "figlet is not installed"; exit 1; }
+hash figlet || exit 127
 
 SPACE_ABOVE=$(( ( ( $(tput lines) - 16 ) /2 ) -2 ))
 seq $SPACE_ABOVE | xargs -Iz echo ""
 
-figlet -c -f doh -t $(date +%H:%M:%S)
-# figlet -f univers -w 180 $(date +%H:%M:%S)
-
+# figlet -c -f doh -t $(date +%H:%M:%S)
+figlet -f univers -w 180 $(date +%H:%M:%S)

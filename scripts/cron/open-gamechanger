@@ -1,5 +1,0 @@
-#! /bin/sh
-
-export DISPLAY=:0
-
-brave "https://joerg-loehr.mykajabi.com/products/gamechanger-jahrescoaching" >/dev/null 2>&1 &

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-FILE="/home/jneidel/org/3_resources/exercise/My Sustainable Training Routine.org"
+FILE="/home/jneidel/org/3_resources/exercise, fitness, sports, training/My Sustainable Training Routine.org"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -14,5 +14,5 @@ EOF
   exit
 fi
 
-#       Date | Leg day | Push ups | Plank |
-printf "| %s |         |          |       |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"
+#       Date | Squat load | Nordic curls | Push ups | Pull ups | Plank | Yoga ||
+printf "| %s |            |              |          |          |       |      |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"

@@ -18,4 +18,7 @@ hash i3-msg || exit 127
 
 n="$1"
 workspace_name="$(grep -Po "^set \\\$ws$n \K$n:.*" $HOME/.config/i3/config)"
-i3-msg "workspace $workspace_name" >/dev/null
+current=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')
+if [ "$current" != "$workspace_name" ]; then
+  i3-msg "workspace $workspace_name" >/dev/null
+fi

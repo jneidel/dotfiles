@@ -5,12 +5,12 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; t
 $ release-aur-from-rss
 Semiautomate the release of aur pkg via rss feeds
 
-Called from a keybinding within newsboat (see config)
+Called from within notmuch in Emacs (see dotemacs)
 EOF
   exit
 fi
 
-command -v tmux >/dev/null || { echo "tmux is not installed" 1>&2; exit 127; }
+hash tmux || exit 127
 
 send_error() {
   MSG="$1"

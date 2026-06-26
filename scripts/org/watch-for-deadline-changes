@@ -1,3 +1,4 @@
 #! /bin/sh
 
-find $ORG_PROJECTS -maxdepth 2 -name 'index.norg' -or -name 'plan.norg' -or -name 'tasks.norg' | entr -n add-project-deadlines-to-calendar
+find $ORG_PROJECTS -maxdepth 2 -name 'index.org' -or -name 'plan.org' -or -name 'tasks.org' |
+  entr -n add-project-deadlines-to-calendar

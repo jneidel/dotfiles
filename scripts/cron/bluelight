@@ -9,36 +9,42 @@ $ bluelight start|stop
 Start or stop the bluelight filter
 
 Runable via cron
+
+Commands:
+  start, on: enable bluelight filter
+  stop, off: kill bluelight filter
+  reset:     reset screen temperature
 EOF
   exit
 fi
 
-hash xflux || exit 127
-
-start_xflux() {
-  xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
-}
-kill_xflux() {
-  sleep 1s
-  kill -9 $(pidof xflux) 2>/dev/null
-}
+hash xflux xrandr || exit 127
 
 start() {
-  start_xflux
+  xflux -k 3000 -l 52 -g 13 >/dev/null 2>&1
+  
   ~/scripts/cron/natural-brightness >/dev/null
 }
 
+reset_screen_temp() {
+  xrandr | grep ' connected' | awk '{print $1}' | while read monitor; do
+    xrandr --output $monitor --gamma 1:1:1
+  done
+}
+
 stop() {
-  start_xflux # start before killing to reset screen temperature
-  kill_xflux
+  sleep 1s
+  kill -9 $(pidof xflux) 2>/dev/null
+  reset_screen_temp
   ~/scripts/cron/natural-brightness >/dev/null
 }
 
 export DISPLAY=:0
 export XAUTHORITY=/run/user/1000/Xauthority
-xauth add $(xauth -f $XAUTHORITY list|tail -1)
+xauth add $(xauth -f $XAUTHORITY list | tail -1)
 
 case $1 in
   start|on) start;;
   stop|off) stop;;
+  reset) reset_screen_temp;;
 esac

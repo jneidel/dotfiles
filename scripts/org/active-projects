@@ -8,8 +8,6 @@ EOF
   exit
 fi
 
-command -v find >/dev/null || { echo "find is not installed" 1>&2; exit 127; }
-
 number_of_projects=$(find $ORG_PROJECTS -mindepth 1 -maxdepth 1 -type d -name "[^.]*" | wc -l)
 
 # You can only realistically manage about 10 active projects at a time.

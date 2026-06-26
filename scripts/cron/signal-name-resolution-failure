@@ -25,3 +25,6 @@ if find $ORG_INBOX -name "signal-api-errors*" 2>/dev/null | tail -n1 | xargs cat
   sleep 2s
   $SCRIPT >/dev/null
 fi
+
+rm /tmp/signal-inbox.lock 2>/dev/null
+true

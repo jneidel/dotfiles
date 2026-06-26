@@ -30,5 +30,5 @@ cat <<EOF
 :ID: $(uuidgen)
 :END:
 #+title: $title
-#+date: $(date +%Y-%m-%d)
+#+date: [$(date +%Y-%m-%d)]
 EOF

@@ -12,7 +12,7 @@ EOF
 fi
 
 RESOURCES_RAW="$ORG_RESOURCES/raw"
-DESTINATION="$ORG_ARCHIVE/resource: raw"
+DESTINATION="$ORG_RESOURCES/raw/archive"
 
 CURRENT_MONTH_DIR="$RESOURCES_RAW/$(date +%Y-%m)"
 PREVIOUS_MONTH_DIR="$RESOURCES_RAW/$(date -d "$(date +%Y-%m-01) -1 month" +%Y-%m)"

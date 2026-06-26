@@ -1,0 +1,6 @@
+#! /bin/sh
+
+. ~/.zsh/org.env
+
+echo "$(date +%s) $(~/scripts/music/unhrd | cut -d\  -f1 | sed 's|\.||g')" >>"$ORG_ARCHIVE/rest, old/…random/data/unhrd-data.txt"
+echo "$(date +%s) $(~/scripts/music/unhrd -m | cut -d\  -f1 | sed 's|\.||g')" >>"$ORG_ARCHIVE/rest, old/…random/data/unhrd-main-data.txt"

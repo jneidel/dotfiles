@@ -26,10 +26,7 @@ EOF
   exit
 fi
 
-command -v mpv >/dev/null || { echo "mpv is not installed" 1>&2; exit 127; }
-command -v ss >/dev/null || { echo "ss is not installed" 1>&2; exit 127; }
-command -v tac >/dev/null || { echo "tac is not installed" 1>&2; exit 127; }
-command -v socat >/dev/null || { echo "socat is not installed" 1>&2; exit 127; }
+hash mpv ss tac socat || exit 127
 
 list_open_numbered_sockets() {
   ss -l -x src "${SCHEMA_NUMBERED}*" | grep -Po "${SCHEMA_NUMBERED}.*?(?=\s)" | tac

@@ -1,35 +1,24 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ btconnect <mac-address>"
-  echo "Connect to a bluetooth device via bluetoothctl."
-  echo ""
-  echo "The device has to be trusted and paired via"
-  echo "bluetoothctl manually beforehand:"
-  echo "  $ bluetoothctl"
-  echo "  power on"
-  echo "  scan on"
-  echo "  # get the mac address as it gets scanned"
-  echo "  trust <mac>"
-  echo "  pair <mac>"
-  echo ""
-  echo "Example:"
-  echo "$ btconnect B8:D5:0B:EA:D9:A6"
+  cat << EOF
+$ btconnect MAC-ADDRESS
+Connect to a bluetooth device via bluetoothctl.
+
+The device has to be trusted and paired via
+bluetoothctl manually beforehand:
+  $ bluetoothctl
+  power on
+  scan on
+  # get the mac address as it gets scanned
+  trust <mac>
+  pair <mac>
+
+Example:
+  $ btconnect B8:D5:0B:EA:D9:A6
+EOF
   exit
 fi
 
-bluetoothctl power on # >/dev/null
-
-# echo "Started connecting"
-
+bluetoothctl power on
 bluetoothctl connect "$1"
-
-# while [ 1 -eq 1 ]; do
-#   if printf "connect %s\nquit" "$1" | bluetoothctl | grep "# quit" | grep "bluetooth" > /dev/null; then
-#     sleep 1
-#   else
-#     echo "Connected"
-#     break
-#   fi
-# done
-

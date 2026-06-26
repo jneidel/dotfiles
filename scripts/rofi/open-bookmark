@@ -1,37 +1,39 @@
 #! /bin/sh
 
-BOOKMARK_FILE=$HOME/scripts/personal/webpages
-FATURDAY_EXCLUDE_FILE=$HOME/scripts/personal/webpages-faturday-exclude
+BOOKMARK_FILE="$HOME/scripts/personal/bookmark data/bookmarks"
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ open-bookmark
-Open a bookmark in $BROWSER
+Open a bookmarked website in $BROWSER
+
+Takes a file with entries like this:
+Github Notifications https://github.com/notifications?query=is%3Aunread
+Plausible https://plausible.jneidel.top/
+
+Last space separated value on a line is the URL that will be opened.
+Everything else is description for easy matching with rofi.
 EOF
   exit
 fi
 
 MAIN_BROWSER=$BROWSER
-SECONDARY_BROWSER=firefox
+SECONDARY_BROWSER=brave
 
-hash rofi $MAIN_BROWSER $SECONDARY_BROWSER node || exit 127
-
+hash rofi $MAIN_BROWSER open-i3-workspace || exit 127
 
 if [ ! -f "$BOOKMARK_FILE" ]; then
   echo "Bookmark file '$BOOKMARK_FILE' does not exist"
   exit 1
 fi
 
-bookmarks() {
-  cat $BOOKMARK_FILE | sed "s/12345678/$(shuf -i 1-9999999 -n 1)/"
-}
-
-SELECTION=`bookmarks | rofi -dmenu -i -lines 15 -eh 1 -p open -auto-select 2>/dev/null | rev | cut -d\  -f1 | rev`
+SELECTION=`cat "$BOOKMARK_FILE" | rofi -dmenu -i -lines 15 -eh 1 -p open -auto-select 2>/dev/null | rev | cut -d\  -f1 | rev`
 
 if [ -n "$SELECTION" ]; then
-  if echo $SELECTION | grep -e jellyfin -e flood -e flickfocus -e jc141 -e 178.69 >/dev/null; then
-    $SECONDARY_BROWSER $SELECTION >/dev/null 2>&1
-  else
-    $MAIN_BROWSER $SELECTION >/dev/null 2>&1
+  if echo $SELECTION | grep -F "github.com/notifications" >/dev/null; then
+    ~/code/awesome-cli-apps/auto-close-prs
   fi
+  
+  $MAIN_BROWSER $SELECTION & >/dev/null 2>&1
+  open-i3-workspace 2
 fi

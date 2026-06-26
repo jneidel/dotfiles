@@ -1,8 +1,9 @@
 #! /bin/sh
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ btoff"
-  echo "Turn off bluetooth via bluetoothctl"
+  cat <<EOF
+$ btoff"
+Turn off bluetooth via bluetoothctl"
   exit
 fi
 

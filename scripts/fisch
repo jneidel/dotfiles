@@ -3,7 +3,7 @@
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
 $ fisch
-Show opening hours of my fisch market
+Show the inconsistent opening hours of my local markets.
 
 Generic implementation, just swap out the timetable for your own use
 
@@ -29,14 +29,7 @@ timetable_fisch() {
 Wed 9:00-14:00
 Thu 8:00-13:00 At Edeka in Kirchhain
 Fri 9:00-18:00
-EOF
-}
-
-timetable_milch() {
-  cat <<EOF
-Tue 15:00-18:00
-Fri 9:00-18:00
-Sat 9:00-14:00
+Holiday Closed
 EOF
 }
 
@@ -46,9 +39,33 @@ if [ "$command" = "list" ]; then
   exit 0
 fi
 
-if [ "$command" = "milch" ] & [ "$2" = "list" ]; then
+timetable_milch() {
+  cat <<EOF
+Tue 15:00-18:00
+Fri 9:00-18:00
+Sat 9:00-14:00
+Holiday Closed
+EOF
+}
+if [ "$command" = "milch" ] && [ "$2" = "list" ]; then
   echo "Gut Ogrosen:"
   timetable_milch
+  exit 0
+fi
+
+timetable_sauna() {
+  cat <<EOF
+Wed 10:00-21:00
+Thu 10:00-21:00
+Fri 14:00-21:00
+Sat 10:00-20:00
+Sun 10:00-20:00
+Holiday 10:00-18:00
+EOF
+}
+if [ "$command" = "sauna" ] && [ "$2" = "list" ]; then
+  echo "Fiwave:"
+  timetable_sauna
   exit 0
 fi
 
@@ -59,6 +76,9 @@ match_dotw() {
     case "$command" in
       "milch")
         timetable_milch | grep "^$(date +%a)" | cut -d\  -f2-
+        ;;
+      "sauna")
+        timetable_sauna | grep "^$(date +%a)" | cut -d\  -f2-
         ;;
       *|"fisch")
         timetable_fisch | grep "^$(date +%a)" | cut -d\  -f2-

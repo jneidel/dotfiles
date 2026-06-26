@@ -32,19 +32,17 @@ alert_at() {
   UPPER=`echo "($ALERT_PERCENT+0.5)*$CAPACITY/100" | bc`
   LOWER=`echo "($ALERT_PERCENT-0.5)*$CAPACITY/100" | bc`
 
-  # echo $UPPER $LOWER $CHARGE $ALERT_PERCENT
-
   if [ "$CHARGE" -le "$UPPER" ] && [ "$CHARGE" -ge "$LOWER" ]; then
     ~/scripts/cron/cron-notify-send "Battery at: $ALERT_PERCENT" -t 10000 -u critical
   fi
 }
 
-# comments specifify the order in which alerts will be triggered
+# comments specify the order in which alerts will be triggered
 BAT=$POWER/BAT1 # external
-alert_at 15 # 1st
+alert_at 30 # 1st
 alert_at 4  # 5th, after internal battery is empty
 
 BAT=$POWER/BAT0 # internal
 alert_at 50 # 2nd
 alert_at 20 # 3rd
-alert_at 5 # 4rd
+alert_at 5  # 4rd

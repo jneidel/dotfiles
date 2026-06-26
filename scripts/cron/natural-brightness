@@ -1,7 +1,9 @@
 #! /bin/sh
 
-SLEEP_TIME=21 # in winter time go to bed around 21:00
-WIND_DOWN_DURATION=1 # start preparing for bed around 20:00
+SLEEP_TIME=22
+# in winter time go to bed around 21:00
+# in summer time go to bed around 22:00
+WIND_DOWN_DURATION=1 # start preparing for bed one hour prior
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat <<EOF
@@ -52,9 +54,9 @@ two_h_before_sunset=$(echo ${sunset_hour}-2 | bc)
 if /home/jneidel/scripts/between 04 $two_h_before_sunset 2>/dev/null; then
   set_brightness_percent 100 true
 elif /home/jneidel/scripts/between $two_h_before_sunset $sunset_hour 2>/dev/null; then
-  set_brightness_percent 55
+  set_brightness_percent 75
 elif /home/jneidel/scripts/between $sunset_hour $wind_down_hour 2>/dev/null; then
-  set_brightness_percent 40 # winddown might start before sunset in summer?
+  set_brightness_percent 60 # winddown might start before sunset in summer?
 elif /home/jneidel/scripts/between $wind_down_hour 2>/dev/null; then
-  set_brightness_percent 10
+  set_brightness_percent 20
 fi

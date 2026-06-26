@@ -26,6 +26,7 @@ case "$1" in
     touch $LOCK_FILE
 
     sleep 4s; /home/jneidel/scripts/sxhkd/backlight set 0
+    sleep 4s; ~/scripts/cron/bluelight reset
     if tmux has-session -t $tmux_session; then
       tmux -u new-window -d -n "dock" -t $tmux_session:98
       tmux send-keys -t $tmux_session:98 "natural-brightness; remap; exit" "enter"
@@ -34,8 +35,9 @@ case "$1" in
   disconnect)
     /home/jneidel/scripts/monitor off &
     rm $LOCK_FILE /tmp/secondary-monitor 2>/dev/null
-    /home/jneidel/scripts/sxhkd/backlight percent 50 &
 
+    /home/jneidel/scripts/sxhkd/backlight percent 50 &
+    ~/scripts/cron/bluelight reset
     if tmux has-session -t $tmux_session; then
       tmux -u new-window -d -n "dock" -t $tmux_session:98
       sleep 8s; tmux send-keys -t $tmux_session:98 "natural-brightness; remap; exit

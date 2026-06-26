@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # rofi - dmenu replacement
 ## called via mod+d
 ## open windows, connect ssh, run applications

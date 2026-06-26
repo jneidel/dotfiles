@@ -3,14 +3,16 @@
 BROWSER=$(grep "^export BROWSER=" ~/.zshrc | cut -d\= -f2)
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
-  echo "$ open-in-browser-without-pluses"
-  echo "Remove '+' (pluses) from url before opening them in '$BROWSER'"
-  echo ""
-  echo "Built for opening links in neomutt with the kitty terminal open shortcut."
-  echo "See kitty config for more info."
-  echo ""
-  echo "Parameters:"
-  echo "  \$1: url to clean"
+  cat <<EOF
+$ open-in-browser-without-pluses
+Remove '+' (pluses) from url before opening them in '$BROWSER'
+
+Built for opening links in neomutt with the kitty terminal open shortcut."
+See kitty config for more info.
+
+Parameters:
+  \$1: url to clean
+EOF
   exit
 fi
 
@@ -19,6 +21,7 @@ URL="$1"
 # use open on macos
 if command -v open >/dev/null; then
   open "$URL"
+  exit 0
 fi
 
 if echo $URL | grep -e "youtube.com" >/dev/null; then

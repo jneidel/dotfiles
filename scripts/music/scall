@@ -10,7 +10,7 @@ EOF
   exit
 fi
 
-command -v single >/dev/null || { echo "single script is not installed" 1>&2; exit 127; }
+hash single || exit 127
 
 FILES=$(mktemp)
 find ~/Downloads -type d -name "* ^ *" >$FILES

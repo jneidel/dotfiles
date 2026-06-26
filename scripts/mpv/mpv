@@ -4,9 +4,9 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
   cat << EOF
 $ mpv MPV_ARGS
 Preconfigured mpv launch:
-- using ICP socket (remote control)
-- delay if connected to bluetooth speaker
-- adjust speed hearing uni lectures
+- uses ICP socket (remote control)
+- adds audio delay if connected to bluetooth speaker
+- adjusts playback speed on uni lectures
 
 Example:
   $ mpv --socket-name music http://192.168.178.69:9111

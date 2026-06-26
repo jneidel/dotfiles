@@ -1,30 +1,35 @@
 #! /bin/sh
-# Todo: add option to pass stuff via args
 
 if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
-  printf "$ bangs
-Portable custom duckduckgo bangs (tpb, lg, etc.)
-Open in \$BROWSER ($BROWSER).
-Bangs not in the list will be referred to duckduckgo.
-Should be run via keyboard shortcut.
+  cat << EOF
+$ bangs
+Search in a website through custom duckduckgo bangs.
+!yt video query
+!lg libgen book query
+!klein search local classifieds
+Configure your preferred search options and reuse them via ergonomic shortcuts.
 
-Commands:
+Unspecified bangs will fall back to duckduckgo.
+Best assigned to a keyboard shortcut.
+Leading with a space or using '-' as the bang will search in ddg.
+
+  Commands:
   list: list all available bangs
   BANG QUERY: open the given query for the given bang
 
 Examples:
   $ bangs
-  $ bangs list
-  $ bangs yt 'rofi showcase'
-"; exit
+  # yt rofi showcase
+  # git dotfiles
+EOF
+  exit
 fi
 
-MAIN_BROWSER=firefox
-SECONDARY_BROWSER=firefox
-
-hash rofi $MAIN_BROWSER $SECONDARY_BROWSER node || exit 127
-
+MAIN_BROWSER=$BROWSER
+SECONDARY_BROWSER=brave
 DEFAULT_BANG="-" # ddg
+
+hash rofi $MAIN_BROWSER node open-i3-workspace || exit 127
 
 bangList() {
   cat $(dirname $0)/banglist
@@ -53,22 +58,14 @@ else
   bang=$1
   rawquery="$2"
 fi
-
 query=`urlEncode "$rawquery"`
-case "$bang" in
-  y)
-    ~/scripts/yt $rawquery
-    exit;;
-  yts)
-    ~/scripts/yts $rawquery
-    exit;;
-  13|nyaa|yy|j)
-    bangList | grep -m 1 "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $SECONDARY_BROWSER >/dev/null 2>&1 &
-    exit;;
-  rap)
-    $SECONDARY_BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
-    exit;;
-esac
+
+# bang specific manipulation
+# case "$bang" in
+# )
+#   $SECONDARY_BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
+#   exit;;
+# esac
 
 if bangList | grep -m 1 "^$bang " >/dev/null; then
   bangList | grep -m 1 "^$bang " | cut -d\  -f2- | sed "s|\%s|$query|" | xargs -r -0 $MAIN_BROWSER >/dev/null 2>&1 &
@@ -79,3 +76,4 @@ else
     $MAIN_BROWSER "https://duckduckgo.com/?q=!$bang%20$query" >/dev/null 2>&1 &
   fi
 fi
+open-i3-workspace 2

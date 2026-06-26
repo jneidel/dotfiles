@@ -14,7 +14,7 @@ EOF
   exit
 fi
 
-command -v tmuxinator >/dev/null || { echo "tmuxinator is not installed" 1>&2; exit 127; }
+hash tmuxinator || exit 127
 
 CONFIG="$1"
 project_name=$(cat "$CONFIG" | grep name -m1 | cut -d\  -f2)

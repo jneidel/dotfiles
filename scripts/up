@@ -25,13 +25,17 @@ log() {
 run_yay() {
   log yay "System update"
 
+  # official packages
   nice -n 19 sudo pacman -Syu
-  reapply_X_settings
+  remap
 
+  # aur packages
   nice -n 19 yay --color=always --noconfirm
+  remap
+  
   nice -n 19 yay -S yt-dlp-git --noconfirm
-  reapply_X_settings
-
+  remap
+  
   yay -Qtdq | yay -Rsn --noconfirm -
 }
 hash yay && run_yay

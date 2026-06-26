@@ -8,7 +8,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; t
 $ cpufreq COMMAND
 Display current cpu frequency.
 
-Verbose alternative: cpupower frequency-info
+Minimal alternative to $ cpupower frequency-info
 
 Commands:
   abs       Display absolute frequency in KHz
@@ -19,7 +19,7 @@ EOF
   exit
 fi
 
-command -v bc >/dev/null || { echo "bc is not installed" 1>&2; exit 127; }
+hash bc || exit 127
 
 base_frequency_calc() {
   cat $DIR/*/scaling_cur_freq | tr "\n" +
