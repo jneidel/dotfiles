@@ -22,7 +22,6 @@ document the changes that I've done.
   - [git (version control)](#git-version-control)
   - [mpd + ncmpcpp (music player)](#mpd--ncmpcpp-music-player)
   - [remind (calendar)](#remind-calendar)
-  - [newsboat (RSS feed reader)](#newsboat-rss-feed-reader)
   - [hledger (accounting)](#hledger-accounting)
   - [& more](#-more)
 - [GUI apps](#gui-apps)
@@ -164,23 +163,10 @@ OMIT Oct 3 SPECIAL COLOR 175 175 25 Tag der Deutschen Einheit
 </details>
 
 - [Offical website](https://dianne.skoll.ca/projects/remind)
+- My [Emacs package for interacting with remind](https://github.com/jneidel/remind-calendar.el)
 - [aliases](.zsh/apps/remind.zsh)
 
 ![remind calendar view](images/remind.png)
-
-### newsboat (RSS feed reader)
-
-[Stable RSS feed reader](https://newsboat.org/).
-
-Use for reading [newsletters](https://kill-the-newsletter.com/),
-[manga](https://manga4life.com/), receiving [album updates](https://muspy.com/) for followed artists,
-youtube, notification of github released for packages I'm maintaining and
-more.
-
-- [config](.config/newsboat/config)
-- [scripts](scripts/newsboat)
-    - [release aur pkg](scripts/newsboat/release-aur-from-rss)
-- [wait_for_newsboat alias](.zsh/apps.zsh)
 
 ### hledger (accounting)
 
@@ -216,8 +202,7 @@ all the best plugins.
 
 The only logical choice after really considering the options.
 
-- [configs](.config/emacs)
-- [all the projects](https://github.com/stars/jneidel/lists/emacs) I'm using
+- my [literate config](.emacs.d/dotemacs.org)
 
 ![emacs](./images/emacs.png)
 
@@ -330,8 +315,6 @@ with a custom screenshot script and
 Migration from pulseaudio was super easy.
 
 - [script to control volume](scripts/sxhkd/set-volume) (bound via [sxhkd](#sxhkd-hotkey-daemon))
-- [pipewire configs](.config/pipewire)
-- [wireguard configs](.config/wireplumber)
 - [pulsemixer](https://archlinux.org/packages/extra/any/pulsemixer/) app for manual control
 
 ## Browser & Extensions
@@ -451,11 +434,11 @@ Ordered by importance and pretty much complete.
 | CamScanner | Document scanner (pro) | [gplay](https://play.google.com/store/apps/details?id=com.intsig.camscanner) |
 | Vinyl | Full featured music player | [fdroid](https://f-droid.org/packages/com.poupa.vinylmusicplayer/) [gplay](https://play.google.com/store/apps/details?id=com.poupa.vinylmusicplayer) [git](https://github.com/AdrienPoupa/VinylMusicPlayer) |
 | VLC | Generic player | [fdroid](https://f-droid.org/en/packages/org.videolan.vlc/) [gplay](https://play.google.com/store/apps/details?id=org.videolan.vlc) |
-| OI Shopping List | Shopping list | [fdroid](https://f-droid.org/packages/org.openintents.shopping) |
+| OI Shopping List | Shopping list | [gplay](https://play.google.com/store/apps/details?id=org.openintents.shopping) [git](https://github.com/openintents/shoppinglist) |
 | OsmAnd | Navigation | [fdroid](https://f-droid.org/packages/net.osmand.plus/) [gplay](https://play.google.com/store/apps/details?id=net.osmand) |
 | f.lux | Bluelight filter (root) | [gplay](https://play.google.com/store/apps/details?id=com.justgetflux.flux) [website](https://justgetflux.com/) |
 | Audiobook-shelf | Audiobook player (served from home server, with offline sync) | [homepage](https://www.audiobookshelf.org/) [gplay](https://play.google.com/store/apps/details?id=com.audiobookshelf.app) |
-| Syncthing-Fork | File sync (music and such) | [fdroid](https://f-droid.org/en/packages/com.github.catfriend1.syncthingandroid/) |
+| Syncthing-Fork | File sync (music and such) | [fdroid](https://f-droid.org/en/packages/com.github.catfriend1.syncthingfork/) |
 | K-9 Mail | Mail | [fdroid](https://f-droid.org/en/packages/com.fsck.k9) [sync-setup](https://github.com/k9mail/k-9/issues/857#issuecomment-397109350) [gplay](https://play.google.com/store/apps/details?id=com.fsck.k9) |
 | Merriam Webster | English dictionary | [gplay](https://play.google.com/store/apps/details?id=com.merriamwebster) |
 | Alle Deutschen Wörterbücher | Germany dictionaries | [gplay](https://play.google.com/store/apps/details?id=com.copyharuki.germangermandictionaries) |
@@ -483,14 +466,12 @@ Ordered by importance and pretty much complete.
 |--|--|--|
 | NewPipe | Youtube without ads | [fdroid](https://f-droid.org/en/packages/org.schabi.newpipe/) |
 | DAVx⁵ | CalDAV sync | [fdroid](https://f-droid.org/packages/at.bitfire.davdroid/) [website](https://www.davx5.com) [setup explaination](docs/caldav.md) |
-| DNS66 | Mobile hosts file | [fdroid](https://f-droid.org/en/packages/org.jak_linux.dns66) |
 | primitive ftpd | ftp server | [fdroid](https://f-droid.org/en/packages/org.primftpd/) [git](https://github.com/wolpi/prim-ftpd) |
 | M.A.L.P. | MPD client | [fdroid](https://f-droid.org/en/packages/org.gateshipone.malp) |
 | AudioAnchor | Audiobook player | [fdroid](https://f-droid.org/packages/com.prangesoftwaresolutions.audioanchor/) |
 | Simple Calendar | Calendar | [fdroid](https://f-droid.org/packages/com.simplemobiletools.calendar.pro/) [git](https://github.com/SimpleMobileTools/Simple-Calendar) |
 | My Expenses | Expense/income tracker, with exports | [fdroid](https://f-droid.org/repository/browse/?fdid=org.totschnig.myexpenses) [gplay](https://play.google.com/store/apps/details?id=org.totschnig.myexpenses) [git](https://github.com/mtotschnig/MyExpenses) |
 | Productivity Challenge Timer | Optimized pomodoro clock | [gplay](https://play.google.com/store/apps/details?id=com.wlxd.pomochallenge) |
-| JuiceSSH | Mobile mosh (ssh) client | [fdroid](https://play.google.com/store/apps/details?id=com.sonelli.juicessh) |
 | MX Player | Video player (better than vlc) ||
 | Anki | Flashcards | [fdroid](https://f-droid.org/en/packages/com.ichi2.anki/) [gplay](https://play.google.com/store/apps/details?id=com.ichi2.anki) [git](https://github.com/ankidroid/Anki-Android) |
 | MuPDF | PDF viewer | [fdroid](https://f-droid.org/en/packages/com.artifex.mupdf.viewer.app) |
