@@ -2788,6 +2788,13 @@ When the bookmark file has changed on disk just reload it without pestering me.
 (setq bookmark-watch-bookmark-file 'silent)
 #+end_src
 
+Occasionally my Emacs hung on "Waiting for reply from selection owner...", which
+is the Xorg clipboard.
+Set it to a more reasonable 1s (down from 5s.)
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(setq x-selection-timeout 1000)
+#+end_src
+
 Do not report warnings and errors from asynchronous native compilation.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 ;; make emacs backup every time I save
