@@ -19,8 +19,13 @@ unbind <C-f>
 bind --mode=ex <ArrowDown> ex.next_completion
 bind --mode=ex <ArrowUp>   ex.prev_completion
 
+"" j/k for scrolling causes weird stutter, so I use those via surfingkeys.
+"" j/k are thus overwritten by surfingkeys and become unusuable in hints.
+"" Remove from the chars that can show up as hints:
+set hintchars asdfhlöguiopqwertnmxcvb.,ü
+
 """"""""""""""""""""""""""""""""""" defaults """""""""""""""""""""""""""""""""""
-" General Settings
+"" General Settings
 set update.lastchecktime 1772656917594
 set update.nag true
 set update.nagwait 7
@@ -29,7 +34,7 @@ set update.checkintervalsecs 86400
 set configversion 2.0
 set modeindicator false
 
-" Binds
+"" Binds
 bind ;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 1")}
 bind ;c hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 3")}
 bind ;: hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y)}
@@ -60,9 +65,9 @@ bind gh home
 bind gH home true
 bind p clipboard open
 bind P clipboard tabopen
-bind j scrollline 10
+# bind j scrollline 10
 bind <C-e> scrollline 10
-bind k scrollline -10
+# bind k scrollline -10
 bind <C-y> scrollline -10
 bind h scrollpx -50
 bind l scrollpx 50
@@ -70,8 +75,6 @@ bind G scrollto 100
 bind gg scrollto 0
 bind <C-u> scrollpage -0.5
 bind <C-d> scrollpage 0.5
-bind <C-f> scrollpage 1
-bind <C-b> scrollpage -1
 bind <C-v> nmode ignore 1 mode normal
 bind $ scrollto 100 x
 bind ^ scrollto 0 x
@@ -186,7 +189,7 @@ bind <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-Arrow
 bind m gobble 1 markadd
 bind ` gobble 1 markjump
 
-" Aliases
+"" Aliases
 alias mpvqueue composite shellescape | exclaim /home/jneidel/scripts/sxhkd/open_clip_mpv
 command alias command
 alias au autocmd
@@ -270,7 +273,7 @@ alias tabclosealltoright tabcloseallto right
 alias tabclosealltoleft tabcloseallto left
 alias reibadailty jumble
 
-" Autocmds
+"" Autocmds
 autocmd DocLoad ^https://github.com/tridactyl/tridactyl/issues/new$ issue
 autocmd TriStart .* source_quiet
 
