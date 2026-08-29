@@ -1224,6 +1224,40 @@ I also want to have access to everything, but clocking in, outside of org-mode.
   )
 #+end_src
 
+*** Inline images
+[[https://github.com/misohena/org-inline-image-fix][org-inline-image-fix]]
+
+Limit inline image size.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-http-inline-image
+  :quelpa (org-inline-image-fix :fetcher github :repo "misohena/org-inline-image-fix")
+  :config
+  (with-eval-after-load "org"
+    (require 'org-limit-image-size)
+    (setq org-limit-image-size '(500 . 400)) ; max height . width (whichever is limiting)
+    (org-limit-image-size-activate)))
+#+end_src
+
+Update inline images when their sources change.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-http-inline-image
+  :quelpa (org-inline-image-fix :fetcher github :repo "misohena/org-inline-image-fix")
+  :config
+  (with-eval-after-load "org"
+     (require 'org-flyimage)
+     (add-hook 'org-mode-hook 'org-flyimage-mode)))
+#+end_src
+
+Display HTTP images inline.
+They are downloaded every time.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package org-http-inline-image
+  :config
+  (with-eval-after-load "org"
+    (require 'org-http-inline-image)
+    (org-http-inline-image-activate)))
+#+end_src
+
 *** Snippets
 [[https://orgmode.org/manual/Structure-Templates.html][structure template]] (has list of keys)
 
