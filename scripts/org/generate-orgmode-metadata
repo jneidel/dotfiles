@@ -7,6 +7,8 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ]; then
 $ generate-orgmode-metadata TITLE
 Generate the metadata block for the top of an orgmode file.
 
+If the title is index, the name of the containing directory will be used instead.
+
 Arguments:
   \$1: title
 EOF
@@ -14,6 +16,12 @@ EOF
 fi
 
 title="$1"
+filename="$2"
+
+if [ "$title" = "index" ]; then
+  dirname="$(basename "$(pwd)")" # pwd works because script is called via dirvish from within the directory
+  title="$dirname"
+fi
 
 # I only want one metadata block per note with the same title.
 # For signal-to-inbox messages are parsed async, so the file exists check does not
