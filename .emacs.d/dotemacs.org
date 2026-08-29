@@ -6094,6 +6094,9 @@ The `crontab(1)' executable is used to load the crontab."
   :after eshell
   :bind (:map eshell-mode-map
               ("M-=" . kill-current-buffer)))
+
+(use-package completion-preview
+  :hook (eshell-mode . completion-preview-mode))
 #+end_src
 
 ** Templates (YASnippet)
