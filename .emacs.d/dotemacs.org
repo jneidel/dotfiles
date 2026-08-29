@@ -1193,7 +1193,7 @@ customize: org-src-block-faces
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq org-todo-keywords
       '((sequence "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)")
-        (sequence "NEXT(n)" "WAITING(w)" "|")
+        (sequence "NEXT(n)" "WAITING(w)" "STALLED(s)" "|")
         (sequence "|" "REJECTED(r)")))
 #+end_src
 
@@ -1201,8 +1201,9 @@ Set [[https://orgmode.org/manual/Faces-for-TODO-keywords.html][custom faces]] fo
 Green means ready to go. Yellow is inactive. Orange is no concern.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq org-todo-keyword-faces
-      '(("TODO" . "green") ("NEXT" . "green")  ("IN PROGRESS" . "green")
-        ("WAITING" . "yellow")
+      '(("TODO" . "green") ("NEXT" . "green")
+        ("IN PROGRESS" . "yellow")
+        ("WAITING" . "orange") ("STALLED" . "orange")
         ("DONE" . org-warning) ("REJECTED" . org-warning)))
 #+end_src
 
