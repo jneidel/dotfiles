@@ -4811,6 +4811,8 @@ Tags are shown in the interface.
 To make it less verbose I turn them into emoji.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq jn/notmuch-tag-trash '("+trash" "-inbox" "-archived" "-spam" "-invoice" "-unread"))
+(setq jn/notmuch-tag-spam '("+spam" "-inbox" "-archived" "-trash" "-invoice" "-unread"))
+
 (defun notmuch-search-mode-delete-goto-next ()
   "Tag current mail as trash and move to the next."
   (interactive)
@@ -4822,6 +4824,19 @@ To make it less verbose I turn them into emoji.
   (notmuch-show-tag jn/notmuch-tag-trash)
   (notmuch-show-next-message t)
   (notmuch-search-show-thread))
+
+(defun notmuch-search-mode-tag-spam-goto-next ()
+  "Tag current mail as spam and move to the next."
+  (interactive)
+  (notmuch-search-tag jn/notmuch-tag-spam)
+  (forward-line))
+(defun notmuch-show-mode-tag-spam-goto-next ()
+  "Tag current mail as spam and move to the next."
+  (interactive)
+  (notmuch-show-tag jn/notmuch-tag-spam)
+  (notmuch-show-next-message t)
+  (notmuch-search-show-thread))
+
 
 (defun notmuch-show-mode-open-html ()
   "Open HTML part of message in browser (via ~/.mailcap)."
@@ -4887,7 +4902,7 @@ To make it less verbose I turn them into emoji.
 
   (notmuch-tagging-keys
    `((,(kbd "d") jn/notmuch-tag-trash "🗑️ Mark for deletion")
-     (,(kbd "m") ("+spam" "-inbox" "-archived" "-trash" "-invoice" "-unread") "🪓 Mark as spam")
+     (,(kbd "m") jn/notmuch-tag-spam "🪓 Mark as spam")
      (,(kbd "i") ("+invoice" "-inbox" "-archived" "-spam" "-trash"  "-unread") "🛒 Mark as invoice")
      (,(kbd "a") ("+archived" "-inbox" "-trash" "-spam" "-invoice" "-unread") "🗃️ Mark as archived")
      (,(kbd "I") ("+inbox" "-archived" "-trash" "-spam" "-invoice") "📥️ Mark as inbox")
