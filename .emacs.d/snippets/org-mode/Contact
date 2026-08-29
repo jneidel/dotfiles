@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# name: Contact
+# key: <contact
+# --
+
+#+TITLE: $1
+#+EMAIL: $2
+#+PHONE: ${3:+49}
+#+BIRTHDAY: $4
+#+ADDRESS: $5
+[[https://www.openstreetmap.org/search?query=$5][OSM]], [[https://www.google.com/maps?q=$5][Maps]]
+
+[[file:pic/$1.jpg]]
+
+* Relations
+
+* Background 
+How did we meet? $6
+
+Arbeit: $7
+Expertise:
+- $8
+
+* Current focus
+
+* Reach out via
+- [[sgnl://signal.me/#p/$3][Signal]]
+- [[https://web.whatsapp.com/send/?phone=$3][WhatsApp]]
+- [[mailto:$2][Email]]
+- $0
+
+* Communication history
+

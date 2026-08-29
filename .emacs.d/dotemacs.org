@@ -955,12 +955,28 @@ https://orgmode.org/manual/Capture-templates.html
                           "#+date: %t\n"
                           "\n** ref\n%a\n%i")
                  :after-finalize jneidel-note-capture))
-
-  ;; tasks
+  
   (add-to-list 'org-capture-templates
                '("m" "Message to send" entry
                  (file+headline (lambda () (substitute-in-file-name "$ORG/messages to send.org")) "Messages to send")
                  "* TODO %?\n"
+                 :prepend 1 :empty-lines-after 1))
+
+  (add-to-list 'org-capture-templates
+               '("a" "Activity with contact" entry
+                 (file+headline (lambda ()
+                                  (let* ((dir (substitute-in-file-name "$ORG_RESOURCES/contacts"))
+                                         (files (mapcar (lambda (f) (file-name-sans-extension f))
+                                                        (directory-files dir nil "\\.org\\'"))))
+                                    (format "%s/%s.org" dir (completing-read "Pick contact: " files nil t))))
+                                  "Communication history")
+                 "* %t %?\n"
+                 :prepend 1 :empty-lines-after 1))
+
+  (add-to-list 'org-capture-templates
+               '("b" "Item to buy" entry
+                 (file+headline (lambda () (substitute-in-file-name (concat "$ORG_RESOURCES/finances/Buying list.org"))) "List")
+                 "* %?\n%t €\n\nWhy? "
                  :prepend 1 :empty-lines-after 1))
   )
 #+end_src
@@ -982,28 +998,51 @@ Not in use:
 #+begin_src elisp :results silent
 (with-eval-after-load 'org-capture
   (add-to-list 'org-capture-templates
-             '("j" "Tracking Journal" item
-               (file+olp+datetree "~/org/tracking-journal.org")
-               "%<%H:%M> %?\n"))
+               '("j" "Tracking Journal" item
+                 (file+olp+datetree "~/org/tracking-journal.org")
+                 "%<%H:%M> %?\n"))
 
-;; sprint retrospective for work
-(setq retro-notes (substitute-in-file-name "$DAVA_ORG/2_areas/retro notes.org"))
-(add-to-list 'org-capture-templates
-             '("g" "Retro Goodness" entry
-               (file+headline retro-notes "Goodness")
-               "* %?\n  %t"
-               :prepend 1 :empty-lines-after 1))
-(add-to-list 'org-capture-templates
-             '("b" "Retro Goodness" entry
-               (file+headline retro-notes "Badness")
-               "* %?\n  %t"
-               :prepend 1 :empty-lines-after 1))
-)
+  ;; sprint retrospective for work
+  (setq retro-notes (substitute-in-file-name "$DAVA_ORG/2_areas/retro notes.org"))
+  (add-to-list 'org-capture-templates
+               '("g" "Retro Goodness" entry
+                 (file+headline retro-notes "Goodness")
+                 "* %?\n  %t"
+                 :prepend 1 :empty-lines-after 1))
+  (add-to-list 'org-capture-templates
+               '("b" "Retro Goodness" entry
+                 (file+headline retro-notes "Badness")
+                 "* %?\n  %t"
+                 :prepend 1 :empty-lines-after 1))
+  )
 #+end_src
 - refactor with: https://miguelcrespo.co/posts/using-org-capture-to-create-new-org-files
 - ideas from: https://howardism.org/Technical/Emacs/capturing-content.html
   & https://protesilaos.com/emacs/dotemacs#h:f8f06938-0dfe-45c3-b4cf-996d36cba82d
-- further info: https://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
+- further info:
+  https://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
+
+  
+#+begin_src elisp :results silent
+(defun my/contact-files ()
+  "Return a list of contact names from $ORG_RESOURCES/contacts."
+  (mapcar #'file-name-base
+          (file-expand-wildcards
+           (substitute-in-file-name "$ORG_RESOURCES/contacts/*.org"))))
+
+(defun my/pick-contact-file ()
+  "Completing-read over contacts, return the full path."
+  (substitute-in-file-name
+   (concat "$ORG_RESOURCES/contacts/"
+           (completing-read "Pick contact: " (my/contact-files))
+           ".org")))
+
+(add-to-list 'org-capture-templates
+             '("a" "Activity with contact" entry
+               (file+headline my/pick-contact-file "Communication history")
+               "* %U %?\n"
+               :prepend t :empty-lines-after 1))
+#+end_src
 
 *** Org-agenda
 #+begin_src emacs-lisp :tangle "init.el" :results silent
@@ -2608,6 +2647,20 @@ Skip fontification during input.
 Relevant for tree-sitter modes or large buffers.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (setq redisplay-skip-fontification-on-input t)
+#+end_src
+
+Open signal links in signal desktop via xdg.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(org-link-set-parameters "sgnl"
+  :follow (lambda (path _)
+    (browse-url (concat "sgnl:" path))))
+
+(defun browse-url-signal (url &optional single)
+  "Open the url with XDG open and then navigate to the i3 messenging workspace."
+  (browse-url-xdg-open url single)
+  (when (eq system-type 'gnu/linux)
+    (shell-command "open-i3-workspace 4")))
+(push (cons "sgnl://" 'browse-url-signal) browse-url-handlers)
 #+end_src
 
 Disable annoying audible and visible bells.
