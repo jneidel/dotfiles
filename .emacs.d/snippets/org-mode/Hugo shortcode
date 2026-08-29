@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Hugo shortcode
+# key: <hs
+# --
+
+@@hugo:{{<${1}>}}@@$0

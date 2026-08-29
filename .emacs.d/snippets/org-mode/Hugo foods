@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: Hugo /foods
+# key: <food
+# --
+
+#+hugo_bundle: ${1}
+#+export_file_name: index.de.md
+#+hugo_custom_front_matter: :excludeRss true
+#+hugo_custom_front_matter: :thumbnail ""
+#+hugo_custom_front_matter: :thumbnailAlt ""
+#+hugo_custom_front_matter: :summary ""
+#+description: 
+#+hugo_tags: ${2}
+
+- 
+- Kombinationsgruppe: [[/tags/][]
+- @@hugo:{{<in-season "es" "" "">}}@@
+
+$0
