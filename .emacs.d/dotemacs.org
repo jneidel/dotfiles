@@ -2679,6 +2679,95 @@ opened.
 (setq auto-save-file-name-transforms '((".*" "~/.cache/emacs/auto-saves" t)))
 #+end_src
 
+** Emacs cache files
+[[elfeed:www.rahuljuliato.com#https://rahuljuliato.com/posts/emacs-cache-paths][Taming Emacs Cache and Temporary Files]]
+TODO: migrate to [[https://github.com/emacscollective/no-littering][GitHub - emacscollective/no-littering: Help keeping ~/.config/emacs clean · GitHub]]
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defcustom my/cache-directory
+  (expand-file-name "cache/" user-emacs-directory)
+  "Base directory for Emacs cache files.
+All entries in `my/cache-paths' are resolved relative to this
+directory.  Choose one of the presets or supply any custom path.
+Changes take effect after restarting Emacs."
+  :type `(choice
+		  (const     :tag "Inside Emacs config  (cache/ in user-emacs-directory)"
+					 ,(expand-file-name "cache/" user-emacs-directory))
+		  (const     :tag "System temp          (/tmp/emacs-cache/)" "/tmp/emacs-cache/")
+		  (directory :tag "Custom directory"))
+  :group 'my)
+
+(when custom-file
+  (load custom-file 'noerror 'nomessage))
+
+(defvar my/cache-paths
+  '(;; Files:
+	(bookmark-file               . "bookmarks")
+	(ielm-history-file-name      . "ielm-history.eld")
+	(recentf-save-file           . "recentf")
+	(savehist-file               . "history")
+	(save-place-file             . "saveplace")
+	(transient-history-file      . "transient/history.el")
+	(transient-levels-file       . "transient/levels.el")
+	(transient-values-file       . "transient/values.el")
+	(tramp-persistency-file-name . "tramp")
+	(nsm-settings-file           . "network-security.data")
+	;; Directories:
+	(backups                     . "backups/")
+	(auto-saves                  . "auto-saves/")
+	(auto-saves-sessions         . "auto-saves/sessions/")
+	(multisession-directory      . "multisession/")
+	(url-configuration-directory . "url/")
+	(image-dired-dir             . "image-dired/")
+	(erc-log-channels-directory  . "erc/logs/")
+	(erc-image-cache-directory   . "erc/images/")
+	(rcirc-log-directory         . "rcirc/logs/"))
+  "Alist of (KEY . RELATIVE-PATH) for cache locations.
+RELATIVE-PATH is resolved against `my/cache-directory'.
+A trailing slash on RELATIVE-PATH marks the entry as a directory.")
+
+(defun my/cache--path (key)
+  "Return the absolute path for KEY in `my/cache-paths'."
+  (let ((rel (cdr (assq key my/cache-paths))))
+	(unless rel
+	  (error "my/cache--path: Unknown key %S" key))
+	(expand-file-name rel my/cache-directory)))
+
+(defun my/cache--ensure-dirs ()
+  "Create every directory referenced by `my/cache-paths'.
+Entries ending in `/' are created directly; other entries have their
+parent directory created."
+  (dolist (entry my/cache-paths)
+	(let* ((abs (my/cache--path (car entry)))
+		   (dir (if (directory-name-p abs)
+					abs
+				  (file-name-directory abs))))
+	  (make-directory dir t))))
+(my/cache--ensure-dirs)
+
+(use-package emacs
+  :ensure nil
+  :custom
+  (bookmark-file              (my/cache--path 'bookmark-file))
+  (ielm-history-file-name     (my/cache--path 'ielm-history-file-name))
+  (recentf-save-file          (my/cache--path 'recentf-save-file))
+  (savehist-file              (my/cache--path 'savehist-file))
+  (save-place-file            (my/cache--path 'save-place-file))
+  (transient-history-file     (my/cache--path 'transient-history-file))
+  (transient-levels-file      (my/cache--path 'transient-levels-file))
+  (transient-values-file      (my/cache--path 'transient-values-file))
+  (nsm-settings-file          (my/cache--path 'nsm-settings-file))
+  (multisession-directory     (my/cache--path 'multisession-directory))
+  (url-configuration-directory (my/cache--path 'url-configuration-directory))
+  ;; The two below are *not* backups; they keep auto-save state
+  ;; without scattering `#file#' next to every edited buffer.
+  (create-lockfiles  nil)   ; no `.#file' lock files at all
+  ;; (make-backup-files nil)   ; no `file~' tilde backups at all
+  (backup-directory-alist   '(("." . (my/cache--path 'backups))))
+  :config
+  (setopt tramp-persistency-file-name (my/cache--path 'tramp-persistency-file-name))
+)
+#+end_src
+
 Lockfiles prevent multiple users from editing the same file.
 They look like this "#dotemacs.el#".
 Since I can't configure the location to be somewhere else, I'd rather not have it.
