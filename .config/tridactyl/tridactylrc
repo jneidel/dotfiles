@@ -1,11 +1,14 @@
-" :source or :restart to apply changes
+"" tridactylrc
+"" :source and reload to apply changes
 
-" Open video in mpv.
-" Accepts one argument (the hinted URL). Shellescape for external output.
-alias mpvqueue composite shellescape | exclaim /home/jneidel/scripts/sxhkd/open_clip_mpv
+"" Open video in mpv.
+"" Accepts one argument (the hinted URL). Shellescape for external output.
+"" alias mpvqueue exclaim_quiet /home/jneidel/scripts/sxhkd/open_clip_mpv
+alias mpvqueue js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('/home/jneidel/scripts/sxhkd/open_clip_mpv'))
 bind ;v hint -W mpvqueue
 
-" Hide inficator on jellyfin
+
+"" Hide inficator on jellyfin
 autocmd DocStart jellyfin.neidel.xyz set modeindicator false
 
 bind <A-h> tabprev
