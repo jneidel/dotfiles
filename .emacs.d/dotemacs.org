@@ -411,6 +411,13 @@ https://github.com/abo-abo/hydra
 
 Open frequently used file directly via a short-cut menu:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun org-roam-open-file-from-id (id)
+  "Given an id open the file (if it exists.)"
+  (let* ((node (org-roam-node-from-id id))
+         (file (when node (org-roam-node-file node))))
+    (unless file (user-error "No org-roam node with ID %s" id))
+    (find-file file)))
+
 (use-package transient
   :ensure nil
   :config
@@ -421,12 +428,14 @@ Open frequently used file directly via a short-cut menu:
      ("m" "notmuch mail" (lambda () (interactive) (workspace-switch-to-main) (notmuch)))
      ("n" "ncmpcpp music" (lambda () (interactive) (ncmpcpp)))
      ("r" "elfeed rss" (lambda () (interactive) (workspace-switch-to-main) (elfeed) (elfeed-update)))
-     ("c" "remind calendar" (lambda () (interactive) (workspace-switch-to-main) (remind-calendar)))
+     ("c" "remind calendar" (lambda () (interactive) (workspace-switch-to-main) (remind-calendar-view)))
+     ("C" "calendar file" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/.calendar/main/1_cal.rem")))
      ("s" "scratch buffer" (lambda () (interactive) (scratch-buffer) (lisp-interaction-mode)))
+     ("e" "entrypoint" (lambda () (interactive) (workspace-switch-to-main) (org-roam-open-file-from-id "08e29df6-5516-4965-8280-bdcf348efcbf")))
      ("p" "parcels" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/3_resources/Parcels tracking.org")))
-     ("e" "exercise routine" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/3_resources/exercise/My Sustainable Training Routine.org")))
      ("t" "Re:Zero todos" (lambda () (interactive) (workspace-switch-to-main) (rezero)))
      ("f" "filetags" (lambda () (interactive) (workspace-switch-to-main) (find-file "~/org/filetags.org")))
+     ("x" "Exercise routine" (lambda () (interactive) (workspace-switch-to-main) (org-roam-open-file-from-id "6fce3473-f7b4-4229-a551-a5aec493d26a")))
      ])
   :bind ("H-j" . jump-menu-common-files))
 #+end_src
