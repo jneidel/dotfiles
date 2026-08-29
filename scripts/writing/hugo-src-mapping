@@ -25,6 +25,10 @@ find "$SRC_DIR" -type f -name "*.org" | while IFS= read -r file; do
     esac
   fi
 
+  if [ -z "$section" ] && echo $file | grep "src/foods/" >/dev/null; then
+    section=foods
+  fi
+
   if ! grep "^#.hugo_draft: true" "$file" >/dev/null; then
     printf "$file:$CONTENT_DIR/%s/%s/%s\n" \
            "$section" "$bundle" "$export_name"

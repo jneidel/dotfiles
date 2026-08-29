@@ -105,6 +105,7 @@ function qr {
     echo "qr code copied to clipboard"
 }
 alias milch="fisch milch"
+alias sauna="fisch sauna"
 
 ### misc
 function dict {
@@ -124,7 +125,7 @@ alias pg="sudo -u postgres"
 alias status="journalctl --no-pager -f -u"
 alias s-sshd="sudo systemctl start sshd"
 alias tspc="tsp -C && tsp"
-gh() {
+hub() {
   [ -e "package.json" ] && \
     grep "repository" package.json | awk -F\" '{ print "https://github.com/"$4}' | xargs -r brave >/dev/null 2>&1 &
 }

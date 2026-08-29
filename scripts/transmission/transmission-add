@@ -15,12 +15,7 @@ echo "$CLIP" > ~/tmp/clip
 
 if tsr -a "$CLIP" >/dev/null; then
   notify-send "Added magnet link to tsm" -t 800
-
-  if is-mullvad; then
-    tsr -t "$CLIP" --start
-  else
-    tsr -t all --stop
-  fi
+  tsr -t "$CLIP" --start
 else
   notify-send "Adding the magnet failed" -t 1000
 fi

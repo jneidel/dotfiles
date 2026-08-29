@@ -60,3 +60,5 @@ elif /home/jneidel/scripts/between $sunset_hour $wind_down_hour 2>/dev/null; the
 elif /home/jneidel/scripts/between $wind_down_hour 2>/dev/null; then
   set_brightness_percent 20
 fi
+
+/home/jneidel/scripts/cron/bluelight reset

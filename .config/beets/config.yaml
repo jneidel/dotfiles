@@ -20,7 +20,8 @@ plugins: fetchart embedart lyrics fromfilename scrub convert musicbrainz
 # spotify
 lyrics:
   force: yes
-  sources: google lyricwiki musixmatch genius
+  sources: google lyricwiki
+  # musixmatch genius
 match:
   strong_rec_thresh: 0.15
   medium_rec_thresh: 0.27

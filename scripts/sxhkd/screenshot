@@ -51,10 +51,8 @@ screenshot_selection_clip() {
   rmdir "$PIC_DIR"
 }
 screenshot_app() {
-  maim --window $(xdotool getactivewindow) |
-    tee "$file" |
-    xclip -selection clipboard -t image/png &&
-    notify-send "took screenshot" $notify_send_options
+  maim --window $(xdotool getactivewindow) "$file"
+  notify-send "took screenshot" $notify_send_options
 }
 screenshot_app_clip() {
   maim --window $(xdotool getactivewindow) |

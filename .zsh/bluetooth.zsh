@@ -8,8 +8,3 @@ alias oo="btconnect 28:FA:19:84:BB:20" # Oladance overear
 alias g3="btconnect F4:2B:7D:11:3E:FB" # green soundcore motion 300, hanging speaker
 alias m3="g3"
 alias hang="g3"
-
-### connecting multiple speakers with each other requires a constant audio stream like such:
-# # stream random audio file over bluetooth to stop charge from stuttering when using it in connect mode
-# kill $(pgrep -f "$HOME/scripts/personal/audio.mp3") 2>/dev/null
-# /bin/mpv -ao pulse ~/scripts/personal/audio.mp3 --mute --loop-file=inf >/dev/null 2>&1 &

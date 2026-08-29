@@ -51,3 +51,24 @@ addwireguard() {
 ## lock
 alias lockon="xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &"
 alias lockoff="fkill xss-lock"
+
+## restart
+reshim() {
+
+  kill -9 $(pgrep -f '/bin/jellyfin-mpv-shim')
+}
+reimap() {
+  kill -9 $(pidof goimapnotify)
+}
+
+zsh_init_benchmark() {
+  times=()
+  temp=$(mktemp)
+  tail -f $temp 2>/dev/null &
+  for i in {1..20}; do
+    t=$( { time zsh -i -c exit; } 2>&1 | tee $temp | awk '/total/ { print $(NF-1)+0 }' )
+    times+=($t)
+  done
+  printf "%s\n" "${times[@]}" | awk '{ total+=$1 } END { printf "Average: %.3fs over %d runs\n", total/NR, NR }'
+  jobs -p | xargs -r kill 2>/dev/null
+}

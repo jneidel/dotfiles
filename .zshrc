@@ -52,9 +52,9 @@ if [ "$TERM" = "tmux-256color" ]; then
 fi
 
 ## Paths
-export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/.rd/bin:~/.local/share/pip/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/sbin:/usr/bin/site_perl:$HOME/.cargo/bin:$HOME/.local/share/nix/profile/bin:$(ls -d ~/.local/share/gem/ruby/*/bin | tr '\n' ':')
+export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/.rd/bin:~/.local/share/pip/bin:/bin:/usr/bin:/usr/bin/vendor_perl:/usr/sbin:/usr/bin/site_perl:$HOME/.local/share/cargo/bin::$HOME/.local/share/nix/profile/bin:$(ls -d ~/.local/share/gem/ruby/*/bin | tr '\n' ':')
 export PATH="$(du $HOME/scripts/ | cut -f2 | grep -Fve .git -e node_modules -e lib -e data | tr '\n' ':')$PATH"
-export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/3_areas:~/org/4_resources:~/org/4_resources/media:~/scripts:~/.config:~/code/notes:~/.local/org
+export CDPATH=.:~:~/code:~/Downloads:~/org:~/org/1_design:~/org/2_project:~/org/3_areas:~/org/4_resources:~/org/4_resources/media:~/scripts:~/code/notes:~/.local/org
 
 ## Applications
 export EDITOR=vim
@@ -73,13 +73,9 @@ export WEB_HOME=$HOME/code/web
 export WEB_SESSION_NAME=web
 export WEB_NOTES=$ORG_AREAS/blog/posts
 
-test -f "$HOME/.config/broot/launcher/bash/br" && source $HOME/.config/broot/launcher/bash/br
-
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
-compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
-
 # kitty shell integration
-test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
+# https://sw.kovidgoyal.net/kitty/shell-integration
+# test -e "/usr/lib/kitty/shell-integration/kitty.zsh" && source "/usr/lib/kitty/shell-integration/kitty.zsh"
 
 # macos
 if [ "$(uname)" = "Darwin" ]; then

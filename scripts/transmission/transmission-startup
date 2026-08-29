@@ -9,11 +9,6 @@ EOF
 fi
 
 command -v transmission-daemon >/dev/null || { echo "transmission-daemon is not installed"; exit 127; }
-command -v is-mullvad >/dev/null || { echo "is-mullvad script is not in PATH"; exit 127; }
 
 echo "Starting transmission-daemon"
-if is-mullvad; then
-  nice transmission-daemon -c ~/Downloads --encryption-preferred
-else
-  nice transmission-daemon -c ~/Downloads --encryption-preferred --paused
-fi
+nice transmission-daemon -c ~/Downloads --encryption-preferred --paused

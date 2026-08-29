@@ -24,6 +24,9 @@ rm -f ~/*.desktop 2>/dev/null
 # crontab locks
 rm -f /tmp/*lock 2>/dev/null
 
+# script temp data files
+rm -f /tmp/generate-org-metadata-reused-titles 2>/dev/null
+
 # empty dirs
 rmdir ~/Desktop 2>/dev/null
 rmdir $ORG_INBOX/screenshots 2>/dev/null

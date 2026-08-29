@@ -36,6 +36,9 @@ fi
 if [ -z "$video_format" ]; then
   video_format=$(grep "video only" $formats | grep "1280x" | head -n1 | awk '{ print $1 }')
 fi
+if [ -z "$video_format" ]; then
+  video_format=$(grep "video only" $formats | grep "480x" | head -n1 | awk '{ print $1 }')
+fi
 
 if [ -z "$audio_format" ]; then
   ecos .red "No audio format found (audio only, opus or none)"
@@ -57,7 +60,7 @@ audio_tmp="$(find $dir | tail -n1)"
 audio_file="audio.${audio_tmp##*.}"
 mv "$audio_tmp" $audio_file # in case audio file is mp4
 
-echo "\nDownloading video"
+echo "Downloading video"
 nice -n 19 yt-dlp -i --retries 4 -f "$video_format" -o "$dir/%(title)s.%(ext)s" "$video" --sub-format srt --sub-langs "de,en" --write-subs
 # --write-auto-sub for generated subs
 
@@ -76,8 +79,5 @@ elif [ -z "$video_file" ]; then
 fi
 
 echo "Combinding audio and video"
-nice -n 19 \
-     ffmpeg -i "$video_file" -i "$audio_file" -map 0:v -map 1:a -c:v copy -c:a copy "$ORG_INBOX/$title.mkv" &&
+nice -n 19 combine-audio-video "$audio_file" "$video_file" "$ORG_INBOX/$title" &&
   echo "Wrote $ORG_INBOX/$title.mkv"
-
-# ffmpeg -i ./THE\ PRIMORDIAL\ CODE\ III,\ The\ Return\ of\ the\ Stars.mkv -i ./THE\ PRIMORDIAL\ CODE\ III,\ The\ Return\ of\ the\ Stars.en.srt -map 0:v -map 0:a -map 1:s -c:v copy -c:a copy -c:s copy "out.mkv"

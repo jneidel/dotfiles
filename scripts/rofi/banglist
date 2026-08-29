@@ -15,8 +15,8 @@ gc https://getcomics.info/?s=%s
 fp https://filepursuit.com/pursuit?q=%s
 abb https://audiobookbay.is/?s=%s
 nd https://www.youtube.com/results?search_query=theneedledrop+%s
-ekb https://www.ebay-kleinanzeigen.de/s-12459/%s/k0l3484r10
-klein https://www.ebay-kleinanzeigen.de/s-03238/%s/k0l7714r10
+ekb https://www.kleinanzeigen.de/s-12459/%s/k0l3484r10
+klein https://www.kleinanzeigen.de/s-03238/%s/k0l7714r10
 yt https://inv.nadeko.net/search?q=%s
 yt https://www.youtube.com/results?search_query=%s
 yt https://yewtu.be/search?q=%s
@@ -30,6 +30,7 @@ d https://www.dict.cc/?s=%s
 cs https://curiositystream.com/search/%s
 ddg https://duckduckgo.com/?q=%s
 m https://www.medimops.de/produkte-C0/?fcIsSearch=1&searchparam=%s
+w https://www.websters1913.com/words/%s
 mw https://www.merriam-webster.com/dictionary/%s
 dl https://duckduckgo.com/?q=%s+mp3+download
 du https://www.duden.de/rechtschreibung/%s
@@ -67,9 +68,10 @@ earnings https://alpha.earningswhispers.com/stocks/%s
 ups https://www.ups.com/track?tracknum=%s
 vl https://research.valueline.com/research#sec=company&sym=%s
 inside http://openinsider.com/screener?s=%s&td=30&grp=2&nol=1&nil=2&v2l=1000&oc2l=3
-nf https://www.netflix.com/search?q=%s
 unicode https://unicode-table.com/en/search/?q=%s
-w https://en.wikipedia.org/wiki/Special:Search?search=%s
+ww https://en.wikipedia.org/wiki/Special:Search?search=%s
+wen https://en.wikipedia.org/wiki/Special:Search?search=%s
+wuk https://en.wikipedia.org/wiki/Special:Search?search=%s
 wd https://en.wikipedia.org/wiki/Special:Search?search=%s+discography
 wde https://de.wikipedia.org/wiki/Special:Search?search=%s
 ru https://rutracker.org/forum/tracker.php?nm=%s
@@ -105,7 +107,6 @@ media https://mediathekviewweb.de/#query=%s
 j https://jellyfin.neidel.xyz/web/index.html#/search.html?query=%s
 inv https://www.marketwatch.com/investing/stock/%s/company-profile?mod=mw_quote_tab
 i https://duckduckgo.com/?q=%s&ia=images&iax=images
-wb https://www.worldofbooks.com/de-de/search?q=%s
 wob https://www.worldofbooks.com/de-de/search?q=%s
 o https://org-search.neidel.xyz/?query=%s
 roh https://wiki.rohkost-tagebuch.de/index.php?title=Spezial%3ASuche&search=%s&go=Seite
@@ -119,3 +120,12 @@ dc https://deadcells.wiki.gg/wiki/Special:Search?search=%s
 gog https://www.gog.com/de/games?query=%s
 nix https://search.nixos.org/packages?channel=unstable&query=%s
 z https://zoboko.com/search/%s
+gr https://www.goodreads.com/search?q=%s
+nc https://www.namecheap.com/domains/registration/results/?domain=%s
+osm https://www.openstreetmap.org/search?query=%s
+nf https://nutritionfacts.org/?s=%s
+wb https://web.archive.org/web/2/%s
+ia https://web.archive.org/web/2/%s
+flix https://uflix.cc/search?keyword=%s
+bike https://www.bike24.de/suchergebnis?searchTerm=%s
+veh https://www.vehgroshop.de/checkout/cart/#%7B%22hr-search%22%3A%7B%22search_term%22%3A%22%s%22%2C%22filters%22%3A%5B%5D%2C%22sorting%22%3A%5B%5D%2C%22offsets%22%3A%7B%22category%22%3A12%2C%22site_page%22%3A12%2C%22blog_post%22%3A12%2C%22product%22%3A1000%7D%7D%7D

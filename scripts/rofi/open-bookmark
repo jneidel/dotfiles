@@ -31,7 +31,7 @@ SELECTION=`cat "$BOOKMARK_FILE" | rofi -dmenu -i -lines 15 -eh 1 -p open -auto-s
 
 if [ -n "$SELECTION" ]; then
   if echo $SELECTION | grep -F "github.com/notifications" >/dev/null; then
-    ~/code/awesome-cli-apps/auto-close-prs
+    systemctl --user start close-awesome-prs.service
   fi
   
   $MAIN_BROWSER $SELECTION & >/dev/null 2>&1

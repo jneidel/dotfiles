@@ -12,6 +12,7 @@ local options = {
 
     -- Categories to fetch
     categories = "sponsor,intro,outro,interaction,selfpromo,filler",
+    -- for fetching a new option is available directly on yt-dlp: --sponsorblock-mark CATS
 
     -- Categories to skip automatically
     skip_categories = "sponsor",

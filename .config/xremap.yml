@@ -49,7 +49,7 @@ keymap:
 
   - name: Browser
     application:
-      only: [firefox, Brave-browser]
+      only: [firefox, firefox-developer-edition, Brave-browser]
     remap:
       # Kill tab
       C-q: C-w

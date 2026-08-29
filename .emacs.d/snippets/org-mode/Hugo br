@@ -3,5 +3,4 @@
 # key: <br
 # --
 
-#+html: <br>
-$0
+@@html:<br>@@$0

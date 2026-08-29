@@ -23,9 +23,6 @@ xset -b &
 # X styles
 xrdb -load "$XDG_CONFIG_HOME/X11/Xresources" &
 
-# Compositor (X shadows and such)
-# xcompmgr -c &
-
 # wallpaper
 xwallpaper --zoom ~/.config/wallpaper.png &
 
@@ -33,7 +30,7 @@ xwallpaper --zoom ~/.config/wallpaper.png &
 unclutter --timeout 2 &
 
 # disable external monitors
-monitor off & # xrandr
+monitor off &
 
 ## daemons & background programs
 # hotkeys
@@ -60,19 +57,13 @@ mkfifo /tmp/xobpipe
 (sleep 1m; nice -n 10 jellyfin-mpv-shim &) &
 
 # desktop monitor
-~/scripts/conky/start-conky &
+# ~/scripts/conky/start-conky &
 
 # CPU frequency scaling governor
-# TODO test whats the minimal required setup. Both uncommented worked.
 (sleep 1m; sudo cpupower frequency-set --governor conservative) &
-# {
-#   sleep 30s
-#   if tmux has-session -t main; then
-#     tmux -u new-window -d -n "freq" -t main:98
-#     tmux send-keys -t main:98 "sudo cpupower frequency-set --governor conservative; exit" "enter"
-#   fi
-# } &
 ## systemd service fails on boot, but works once in userspace
+# fix cpu frequency
+# (echo passive | sudo tee /sys/devices/system/cpu/intel_pstate/status ; sudo cpupower frequency-set -g userspace) &
 
 # lock the screen on suspend/hibernate
 # xss-lock --transfer-sleep-lock ~/scripts/i3/lock/lock &
@@ -82,33 +73,23 @@ mkfifo /tmp/xobpipe
 # https://unix.stackexchange.com/a/639552
 
 # status bar
-(sleep 10s; nice -n -10 ~/scripts/lemonbar/run-lemonbar &) &
-
-# doesn't work if started directly
-# {
-#   sleep 10
-#   # conky with local mpd cover
-#   ~/scripts/mpd/local-cover &
-#   # nitrogen --restore &
-# } &
+(sleep 10s; nice -n -5 ~/scripts/lemonbar/run-lemonbar &) &
 
 # fix backlight permissions
 sudo chown -R jneidel /sys/class/backlight/intel_backlight/brightness &
 
 # fetch new mail to local when it arrives on imap server
-(sleep 10s; ~/scripts/mail/watch-imap >/dev/null 2>&1 &) &
-
-# fix cpu frequency
-(
-  echo passive | sudo tee /sys/devices/system/cpu/intel_pstate/status ; sudo cpupower frequency-set -g userspace
-) &
+(sleep 1m; ~/scripts/mail/watch-imap >/dev/null 2>&1 &) &
 
 ## autostart gui applications
+nice -n -7 emacs &
 nice -n -7 kitty ~/scripts/tmux/tp main &
+nice -n 12 keepassxc &
 nice -n 17 firefox &
 nice -n 17 signal-desktop &
-nice -n 17 watch-for-deadline-changes &
-emacs &
+nice -n 19 watch-for-deadline-changes &
+nice -n 19 /usr/lib/xdg-desktop-portal-gtk >/dev/null 2>&1 &
+# service keeps failing: systemctl --user status xdg-desktop-portal-gtk
 
 # start window manager
 exec i3

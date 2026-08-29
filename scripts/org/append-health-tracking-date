@@ -14,5 +14,5 @@ EOF
   exit
 fi
 
-#       Date | Squat load | Nordic curls | Push ups | Pull ups | Plank | Yoga ||
-printf "| %s |            |              |          |          |       |      |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"
+#       Date | Squat sets/load | Nordic curls | Push ups | Chin ups | Hollow hold | Yoga | Notes |
+printf "| %s |                 |              |          |          |             |      |                                            |\n" "$(date '+%Y-%m-%d %a')" >>"$FILE"

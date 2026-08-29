@@ -2,12 +2,10 @@
 
 if [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   cat <<EOF
-$ btoff"
-Turn off bluetooth via bluetoothctl"
+$ btoff
+Turn off bluetooth via bluetoothctl
+EOF
   exit
 fi
 
 bluetoothctl disconnect || bluetoothctl power off
-
-# kill keep alive audio stream
-# kill $(pgrep -f "mpv -ao pulse /home/jneidel/scripts/personal/audio.mp3 --mute --loop-file=inf") 2>/dev/null || true

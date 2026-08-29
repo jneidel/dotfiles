@@ -4,6 +4,8 @@
 ;; Version: 0.1.0
 ;; Keywords: color, theme
 ;; Package-Requires: ((emacs "24"))
+;;
+;; For overhaul attempt use: https://emacsredux.com/blog/2026/03/30/creating-emacs-color-themes
 
 (deftheme an-old-hope
   "emacs theme inspired by a galaxy far far away...
