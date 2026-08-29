@@ -1598,9 +1598,9 @@ It integrates well into existing tools (project.el and tab-bar.el).
 (defun workspace-switch-to-main ()
   (tab-bar-switch-to-tab "main"))
 (defun workspace-local-buffer-p (buf)
-  (tabspaces--local-buffer-p buf)
-  ;; persp-is-current-buffer
-  )
+  (tabspaces--local-buffer-p buf)) ; persp-is-current-buffer
+(defun workspace-is-main-p ()
+  (equal "main" (tabspaces--current-tab-name)))
 
 (use-package tabspaces
   :hook (after-init . tabspaces-mode)
@@ -1978,6 +1978,9 @@ To make it even faster I reduce the matches with ignore patterns.
 (defvar rg-find-files-command
   (format "rg -L --ignore --hidden --files --color=never %s" rg-ignore-flags)
   "Command for finding files with ripgrep.")
+(defvar rg-find-org-files-command
+  (format "rg -L --ignore --hidden --files --color=never -g \"!4_archive\" %s" rg-ignore-flags)
+  "Command for finding files with ripgrep.")
 (defvar rg-find-directories-command
   (format "rg-dir -L --ignore --hidden --color=never %s" rg-ignore-flags)
   "Command for finding directories with ripgrep.")
@@ -1996,6 +1999,11 @@ It feels like fzf, but integrates with and looks like consult.
        (affe-find-file (substitute-in-file-name "$HOME")))
 (defun affe-find-directory-home () (interactive)
        (affe-find-directory (substitute-in-file-name "$HOME")))
+(defun affe-find-file-dwim () (interactive)
+       (if (workspace-is-main-p)
+           (progn (setq affe-find-command rg-find-org-files-command)
+                  (affe-find (substitute-in-file-name "$ORG")))
+         (affe-find-file)))
 #+end_src
 
 For finding files I prefer fast access to the global search (from home directory).
@@ -2004,7 +2012,7 @@ The local search (in current working directory or project) is easily available a
 (use-package affe
   :defer t
   :bind (("H-f" . affe-find-file-home)
-         ("H-M-f" . affe-find-file)
+         ("H-M-f" . affe-find-file-dwim)
          ("H-s" . affe-find-directory-home))
   :custom
   (affe-count 5000))
