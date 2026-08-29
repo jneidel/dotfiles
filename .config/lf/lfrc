@@ -365,6 +365,11 @@ map sr set reverse!
 map rd ldr
 ### fzf open
 
+# mirror dired
+map <c-f> reload
+map <lt> top
+map <gt> bottom
+
 ### move into dir
 map <a-d> fzf_dir
 map <a-f> fzf_file
