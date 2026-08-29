@@ -218,6 +218,26 @@ Equivalent ways to diminish a mode:
 Now quelpa can be used via [[https://github.com/quelpa/quelpa-use-package][`use-package`]].
 [[https://github.com/melpa/melpa/#recipe-format][See recipe format.]]
 
+**** Install from git (straight.el)
+[[https://github.com/radian-software/straight.el][straight.el]] seems to be the better quelpa.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defvar bootstrap-version)
+
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+#+end_src
 
 ** Modeline (status bar)
 https://github.com/domtronn/all-the-icons.el/wiki/Spaceline
