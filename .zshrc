@@ -19,9 +19,8 @@ export XDG_CONFIG_RC="${XDG_DATA_HOME}"
 
 # oh-my-zsh
 ZSH_DIR=~/.zsh
-source $ZSH_DIR/oh-my-zsh.sh
-source $ZSH_DIR/lib/init.zsh
 source $ZSH_DIR/cobalt2.zsh-theme
+source $ZSH_DIR/lib/init.zsh
 
 test -e "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &&
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

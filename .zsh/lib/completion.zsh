@@ -70,3 +70,15 @@ if [[ $COMPLETION_WAITING_DOTS = true ]]; then
   zle -N expand-or-complete-with-dots
   bindkey "^I" expand-or-complete-with-dots
 fi
+
+autoload -Uz compinit
+mkdir -p "$XDG_CACHE_HOME"/zsh
+zstyle ':completion:*' cache-p/zcompcacheath "$XDG_CACHE_HOME"/zsh/zcompcache
+
+# only run security checks once every 24h
+if [[ -n "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"(#qNmh-24) ]]; then
+        compinit -i -C -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+        else
+          compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+      fi
+
