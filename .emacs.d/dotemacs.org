@@ -634,6 +634,26 @@ https://orgmode.org/manual/Checkboxes.html
 ;; TODO: enhance by checking if output is "Not a table" and running the command
 ;; of C-c C-c (recalc if on TBLFM)
 
+(defun org-metadown-dwim ()
+  "If org-metadown does not have an element to operate on, drage the line instead."
+  (interactive)
+  (condition-case err
+      (org-metadown)
+    (error
+     (if (string-match-p "Cannot drag element forward" (error-message-string err))
+         (org-drag-line-forward 1)
+       (signal (car err) (cdr err))))))
+
+(defun org-metaup-dwim ()
+  "If org-metaup does not have an element to operate on, drage the line instead."
+  (interactive)
+  (condition-case err
+      (org-metaup)
+    (error
+     (if (string-match-p "Cannot drag element backward" (error-message-string err))
+         (org-drag-line-backward 1)
+       (signal (car err) (cdr err))))))
+
 (use-package org
   :ensure nil
   :defer t
@@ -642,14 +662,15 @@ https://orgmode.org/manual/Checkboxes.html
               ;; ("g i" . org-toggle-inline-images)
               ;; ("g l" . org-insert-link)
               ;; ("g a" . jneidel/insert-latest-chart-screenshot)
-              ;; ("g t p" . jneidel/org-set-checkbox-in-progress)
               ;; ("g r" . org-table-recalculate)
               ;; ("TAB" . org-cycle)
               ;; ("<S-return>" . jneidel/insert-org-list-item-or-copy-down-table)
-              ("M-j" . org-metadown)
-              ("M-k" . org-metaup)
+              ("M-j" . org-metadown-dwim)
+              ("M-k" . org-metaup-dwim)
               ("M-h" . org-metaleft)
               ("M-l" . org-metaright)
+              ("M-C-k" . org-drag-line-backward)
+              ("M-C-j" . org-drag-line-forward)
               ;; (kbd "RET") #'jneidel/insert-org-list-item ;; RET in cal doesn't work anyway
               ("C-c a" . org-table-recalculate)
               ))
