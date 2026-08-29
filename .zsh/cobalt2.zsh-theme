@@ -59,7 +59,18 @@ prompt_context() {
 # Git: branch/detached head, dirty status
 prompt_git() {
   local ref dirty
-  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+  if jj root >/dev/null 2>&1; then
+    conflict="$(jj log --no-graph -T 'if(conflict, "!")' 2>/dev/null)"
+    if [ -n "$conflict" ]; then
+      prompt_segment yellow black
+    else
+      prompt_segment green black
+    fi
+    
+    branch="$(jj log --no-graph --color=never -r 'latest(ancestors(@, 10) & bookmarks())' -T 'bookmarks' 2>/dev/null)"
+    info="$(jj log --no-graph -T 'separate(" ", if(conflict, "!"), if(divergent, "⑂"),  if(empty, "∅"))' 2>/dev/null)"
+    echo -n "${branch}${info:+ $info}"
+  elif $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"

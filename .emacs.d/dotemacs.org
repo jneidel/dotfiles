@@ -2392,6 +2392,29 @@ After [[info:forge#Initial Setup][configuring a git forge]] you can initialize a
   :after magit)
 #+end_src
 
+**** Majutsu
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun smart-vcs-status ()
+  "Open magit or majutsu depending on repo type."
+  (interactive)
+  (if (= 0 (call-process "jj" nil nil nil "status"))
+      (majutsu-log)
+    (magit-status)))
+
+(use-package majutsu
+  :bind ("C-x g" . smart-vcs-status)
+  :quelpa (majutsu :fetcher github :repo "0WD0/majutsu")
+  :config
+
+  (transient-append-suffix 'majutsu-dispatch "r"
+    '("p" "Simplify parents"  majutsu-simplify-parents))
+  (transient-replace-suffix 'majutsu-dispatch "P"
+    '("P" "Push" majutsu-git-push-transient))
+  (transient-append-suffix 'majutsu-dispatch "E"
+    '("f" "Fetch" majutsu-git-fetch-transient))
+  )
+#+end_src
+
 *** Tree-sitter
 Provides better abstract syntax trees and thus improves highlighting and syntax
 based commands.

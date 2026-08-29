@@ -1,7 +1,17 @@
-# git
+# git (some jujutsu)
+
+is_jj() {
+  jj status >/dev/null 2>&1 
+}
 
 ## status
-alias s="git status -sb 2>/dev/null" # -s short output, -b branch info
+s() {
+  if is_jj; then
+    jj status
+  else
+    git status -sb 2>/dev/null # -s short output, -b branch info
+  fi
+}
 
 ## add
 alias ga="git add"
@@ -11,22 +21,33 @@ alias gap="git add -p" # patch
 alias unadd="git restore --staged"
 alias unstage="unadd"
 
-## commit
-commit() {
+## commit/describe
+commit_describe() {
   MSG="$1"
   DESC="$2"
   EXTRA="$3"
   if [ -z "$MSG" ]; then
     false
   else
-    if [ -z "$DESC" ]; then
-      git commit -m "$MSG" $EXTRA
+    if [ -z "$DESC" ] || [ "$DESC" = "-r" ]; then
+      if is_jj; then
+        jj describe -m "$MSG" $EXTRA
+      else
+        git commit -m "$MSG" $EXTRA
+      fi
     else
-      git commit -m "$MSG" -m "$DESC" $EXTRA
+      if is_jj; then
+
+        jj describe -m "$MSG" -m "$DESC" $EXTRA
+      else
+        git commit -m "$MSG" -m "$DESC" $EXTRA
+      fi
     fi
   fi
 }
-alias gc="commit"
+alias commit="commit_describe"
+alias gc="commit_describe"
+
 alias gcf="git commit --fixup" # HASH to fixup, tutorial: https://www.mikulskibartosz.name/git-fixup-explained
 gcff() { # fast fixup
   hash=$1
@@ -36,32 +57,46 @@ gcff() { # fast fixup
 gcn() { # --no-verify, ignore hooks
   commit "$1" "$2" -n
 }
-if [ "$(uname)" = "Darwin" ]; then
-  alias addcom="ga -A; gcn"
+alias addcom="ga -A; commit"
 
-  alias amend="git commit -n --amend"
-  alias amendd="git commit -n --amend --no-edit"
-  alias addam="ga -A; git commit -n --amend --no-edit"
-else
-  alias addcom="ga -A; commit"
-
-  ## commit --amend
-  alias amend="git commit --amend"
-  alias amendd="git commit --amend --no-edit"
-  alias addam="ga -A; git commit --amend --no-edit"
-fi
+## commit --amend
+alias amend="git commit --amend"
+alias amendd="git commit --amend --no-edit"
+alias addam="git add -A; git commit --amend --no-edit"
 
 ## push/pull
+push() {
+  if is_jj; then
+    jj git push origin
+  else
+    git push origin
+  fi
+}
+pushf() {
+  if is_jj; then
+    git push --force-with-lease origin
+  else
+    git push origin
+  fi
+}
+pull() {
+  if is_jj; then
+    jj git fetch
+  else
+    git pull origin
+  fi
+}
 alias gp="git push"
-alias push="git push origin"
-alias pushf="git push --force-with-lease origin"
-alias pub="git publish" # custom git command, see git config
-alias pull="git pull origin"
-alias master="git pull origin master; git push origin master"
-alias gpu="git push uber master"
 clone() {
   local repo="$1"
-  git clone $repo
+
+  printf "Use jj? (Y/n) "
+  read ans
+  if [ "$ans" = n ] || [ "$ans" = "N" ]; then
+    git clone $repo
+  else
+    jj git clone $repo
+  fi
   cd $(echo $repo | rev | cut -d/ -f1 | cut -d. -f2- | rev)
 }
 alias stash="git stash"
@@ -69,7 +104,13 @@ alias stashp="stash pop"
 
 ## checkout
 # alias co="git checkout" # replace by script of the same name
-alias com="git checkout master 2>/dev/null || git checkout main"
+com() {
+  if is_jj; then
+    jj new -r "trunk()"
+  else
+    git checkout master 2>/dev/null || git checkout main
+  fi
+}
 alias cob="git checkout -b"
 
 ## rebase
@@ -88,7 +129,13 @@ alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 
 ## branch
-alias gb="git branch"
+gb() {
+  if is_jj; then
+    jj log -r "heads(~description('')) | trunk()"
+  else
+    git branch $@
+  fi
+}
 
 ## reset
 re() {
@@ -101,11 +148,24 @@ re() {
 alias reh="git reset --hard"
 
 ## log
-alias gl="git log --oneline --graph --decorate --date=relative"
+gl() {
+  if is_jj; then
+    jj log $@
+  else
+    git log --oneline --graph --decorate --date=relative
+  fi
+}
+alias log="gl"
 alias reflog="git reflog"
 
 ## diff
-alias gd="git diff"
+gd() {
+  if is_jj; then
+    jj diff $@
+  else
+    git diff
+  fi
+}
 alias gds="gd --staged"
 
 ## ignore
@@ -124,22 +184,26 @@ alias gcpa="git cherry-pick --abort"
 
 ## show
 gs() {
-  if [ -n "$1" ]; then
-    git show "$1"
+  if is_jj; then
+    jj show $@
   else
-    clipBoardContents=
-    if [ "$(uname)" = "Darwin" ]; then
-      clipBoardContents="$(pbpaste)"
+    if [ -n "$1" ]; then
+      git show "$1"
     else
-      clipBoardContents="$(xclip -o -sel clip)"
-    fi
-    if [[ "$clipBoardContents" =~ ^[a-zA-Z0-9]{1,7}$ ]]; then
-      echo "Using hash from clipboard: $clipBoardContents"
-      git show "$clipBoardContents"
-    elif ! git diff --cached --exit-code >/dev/null; then
-      gd --staged # show staged changes
-    else
-      git show # show last commit
+      clipBoardContents=
+      if [ "$(uname)" = "Darwin" ]; then
+        clipBoardContents="$(pbpaste)"
+      else
+        clipBoardContents="$(xclip -o -sel clip)"
+      fi
+      if [[ "$clipBoardContents" =~ ^[a-zA-Z0-9]{1,7}$ ]]; then
+        echo "Using hash from clipboard: $clipBoardContents"
+        git show "$clipBoardContents"
+      elif ! git diff --cached --exit-code >/dev/null; then
+        gd --staged # show staged changes
+      else
+        git show # show last commit
+      fi
     fi
   fi
 }
