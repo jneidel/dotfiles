@@ -695,6 +695,48 @@ https://orgmode.org/manual/Checkboxes.html
                       :foreground "purple"))
 #+end_src
 
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun org-rename-file-based-on-title ()
+  "Ensure that the org-mode title and file name of an org file match.
+If not the same, rename and reopen the file.
+If the same, match `save-buffer's behavior and exit."
+  (interactive)
+  (unless (buffer-file-name)
+    (user-error "Not in a file."))
+  (unless (derived-mode-p 'org-mode)
+    (user-error "Not in an org-mode file."))
+
+  (when (buffer-modified-p)
+    (save-buffer))
+  
+  (let* ((current-path (buffer-file-name))
+         (filetags (when (string-match " -- \\(.+\\)\\.org" current-path)
+                     (match-string 1 current-path)))
+         (title (save-excursion
+                  (goto-char (point-min))
+                  (if (re-search-forward "^#\\+\\(TITLE\\|title\\): \\(.+\\)" nil t)
+                      (string-trim
+                       (replace-regexp-in-string "[/\\\\<>\"|]" "" (match-string 2)))
+                    (user-error "No title found in this file"))))
+         (new-path (expand-file-name (format "%s%s.org" title
+                                             (if filetags (format " -- %s" filetags) "")))))
+    (when (equal current-path new-path)
+      (user-error "Title already matches file name."))
+    (when (file-exists-p new-path)
+      (user-error "File at new location already exists. Not overwriting."))
+
+    (rename-file current-path new-path)
+    (kill-buffer)
+    (find-file new-path)
+    (message "Renamed and reopened.")))
+
+(use-package org
+  :ensure nil
+  :defer t
+  :bind (:map org-mode-map
+              ("C-x C-s" . org-rename-file-based-on-title))) ; overwrites save-buffer
+#+end_src
+
 *** Insert link DWIM
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (defun jn/org-insert-link-with-org-roam-override ()
