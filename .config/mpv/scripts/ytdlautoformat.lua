@@ -56,9 +56,10 @@ local function update_ytdl_format()
     }
 
     local ytdl_custom = "bv" .. format.quality .. format.codec .. "+ba/b" .. format.quality .. format.fallback
+    local ytdl_format = "bv[height>=720][height<=1080][vcodec~='^(vp0?9)']+ba/bv[height>=720][height<=1080]+ba/bv[height<=?1080][vcodec~='^(vp0?9)']+ba/bv[height<=?1080]+ba/bv+ba/b"
 
-    mp.set_property("file-local-options/ytdl-format", ytdl_custom)
-    msg.info("Changed ytdl-format to: " .. ytdl_custom)
+    mp.set_property("file-local-options/ytdl-format", ytdl_format)
+    msg.info("Changed ytdl-format to: " .. ytdl_format)
 end
 
 local list = create_set(options.domains)
