@@ -23,6 +23,10 @@ if echo $CLIP_CONTENT | grep ".mp3" >/dev/null; then
 else
   notify-send -t 3500 -u normal -i preferences-system-notifications -a "open clip mpv" "Scheduled video" "$CLIP_CONTENT"
   # tsp mpv --profile=yt "$CLIP_CONTENT" 2>/dev/null >/dev/null
-  tsp mpv --profile=yt --ytdl-raw-options=cookies-from-browser=firefox "$CLIP_CONTENT" 2>/dev/null >/dev/null
-  # force-ipv4=
+
+  
+  # tsp mpv --profile=yt --ytdl-raw-options=cookies-from-browser=firefox,extractor-args="youtubepot-bgutilhttp:base_url=http://192.168.178.40:4416",force-ipv4= "$CLIP_CONTENT" 2>/dev/null >/dev/null
+  tsp mpv --profile=yt --ytdl-raw-options=cookies-from-browser=firefox,force-ipv4= "$CLIP_CONTENT" 2>/dev/null >/dev/null
+  # ,force-ipv4=
+  # cookies-from-browser=firefox,
 fi
