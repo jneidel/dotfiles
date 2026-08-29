@@ -1,5 +1,10 @@
 [Unit]
 Description=Automatically close awesome-cli-list PRs that dont meet the requirements.
+After=network-online.target
+Wants=network-online.target
 
 [Service]
+Type=oneshot
 ExecStart=/home/jneidel/code/awesome-cli-apps/auto-close-prs
+WorkingDirectory=/home/jneidel/code/awesome-cli-apps
+Nice=18

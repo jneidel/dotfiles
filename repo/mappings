@@ -338,3 +338,7 @@ create .config/codex
 
 [preload]
 /etc/gopreload.conf
+
+[systemd]
+create .config/systemd/user
+.config/systemd/user

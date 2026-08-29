@@ -46,3 +46,6 @@ repo/PKGBUILD/*
 .local/share/fonts/material-design-icons.ttf
 .local/share/fonts/octicons.ttf
 .local/share/fonts/weathericons.ttf
+
+.config/systemd/user/default.target.wants
+.config/systemd/user/timers.target.wants
