@@ -4010,14 +4010,24 @@ Or follow a symlink if " ; built-in dired-do-open uses xdg-open
 #+end_src
 
 *** Dirvish
-https://github.com/alexluigit/dirvish
+[[https://github.com/latiagertrutis/dirvish][Dirvish]]
 
 https://github.com/alexluigit/dirvish/blob/main/docs/CUSTOMIZING.org
 https://github.com/alexluigit/dirvish/blob/main/docs/EXTENSIONS.org
 https://github.com/alexluigit/dirvish/issues/324
 #+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun revert-buffer-silently ()
+  "Revert buffer, but stop it from writing to echo line or *Messages*"
+  (interactive)
+  (let ((inhibit-message t)
+        (message-log-max nil))
+    (revert-buffer)))
+
 (use-package dirvish
-  :hook (dired-load . dirvish-override-dired-mode)
+  :defer t
+  :straight (dirvish :type git :repo "latiagertrutis/dirvish")
+  ;; :quelpa (dirvish :fetcher github :repo "alexluigit/dirvish" :files (:defaults "extensions/*.el"))
+  :hook (after-init . dirvish-override-dired-mode)
   :bind (("C-x d" . dirvish)
          ("H-d" . dirvish)
          :map dired-mode-map
@@ -4033,8 +4043,7 @@ https://github.com/alexluigit/dirvish/issues/324
 
          ("D" . nil)
          ("r m" . dired-do-delete)
-         ("r r" . revert-buffer) ; refresh
-         ("r s" . revert-buffer))
+         ("C-f" . revert-buffer-silently)) ; refresh
   :init
   (add-to-list 'load-path (concat user-emacs-directory "elpa/dirvish-2.3.0/extensions")) ; bug in 2.3.0
   :config
