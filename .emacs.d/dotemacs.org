@@ -3403,35 +3403,28 @@ https://codelearn.me/2022/10/24/eglot_php.html
 Alternatives:
 - [[https://codeberg.org/divyaranjan/emacs-reader][Using mupdf]] (supports all ebook extensions)
 
-*** Remind
-I use the [[https://dianne.skoll.ca/wiki/Remind][remind]] calendar.
-There is no emacs packge for it, so this quick function displays a rendered
-calendar in it's own buffer.
-The date range is fixed at one month in the past and three into the future.
+
+Open "larger" files without asking.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-(use-package ansi-color
-  :ensure nil
-  :commands (remind-calendar)
-  :config
-  (defun remind-calendar()
-    "Display colored remind calendar."
-    (interactive)
-    (let ((buf (get-buffer-create "*remind-calendar*")))
-      (with-current-buffer buf
-        (read-only-mode -1)
-        (call-process-shell-command
-         "rem -b1 -cu3 -m -w141 -@2,0 $(date -d '-4 weeks' +%Y-%m-%d ) 2>/dev/null"
-         ;; -4 weeks = 1 month into the past, -cu3 = 3 months into the future
-         nil buf t)
-        (ansi-color-apply-on-region (point-min) (point-max))
-        (goto-char (point-min))
-        (view-mode 1))
-      (pop-to-buffer buf))
-    (delete-other-windows)
-    (search-forward "******") ;; find today
-    (beginning-of-line)
-    (recenter-top-bottom 1) ;; this week at the top of the screen
-    ))
+(setq large-file-warning-threshold 150000000) ; 150MB
+#+end_src
+
+*** Remind
+I use the [[https://dianne.skoll.ca/wiki/Remind][remind]] calendar system.
+My [[https://github.com/jneidel/remind-calendar-mode][own package]] provides syntax highlighting and calendar opening with =M-x remind-calendar=.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package remind-calendar
+  :quelpa (remind-calendar :fetcher github :repo "jneidel/remind-calendar.el"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(with-eval-after-load 'org-capture
+  (add-to-list 'org-capture-templates
+               '("c" "Calendar event" plain
+                 (file (lambda () (substitute-in-file-name "$ORG_CALENDAR/main/1_cal.rem")))
+                 "%?"
+                 :prepend t
+                 :hook (remind-script-read-date))))
 #+end_src
 
 *** PKGBUILD
