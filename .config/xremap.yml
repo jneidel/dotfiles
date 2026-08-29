@@ -76,8 +76,8 @@ keymap:
       # Page up/down
       M-v: { with_mark: pageup }
       C-v: { with_mark: pagedown }
-      # Cancel
-      C-g: [esc, { set_mark: false }]
+      # Exit
+      C-g: [C-c, { set_mark: false }]
       # Copy & paste are directly configured in kitty.conf
 
   - name: GIMP
