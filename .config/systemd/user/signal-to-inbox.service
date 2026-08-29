@@ -1,0 +1,9 @@
+[Unit]
+Description=Fetch signal messages and save them to inbox.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/jneidel/scripts/cron/signal-name-resolution-failure inbox
+Nice=18
