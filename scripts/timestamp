@@ -1,0 +1,30 @@
+#! /bin/bash
+
+CACERT=$HOME/.local/share/freeTSA/cacert.pem
+TSACERT=$HOME/.local/share/freeTSA/tsa.crt
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ -z "$1" ]; then
+  cat <<EOF
+$ timestamp FILE
+Timestamp a file with freeTSA
+
+Parameters:
+  \$1: file to be timestamped
+
+Example:
+  $ timestamp file.txt
+  # generates sha512sum, tsq and tsr files, and verifies them
+EOF
+  exit
+fi
+
+hash sha512sum openssl || exit 127
+
+filename="$1"
+name="${filename%.*}" 
+
+openssl ts -query -data "$filename" -no_nonce -sha512 -cert -out "$name.tsq" 2>/dev/null
+curl -SsH "Content-Type: application/timestamp-query" --data-binary "@$name.tsq" https://freetsa.org/tsr > "$name.tsr"
+
+openssl ts -verify -in "$name.tsr" -queryfile "$name.tsq" -CAfile "$CACERT" -untrusted "$TSACERT" 2>/dev/null
+sha512sum "$filename"
