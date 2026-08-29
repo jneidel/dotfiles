@@ -5382,7 +5382,28 @@ video is worth watching.
 
 ** Interactive utilities
 Interactive (~M-x~) commands that do useful things.
-ö
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defun md-to-org-file ()
+  "Convert the current markdown file to org using pandoc
+after generating metadata for it."
+  (interactive)
+  (unless buffer-file-name
+    (error "Buffer is not visiting a file"))
+  (unless (derived-mode-p 'markdown-mode)
+    (error "Buffer is not in markdown-mode"))
+  (let* ((md-file buffer-file-name)
+         (org-file (concat (file-name-sans-extension md-file) ".org")))
+    (shell-command (format "generate-orgmode-metadata %s >%s"
+                           (shell-quote-argument (file-name-base md-file))
+                           (shell-quote-argument org-file)))
+    (shell-command (format "printf '\n' >>%s" (shell-quote-argument org-file)))
+    (shell-command (format "pandoc -f markdown-auto_identifiers -t org --wrap=preserve %s >>%s"
+                           (shell-quote-argument md-file)
+                           (shell-quote-argument org-file)))
+    (find-file org-file)))
+#+end_src
+
 [[https://xenodium.com/copy-from-desktop-to-mobile-via-qr-code/][Create a QR code from the clipboard]].
 Useful to quickly open a link on my phone or transfer a snippet of text.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
