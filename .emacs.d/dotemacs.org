@@ -1660,7 +1660,8 @@ Keeps things predictable."
          :predicate (lambda (buf)
                       (and (workspace-local-buffer-p buf)
                            (with-current-buffer buf
-                             (not (derived-mode-p 'dired-mode)))))
+                             (not (derived-mode-p 'dired-mode)))
+                           (not (string= (buffer-name buf) "*empty*"))))
          :exclude (append jn/secondary-buffer-pure-regexes '("^ \\*"))))))
 
 (use-package consult
