@@ -5610,6 +5610,17 @@ It fills a void I had coming from vim.
 (setopt isearch-lazy-count t)
 #+end_src
 
+Remember cursor position in files.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(use-package save-place
+  :ensure nil
+  :hook after-init
+  :config
+  (advice-add 'save-place-find-file-hook :after
+              (lambda (&rest _)
+                (when buffer-file-name (ignore-errors (recenter))))))
+#+end_src
+
 *** Look up word definitions
 Available through: ~C-h w~
 
