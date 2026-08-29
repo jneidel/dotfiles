@@ -4862,6 +4862,22 @@ To make it less verbose I turn them into emoji.
                 (shell-command "open-i3-workspace 2")
                 (message "Opened HTML in browser")))))
 
+(defun notmuch-extract-verification-code ()
+  "Extract a 6-digit verification code and copy it."
+  (interactive)
+  (notmuch-search-show-thread)
+  (let* ((body (buffer-substring-no-properties (point-min) (point-max)))
+         (code (when
+                   (string-match
+                    (rx (or (seq bow (= 6 digit) eow) ;; 123456
+                            (seq (= 3 digit) (1+ space) (= 3 digit)))) ;; 123 456
+                    body)
+                 (replace-regexp-in-string "[[:space:]]" "" (match-string 0 body)))))
+    (if code (progn
+               (kill-new code)
+               (message "Verification code copied: %s" code))
+      (message "No 6-digit verification code found in this email."))))
+
 (use-package notmuch
   :defer t
   :custom
