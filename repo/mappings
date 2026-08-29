@@ -108,6 +108,10 @@ create .config/htop
 .config/git
 
 #### node
+[node]
+create .config/npm
+.config/npm/npmrc
+
 [eslint]
 .config/eslint
 
