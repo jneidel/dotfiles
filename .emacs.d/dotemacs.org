@@ -3395,7 +3395,9 @@ https://codelearn.me/2022/10/24/eglot_php.html
   (visual-fill-column-center-text t)
   :hook ((nov-mode . jn/nov-font-setup)
          (nov-mode . visual-line-mode)
-         (nov-mode . visual-fill-column-mode)))
+         (nov-mode . visual-fill-column-mode))
+  :bind (:map nov-mode-map
+              ("C-c l" . org-store-link)))
 #+end_src
 
 Alternatives:
