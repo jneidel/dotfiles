@@ -3164,14 +3164,11 @@ which runs fine in Emacs it does not make sense to convert my workflow.
   (let ((buf (get-buffer-create "*ncmpcpp*")))
     (with-current-buffer buf
       (unless (derived-mode-p 'vterm-mode)
-        (progn
-          (vterm-mode)
-          (vterm-send-string "ncmpcpps")
-          (vterm-send-return))
-        ))
+        (vterm-mode)
+        (vterm-send-string "ncmpcpps; exit")
+        (vterm-send-return)))
     (pop-to-buffer buf))
-  (delete-other-windows)
-  )
+  (delete-other-windows))
 #+end_src
 
 ***** Home screen
