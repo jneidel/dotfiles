@@ -3839,28 +3839,30 @@ This behavior can be disabled by setting the second argument `no-fallback' to no
     (dired-find-file)))
 
 (defun jn/touch-index-node-file (name)
-    "Create org-roam index node file."
-    (let ((filename (if (string-match-p "\\." name) name (format "%s.org" name)))
-          (title (replace-regexp-in-string " -- .*\\'" "" ; remove tags
-                                           (file-name-sans-extension name))))
-      (shell-command
-       (format "generate-orgmode-metadata \"%s\" >\"%s\"; echo '#+filetags: :index_node:' >>\"%s\"" title filename filename))
-      (revert-buffer)
-      (dired-goto-file (expand-file-name filename default-directory))
-      (dired-find-file)))
+  "Create org-roam index node file."
+  (let ((filename (if (string-match-p "\\." name) name (format "%s.org" name)))
+        (title (replace-regexp-in-string " -- .*\\'" "" ; remove tags
+                                         (file-name-sans-extension name))))
+    (shell-command
+     (format "generate-orgmode-metadata \"%s\" >\"%s\"; echo '#+filetags: :index_node:' >>\"%s\"" title filename filename))
+    (revert-buffer)
+    (dired-goto-file (expand-file-name filename default-directory))
+    (dired-find-file)))
 
 (defun create-in-fs (name)
   "Create something on the filesystem (file or directory).
 First enter the new name, then decide what it is."
   (interactive (list (read-string "Name: ")))
-  (let ((choice (read-key
-                 (concat
-                  (propertize "Create" 'face 'transient-heading) "  "
-                  "[" (propertize "d" 'face 'transient-key) "] directory   "
-                  "[" (propertize "f" 'face 'transient-key) "] file   "
-                  "[" (propertize "n" 'face 'transient-key) "] file " (propertize "(no .org)" 'face 'grey-on-grey )
-                  "[" (propertize "N" 'face 'transient-key) "] file " (propertize "(index node)" 'face 'grey-on-grey )
-                  ))))
+  (let ((choice (if (equal name "index")
+                    (progn (let ((name "index.org"))) ?f)
+                  (read-key
+                   (concat
+                    (propertize "Create" 'face 'transient-heading) "  "
+                    "[" (propertize "d" 'face 'transient-key) "] directory   "
+                    "[" (propertize "f" 'face 'transient-key) "] file   "
+                    "[" (propertize "n" 'face 'transient-key) "] file " (propertize "(no .org)" 'face 'grey-on-grey )
+                    "[" (propertize "N" 'face 'transient-key) "] file " (propertize "(index node)" 'face 'grey-on-grey )
+                    )))))
     (pcase choice
       (?d (mkdir-dired name))
       (?f (touch-file name))
