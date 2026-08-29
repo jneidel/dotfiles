@@ -1,0 +1,4 @@
+# Make instantly visually distinct from dired to avoid confusion.
+# See: https://github.com/gokcehan/lf/blob/master/etc/colors.example
+
+di      01;31   # red dirs
