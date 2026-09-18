@@ -56,7 +56,8 @@ local function update_ytdl_format()
     }
 
     local ytdl_custom = "bv" .. format.quality .. format.codec .. "+ba/b" .. format.quality .. format.fallback
-    local ytdl_format = "bv[height>=720][height<=1080][vcodec~='^(vp0?9)']+ba/bv[height>=720][height<=1080]+ba/bv[height<=?1080][vcodec~='^(vp0?9)']+ba/bv[height<=?1080]+ba/bv+ba/b"
+    -- local ytdl_format = "bv[height>=720][height<=1080][vcodec~='^(vp0?9)']+ba/bv[height>=720][height<=1080]+ba/bv[height<=?1080][vcodec~='^(vp0?9)']+ba/bv[height<=?1080]+ba/bv+ba/b"
+    local ytdl_format = ytdl_custom
 
     mp.set_property("file-local-options/ytdl-format", ytdl_format)
     msg.info("Changed ytdl-format to: " .. ytdl_format)
@@ -65,15 +66,15 @@ end
 local list = create_set(options.domains)
 
 mp.add_hook("on_load", 9, function()
-                              local path = mp.get_property("path", "")
+   local path = mp.get_property("path", "")
 
-                              if path:match("^%a+://") then
-                                  local hostname = path:lower():match("^%a+://([^/]+)/?") or ""
-                                  local domain = hostname:match("([%w%-]+%.%w+%.%w+)$") or hostname:match("([%w%-]+%.%w+)$") or ""
+   if path:match("^%a+://") then
+       local hostname = path:lower():match("^%a+://([^/]+)/?") or ""
+       local domain = hostname:match("([%w%-]+%.%w+%.%w+)$") or hostname:match("([%w%-]+%.%w+)$") or ""
 
-                                  if list[domain] then
-                                      msg.info("Domain match found: " .. domain)
-                                      update_ytdl_format()
-                                  end
-                              end
+       if list[domain] then
+           msg.info("Domain match found: " .. domain)
+           update_ytdl_format()
+       end
+   end
 end)
