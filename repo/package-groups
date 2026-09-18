@@ -683,3 +683,9 @@ systemd:gopreload
 
 [jellyfin-mpv-shim]
 jellyfin-mpv-shim Play jellfin videos via mpv
+
+[webcam]
+ffmpeg Process video
+gphoto2 Access plugged-in Canon camera
+v4l2loopback-dkms Kernel module to register webcam
+v4l-utils Utils
