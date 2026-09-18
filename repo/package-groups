@@ -482,7 +482,7 @@ python-pdftotext Pdf preview
 broot Fuzzy selector
 epub-thumbnailer-git Epub preview
 ffmpegthumbnailer Video preview
-ueberzug Dependency
+perl-image-exiftool Image metadata
 
 [brave]
 brave-bin Main Browser
