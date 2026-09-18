@@ -1,21 +1,23 @@
 [Filter.1]
-message = Tag mailserver categorized spam so that it is visible
+message = Hide spam
+query   = from:consultores-rh.com OR to:td365@jneidel.com OR to:linkedin@jneidel.com OR to:younity@jneidel.com OR from:evalsignal.xyz OR subject:"stars feels low" OR to:home@jneidel.com
+tags    = +spam;-unread;-inbox
+# test match with:
+# notmuch search --exclude=false "from:evalsignal.xyz"
+
+[Filter.2]
+message = Tag mailserver marked spam
 query   = folder:jneidel@jneidel.de/Spam
 tags    = +spam;-inbox
 
-[Filter.2]
+[Filter.3]
 message = Hide jobdirecto mails
 query   = folder:jneidel@jneidel.de/INBOX AND to:wilfredocasas100@gmail.com OR subject:'User Data Deletion Request for jobdirecto'
 tags    = +trash;-unread;-inbox
 
-[Filter.3]
-message = Remove Lidl Pay confirmations
-query   = subject:Abbuchungsankündigung AND from:lidlpay@lidl.de
-tags    = +trash;-unread;-inbox
-
 [Filter.4]
-message = Hide bellicon
-query   = from:affiliate@bellicon.com
+message = Hide trash
+query   = from:affiliate@bellicon.com OR to:spenderservice@jneidel.com
 tags    = +trash;-unread;-inbox
 
 [Filter.5]
@@ -27,11 +29,6 @@ tags    = +trash;-unread;-inbox
 message = Move Telekom invoices
 query   = subject:'Telekom Festnetz-Rechnung' AND from:rechnungonline@telekom.de
 tags    = +invoice;-unread;-inbox
-
-[Filter.7]
-message = Blutspende
-query   = to:spenderservice@jneidel.com
-tags    = +trash;-unread;-inbox
 
 [Filter.8]
 message = Tag mail in sent dir as sent
@@ -49,9 +46,9 @@ query   = folder:jneidel@jneidel.com/invoices OR folder:jneidel@jneidel.de/invoi
 tags    = +invoice;-unread;-inbox
 
 [Filter.11]
-message = spam
-query   = from:*@consultores-rh.com OR to:td365@jneidel.com OR to:linkedin@jneidel.com OR to:younity@jneidel.com
-tags    = +spam;-unread;-inbox
+message = Remove Lidl Pay confirmations
+query   = subject:Abbuchungsankündigung AND from:lidlpay@lidl.de
+tags    = +trash;-unread;-inbox
 
 [Filter.12]
 message = IB reminder

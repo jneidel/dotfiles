@@ -129,3 +129,7 @@ ia https://web.archive.org/web/2/%s
 flix https://uflix.cc/search?keyword=%s
 bike https://www.bike24.de/suchergebnis?searchTerm=%s
 veh https://www.vehgroshop.de/checkout/cart/#%7B%22hr-search%22%3A%7B%22search_term%22%3A%22%s%22%2C%22filters%22%3A%5B%5D%2C%22sorting%22%3A%5B%5D%2C%22offsets%22%3A%7B%22category%22%3A12%2C%22site_page%22%3A12%2C%22blog_post%22%3A12%2C%22product%22%3A1000%7D%7D%7D
+manga https://myanimelist.net/manga.php?q=%s
+mal https://myanimelist.net/manga.php?q=%s
+gb https://www.gettextbooks.com/isbn/%s
+bb https://bookbot.de/p/q/%s/language/3_4

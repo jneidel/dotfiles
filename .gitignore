@@ -37,7 +37,7 @@ repo/PKGBUILD/*
 .local/share/icons/*
 !.local/share/icons/*.png
 
-.local/share/fonts/Comic Code/.uuid
+.local/share/fonts/*/.uuid
 
 # install via emacs: M-x all-the-icons-install-fonts
 .local/share/fonts/all-the-icons.ttf

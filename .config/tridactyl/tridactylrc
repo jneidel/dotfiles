@@ -82,7 +82,6 @@ bind H back
 bind L forward
 bind <C-o> jumpprev
 bind <C-i> jumpnext
-bind d tabclose
 bind D js tri.excmds.composite('tabprev;', 'tabclose #')
 bind gx0 tabclosealltoleft
 bind gx$ tabclosealltoright

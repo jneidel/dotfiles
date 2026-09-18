@@ -3458,7 +3458,7 @@ Make scripts with that start with a shebang executable.
 #+end_src
 
 ***** Mermaid
-[[https://github.com/abrochard/mermaid-mode][Mermaid mode]]
+[[https://github.com/abrochard/mermaid-mode][Mermaid mode]], [[https://www.reddit.com/r/emacs/comments/1whdiob/best_diagram_charts_for_org_mode/][Alternatives]]
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package mermaid-mode
   :after markdown-mode)
@@ -4120,7 +4120,7 @@ Or follow a symlink if " ; built-in dired-do-open uses xdg-open
 (use-package dired
   :ensure nil :defer t
   :bind (:map dired-mode-map
-              ("L" . jn/dired-jump-to-link-source)
+              ("M-l" . jn/dired-jump-to-link-source)
               ("e" . jn/dired-do-open)
               ("E" . jn/dired-do-edit)))
 ;; (dired-guess-shell-alist-user ; those are the suggestions for ! and & in Dired
@@ -5723,6 +5723,14 @@ intentionally aren't covering to fit the appetite or make the problem tractable/
   "Remove hyphen+newline in region, joining the lines."
   (interactive "r")
   (save-excursion
+    (goto-char start)
+    (replace-string ",," "\"")
+    (goto-char start)
+    (replace-regexp "„,?" "\"")
+    (goto-char start)
+    (replace-string "“" "\"")
+    (goto-char start)
+    (replace-string "”" "\"")
     (goto-char start)
     (while (re-search-forward "-\n" end t)
       (replace-match ""))))

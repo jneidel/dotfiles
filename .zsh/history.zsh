@@ -1,8 +1,8 @@
 alias history="builtin fc -l 1"
 
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+export HISTSIZE=50000
+export SAVEHIST=10000
 
 setopt HIST_IGNORE_DUPS   # ignore duplicated commands history list
 setopt HIST_IGNORE_SPACE  # ignore commands that start with space
