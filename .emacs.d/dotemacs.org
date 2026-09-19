@@ -81,8 +81,18 @@ terminal, tabs, etc., it just gets in your way.)
 Configuring complex neovim plugins is just not fun.
 Coc is super inconsistent and brittle.
 
+* Lexical binding
+
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+;; -*- lexical-binding: t; -*-
+#+end_src
+#+begin_src emacs-lisp :tangle "early-init.el" :results silent
+;; -*- lexical-binding: t; -*-
+#+end_src
+
 * Theme
 https://www.jneidel.com/misc/colors/
+
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (load-theme 'an-old-hope t)
 
@@ -1557,11 +1567,11 @@ One way to do this is keeping project stuff in one tab and persisting it with [[
 (set-face-attribute 'tab-bar-tab nil
                     :inherit 'tab-bar
                     :foreground "grey42"
+                    :background 'unspecified
                     :box nil)
 (set-face-attribute 'tab-bar-tab-inactive nil
                     :inherit 'tab-bar-tab
-                    :foreground "grey30"
-                    :background 'unspecified)
+                    :foreground "grey30")
 
 (general-define-key
  "ħ" 'tab-previous ;; AltGr + h, default C-S-tab
@@ -1656,7 +1666,7 @@ and secondary buffers (help, ~*Messages*~, etc.) is implemented here.
 (use-package consult
   :defer t
   :config
-  (consult-customize consult-source-buffer :hidden t :default nil) ; disable
+  (consult-customize consult-source-buffer :hidden t :default nil) ; disable default
   (defvar consult--source-workspace
     (list :name     "Workspace Buffers"
           :narrow   ?w
@@ -2880,6 +2890,11 @@ Hide cursor and selection in non-selected windows.
 (setq highlight-nonselected-windows nil)
 #+end_src
 
+#+begin_src emacs-lisp :tangle "early-init.el" :results silent
+(use-package systemd
+  :defer t)
+#+end_src
+
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 ;; default line length
 (setq-default fill-column 80)
@@ -2958,10 +2973,6 @@ You don't want to set it [[https://emacsredux.com/blog/2025/03/28/speed-up-emacs
 
 (add-hook 'emacs-startup-hook
           (lambda () (setq gc-cons-threshold (* 50 1024 1024)))) ; 50MB
-#+end_src
-
-#+begin_src emacs-lisp :tangle "early-init.el" :results silent
-(use-package systemd)
 #+end_src
 
 #+begin_src emacs-lisp :tangle "early-init.el" :results silent
@@ -3349,7 +3360,7 @@ svg path for the file.
 
 **** PHP
 [[https://github.com/emacs-php/php-mode][PHP mode]]
-#+begin_src emacs-lisp :tangle "init.el" :results silent
+#+begin_src emacs-lisp
 (use-package php-mode
   :mode ("\\.php\\'"))
 #+end_src
@@ -3576,7 +3587,6 @@ To invoke use ~H-h~ (reminicent of ~C-h~ for help.)
 
 [[https://kickingvegas.github.io/casual/EditKit.html][EditKit]] provides a menu for general purpose editing.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
-
 (use-package casual
   :config
   (keymap-global-set casual-bind #'casual-editkit-main-tmenu))
@@ -3592,6 +3602,7 @@ For [[https://kickingvegas.github.io/casual/Elisp.html][emacs-lisp]] development
 For the [[https://kickingvegas.github.io/casual/Info.html][info]] mode.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package casual
+  :after info
   :config
   (keymap-set Info-mode-map "C-o" #'casual-info-tmenu)
 
