@@ -1621,8 +1621,8 @@ It integrates well into existing tools (project.el and tab-bar.el).
              tabspaces-open-or-create-project-and-workspace)
   :bind (("C-x t s" . tabspaces-switch-or-create-workspace) ; [s]witch
          ("C-x t c" . tabspaces-switch-or-create-workspace) ; [c]reate
-         ("C-x t o" . tabspaces-open-or-create-project-and-workspace) ; [o]pen
-         ("C-x t p" . tabspaces-open-or-create-project-and-workspace) ; [p]roject
+         ("C-x t o" . my/tabspaces-open-or-create-project-or-workspace) ; [o]pen
+         ("C-x t p" . my/tabspaces-open-or-create-project-or-workspace) ; [p]roject
          ("C-x t C-l" . tabspaces-clear-buffers) ; mirrors C-l in shell
          ("C-x t C-k" . tabspaces-kill-buffers-close-workspace) ; mirrors C-x C-k
          ("H-B" . tabspaces-switch-buffer-and-tab)) ; switch-buffer in any workspace
@@ -1631,7 +1631,7 @@ It integrates well into existing tools (project.el and tab-bar.el).
   (tabspaces-default-tab "main")
   (tabspaces-remove-to-default t)
   (tabspaces-include-buffers '("*scratch*"))
-  (tabspaces-initialize-project-with-todo t)
+  (tabspaces-initialize-project-with-todo nil)
   (tabspaces-todo-file-name "project-todo.org")
   ;; additional options
   (tabspaces-fully-resolve-paths t)  ; Resolve relative project paths to absolute
@@ -1640,6 +1640,136 @@ It integrates well into existing tools (project.el and tab-bar.el).
   :config
   ;; rename initial tab "*scratch*"
   (when (= (length (tab-bar-tabs)) 1) (tab-bar-rename-tab tabspaces-default-tab)))
+#+end_src
+
+I use the builtin project type for code repos.
+Tabspaces can create a new tab for a project for you.
+This works well and I use it all the time, so much so that I want it for my
+manually created tabs as well.
+These tabs are an non repo directory.
+I call these workspaces and have wired everything up to have the function the
+same way that opening projects functions through tabspaces.
+#+begin_src emacs-lisp :tangle "init.el" :results silent
+(defvar my/workspace-dirs nil
+  "Alist of (NAME . DIR), loaded from the `workspaces' file.")
+
+(defun my/workspaces-file ()
+  "The `workspaces' file, next to `project-list-file'."
+  (expand-file-name "workspaces"
+                    (file-name-directory (expand-file-name project-list-file))))
+
+(defun my/workspaces-load ()
+  (let ((file (my/workspaces-file)))
+    (setq my/workspace-dirs
+          (when (file-exists-p file)
+            (with-temp-buffer
+              (insert-file-contents file)
+              (read (current-buffer)))))))
+
+(defun my/workspaces-save ()
+  (with-temp-file (my/workspaces-file)
+    (insert ";;; -*- lisp-data -*-\n(")
+    (dolist (e my/workspace-dirs)
+      (insert (format "\n  %S" e)))
+    (insert "\n)\n")))
+
+(defun my/workspace-add ()
+  "Create a new workspace and open it.
+Asks for directory, name and an optional default file."
+  (let* ((dir (file-name-as-directory
+               (expand-file-name
+                (tabspaces--read-directory-name "Select directory: " nil nil nil))))
+         (name (read-string "Workspace name: "
+                            (file-name-nondirectory (directory-file-name dir))))
+         (picked (read-file-name "Default file (RET for none): " dir nil nil))
+         (file (unless (or (string-empty-p picked)
+                           (file-directory-p (expand-file-name picked dir)))
+                 (file-relative-name (expand-file-name picked dir) dir))))
+    (setq my/workspace-dirs
+          (append (assoc-delete-all name my/workspace-dirs)
+                  (list (if file (list name dir file) (list name dir)))))
+    (my/workspaces-save)
+    (my/open-dir-workspace name)))
+
+(defun my/open-dir-workspace (name)
+  "Open workspace by NAME from `my/workspace-dirs' in new tab NAME.
+Opens the default file if the entry has one, else the dir in dired."
+  (interactive
+   (progn (my/workspaces-load)
+          (list (completing-read "Workspace: "
+                                 (mapcar #'car my/workspace-dirs) nil t))))
+  (let* ((entry (assoc name my/workspace-dirs))
+         (dir (expand-file-name (nth 1 entry)))
+         (file (nth 2 entry)))
+    (unless (file-directory-p (expand-file-name dir))
+        (user-error "Workspace dir does not exist: %s" dir))
+    (if (member name (mapcar (lambda (tab) (alist-get 'name tab)) (tab-bar-tabs)))
+        (tab-bar-switch-to-tab name)
+      (tabspaces-switch-or-create-workspace name)
+      (delete-other-windows)
+      (let ((path (and file (expand-file-name file dir))))
+        (if (and path (file-exists-p path))
+            (find-file path)
+          (dired dir))))))
+
+(defun my/tabspaces-open-or-create-project-or-workspace ()
+  "Pick either a project or a workspace.
+
+If tab exists, open the tab.
+If tab does not exist, create tab and open it.
+
+A new project or workspace can be interactively defined and later removed
+with: `my/remove-workspace-or-project'"
+  (interactive)
+  (project--ensure-read-project-list)
+  (my/workspaces-load)
+  (let* ((entries
+          (append
+           (mapcar (lambda (w)
+                     (cons (format "Wksp: %s (%s)" (car w) (abbreviate-file-name (nth 1 w)))
+                           (cons 'wksp (car w))))
+                   my/workspace-dirs)
+           (mapcar (lambda (p)
+                     (cons (format "Proj: %s" (abbreviate-file-name p))
+                           (cons 'proj p)))
+                   (project-known-project-roots))
+           (list (cons "Proj: ... (choose a dir)" '(proj-new))
+                 (cons "Wksp: ... (choose a dir)" '(wksp-new)))))
+         (choice (completing-read "Open: " (mapcar #'car entries) nil t)))
+    (pcase-let ((`(,type . ,val) (cdr (assoc choice entries))))
+      (pcase type
+        ('proj (unless (file-directory-p (expand-file-name val))
+                 (user-error "Project dir does not exist: %s" val))
+               (tabspaces-open-or-create-project-and-workspace val))
+        ('proj-new (tabspaces-open-or-create-project-and-workspace
+                    (tabspaces--read-directory-name "Select directory: " nil nil nil)))
+        ('wksp (my/open-dir-workspace val))
+        ('wksp-new (my/workspace-add))))))
+
+(defun my/remove-workspace-or-project ()
+  "Remove a workspace or a known project from its list and file."
+  (interactive)
+  (project--ensure-read-project-list)
+  (my/workspaces-load)
+  (let* ((entries
+          (append
+           (mapcar (lambda (e)
+                     (cons (format "Wksp: %s (%s)" (car e)
+                                   (abbreviate-file-name (nth 1 e)))
+                           (cons 'wksp (car e))))
+                   my/workspace-dirs)
+           (mapcar (lambda (p)
+                     (cons (format "Proj: %s" (abbreviate-file-name p))
+                           (cons 'proj p)))
+                   (project-known-project-roots))))
+         (choice (completing-read "Remove: " (mapcar #'car entries) nil t))
+         (entry (assoc choice entries)))
+    (when (and entry (y-or-n-p (format "Remove %s? " choice)))
+      (pcase-let ((`(,type . ,val) (cdr entry)))
+        (pcase type
+          ('wksp (setq my/workspace-dirs (assoc-delete-all val my/workspace-dirs))
+                 (my/workspaces-save))
+          ('proj (project-forget-project val)))))))
 #+end_src
 
 Before tabspaces I use perspective.
