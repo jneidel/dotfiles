@@ -887,12 +887,14 @@ Execute the code within source blocks with ~C-c C-c~.
 Disable the default confirmation prompt for these executions:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
+  :ensure nil
   :custom (org-confirm-babel-evaluate nil))
 #+end_src
 
 The languages which can be evaluated inline with `C-c C-c`.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
+  :ensure nil
   :custom
   (org-babel-load-languages '((emacs-lisp . t)
                               (shell . t)
@@ -938,6 +940,7 @@ TODO Is this needed? Elisp completions seemed to have worked (inconsistently) wi
   (add-hook 'completion-at-point-functions #'cape-elisp-block nil 'local))
 
 (use-package org
+  :ensure nil
   :hook (org-mode . register-elisp-block-cape))
 #+end_src
 
@@ -3283,6 +3286,7 @@ Execute org-babel lisp blocks:
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
   :defer t
+  :ensure nil
   :config (require 'ob-lisp))
 #+end_src
 
@@ -3339,6 +3343,7 @@ I don't want to think about that, so a new =:file auto= generates a random /tmp
 svg path for the file.
 #+begin_src emacs-lisp :tangle "init.el" :results silent
 (use-package org
+  :ensure nil
   :custom
   (org-babel-default-header-args:mermaid
    '((:file . "auto")
